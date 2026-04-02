@@ -1,0 +1,278 @@
+/* ════════════════════════════════════════════════════════
+   SERVICES  —  Luxuria-style pinned scroll animation
+   
+   Architecture:
+     .services-wrapper  →  normal-flow tall div
+                           GSAP pinSpacing adds scroll space here
+     .services-panel    →  100vh viewport, GSAP pins this element
+   ════════════════════════════════════════════════════════ */
+
+/* Global smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Outer wrapper (just a flow container, no height set) ── */
+.services-wrapper {
+  position: relative;
+  width: 100%;
+  /* ⚠️ NO height / min-height here — GSAP pinSpacing handles it */
+}
+
+/* ── Pinned 100vh panel ──────────────────────────────────── */
+.services-panel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #0c0b09;
+}
+
+/* ── Background layers ───────────────────────────────────── */
+.services-bg-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.services-bg-layer {
+  position: absolute;
+  inset: -8%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.17) saturate(0.55);
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* ── Fullscreen hero image ───────────────────────────────── */
+.services-hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.42) saturate(0.80);
+  will-change: transform, opacity, clip-path;
+  transform-origin: center center;
+}
+
+/* ── Diagonal accent lines ───────────────────────────────── */
+.services-diagonal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.services-diagonal::before,
+.services-diagonal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(200, 16, 46, 0.32) 30%,
+    rgba(200, 16, 46, 0.32) 70%,
+    transparent 100%
+  );
+  transform-origin: top center;
+}
+.services-diagonal::before {
+  left: 28%;
+  transform: rotate(-18deg) scaleY(1.6);
+}
+.services-diagonal::after {
+  left: 33%;
+  transform: rotate(-18deg) scaleY(1.6);
+}
+
+/* ── Vertical section label (left side) ─────────────────── */
+.services-label {
+  position: absolute;
+  top: 50%;
+  left: 4.5%;
+  z-index: 10;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ── Service names stack (absolute center) ───────────────── */
+.services-names-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+  width: 72%;
+}
+
+.services-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* 
+    translateX stays fixed; GSAP animates translateY via `y` prop
+    which GSAP sets as a separate transform — this keeps them compatible.
+    We use `xPercent`/`yPercent` equivalents via initial gsap.set.
+  */
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(2.6rem, 5.2vw, 6.2rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0);
+  line-height: 1;
+  will-change: transform, opacity;
+  user-select: none;
+}
+
+.services-name--active {
+  color: #ffffff;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Region badge shown above active service name */
+.services-name-region {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.6rem, 0.85vw, 0.75rem);
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #c8102e;
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+
+/* ── Description area (bottom-left) ─────────────────────── */
+.services-descs {
+  position: absolute;
+  bottom: 6%;
+  left: 5%;
+  right: 5%;
+  z-index: 10;
+  max-width: 400px;
+  min-height: 80px;
+}
+
+.services-desc-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  opacity: 0;
+  will-change: opacity, transform;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 2px solid rgba(200, 16, 46, 0.6);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.services-desc-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  background: rgba(200, 16, 46, 0.18);
+  border: 1px solid rgba(200, 16, 46, 0.32);
+  color: #c8102e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.services-desc-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .services-name {
+    font-size: clamp(2.1rem, 4.8vw, 5rem);
+  }
+  .services-descs {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-name {
+    font-size: clamp(1.7rem, 5.5vw, 3.4rem);
+  }
+  .services-label {
+    display: none;
+  }
+  .services-descs {
+    bottom: 5%;
+    left: 4%;
+    right: 4%;
+    max-width: 100%;
+  }
+  .services-desc-block {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .services-desc-text {
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+  .services-diagonal::before { left: 20%; }
+  .services-diagonal::after  { left: 26%; }
+}
+
+@media (max-width: 480px) {
+  .services-name {
+    font-size: clamp(1.4rem, 6.5vw, 2.6rem);
+  }
+  .services-descs {
+    bottom: 4%;
+    left: 3%;
+    right: 3%;
+  }
+  .services-desc-block {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .services-desc-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 6px;
+  }
+  .services-desc-text {
+    font-size: 0.68rem;
+    line-height: 1.5;
+  }
+}

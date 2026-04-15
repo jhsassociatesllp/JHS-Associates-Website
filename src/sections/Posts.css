@@ -61,7 +61,8 @@
 /* ── Track wrapper — clips overflow ──────────────────────────────── */
 .posts__track-wrap {
   overflow: hidden;
-  padding-left: 48px;          /* left breathing room */
+  padding-left: 48px;
+  /* left breathing room */
 }
 
 /* ── Sliding strip ────────────────────────────────────────────────── */

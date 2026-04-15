@@ -1,368 +1,525 @@
-import { useEffect, useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { ChevronDown, ArrowUpRight, X, Menu } from 'lucide-react'
-import './Navbar.css'
+import { useState, useEffect, useRef } from "react";
+import "./Navbar.css";
 
-/* ── Data ──────────────────────────────────────────────── */
-const INSIGHTS_LINKS = [
-  { name: 'Resources',          href: '/resources' },
-  { name: 'Articles',           href: '/articles' },
-  { name: 'Case Studies',       href: '/case-studies' },
-  { name: 'Thought Leadership', href: '/thought-leadership' },
-]
-const SERVICES_INDIA = [
-  { name: 'Outsourcing', href: '/services/outsourcing' },
-  { name: 'Consulting',  href: '/services/consulting' },
-  { name: 'Taxation',    href: '/services/taxation' },
-  { name: 'Assurance',   href: '/services/assurance' },
-]
-const SERVICES_GLOBAL = [
-  { name: 'Assurance',                href: '/services/assurance' },
-  { name: 'Taxation',                 href: '/services/taxation' },
-  { name: 'Single Window Assistance', href: '/services/single-window-assistance' },
-  { name: 'Consulting',               href: '/services/consulting' },
-  { name: 'SOC Attestation',          href: '/services/soc-attestation' },
-  { name: 'Outsourcing',              href: '/services/outsourcing' },
-]
-const SECTORS = [
-  {
-    title: 'Financial Services',
-    items: [
-      { name: 'Banking',                    href: '/sectors/financial-services/banking' },
-      { name: 'Broking',                    href: '/sectors/financial-services/broking' },
-      { name: 'Mutual Funds',               href: '/sectors/financial-services/mutual-funds' },
-      { name: 'Family-Oriented Businesses', href: '/sectors/financial-services/family-oriented-businesses' },
-      { name: 'Insurance',                  href: '/sectors/financial-services/insurance' },
-      { name: 'Digital Currency',           href: '/sectors/financial-services/digital-currency' },
-      { name: 'NBFC',                       href: '/sectors/financial-services/nbfc' },
-      { name: 'Portfolio Management',       href: '/sectors/financial-services/portfolio-management' },
-      { name: 'Venture Capital',            href: '/sectors/financial-services/venture-capital' },
-    ],
-  },
-  {
-    title: 'Consumer',
-    items: [
-      { name: 'Housing',        href: '/sectors/consumer/housing' },
-      { name: 'Gems & Jewellery', href: '/sectors/consumer/gems-jewellery' },
-      { name: 'Real Estate',    href: '/sectors/consumer/real-estate' },
-      { name: 'Retail',         href: '/sectors/consumer/retail' },
-      { name: 'Oil & Gas',      href: '/sectors/consumer/oil-gas-industry' },
-      { name: 'FMCG',           href: '/sectors/consumer/fmcg' },
-      { name: 'Commodity',      href: '/sectors/consumer/commodity' },
-    ],
-  },
-  {
-    title: 'Media & Technology',
-    items: [
-      { name: 'Media',           href: '/sectors/media-technology/media' },
-      { name: 'IT System Audit', href: '/sectors/media-technology/it-system-audit' },
-      { name: 'IT / ITeS',       href: '/sectors/media-technology/it-tes' },
-    ],
-  },
-  {
-    title: 'Other',
-    items: [
-      { name: 'Healthcare',    href: '/sectors/other/healthcare' },
-      { name: 'Construction',  href: '/sectors/other/construction' },
-      { name: 'NGO',           href: '/sectors/other/ngo' },
-      { name: 'Manufacturing', href: '/sectors/other/manufacturing' },
-    ],
-  },
-]
-const ABOUT_LINKS = [
-  { name: 'Our Story',  href: '/about/our-story' },
-  { name: 'Leadership', href: '/about/leadership' },
-  { name: 'Awards',     href: '/about/awards' },
-  { name: 'CSR',        href: '/about/csr' },
-  { name: 'Careers',    href: '/about/careers' },
-]
+// ─── Types ─────────────────────────────────────────────────────
+interface SubItem {
+  label: string;
+  description?: string;
+  href?: string;
+  children?: RightItem[]; // ← Services & Sectors ke right-panel items
+}
 
-/* ── Social icons ── */
-const LinkedInIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-  </svg>
-)
-const FacebookIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-  </svg>
-)
-const InstagramIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-  </svg>
-)
+interface RightItem {
+  label: string;
+  description?: string;
+  href?: string;
+}
 
-/* ── Component ── */
-export default function Navbar() {
-  const [scrolled,     setScrolled]     = useState(false)
-  const [menuOpen,     setMenuOpen]     = useState(false)
-  const [activeMenu,   setActiveMenu]   = useState<string | null>(null)
-  const [activeMobile, setActiveMobile] = useState<string | null>(null)
-  const navRef     = useRef<HTMLElement>(null)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+interface NavItem {
+  id: string;
+  label: string;
+  subLabel?: string;
+  subDesc?: string;
+  subItems?: SubItem[];
+  inlineExpand?: boolean; // ← true = Services & Sectors style
+}
+
+// ─── Menu Data ─────────────────────────────────────────────────
+const NAV_ITEMS: NavItem[] = [
+  {
+    id: "insights",
+    label: "Insights",
+    subLabel: "Insights",
+    subDesc: "Access our latest thinking, research & perspectives.",
+    subItems: [
+      { label: "Resources", description: "Reports, tools & frameworks", href: '/resources' },
+      { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
+      { label: "Thought Leadership", description: "CEO & leadership perspectives", href: '/thought-leadership' },
+      { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
+      { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
+      { label: "Podcasts", description: "Audio insights on the go", href: '/podcasts' },
+    ],
+  },
+
+  // ── SERVICES — inlineExpand: true ──────────────────────────
+  {
+    id: "services",
+    label: "Services",
+    inlineExpand: true,
+    subItems: [
+      {
+        label: "India",
+        description: "Tailored solutions for the Indian market",
+        children: [
+          { label: "Consulting", description: "Holistic advisory across functions", href: '/services/consulting' },
+          { label: "Assurance", description: "Audit, risk & compliance", href: '/services/assurance' },
+          { label: "Taxation Services", description: "Direct & indirect tax advisory", href: '/services/taxation' },
+          { label: "Outsourcing Services", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
+        ],
+      },
+      {
+        label: "Global",
+        description: "World-class advisory across geographies",
+        children: [
+          { label: "Assurance", description: "", href: '/services/assurance' },
+          { label: "Taxation ", description: "", href: '/services/taxation' },
+          { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
+          { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
+          { label: "Consulting", description: "", href: '/services/consulting' },
+          { label: "Outsourcing", description: "", href: '/services/outsourcing' },
+        ],
+      },
+    ],
+  },
+
+  // ── SECTORS — inlineExpand: true ───────────────────────────
+  {
+    id: "sectors",
+    label: "Sectors",
+    inlineExpand: true,
+    subItems: [
+      {
+        label: "Media & Technology",
+        description: "Navigating digital disruption",
+        children: [
+          { label: "Media", description: "", href: '/sectors/media-technology/media' },
+          { label: "IT System Audit", description: "", href: '/sectors/media-technology/it-system-audit' },
+          { label: "IT /ITeS", description: "", href: '/sectors/media-technology/it-ites' },
+        ],
+      },
+      {
+        label: "Consumer",
+        description: "FMCG to luxury retail",
+        children: [
+          { label: "FMCG", description: "", href: '/sectors/consumer/fmcg' },
+          { label: "Retail ", description: "", href: '/sectors/consumer/retail' },
+          { label: "Oil & Gas", description: "", href: '/sectors/consumer/oil-gas' },
+          { label: "Housing ", description: "", href: '/sectors/consumer/housing' },
+          { label: "Real Estate", description: "", href: '/sectors/consumer/real-estate' },
+          { label: "Commoditiy", description: "", href: '/sectors/consumer/commodities' },
+          { label: "Gems & Jewelry", description: "", href: '/sectors/consumer/gems-jewelry' },
+        ],
+      },
+      {
+        label: "Financial Services",
+        description: "Banking, capital & fintech",
+        children: [
+          { label: "Banking", description: "Retail & corporate banking", href: '/sectors/financial-services/banking' },
+          { label: "Insurance", description: "Life, health & general insurance", href: '/sectors/financial-services/insurance' },
+          { label: "Broking", description: "", href: '/sectors/financial-services/broking' },
+          { label: "Mutual Funds", description: "", href: '/sectors/financial-services/mutual-funds' },
+          { label: "Digital Currency", description: "", href: '/sectors/financial-services/digital-currency' },
+          { label: "Family Oriented Businesses", description: "", href: '/sectors/financial-services/family-oriented-businesses' },
+          { label: "Portfolio Management", description: "", href: '/sectors/financial-services/portfolio-management' },
+          { label: "Venture capital", description: "", href: '/sectors/financial-services/venture-capital' },
+          { label: "NBFC", description: "", href: '/sectors/financial-services/nbfc' },
+        ],
+      },
+      {
+        label: "Others",
+        description: "Cross-industry specialist practices",
+        children: [
+          { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/others/healthcare' },
+          { label: "Constructions", description: "", href: '/sectors/others/constructions' },
+          { label: "Manufacturing", description: "", href: '/sectors/others/manufacturing' },
+          { label: "NGO", description: "", href: '/sectors/others/ngo' },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "knowus",
+    label: "Know Us",
+    subLabel: "Know Us",
+    subDesc: "Discover who we are, what we stand for, and how we work.",
+    subItems: [
+      { label: "Our Story", description: "History & founding vision" },
+      { label: "Mission & Vision", description: "What drives us" },
+      { label: "Leadership", description: "Meet the partners" },
+      { label: "Culture", description: "Our values & ways of working" },
+      { label: "Partnerships", description: "Strategic alliances & networks" },
+      { label: "Awards", description: "Recognition & accolades" },
+    ],
+  },
+  {
+    id: "aboutus",
+    label: "About Us",
+    subLabel: "About Us",
+    subDesc: "JHS & Associates LLP — your trusted partners in finance.",
+    subItems: [
+      { label: "Company Overview", description: "Who we are" },
+      { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more" },
+      { label: "Global Presence", description: "Our international footprint" },
+      { label: "Leadership Team", description: "Board & senior partners" },
+      { label: "Careers", description: "Join our growing team" },
+      { label: "CSR", description: "Our social responsibility" },
+    ],
+  },
+  {
+    id: "contact",
+    label: "Contact",
+    subLabel: "Contact",
+    subDesc: "Get in touch with our team — we're here to help.",
+    subItems: [
+      { label: "General Enquiry", description: "Write to us" },
+      { label: "Media Relations", description: "Press & publications" },
+      { label: "Investor Relations", description: "For our stakeholders" },
+      { label: "Mumbai Office", description: "+91 22 0000 0000" },
+      { label: "Delhi Office", description: "+91 11 0000 0000" },
+      { label: "Bangalore Office", description: "+91 80 0000 0000" },
+    ],
+  },
+];
+
+// ─── Component ─────────────────────────────────────────────────
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
+
+  // For inlineExpand items (Services & Sectors):
+  // which sub-item is selected → drives the right panel
+  const [activeSubLabel, setActiveSubLabel] = useState<string | null>(null);
+
+  // Mobile Drill-Down State
+  const [mobileState, setMobileState] = useState<{
+    view: 'root' | 'l1' | 'l2';
+    l1Id?: string;
+    l2Label?: string;
+  }>({ view: 'root' });
+
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const fn = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
 
   useEffect(() => {
-    gsap.fromTo(
-      navRef.current,
-      { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.15 }
-    )
-  }, [])
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
-  /* lock body scroll when mobile menu open */
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+    if (menuOpen) setTimeout(() => searchRef.current?.focus(), 400);
+  }, [menuOpen]);
 
-  const openMenu  = (m: string) => { if (timeoutRef.current) clearTimeout(timeoutRef.current); setActiveMenu(m) }
-  const closeMenu = ()          => { timeoutRef.current = setTimeout(() => setActiveMenu(null), 150) }
-  const keepMenu  = (m: string) => { if (timeoutRef.current) clearTimeout(timeoutRef.current); setActiveMenu(m) }
-  const toggleMob = (m: string) => setActiveMobile(p => p === m ? null : m)
-  const closeMob  = ()          => { setMenuOpen(false); setActiveMobile(null) }
+  const openMenu = () => {
+    setActiveId(NAV_ITEMS[0].id);
+    setActiveSubLabel(null);
+    setMobileState({ view: 'root' });
+    setMenuOpen(true);
+  };
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setActiveSubLabel(null);
+    setTimeout(() => setMobileState({ view: 'root' }), 400);
+  };
+
+  // When L1 nav changes, reset sub selection
+  const handleNavHover = (id: string) => {
+    setActiveId(id);
+    setActiveSubLabel(null);
+  };
+
+  const activeNavItem = NAV_ITEMS.find((n) => n.id === activeId) ?? NAV_ITEMS[0];
+  const isInline = !!activeNavItem.inlineExpand;
+
+  // Right panel content:
+  // — inlineExpand items → driven by activeSubLabel
+  // — normal items       → show subItems directly in right panel
+  const rightChildren: RightItem[] | SubItem[] | null = (() => {
+    if (isInline && activeSubLabel) {
+      return (
+        activeNavItem.subItems?.find((s) => s.label === activeSubLabel)
+          ?.children ?? null
+      );
+    }
+    if (!isInline) {
+      return activeNavItem.subItems ?? null;
+    }
+    return null;
+  })();
+
+  const rightTitle = isInline
+    ? activeSubLabel
+    : activeNavItem.subLabel ?? activeNavItem.label;
+
+  const rightDesc = isInline
+    ? activeNavItem.subItems?.find((s) => s.label === activeSubLabel)?.description
+    : activeNavItem.subDesc;
+
+  // --- Mobile Derived State ---
+  const mobileActiveL1 = NAV_ITEMS.find((n) => n.id === mobileState.l1Id) ?? NAV_ITEMS[0];
+  const mobileL1Items = mobileActiveL1.subItems ?? [];
+  const mobileActiveL2 = mobileState.l2Label
+    ? mobileL1Items.find((s) => s.label === mobileState.l2Label)
+    : null;
+  const mobileL2Items = mobileActiveL2?.children ?? [];
 
   return (
     <>
-      {/* ══════════ HEADER ══════════ */}
-      <header ref={navRef} className={`nb${scrolled ? ' nb--scrolled' : ''}`}>
-        <div className="nb__topbar" />
+      {/* ══════════════ TOP NAVBAR ══════════════ */}
+      <header className={`nb ${scrolled ? "nb--scrolled" : ""}`}>
+        <div className="nb__left">
+          <button
+            className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
+            onClick={menuOpen ? closeMenu : openMenu}
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+          >
+            <span className="nb__bar" />
+            <span className="nb__bar" />
+            <span className="nb__bar" />
+          </button>
 
-        <div className="nb__inner">
-          {/* Logo */}
-          <a href="/" className="nb__logo">
-            <img src="/src/image/logo2.png" alt="JHS & Associates LLP" className="nb__logo-img" />
+          <a href="/" className="nb__brand" onClick={closeMenu}>
+            <img
+              src="/src/image/logo.png"
+              alt="JHS & Associates LLP"
+              className="nb__logo"
+            />
           </a>
+        </div>
 
-          {/* Desktop nav */}
-          <nav className="nb__nav" aria-label="Primary">
-            <ul className="nb__links">
-              <li><a href="/" className="nb__link">Home</a></li>
+        {/* <div className="nb__right">
+          <a href="/login" className="nb__login">LOG IN</a>
+        </div> */}
+      </header>
 
-              {/* Insights */}
-              <li className="nb__item" onMouseEnter={() => openMenu('insights')} onMouseLeave={closeMenu}>
-                <button className={`nb__link nb__link--btn${activeMenu === 'insights' ? ' nb__link--active' : ''}`}>
-                  Insights <ChevronDown size={13} className={`nb__chevron${activeMenu === 'insights' ? ' nb__chevron--open' : ''}`} />
-                </button>
-                <div className={`nb__drop nb__drop--sm${activeMenu === 'insights' ? ' nb__drop--visible' : ''}`}
-                  onMouseEnter={() => keepMenu('insights')} onMouseLeave={closeMenu}>
-                  <div className="nb__drop-inner">
-                    {INSIGHTS_LINKS.map(item => (
-                      <a key={item.name} href={item.href} className="nb__drop-link">
-                        <span>{item.name}</span><ArrowUpRight size={12} className="nb__drop-arrow" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </li>
+      {/* ══════════════ FULL-WIDTH MEGA MODAL ══════════════ */}
+      <div
+        className={`mega ${menuOpen ? "mega--open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+      >
+        {/* ── Modal top bar ── */}
+        <div className="mega__topbar">
+          <div className="mega__topbar-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mega__search-ic">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              ref={searchRef}
+              type="text"
+              placeholder="Type to search…"
+              className="mega__search-inp"
+            />
+          </div>
+        </div>
 
-              {/* Services */}
-              <li className="nb__item" onMouseEnter={() => openMenu('services')} onMouseLeave={closeMenu}>
-                <button className={`nb__link nb__link--btn${activeMenu === 'services' ? ' nb__link--active' : ''}`}>
-                  Services <ChevronDown size={13} className={`nb__chevron${activeMenu === 'services' ? ' nb__chevron--open' : ''}`} />
-                </button>
-                <div className={`nb__drop nb__drop--mega${activeMenu === 'services' ? ' nb__drop--visible' : ''}`}
-                  onMouseEnter={() => keepMenu('services')} onMouseLeave={closeMenu}>
-                  <div className="nb__drop-inner nb__mega-services">
-                    <div className="nb__mega-col">
-                      <p className="nb__mega-label">India</p>
-                      {SERVICES_INDIA.map(item => (
-                        <a key={item.name} href={item.href} className="nb__drop-link">
-                          <span>{item.name}</span><ArrowUpRight size={12} className="nb__drop-arrow" />
-                        </a>
+        {/* ── Body: LEFT | RIGHT ── */}
+        <div className="mega__body">
+
+          {/* ════ DESKTOP PANEL ════ */}
+          <div className="mega__desktop">
+
+          {/* ════ LEFT PANEL ════ */}
+          <nav className="mega__left" aria-label="Main navigation">
+            <ul className="mega__nav-list">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.id} className="mega__nav-li">
+
+                  {/* L1 button */}
+                  <button
+                    className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
+                    onClick={() => handleNavHover(item.id)}
+                  >
+                    <span className="mega__nav-label">{item.label}</span>
+                    <svg
+                      className={`mega__nav-arr ${activeId === item.id && item.inlineExpand ? "mega__nav-arr--down" : ""}`}
+                      width="14" height="14"
+                      viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5"
+                    >
+                      {/* Arrow down when inline-expanded, right otherwise */}
+                      {activeId === item.id && item.inlineExpand
+                        ? <polyline points="6 9 12 15 18 9" />
+                        : <polyline points="9 18 15 12 9 6" />
+                      }
+                    </svg>
+                  </button>
+
+                  {/* ── INLINE SUB-ITEMS (Services & Sectors only) ── */}
+                  {item.inlineExpand && activeId === item.id && item.subItems && (
+                    <ul className="mega__inline-list">
+                      {item.subItems.map((sub) => (
+                        <li key={sub.label} className="mega__inline-li">
+                          <button
+                            className={`mega__inline-btn ${activeSubLabel === sub.label ? "mega__inline-btn--active" : ""}`}
+                            onClick={() =>
+                              setActiveSubLabel((prev) =>
+                                prev === sub.label ? null : sub.label
+                              )
+                            }
+                          >
+                            <span className="mega__inline-label">{sub.label}</span>
+                            <svg
+                              className="mega__inline-arr"
+                              width="12" height="12"
+                              viewBox="0 0 24 24" fill="none"
+                              stroke="currentColor" strokeWidth="2.5"
+                            >
+                              <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                          </button>
+                        </li>
                       ))}
-                    </div>
-                    <div className="nb__mega-divider" />
-                    <div className="nb__mega-col">
-                      <p className="nb__mega-label">Global</p>
-                      {SERVICES_GLOBAL.map(item => (
-                        <a key={item.name} href={item.href} className="nb__drop-link">
-                          <span>{item.name}</span><ArrowUpRight size={12} className="nb__drop-arrow" />
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </li>
+                    </ul>
+                  )}
 
-              {/* Sectors */}
-              <li className="nb__item" onMouseEnter={() => openMenu('sectors')} onMouseLeave={closeMenu}>
-                <button className={`nb__link nb__link--btn${activeMenu === 'sectors' ? ' nb__link--active' : ''}`}>
-                  Sectors <ChevronDown size={13} className={`nb__chevron${activeMenu === 'sectors' ? ' nb__chevron--open' : ''}`} />
-                </button>
-                <div className={`nb__drop nb__drop--mega nb__drop--sectors${activeMenu === 'sectors' ? ' nb__drop--visible' : ''}`}
-                  onMouseEnter={() => keepMenu('sectors')} onMouseLeave={closeMenu}>
-                  <div className="nb__drop-inner nb__mega-sectors">
-                    {SECTORS.map(sector => (
-                      <div key={sector.title} className="nb__mega-col">
-                        <p className="nb__mega-label">{sector.title}</p>
-                        {sector.items.map(item => (
-                          <a key={item.name} href={item.href} className="nb__drop-link">
-                            <span>{item.name}</span><ArrowUpRight size={12} className="nb__drop-arrow" />
-                          </a>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </li>
-
-              {/* About */}
-              <li className="nb__item" onMouseEnter={() => openMenu('about')} onMouseLeave={closeMenu}>
-                <button className={`nb__link nb__link--btn${activeMenu === 'about' ? ' nb__link--active' : ''}`}>
-                  About Us <ChevronDown size={13} className={`nb__chevron${activeMenu === 'about' ? ' nb__chevron--open' : ''}`} />
-                </button>
-                <div className={`nb__drop nb__drop--sm${activeMenu === 'about' ? ' nb__drop--visible' : ''}`}
-                  onMouseEnter={() => keepMenu('about')} onMouseLeave={closeMenu}>
-                  <div className="nb__drop-inner">
-                    {ABOUT_LINKS.map(item => (
-                      <a key={item.name} href={item.href} className="nb__drop-link">
-                        <span>{item.name}</span><ArrowUpRight size={12} className="nb__drop-arrow" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
           </nav>
 
-          {/* Right: socials + CTA */}
-          <div className="nb__right">
-            <div className="nb__socials">
-              <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" className="nb__social" aria-label="LinkedIn"><LinkedInIcon /></a>
-              <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" className="nb__social" aria-label="Facebook"><FacebookIcon /></a>
-              <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" className="nb__social" aria-label="Instagram"><InstagramIcon /></a>
-            </div>
-            <div className="nb__right-sep" />
-            <a href="/contact" className="nb__cta">Contact Us <ArrowUpRight size={14} /></a>
-          </div>
+          {/* ════ RIGHT PANEL ════ */}
+          <div className="mega__right">
 
-          {/* Hamburger — always visible on mobile */}
-          <button
-            className={`nb__burger${menuOpen ? ' nb__burger--open' : ''}`}
-            onClick={() => setMenuOpen(v => !v)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            type="button"
-          >
-            {menuOpen ? <X size={22} strokeWidth={2.5} /> : <Menu size={22} strokeWidth={2.5} />}
-          </button>
-        </div>
-      </header>
+            {/* Single unified right panel — updates based on active state */}
+            <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
 
-      {/* ══════════ MOBILE DRAWER — outside <header> so nothing clips it ══════════ */}
-      {/* Backdrop */}
-      <div
-        className={`nb__backdrop${menuOpen ? ' nb__backdrop--show' : ''}`}
-        onClick={closeMob}
-        aria-hidden="true"
-      />
-
-      {/* Drawer panel */}
-      <div
-        className={`nb__drawer${menuOpen ? ' nb__drawer--open' : ''}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Navigation menu"
-      >
-        {/* Drawer header */}
-        <div className="nb__drawer-hd">
-          <a href="/" className="nb__logo" onClick={closeMob}>
-            <img src="/src/image/logo.png" alt="JHS & Associates LLP" className="nb__logo-img" />
-          </a>
-          <button className="nb__drawer-close" onClick={closeMob} aria-label="Close menu" type="button">
-            <X size={20} strokeWidth={2.5} />
-          </button>
-        </div>
-
-        {/* Drawer body */}
-        <div className="nb__drawer-body">
-
-          <a href="/" className="nb__mob-link" onClick={closeMob}>Home</a>
-
-          {/* Insights */}
-          <div className="nb__mob-group">
-            <button className={`nb__mob-link nb__mob-toggle${activeMobile === 'insights' ? ' nb__mob-toggle--open' : ''}`}
-              onClick={() => toggleMob('insights')} type="button">
-              Insights
-              <ChevronDown size={16} className={`nb__mob-chevron${activeMobile === 'insights' ? ' nb__mob-chevron--open' : ''}`} />
-            </button>
-            <div className={`nb__mob-sub${activeMobile === 'insights' ? ' nb__mob-sub--open' : ''}`}>
-              {INSIGHTS_LINKS.map(item => (
-                <a key={item.name} href={item.href} className="nb__mob-sublink" onClick={closeMob}>{item.name}</a>
-              ))}
-            </div>
-          </div>
-
-          {/* Services */}
-          <div className="nb__mob-group">
-            <button className={`nb__mob-link nb__mob-toggle${activeMobile === 'services' ? ' nb__mob-toggle--open' : ''}`}
-              onClick={() => toggleMob('services')} type="button">
-              Services
-              <ChevronDown size={16} className={`nb__mob-chevron${activeMobile === 'services' ? ' nb__mob-chevron--open' : ''}`} />
-            </button>
-            <div className={`nb__mob-sub${activeMobile === 'services' ? ' nb__mob-sub--open' : ''}`}>
-              <p className="nb__mob-sublabel">India</p>
-              {SERVICES_INDIA.map(i => <a key={i.name} href={i.href} className="nb__mob-sublink" onClick={closeMob}>{i.name}</a>)}
-              <p className="nb__mob-sublabel">Global</p>
-              {SERVICES_GLOBAL.map(i => <a key={i.name} href={i.href} className="nb__mob-sublink" onClick={closeMob}>{i.name}</a>)}
-            </div>
-          </div>
-
-          {/* Sectors */}
-          <div className="nb__mob-group">
-            <button className={`nb__mob-link nb__mob-toggle${activeMobile === 'sectors' ? ' nb__mob-toggle--open' : ''}`}
-              onClick={() => toggleMob('sectors')} type="button">
-              Sectors
-              <ChevronDown size={16} className={`nb__mob-chevron${activeMobile === 'sectors' ? ' nb__mob-chevron--open' : ''}`} />
-            </button>
-            <div className={`nb__mob-sub${activeMobile === 'sectors' ? ' nb__mob-sub--open' : ''}`}>
-              {SECTORS.map(s => (
-                <div key={s.title}>
-                  <p className="nb__mob-sublabel">{s.title}</p>
-                  {s.items.map(i => <a key={i.name} href={i.href} className="nb__mob-sublink" onClick={closeMob}>{i.name}</a>)}
+              {/* Heading */}
+              {rightTitle && (
+                <div className="mega__right-hdr">
+                  <h2 className="mega__right-title">{rightTitle}</h2>
+                  {rightDesc && (
+                    <p className="mega__right-desc">{rightDesc}</p>
+                  )}
+                  <div className="mega__right-rule" />
                 </div>
-              ))}
+              )}
+
+              {/* 2-column grid */}
+              {rightChildren && rightChildren.length > 0 && (
+                <ul className="mega__sub-grid">
+                  {(rightChildren as Array<{
+                    label: string;
+                    description?: string;
+                    href?: string;
+                  }>).map((item) => (
+                    <li key={item.label} className="mega__sub-cell">
+                      <a href={item.href || "#"} className="mega__sub-link">
+                        <span className="mega__sub-name">{item.label}</span>
+
+                        {item.description && (
+                          <span className="mega__sub-desc">
+                            {item.description}
+                          </span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Placeholder when inlineExpand item selected but no sub clicked yet */}
+              {isInline && !activeSubLabel && (
+                <div className="mega__inline-placeholder">
+                  <p>Select a category from the left to explore</p>
+                </div>
+              )}
+
             </div>
           </div>
 
-          {/* About */}
-          <div className="nb__mob-group">
-            <button className={`nb__mob-link nb__mob-toggle${activeMobile === 'about' ? ' nb__mob-toggle--open' : ''}`}
-              onClick={() => toggleMob('about')} type="button">
-              About Us
-              <ChevronDown size={16} className={`nb__mob-chevron${activeMobile === 'about' ? ' nb__mob-chevron--open' : ''}`} />
-            </button>
-            <div className={`nb__mob-sub${activeMobile === 'about' ? ' nb__mob-sub--open' : ''}`}>
-              {ABOUT_LINKS.map(item => (
-                <a key={item.name} href={item.href} className="nb__mob-sublink" onClick={closeMob}>{item.name}</a>
-              ))}
+          </div>
+
+          {/* ════ MOBILE DRILL-DOWN PANEL ════ */}
+          <div className="mega__mobile">
+            <div 
+              className="mega__mobile-slider" 
+              style={{ transform: `translateX(-${mobileState.view === 'root' ? 0 : mobileState.view === 'l1' ? 100 : 200}%)` }}
+            >
+              
+              {/* P0: ROOT (L1 categories) */}
+              <div className="mega__mobile-panel">
+                <ul className="mega__mobile-list">
+                  {NAV_ITEMS.map((item) => (
+                    <li key={item.id}>
+                      <button 
+                        className="mega__mobile-btn" 
+                        onClick={() => setMobileState({ view: 'l1', l1Id: item.id })}
+                      >
+                        <span>{item.label}</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* P1: SECOND LEVEL */}
+              <div className="mega__mobile-panel">
+                <div className="mega__mobile-hdr">
+                  <button className="mega__mobile-back" onClick={() => setMobileState({ view: 'root' })}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    Back
+                  </button>
+                  <h3>{mobileActiveL1.label}</h3>
+                </div>
+                <ul className="mega__mobile-sublist">
+                  {mobileL1Items.map((sub) => (
+                    <li key={sub.label}>
+                      {sub.children ? (
+                        <button 
+                          className="mega__mobile-btn" 
+                          onClick={() => setMobileState({ view: 'l2', l1Id: mobileState.l1Id, l2Label: sub.label })}
+                        >
+                          <span>{sub.label}</span>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
+                        </button>
+                      ) : (
+                        <a className="mega__mobile-link" href={sub.href || '#'} onClick={closeMenu}>
+                          <span className="name">{sub.label}</span>
+                          {sub.description && <span className="desc">{sub.description}</span>}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* P2: THIRD LEVEL */}
+              <div className="mega__mobile-panel">
+                <div className="mega__mobile-hdr">
+                  <button className="mega__mobile-back" onClick={() => setMobileState({ view: 'l1', l1Id: mobileState.l1Id })}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    Back
+                  </button>
+                  <h3>{mobileState.l2Label}</h3>
+                </div>
+                <ul className="mega__mobile-sublist">
+                  {mobileL2Items.map((child) => (
+                    <li key={child.label}>
+                      <a className="mega__mobile-link" href={child.href || '#'} onClick={closeMenu}>
+                        <span className="name">{child.label}</span>
+                        {child.description && <span className="desc">{child.description}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
           </div>
 
-          {/* Socials */}
-          <div className="nb__mob-socials">
-            <p className="nb__mob-socials-label">Connect</p>
-            <div className="nb__mob-socials-row">
-              <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" className="nb__mob-social" aria-label="LinkedIn"><LinkedInIcon /></a>
-              <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" className="nb__mob-social" aria-label="Facebook"><FacebookIcon /></a>
-              <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" className="nb__mob-social" aria-label="Instagram"><InstagramIcon /></a>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <a href="/contact" className="nb__mob-cta" onClick={closeMob}>
-            Contact Us <ArrowUpRight size={15} />
-          </a>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
+
+export default Navbar;

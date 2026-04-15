@@ -47,10 +47,10 @@ const POSTS = [
 ]
 
 export default function Posts() {
-  const sectionRef  = useRef<HTMLDivElement>(null)
-  const headingRef  = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const headingRef = useRef<HTMLDivElement>(null)
   const trackWrapRef = useRef<HTMLDivElement>(null)
-  const trackRef    = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // ── Lenis smooth scroll ────────────────────────────────────────────────

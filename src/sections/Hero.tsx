@@ -1,194 +1,313 @@
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight } from 'lucide-react'
-import './Hero.css'
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Hero.css";
 
-gsap.registerPlugin(ScrollTrigger)
+interface Card {
+  id: number;
+  image: string;
+  category: string;
+  meta: string;
+  title: string;
+  hoverTitle: string;
+  hoverDescription: string;
+}
 
-const PANELS = [
+const cards: Card[] = [
   {
     id: 1,
-    // tag: 'Financial Excellence',
-    heading: ['Your Trusted', 'Partners in Finance'],
-    body: 'Decades of experience helping businesses navigate complex financial landscapes with precision, integrity, and strategic vision.',
-    cta: 'Explore Services',
-    href: '#services',
-    bg: 'src/image/Fainance.avif',
+    image:
+      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800",
+    category: "AUTOMOTIVE INDUSTRY",
+    meta: "SLIDESHOW • MARCH 26, 2026",
+    title: "A Faster Path to Value from AI in the Commercial Vehicle Aftermarket",
+    hoverTitle: "Automotive Industry 2026",
+    hoverDescription:
+      "Artificial intelligence is reshaping the commercial vehicle aftermarket. Companies that act now can capture significant value — those that wait risk being left behind.",
   },
   {
     id: 2,
-    // tag: 'Audit & Assurance',
-    heading: ['Clarity Through', 'Rigorous Audit'],
-    body: 'Our audit methodology delivers transparency and confidence to stakeholders, ensuring compliance and uncovering strategic opportunities.',
-    cta: 'Learn More',
-    href: '#services',
-    bg: 'src/image/Auditposter.jpg',
+    image:
+      "https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=800",
+    category: "INFRASTRUCTURE",
+    meta: "REPORT • APRIL 1, 2026",
+    title: "Infrastructure Strategy for a New Era of Capital Markets",
+    hoverTitle: "Infrastructure Strategy 2026",
+    hoverDescription:
+      "After two challenging years, investors can look forward to increased fundraising, stabilizing valuations, and fresh opportunities across energy and digital infrastructure.",
   },
   {
     id: 3,
-    // tag: 'Tax Advisory',
-    heading: ['Strategic Tax', 'Planning & Compliance'],
-    body: 'Optimise your tax position with tailored strategies that are compliant, efficient, and aligned with your long-term business goals.',
-    cta: 'Discover More',
-    href: '#services',
-    bg: 'src/image/Taxposter.jpg',
+    image:
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800",
+    category: "TECHNOLOGY",
+    meta: "ARTICLE • APRIL 4, 2026",
+    title: "Generative AI: From Experimentation to Enterprise-Wide Value",
+    hoverTitle: "Generative AI at Scale",
+    hoverDescription:
+      "The most successful organizations are moving beyond pilots. Discover how leading enterprises are embedding GenAI into core operations to unlock transformative gains.",
   },
   {
     id: 4,
-    // tag: 'Corporate Advisory',
-    heading: ['Driving Growth', 'Through Smart Counsel'],
-    body: 'From mergers to restructuring, we provide actionable advisory that empowers decision-makers to achieve exceptional outcomes.',
-    cta: 'Our Expertise',
-    href: '#services',
-    bg: 'src/image/growthposter.jpg',
+    image:
+      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800",
+    category: "SUSTAINABILITY",
+    meta: "INSIGHT • MARCH 30, 2026",
+    title: "The Green Transition: Turning Climate Risk into Competitive Advantage",
+    hoverTitle: "Sustainability & Climate 2026",
+    hoverDescription:
+      "Companies that embed sustainability into their core strategy are outperforming peers. Learn how to navigate the energy transition and create lasting stakeholder value.",
   },
-]
-
-// ─── Tuning knobs — tweak these to taste ────────────────────────────────────
-//  SCROLL_VH  : vh of scroll consumed per panel. 200 = 2 full screens per panel.
-//               Raise to 250 for even slower feel.
-//  SCRUB_LAG  : seconds of lag behind wheel. 2.5 = cinematic butter.
-//  SEGMENT    : timeline units per panel. Must match tween offsets below.
-const SCROLL_VH = 300
-const SCRUB_LAG = 4.5
-const SEGMENT   = 6
+  {
+    id: 5,
+    image:
+      "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=800",
+    category: "DIGITAL",
+    meta: "ARTICLE • APRIL 5, 2026",
+    title: "Digital Twins: The Future of Industrial Operations",
+    hoverTitle: "Digital Transformation 2026",
+    hoverDescription:
+      "Digital twins are revolutionizing how companies design, operate, and maintain complex systems. Early adopters are seeing 30% efficiency gains.",
+  },
+];
 
 export default function Hero() {
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const panelRefs  = useRef<(HTMLDivElement | null)[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
+
+  // Touch Swipe Refs
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const totalCards = cards.length;
+
+  const nextSlide = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => (prev + 1) % totalCards);
+    setTimeout(() => setIsAnimating(false), 400);
+  };
+
+  const prevSlide = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex((prev) => (prev - 1 + totalCards) % totalCards);
+    setTimeout(() => setIsAnimating(false), 400);
+  };
 
   useEffect(() => {
-    const wrapper = wrapperRef.current
-    if (!wrapper) return
-
-    const panels = panelRefs.current.filter(Boolean) as HTMLDivElement[]
-    const NUM    = panels.length
-
-    const getEls = (panel: HTMLDivElement) => ({
-      tag    : panel.querySelector<HTMLElement>('.h-tag')!,
-      lines  : Array.from(panel.querySelectorAll<HTMLElement>('.h-line')),
-      divider: panel.querySelector<HTMLElement>('.h-divider')!,
-      body   : panel.querySelector<HTMLElement>('.h-body')!,
-      actions: panel.querySelector<HTMLElement>('.h-actions')!,
-    })
-
-    // ── 1. Initial hidden state ───────────────────────────────────────────
-    panels.forEach((panel, i) => {
-      const { tag, lines, divider, body, actions } = getEls(panel)
-      gsap.set(tag,     { y: 20,  autoAlpha: 0 })
-      gsap.set(lines,   { yPercent: 110, autoAlpha: 0 })
-      gsap.set(divider, { scaleX: 0, autoAlpha: 0, transformOrigin: 'left center' })
-      gsap.set(body,    { y: 28,  autoAlpha: 0 })
-      gsap.set(actions, { y: 22,  autoAlpha: 0 })
-      if (i > 0) gsap.set(panel, { yPercent: 100 })
-    })
-
-    // ── 2. Panel 1 — animate in on load, no scroll ───────────────────────
-    const p0     = getEls(panels[0])
-    const loadTl = gsap.timeline({ delay: 0.4 })
-    loadTl
-      .to(p0.tag,     { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out'   }, 0)
-      .to(p0.lines,   { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'power4.out', stagger: 0.16 }, 0.12)
-      .to(p0.divider, { scaleX: 1, autoAlpha: 1, duration: 0.5,  ease: 'power3.inOut' }, 0.55)
-      .to(p0.body,    { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out'   }, 0.68)
-      .to(p0.actions, { y: 0, autoAlpha: 1, duration: 0.6,  ease: 'power3.out'   }, 0.84)
-
-    // ── 3. Master paused timeline — one segment per panel ────────────────
-    //
-    //  Per-panel layout (SEGMENT = 6 units):
-    //  [0.0  → 1.5]  panel slides up           (slow power2.inOut)
-    //  [1.6  → 2.4]  tag fades in
-    //  [2.1  → 3.0]  heading line 1 rises
-    //  [2.7  → 3.6]  heading line 2 rises
-    //  [3.4  → 4.1]  divider scales in
-    //  [4.0  → 4.9]  paragraph drifts up
-    //  [4.9  → 5.7]  buttons appear
-    //  [6.0       ]  next panel segment starts
-    //
-    const masterTl = gsap.timeline({ paused: true })
-
-    panels.forEach((panel, i) => {
-      if (i === 0) return
-      const offset = (i - 1) * SEGMENT
-      const { tag, lines, divider, body, actions } = getEls(panel)
-      const line0 = lines[0]
-      const line1 = lines[1] ?? lines[0]
-
-      masterTl
-        // Panel slide
-        .to(panel, { yPercent: 0, ease: 'power2.inOut', duration: 3.5 }, offset)
-        // Content reveal — sequential, not simultaneous
-        .to(tag,     { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out'   }, offset + 1.6)
-        .to(line0,   { yPercent: 0, autoAlpha: 1, duration: 1.9, ease: 'power4.out'   }, offset + 2.1)
-        .to(line1,   { yPercent: 0, autoAlpha: 1, duration: 1.9, ease: 'power4.out'   }, offset + 2.7)
-        .to(divider, { scaleX: 1, autoAlpha: 1, duration: 1.9, ease: 'power3.inOut'   }, offset + 3.4)
-        .to(body,    { y: 0, autoAlpha: 1, duration: 1.9, ease: 'power3.out'   }, offset + 4.0)
-        .to(actions, { y: 0, autoAlpha: 1, duration: 1.8, ease: 'power3.out'   }, offset + 4.9)
-    })
-
-    // ── 4. Single ScrollTrigger: pin + drive masterTl ────────────────────
-    ScrollTrigger.create({
-      trigger      : wrapper,
-      start        : 'top top',
-      end          : `+=${(NUM - 1) * SCROLL_VH}vh`,
-      pin          : true,
-      pinSpacing   : true,
-      anticipatePin: 1,
-      scrub        : SCRUB_LAG,
-      animation    : masterTl,
-    })
-
+    autoSlideRef.current = setInterval(nextSlide, 3000);
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill())
-      masterTl.kill()
-      loadTl.kill()
+      if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+    };
+  }, [currentIndex]);
+
+  const pauseAutoSlide = () => {
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+  };
+
+  const resumeAutoSlide = () => {
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+    autoSlideRef.current = setInterval(nextSlide, 3000);
+  };
+
+  // --- SWIPE HANDLERS ---
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+    pauseAutoSlide();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) {
+      resumeAutoSlide();
+      return;
     }
-  }, [])
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
 
-  return (
-    <section id="home" ref={wrapperRef} className="hero">
-      {PANELS.map((panel, i) => (
+    if (distance > minSwipeDistance) {
+      nextSlide();
+    } else if (distance < -minSwipeDistance) {
+      prevSlide();
+    }
+
+    resumeAutoSlide();
+  };
+
+  const getVisibleCards = () => {
+    const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
+    const nextIndex = (currentIndex + 1) % totalCards;
+    const prev2Index = (currentIndex - 2 + totalCards) % totalCards;
+    const next2Index = (currentIndex + 2) % totalCards;
+
+    return {
+      prev2: cards[prev2Index],
+      prev: cards[prevIndex],
+      current: cards[currentIndex],
+      next: cards[nextIndex],
+      next2: cards[next2Index],
+    };
+  };
+
+  const visible = getVisibleCards();
+
+  const renderCard = (card: Card, position: string) => {
+    if (!card) return null;
+    const isHovered = hoveredCard === card.id;
+    const isCenter = position === "current";
+
+    return (
+      <article
+        key={card.id}
+        className={`hero__carousel-card hero__carousel-card--${position} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
+          }`}
+        onClick={() => {
+          if (position === "prev") prevSlide();
+          else if (position === "next") nextSlide();
+        }}
+        onMouseEnter={() => {
+          if (isCenter) {
+            pauseAutoSlide();
+            setHoveredCard(card.id);
+          }
+        }}
+        onMouseLeave={() => {
+          if (isCenter) {
+            resumeAutoSlide();
+            setHoveredCard(null);
+          }
+        }}
+        tabIndex={isCenter ? 0 : -1}
+      >
+        {/* Background Image - Full Cover */}
         <div
-          key={panel.id}
-          ref={el => { panelRefs.current[i] = el }}
-          className="hero__panel"
-          style={{ backgroundImage: `url(${panel.bg})`, zIndex: i + 1 }}
-        >
-          <div className="hero__overlay" />
-          <div className="hero__noise" />
+          className="hero__carousel-card-bg"
+          style={{ backgroundImage: `url(${card.image})` }}
+        />
 
-          <div className="hero__content container">
-            <span className="h-tag">{panel.tag}</span>
+        {/* Dark Gradient Overlay - Only for center card */}
+        {isCenter && <div className="hero__carousel-card-overlay" />}
 
-            <h1 className="hero__heading">
-              {panel.heading.map((line, li) => (
-                <span key={li} className="h-line-wrap">
-                  <span className="h-line">{line}</span>
-                </span>
-              ))}
-            </h1>
-
-            <div className="h-divider" />
-            <p className="h-body">{panel.body}</p>
-
-            <div className="h-actions">
-              <a href={panel.href} className="btn btn-primary">
-                {panel.cta} <ArrowRight size={16} />
+        {/* White Clean Overlay on Hover - Like BCG style */}
+        {isCenter && (
+          <div className="hero__carousel-card-hover-overlay">
+            <div className="hero__carousel-card-hover-content">
+              <span className="hero__carousel-card-hover-category">
+                {card.category}
+              </span>
+              <h3 className="hero__carousel-card-hover-title">{card.hoverTitle}</h3>
+              <p className="hero__carousel-card-hover-desc">{card.hoverDescription}</p>
+              <a href="#" className="hero__carousel-card-cta">
+                LEARN MORE
+                <span className="hero__carousel-card-cta-arrow">→</span>
               </a>
-              <a href="#about" className="btn btn-ghost">About Us</a>
             </div>
           </div>
+        )}
 
-          {i === 0 && (
-            <div className="hero__scroll-hint" aria-hidden>
-              <div className="hero__scroll-line">
-                <div className="hero__scroll-dot" />
-              </div>
+        {/* Content - Only visible on center card */}
+        {isCenter && (
+          <>
+            <div className={`hero__carousel-card-badge ${isHovered ? "hero__carousel-card-badge--hidden" : ""}`}>
+              {card.category}
             </div>
-          )}
+            <div className={`hero__carousel-card-content ${isHovered ? "hero__carousel-card-content--hidden" : ""}`}>
+              <p className="hero__carousel-card-meta">{card.meta}</p>
+              <h3 className="hero__carousel-card-title">{card.title}</h3>
+            </div>
+          </>
+        )}
+      </article>
+    );
+  };
+
+  return (
+    <section className="hero">
+      <div className="hero__bg" aria-hidden="true" />
+
+      {/* Header */}
+      <div className="hero__header">
+        <span className="hero__eyebrow">WELCOME TO JHS</span>
+        <h1 className="hero__headline">
+          Building Trust.
+          <br />
+          Delivering Excellence
+          <br />
+          Shaping Better Futures.
+        </h1>
+        {/* <span className="hero__badge">RESPONSIBLE AI</span> */}
+      </div>
+
+      {/* Carousel */}
+      <div className="hero__carousel">
+        <div
+          className="hero__carousel-container"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="hero__carousel-track">
+            {renderCard(visible.prev2, "prev2")}
+            {renderCard(visible.prev, "prev")}
+            {renderCard(visible.current, "current")}
+            {renderCard(visible.next, "next")}
+            {renderCard(visible.next2, "next2")}
+          </div>
+        </div> 
+
+
+
+        <div className="hero__carousel-dots">
+          {cards.map((_, idx) => (
+            <button
+              key={idx}
+              className={`hero__carousel-dot ${idx === currentIndex ? "hero__carousel-dot--active" : ""
+                }`}
+              onClick={() => {
+                pauseAutoSlide();
+                setCurrentIndex(idx);
+                setTimeout(resumeAutoSlide, 3000);
+              }}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
-      ))}
+        <div className="hero__spotlight-controls">
+          {/* <button className="hero__spotlight-pause" aria-label="Pause">
+            <span />
+            <span />
+          </button> */}
+          <button className="hero__spotlight-arrow" onClick={prevSlide} aria-label="Previous">‹</button>
+          <button className="hero__spotlight-arrow" onClick={nextSlide} aria-label="Next">›</button>
+        </div>
+      </div>
+      {/* ── Spotlight Tab Section ── */}
+      {/* <div className="hero__spotlight">
+        <div className="hero__spotlight-title">JHS SPOTLIGHT</div>
+        <nav className="hero__spotlight-tabs">
+          {["AI & Automation", "Alumni", "Solutions"].map((tab) => (
+            <button
+              key={tab}
+              className="hero__spotlight-tab"
+              onClick={() => {
+                if (tab === "AI & Automation") navigate("/ai-automation");
+                else if (tab === "Alumni") navigate("/alumni");
+                else if (tab === "Solutions") navigate("/solutions");
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </nav>
+      </div> */}
     </section>
-  )
+
+  );
 }

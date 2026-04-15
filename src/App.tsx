@@ -6,11 +6,12 @@ import { useSmoothScroll } from './hooks/useSmoothScroll'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
+import Spotlight from './sections/Spotlight'
 import Stats from './sections/Stats'
 import Services from './sections/Services'
-import Posts from './sections/Posts'
-import CareerCaseStudy from './sections/CareerCaseStudy'
-
+import Cities from './sections/Cities'
+import VisionMission from './sections/VisionMission'
+import Insights from './sections/Insights'
 // Services pages
 import Outsourcing from './components/services/Outsourcing'
 import Consulting from './components/services/Consulting'
@@ -56,6 +57,21 @@ import Articles from './components/Insights/Articles'
 import CaseStudies from './components/Insights/CaseStudies'
 import ThoughtLeadership from './components/Insights/ThoughtLeadership'
 
+// Spotlight pages
+import AIAutomation from './components/Spotlight/AIAutomation'
+import Alumni from './components/Spotlight/Alumni'
+import Solutions from './components/Spotlight/Solutions'
+
+// City pages
+import Mumbai from './components/Cities/Mumbai'
+import Delhi from './components/Cities/Delhi'
+import Bengaluru from './components/Cities/Bengaluru'
+import Vadodara from './components/Cities/Vadodara'
+import Ahmedabad from './components/Cities/Ahmedabad'
+import Hyderabad from './components/Cities/Hyderabad'
+import Kolkata from './components/Cities/Kolkata'
+import Chennai from './components/Cities/Chennai'
+
 // About pages
 import OurStory from './components/About Us/OurStory'
 import Leadership from './components/About Us/Partners'
@@ -72,10 +88,15 @@ function HomePage() {
   return (
     <main>
       <Hero />
+      <Spotlight />
       <Stats />
       <Services />
-      <Posts />
-      <CareerCaseStudy />
+      <Cities />
+      <VisionMission />
+      <Insights />
+      {/* <Posts />
+      <CareerCaseStudy /> */}
+
     </main>
   )
 }
@@ -92,6 +113,21 @@ export default function App() {
       <Routes>
         {/* Home */}
         <Route path="/" element={<HomePage />} />
+
+        {/* Spotlight Pages */}
+        <Route path="/ai-automation" element={<AIAutomation />} />
+        <Route path="/alumni" element={<Alumni />} />
+        <Route path="/solutions" element={<Solutions />} />
+
+        {/* City Pages */}
+        <Route path="/city/mumbai" element={<Mumbai />} />
+        <Route path="/city/delhi" element={<Delhi />} />
+        <Route path="/city/bengaluru" element={<Bengaluru />} />
+        <Route path="/city/vadodara" element={<Vadodara />} />
+        <Route path="/city/ahmedabad" element={<Ahmedabad />} />
+        <Route path="/city/hyderabad" element={<Hyderabad />} />
+        <Route path="/city/kolkata" element={<Kolkata />} />
+        <Route path="/city/chennai" element={<Chennai />} />
 
         {/* Services */}
         <Route path="/services/outsourcing" element={<Outsourcing />} />

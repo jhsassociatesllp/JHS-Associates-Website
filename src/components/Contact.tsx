@@ -31,7 +31,7 @@ const SERVICES = [
 const OFFICES = [
   {
     city: 'Mumbai',
-    address: 'Navkar Chambers, B-Wing, 4th Floor, Marol Naka, Andheri East, Mumbai – 400059',
+    address: 'Unit No. B-406 t0 410, 4th floor, Navkar chambers, Marol Naka metro station, andheri east, maharashtra -400059 ',
     phone: '+91 22 1234 5678',
     email: 'mumbai@jhsassociates.in',
   },
@@ -148,14 +148,6 @@ export default function Contact() {
       <section className="ct-hero">
         {/* Background photo */}
         <div className="ct-hero__photo" aria-hidden="true" />
-
-        {/* Decorative coloured squares — top-right */}
-        <div className="ct-hero__deco" aria-hidden="true">
-          <span className="ct-sq ct-sq--gold ct-sq--lg" />
-          <span className="ct-sq ct-sq--navy ct-sq--md" />
-          <span className="ct-sq ct-sq--gold ct-sq--sm" />
-          <span className="ct-sq ct-sq--navy ct-sq--xs" />
-        </div>
 
         {/* White poster card — bottom center */}
         <div className="ct-hero__card">
@@ -331,7 +323,7 @@ export default function Contact() {
               </div>
               <div className="ct-map-footer">
                 <p className="ct-map-addr">Navkar Chambers, B-Wing, 4th Floor,<br />Marol Naka, Andheri East, Mumbai – 400059</p>
-                <a href="https://maps.google.com/?q=Navkar+Chambers,Marol+Naka,Andheri+East,Mumbai" target="_blank" rel="noopener noreferrer" className="ct-map-dir">
+                <a href="https://www.google.com/maps/search/Unit+No.+B-406+t0+410,+4th+floor,+Navkar+chambers,+Marol+Naka+metro+station,+andheri+east,+maharashtra+-400059+/@19.1117672,72.8696096,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="ct-map-dir">
                   Get Directions
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
                 </a>

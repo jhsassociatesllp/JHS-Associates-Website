@@ -226,7 +226,7 @@
   }
 }
 
-/* Menu items */
+/* Menu items — button or Link (<a>) */
 .services__dropdown-item {
   width: 100%;
   display: flex;
@@ -241,6 +241,7 @@
   font-weight: 400;
   color: var(--sv-text-primary);
   text-align: left;
+  text-decoration: none;
   transition: background var(--sv-transition), color var(--sv-transition),
     padding-left var(--sv-transition);
 }
@@ -351,8 +352,7 @@
 
   .services__right {
     height: 280px;
-    order: -1;
-    /* image on top on tablet */
+    /* content first, design panel below on mobile */
   }
 
   .services__left {

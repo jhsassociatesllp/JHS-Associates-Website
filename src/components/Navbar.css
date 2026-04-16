@@ -646,6 +646,17 @@
   background: #f7f7f7;
 }
 
+/* Items without a link (e.g. office phone lines) */
+.mega__sub-link--plain {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  margin-left: -16px;
+  border-radius: 6px;
+}
+
 .mega__sub-name {
   font-family: var(--sans);
   font-size: 15px;

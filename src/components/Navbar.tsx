@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 // ─── Types ─────────────────────────────────────────────────────
@@ -162,7 +163,7 @@ const NAV_ITEMS: NavItem[] = [
     subLabel: "Contact",
     subDesc: "Get in touch with our team — we're here to help.",
     subItems: [
-      { label: "General Enquiry", description: "Write to us" },
+      { label: "General Enquiry", description: "Write to us", href: '/contact' },
       { label: "Media Relations", description: "Press & publications" },
       { label: "Investor Relations", description: "For our stakeholders" },
       { label: "Mumbai Office", description: "+91 22 0000 0000" },
@@ -318,131 +319,141 @@ const Navbar = () => {
           {/* ════ DESKTOP PANEL ════ */}
           <div className="mega__desktop">
 
-          {/* ════ LEFT PANEL ════ */}
-          <nav className="mega__left" aria-label="Main navigation">
-            <ul className="mega__nav-list">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.id} className="mega__nav-li">
+            {/* ════ LEFT PANEL ════ */}
+            <nav className="mega__left" aria-label="Main navigation">
+              <ul className="mega__nav-list">
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.id} className="mega__nav-li">
 
-                  {/* L1 button */}
-                  <button
-                    className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
-                    onClick={() => handleNavHover(item.id)}
-                  >
-                    <span className="mega__nav-label">{item.label}</span>
-                    <svg
-                      className={`mega__nav-arr ${activeId === item.id && item.inlineExpand ? "mega__nav-arr--down" : ""}`}
-                      width="14" height="14"
-                      viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="2.5"
+                    {/* L1 button */}
+                    <button
+                      className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
+                      onClick={() => handleNavHover(item.id)}
                     >
-                      {/* Arrow down when inline-expanded, right otherwise */}
-                      {activeId === item.id && item.inlineExpand
-                        ? <polyline points="6 9 12 15 18 9" />
-                        : <polyline points="9 18 15 12 9 6" />
-                      }
-                    </svg>
-                  </button>
+                      <span className="mega__nav-label">{item.label}</span>
+                      <svg
+                        className={`mega__nav-arr ${activeId === item.id && item.inlineExpand ? "mega__nav-arr--down" : ""}`}
+                        width="14" height="14"
+                        viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2.5"
+                      >
+                        {/* Arrow down when inline-expanded, right otherwise */}
+                        {activeId === item.id && item.inlineExpand
+                          ? <polyline points="6 9 12 15 18 9" />
+                          : <polyline points="9 18 15 12 9 6" />
+                        }
+                      </svg>
+                    </button>
 
-                  {/* ── INLINE SUB-ITEMS (Services & Sectors only) ── */}
-                  {item.inlineExpand && activeId === item.id && item.subItems && (
-                    <ul className="mega__inline-list">
-                      {item.subItems.map((sub) => (
-                        <li key={sub.label} className="mega__inline-li">
-                          <button
-                            className={`mega__inline-btn ${activeSubLabel === sub.label ? "mega__inline-btn--active" : ""}`}
-                            onClick={() =>
-                              setActiveSubLabel((prev) =>
-                                prev === sub.label ? null : sub.label
-                              )
-                            }
-                          >
-                            <span className="mega__inline-label">{sub.label}</span>
-                            <svg
-                              className="mega__inline-arr"
-                              width="12" height="12"
-                              viewBox="0 0 24 24" fill="none"
-                              stroke="currentColor" strokeWidth="2.5"
+                    {/* ── INLINE SUB-ITEMS (Services & Sectors only) ── */}
+                    {item.inlineExpand && activeId === item.id && item.subItems && (
+                      <ul className="mega__inline-list">
+                        {item.subItems.map((sub) => (
+                          <li key={sub.label} className="mega__inline-li">
+                            <button
+                              className={`mega__inline-btn ${activeSubLabel === sub.label ? "mega__inline-btn--active" : ""}`}
+                              onClick={() =>
+                                setActiveSubLabel((prev) =>
+                                  prev === sub.label ? null : sub.label
+                                )
+                              }
                             >
-                              <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                              <span className="mega__inline-label">{sub.label}</span>
+                              <svg
+                                className="mega__inline-arr"
+                                width="12" height="12"
+                                viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" strokeWidth="2.5"
+                              >
+                                <polyline points="9 18 15 12 9 6" />
+                              </svg>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                </li>
-              ))}
-            </ul>
-          </nav>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* ════ RIGHT PANEL ════ */}
-          <div className="mega__right">
+            {/* ════ RIGHT PANEL ════ */}
+            <div className="mega__right">
 
-            {/* Single unified right panel — updates based on active state */}
-            <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
+              {/* Single unified right panel — updates based on active state */}
+              <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
 
-              {/* Heading */}
-              {rightTitle && (
-                <div className="mega__right-hdr">
-                  <h2 className="mega__right-title">{rightTitle}</h2>
-                  {rightDesc && (
-                    <p className="mega__right-desc">{rightDesc}</p>
-                  )}
-                  <div className="mega__right-rule" />
-                </div>
-              )}
+                {/* Heading */}
+                {rightTitle && (
+                  <div className="mega__right-hdr">
+                    <h2 className="mega__right-title">{rightTitle}</h2>
+                    {rightDesc && (
+                      <p className="mega__right-desc">{rightDesc}</p>
+                    )}
+                    <div className="mega__right-rule" />
+                  </div>
+                )}
 
-              {/* 2-column grid */}
-              {rightChildren && rightChildren.length > 0 && (
-                <ul className="mega__sub-grid">
-                  {(rightChildren as Array<{
-                    label: string;
-                    description?: string;
-                    href?: string;
-                  }>).map((item) => (
-                    <li key={item.label} className="mega__sub-cell">
-                      <a href={item.href || "#"} className="mega__sub-link">
-                        <span className="mega__sub-name">{item.label}</span>
-
-                        {item.description && (
-                          <span className="mega__sub-desc">
-                            {item.description}
+                {/* 2-column grid */}
+                {rightChildren && rightChildren.length > 0 && (
+                  <ul className="mega__sub-grid">
+                    {(rightChildren as Array<{
+                      label: string;
+                      description?: string;
+                      href?: string;
+                    }>).map((item) => (
+                      <li key={item.label} className="mega__sub-cell">
+                        {item.href ? (
+                          <Link
+                            to={item.href}
+                            className="mega__sub-link"
+                            onClick={closeMenu}
+                          >
+                            <span className="mega__sub-name">{item.label}</span>
+                            {item.description && (
+                              <span className="mega__sub-desc">{item.description}</span>
+                            )}
+                          </Link>
+                        ) : (
+                          <span className="mega__sub-link mega__sub-link--plain">
+                            <span className="mega__sub-name">{item.label}</span>
+                            {item.description && (
+                              <span className="mega__sub-desc">{item.description}</span>
+                            )}
                           </span>
                         )}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
-              {/* Placeholder when inlineExpand item selected but no sub clicked yet */}
-              {isInline && !activeSubLabel && (
-                <div className="mega__inline-placeholder">
-                  <p>Select a category from the left to explore</p>
-                </div>
-              )}
+                {/* Placeholder when inlineExpand item selected but no sub clicked yet */}
+                {isInline && !activeSubLabel && (
+                  <div className="mega__inline-placeholder">
+                    <p>Select a category from the left to explore</p>
+                  </div>
+                )}
 
+              </div>
             </div>
-          </div>
 
           </div>
 
           {/* ════ MOBILE DRILL-DOWN PANEL ════ */}
           <div className="mega__mobile">
-            <div 
-              className="mega__mobile-slider" 
+            <div
+              className="mega__mobile-slider"
               style={{ transform: `translateX(-${mobileState.view === 'root' ? 0 : mobileState.view === 'l1' ? 100 : 200}%)` }}
             >
-              
+
               {/* P0: ROOT (L1 categories) */}
               <div className="mega__mobile-panel">
                 <ul className="mega__mobile-list">
                   {NAV_ITEMS.map((item) => (
                     <li key={item.id}>
-                      <button 
-                        className="mega__mobile-btn" 
+                      <button
+                        className="mega__mobile-btn"
                         onClick={() => setMobileState({ view: 'l1', l1Id: item.id })}
                       >
                         <span>{item.label}</span>
@@ -470,8 +481,8 @@ const Navbar = () => {
                   {mobileL1Items.map((sub) => (
                     <li key={sub.label}>
                       {sub.children ? (
-                        <button 
-                          className="mega__mobile-btn" 
+                        <button
+                          className="mega__mobile-btn"
                           onClick={() => setMobileState({ view: 'l2', l1Id: mobileState.l1Id, l2Label: sub.label })}
                         >
                           <span>{sub.label}</span>

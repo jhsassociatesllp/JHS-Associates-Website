@@ -1,43 +1,57 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Services.css";
 
 const capabilities = [
-  { label: "Audit & Assurance", href: "/services/audit" },
-  { label: "Tax Advisory", href: "/services/tax" },
-  { label: "GST Compliance", href: "/services/gst" },
-  { label: "Financial Reporting", href: "/services/reporting" },
-  { label: "Corporate Advisory", href: "/services/corporate" },
-  { label: "Risk & Governance", href: "/services/risk" },
+  { label: "Audit & Assurance", href: "/services/assurance" },
+  { label: "Tax Advisory", href: "/services/taxation" },
+  { label: "GST Compliance", href: "/services/taxation" },
+  { label: "Financial Reporting", href: "/services/consulting" },
+  { label: "Corporate Advisory", href: "/services/consulting" },
+  { label: "Risk & Governance", href: "/services/soc-attestation" },
+  { label: "Outsourcing", href: "/services/outsourcing" },
+  { label: "Single Window Assistance", href: "/services/single-window-assistance" },
 ];
 
 const industries = [
-  { label: "Manufacturing", href: "/industries/manufacturing" },
-  { label: "Real Estate", href: "/industries/real-estate" },
-  { label: "Healthcare", href: "/industries/healthcare" },
-  { label: "Banking & Finance", href: "/industries/banking" },
-  { label: "IT & Technology", href: "/industries/technology" },
-  { label: "Retail & FMCG", href: "/industries/retail" },
+  { label: "Manufacturing", href: "/sectors/other/manufacturing" },
+  { label: "Real Estate", href: "/sectors/consumer/real-estate" },
+  { label: "Healthcare", href: "/sectors/other/healthcare" },
+  { label: "Banking & Finance", href: "/sectors/financial-services/banking" },
+  { label: "IT & Technology", href: "/sectors/media-technology/it-tes" },
+  { label: "Retail & FMCG", href: "/sectors/consumer/retail" },
+  { label: "Construction", href: "/sectors/other/construction" },
+  { label: "NGO", href: "/sectors/other/ngo" },
+  { label: "Media", href: "/sectors/media-technology/media" },
+  { label: "Insurance", href: "/sectors/financial-services/insurance" },
 ];
 
 export default function Services() {
   const [capOpen, setCapOpen] = useState(false);
   const [indOpen, setIndOpen] = useState(false);
 
-  const handleCapSelect = (href: string) => {
-    window.location.href = href;
-    setCapOpen(false);
-  };
+  const capRef = useRef<HTMLDivElement>(null);
+  const indRef = useRef<HTMLDivElement>(null);
 
-  const handleIndSelect = (href: string) => {
-    window.location.href = href;
-    setIndOpen(false);
-  };
+  // Close dropdowns when clicking outside either dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      const outsideCap = capRef.current && !capRef.current.contains(target);
+      const outsideInd = indRef.current && !indRef.current.contains(target);
+      if (outsideCap && outsideInd) {
+        setCapOpen(false);
+        setIndOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <section className="services">
       {/* Left — pale navy background with text + dropdowns */}
       <div className="services__left">
-        {/* Decorative circles wrapped to contain overflow without clipping dropdowns */}
         <div className="services__left-bg">
           <span className="services__deco services__deco--1" aria-hidden="true" />
           <span className="services__deco services__deco--2" aria-hidden="true" />
@@ -45,8 +59,7 @@ export default function Services() {
 
         <div className="services__content">
           <h2 className="services__heading">
-            How can we
-            assist you <br /> today?
+            How can we assist you <br /> today?
           </h2>
           <p className="services__sub">
             Explore our core areas of expertise by selecting your
@@ -55,10 +68,13 @@ export default function Services() {
 
           <div className="services__dropdowns">
             {/* Capabilities dropdown */}
-            <div className={`services__dropdown ${capOpen ? "services__dropdown--open" : ""}`}>
+            <div
+              ref={capRef}
+              className={`services__dropdown ${capOpen ? "services__dropdown--open" : ""}`}
+            >
               <button
                 className="services__dropdown-trigger"
-                onClick={() => { setCapOpen(!capOpen); setIndOpen(false); }}
+                onClick={() => { setCapOpen((v) => !v); setIndOpen(false); }}
                 aria-expanded={capOpen}
                 aria-haspopup="listbox"
               >
@@ -73,13 +89,15 @@ export default function Services() {
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
+
               {capOpen && (
                 <ul className="services__dropdown-menu" role="listbox">
                   {capabilities.map((item) => (
                     <li key={item.label} role="option">
-                      <button
+                      <Link
                         className="services__dropdown-item"
-                        onClick={() => handleCapSelect(item.href)}
+                        to={item.href}
+                        onClick={() => setCapOpen(false)}
                       >
                         {item.label}
                         <svg width="14" height="14" viewBox="0 0 24 24"
@@ -89,7 +107,7 @@ export default function Services() {
                         >
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -97,10 +115,13 @@ export default function Services() {
             </div>
 
             {/* Industries dropdown */}
-            <div className={`services__dropdown ${indOpen ? "services__dropdown--open" : ""}`}>
+            <div
+              ref={indRef}
+              className={`services__dropdown ${indOpen ? "services__dropdown--open" : ""}`}
+            >
               <button
                 className="services__dropdown-trigger"
-                onClick={() => { setIndOpen(!indOpen); setCapOpen(false); }}
+                onClick={() => { setIndOpen((v) => !v); setCapOpen(false); }}
                 aria-expanded={indOpen}
                 aria-haspopup="listbox"
               >
@@ -115,13 +136,15 @@ export default function Services() {
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
+
               {indOpen && (
                 <ul className="services__dropdown-menu" role="listbox">
                   {industries.map((item) => (
                     <li key={item.label} role="option">
-                      <button
+                      <Link
                         className="services__dropdown-item"
-                        onClick={() => handleIndSelect(item.href)}
+                        to={item.href}
+                        onClick={() => setIndOpen(false)}
                       >
                         {item.label}
                         <svg width="14" height="14" viewBox="0 0 24 24"
@@ -131,7 +154,7 @@ export default function Services() {
                         >
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -144,7 +167,6 @@ export default function Services() {
       {/* Right — abstract decorative image panel */}
       <div className="services__right" aria-hidden="true">
         <div className="services__right-bg" />
-        {/* SVG wave shapes layered for depth */}
         <svg className="services__wave services__wave--back"
           viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
           <ellipse cx="320" cy="280" rx="260" ry="340" fill="rgba(255,255,255,0.06)" />
@@ -167,15 +189,6 @@ export default function Services() {
           <circle cx="260" cy="360" r="60" fill="rgba(255,255,255,0.05)" />
         </svg>
       </div>
-
-      {/* Click-outside overlay to close dropdowns */}
-      {(capOpen || indOpen) && (
-        <div
-          className="services__backdrop"
-          onClick={() => { setCapOpen(false); setIndOpen(false); }}
-          aria-hidden="true"
-        />
-      )}
     </section>
   );
 }

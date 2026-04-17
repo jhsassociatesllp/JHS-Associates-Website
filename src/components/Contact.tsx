@@ -30,22 +30,69 @@ const SERVICES = [
 
 const OFFICES = [
   {
-    city: 'Mumbai',
-    address: 'Unit No. B-406 t0 410, 4th floor, Navkar chambers, Marol Naka metro station, andheri east, maharashtra -400059 ',
-    phone: '+91 22 1234 5678',
-    email: 'mumbai@jhsassociates.in',
+    city: 'H.O. Andheri',
+    region: 'Maharashtra',
+    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059',
   },
   {
-    city: 'Delhi',
-    address: '12th Floor, Connaught Place Tower, New Delhi – 110001',
-    phone: '+91 11 4321 8765',
-    email: 'delhi@jhsassociates.in',
+    city: 'Borivali',
+    region: 'Maharashtra',
+    address: '2201-2202, ESSPEE Tower, Opp. Oberoi Sky City, Near Prabhu Hotel, Borivali East, Maharashtra – 400066',
+  },
+  {
+    city: 'Kalyan',
+    region: 'Maharashtra',
+    address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301',
+  },
+  {
+    city: 'Masjid Bunder',
+    region: 'Maharashtra',
+    address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra \u2013 400009",
+  },
+  {
+    city: 'Ahmedabad',
+    region: 'Gujarat',
+    address: 'Unit No. 206, 2nd Floor, Shital Varsha, Shivranjani Cross Road, Ahmedabad, Gujarat – 380015',
+  },
+  {
+    city: 'Vadodara',
+    region: 'Gujarat',
+    address: '4th Floor, Lila Chambers, Vatsa Pride, Vadodara, Gujarat – 390023',
+  },
+  {
+    city: 'Rajkot',
+    region: 'Gujarat',
+    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat – 360001',
+  },
+  {
+    city: 'Surat',
+    region: 'Gujarat',
+    address: '504, 5th Floor, Shubh Square, Opp. Venus Hospital, Lal Darwaja, Golalanadi Road, Gujarat – 395003',
+  },
+  {
+    city: 'Vapi',
+    region: 'Gujarat',
+    address: 'Unit No. 101, Saga Casa, Daulat Nagar, Vapi, Gujarat – 396215',
   },
   {
     city: 'Bengaluru',
-    address: 'Prestige Trade Tower, Level 8, Lavelle Road, Bengaluru – 560001',
-    phone: '+91 80 6543 2109',
-    email: 'bengaluru@jhsassociates.in',
+    region: 'Karnataka',
+    address: 'Unit No. 589, 3rd Floor, 60H Main Road, AECS Layout, Kundalahalli, Bengaluru – 560037',
+  },
+  {
+    city: 'Delhi',
+    region: 'Delhi',
+    address: 'Unit No. 306, DIF Centre, Savitri Cinema Complex, Delhi – 110048',
+  },
+  {
+    city: 'Kolkata',
+    region: 'West Bengal',
+    address: 'Unit No. 402, 4th Floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016',
+  },
+  {
+    city: 'Chennai',
+    region: 'Tamil Nadu',
+    address: 'No: 43/95, South West Boag Road, T-Nagar, Chennai – 600017',
   },
 ]
 
@@ -330,27 +377,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Office Cards */}
-            <div className="ct-offices ct-reveal">
-              <h3 className="ct-offices__title">Our Offices</h3>
-              {OFFICES.map(o => (
-                <div key={o.city} className="ct-office-card">
-                  <div className="ct-office-card__city">{o.city}</div>
-                  <p className="ct-office-card__addr">{o.address}</p>
-                  <div className="ct-office-card__contacts">
-                    <a href={`tel:${o.phone}`} className="ct-office-card__link">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5 19.79 19.79 0 0 1 1.6 2.82 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 5.55 5.55l.92-.83a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                      {o.phone}
-                    </a>
-                    <a href={`mailto:${o.email}`} className="ct-office-card__link">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-                      {o.email}
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-
             {/* Social links */}
             <div className="ct-social-card ct-reveal">
               <p className="ct-social-card__label">Follow Us</p>
@@ -367,6 +393,34 @@ export default function Contact() {
           </div>{/* end ct-right */}
         </div>{/* end ct-main */}
       </div>{/* end ct-container */}
+
+      {/* ══════════════════════════════════════════════════
+          OFFICES GRID — full width section
+      ══════════════════════════════════════════════════ */}
+      <section className="ct-offices-section ct-reveal">
+        <div className="ct-container">
+          <div className="ct-offices-hdr">
+            <h2 className="ct-offices-hdr__title">JHS Offices</h2>
+            <p className="ct-offices-hdr__sub">Serving clients across India — find an office near you</p>
+          </div>
+          <div className="ct-offices-grid">
+            {OFFICES.map(o => (
+              <div key={o.city} className="ct-office-tile">
+                <div className="ct-office-tile__top">
+                  <span className="ct-office-tile__icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                  </span>
+                  <div>
+                    <p className="ct-office-tile__city">{o.city}</p>
+                    <p className="ct-office-tile__region">{o.region}</p>
+                  </div>
+                </div>
+                <p className="ct-office-tile__addr">{o.address}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
     </div>
   )

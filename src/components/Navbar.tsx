@@ -298,7 +298,7 @@ const Navbar = () => {
         aria-label="Site navigation"
       >
         {/* ── Modal top bar ── */}
-        <div className="mega__topbar">
+        {/* <div className="mega__topbar">
           <div className="mega__topbar-search">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mega__search-ic">
               <circle cx="11" cy="11" r="8" />
@@ -311,7 +311,7 @@ const Navbar = () => {
               className="mega__search-inp"
             />
           </div>
-        </div>
+        </div> */}
 
         {/* ── Body: LEFT | RIGHT ── */}
         <div className="mega__body">

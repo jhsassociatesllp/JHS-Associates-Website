@@ -561,70 +561,116 @@ textarea.ct-input {
   transform: translateX(2px);
 }
 
-/* Offices */
-.ct-offices {
-  background: var(--ct-white);
-  border: 1px solid var(--ct-border);
-  border-radius: var(--r-card);
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
+/* ============================================================
+   OFFICES GRID SECTION — full width below main grid
+   ============================================================ */
+.ct-offices-section {
+  background: var(--ct-navy);
+  padding: 4rem 0 5rem;
 }
 
-.ct-offices__title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--ct-ink);
-  letter-spacing: 0.02em;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--ct-border);
+.ct-offices-hdr {
+  text-align: center;
+  margin-bottom: 2.75rem;
 }
 
-.ct-office-card {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--ct-border);
+.ct-offices-hdr__title {
+  font-family: var(--font);
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 800;
+  color: var(--ct-white);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
 }
 
-.ct-office-card:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+.ct-offices-hdr__sub {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
 }
 
-.ct-office-card__city {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--ct-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 5px;
+/* The grid */
+.ct-offices-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
-.ct-office-card__addr {
-  font-size: 0.78rem;
-  color: var(--ct-ink-3);
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-
-.ct-office-card__contacts {
+/* Individual tile */
+.ct-office-tile {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.85rem;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+  cursor: default;
 }
 
-.ct-office-card__link {
-  display: inline-flex;
+.ct-office-tile:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Top: icon + city/region */
+.ct-office-tile__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ct-office-tile__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--ct-gold);
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.77rem;
-  color: var(--ct-ink-4);
-  text-decoration: none;
-  transition: color var(--dur) var(--ease);
+  justify-content: center;
+  color: var(--ct-white);
+  flex-shrink: 0;
 }
 
-.ct-office-card__link:hover {
-  color: var(--ct-navy);
+.ct-office-tile__city {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ct-white);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
 }
+
+.ct-office-tile__region {
+  font-size: 0.72rem;
+  color: var(--ct-gold);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.ct-office-tile__addr {
+  font-size: 0.77rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+/* Responsive grid breakpoints */
+@media (max-width: 1100px) {
+  .ct-offices-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 760px) {
+  .ct-offices-grid { grid-template-columns: repeat(2, 1fr); }
+  .ct-offices-section { padding: 3rem 0 4rem; }
+}
+@media (max-width: 480px) {
+  .ct-offices-grid { grid-template-columns: 1fr; }
+}
+
+/* ── keep old sidebar office styles for compatibility ── */
 
 /* Social card */
 .ct-social-card {
@@ -711,9 +757,9 @@ textarea.ct-input {
 
 @media (max-width: 640px) {
   .ct-hero {
-    height: auto;
-    min-height: unset;
-    padding: 80px 16px 36px;
+    height: 88vh;
+    min-height: 480px;
+    padding: 0 16px 32px;
   }
 
   .ct-hero__card {

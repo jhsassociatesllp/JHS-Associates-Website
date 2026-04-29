@@ -1,0 +1,207 @@
+/* ============================================================
+   Partners.css
+   ============================================================ */
+.partners-section {
+  padding: 5rem 0 6rem;
+  background: #f4f6f9;
+}
+
+.partners-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.partners-intro h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #0f2340;
+  margin-bottom: 1rem;
+}
+
+.partners-intro p {
+  font-size: 1.1rem;
+  color: #4a4a4a;
+  line-height: 1.6;
+}
+
+/* Category Wrapper */
+.partner-category {
+  margin-bottom: 5rem;
+}
+
+.partner-category:last-child {
+  margin-bottom: 0;
+}
+
+.partner-category__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #B01E2E;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.partner-category__title::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 24px;
+  background: #0f2340;
+  border-radius: 4px;
+}
+
+/* Grid */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.partner-grid--senior {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* Card */
+.partner-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.partner-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(15, 35, 64, 0.08);
+  border-color: rgba(15, 35, 64, 0.1);
+}
+
+.partner-card__img-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  background: #f4f6f9;
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.partner-grid--senior .partner-card__img-wrapper {
+  width: 180px;
+  height: 180px;
+}
+
+.partner-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  /* background color for transparent images */
+  background-color: #eef2f6;
+}
+
+.partner-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #1e3a5f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.partner-card__info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.partner-card__name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f2340;
+  margin-bottom: 0.25rem;
+}
+
+.partner-grid--senior .partner-card__name {
+  font-size: 1.6rem;
+}
+
+.partner-card__creds {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #B01E2E;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.partner-card__desc {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.partner-card__social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(10, 102, 194, 0.08);
+  color: #0a66c2; /* LinkedIn Blue */
+  text-decoration: none;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.partner-card__social:hover {
+  background: #0a66c2;
+  color: #ffffff;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .partner-category__title {
+    font-size: 1.5rem;
+  }
+  
+  .partner-grid,
+  .partner-grid--senior {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .partner-grid,
+  .partner-grid--senior {
+    grid-template-columns: 1fr;
+  }
+  
+  .partner-card {
+    padding: 1.5rem;
+  }
+}

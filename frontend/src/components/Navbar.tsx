@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import JHS_logo from '../image/JHS_logo.png';
+import JHS_logo from '../image/logo.png';
 
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {

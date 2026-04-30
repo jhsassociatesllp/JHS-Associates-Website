@@ -53,5 +53,3 @@ jobs:
 
             echo "🧹 Cleanup"
             docker system prune -af
-
-            

@@ -35,29 +35,24 @@ const OFFICES = [
     address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059',
   },
   {
-    city: 'Borivali',
-    region: 'Maharashtra',
-    address: '2201-2202, ESSPEE Tower, Opp. Oberoi Sky City, Near Prabhu Hotel, Borivali East, Maharashtra – 400066',
-  },
-  {
     city: 'Kalyan',
     region: 'Maharashtra',
-    address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301',
+    address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301',
   },
   {
     city: 'Masjid Bunder',
     region: 'Maharashtra',
-    address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra \u2013 400009",
+    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra – 400009",
   },
   {
     city: 'Ahmedabad',
     region: 'Gujarat',
-    address: 'Unit No. 206, 2nd Floor, Shital Varsha, Shivranjani Cross Road, Ahmedabad, Gujarat – 380015',
+    address: '1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059',
   },
   {
     city: 'Vadodara',
     region: 'Gujarat',
-    address: '4th Floor, Lila Chambers, Vatsa Pride, Vadodara, Gujarat – 390023',
+    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023',
   },
   {
     city: 'Rajkot',
@@ -67,22 +62,28 @@ const OFFICES = [
   {
     city: 'Surat',
     region: 'Gujarat',
-    address: '504, 5th Floor, Shubh Square, Opp. Venus Hospital, Lal Darwaja, Golalanadi Road, Gujarat – 395003',
+    address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003',
   },
   {
     city: 'Vapi',
     region: 'Gujarat',
-    address: 'Unit No. 101, Saga Casa, Daulat Nagar, Vapi, Gujarat – 396215',
+    address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215',
+  },
+  {
+    city: 'Rajkot',
+    region: 'Gujarat',
+    address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001',
+
   },
   {
     city: 'Bengaluru',
     region: 'Karnataka',
-    address: 'Unit No. 589, 3rd Floor, 60H Main Road, AECS Layout, Kundalahalli, Bengaluru – 560037',
+    address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037',
   },
   {
     city: 'Delhi',
     region: 'Delhi',
-    address: 'Unit No. 306, DIF Centre, Savitri Cinema Complex, Delhi – 110048',
+    address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048',
   },
   {
     city: 'Kolkata',
@@ -94,6 +95,11 @@ const OFFICES = [
     region: 'Tamil Nadu',
     address: 'No: 43/95, South West Boag Road, T-Nagar, Chennai – 600017',
   },
+  {
+    city: 'Hyderabad',
+    region: 'Telangana',
+    address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016',
+  }
 ]
 
 const SOCIALS = [
@@ -155,15 +161,15 @@ export default function Contact() {
     const e: FormErrors = {}
     if (!formData.name.trim()) e.name = 'Name is required'
     else if (formData.name.trim().length < 2) e.name = 'Name must be at least 2 characters'
-    
+
     if (!formData.email.trim()) e.email = 'Email is required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Enter a valid email'
-    
+
     if (formData.phone && !/^[+\d\s\-()\\.]{7,16}$/.test(formData.phone)) e.phone = 'Enter a valid phone'
-    
+
     if (!formData.message.trim()) e.message = 'Message is required'
     else if (formData.message.trim().length < 10) e.message = 'Message must be at least 10 characters'
-    
+
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -178,7 +184,7 @@ export default function Contact() {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
-    
+
     try {
       const apiUrl = `http://${window.location.hostname}:8000/contact/`
       const response = await fetch(apiUrl, {
@@ -188,11 +194,11 @@ export default function Contact() {
         },
         body: JSON.stringify(formData),
       })
-      
+
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      
+
       setSubmitted(true)
       setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' })
       setTimeout(() => setSubmitted(false), 7000)

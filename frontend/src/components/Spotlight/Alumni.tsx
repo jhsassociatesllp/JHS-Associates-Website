@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import './SpotlightPages.css';
 import './Alumni.css';
 import heroImg from '../../image/WebPoster3.jpeg';
+import imgRiddhi from '../../image/Riddhi Kishnadwala.jpeg'
 
 const ALUMNI_PROFILES = [
   {
     id: 1,
-    name: "Aman Desai",
+    name: "Riddhi Kishnadwala ",
     role: "Former Audit Partner",
-    desc: "Aman played a crucial role in establishing our modern audit framework. He now serves as the Chief Financial Officer at a leading multinational manufacturing firm, continuing to champion robust governance.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+    desc: "JHS was my first job post CA qualification. It was a great learning experience and guidance was provided whenever needed. Executional excellence and quality deliverables were the key corners of all the projects I worked on. A good place to learn and grow.",
+    image: imgRiddhi
   },
   {
     id: 2,

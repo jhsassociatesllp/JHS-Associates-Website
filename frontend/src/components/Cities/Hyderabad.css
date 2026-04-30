@@ -436,16 +436,87 @@
    ============================================================ */
 .hyd-map-section {
   background: var(--hyd-white);
-  padding: 4rem 0;
+  padding: 5rem 0;
   border-top: 1px solid var(--hyd-border);
   border-bottom: 1px solid var(--hyd-border);
+}
+
+.hyd-map-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hyd-map-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1.5px solid var(--hyd-border);
+  border-radius: var(--hyd-r-pill);
+  background: var(--hyd-white);
+  color: var(--hyd-ink-3);
+  font-family: var(--hyd-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--hyd-dur) var(--hyd-ease);
+}
+
+.hyd-map-tab svg {
+  width: 16px;
+  height: 16px;
+  transition: color var(--hyd-dur) var(--hyd-ease);
+}
+
+.hyd-map-tab:hover {
+  border-color: var(--hyd-navy);
+  color: var(--hyd-navy);
+}
+
+.hyd-map-tab.active {
+  background: var(--hyd-navy);
+  border-color: var(--hyd-navy);
+  color: var(--hyd-white);
+  box-shadow: 0 8px 20px rgba(30, 58, 95, 0.2);
+}
+
+.hyd-map-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hyd-map-info-card {
+  background: var(--hyd-bg);
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--hyd-border);
+  text-align: center;
+}
+
+.hyd-map-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--hyd-navy-dk);
+  margin-bottom: 8px;
+}
+
+.hyd-map-info-addr {
+  font-size: 0.9rem;
+  color: var(--hyd-ink-3);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .hyd-map-wrap {
   border-radius: var(--hyd-r-card);
   overflow: hidden;
   box-shadow: var(--hyd-shadow-card);
-  height: 400px;
+  height: 450px;
 }
 
 .hyd-map-wrap iframe {

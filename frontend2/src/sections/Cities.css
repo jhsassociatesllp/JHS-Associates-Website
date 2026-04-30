@@ -1,0 +1,204 @@
+/* =============================================
+   Cities Section (Our Presence)
+   ============================================= */
+
+.cities {
+  position: relative;
+  background-color: #ffffff;
+  /* Very pale background for contrast with dark hero/footer */
+  padding: 100px 48px;
+  font-family: var(--font-body, "DM Sans", "Helvetica Neue", sans-serif);
+  overflow: hidden;
+}
+
+.cities__container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* Header */
+.cities__header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 64px;
+}
+
+.cities__eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  /* color: #00783e; */
+  color: #d72020;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.cities__headline {
+  font-family: var(--font-display, sans-serif, serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  color: #1e3a5f;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+}
+
+.cities__sub {
+  font-size: 16px;
+  color: #6b6b6b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Grid */
+.cities__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* Card */
+.cities__card {
+  position: relative;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transform: translateZ(0);
+  /* Hardware acceleration */
+}
+
+.cities__card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 1;
+}
+
+
+
+.cities__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.8) 100%);
+  z-index: 2;
+  transition: background 0.4s ease;
+}
+
+.cities__card:hover .cities__card-overlay {
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.1) 30%,
+      rgba(0, 0, 0, 0.9) 100%);
+}
+
+/* Content */
+.cities__card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 32px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.cities__card-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  font-family: var(--font-display, sans-serif, serif);
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.cities__card-address {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 20px 0;
+  font-weight: 400;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.cities__card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d72020;
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.cities__card-btn a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cities__card-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.cities__card:hover .cities__card-title,
+.cities__card:hover .cities__card-address {
+  transform: translateY(0);
+}
+
+.cities__card:hover .cities__card-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cities__card-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cities__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cities {
+    padding: 80px 24px;
+  }
+
+  .cities__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cities__card {
+    height: 280px;
+  }
+}
+
+@media (max-width: 500px) {
+  .cities__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cities__card {
+    height: 320px;
+  }
+}

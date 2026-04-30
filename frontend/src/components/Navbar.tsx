@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import logo from "../image/logo.png";
 
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
@@ -284,7 +283,11 @@ const Navbar = () => {
           </button>
 
           <a href="/" className="nb__brand" onClick={closeMenu}>
-            <img src={logo} alt="JHS & Associates LLP" className="nb__logo" />
+            <img
+              src="/src/image/logo.png"
+              alt="JHS & Associates LLP"
+              className="nb__logo"
+            />
           </a>
         </div>
 

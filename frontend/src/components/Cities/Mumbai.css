@@ -525,16 +525,87 @@
    ============================================================ */
 .mum-map-section {
   background: var(--mum-white);
-  padding: 4rem 0;
+  padding: 5rem 0;
   border-top: 1px solid var(--mum-border);
   border-bottom: 1px solid var(--mum-border);
+}
+
+.mum-map-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.mum-map-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1.5px solid var(--mum-border);
+  border-radius: var(--r-pill);
+  background: var(--mum-white);
+  color: var(--mum-ink-3);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+
+.mum-map-tab svg {
+  width: 16px;
+  height: 16px;
+  transition: color var(--dur) var(--ease);
+}
+
+.mum-map-tab:hover {
+  border-color: var(--mum-navy);
+  color: var(--mum-navy);
+}
+
+.mum-map-tab.active {
+  background: var(--mum-navy);
+  border-color: var(--mum-navy);
+  color: var(--mum-white);
+  box-shadow: 0 8px 20px rgba(30, 58, 95, 0.2);
+}
+
+.mum-map-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mum-map-info-card {
+  background: var(--mum-bg);
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--mum-border);
+  text-align: center;
+}
+
+.mum-map-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--mum-navy-dk);
+  margin-bottom: 8px;
+}
+
+.mum-map-info-addr {
+  font-size: 0.9rem;
+  color: var(--mum-ink-3);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .mum-map-wrap {
   border-radius: var(--r-card);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  height: 400px;
+  height: 450px;
 }
 
 .mum-map-wrap iframe {

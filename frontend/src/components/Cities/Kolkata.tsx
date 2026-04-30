@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Kolkata.css'
 
 import kolkataBg from '../../image/Kolkata.jpg'
@@ -42,6 +42,28 @@ const PARTNERS = [
   },
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'kolkata',
+    name: 'Kolkata (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
+    address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
+  },
+  {
+    id: 'parkstreet',
+    name: 'Park Street',
+    mapUrl: 'https://maps.google.com/maps?q=Chatterjee%20International,%20Jawaharlal%20Nehru%20Road,%20Park%20Street,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071'
+  },
+  {
+    id: 'saltlake',
+    name: 'Salt Lake',
+    mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
+  }
+]
+
 const BRANCHES = [
   {
     name: 'Park Street',
@@ -80,6 +102,8 @@ const IconPin = () => (
 )
 
 export default function Kolkata() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
   return (
     <div className="kol-page">
@@ -154,13 +178,40 @@ export default function Kolkata() {
       <section className="kol-map-section">
         <div className="kol-container">
           <div className="kol-section-hdr">
-            <span className="kol-section-hdr__tag">Location</span>
-            <h2 className="kol-section-hdr__title">Head Office – Park Street</h2>
+            <span className="kol-section-hdr__tag">Locations</span>
+            <h2 className="kol-section-hdr__title">Our Offices in Kolkata</h2>
+            <p className="kol-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="kol-map-wrap">
-            <iframe title="JHS Kolkata Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+          <div className="kol-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`kol-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="kol-map-content">
+            <div className="kol-map-info-card">
+              <h3 className="kol-map-info-title">{activeLocation.name}</h3>
+              <p className="kol-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="kol-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

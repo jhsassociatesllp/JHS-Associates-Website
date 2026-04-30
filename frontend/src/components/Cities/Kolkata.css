@@ -47,8 +47,17 @@
 .kol-pc-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:7px 10px;border-radius:8px;font-size:0.72rem;font-weight:600;text-decoration:none;border:1.5px solid var(--kol-border);color:var(--kol-ink-4);transition:all var(--kol-dur) var(--kol-ease);white-space:nowrap}
 .kol-pc-btn--mail:hover{background:var(--kol-navy);border-color:var(--kol-navy);color:var(--kol-white)}
 .kol-pc-btn--li:hover{background:#0077b5;border-color:#0077b5;color:var(--kol-white)}
-.kol-map-section{background:var(--kol-white);padding:4rem 0;border-top:1px solid var(--kol-border);border-bottom:1px solid var(--kol-border)}
-.kol-map-wrap{border-radius:var(--kol-r-card);overflow:hidden;box-shadow:var(--kol-shadow-card);height:400px}
+.kol-map-section{background:var(--kol-white);padding:5rem 0;border-top:1px solid var(--kol-border);border-bottom:1px solid var(--kol-border)}
+.kol-map-tabs{display:flex;justify-content:center;gap:12px;margin-bottom:2.5rem;flex-wrap:wrap}
+.kol-map-tab{display:flex;align-items:center;gap:8px;padding:12px 24px;border:1.5px solid var(--kol-border);border-radius:var(--kol-r-pill);background:var(--kol-white);color:var(--kol-ink-3);font-family:var(--kol-font);font-size:0.95rem;font-weight:600;cursor:pointer;transition:all var(--kol-dur) var(--kol-ease)}
+.kol-map-tab svg{width:16px;height:16px;transition:color var(--kol-dur) var(--kol-ease)}
+.kol-map-tab:hover{border-color:var(--kol-navy);color:var(--kol-navy)}
+.kol-map-tab.active{background:var(--kol-navy);border-color:var(--kol-navy);color:var(--kol-white);box-shadow:0 8px 20px rgba(30,58,95,0.2)}
+.kol-map-content{display:flex;flex-direction:column;gap:1.5rem}
+.kol-map-info-card{background:var(--kol-bg);padding:20px 24px;border-radius:12px;border:1px solid var(--kol-border);text-align:center}
+.kol-map-info-title{font-size:1.1rem;font-weight:700;color:var(--kol-navy-dk);margin-bottom:8px}
+.kol-map-info-addr{font-size:0.9rem;color:var(--kol-ink-3);line-height:1.6;max-width:600px;margin:0 auto}
+.kol-map-wrap{border-radius:var(--kol-r-card);overflow:hidden;box-shadow:var(--kol-shadow-card);height:450px}
 .kol-map-wrap iframe{width:100%;height:100%;border:none;display:block}
 .kol-branches-section{background:var(--kol-navy);padding:5rem 0 6rem}
 .kol-branches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:800px;margin:0 auto}

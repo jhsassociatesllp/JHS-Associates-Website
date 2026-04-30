@@ -1,12 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-import card1 from '../image/Card1.jpeg'
-import card2 from '../image/Card2.jpeg'
-import card3 from '../image/Card3.jpeg'
-import card4 from '../image/Card4.jpeg'
-import card5 from '../image/Card5.jpeg'
+// import card1 from '../image/card1.jpeg'
+// import card2 from '../image/card2.jpeg'
+// import card3 from '../image/card3.jpeg'
+// import card4 from '../image/card4.jpeg'
+// import card5 from '../image/card5.jpeg'
 
+import card1 from '../image/BOARDROOMS-IN-TRANSITION-.png.webp'
+import card2 from '../image/Data-Governance.png'
+import card3 from '../image/Investment-Opportunities.png.webp'
+import card4 from '../image/card4.jpeg'
+import card5 from '../image/2-1.png.webp'
 
 interface Card {
   id: number;
@@ -25,7 +30,7 @@ const cards: Card[] = [
     category: "ARTICLES",
     meta: "SLIDESHOW • December 20, 2026",
     title: "BOARDROOMS IN TRANSITION: HOW INDIA’S GRC FRAMEWORK IS REDEFINING CORPORATE GOVERNANCE",
-    hoverTitle: "Automotive Industry 2026",
+    hoverTitle: "BOARDROOMS IN TRANSITION",
     hoverDescription:
       "India’s corporate governance ecosystem has witnessed a decisive shift over the past decade. Landmark regulatory reforms led by SEBI, RBI, and IRDAI have elevated boardroom expectations and redefined the role of Governance, Risk, and Compliance (GRC). No longer limited to defensive oversight, GRC has become a strategic pillar enabling better board performance, organizational resilience, and sustainable long-term value creation.",
   },
@@ -63,7 +68,7 @@ const cards: Card[] = [
     id: 5,
     image: card5,
     category: "DIGITAL",
-    meta: "ARTICLE • APRIL 5, 2026",
+    meta: "AI & Automation • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",
     hoverTitle: "Digital Transformation 2026",
     hoverDescription:

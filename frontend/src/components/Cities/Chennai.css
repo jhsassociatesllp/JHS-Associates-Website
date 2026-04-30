@@ -46,10 +46,100 @@
 .chn-pc-social{display:flex;gap:8px;width:100%;margin-top:auto;padding-top:1rem;border-top:1px solid var(--chn-border)}
 .chn-pc-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:7px 10px;border-radius:8px;font-size:0.72rem;font-weight:600;text-decoration:none;border:1.5px solid var(--chn-border);color:var(--chn-ink-4);transition:all var(--chn-dur) var(--chn-ease);white-space:nowrap}
 .chn-pc-btn--mail:hover{background:var(--chn-navy);border-color:var(--chn-navy);color:var(--chn-white)}
-.chn-pc-btn--li:hover{background:#0077b5;border-color:#0077b5;color:var(--chn-white)}
-.chn-map-section{background:var(--chn-white);padding:4rem 0;border-top:1px solid var(--chn-border);border-bottom:1px solid var(--chn-border)}
-.chn-map-wrap{border-radius:var(--chn-r-card);overflow:hidden;box-shadow:var(--chn-shadow-card);height:400px}
-.chn-map-wrap iframe{width:100%;height:100%;border:none;display:block}
+.chn-pc-btn--li:hover{background:#0077b5;border-color:#0077b5;color:var(--chn-white)}/* ============================================================
+   MAP SECTION
+   ============================================================ */
+.chn-map-section {
+  background: var(--chn-white);
+  padding: 5rem 0;
+  border-top: 1px solid var(--chn-border);
+  border-bottom: 1px solid var(--chn-border);
+}
+
+.chn-map-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.chn-map-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1.5px solid var(--chn-border);
+  border-radius: var(--chn-r-pill);
+  background: var(--chn-white);
+  color: var(--chn-ink-3);
+  font-family: var(--chn-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--chn-dur) var(--chn-ease);
+}
+
+.chn-map-tab svg {
+  width: 16px;
+  height: 16px;
+  transition: color var(--chn-dur) var(--chn-ease);
+}
+
+.chn-map-tab:hover {
+  border-color: var(--chn-navy);
+  color: var(--chn-navy);
+}
+
+.chn-map-tab.active {
+  background: var(--chn-navy);
+  border-color: var(--chn-navy);
+  color: var(--chn-white);
+  box-shadow: 0 8px 20px rgba(30, 58, 95, 0.2);
+}
+
+.chn-map-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chn-map-info-card {
+  background: var(--chn-bg);
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--chn-border);
+  text-align: center;
+}
+
+.chn-map-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--chn-navy-dk);
+  margin-bottom: 8px;
+}
+
+.chn-map-info-addr {
+  font-size: 0.9rem;
+  color: var(--chn-ink-3);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.chn-map-wrap {
+  border-radius: var(--chn-r-card);
+  overflow: hidden;
+  box-shadow: var(--chn-shadow-card);
+  height: 450px;
+}
+
+.chn-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
 .chn-branches-section{background:var(--chn-navy);padding:5rem 0 6rem}
 .chn-branches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:800px;margin:0 auto}
 .chn-branch-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--chn-r-card);padding:2rem 1.75rem;display:flex;flex-direction:column;gap:0.75rem;transition:background var(--chn-dur) var(--chn-ease),transform var(--chn-dur) var(--chn-ease),border-color var(--chn-dur) var(--chn-ease)}

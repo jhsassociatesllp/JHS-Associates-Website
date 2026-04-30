@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Mumbai.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -13,7 +13,7 @@ import imgSahil from '../../image/Sahil-Shah-removebg-preview.png'
 import imgTausif from '../../image/Tausif-Shaikh-removebg-preview.png'
 import imgSamad from '../../image/Samad-Dhanani-removebg-preview.png'
 import imgDisha from '../../image/Disha Shah-removebg-preview.png'
-import imgDhanlaxmi from '../../image/Dhanlaxmi_-removebg-preview.png'
+import imgDhanlaxmi from '../../image/Dhanlaxmi.png'
 
 /* ─── Partner Data ─────────────────────────────────────── */
 const PARTNERS = [
@@ -91,6 +91,28 @@ const PARTNERS = [
   }
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'andheri',
+    name: 'Andheri (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin',
+    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059'
+  },
+  {
+    id: 'masjid',
+    name: 'Masjid',
+    mapUrl: 'https://maps.google.com/maps?q=Nav%20Vyapar%20Bhavan,%20P.D’mello%20Road,%20Mumbai,%20Maharashtra%20400009&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra – 400009'
+  },
+  {
+    id: 'kalyan',
+    name: 'Kalyan',
+    mapUrl: 'https://maps.google.com/maps?q=Regency%20Avenue,%20Syndicate%20Bus%20Stop,%20Kalyan%20West,%20Maharashtra%20421301&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301'
+  }
+]
+
 /* ─── Branch Data ────────────────────────────────────────── */
 const BRANCHES = [
   // {
@@ -142,6 +164,8 @@ const IconPin = () => (
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function Mumbai() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [])
@@ -251,17 +275,40 @@ export default function Mumbai() {
       <section className="mum-map-section">
         <div className="mum-container">
           <div className="mum-section-hdr">
-            <span className="mum-section-hdr__tag">Location</span>
-            <h2 className="mum-section-hdr__title">Head Office – Andheri</h2>
+            <span className="mum-section-hdr__tag">Locations</span>
+            <h2 className="mum-section-hdr__title">Our Offices in Mumbai</h2>
+            <p className="mum-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="mum-map-wrap">
-            <iframe
-              title="JHS Mumbai Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+
+          <div className="mum-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`mum-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="mum-map-content">
+            <div className="mum-map-info-card">
+              <h3 className="mum-map-info-title">{activeLocation.name}</h3>
+              <p className="mum-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="mum-map-wrap">
+              <iframe
+                title={`JHS Mumbai ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

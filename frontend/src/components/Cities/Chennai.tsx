@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Chennai.css'
 
 import chennaiBg from '../../image/Chennai.jpg'
@@ -42,6 +42,30 @@ const PARTNERS = [
   },
 ]
 
+
+
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'chennai',
+    name: 'Chennai (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9!2d80.2337!3d13.0416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c07a1e3b3d%3A0x4c9b5e9a8b9a8b9a!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000007',
+    address: 'No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017'
+  },
+  {
+    id: 'tnagar',
+    name: 'T. Nagar',
+    mapUrl: 'https://maps.google.com/maps?q=Abacus%20Tower,%20Venkatnarayana%20Road,%20T.%20Nagar,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017'
+  },
+  {
+    id: 'annanagar',
+    name: 'Anna Nagar',
+    mapUrl: 'https://maps.google.com/maps?q=Anna%20Nagar%20Eastern%20Extn,%20Chennai,%20Tamil%20Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102'
+  }
+]
+
 const BRANCHES = [
   {
     name: 'T. Nagar',
@@ -80,6 +104,8 @@ const IconPin = () => (
 )
 
 export default function Chennai() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
   return (
     <div className="chn-page">
@@ -154,13 +180,40 @@ export default function Chennai() {
       <section className="chn-map-section">
         <div className="chn-container">
           <div className="chn-section-hdr">
-            <span className="chn-section-hdr__tag">Location</span>
-            <h2 className="chn-section-hdr__title">Head Office – T. Nagar</h2>
+            <span className="chn-section-hdr__tag">Locations</span>
+            <h2 className="chn-section-hdr__title">Our Offices in Chennai</h2>
+            <p className="chn-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="chn-map-wrap">
-            <iframe title="JHS Chennai Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9!2d80.2337!3d13.0416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c07a1e3b3d%3A0x4c9b5e9a8b9a8b9a!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000007"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+          <div className="chn-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`chn-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="chn-map-content">
+            <div className="chn-map-info-card">
+              <h3 className="chn-map-info-title">{activeLocation.name}</h3>
+              <p className="chn-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="chn-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Hyderabad.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -55,6 +55,28 @@ const PARTNERS = [
   },
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'hyderabad',
+    name: 'Hyderabad (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.3!2d78.3722!3d17.4474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dc8c5d69df%3A0x19688bef76177fe5!2sHiTech%20City%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1680000000003!5m2!1sen!2sin',
+    address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016'
+  },
+  {
+    id: 'hiteccity',
+    name: 'HITEC City',
+    mapUrl: 'https://maps.google.com/maps?q=Cyber%20Towers,%20HITEC%20City,%20Madhapur,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081'
+  },
+  {
+    id: 'banjarahills',
+    name: 'Banjara Hills',
+    mapUrl: 'https://maps.google.com/maps?q=Lumbini%20Avenue,%20Road%20No.%202,%20Banjara%20Hills,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '201, 2nd Floor, Lumbini Avenue, Road No. 2, Banjara Hills, Hyderabad, Telangana – 500034'
+  }
+]
+
 /* ─── Branch Data ────────────────────────────────────────── */
 const BRANCHES = [
   {
@@ -101,6 +123,8 @@ const IconPin = () => (
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function Hyderabad() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [])
@@ -196,17 +220,40 @@ export default function Hyderabad() {
       <section className="hyd-map-section">
         <div className="hyd-container">
           <div className="hyd-section-hdr">
-            <span className="hyd-section-hdr__tag">Location</span>
-            <h2 className="hyd-section-hdr__title">Head Office</h2>
+            <span className="hyd-section-hdr__tag">Locations</span>
+            <h2 className="hyd-section-hdr__title">Our Offices in Hyderabad</h2>
+            <p className="hyd-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="hyd-map-wrap">
-            <iframe
-              title="JHS Hyderabad Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.3!2d78.3722!3d17.4474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dc8c5d69df%3A0x19688bef76177fe5!2sHiTech%20City%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1680000000003!5m2!1sen!2sin"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+
+          <div className="hyd-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`hyd-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="hyd-map-content">
+            <div className="hyd-map-info-card">
+              <h3 className="hyd-map-info-title">{activeLocation.name}</h3>
+              <p className="hyd-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="hyd-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

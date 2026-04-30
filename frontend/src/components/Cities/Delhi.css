@@ -436,16 +436,87 @@
    ============================================================ */
 .del-map-section {
   background: var(--del-white);
-  padding: 4rem 0;
+  padding: 5rem 0;
   border-top: 1px solid var(--del-border);
   border-bottom: 1px solid var(--del-border);
+}
+
+.del-map-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.del-map-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1.5px solid var(--del-border);
+  border-radius: var(--del-r-pill);
+  background: var(--del-white);
+  color: var(--del-ink-3);
+  font-family: var(--del-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--del-dur) var(--del-ease);
+}
+
+.del-map-tab svg {
+  width: 16px;
+  height: 16px;
+  transition: color var(--del-dur) var(--del-ease);
+}
+
+.del-map-tab:hover {
+  border-color: var(--del-navy);
+  color: var(--del-navy);
+}
+
+.del-map-tab.active {
+  background: var(--del-navy);
+  border-color: var(--del-navy);
+  color: var(--del-white);
+  box-shadow: 0 8px 20px rgba(30, 58, 95, 0.2);
+}
+
+.del-map-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.del-map-info-card {
+  background: var(--del-bg);
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--del-border);
+  text-align: center;
+}
+
+.del-map-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--del-navy-dk);
+  margin-bottom: 8px;
+}
+
+.del-map-info-addr {
+  font-size: 0.9rem;
+  color: var(--del-ink-3);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .del-map-wrap {
   border-radius: var(--del-r-card);
   overflow: hidden;
   box-shadow: var(--del-shadow-card);
-  height: 400px;
+  height: 450px;
 }
 
 .del-map-wrap iframe {

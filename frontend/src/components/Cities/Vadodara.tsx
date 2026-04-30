@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Vadodara.css'
 
 import vadodaraBg from '../../image/Vadodara.jpg'
@@ -42,6 +42,28 @@ const PARTNERS = [
   },
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'vadodara',
+    name: 'Vadodara (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.4!2d73.1812!3d22.3119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc5873e48f5a9%3A0x1be90e4cce8bf0c6!2sAlkapuri%2C%20Vadodara%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000004',
+    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023'
+  },
+  {
+    id: 'alkapuri',
+    name: 'Alkapuri',
+    mapUrl: 'https://maps.google.com/maps?q=Kumar%20Plaza,%20Alkapuri,%20Vadodara,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '301, 3rd Floor, Kumar Plaza, Alkapuri, Vadodara, Gujarat – 390007'
+  },
+  {
+    id: 'fatehgunj',
+    name: 'Fatehgunj',
+    mapUrl: 'https://maps.google.com/maps?q=Dev%20Complex,%20Near%20BSNL%20Office,%20Fatehgunj,%20Vadodara&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '102, Dev Complex, Near BSNL Office, Fatehgunj, Vadodara, Gujarat – 390002'
+  }
+]
+
 const BRANCHES = [
   {
     name: 'Alkapuri',
@@ -80,6 +102,8 @@ const IconPin = () => (
 )
 
 export default function Vadodara() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
   return (
     <div className="vad-page">
@@ -154,13 +178,40 @@ export default function Vadodara() {
       <section className="vad-map-section">
         <div className="vad-container">
           <div className="vad-section-hdr">
-            <span className="vad-section-hdr__tag">Location</span>
-            <h2 className="vad-section-hdr__title">Head Office – Alkapuri</h2>
+            <span className="vad-section-hdr__tag">Locations</span>
+            <h2 className="vad-section-hdr__title">Our Offices in Vadodara</h2>
+            <p className="vad-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="vad-map-wrap">
-            <iframe title="JHS Vadodara Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.4!2d73.1812!3d22.3119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc5873e48f5a9%3A0x1be90e4cce8bf0c6!2sAlkapuri%2C%20Vadodara%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000004"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+          <div className="vad-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`vad-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="vad-map-content">
+            <div className="vad-map-info-card">
+              <h3 className="vad-map-info-title">{activeLocation.name}</h3>
+              <p className="vad-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="vad-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

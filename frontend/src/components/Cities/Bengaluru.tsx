@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Bengaluru.css'
 
 import bengaluruBg from '../../image/Bengluru.avif'
@@ -42,6 +42,29 @@ const PARTNERS = [
   },
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'bengaluru',
+    name: 'Bengaluru (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.6263!3d12.9352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1680000000005',
+    address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037'
+  },
+  {
+    id: 'koramangala',
+    name: 'Koramangala',
+    mapUrl: 'https://maps.google.com/maps?q=Prestige%20Meridian,%2029%20MG%20Road,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034'
+  },
+  {
+    id: 'whitefield',
+    name: 'Whitefield',
+    mapUrl: 'https://maps.google.com/maps?q=Salarpuria%20Softzone,%20Whitefield,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '502, 5th Floor, Salarpuria Softzone, Whitefield, Bengaluru, Karnataka – 560066'
+  }
+]
+
+/* ─── Branch Data ────────────────────────────────────────── */
 const BRANCHES = [
   {
     name: 'Koramangala',
@@ -80,6 +103,8 @@ const IconPin = () => (
 )
 
 export default function Bengaluru() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
   return (
     <div className="blr-page">
@@ -154,13 +179,40 @@ export default function Bengaluru() {
       <section className="blr-map-section">
         <div className="blr-container">
           <div className="blr-section-hdr">
-            <span className="blr-section-hdr__tag">Location</span>
-            <h2 className="blr-section-hdr__title">Head Office</h2>
+            <span className="blr-section-hdr__tag">Locations</span>
+            <h2 className="blr-section-hdr__title">Our Offices in Bengaluru</h2>
+            <p className="blr-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="blr-map-wrap">
-            <iframe title="JHS Bengaluru Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.6263!3d12.9352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1680000000005"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+          <div className="blr-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`blr-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="blr-map-content">
+            <div className="blr-map-info-card">
+              <h3 className="blr-map-info-title">{activeLocation.name}</h3>
+              <p className="blr-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="blr-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

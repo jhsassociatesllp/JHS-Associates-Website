@@ -1,0 +1,297 @@
+/* ═══════════════════════════════════════════════════════════════════
+   POSTS  —  Centered heading · Horizontal card scroll · View All CTA
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Section ──────────────────────────────────────────────────────── */
+.posts {
+  position: relative;
+  background: var(--color-bg);
+  overflow: hidden;
+  /* min-height so GSAP pin has room to work */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 72px;
+  padding-bottom: 40px;
+}
+
+/* ── Centered Heading ─────────────────────────────────────────────── */
+.posts__header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 52px;
+  padding: 0 24px;
+  will-change: opacity, transform;
+}
+
+.posts__overline {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.posts__title {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-text);
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+/* Italic red accent */
+.posts__title em {
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.posts__sub {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── Track wrapper — clips overflow ──────────────────────────────── */
+.posts__track-wrap {
+  overflow: hidden;
+  padding-left: 48px;
+  /* left breathing room */
+}
+
+/* ── Sliding strip ────────────────────────────────────────────────── */
+.posts__track {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  will-change: transform;
+}
+
+/* ── Progress bar ─────────────────────────────────────────────────── */
+.posts__progress {
+  height: 2px;
+  background: var(--color-border, #e5e7eb);
+  margin: 36px 48px 0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.posts__progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--color-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+  border-radius: 999px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CARD
+   ════════════════════════════════════════════════════════════════════ */
+.post-card {
+  flex: 0 0 320px;
+  background: var(--color-bg-white, #ffffff);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-border, #ebebeb);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.38s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform, opacity;
+}
+
+.post-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.11);
+}
+
+/* Image */
+.post-card__img-wrap {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+
+.post-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+  display: block;
+}
+
+.post-card:hover .post-card__img-wrap img {
+  transform: scale(1.07);
+}
+
+/* Category badge */
+.post-card__category {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+/* Body */
+.post-card__body {
+  padding: 22px 20px 20px;
+}
+
+.post-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.71rem;
+  color: var(--color-text-light, #999);
+  margin-bottom: 12px;
+}
+
+.post-card__meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-card__title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.post-card__desc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted, #666);
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.post-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: gap 0.25s ease;
+}
+
+.post-card__link:hover {
+  gap: 12px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   VIEW ALL — last item inside the track
+   ════════════════════════════════════════════════════════════════════ */
+.posts__view-all {
+  flex: 0 0 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+}
+
+.posts__view-all-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.25s ease;
+}
+
+.posts__view-all-btn:hover {
+  color: var(--color-primary);
+}
+
+.posts__view-all-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.posts__view-all-btn:hover .posts__view-all-icon {
+  background: var(--color-primary);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RESPONSIVE — mobile: native touch scroll, no GSAP pin
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .posts {
+    padding-top: 56px;
+    overflow: visible;
+    min-height: unset;
+  }
+
+  .posts__track-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 20px;
+  }
+
+  .posts__track {
+    transform: none !important;
+  }
+
+  .post-card {
+    flex: 0 0 272px;
+  }
+
+  .posts__view-all {
+    flex: 0 0 140px;
+    padding: 0 16px;
+  }
+
+  .posts__progress {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .posts__title {
+    font-size: 1.9rem;
+  }
+
+  .post-card {
+    flex: 0 0 82vw;
+  }
+}

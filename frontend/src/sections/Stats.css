@@ -246,15 +246,12 @@
 .stats__image {
   position: absolute;
   inset: 0;
-  background-image: url("../image/StatsImg.jpeg");
+  background-image: url("../image/StatsImage.png");
   background-size: cover;
   background-position: center;
-  transition: transform 8s ease-out;
+  /* transition: transform 8s ease-out; */
 }
 
-.stats--visible .stats__image {
-  transform: scale(1.03);
-}
 
 /* Subtle left-edge fade */
 .stats__image-overlay {

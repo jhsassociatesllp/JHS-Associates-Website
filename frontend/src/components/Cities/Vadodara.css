@@ -47,8 +47,17 @@
 .vad-pc-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:1;padding:7px 10px;border-radius:8px;font-size:0.72rem;font-weight:600;text-decoration:none;border:1.5px solid var(--vad-border);color:var(--vad-ink-4);transition:all var(--vad-dur) var(--vad-ease);white-space:nowrap}
 .vad-pc-btn--mail:hover{background:var(--vad-navy);border-color:var(--vad-navy);color:var(--vad-white)}
 .vad-pc-btn--li:hover{background:#0077b5;border-color:#0077b5;color:var(--vad-white)}
-.vad-map-section{background:var(--vad-white);padding:4rem 0;border-top:1px solid var(--vad-border);border-bottom:1px solid var(--vad-border)}
-.vad-map-wrap{border-radius:var(--vad-r-card);overflow:hidden;box-shadow:var(--vad-shadow-card);height:400px}
+.vad-map-section{background:var(--vad-white);padding:5rem 0;border-top:1px solid var(--vad-border);border-bottom:1px solid var(--vad-border)}
+.vad-map-tabs{display:flex;justify-content:center;gap:12px;margin-bottom:2.5rem;flex-wrap:wrap}
+.vad-map-tab{display:flex;align-items:center;gap:8px;padding:12px 24px;border:1.5px solid var(--vad-border);border-radius:var(--vad-r-pill);background:var(--vad-white);color:var(--vad-ink-3);font-family:var(--vad-font);font-size:0.95rem;font-weight:600;cursor:pointer;transition:all var(--vad-dur) var(--vad-ease)}
+.vad-map-tab svg{width:16px;height:16px;transition:color var(--vad-dur) var(--vad-ease)}
+.vad-map-tab:hover{border-color:var(--vad-navy);color:var(--vad-navy)}
+.vad-map-tab.active{background:var(--vad-navy);border-color:var(--vad-navy);color:var(--vad-white);box-shadow:0 8px 20px rgba(30,58,95,0.2)}
+.vad-map-content{display:flex;flex-direction:column;gap:1.5rem}
+.vad-map-info-card{background:var(--vad-bg);padding:20px 24px;border-radius:12px;border:1px solid var(--vad-border);text-align:center}
+.vad-map-info-title{font-size:1.1rem;font-weight:700;color:var(--vad-navy-dk);margin-bottom:8px}
+.vad-map-info-addr{font-size:0.9rem;color:var(--vad-ink-3);line-height:1.6;max-width:600px;margin:0 auto}
+.vad-map-wrap{border-radius:var(--vad-r-card);overflow:hidden;box-shadow:var(--vad-shadow-card);height:450px}
 .vad-map-wrap iframe{width:100%;height:100%;border:none;display:block}
 .vad-branches-section{background:var(--vad-navy);padding:5rem 0 6rem}
 .vad-branches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:800px;margin:0 auto}

@@ -1,0 +1,642 @@
+/* ============================================================
+   Delhi.css  —  JHS & Associates | Delhi Office Page
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap");
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --del-navy: #1e3a5f;
+  --del-navy-dk: #0f2340;
+  --del-red: #B01E2E;
+  --del-cream: #f5f0e8;
+  --del-white: #ffffff;
+  --del-bg: #f4f6f9;
+  --del-ink: #1a1a2e;
+  --del-ink-2: #333;
+  --del-ink-3: #555;
+  --del-ink-4: #888;
+  --del-border: rgba(0, 0, 0, 0.09);
+
+  --del-r-card: 18px;
+  --del-r-sm: 10px;
+  --del-r-pill: 100px;
+
+  --del-shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --del-shadow-lift: 0 18px 44px rgba(30, 58, 95, 0.15), 0 4px 14px rgba(0, 0, 0, 0.07);
+
+  --del-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --del-dur: 0.3s;
+  --del-font: 'DM Sans', 'Helvetica Neue', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.del-page {
+  min-height: 100vh;
+  background: var(--del-bg);
+  font-family: var(--del-font);
+  color: var(--del-ink);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.del-hero {
+  position: relative;
+  width: 100%;
+  height: 95vh;
+  max-height: 860px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 64px;
+  overflow: hidden;
+}
+
+.del-hero__photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.del-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 12, 24, 0.22) 0%,
+    rgba(10, 22, 48, 0.60) 60%,
+    rgba(5, 12, 24, 0.84) 100%
+  );
+  z-index: 1;
+}
+
+/* Hero title content */
+.del-hero__content {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 90%;
+}
+
+.del-hero__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px 18px;
+  border-radius: var(--del-r-pill);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.del-hero__title {
+  font-size: clamp(3.8rem, 10vw, 8.5rem);
+  font-weight: 800;
+  color: var(--del-white);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow: 0 6px 36px rgba(0, 0, 0, 0.5);
+}
+
+.del-hero__sub {
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Poster card */
+.del-hero__card {
+  position: relative;
+  z-index: 4;
+  background: var(--del-cream);
+  border-radius: 8px;
+  padding: 28px 40px 32px;
+  width: min(820px, 92vw);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38), 0 6px 20px rgba(0, 0, 0, 0.18);
+  animation: delCardIn 0.75s var(--del-ease) both;
+  margin-top: 50px;
+}
+
+@keyframes delCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.del-hero__card-brand {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--del-red);
+  letter-spacing: 0.1em;
+}
+
+.del-hero__card-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--del-navy);
+  color: var(--del-white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 5px 14px;
+  border-radius: var(--del-r-pill);
+  margin-bottom: 14px;
+}
+
+.del-hero__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+.del-hero__card-addr {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--del-ink);
+}
+
+.del-hero__card-addr svg {
+  margin-top: 3px;
+  flex-shrink: 0;
+  color: var(--del-red);
+}
+
+/* Info grid inside hero card */
+.del-hero__card-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--del-border);
+  margin-top: 16px;
+  padding-top: 14px;
+}
+
+.del-hero__card-info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-right: 1px solid var(--del-border);
+}
+
+.del-hero__card-info-item:last-child {
+  border-right: none;
+}
+
+.del-hero__card-info-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--del-ink-4);
+  margin-bottom: 2px;
+}
+
+.del-hero__card-info-val {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--del-ink);
+  line-height: 1.3;
+}
+
+/* ============================================================
+   SHARED LAYOUT
+   ============================================================ */
+.del-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.del-section {
+  padding: 5rem 0;
+}
+
+.del-section--light {
+  background: #ffffff;
+}
+
+.del-section-hdr {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.del-section-hdr__tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--del-red);
+  background: rgba(176, 30, 46, 0.08);
+  border: 1px solid rgba(176, 30, 46, 0.18);
+  padding: 5px 14px;
+  border-radius: var(--del-r-pill);
+  margin-bottom: 12px;
+}
+
+.del-section-hdr__tag--light {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.del-section-hdr__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: var(--del-navy-dk);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.del-section-hdr__title--light {
+  color: var(--del-white);
+}
+
+.del-section-hdr__sub {
+  font-size: 0.95rem;
+  color: var(--del-ink-4);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.del-section-hdr__sub--light {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ============================================================
+   PARTNER CARDS
+   ============================================================ */
+.del-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  column-gap: 1.5rem;
+  row-gap: 90px;
+  padding-top: 70px;
+}
+
+.del-pc-card {
+  background: var(--del-white);
+  border: 1px solid var(--del-border);
+  border-radius: var(--del-r-card);
+  padding: 80px 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  box-shadow: var(--del-shadow-card);
+  transition: box-shadow var(--del-dur) var(--del-ease),
+    transform var(--del-dur) var(--del-ease);
+  position: relative;
+  overflow: visible;
+}
+
+.del-pc-card:hover {
+  box-shadow: var(--del-shadow-lift);
+  transform: translateY(-6px);
+  z-index: 2;
+}
+
+/* Avatar */
+.del-pc-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--del-white);
+  flex-shrink: 0;
+  background: #e8eaf0;
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.del-pc-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Text info */
+.del-pc-info {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.del-pc-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--del-navy-dk);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.del-pc-quals {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--del-red);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.del-pc-desig {
+  font-size: 0.75rem;
+  color: var(--del-ink-3);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Social buttons */
+.del-pc-social {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--del-border);
+}
+
+.del-pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid var(--del-border);
+  color: var(--del-ink-4);
+  transition: all var(--del-dur) var(--del-ease);
+  white-space: nowrap;
+}
+
+.del-pc-btn--mail:hover {
+  background: var(--del-navy);
+  border-color: var(--del-navy);
+  color: var(--del-white);
+}
+
+.del-pc-btn--li:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+  color: var(--del-white);
+}
+
+/* ============================================================
+   MAP SECTION
+   ============================================================ */
+.del-map-section {
+  background: var(--del-white);
+  padding: 4rem 0;
+  border-top: 1px solid var(--del-border);
+  border-bottom: 1px solid var(--del-border);
+}
+
+.del-map-wrap {
+  border-radius: var(--del-r-card);
+  overflow: hidden;
+  box-shadow: var(--del-shadow-card);
+  height: 400px;
+}
+
+.del-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ============================================================
+   BRANCHES SECTION
+   ============================================================ */
+.del-branches-section {
+  background: var(--del-navy);
+  padding: 5rem 0 6rem;
+}
+
+.del-branches-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.del-branch-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--del-r-card);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background var(--del-dur) var(--del-ease),
+    transform var(--del-dur) var(--del-ease),
+    border-color var(--del-dur) var(--del-ease);
+}
+
+.del-branch-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.del-branch-card__num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.08);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.del-branch-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--del-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--del-white);
+}
+
+.del-branch-card__name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--del-white);
+  letter-spacing: -0.01em;
+}
+
+.del-branch-card__addr {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 960px) {
+  .del-partners-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .del-partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    row-gap: 90px;
+  }
+
+  .del-hero__card {
+    padding: 22px 20px 26px;
+  }
+
+  .del-section {
+    padding: 3rem 0;
+  }
+
+  .del-branches-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .del-hero {
+    height: auto;
+    min-height: 620px;
+    padding: 0 16px 32px;
+    padding-top: 80px;
+    justify-content: flex-start;
+  }
+
+  .del-hero__content {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 60px auto 24px;
+    width: 100%;
+  }
+
+  .del-hero__card {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Stack card info items vertically */
+  .del-hero__card-info {
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--del-border);
+  }
+
+  .del-hero__card-info-item {
+    border-right: none;
+    border-bottom: 1px solid var(--del-border);
+    padding: 10px 8px;
+  }
+
+  .del-hero__card-info-item:last-child {
+    border-bottom: none;
+  }
+
+  .del-container {
+    padding: 0 1.25rem;
+  }
+
+  .del-map-wrap {
+    height: 260px;
+  }
+
+  /* Smaller avatar on mobile */
+  .del-pc-avatar {
+    width: 86px;
+    height: 86px;
+    top: -43px;
+  }
+
+  .del-pc-card {
+    padding-top: 62px;
+  }
+
+  .del-partners-grid {
+    padding-top: 55px;
+  }
+}
+
+@media (max-width: 420px) {
+  .del-partners-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.75rem;
+    row-gap: 90px;
+  }
+
+  .del-pc-btn span {
+    display: none;
+  }
+
+  .del-pc-btn {
+    padding: 8px;
+    flex: unset;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .del-pc-social {
+    justify-content: center;
+    gap: 10px;
+  }
+}

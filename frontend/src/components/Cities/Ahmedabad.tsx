@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Ahmedabad.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -100,6 +100,34 @@ const PARTNERS = [
   },
 ]
 
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'ahmedabad',
+    name: 'Ahmedabad (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin',
+    address: '1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059'
+  },
+  {
+    id: 'vapi',
+    name: 'Vapi',
+    mapUrl: 'https://maps.google.com/maps?q=Saga%20Casa,%20Daulat%20Nagar,%20Chala,%20Vapi,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215'
+  },
+  {
+    id: 'rajkot',
+    name: 'Rajkot',
+    mapUrl: 'https://maps.google.com/maps?q=Kings%20Heights,%20Vidya%20Kunj%20Society%20Main%20Road,%20Rajkot,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001'
+  },
+  {
+    id: 'surat',
+    name: 'Surat',
+    mapUrl: 'https://maps.google.com/maps?q=Shubh%20Square,%20Lal%20Darwaja,%20Surat,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003'
+  }
+]
+
 /* ─── Branch Data ────────────────────────────────────────── */
 const BRANCHES = [
   {
@@ -151,6 +179,8 @@ const IconPin = () => (
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function Ahmedabad() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [])
@@ -246,17 +276,40 @@ export default function Ahmedabad() {
       <section className="ahm-map-section">
         <div className="ahm-container">
           <div className="ahm-section-hdr">
-            <span className="ahm-section-hdr__tag">Location</span>
-            <h2 className="ahm-section-hdr__title">Head Office</h2>
+            <span className="ahm-section-hdr__tag">Locations</span>
+            <h2 className="ahm-section-hdr__title">Our Offices in Gujarat</h2>
+            <p className="ahm-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="ahm-map-wrap">
-            <iframe
-              title="JHS Ahmedabad Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+
+          <div className="ahm-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`ahm-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="ahm-map-content">
+            <div className="ahm-map-info-card">
+              <h3 className="ahm-map-info-title">{activeLocation.name}</h3>
+              <p className="ahm-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="ahm-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

@@ -1,0 +1,388 @@
+/* =============================================
+   Services Section — JHS Associates
+   Navy blue · Light theme · BCG-inspired split
+   ============================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap");
+
+/* --- Variables --- */
+:root {
+  --sv-navy: #1e3a5f;
+  --sv-navy-dark: #16305a;
+  --sv-navy-bg: #ffffff;
+  /* pale navy tint for left panel */
+  --sv-navy-bg2: #ffffff;
+  /* slightly deeper for decoration */
+  --sv-white: #ffffff;
+  --sv-text-primary: #1a2a40;
+  --sv-text-secondary: #4a5872;
+  --sv-text-muted: #8a96aa;
+  --sv-border: rgba(30, 58, 95, 0.14);
+  --sv-border-hover: rgba(30, 58, 95, 0.35);
+  --sv-shadow: 0 4px 24px rgba(30, 58, 95, 0.1);
+  --sv-shadow-lg: 0 12px 40px rgba(30, 58, 95, 0.18);
+  --font-display: sans-serif, serif;
+  --font-body: "DM Sans", sans-serif;
+  --sv-radius: 14px;
+  --sv-transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================
+   SECTION WRAPPER — 50/50 split
+   ============================================= */
+
+.services {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 800px;
+  font-family: var(--font-body);
+  /* padding: 100px 0; */
+  padding: 100px 0;
+}
+
+/* =============================================
+   LEFT PANEL — pale navy, text + dropdowns
+   ============================================= */
+
+.services__left {
+  position: relative;
+  background: var(--sv-navy-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 64px;
+}
+
+.services__left-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Decorative blurred circles */
+.services__deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.services__deco--1 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(30, 58, 95, 0.08) 0%, transparent 70%);
+  top: -80px;
+  right: -80px;
+}
+
+.services__deco--2 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(30, 58, 95, 0.06) 0%, transparent 70%);
+  bottom: -40px;
+  left: 40px;
+}
+
+/* Content */
+.services__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 480px;
+}
+
+/* Heading */
+.services__heading {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--sv-text-primary);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+/* Subtext */
+.services__sub {
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--sv-text-secondary);
+  margin: 0;
+  max-width: 400px;
+}
+
+/* =============================================
+   DROPDOWNS
+   ============================================= */
+
+.services__dropdowns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Dropdown wrapper */
+.services__dropdown {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+}
+
+/* Trigger button */
+.services__dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--sv-white);
+  border: 1.5px solid var(--sv-border);
+  border-radius: var(--sv-radius);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sv-text-primary);
+  transition: border-color var(--sv-transition), box-shadow var(--sv-transition) background var(--sv-transition);
+  text-align: left;
+}
+
+.services__dropdown-trigger:hover {
+  border-color: var(--sv-navy);
+  box-shadow: var(--sv-shadow);
+}
+
+.services__dropdown--open .services__dropdown-trigger {
+  border-color: var(--sv-navy);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 -2px 12px rgba(30, 58, 95, 0.08);
+}
+
+/* Chevron icon */
+.services__dropdown-icon {
+  flex-shrink: 0;
+  color: var(--sv-text-secondary);
+  transition: transform var(--sv-transition), color var(--sv-transition);
+}
+
+.services__dropdown--open .services__dropdown-icon {
+  transform: rotate(180deg);
+  color: var(--sv-navy);
+}
+
+/* Dropdown menu */
+.services__dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--sv-white);
+  border: 1.5px solid var(--sv-navy);
+  border-top: none;
+  border-bottom-left-radius: var(--sv-radius);
+  border-bottom-right-radius: var(--sv-radius);
+  box-shadow: var(--sv-shadow-lg);
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  animation: dropDown 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+  overflow-y: auto;
+  max-height: 280px;
+}
+
+/* Scrollbar styling for dropdown */
+.services__dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.services__dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.services__dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(30, 58, 95, 0.2);
+  border-radius: 10px;
+}
+
+@keyframes dropDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Menu items — button or Link (<a>) */
+.services__dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--sv-text-primary);
+  text-align: left;
+  text-decoration: none;
+  transition: background var(--sv-transition), color var(--sv-transition),
+    padding-left var(--sv-transition);
+}
+
+.services__dropdown-item svg {
+  opacity: 0;
+  color: var(--sv-navy);
+  transition: opacity var(--sv-transition), transform var(--sv-transition);
+  flex-shrink: 0;
+}
+
+.services__dropdown-item:hover {
+  background: var(--sv-navy-bg);
+  color: var(--sv-navy);
+  padding-left: 22px;
+}
+
+.services__dropdown-item:hover svg {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* separator between items */
+.services__dropdown-menu li+li {
+  border-top: 1px solid rgba(30, 58, 95, 0.06);
+}
+
+/* =============================================
+   RIGHT PANEL — navy blue abstract art
+   ============================================= */
+
+.services__right {
+  position: relative;
+  background: var(--sv-navy);
+  overflow: hidden;
+}
+
+/* Base gradient mesh */
+.services__right-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 30%, #2a4f80 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 20% 80%, #16305a 0%, transparent 60%),
+    linear-gradient(135deg, #1e3a5f 0%, #0f2340 100%);
+}
+
+/* Layered SVG wave shapes */
+.services__wave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.services__wave--back {
+  z-index: 1;
+}
+
+.services__wave--mid {
+  z-index: 2;
+}
+
+.services__wave--front {
+  z-index: 3;
+}
+
+/* Animated subtle pulse on the orbs */
+@keyframes floatOrb {
+
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+
+  50% {
+    transform: translateY(-14px) scale(1.03);
+  }
+}
+
+.services__wave--mid {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+.services__wave--front {
+  animation: floatOrb 11s ease-in-out infinite reverse;
+}
+
+/* =============================================
+   CLICK-OUTSIDE BACKDROP
+   ============================================= */
+
+.services__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1024px) {
+  .services {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .services__right {
+    height: 280px;
+    /* content first, design panel below on mobile */
+  }
+
+  .services__left {
+    padding: 56px 40px;
+  }
+
+  .services__dropdowns {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 640px) {
+  .services__left {
+    padding: 48px 24px;
+  }
+
+  .services__heading {
+    font-size: 30px;
+  }
+
+  .services__dropdowns {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .services__dropdown {
+    min-width: unset;
+  }
+
+  .services__right {
+    height: 220px;
+  }
+}

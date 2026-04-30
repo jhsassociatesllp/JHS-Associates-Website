@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Delhi.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -44,6 +44,28 @@ const PARTNERS = [
     email: 'virendra.nayyar@jhsassociates.in',
     linkedin: 'https://www.linkedin.com/in/virendra-nayyar',
   },
+]
+
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'delhi',
+    name: 'Delhi (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin',
+    address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048'
+  },
+  {
+    id: 'connaughtplace',
+    name: 'Connaught Place',
+    mapUrl: 'https://maps.google.com/maps?q=Antriksh%20Bhawan,%20Kasturba%20Gandhi%20Marg,%20Connaught%20Place,%20New%20Delhi&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001'
+  },
+  {
+    id: 'noida',
+    name: 'Noida',
+    mapUrl: 'https://maps.google.com/maps?q=Sector%2016,%20Noida,%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301'
+  }
 ]
 
 /* ─── Branch Data ────────────────────────────────────────── */
@@ -92,6 +114,8 @@ const IconPin = () => (
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function Delhi() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [])
@@ -187,17 +211,40 @@ export default function Delhi() {
       <section className="del-map-section">
         <div className="del-container">
           <div className="del-section-hdr">
-            <span className="del-section-hdr__tag">Location</span>
-            <h2 className="del-section-hdr__title">Head Office</h2>
+            <span className="del-section-hdr__tag">Locations</span>
+            <h2 className="del-section-hdr__title">Our Offices in Delhi-NCR</h2>
+            <p className="del-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="del-map-wrap">
-            <iframe
-              title="JHS Delhi Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin"
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+
+          <div className="del-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`del-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="del-map-content">
+            <div className="del-map-info-card">
+              <h3 className="del-map-info-title">{activeLocation.name}</h3>
+              <p className="del-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="del-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

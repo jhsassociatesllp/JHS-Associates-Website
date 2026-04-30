@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Download, Filter, ArrowUpRight, BookOpen } from 'lucide-react'
+import { ArrowRight, Filter } from 'lucide-react'
 import { ARTICLES, ARTICLE_CATEGORIES, getArticlesByCategory } from '../../data/articles'
 import './Articles.css'
 
@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Articles() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [filteredArticles, setFilteredArticles] = useState(ARTICLES)
-  const heroRef   = useRef<HTMLDivElement>(null)
-  const gridRef   = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
   const filterRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function Articles() {
     const ctx = gsap.context(() => {
       /* ── Hero: staggered slide-up ── */
       gsap.fromTo(
-        ['.art-hero__eyebrow', '.art-hero__title', '.art-hero__sub', '.art-hero__stats'],
+        ['.art-hero__eyebrow', '.art-hero__title', '.art-hero__sub'],
         { opacity: 0, y: 40 },
         {
           opacity: 1, y: 0,
@@ -41,18 +41,6 @@ export default function Articles() {
           stagger: 0.055,
           ease: 'power2.out',
           scrollTrigger: { trigger: filterRef.current, start: 'top 90%' },
-        }
-      )
-
-      /* ── Featured card: slide in from below ── */
-      gsap.fromTo(
-        '.art-featured__inner',
-        { opacity: 0, y: 60 },
-        {
-          opacity: 1, y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: '.art-featured', start: 'top 84%' },
         }
       )
 
@@ -86,25 +74,31 @@ export default function Articles() {
     document.body.removeChild(link)
   }
 
-  const featured = filteredArticles[0]
+  // Generate a mock date based on ID to simulate realistic content
+  const getMockDate = (id: number) => {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = months[(id * 3) % 12];
+    const day = (id * 7) % 28 + 1;
+    const year = 2024 + (id % 2);
+    return `${month} ${day}, ${year}`;
+  }
 
   return (
     <div className="art-page">
 
       {/* ══════════════════════════════════════
-          HERO — full-width, dark bg image, centered
+          HERO — background image, centered text
       ══════════════════════════════════════ */}
       <section className="art-hero" ref={heroRef}>
         <div className="art-hero__inner">
+          <span className="art-hero__eyebrow">Knowledge Center</span>
           <h1 className="art-hero__title">
-            Expert&nbsp;<em>Articles</em>
+            Our <em>Articles</em>
           </h1>
-
           <p className="art-hero__sub">
             In-depth analysis and commentary from JHS partners and senior advisors on the issues
             shaping Indian and global finance, tax, and compliance.
           </p>
-
         </div>
       </section>
 
@@ -113,8 +107,8 @@ export default function Articles() {
       ══════════════════════════════════════ */}
       <div className="art-filter container" ref={filterRef}>
         <span className="art-filter__label">
-          <Filter size={11} strokeWidth={1.5} />
-          Filter
+          <Filter size={14} strokeWidth={1.5} />
+          Filter By Category
         </span>
         <div className="art-filter__pills">
           {ARTICLE_CATEGORIES.map((cat) => (
@@ -130,133 +124,53 @@ export default function Articles() {
       </div>
 
       {filteredArticles.length > 0 ? (
-        <>
-          {/* ══════════════════════════════════════
-              FEATURED ARTICLE — premium hero card
-          ══════════════════════════════════════ */}
-          {featured && (
-            <section className="art-featured container">
-              <div className="art-featured__inner">
+        <section className="art-grid-section container" ref={gridRef}>
+          <div className="art-grid">
+            {filteredArticles.map((article) => (
+              <article key={article.id} className="art-card">
 
-                {/* Left: content */}
-                <div className="art-featured__content">
-                  <div className="art-featured__meta">
-                    <span className="art-tag">{featured.tag}</span>
-                    <span className="art-featured__badge">Featured</span>
+                {/* Background Image */}
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="art-card__bg-img"
+                  onError={(e) => { e.currentTarget.style.display = 'none' }}
+                />
+
+                {/* Default State: White Box at Bottom */}
+                <div className="art-card__default-box">
+                  <div className="art-card__meta">
+                    {article.tag?.toUpperCase() || 'ARTICLE'} &bull; {article.author?.toUpperCase()} &bull; {getMockDate(article.id).toUpperCase()}
                   </div>
-
-                  <h2 className="art-featured__title">{featured.title}</h2>
-                  <p className="art-featured__desc">{featured.description}</p>
-
-                  <div className="art-featured__footer">
-                    <div className="art-author">
-                      <div className="art-author__avatar">
-                        {featured.author?.charAt(0)?.toUpperCase() ?? 'J'}
-                      </div>
-                      <span className="art-author__name">{featured.author}</span>
-                    </div>
-
-                    <div className="art-featured__actions">
-                      <button
-                        className="art-btn art-btn--ghost"
-                        onClick={() => {}}
-                        type="button"
-                      >
-                        Read Article <ArrowUpRight size={14} />
-                      </button>
-                      <button 
-                        className="art-btn art-btn--solid"
-                        onClick={() => handleDownload(featured.pdf, featured.title)}
-                        type="button"
-                      >
-                        <Download size={13} />
-                        Download PDF
-                      </button>
-                    </div>
-                  </div>
+                  <h3 className="art-card__title">{article.title}</h3>
                 </div>
 
-                {/* Right: image */}
-                <div className="art-featured__img-wrap">
-                  <img
-                    src={featured.image}
-                    alt={featured.title}
-                    className="art-featured__img"
-                    onError={(e) => { e.currentTarget.style.display = 'none' }}
-                  />
-                  <div className="art-featured__img-overlay" />
-                  <span className="art-featured__index">01</span>
+                {/* Hover State: Frosted Overlay */}
+                <div className="art-card__hover-overlay">
+                  <div className="art-card__hover-content">
+                    <div className="art-card__meta">
+                      {article.tag?.toUpperCase() || 'ARTICLE'} &bull; {article.author?.toUpperCase()} &bull; {getMockDate(article.id).toUpperCase()}
+                    </div>
+                    <h3 className="art-card__hover-title">{article.title}</h3>
+                    <p className="art-card__hover-desc">{article.description}</p>
+                  </div>
+
+                  <a
+                    href="#download"
+                    className="art-card__learn-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDownload(article.pdf, article.title);
+                    }}
+                  >
+                    Download <ArrowRight size={16} />
+                  </a>
                 </div>
 
-              </div>
-            </section>
-          )}
- 
-          {/* ══════════════════════════════════════
-              ARTICLE GRID — proper gaps
-          ══════════════════════════════════════ */}
-          <section className="art-grid-section container" ref={gridRef}>
-            <div className="art-grid-header">
-              <h3 className="art-grid-header__title">All Articles</h3>
-              <span className="art-grid-header__count">{filteredArticles.length} results</span>
-            </div>
-
-            <div className="art-grid">
-              {filteredArticles.map((article, idx) => (
-                <article key={article.id} className="art-card">
-
-                  {/* Image */}
-                  <div className="art-card__img-wrap">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="art-card__img"
-                      onError={(e) => { e.currentTarget.style.display = 'none' }}
-                    />
-                    <span className="art-card__num">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <span className="art-card__tag-float">{article.tag}</span>
-                  </div>
-
-                  {/* Body */}
-                  <div className="art-card__body">
-                    <h3 className="art-card__title">{article.title}</h3>
-                    <p className="art-card__desc">{article.description}</p>
-
-                    <div className="art-card__footer">
-                      <div className="art-author art-author--sm">
-                        <div className="art-author__avatar art-author__avatar--sm">
-                          {article.author?.charAt(0)?.toUpperCase() ?? 'J'}
-                        </div>
-                        <span className="art-author__name">{article.author}</span>
-                      </div>
-
-                      <div className="art-card__actions">
-                        <button
-                          className="art-card__icon-btn"
-                          title="Read Article"
-                          onClick={() => {}}
-                          type="button"
-                        >
-                          <ArrowUpRight size={14} />
-                        </button>
-                        <button
-                          className="art-card__dl-btn"
-                          onClick={() => handleDownload(article.pdf, article.title)}
-                          type="button"
-                        >
-                          <Download size={12} />
-                          PDF
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        </>
+              </article>
+            ))}
+          </div>
+        </section>
       ) : (
         <section className="container art-empty">
           <div className="art-empty__box">
@@ -273,24 +187,6 @@ export default function Articles() {
           </div>
         </section>
       )}
-
-      {/* ══════════════════════════════════════
-          CTA BANNER
-      ══════════════════════════════════════ */}
-      {/* <section className="art-cta container">
-        <div className="art-cta__inner">
-          <div className="art-cta__content">
-            <p className="art-cta__eyebrow">Stay Informed</p>
-            <h2 className="art-cta__title">Stay ahead of regulatory changes</h2>
-            <p className="art-cta__sub">
-              Subscribe to receive JHS insights directly in your inbox — no noise, only what matters.
-            </p>
-          </div>
-          <a href="#contact" className="art-btn art-btn--cta">
-            Subscribe Now <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </section> */}
 
     </div>
   )

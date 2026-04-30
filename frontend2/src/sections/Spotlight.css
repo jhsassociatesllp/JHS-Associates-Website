@@ -1,0 +1,142 @@
+/* =============================================
+   Spotlight Section — JHS SPOTLIGHT
+   ============================================= */
+
+.spotlight {
+  background: #ffffff;
+  padding: 60px 20px;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.spotlight__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.spotlight__title {
+  font-family: "DM Sans", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 40px;
+  letter-spacing: -0.02em;
+}
+
+.spotlight__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.spotlight__button {
+  background: #e8f4f8;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 160px;
+}
+
+.spotlight__button:hover {
+  background: #d1e7ee;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.spotlight__button--active {
+  background: #e8f4f8;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+/* .spotlight__button--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #7c3aed;
+  border-radius: 0 0 0 12px;
+} */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  .spotlight {
+    padding: 40px 20px;
+  }
+
+  .spotlight__title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .spotlight__buttons {
+    gap: 15px;
+  }
+
+  .spotlight__button {
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    min-width: 140px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  .spotlight {
+    padding: 30px 15px;
+  }
+
+  .spotlight__title {
+    font-size: 1.75rem;
+    margin-bottom: 25px;
+  }
+
+  .spotlight__buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+
+  .spotlight__button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    min-width: auto;
+  }
+
+  .spotlight__button--active::before {
+    width: 3px;
+  }
+}
+
+/* Large Desktop Styles */
+@media (min-width: 1400px) {
+  .spotlight__container {
+    max-width: 1400px;
+  }
+
+  .spotlight__title {
+    font-size: 3rem;
+  }
+
+  .spotlight__button {
+    font-size: 1.1rem;
+    padding: 18px 36px;
+    min-width: 180px;
+  }
+}

@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-import card1 from '../image/card1.jpeg'
-import card2 from '../image/card2.jpeg'
-import card3 from '../image/card3.jpeg'
-import card4 from '../image/card4.jpeg'
-import card5 from '../image/card5.jpeg'
+import card1 from '../image/Card1.jpeg'
+import card2 from '../image/Card2.jpeg'
+import card3 from '../image/Card3.jpeg'
+import card4 from '../image/Card4.jpeg'
+import card5 from '../image/Card5.jpeg'
 
 
 interface Card {

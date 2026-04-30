@@ -10,7 +10,7 @@ import "./Hero.css";
 import card1 from '../image/BOARDROOMS-IN-TRANSITION-.png.webp'
 import card2 from '../image/Data-Governance.png'
 import card3 from '../image/Investment-Opportunities.png.webp'
-import card4 from '../image/card4.jpeg'
+import card4 from '../image/Card4.jpeg'
 import card5 from '../image/2-1.png.webp'
 
 interface Card {

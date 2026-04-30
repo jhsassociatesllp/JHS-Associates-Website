@@ -21,7 +21,11 @@ jobs:
           script: |
             set -e
 
-            BRANCH="${GITHUB_REF_NAME}"
+            BRANCH=$(echo "${GITHUB_REF}" | sed 's|refs/heads/||')
+
+            echo "DEBUG BRANCH: $BRANCH"
+            echo "RAW REF: $GITHUB_REF"
+            echo "REF NAME: $GITHUB_REF_NAME"
 
             if [ "$BRANCH" = "main" ]; then
               PORT=9030
@@ -30,7 +34,7 @@ jobs:
               PORT=9025
               ENV=staging
             else
-              echo "Unsupported branch"
+              echo "Unsupported branch: $BRANCH"
               exit 1
             fi
 

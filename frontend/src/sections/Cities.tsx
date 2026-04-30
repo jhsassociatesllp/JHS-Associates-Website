@@ -3,47 +3,55 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Cities.css";
+import Mumbai from '../image/Mumbai.jpg'
+import Delhi from '../image/Dehli.avif'
+import Bengaluru from '../image/Bengluru.avif'
+import Vadodara from '../image/Vadodara.jpg'
+import Ahmedabad from '../image/Ahmedabad.jpg'
+import Hyderabad from '../image/Hydrabad.jpg'
+import Kolkata from '../image/Kolkata.jpg'
+import Chennai from '../image/Chennai.jpg'
 
 const citiesList = [
   {
     name: "Mumbai",
     address: "Headquarters, Andheri",
-    image: "src/image/Mumbai.jpg",
+    image: { Mumbai },
   },
   {
     name: "Delhi",
     address: "Connaught Place",
-    image: "src/image/Dehli.avif",
+    image: { Delhi },
   },
   {
     name: "Bengaluru",
     address: "UB City, Vittal Mallya Road",
-    image: "src/image/Bengluru.avif"
+    image: { Bengaluru }
   },
   {
     name: "Vadodara",
     address: "Kalyani Nagar",
-    image: "src/image/Vadodara.jpg",
+    image: { Vadodara },
   },
   {
     name: "Ahmedabad",
     address: "SG Highway",
-    image: "src/image/Ahmedabad.jpg",
+    image: { Ahmedabad },
   },
   {
     name: "Hyderabad",
     address: "HITEC City",
-    image: "src/image/Hydrabad.jpg",
+    image: { Hyderabad },
   },
   {
     name: "Kolkata",
     address: "Salt Lake City",
-    image: "src/image/Kolkata.jpg",
+    image: { Kolkata },
   },
   {
     name: "Chennai",
     address: "T Nagar",
-    image: "src/image/Chennai.jpg",
+    image: { Chennai },
   },
 ];
 

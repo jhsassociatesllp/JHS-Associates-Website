@@ -86,9 +86,9 @@
   transition: transform 0.8s ease;
 }
 
-.vision-mission__graphic:hover .vision-mission__image {
+/* .vision-mission__graphic:hover .vision-mission__image {
   transform: scale(1.05);
-}
+} */
 
 /* Big off-white decorative circle overlapping the bottom-right */
 .vision-mission__deco-circle {

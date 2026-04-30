@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./VisionMission.css";
+import VisionMissionImg from "../image/Visionmission.avif";
 
 export default function VisionMission() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,7 +61,7 @@ export default function VisionMission() {
             <div className="vision-mission__image-wrapper">
               {/* Replace with actual team image from src/image when available */}
               <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1470&auto=format&fit=crop"
+                src={VisionMissionImg}
                 alt="Our Team"
                 className="vision-mission__image"
               />

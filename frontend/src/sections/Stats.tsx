@@ -95,7 +95,7 @@ export default function Stats() {
                 </span>
               </button>
             ))}
-          </div> 
+          </div>
         </div>
 
         {/* Stat row inside left panel */}

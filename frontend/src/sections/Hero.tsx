@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
+import card1 from '../image/card1.jpeg'
+import card2 from '../image/card2.jpeg'
+import card3 from '../image/card3.jpeg'
+import card4 from '../image/card4.jpeg'
+import card5 from '../image/card5.jpeg'
+
 
 interface Card {
   id: number;
@@ -15,41 +21,37 @@ interface Card {
 const cards: Card[] = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800",
-    category: "AUTOMOTIVE INDUSTRY",
-    meta: "SLIDESHOW • MARCH 26, 2026",
-    title: "A Faster Path to Value from AI in the Commercial Vehicle Aftermarket",
+    image: card1,
+    category: "ARTICLES",
+    meta: "SLIDESHOW • December 20, 2026",
+    title: "BOARDROOMS IN TRANSITION: HOW INDIA’S GRC FRAMEWORK IS REDEFINING CORPORATE GOVERNANCE",
     hoverTitle: "Automotive Industry 2026",
     hoverDescription:
-      "Artificial intelligence is reshaping the commercial vehicle aftermarket. Companies that act now can capture significant value — those that wait risk being left behind.",
+      "India’s corporate governance ecosystem has witnessed a decisive shift over the past decade. Landmark regulatory reforms led by SEBI, RBI, and IRDAI have elevated boardroom expectations and redefined the role of Governance, Risk, and Compliance (GRC). No longer limited to defensive oversight, GRC has become a strategic pillar enabling better board performance, organizational resilience, and sustainable long-term value creation.",
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=800",
-    category: "INFRASTRUCTURE",
-    meta: "REPORT • APRIL 1, 2026",
-    title: "Infrastructure Strategy for a New Era of Capital Markets",
+    image: card2,
+    category: "RESOURCES",
+    meta: "Resources • April 27, 2026",
+    title: "The Rule 6 Maze: A Boardroom Perspective on Data Governance in India",
     hoverTitle: "Infrastructure Strategy 2026",
     hoverDescription:
-      "After two challenging years, investors can look forward to increased fundraising, stabilizing valuations, and fresh opportunities across energy and digital infrastructure.",
+      "This strategic briefing examines the evolving role of data governance under the Digital Personal Data Protection (DPDP) framework, with a focused lens on Rule 6 and its implications for CEOs, Boards, and senior leadership. It highlights the shift from treating data privacy as a compliance function to positioning it as a critical element of governance, accountability, and institutional trust.",
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800",
+    image: card3,
     category: "TECHNOLOGY",
-    meta: "ARTICLE • APRIL 4, 2026",
-    title: "Generative AI: From Experimentation to Enterprise-Wide Value",
+    meta: "Thought Leadership • January 22, 2025",
+    title: "Investment Opportunities: A Strategic Roadmap for India”",
     hoverTitle: "Generative AI at Scale",
     hoverDescription:
-      "The most successful organizations are moving beyond pilots. Discover how leading enterprises are embedding GenAI into core operations to unlock transformative gains.",
+      "India, with its dynamic economy, presents numerous investment opportunities across sectors. From emerging technologies like Artificial Intelligence and renewable energy to traditional industries such as manufacturing and infrastructure, the nation offers diverse avenues for growth.",
   },
   {
     id: 4,
-    image:
-      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800",
+    image: card4,
     category: "SUSTAINABILITY",
     meta: "INSIGHT • MARCH 30, 2026",
     title: "The Green Transition: Turning Climate Risk into Competitive Advantage",
@@ -59,8 +61,7 @@ const cards: Card[] = [
   },
   {
     id: 5,
-    image:
-      "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=800",
+    image: card5,
     category: "DIGITAL",
     meta: "ARTICLE • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",
@@ -260,7 +261,7 @@ export default function Hero() {
             {renderCard(visible.next, "next")}
             {renderCard(visible.next2, "next2")}
           </div>
-        </div> 
+        </div>
 
 
 

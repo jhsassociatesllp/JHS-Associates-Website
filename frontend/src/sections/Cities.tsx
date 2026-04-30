@@ -16,32 +16,32 @@ const citiesList = [
   {
     name: "Mumbai",
     address: "Headquarters, Andheri",
-    image: { Mumbai },
+    image: Mumbai,
   },
   {
     name: "Delhi",
     address: "Connaught Place",
-    image: { Delhi },
+    image: Delhi,
   },
   {
     name: "Bengaluru",
     address: "UB City, Vittal Mallya Road",
-    image: { Bengaluru }
+    image: Bengaluru,
   },
   {
     name: "Vadodara",
     address: "Kalyani Nagar",
-    image: { Vadodara },
+    image: Vadodara,
   },
   {
     name: "Ahmedabad",
     address: "SG Highway",
-    image: { Ahmedabad },
+    image: Ahmedabad,
   },
   {
     name: "Hyderabad",
     address: "HITEC City",
-    image: { Hyderabad },
+    image: Hyderabad,
   },
   {
     name: "Kolkata",
@@ -51,7 +51,7 @@ const citiesList = [
   {
     name: "Chennai",
     address: "T Nagar",
-    image: { Chennai },
+    image: Chennai,
   },
 ];
 

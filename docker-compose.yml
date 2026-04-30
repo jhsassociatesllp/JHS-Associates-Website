@@ -10,3 +10,4 @@ services:
       - "${FRONTEND_PORT}:80"
     depends_on:
       - backend
+      

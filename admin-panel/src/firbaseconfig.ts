@@ -16,6 +16,14 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID",
 };
 
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBeiczghIsVJDUEiymPjHOzG9bZVk2VVvs",
+//     authDomain: "my-website-2c42c.firebaseapp.com",
+//     projectId: "my-website-2c42c",
+//     storageBucket: "my-website-2c42c.firebasestorage.app",
+//     messagingSenderId: "553333705642",
+//     appId: "1:553333705642:web:2ec7002d118b93ad1539d3"
+// };
 const app = initializeApp(firebaseConfig);
 
 // Export storage for use in AdminArticles.tsx and AdminBlogs.tsx

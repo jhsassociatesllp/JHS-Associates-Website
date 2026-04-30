@@ -21,11 +21,9 @@ jobs:
           script: |
             set -e
 
-            BRANCH=$(echo "${GITHUB_REF}" | sed 's|refs/heads/||')
+            BRANCH="${{ github.ref_name }}"
 
-            echo "DEBUG BRANCH: $BRANCH"
-            echo "RAW REF: $GITHUB_REF"
-            echo "REF NAME: $GITHUB_REF_NAME"
+            echo "🌿 Branch: $BRANCH"
 
             if [ "$BRANCH" = "main" ]; then
               PORT=9030
@@ -57,5 +55,3 @@ jobs:
 
             echo "🧹 Cleanup"
             docker system prune -af
-
-            

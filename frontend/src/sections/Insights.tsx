@@ -115,7 +115,7 @@ export default function Insights() {
             <div className="insights__card-content">
               <span className="insights__eyebrow insights__eyebrow--light">BUILT FOR EXCELLENCE</span>
               <h2 className="insights__title insights__title--light">
-                JHS Excellancia Library
+                JHS Excellencia Library
               </h2>
               <Link to="/excellencia" className="insights__btn insights__btn--accent">
                 FIND YOUR SOLUTION

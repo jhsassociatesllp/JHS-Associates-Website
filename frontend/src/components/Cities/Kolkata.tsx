@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './Kolkata.css'
 
 import kolkataBg from '../../image/Kolkata.jpg'
@@ -42,6 +42,136 @@ const PARTNERS = [
   },
 ]
 
+
+const SectorIcons: Record<string, JSX.Element> = {
+  BFSI: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="5" y="16" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="8" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="17.5" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="27" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="5" y="30" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="20" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  ),
+  Manufacturing: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="6" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="20" cy="20" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M20 8 L20 11" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M20 29 L20 32" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M8 20 L11 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M29 20 L32 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M11.5 11.5 L13.6 13.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M26.4 26.4 L28.5 28.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M28.5 11.5 L26.4 13.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M13.6 26.4 L11.5 28.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  NPO: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 32 L9.5 21.5 C6.7 18.7 6.7 14.3 9.5 11.5 C12.3 8.7 16.7 8.7 19.5 11.5 L20 12 L20.5 11.5 C23.3 8.7 27.7 8.7 30.5 11.5 C33.3 14.3 33.3 18.7 30.5 21.5 L20 32 Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  ),
+  "NGO's": (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 32 L9.5 21.5 C6.7 18.7 6.7 14.3 9.5 11.5 C12.3 8.7 16.7 8.7 19.5 11.5 L20 12 L20.5 11.5 C23.3 8.7 27.7 8.7 30.5 11.5 C33.3 14.3 33.3 18.7 30.5 21.5 L20 32 Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  ),
+  Retail: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="16" width="24" height="18" rx="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M14 16 L14 12 C14 8.7 16.7 6 20 6 C23.3 6 26 8.7 26 12 L26 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  'Corporates & Trusts': (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="10" width="16" height="24" rx="1" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M8 34 L32 34" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M16 16 L16 18 M24 16 L24 18 M16 22 L16 24 M24 22 L24 24 M16 28 L16 30 M24 28 L24 30" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  'Individual Investors': (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="14" r="5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M10 32 C10 26.5 14.5 22 20 22 C25.5 22 30 26.5 30 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  FMCG: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 8 L10 8 L14 26 L30 26 L34 14 L12 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="16" cy="32" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="28" cy="32" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  ),
+  'Real Estate': (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 20 L20 7 L35 20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="9" y="20" width="22" height="14" rx="1" stroke="currentColor" strokeWidth="1.8" />
+      <rect x="16" y="24" width="8" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  ),
+  Infrastructure: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 34 L10 14 L30 14 L30 34" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 24 L30 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M10 14 L20 6 L30 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 14 L15 34 M25 14 L25 34" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  'Family-Owned Business': (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 18 C16.2 18 18 16.2 18 14 C18 11.8 16.2 10 14 10 C11.8 10 10 11.8 10 14 C10 16.2 11.8 18 14 18 Z" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M26 22 C28.2 22 30 20.2 30 18 C30 15.8 28.2 14 26 14 C23.8 14 22 15.8 22 18 C22 20.2 23.8 22 26 22 Z" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M6 32 C6 27.6 9.6 24 14 24 C16.5 24 18.7 25.1 20.1 26.9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M19.9 32 C19.9 28.5 22.3 25.5 25.6 24.9 C25.7 24.8 25.9 24.8 26 24.8 C29.9 24.8 33 28 33 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+
+/* ─── Sectors ─────────────────────────────────────── */
+const SECTORS = ["Real Estate","Infrastructure","FMCG","Retail","Family-Owned Business"]
+
+/* ─── Specialisations ─────────────────────────────── */
+const SPECIALIZATIONS = [
+  {
+    "label": "Risk-Based Internal Audit",
+    "g": "a"
+  },
+  {
+    "label": "SOP's",
+    "g": "b"
+  },
+  {
+    "label": "Dispute Resolution",
+    "g": "c"
+  }
+]
+
+/* ─── Map Locations ───────────────────────────────────────── */
+const MAP_LOCATIONS = [
+  {
+    id: 'kolkata',
+    name: 'Kolkata (Head Office)',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
+    address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
+  },
+  {
+    id: 'parkstreet',
+    name: 'Park Street',
+    mapUrl: 'https://maps.google.com/maps?q=Chatterjee%20International,%20Jawaharlal%20Nehru%20Road,%20Park%20Street,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071'
+  },
+  {
+    id: 'saltlake',
+    name: 'Salt Lake',
+    mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
+  }
+]
+
 const BRANCHES = [
   {
     name: 'Park Street',
@@ -79,7 +209,16 @@ const IconPin = () => (
   </svg>
 )
 
+
+const IconCheck = () => (
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+)
+
 export default function Kolkata() {
+  const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
   return (
     <div className="kol-page">
@@ -123,6 +262,52 @@ export default function Kolkata() {
         </div>
       </section>
 
+            {/* ════════════ SECTORS SERVED ════════════ */}
+      <section className="kol-section kol-sectors-section">
+        <div className="kol-container">
+          <div className="kol-section-hdr">
+            <span className="kol-section-hdr__tag">Industries</span>
+            <h2 className="kol-section-hdr__title">Sectors Served</h2>
+            <p className="kol-section-hdr__sub">Deep domain expertise across dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="kol-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="kol-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="kol-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="kol-sector-card__label">{s}</span>
+                <div className="kol-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════ WE SPECIALISE IN ════════════ */}
+      <section className="kol-section kol-specials-section">
+        <div className="kol-container">
+          <div className="kol-specials-inner">
+            <div className="kol-specials-left">
+              <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
+              <h2 className="kol-specials-title">We Specialise In</h2>
+              <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
+              <div className="kol-specials-accent-line" />
+              <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="kol-specials-right">
+              <div className="kol-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`kol-special-pill kol-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="kol-special-pill__check"><IconCheck /></span>
+                    <span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <section className="kol-section kol-section--light">
         <div className="kol-container">
           <div className="kol-section-hdr">
@@ -154,13 +339,40 @@ export default function Kolkata() {
       <section className="kol-map-section">
         <div className="kol-container">
           <div className="kol-section-hdr">
-            <span className="kol-section-hdr__tag">Location</span>
-            <h2 className="kol-section-hdr__title">Head Office – Park Street</h2>
+            <span className="kol-section-hdr__tag">Locations</span>
+            <h2 className="kol-section-hdr__title">Our Offices in Kolkata</h2>
+            <p className="kol-section-hdr__sub">
+              Select a location below to view it on the map.
+            </p>
           </div>
-          <div className="kol-map-wrap">
-            <iframe title="JHS Kolkata Head Office"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006"
-              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+          <div className="kol-map-tabs">
+            {MAP_LOCATIONS.map(loc => (
+              <button
+                key={loc.id}
+                className={`kol-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`}
+                onClick={() => setActiveLocation(loc)}
+              >
+                <IconPin />
+                <span>{loc.name}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="kol-map-content">
+            <div className="kol-map-info-card">
+              <h3 className="kol-map-info-title">{activeLocation.name}</h3>
+              <p className="kol-map-info-addr">{activeLocation.address}</p>
+            </div>
+            <div className="kol-map-wrap">
+              <iframe
+                title={`JHS ${activeLocation.name} Office`}
+                src={activeLocation.mapUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </section>

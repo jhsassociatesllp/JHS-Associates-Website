@@ -1,0 +1,13 @@
+services:
+  backend:
+    build: ./backend
+    container_name: jhs_backend
+
+  frontend:
+    build: ./frontend
+    container_name: jhs_frontend
+    ports:
+      - "${FRONTEND_PORT}:80"
+    depends_on:
+      - backend
+      

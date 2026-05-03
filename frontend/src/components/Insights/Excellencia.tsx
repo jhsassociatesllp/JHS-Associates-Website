@@ -10,7 +10,7 @@ export default function Excellencia() {
       {/* ════ HERO ════ */}
       <section className="simple-insight-hero">
         <span className="simple-insight-eyebrow">Built for Excellence</span>
-        <h1 className="simple-insight-title">JHS Excellancia Library</h1>
+        <h1 className="simple-insight-title">JHS Excellencia Library</h1>
         <p className="simple-insight-sub">
           Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks.
         </p>

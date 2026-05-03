@@ -1,142 +1,235 @@
 /* =============================================
    Spotlight Section — JHS SPOTLIGHT
+   Premium Split Layout Design
    ============================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap");
 
 .spotlight {
   background: #ffffff;
-  padding: 60px 20px;
+  padding: 80px 20px;
   width: 100%;
-  margin-bottom: 100px;
 }
 
 .spotlight__container {
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+/* =============================================
+   LEFT COLUMN
+   ============================================= */
+.spotlight__left {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.spotlight__eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1e3a5f;
+  /* JHS Navy */
+  margin-bottom: 20px;
 }
 
 .spotlight__title {
   font-family: "DM Sans", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 40px;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #1a2a40;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
 }
 
-.spotlight__buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.spotlight__button {
-  background: #e8f4f8;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 32px;
+.spotlight__desc {
   font-family: "DM Sans", sans-serif;
   font-size: 1rem;
-  font-weight: 600;
-  color: #4a5568;
+  color: #1a2a40;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 90%;
+}
+
+.spotlight__cta {
+  background: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  padding: 14px 28px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  min-width: 160px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.spotlight__button:hover {
-  background: #d1e7ee;
+.spotlight__cta:hover {
+  background: #B01E2E;
+  /* JHS Red */
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(176, 30, 46, 0.2);
 }
 
-.spotlight__button--active {
-  background: #e8f4f8;
+
+/* =============================================
+   RIGHT COLUMN (LIST)
+   ============================================= */
+.spotlight__right {
+  display: flex;
+  flex-direction: column;
+}
+
+.spotlight__item-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.spotlight__item {
+  padding: 30px 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.spotlight__item:first-child {
+  padding-top: 10px;
+}
+
+.spotlight__item-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.spotlight__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #1a1a1a;
-  font-weight: 700;
+  transition: color 0.3s ease;
 }
 
-/* .spotlight__button--active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: #7c3aed;
-  border-radius: 0 0 0 12px;
-} */
+.spotlight__icon svg {
+  width: 100%;
+  height: 100%;
+}
 
-/* Tablet Styles */
-@media (max-width: 768px) {
+.spotlight__item:hover .spotlight__icon {
+  color: #B01E2E;
+  /* JHS Red */
+}
+
+.spotlight__item-title {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1a2a40;
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.spotlight__item:hover .spotlight__item-title {
+  color: #B01E2E;
+}
+
+.spotlight__item-desc {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 90%;
+  padding-left: 48px;
+  /* aligns text with the title by skipping icon (32px) + gap (16px) */
+}
+
+.spotlight__divider {
+  height: 1px;
+  width: 100%;
+  background-color: #e2e8f0;
+}
+
+
+/* =============================================
+   RESPONSIVE LAYOUT
+   ============================================= */
+
+@media (max-width: 992px) {
+  .spotlight__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .spotlight__left {
+    position: relative;
+    top: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .spotlight__desc {
+    max-width: 100%;
+  }
+
+  .spotlight__item {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .spotlight__item:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 576px) {
   .spotlight {
-    padding: 40px 20px;
+    padding: 60px 15px;
   }
 
   .spotlight__title {
     font-size: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
   }
 
-  .spotlight__buttons {
-    gap: 15px;
-  }
-
-  .spotlight__button {
-    padding: 14px 24px;
+  .spotlight__desc {
     font-size: 0.95rem;
-    min-width: 140px;
-  }
-}
-
-/* Mobile Styles */
-@media (max-width: 480px) {
-  .spotlight {
-    padding: 30px 15px;
+    margin-bottom: 24px;
   }
 
-  .spotlight__title {
-    font-size: 1.75rem;
-    margin-bottom: 25px;
+  .spotlight__item-title {
+    font-size: 1.25rem;
   }
 
-  .spotlight__buttons {
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    gap: 12px;
-  }
-
-  .spotlight__button {
-    width: 100%;
-    padding: 12px 20px;
+  .spotlight__item-desc {
     font-size: 0.9rem;
-    min-width: auto;
+    padding-left: 0;
+    margin-top: 8px;
   }
 
-  .spotlight__button--active::before {
-    width: 3px;
-  }
-}
-
-/* Large Desktop Styles */
-@media (min-width: 1400px) {
-  .spotlight__container {
-    max-width: 1400px;
+  .spotlight__item {
+    padding: 24px 0;
   }
 
-  .spotlight__title {
-    font-size: 3rem;
-  }
-
-  .spotlight__button {
-    font-size: 1.1rem;
-    padding: 18px 36px;
-    min-width: 180px;
+  .spotlight__item-header {
+    margin-bottom: 0;
   }
 }

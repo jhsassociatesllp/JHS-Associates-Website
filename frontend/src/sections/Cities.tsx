@@ -46,7 +46,7 @@ const citiesList = [
   {
     name: "Kolkata",
     address: "Salt Lake City",
-    image: { Kolkata },
+    image: Kolkata,
   },
   {
     name: "Chennai",

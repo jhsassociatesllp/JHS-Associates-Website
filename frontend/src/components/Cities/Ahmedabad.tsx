@@ -111,9 +111,14 @@ const SPECIALIZATIONS = [
 /* ─── Map Locations ───────────────────────────────── */
 const MAP_LOCATIONS = [
   {
-    id: 'ahmedabad', name: 'Ahmedabad (Head Office)', tag: 'Head Office',
+    id: 'ahmedabad', name: 'Ahmedabad ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin',
     address: '1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059'
+  },
+  {
+    id: 'vadodara', name: 'Vadodara', tag: 'Branch',
+    mapUrl: 'https://maps.google.com/maps?q=Lila%20Chambers,%20Notus%20Pride,%20Vadodara,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023'
   },
   {
     id: 'vapi', name: 'Vapi', tag: 'Branch',
@@ -173,7 +178,7 @@ export default function Ahmedabad() {
         </div>
         <div className="ahm-hero__card">
           <div className="ahm-hero__card-left">
-            <span className="ahm-hero__card-badge">Head Office — Ahmedabad</span>
+            <span className="ahm-hero__card-badge">Ahmedabad</span>
             <div className="ahm-hero__card-addr">
               <IconPin />
               <span>1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059</span>
@@ -191,7 +196,7 @@ export default function Ahmedabad() {
       {/* ══ STATS RIBBON ══ */}
       <div className="ahm-ribbon">
         <div className="ahm-ribbon__inner">
-          {([['10+', 'Expert Partners'], ['6', 'Sectors Served'], ['7+', 'Specialisations'], ['4', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['10+', 'Expert Partners'], ['6', 'Sectors Served'], ['7+', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="ahm-ribbon__item">
               <span className="ahm-ribbon__num">{num}</span>
               <span className="ahm-ribbon__lbl">{lbl}</span>
@@ -284,7 +289,7 @@ export default function Ahmedabad() {
             {MAP_LOCATIONS.map(loc => (
               <button key={loc.id} className={`ahm-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`} onClick={() => setActiveLocation(loc)}>
                 <IconPin /><span>{loc.name}</span>
-                {loc.tag === 'Head Office' && <span className="ahm-map-tab__badge">HQ</span>}
+                {/* {loc.tag === '' && <span className="ahm-map-tab__badge">HQ</span>} */}
               </button>
             ))}
           </div>
@@ -312,9 +317,10 @@ export default function Ahmedabad() {
           </div>
           <div className="ahm-branches-grid">
             {[
-              { name: 'Vapi', num: '01', address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215' },
-              { name: 'Rajkot', num: '02', address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001' },
-              { name: 'Surat', num: '03', address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003' },
+              { name: 'Vadodara', num: '01', address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023' },
+              { name: 'Vapi', num: '02', address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215' },
+              { name: 'Rajkot', num: '03', address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001' },
+              { name: 'Surat', num: '04', address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003' },
             ].map(b => (
               <div key={b.name} className="ahm-branch-card">
                 <div className="ahm-branch-card__num">{b.num}</div>

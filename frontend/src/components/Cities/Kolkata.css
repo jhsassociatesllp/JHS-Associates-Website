@@ -721,13 +721,7 @@
   transition: color 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.kol-sector-card__line {
-  width: 22px;
-  height: 2.5px;
-  border-radius: 3px;
-  background: var(--kol-red, #B01E2E);
-  transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
+
 
 /* ============================================================
    WE SPECIALISE IN

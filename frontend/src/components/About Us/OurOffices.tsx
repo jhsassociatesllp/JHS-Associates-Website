@@ -16,7 +16,7 @@ const OFFICES = [
     isPrimary: true,
     branches: [
       { name: 'Andheri (East) — Head Office', address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059' },
-      { name: 'Borivali', address: '2201-2202, ESSPEE Tower, Opp. Oberoi Sky City, Near Prabhu Hotel, Borivali East, Maharashtra – 400066' },
+      { name: 'Mazgaon', address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010' },
       { name: 'Masjid Bunder', address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra – 400009" },
       { name: 'Kalyan', address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301' },
     ],
@@ -78,20 +78,6 @@ const OFFICES = [
     ],
   },
   {
-    city: 'Vadodara',
-    badge: 'Cultural Capital Office',
-    state: 'Gujarat',
-    route: '/city/vadodara',
-    phone: '+91 265 1234 5678',
-    email: 'vadodara@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
-    isPrimary: false,
-    branches: [
-      { name: 'Alkapuri — Head Office', address: '301, 3rd Floor, Kumar Plaza, Alkapuri, Vadodara, Gujarat – 390007' },
-      { name: 'Fatehgunj', address: '102, Dev Complex, Near BSNL Office, Fatehgunj, Vadodara, Gujarat – 390002' },
-    ],
-  },
-  {
     city: 'Kolkata',
     badge: 'Eastern India Gateway',
     state: 'West Bengal',
@@ -119,6 +105,21 @@ const OFFICES = [
       { name: 'Anna Nagar', address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102' },
     ],
   },
+  {
+    city: 'Global',
+    badge: 'International Offices',
+    state: 'Worldwide',
+    route: '/city/global',
+    phone: '',
+    email: 'global@jhsassociates.in',
+    hours: 'Mon–Fri, 9:00 AM – 6:00 PM',
+    isPrimary: false,
+    branches: [
+      { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },
+      { name: 'Muscat, Oman', address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman' },
+      { name: 'Amersham, UK', address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom' },
+    ],
+  }
 ]
 
 /* ─── Icons ───────────────────────────────────────────────── */

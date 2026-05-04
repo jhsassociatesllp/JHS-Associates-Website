@@ -72,7 +72,7 @@ const SPECIALIZATIONS = [
 /* ─── Map Locations ───────────────────────────────── */
 const MAP_LOCATIONS = [
   {
-    id: 'delhi', name: 'Delhi (Head Office)', tag: 'Head Office',
+    id: 'delhi', name: 'Delhi ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin',
     address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048'
   },
@@ -113,7 +113,7 @@ export default function Delhi() {
         </div>
         <div className="del-hero__card">
           <div className="del-hero__card-left">
-            <span className="del-hero__card-badge">Head Office — Greater Kailash-II</span>
+            <span className="del-hero__card-badge"> Greater Kailash-II</span>
             <div className="del-hero__card-addr"><IconPin /><span>306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048</span></div>
           </div>
           <div className="del-hero__card-divider" />
@@ -213,7 +213,7 @@ export default function Delhi() {
             {MAP_LOCATIONS.map(loc => (
               <button key={loc.id} className={`del-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`} onClick={() => setActiveLocation(loc)}>
                 <IconPin /><span>{loc.name}</span>
-                {loc.tag === 'Head Office' && <span className="del-map-tab__badge">HQ</span>}
+                {/* {loc.tag === 'Head Office' && <span className="del-map-tab__badge">HQ</span>} */}
               </button>
             ))}
           </div>

@@ -39,9 +39,9 @@
   position: fixed;
   top: 20px;
   left: 20px;
-  right: 0px;
   width: 23%;
-  z-index: 800;
+  min-width: 320px;
+  z-index: 1000;
   height: var(--nb-h);
   background: #ffffff;
   display: flex;
@@ -49,14 +49,21 @@
   justify-content: space-between;
   padding: 0 32px;
   border-radius: 15px;
-  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nb--scrolled {
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  border-color: var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.nb--open {
+  top: 0 !important;
+  left: 0 !important;
+  width: var(--left-w) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-right: 1px solid var(--border) !important;
 }
 
 .nb__left {
@@ -170,7 +177,7 @@
    ================================================================ */
 .mega {
   position: fixed;
-  top: var(--nb-h);
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -182,6 +189,7 @@
   transition: transform 0.42s var(--ease);
   overflow: hidden;
   pointer-events: none;
+  padding-top: var(--nb-h);
 }
 
 .mega--open {

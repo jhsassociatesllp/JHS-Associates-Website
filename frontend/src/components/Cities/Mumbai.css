@@ -352,7 +352,8 @@
    SECTORS SERVED
    ============================================================ */
 .mum-sectors-section {
-  background: var(--mum-bg);
+  /* background: var(--mum-bg); */
+  background: #ffffff;
   border-bottom: 1px solid var(--mum-border);
 }
 
@@ -589,7 +590,8 @@
    PARTNER CARDS
    ============================================================ */
 .mum-partners-section {
-  background: var(--mum-bg-alt);
+  /* background: var(--mum-bg-alt); */
+  background: #ffffff;
 }
 
 .mum-partners-grid {
@@ -897,9 +899,9 @@
 
 .mum-branches-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  max-width: 820px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -1011,6 +1013,10 @@
   .mum-map-info-card {
     border-left: none;
     border-top: 4px solid var(--mum-red);
+  }
+
+  .mum-branches-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

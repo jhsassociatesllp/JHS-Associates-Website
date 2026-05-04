@@ -69,7 +69,7 @@ import Solutions from './components/Spotlight/Solutions'
 import Mumbai from './components/Cities/Mumbai'
 import Delhi from './components/Cities/Delhi'
 import Bengaluru from './components/Cities/Bengaluru'
-import Vadodara from './components/Cities/Vadodara'
+import Global from './components/Cities/Global'
 import Ahmedabad from './components/Cities/Ahmedabad'
 import Hyderabad from './components/Cities/Hyderabad'
 import Kolkata from './components/Cities/Kolkata'
@@ -134,7 +134,7 @@ export default function App() {
         <Route path="/city/mumbai" element={<Mumbai />} />
         <Route path="/city/delhi" element={<Delhi />} />
         <Route path="/city/bengaluru" element={<Bengaluru />} />
-        <Route path="/city/vadodara" element={<Vadodara />} />
+        <Route path="/city/global" element={<Global />} />
         <Route path="/city/ahmedabad" element={<Ahmedabad />} />
         <Route path="/city/hyderabad" element={<Hyderabad />} />
         <Route path="/city/kolkata" element={<Kolkata />} />

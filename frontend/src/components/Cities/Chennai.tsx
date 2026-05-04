@@ -56,7 +56,7 @@ const SPECIALIZATIONS = [
 
 const MAP_LOCATIONS = [
   {
-    id: 'chennai', name: 'Chennai (Head Office)', tag: 'Head Office',
+    id: 'chennai', name: 'Chennai', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9!2d80.2337!3d13.0416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c07a1e3b3d%3A0x4c9b5e9a8b9a8b9a!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000007',
     address: 'No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017'
   },
@@ -93,7 +93,7 @@ export default function Chennai() {
         </div>
         <div className="chn-hero__card">
           <div className="chn-hero__card-left">
-            <span className="chn-hero__card-badge">Head Office — T. Nagar</span>
+            <span className="chn-hero__card-badge">T. Nagar</span>
             <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
           </div>
           <div className="chn-hero__card-divider" />

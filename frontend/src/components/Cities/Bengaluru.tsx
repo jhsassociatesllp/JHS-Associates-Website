@@ -54,7 +54,7 @@ const SPECIALIZATIONS = [
 
 const MAP_LOCATIONS = [
   {
-    id: 'bengaluru', name: 'Bengaluru (Head Office)', tag: 'Head Office',
+    id: 'bengaluru', name: 'Bengaluru ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.6263!3d12.9352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1680000000005',
     address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037'
   },
@@ -91,7 +91,7 @@ export default function Bengaluru() {
         </div>
         <div className="blr-hero__card">
           <div className="blr-hero__card-left">
-            <span className="blr-hero__card-badge">Head Office — Bengaluru</span>
+            <span className="blr-hero__card-badge">Bengaluru</span>
             <div className="blr-hero__card-addr"><IconPin /><span>3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037</span></div>
           </div>
           <div className="blr-hero__card-divider" />
@@ -186,7 +186,7 @@ export default function Bengaluru() {
             {MAP_LOCATIONS.map(loc => (
               <button key={loc.id} className={`blr-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`} onClick={() => setActiveLocation(loc)}>
                 <IconPin /><span>{loc.name}</span>
-                {loc.tag === 'Head Office' && <span className="blr-map-tab__badge">HQ</span>}
+                {/* {loc.tag === 'Head Office' && <span className="blr-map-tab__badge">HQ</span>} */}
               </button>
             ))}
           </div>

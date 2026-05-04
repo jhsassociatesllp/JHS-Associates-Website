@@ -337,7 +337,8 @@
 
 /* SECTORS */
 .hyd-sectors-section {
-  background: var(--hyd-bg);
+  /* background: var(--hyd-bg); */
+  background: #ffffff;
   border-bottom: 1px solid var(--hyd-border)
 }
 
@@ -376,12 +377,12 @@
   }
 }
 
-.hyd-sector-card:hover {
+/* .hyd-sector-card:hover {
   background: var(--hyd-navy);
   border-color: var(--hyd-navy);
   transform: translateY(-6px);
   box-shadow: var(--hyd-shadow-lg)
-}
+} */
 
 .hyd-sector-card__icon-wrap {
   width: 56px;
@@ -398,9 +399,9 @@
   height: 44px
 }
 
-.hyd-sector-card:hover .hyd-sector-card__icon-wrap {
+/* .hyd-sector-card:hover .hyd-sector-card__icon-wrap {
   color: #fff
-}
+} */
 
 .hyd-sector-card__label {
   font-size: 0.72rem;
@@ -412,22 +413,11 @@
   transition: color var(--hyd-dur) var(--hyd-ease)
 }
 
-.hyd-sector-card:hover .hyd-sector-card__label {
+/* .hyd-sector-card:hover .hyd-sector-card__label {
   color: #fff
-}
+} */
 
-.hyd-sector-card__line {
-  width: 22px;
-  height: 2.5px;
-  border-radius: 3px;
-  background: var(--hyd-red);
-  transition: background var(--hyd-dur) var(--hyd-ease), width var(--hyd-dur) var(--hyd-ease)
-}
 
-.hyd-sector-card:hover .hyd-sector-card__line {
-  background: rgba(255, 255, 255, 0.45);
-  width: 36px
-}
 
 /* SPECIALISE */
 .hyd-specials-section {
@@ -570,7 +560,7 @@
 
 /* PARTNERS */
 .hyd-partners-section {
-  background: var(--hyd-bg-alt)
+  background: #ffffff;
 }
 
 .hyd-partners-grid {

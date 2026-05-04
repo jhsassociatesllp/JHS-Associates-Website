@@ -6,7 +6,7 @@ import "./Cities.css";
 import Mumbai from '../image/Mumbai.jpg'
 import Delhi from '../image/Dehli.avif'
 import Bengaluru from '../image/Bengluru.avif'
-import Vadodara from '../image/Vadodara.jpg'
+import GlobalOffices from '../image/4-1.png.webp'
 import Ahmedabad from '../image/Ahmedabad.jpg'
 import Hyderabad from '../image/Hydrabad.jpg'
 import Kolkata from '../image/Kolkata.jpg'
@@ -29,11 +29,6 @@ const citiesList = [
     image: Bengaluru,
   },
   {
-    name: "Vadodara",
-    address: "Kalyani Nagar",
-    image: Vadodara,
-  },
-  {
     name: "Ahmedabad",
     address: "SG Highway",
     image: Ahmedabad,
@@ -53,6 +48,11 @@ const citiesList = [
     address: "T Nagar",
     image: Chennai,
   },
+  {
+    name: "Global",
+    address: "International",
+    image: GlobalOffices,
+  }
 ];
 
 export default function Cities() {

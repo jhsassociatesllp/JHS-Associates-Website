@@ -337,7 +337,8 @@
 
 /* SECTORS */
 .blr-sectors-section {
-  background: var(--blr-bg);
+  /* background: var(--blr-bg); */
+  background: #ffffff;
   border-bottom: 1px solid var(--blr-border)
 }
 
@@ -376,12 +377,12 @@
   }
 }
 
-.blr-sector-card:hover {
+/* .blr-sector-card:hover {
   background: var(--blr-navy);
   border-color: var(--blr-navy);
   transform: translateY(-6px);
   box-shadow: var(--blr-shadow-lg)
-}
+} */
 
 .blr-sector-card__icon-wrap {
   width: 56px;
@@ -398,9 +399,9 @@
   height: 44px
 }
 
-.blr-sector-card:hover .blr-sector-card__icon-wrap {
+/* .blr-sector-card:hover .blr-sector-card__icon-wrap {
   color: #fff
-}
+} */
 
 .blr-sector-card__label {
   font-size: 0.72rem;
@@ -412,22 +413,19 @@
   transition: color var(--blr-dur) var(--blr-ease)
 }
 
-.blr-sector-card:hover .blr-sector-card__label {
+/* .blr-sector-card:hover .blr-sector-card__label {
   color: #fff
-}
+} */
 
-.blr-sector-card__line {
+/* .blr-sector-card__line {
   width: 22px;
   height: 2.5px;
   border-radius: 3px;
   background: var(--blr-red);
   transition: background var(--blr-dur) var(--blr-ease), width var(--blr-dur) var(--blr-ease)
-}
+} */
 
-.blr-sector-card:hover .blr-sector-card__line {
-  background: rgba(255, 255, 255, 0.45);
-  width: 36px
-}
+
 
 /* SPECIALISE */
 .blr-specials-section {
@@ -570,7 +568,8 @@
 
 /* PARTNERS */
 .blr-partners-section {
-  background: var(--blr-bg-alt)
+  /* background: var(--blr-bg-alt) */
+  background: #ffffff;
 }
 
 .blr-partners-grid {

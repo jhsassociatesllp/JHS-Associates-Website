@@ -58,7 +58,7 @@ const SPECIALIZATIONS = [
 
 const MAP_LOCATIONS = [
   {
-    id: 'hyderabad', name: 'Hyderabad (Head Office)', tag: 'Head Office',
+    id: 'hyderabad', name: 'Hyderabad ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.3!2d78.3722!3d17.4474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dc8c5d69df%3A0x19688bef76177fe5!2sHiTech%20City%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1680000000003!5m2!1sen!2sin',
     address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016'
   },
@@ -95,7 +95,7 @@ export default function Hyderabad() {
         </div>
         <div className="hyd-hero__card">
           <div className="hyd-hero__card-left">
-            <span className="hyd-hero__card-badge">Head Office — Hyderabad</span>
+            <span className="hyd-hero__card-badge">Hyderabad</span>
             <div className="hyd-hero__card-addr"><IconPin /><span>6-3-788/36 &amp; 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016</span></div>
           </div>
           <div className="hyd-hero__card-divider" />
@@ -190,7 +190,7 @@ export default function Hyderabad() {
             {MAP_LOCATIONS.map(loc => (
               <button key={loc.id} className={`hyd-map-tab ${activeLocation.id === loc.id ? 'active' : ''}`} onClick={() => setActiveLocation(loc)}>
                 <IconPin /><span>{loc.name}</span>
-                {loc.tag === 'Head Office' && <span className="hyd-map-tab__badge">HQ</span>}
+                {/* {loc.tag === 'Head Office' && <span className="hyd-map-tab__badge">HQ</span>} */}
               </button>
             ))}
           </div>

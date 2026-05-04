@@ -132,7 +132,7 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 
 /* ─── Sectors ─────────────────────────────────────── */
-const SECTORS = ["Real Estate","Infrastructure","FMCG","Retail","Family-Owned Business"]
+const SECTORS = ["Real Estate", "Infrastructure", "FMCG", "Retail", "Family-Owned Business"]
 
 /* ─── Specialisations ─────────────────────────────── */
 const SPECIALIZATIONS = [
@@ -154,7 +154,7 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'kolkata',
-    name: 'Kolkata (Head Office)',
+    name: 'Kolkata',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
     address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
   },
@@ -232,7 +232,7 @@ export default function Kolkata() {
         </div>
         <div className="kol-hero__card">
           <span className="kol-hero__card-brand">JHS</span>
-          <div className="kol-hero__card-badge">Head Office</div>
+          <div className="kol-hero__card-badge"> Office</div>
           <div className="kol-hero__card-body">
             <div className="kol-hero__card-addr">
               <IconPin />
@@ -262,7 +262,7 @@ export default function Kolkata() {
         </div>
       </section>
 
-            {/* ════════════ SECTORS SERVED ════════════ */}
+      {/* ════════════ SECTORS SERVED ════════════ */}
       <section className="kol-section kol-sectors-section">
         <div className="kol-container">
           <div className="kol-section-hdr">

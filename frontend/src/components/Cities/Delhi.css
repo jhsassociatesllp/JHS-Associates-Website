@@ -337,7 +337,8 @@
 
 /* SECTORS */
 .del-sectors-section {
-  background: var(--del-bg);
+  /* background: var(--del-bg); */
+  background: #ffffff;
   border-bottom: 1px solid var(--del-border)
 }
 
@@ -374,12 +375,12 @@
   }
 }
 
-.del-sector-card:hover {
+/* .del-sector-card:hover {
   background: var(--del-navy);
   border-color: var(--del-navy);
   transform: translateY(-6px);
   box-shadow: var(--del-shadow-lg)
-}
+} */
 
 .del-sector-card__icon-wrap {
   width: 56px;
@@ -396,9 +397,9 @@
   height: 44px
 }
 
-.del-sector-card:hover .del-sector-card__icon-wrap {
+/* .del-sector-card:hover .del-sector-card__icon-wrap {
   color: #fff
-}
+} */
 
 .del-sector-card__label {
   font-size: 0.72rem;
@@ -410,22 +411,11 @@
   transition: color var(--del-dur) var(--del-ease)
 }
 
-.del-sector-card:hover .del-sector-card__label {
+/* .del-sector-card:hover .del-sector-card__label {
   color: #fff
-}
+} */
 
-.del-sector-card__line {
-  width: 22px;
-  height: 2.5px;
-  border-radius: 3px;
-  background: var(--del-red);
-  transition: background var(--del-dur) var(--del-ease), width var(--del-dur) var(--del-ease)
-}
 
-.del-sector-card:hover .del-sector-card__line {
-  background: rgba(255, 255, 255, 0.45);
-  width: 36px
-}
 
 /* SPECIALISE */
 .del-specials-section {

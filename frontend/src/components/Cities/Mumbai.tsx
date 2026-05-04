@@ -141,6 +141,11 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://maps.google.com/maps?q=Regency%20Avenue,%20Syndicate%20Bus%20Stop,%20Kalyan%20West,%20Maharashtra%20421301&t=&z=15&ie=UTF8&iwloc=&output=embed',
     address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301'
   },
+  {
+    id: 'mazgaon', name: 'Mazgaon', tag: 'Branch',
+    mapUrl: 'https://maps.google.com/maps?q=New%20Sai%20Niketan%20CHS%20Ltd.,%20Dr.%20Mascarenhas%20Road,%20Mazgaon,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed',
+    address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010'
+  }
 ]
 
 /* ─── Inline Icons ───────────────────────────────── */
@@ -202,7 +207,7 @@ export default function Mumbai() {
       {/* ══ STATS RIBBON ══ */}
       <div className="mum-ribbon">
         <div className="mum-ribbon__inner">
-          {([['9+', 'Expert Partners'], ['7', 'Sectors Served'], ['13+', 'Specialisations'], ['3', 'Mumbai Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['9+', 'Expert Partners'], ['7', 'Sectors Served'], ['13+', 'Specialisations'], ['4', 'Mumbai Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="mum-ribbon__item">
               <span className="mum-ribbon__num">{num}</span>
               <span className="mum-ribbon__lbl">{lbl}</span>
@@ -325,6 +330,7 @@ export default function Mumbai() {
             {[
               { name: 'Masjid', num: '01', address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra – 400009" },
               { name: 'Kalyan', num: '02', address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301' },
+              { name: 'Mazgaon', num: '03', address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010' }
             ].map(b => (
               <div key={b.name} className="mum-branch-card">
                 <div className="mum-branch-card__num">{b.num}</div>

@@ -261,7 +261,7 @@ const Navbar = () => {
   return (
     <>
       {/* ══════════════ TOP NAVBAR ══════════════ */}
-      <header className={`nb ${scrolled ? "nb--scrolled" : ""}`}>
+      <header className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""}`}>
         <div className="nb__left">
           <button
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}

@@ -73,7 +73,7 @@ export default function Spotlight() {
           </p>
           <button
             className="spotlight__cta"
-            onClick={() => navigate('/solutions')}
+            onClick={() => navigate('/about/leadership')}
           >
             EXPLORE EXPERTISE
           </button>
@@ -83,7 +83,7 @@ export default function Spotlight() {
         <div className="spotlight__right">
           {spotlightItems.map((item, index) => (
             <div key={item.id} className="spotlight__item-wrapper">
-              <div 
+              <div
                 className="spotlight__item"
                 onClick={() => navigate(item.path)}
                 role="button"

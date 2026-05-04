@@ -145,7 +145,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Our Story", description: "History & founding vision", href: "/know-us/our-story" },
       { label: "Mission & Vision", description: "What drives us", href: "/know-us/mission-vision" },
       { label: "Leadership", description: "Meet the partners", href: "/know-us/leadership" },
-      { label: "Culture", description: "Our values & ways of working", href: "/know-us/culture" },
+      // { label: "Culture", description: "Our values & ways of working", href: "/know-us/culture" },
       // { label: "Partnerships", description: "Strategic alliances & networks", href: "/know-us/partnerships" },
       { label: "Awards", description: "Recognition & accolades", href: "/know-us/awards" },
     ],
@@ -156,9 +156,9 @@ const NAV_ITEMS: NavItem[] = [
     subLabel: "About Us",
     subDesc: "JHS & Associates LLP — your trusted partners in finance.",
     subItems: [
-      { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
+      // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
-      { label: "Global Presence", description: "Our international footprint", href: '/about/global-presence' },
+      // { label: "Global Presence", description: "Our international footprint", href: '/about/global-presence' },
       { label: "Leadership Team", description: "Board & senior partners", href: '/about/leadership' },
       { label: "Careers", description: "Join our growing team", href: '/about/careers' },
       // { label: "CSR", description: "Our social responsibility", href: '/about/csr' },
@@ -167,16 +167,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: "contact",
     label: "Contact",
-    subLabel: "Contact",
-    subDesc: "Get in touch with our team — we're here to help.",
-    subItems: [
-      { label: "General Enquiry", description: "Write to us", href: '/contact' },
-      // { label: "Media Relations", description: "Press & publications" },
-      // { label: "Investor Relations", description: "For our stakeholders" },
-      // { label: "Mumbai Office", description: "+91 22 0000 0000" },
-      // { label: "Delhi Office", description: "+91 11 0000 0000" },
-      // { label: "Bangalore Office", description: "+91 80 0000 0000" },
-    ],
+    href: '/contact',
   },
 ];
 

@@ -90,7 +90,8 @@
 }
 
 .vad-hero__title {
-  font-size: clamp(3.4rem, 9vw, 8rem);
+  /* font-size: clamp(3.4rem, 9vw, 8rem); */
+  font-size: 6.5rem;
   font-weight: 800;
   color: var(--vad-white);
   letter-spacing: -0.04em;

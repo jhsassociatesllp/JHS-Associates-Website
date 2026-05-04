@@ -5,7 +5,7 @@
 .insights {
   position: relative;
   background-color: #ffffff;
-  padding: 100px 48px;
+  padding: 80px 48px;
   font-family: var(--font-body, "DM Sans", "Helvetica Neue", sans-serif);
 }
 
@@ -14,8 +14,8 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.25fr 1fr;
-  gap: 32px;
-  min-height: 640px;
+  gap: 24px;
+  min-height: 480px;
 }
 
 /* Base Card Styles */
@@ -48,6 +48,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 16px;
+  color: #f7f6f2;
 }
 
 .insights__eyebrow--light {
@@ -63,10 +64,10 @@
 .insights__title {
   font-family: var(--font-body, "DM Sans", sans-serif);
   /* BCG style usually uses sans-serif for these blocks */
-  font-size: clamp(28px, 3.5vw, 44px);
+  font-size: clamp(24px, 2.5vw, 36px);
   font-weight: 500;
   line-height: 1.15;
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
   letter-spacing: -0.02em;
 }
 
@@ -120,7 +121,7 @@
    ───────────────────────────────────────────── */
 
 .insights__card--blogs {
-  padding: 48px;
+  padding: 40px;
   background-color: #1e3a5f;
 }
 
@@ -152,7 +153,7 @@
 .insights__right-col {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   height: 100%;
 }
 
@@ -160,7 +161,7 @@
   flex: 1;
   background-color: #f7f6f2;
   /* Soft beige/off-white */
-  padding: 40px 48px;
+  padding: 32px 40px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -173,13 +174,13 @@
 }
 
 .insights__card--podcast .insights__title {
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(20px, 2vw, 28px);
   max-width: 90%;
 }
 
 .insights__podcast-icon {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: #ffffff;
   display: flex;
@@ -193,7 +194,7 @@
   flex: 1;
   background-color: #111111;
   /* Very dark */
-  padding: 40px 48px;
+  padding: 32px 40px;
   position: relative;
 }
 
@@ -202,7 +203,7 @@
 }
 
 .insights__card--excellancia .insights__title {
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(20px, 2vw, 28px);
 }
 
 .insights__excellancia-bg {
@@ -222,12 +223,12 @@
   }
 
   .insights__card--blogs {
-    min-height: 480px;
+    min-height: 400px;
   }
 
   .insights__card--podcast,
   .insights__card--excellancia {
-    min-height: 380px;
+    min-height: 280px;
   }
 }
 

@@ -116,7 +116,8 @@
 }
 
 .chn-hero__title {
-  font-size: clamp(3rem, 10vw, 8.5rem);
+  /* font-size: clamp(3rem, 10vw, 8.5rem); */
+  font-size: 6.5rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.03em;
@@ -135,7 +136,7 @@
   position: relative;
   z-index: 4;
   background: #fff;
-  border-radius: 16px 16px 0 0;
+  border-radius: 16px;
   border-top: 3px solid var(--chn-red);
   padding: 26px 36px 28px;
   width: min(900px, 94vw);
@@ -143,6 +144,7 @@
   align-items: center;
   gap: 0;
   box-shadow: 0 -6px 32px rgba(0, 0, 0, 0.14);
+  margin-bottom: 3rem;
   animation: chncardUp 0.7s 0.2s var(--chn-ease) both
 }
 

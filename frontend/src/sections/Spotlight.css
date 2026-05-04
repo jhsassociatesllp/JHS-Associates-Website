@@ -76,6 +76,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 27px;
 }
 
 .spotlight__cta:hover {

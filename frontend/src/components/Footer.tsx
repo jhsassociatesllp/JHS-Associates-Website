@@ -1,13 +1,14 @@
 import './Footer.css'
 import { Link } from 'react-router-dom'
 import { MapPin, Mail, Phone } from 'lucide-react'
+import JHS_logo from '../image/logo.png'
 
 /* ─── Column Data ────────────────────────────────────── */
 const INSIGHTS = [
-  { name: 'Thought Leadership', path: '/insights/thought-leadership' },
-  { name: 'Resources', path: '/insights/resources' },
-  { name: 'Articles', path: '/insights/articles' },
-  { name: 'Case Studies', path: '/insights/case-studies' },
+  { name: 'Thought Leadership', path: '/thought-leadership' },
+  { name: 'Resources', path: '/resources' },
+  { name: 'Articles', path: '/articles' },
+  { name: 'Case Studies', path: '/case-studies' },
 ]
 
 const USEFUL_LINKS = [
@@ -95,7 +96,7 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <img src="/src/image/logo.png" alt="JHS & Associates LLP" />
+              <img src={JHS_logo} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
               Trusted chartered accountants and advisory partners for businesses across India.

@@ -18,7 +18,7 @@ export default function OurStory() {
             From humble beginnings to becoming a leading Pan-India advisory network.
           </p>
         </div>
-        
+
         {/* Stats bar */}
         <div className="ap-hero__stats">
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">1992</span><span className="ap-hero__stat-label">Year Founded</span></div>
@@ -32,7 +32,7 @@ export default function OurStory() {
       {/* ════ CONTENT ════ */}
       <section className="ap-content">
         <div className="ap-container">
-          
+
           <div className="ap-grid">
             <div className="ap-grid-left">
               <h2>A Legacy of Trust</h2>

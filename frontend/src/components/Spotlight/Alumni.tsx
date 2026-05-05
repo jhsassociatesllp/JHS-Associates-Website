@@ -3,49 +3,30 @@ import './SpotlightPages.css';
 import './Alumni.css';
 import heroImg from '../../image/WebPoster3.jpeg';
 import imgRiddhi from '../../image/Riddhi Kishnadwala.jpeg'
+import imgPrernaJain from '../../image/Prerna Jain.jpeg'
+import imgAnkitMehta from '../../image/Ankit Mehta.jpeg'
 
 const ALUMNI_PROFILES = [
   {
     id: 1,
-    name: "Riddhi Kishnadwala ",
+    name: "Riddhi Kishnadwala",
     role: "Former Audit Partner",
     desc: "JHS was my first job post CA qualification. It was a great learning experience and guidance was provided whenever needed. Executional excellence and quality deliverables were the key corners of all the projects I worked on. A good place to learn and grow.",
     image: imgRiddhi
   },
   {
     id: 2,
-    name: "Priya Sharma",
+    name: "Prerna Jain",
     role: "Ex-Director, Tax Advisory",
-    desc: "During her tenure, Priya spearheaded complex cross-border taxation strategies. She recently founded a fintech startup aimed at simplifying corporate tax compliances for emerging enterprises.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+    desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
+    image: imgPrernaJain
   },
   {
     id: 3,
-    name: "Karan Mehta",
+    name: "Ankit Mehta",
     role: "Alumnus, Consulting",
-    desc: "Karan's strategic insights helped scale our management consulting wing. Today, he leads a boutique venture capital fund focused on sustainable investments in the Asia-Pacific region.",
-    image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-  },
-  {
-    id: 4,
-    name: "Sneha Patel",
-    role: "Former Lead, IT Risk",
-    desc: "A trailblazer in cybersecurity audits, Sneha transitioned from JHS to become the Global Head of Information Security at a top-tier retail bank, securing data across millions of transactions.",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-  },
-  {
-    id: 5,
-    name: "Vikram Singh",
-    role: "Ex-Manager, M&A",
-    desc: "Vikram was instrumental in driving our early M&A advisory success. He is now a Managing Director at a prominent investment bank in London, executing high-value cross-border deals.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-  },
-  {
-    id: 6,
-    name: "Ananya Rao",
-    role: "Alumna, Corporate Advisory",
-    desc: "After laying the groundwork for our sustainability advisory practice, Ananya founded a non-profit organization dedicated to advancing ESG compliance in developing nations.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+    desc: "At JHS, I was entrusted with responsibilities in Internal Audit despite starting from scratch, which accelerated my learning. The freedom to work independently, along with consistent support, helped me build confidence and leadership abilities.",
+    image: imgAnkitMehta
   }
 ];
 
@@ -60,6 +41,26 @@ interface AlumniFormData {
   last_role: string;
   message: string;
 }
+
+const IconMail = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+    <polyline points="22,6 12,13 2,6"></polyline>
+  </svg>
+)
+
+const IconPhone = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+  </svg>
+)
+
+const IconPin = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+    <circle cx="12" cy="10" r="3"></circle>
+  </svg>
+)
 
 export default function Alumni() {
   const [formData, setFormData] = useState<AlumniFormData>({
@@ -110,66 +111,106 @@ export default function Alumni() {
   return (
     <div className="sp-page">
       {/* Hero Section */}
-      <section className="sp-hero">
+      <section className="alumni-hero">
         <div
-          className="sp-hero__bg"
+          className="alumni-hero__bg"
           style={{ backgroundImage: `url(${heroImg})` }}
         />
-        <div className="sp-hero__overlay" />
-        <div className="sp-container">
-          <div className="sp-hero__content">
-            <span className="sp-eyebrow">Spotlight</span>
-            <h1 className="sp-title">Alumni Network</h1>
-            <p className="sp-subtitle">
-              Welcome to the JHS Alumni portal. A lifelong community where former colleagues connect, collaborate, and continue to grow alongside our firm's global journey.
-            </p>
+        <div className="alumni-hero__overlay" />
+        <div className="alumni-hero__content">
+          <span className="alumni-hero__eyebrow">EST. 1981</span>
+          <h1 className="alumni-hero__title">Celebrating Our Legacy, Connecting Our Future</h1>
+          <p className="alumni-hero__subtitle">
+            A global network of excellence, bringing together generations of leaders, innovators, and visionaries from around the world.
+          </p>
+          <div className="alumni-hero__actions">
+            <button
+              onClick={() => {
+                document.getElementById('alumni-directory')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="alumni-hero__btn alumni-hero__btn--primary"
+            >
+              Explore Directory
+            </button>
+            <a href="/about/story" className="alumni-hero__btn alumni-hero__btn--secondary">
+              Our History
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Alumni Profiles Section */}
-      <section className="alumni-section">
-        <div className="sp-container">
+      {/* Alumni Directory Section */}
+      <section id="alumni-directory" className="alumni-section">
+        <div className="alumni-container">
           <div className="alumni-header">
-            <h2>Our Distinguished Alumni</h2>
-            <p>
-              Meet the exceptional individuals who have shaped our legacy and continue to make waves across industries globally.
-            </p>
+            <div className="alumni-header-left">
+              <h2>Alumni Directory</h2>
+              <p>
+                Discover the achievements of our distinguished alumni. Our network spans diverse industries, reflecting the core values established during their time at JHS.
+              </p>
+            </div>
           </div>
 
           <div className="alumni-grid">
             {ALUMNI_PROFILES.map((profile) => (
               <div key={profile.id} className="alumni-card">
-                <div className="alumni-card__image-wrapper">
-                  <img
-                    src={profile.image}
-                    alt={profile.name}
-                    className="alumni-card__image"
-                    loading="lazy"
-                  />
+                <div className="alumni-card__top">
+                  <div className="alumni-card__image-wrapper">
+                    <img
+                      src={profile.image}
+                      alt={profile.name}
+                      className="alumni-card__image"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="alumni-card__info">
+                    <h3 className="alumni-card__name">{profile.name}</h3>
+                    <span className="alumni-card__badge">Alumnus</span>
+                  </div>
                 </div>
-                <div className="alumni-card__content">
-                  <h3 className="alumni-card__name">{profile.name}</h3>
-                  <div className="alumni-card__role">{profile.role}</div>
-                  <p className="alumni-card__desc">{profile.desc}</p>
-                </div>
+
+                <div className="alumni-card__role">{profile.role}</div>
+                <p className="alumni-card__desc">"{profile.desc}"</p>
+
+                <a href="#" className="alumni-card__link">
+                  View Profile &rarr;
+                </a>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Alumni Registration Form Section */}
-      <section className="alumni-form-section">
-        <div className="sp-container">
-          <div className="alumni-form-container">
-            <div className="alumni-form-header">
-              <h2>Join the Network</h2>
-              <p>Register or update your details to stay connected with our community.</p>
+      {/* Connect / Form Section */}
+      <section className="alumni-connect-section">
+        <div className="alumni-connect-layout">
+
+          <div className="alumni-connect-info">
+            <h2>Stay Connected</h2>
+            <p>
+              Whether you're looking to mentor current professionals, organize a reunion, or simply update your contact details, your presence in our network is what keeps this legacy alive.
+            </p>
+            <div className="alumni-contact-list">
+              <div className="alumni-contact-item">
+                <IconMail />
+                <span>connect@jhsassociates.in</span>
+              </div>
+              <div className="alumni-contact-item">
+                <IconPhone />
+                <span>+91 22 2345 6789</span>
+              </div>
+              <div className="alumni-contact-item">
+                <IconPin />
+                <span>JHS & Associates LLP, Head Office, Mumbai</span>
+              </div>
             </div>
+          </div>
+
+          <div className="alumni-form-wrapper">
+            <h3>Join the Network</h3>
 
             {submitted && (
-              <div className="alumni-success-msg" style={{ backgroundColor: '#e6ffe6', color: '#006600', padding: '15px', borderRadius: '5px', marginBottom: '20px', textAlign: 'center' }}>
+              <div style={{ backgroundColor: '#e6ffe6', color: '#006600', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
                 Registration submitted successfully! Thank you for staying connected.
               </div>
             )}
@@ -178,22 +219,22 @@ export default function Alumni() {
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="first_name">First Name</label>
-                  <input type="text" id="first_name" name="first_name" value={formData.first_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter Your Name" required />
+                  <input type="text" id="first_name" name="first_name" value={formData.first_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter your first name" required />
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="last_name">Last Name</label>
-                  <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter Your Last Name" required />
+                  <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter your last name" required />
                 </div>
               </div>
 
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="alumni-form-input" placeholder="Enter Your Email Address" required />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="alumni-form-input" placeholder="name@email.com" required />
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="alumni-form-input" placeholder="Enter Your Phone Number" />
+                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="alumni-form-input" placeholder="+91 XXXX XXXXXX" />
                 </div>
               </div>
 
@@ -215,20 +256,21 @@ export default function Alumni() {
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="last_role">Last Role at JHS</label>
-                  <input type="text" id="last_role" name="last_role" value={formData.last_role} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Senior Manager - Audit" required />
+                  <input type="text" id="last_role" name="last_role" value={formData.last_role} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Senior Manager" required />
                 </div>
               </div>
 
               <div className="alumni-form-group">
-                <label htmlFor="message">Message / Update (Optional)</label>
-                <textarea id="message" name="message" value={formData.message} onChange={handleChange} className="alumni-form-input" placeholder="Share a brief update on what you've been up to..."></textarea>
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} className="alumni-form-input" placeholder="Tell us how you'd like to get involved..."></textarea>
               </div>
 
               <button type="submit" className="alumni-form-submit" disabled={loading}>
-                {loading ? "Submitting..." : "Submit Registration"}
+                {loading ? "Sending..." : "Send Connection Request"}
               </button>
             </form>
           </div>
+
         </div>
       </section>
     </div>

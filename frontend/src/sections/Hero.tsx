@@ -40,7 +40,7 @@ const cards: Card[] = [
     category: "RESOURCES",
     meta: "Resources • April 27, 2026",
     title: "The Rule 6 Maze: A Boardroom Perspective on Data Governance in India",
-    hoverTitle: "Infrastructure Strategy 2026",
+    hoverTitle: "The Rule 6 Maze:",
     hoverDescription:
       "This strategic briefing examines the evolving role of data governance under the Digital Personal Data Protection (DPDP) framework, with a focused lens on Rule 6 and its implications for CEOs, Boards, and senior leadership. It highlights the shift from treating data privacy as a compliance function to positioning it as a critical element of governance, accountability, and institutional trust.",
   },

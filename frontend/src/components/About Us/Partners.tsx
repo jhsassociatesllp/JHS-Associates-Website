@@ -27,6 +27,8 @@ import alpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
 import raj from '../../image/Raj-Shah-removebg-preview.png'
 import saurabh from '../../image/Saurabh-Shah-removebg-preview.png'
 import disha from '../../image/Disha Shah-removebg-preview.png'
+import Dhanlaxmi from '../../image/Dhanlaxmi.png'
+import Vinod from '../../image/Vinod Joshi.png'
 
 const PARTNER_DATA = [
   {
@@ -37,32 +39,32 @@ const PARTNER_DATA = [
         image: huzeifa,
         creds: "FCA, CISA, ISO 27001, NISM, Social Auditor",
         desc: "Specializes in IT risk governance, cyber security frameworks, and complex systems audits across BFSI sectors.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/"
       },
       {
         name: "Nikhel Kochhar",
         image: nikhel,
         creds: "FCA, CIA",
         desc: "Over 25 years of expertise in internal audits, corporate governance, and strategic management consulting.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/nikhel-kochhar"
       },
       {
         name: "Kalpesh Parmar",
         image: kalpesh,
         creds: "B.Com (Hons), FCA",
         desc: "Leads the statutory audit practice. Expert in Ind AS implementation and complex consolidation for listed entities.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/kalpesh-parmar"
       },
       {
         name: "Sharad Mohata",
         image: sharad,
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Specializes in direct taxation, corporate restructuring, and international tax advisory.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/sharad-mohata-kol"
       },
       {
         name: "Vinod Joshi",
-        image: null,
+        image: Vinod,
         creds: "FCA, MBA (Finance)",
         desc: "Renowned for financial modeling, M&A restructuring, and cross-border strategic alliances.",
         linkedin: "https://linkedin.com/"
@@ -115,12 +117,19 @@ const PARTNER_DATA = [
         linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562"
       },
       {
-        name: 'Disha Shah',
+        name: "Disha Shah",
         image: disha,
-        qualifications: 'FCA',
-        designation: 'Risk Advisory, IA & IPC',
-        linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097',
+        creds: "FCA",
+        desc: "Leads women-entrepreneur advisory and compliance initiatives.",
+        linkedin: "https://linkedin.com/"
       },
+      {
+        name: "Dhanlaxmi Nair",
+        image: Dhanlaxmi,
+        creds: "FCA",
+        desc: "Leads women-entrepreneur advisory and compliance initiatives.",
+        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206"
+      }
     ]
   },
   {
@@ -214,14 +223,7 @@ const PARTNER_DATA = [
         creds: "FCA",
         desc: "Core team member for industrial and chemical sector audits.",
         linkedin: "https://www.linkedin.com/in/saurabh-shah"
-      },
-      // {
-      //   name: "Disha Shah",
-      //   image: disha,
-      //   creds: "FCA",
-      //   desc: "Leads women-entrepreneur advisory and compliance initiatives.",
-      //   linkedin: "https://linkedin.com/"
-      // }
+      }
     ]
   }
 ];

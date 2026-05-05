@@ -28,7 +28,7 @@ import raj from '../../image/Raj-Shah-removebg-preview.png'
 import saurabh from '../../image/Saurabh-Shah-removebg-preview.png'
 import disha from '../../image/Disha Shah-removebg-preview.png'
 import Dhanlaxmi from '../../image/Dhanlaxmi.png'
-import Vinod from '../../image/Vinod Joshi.png'
+import Vinod from '../../image/vinod joshi.png'
 
 const PARTNER_DATA = [
   {

@@ -108,6 +108,7 @@ export default function Alumni() {
     window.scrollTo(0, 0);
   }, []);
 
+
   return (
     <div className="sp-page">
       {/* Hero Section */}

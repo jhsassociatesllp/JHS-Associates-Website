@@ -1,6 +1,20 @@
+import img1 from '../image/Fainance3.jpg';
+import img2 from '../image/WebPoster2.jpeg';
+import img3 from '../image/StatsImage.png';
+import img4 from '../image/Fainance4.jpg';
+// import img5 from '../image/Fainance5.jpg';
+// import img6 from '../image/Fainance6.jpg';
+// import img7 from '../image/Fainance7.jpg';
+// import img8 from '../image/Fainance8.jpg';
+// import img9 from '../image/Fainance9.jpg';
+// import img10 from '../image/Fainance10.jpg';
+// import img11 from '../image/Fainance11.jpg';
+// import img12 from '../image/Fainance12.jpg';
+
 const CASE_STUDIES = [
   {
-    // id: 1,
+    id: 1,
+    image: img1,
     title: "Independent Risk Management Review for a Broking Company",
     sector: "Brokerage",
     solution: "Risk Management Review",
@@ -20,7 +34,8 @@ const CASE_STUDIES = [
     ]
   },
   {
-    // id: 2,
+    id: 2,
+    image: img2,
     title: "Developed Risk Management Systems & Processes for a Payment Bank",
     sector: "Payment Bank",
     solution: "ERM Manuals",
@@ -36,7 +51,8 @@ const CASE_STUDIES = [
     ]
   },
   {
-    // id: 3,
+    id: 3,
+    image: img3,
     title: "Developed Train the Trainer training module on Risk Management for leading Financial Service Group",
     sector: "Financial Services",
     solution: "Develop Train the Trainer training content and training delivery",
@@ -51,7 +67,8 @@ const CASE_STUDIES = [
     ]
   },
   {
-    // id: 4,
+    id: 4,
+    image: img4,
     title: "Developed Risk Management Policy and Manual for Leading Bank",
     sector: "Banking",
     solution: "ERM Manuals",
@@ -63,7 +80,142 @@ const CASE_STUDIES = [
     valueAdded: [
       "Ensuring regulatory compliance with RBI requirements"
     ]
-  }
+  },
+  // {
+  //   id: 5,
+  //   image: img5,
+  //   title: "COMPLIANCE ASSURANCE & SELF CERTIFICATION PROGRAMME (CASP)",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 6,
+  //   image: img6,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 7,
+  //   image: img7,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 8,
+  //   image: img8,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 9,
+  //   image: img9,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 10,
+  //   image: img10,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 11,
+  //   image: img11,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 12,
+  //   image: img12,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // },
+  // {
+  //   id: 13,
+  //   image: img13,
+  //   title: "Developed Risk Management Policy and Manual for Leading Bank",
+  //   sector: "Banking",
+  //   solution: "ERM Manuals",
+  //   scope: "Developed Consolidated Risk Management Policy and Manuals.",
+  //   approach: "Study of business model, review of existing processes and scattered manuals. Preparation of Consolidated Enterprise Risk Management Policy and manuals for 4 key areas as the RBI requirements.",
+  //   delivery: [
+  //     "Consolidated Risk procedures, Framework and reporting framework"
+  //   ],
+  //   valueAdded: [
+  //     "Ensuring regulatory compliance with RBI requirements"
+  //   ]
+  // }
 ];
 
 const CASE_STUDY_CATEGORIES = ['All', 'Brokerage', 'Payment Bank', 'Financial Services', 'Banking'];

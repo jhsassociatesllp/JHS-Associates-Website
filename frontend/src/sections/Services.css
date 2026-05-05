@@ -260,13 +260,15 @@
   flex-shrink: 0;
 }
 
-.services__dropdown-item:hover {
+.services__dropdown-item:hover,
+.services__dropdown-item.active {
   background: var(--sv-navy-bg);
   color: var(--sv-navy);
   padding-left: 22px;
 }
 
-.services__dropdown-item:hover svg {
+.services__dropdown-item:hover svg,
+.services__dropdown-item.active svg {
   opacity: 1;
   transform: translateX(3px);
 }
@@ -348,6 +350,106 @@
 }
 
 /* =============================================
+   DYNAMIC RIGHT PANEL (Image + Card)
+   ============================================= */
+
+.services__right-default {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.services__right-dynamic {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+}
+
+.services__right-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.services__right-dynamic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.services__right-overlay {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: var(--sv-radius);
+  max-width: 420px;
+  box-shadow: var(--sv-shadow-lg);
+  margin-left: 20px;
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.services__right-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--sv-text-primary);
+  margin: 0 0 12px 0;
+  font-weight: 500;
+}
+
+.services__right-desc {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  color: var(--sv-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.services__right-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #3ac067; /* BCG inspired green */
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.services__right-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(58, 192, 103, 0.4);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* =============================================
    RESPONSIVE
    ============================================= */
 
@@ -358,8 +460,14 @@
   }
 
   .services__right {
-    height: 280px;
+    height: 400px; /* Give it more space to show the card */
     /* content first, design panel below on mobile */
+  }
+
+  .services__right-overlay {
+    margin-left: 0;
+    margin: 0 auto;
+    max-width: 90%;
   }
 
   .services__left {
@@ -390,6 +498,19 @@
   }
 
   .services__right {
-    height: 220px;
+    height: 360px;
+  }
+
+  .services__right-dynamic {
+    padding: 24px;
+  }
+
+  .services__right-overlay {
+    padding: 24px;
+    max-width: 100%;
+  }
+
+  .services__right-title {
+    font-size: 24px;
   }
 }

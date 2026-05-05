@@ -55,6 +55,7 @@ import Manufacturing from './components/sectors/Other/Manufacturing'
 import Resources from './components/Insights/Resources'
 import Articles from './components/Insights/Articles'
 import CaseStudies from './components/Insights/CaseStudies'
+import CaseStudyDetail from './components/Insights/CaseStudyDetail'
 import ThoughtLeadership from './components/Insights/ThoughtLeadership'
 import Blog from './components/Insights/Blog'
 import Podcasts from './components/Insights/Podcasts'
@@ -183,6 +184,7 @@ export default function App() {
         <Route path="/resources" element={<Resources />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
         <Route path="/thought-leadership" element={<ThoughtLeadership />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/podcasts" element={<Podcasts />} />

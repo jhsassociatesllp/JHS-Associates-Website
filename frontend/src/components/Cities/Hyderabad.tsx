@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Hyderabad.css'
 
-import hyderabadBg from '../../image/Hydrabad.jpg'
+import hyderabadBg from '../../image/Hyderabad.png'
 import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
 import imgPic3 from '../../image/Picture3-removebg-preview.png'
 import imgPic4 from '../../image/Picture4-removebg-preview.png'

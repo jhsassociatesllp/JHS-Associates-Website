@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Global.css'
 
-import globalBg from '../../image/4-1.png.webp'
+import globalBg from '../../image/Global.png'
 
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (

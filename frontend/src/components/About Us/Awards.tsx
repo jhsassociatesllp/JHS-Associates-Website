@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
-import heroBg from '../../image/Ahmedabad.jpg'
+import heroBg from '../../image/Ahmedabad.png'
 
 export default function Awards() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -23,7 +23,7 @@ export default function Awards() {
       {/* ════ CONTENT ════ */}
       <section className="ap-content">
         <div className="ap-container">
-          
+
           <div className="ap-grid">
             <div className="ap-grid-left">
               <h2>A Record of Excellence</h2>
@@ -31,7 +31,7 @@ export default function Awards() {
             </div>
             <div className="ap-grid-right">
               <p>
-                We don't work for awards; we work for client success. However, we are profoundly humbled when industry bodies and standard-setters recognize the rigor, innovation, and integrity of our practice. 
+                We don't work for awards; we work for client success. However, we are profoundly humbled when industry bodies and standard-setters recognize the rigor, innovation, and integrity of our practice.
               </p>
               <p>
                 Over the past decades, JHS &amp; Associates has been consistently ranked among the emerging leaders in full-service consulting, winning commendations for our specialized work in banking audits, taxation structuring, and comprehensive assurance.

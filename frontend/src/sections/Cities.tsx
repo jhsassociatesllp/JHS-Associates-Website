@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Cities.css";
-import Mumbai from '../image/Mumbai.jpg'
+import Mumbai from '../image/Mumbai.png'
 import Delhi from '../image/Dehli.avif'
 import Bengaluru from '../image/Bengluru.avif'
-import GlobalOffices from '../image/4-1.png.webp'
-import Ahmedabad from '../image/Ahmedabad.jpg'
-import Hyderabad from '../image/Hydrabad.jpg'
-import Kolkata from '../image/Kolkata.jpg'
-import Chennai from '../image/Chennai.jpg'
+import GlobalOffices from '../image/Global.png'
+import Ahmedabad from '../image/Ahmedabad.png'
+import Hyderabad from '../image/Hyderabad.png'
+import Kolkata from '../image/Kolkata.png'
+import Chennai from '../image/Chennai.png'
 
 const citiesList = [
   {

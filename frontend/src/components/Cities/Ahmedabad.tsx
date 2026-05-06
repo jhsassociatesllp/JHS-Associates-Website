@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './Ahmedabad.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import ahmedabadBg from '../../image/Ahmedabad.jpg'
+import ahmedabadBg from '../../image/Ahmedabad.png'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'

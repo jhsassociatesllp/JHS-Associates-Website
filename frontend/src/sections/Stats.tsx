@@ -101,14 +101,55 @@ export default function Stats() {
         {/* Stat row inside left panel */}
         <div className="stats__row">
           {[
-            { number: "44+", label: "Years of Excellence" },
-            { number: "1000+", label: "Clients Served" },
-            { number: "13", label: "Offices" },
-            { number: "700+", label: "Team Size" },
+            { 
+              number: "44+", 
+              label: "Years of Excellence",
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="8" r="7"></circle>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+              )
+            },
+            { 
+              number: "1000+", 
+              label: "Clients Served",
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              )
+            },
+            { 
+              number: "13", 
+              label: "Offices",
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              )
+            },
+            { 
+              number: "700+", 
+              label: "Team Size",
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              )
+            },
           ].map((s, i) => (
             <div className="stats__stat" key={i}>
-              <span className="stats__stat-number">{s.number}</span>
-              <span className="stats__stat-label">{s.label}</span>
+              <div className="stats__stat-icon">{s.icon}</div>
+              <div className="stats__stat-content">
+                <span className="stats__stat-number">{s.number}</span>
+                <span className="stats__stat-label">{s.label}</span>
+              </div>
             </div>
           ))}
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Kolkata.css'
 
-import kolkataBg from '../../image/Kolkata.jpg'
+import kolkataBg from '../../image/Kolkata.png'
 import imgSharad from '../../image/Sharad-Mohata-removebg-preview.png'
 import imgViranch from '../../image/Viranch-Modi-removebg-preview.png'
 import imgJagdish from '../../image/Jagdish-Solanki-removebg-preview.png'

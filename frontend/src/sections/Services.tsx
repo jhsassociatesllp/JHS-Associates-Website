@@ -5,15 +5,15 @@ import "./Services.css";
 // industries_Images
 import imgAssurance from '../image/Assurance.png'
 import imgTaxation from '../image/Taxposter.jpg'
-import imgGST from '../image/gst-im.jpg'
-import imgFinancialReporting from '../image/Fainance-report.avif'
+import imgGST from '../image/gst-im.png'
+import imgFinancialReporting from '../image/Fainance-report.png'
 import imgCorporateAdvisory from '../image/Blogimg.png'
-import imgRiskAndGovernance from '../image/Risk.png.webp'
-import imgOutsourcing from '../image/outsourcing.avif'
+import imgRiskAndGovernance from '../image/Risk.png'
+import imgOutsourcing from '../image/outsourcing.png'
 import imgSingleWindowAssistance from '../image/single-w-A.avif'
 
 // service_images
-import imgManufacturing from '../image/manufacturing.avif'
+import imgManufacturing from '../image/manufacturing.png'
 import imgRealstate from '../image/Real-State.avif'
 import imgHealth from '../image/healthcare.avif'
 import imgbank from '../image/reserve-bank-of-india-rbi-.jpg'

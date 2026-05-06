@@ -58,6 +58,8 @@ const industries: ServiceItem[] = [
   // { label: "Insurance", href: "/sectors/financial-services/insurance", description: "Risk mitigation, regulatory compliance, and audit services for insurance providers and brokers.", image: imgInsurance },
 ];
 
+
+
 export default function Services() {
   const [capOpen, setCapOpen] = useState(false);
   const [indOpen, setIndOpen] = useState(false);

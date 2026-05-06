@@ -20,7 +20,7 @@ import imgbank from '../image/reserve-bank-of-india-rbi-.jpg'
 import imgIt from '../image/IT-Technology.avif'
 import imgRetail from '../image/Retail.avif'
 import imgConstruction from '../image/construction.avif'
-import imgNgo from '../image/ngo.avif'
+import imgNgo from '../image/NGO.avif'
 import imgMedia from '../image/media.avif'
 // import imgInsurance from '../image/insurance.avif'
 

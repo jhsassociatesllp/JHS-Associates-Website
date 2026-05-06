@@ -22,10 +22,6 @@ import imgRetail from '../image/Retail.avif'
 import imgConstruction from '../image/construction.avif'
 import imgNgo from '../image/NGO.avif'
 import imgMedia from '../image/media.avif'
-// import imgInsurance from '../image/insurance.avif'
-
-
-
 
 type ServiceItem = {
   label: string;
@@ -68,6 +64,9 @@ export default function Services() {
   const capRef = useRef<HTMLDivElement>(null);
   const indRef = useRef<HTMLDivElement>(null);
 
+  const isCapability = activeItem ? capabilities.some(c => c.label === activeItem.label) : false;
+  const isIndustry = activeItem ? industries.some(i => i.label === activeItem.label) : false;
+
   // Close dropdowns when clicking outside either dropdown
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -108,12 +107,12 @@ export default function Services() {
               className={`services__dropdown ${capOpen ? "services__dropdown--open" : ""}`}
             >
               <button
-                className="services__dropdown-trigger"
+                className={`services__dropdown-trigger ${isCapability ? "services__dropdown-trigger--active" : ""}`}
                 onClick={() => { setCapOpen((v) => !v); setIndOpen(false); }}
                 aria-expanded={capOpen}
                 aria-haspopup="listbox"
               >
-                <span>Capabilities</span>
+                <span>{isCapability && activeItem ? activeItem.label : "Capabilities"}</span>
                 <svg
                   className="services__dropdown-icon"
                   width="18" height="18" viewBox="0 0 24 24"
@@ -126,20 +125,44 @@ export default function Services() {
               </button>
 
               {capOpen && (
-                <ul className="services__dropdown-menu" role="listbox">
+                <ul
+                  className="services__dropdown-menu"
+                  role="listbox"
+                  onWheel={(e) => {
+                    const el = e.currentTarget;
+
+                    const isAtTop = el.scrollTop === 0;
+                    const isAtBottom = el.scrollHeight - el.scrollTop === el.clientHeight;
+
+                    // Prevent page scroll when reaching top/bottom
+                    if ((e.deltaY < 0 && isAtTop) || (e.deltaY > 0 && isAtBottom)) {
+                      e.preventDefault();
+                    }
+
+                    // Stop event from bubbling to page
+                    e.stopPropagation();
+                  }}
+                >
                   {capabilities.map((item) => (
                     <li key={item.label} role="option">
                       <button
-                        className={`services__dropdown-item ${activeItem?.label === item.label ? 'active' : ''}`}
+                        className={`services__dropdown-item ${activeItem?.label === item.label ? "active" : ""
+                          }`}
                         onClick={() => {
                           setActiveItem(item);
                           setCapOpen(false);
                         }}
                       >
                         {item.label}
-                        <svg width="14" height="14" viewBox="0 0 24 24"
-                          fill="none" stroke="currentColor" strokeWidth="2"
-                          strokeLinecap="round" strokeLinejoin="round"
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           aria-hidden="true"
                         >
                           <path d="M5 12h14M12 5l7 7-7 7" />
@@ -157,12 +180,12 @@ export default function Services() {
               className={`services__dropdown ${indOpen ? "services__dropdown--open" : ""}`}
             >
               <button
-                className="services__dropdown-trigger"
+                className={`services__dropdown-trigger ${isIndustry ? "services__dropdown-trigger--active" : ""}`}
                 onClick={() => { setIndOpen((v) => !v); setCapOpen(false); }}
                 aria-expanded={indOpen}
                 aria-haspopup="listbox"
               >
-                <span>Industries</span>
+                <span>{isIndustry && activeItem ? activeItem.label : "Industries"}</span>
                 <svg
                   className="services__dropdown-icon"
                   width="18" height="18" viewBox="0 0 24 24"
@@ -175,20 +198,44 @@ export default function Services() {
               </button>
 
               {indOpen && (
-                <ul className="services__dropdown-menu" role="listbox">
+                <ul
+                  className="services__dropdown-menu"
+                  role="listbox"
+                  onWheel={(e) => {
+                    const el = e.currentTarget;
+
+                    const isAtTop = el.scrollTop === 0;
+                    const isAtBottom = el.scrollHeight - el.scrollTop === el.clientHeight;
+
+                    // Prevent page scroll when at edges
+                    if ((e.deltaY < 0 && isAtTop) || (e.deltaY > 0 && isAtBottom)) {
+                      e.preventDefault();
+                    }
+
+                    // Stop bubbling to page
+                    e.stopPropagation();
+                  }}
+                >
                   {industries.map((item) => (
                     <li key={item.label} role="option">
                       <button
-                        className={`services__dropdown-item ${activeItem?.label === item.label ? 'active' : ''}`}
+                        className={`services__dropdown-item ${activeItem?.label === item.label ? "active" : ""
+                          }`}
                         onClick={() => {
                           setActiveItem(item);
                           setIndOpen(false);
                         }}
                       >
                         {item.label}
-                        <svg width="14" height="14" viewBox="0 0 24 24"
-                          fill="none" stroke="currentColor" strokeWidth="2"
-                          strokeLinecap="round" strokeLinejoin="round"
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           aria-hidden="true"
                         >
                           <path d="M5 12h14M12 5l7 7-7 7" />

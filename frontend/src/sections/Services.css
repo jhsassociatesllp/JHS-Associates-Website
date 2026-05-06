@@ -160,11 +160,25 @@
   box-shadow: var(--sv-shadow);
 }
 
+.services__dropdown-trigger--active {
+  background: var(--sv-navy);
+  color: var(--sv-white);
+  border-color: var(--sv-navy);
+}
+
+.services__dropdown-trigger--active .services__dropdown-icon {
+  color: var(--sv-white);
+}
+
 .services__dropdown--open .services__dropdown-trigger {
   border-color: var(--sv-navy);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: 0 -2px 12px rgba(30, 58, 95, 0.08);
+}
+
+.services__dropdown--open .services__dropdown-trigger--active {
+  box-shadow: 0 -2px 12px rgba(30, 58, 95, 0.2);
 }
 
 /* Chevron icon */
@@ -185,21 +199,37 @@
   top: 100%;
   left: 0;
   right: 0;
+
   background: var(--sv-white);
   border: 1.5px solid var(--sv-navy);
   border-top: none;
   border-bottom-left-radius: var(--sv-radius);
   border-bottom-right-radius: var(--sv-radius);
+
   box-shadow: var(--sv-shadow-lg);
-  z-index: 100;
+  z-index: 999;
+
   list-style: none;
   margin: 0;
   padding: 6px 0;
-  animation: dropDown 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+
+  /* ✅ SCROLL CONTROL */
+  max-height: 260px;
   overflow-y: auto;
-  max-height: 240px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(30, 58, 95, 0.4) rgba(30, 58, 95, 0.05);
+  overflow-x: hidden;
+
+  /* ✅ THIS IS THE KEY LINE */
+  overscroll-behavior: contain;
+
+  /* smooth feel */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  animation: dropDown 0.25s ease;
+}
+
+.services__dropdown-menu:hover {
+  overflow-y: auto;
 }
 
 /* Scrollbar styling for dropdown */

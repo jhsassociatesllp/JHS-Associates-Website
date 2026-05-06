@@ -9,8 +9,8 @@ import imgGST from '../image/gst-im.jpg'
 import imgFinancialReporting from '../image/Fainance-report.avif'
 import imgCorporateAdvisory from '../image/Blogimg.png'
 import imgRiskAndGovernance from '../image/Risk.png.webp'
-import imgOutsourcing from '../image/Outsourcing.avif'
-import imgSingleWindowAssistance from '../image/Single-w-A.avif'
+import imgOutsourcing from '../image/outsourcing.avif'
+import imgSingleWindowAssistance from '../image/single-w-A.avif'
 
 // service_images
 import imgManufacturing from '../image/manufacturing.avif'

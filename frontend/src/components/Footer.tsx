@@ -99,7 +99,7 @@ export default function Footer() {
               <img src={JHS_logo} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
-              Trusted chartered accountants and advisory partners for businesses across India.
+              Trusted Chartered Accountants and advisory partners for businesses across India.
               Excellence, integrity, and expertise in every engagement.
             </p>
 

@@ -244,7 +244,7 @@ export default function Hero() {
         <h1 className="hero__headline">
           Building Trust.
           <br />
-          Delivering Excellence
+          Delivering Excellence.
           <br />
           Shaping Better Futures.
         </h1>
@@ -267,8 +267,6 @@ export default function Hero() {
             {renderCard(visible.next2, "next2")}
           </div>
         </div>
-
-
 
         <div className="hero__carousel-dots">
           {cards.map((_, idx) => (

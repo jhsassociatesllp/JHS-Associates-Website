@@ -1,357 +1,368 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Typography, Grid, Box, CircularProgress,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  LinearProgress, IconButton, Avatar, Card, CardContent
+  Typography, Box, Card, CardContent, LinearProgress,
+  ToggleButtonGroup, ToggleButton, CircularProgress,
 } from '@mui/material';
 import {
-  Person as PersonIcon,
+  TrendingUp as TrendingUpIcon,
+  People as PeopleIcon,
   ShoppingCart as ShoppingCartIcon,
-  ThumbUp as ThumbUpIcon,
-  TouchApp as TouchAppIcon,
-  MoreVert as MoreVertIcon,
-  ArrowUpward as ArrowUpwardIcon,
-  Facebook as FacebookIcon,
-  Twitter as TwitterIcon,
-  LinkedIn as LinkedInIcon,
-  Google as GoogleIcon,
+  FlashOn as FlashOnIcon,
+  ArrowUpward as ArrowUpIcon,
+  ArrowDownward as ArrowDownIcon,
 } from '@mui/icons-material';
+import {
+  AreaChart, Area, LineChart, Line,
+  XAxis, YAxis, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell,
+} from 'recharts';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-interface Contact {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  message: string;
-  created_at: string;
-}
+/* ─── Design Tokens ────────────────────────────────────────── */
+const C = {
+  pageBg:   '#f4f5fa',
+  cardBg:   '#ffffff',
+  textMain: '#2d3748',
+  textMuted:'#8a8d93',
+  border:   'rgba(0,0,0,0.07)',
+  shadow:   '0 2px 8px rgba(0,0,0,0.08)',
+};
 
-// ─── Design tokens matching the Pluto admin panel ───────────────────────────
-const ORANGE = '#f97316';
-const DARK_NAVY = '#1e2a3b';
-const CARD_BG = '#ffffff';
-const PAGE_BG = '#f4f6f9';
-const TEXT_MAIN = '#344767';
-const TEXT_MUTED = '#8392ab';
-const SHADOW = '0 2px 12px rgba(0,0,0,0.08)';
-const RADIUS = 3;
-
-// Stat card icon colours (teal, blue, pink, green) as seen in image
-const STAT_ICON_COLORS = ['#26c6da', '#42a5f5', '#ec407a', '#66bb6a'];
-
-// Social card colours
-const SOCIAL = [
-  { label: 'Facebook', color: '#3b5998', icon: <FacebookIcon />, fans: '35k', likes: '128' },
-  { label: 'Twitter', color: '#1da1f2', icon: <TwitterIcon />, fans: '58.4k', likes: '978' },
-  { label: 'LinkedIn', color: '#0077b5', icon: <LinkedInIcon />, fans: '750+', likes: '305' },
-  { label: 'Google+', color: '#dd4b39', icon: <GoogleIcon />, fans: '450', likes: '97' },
+/* ─── Static Data ──────────────────────────────────────────── */
+const sparkSets = [
+  [20, 35, 28, 45, 38, 52, 75].map(v => ({ v })),
+  [5,  8,  6, 12,  8, 10, 16].map(v => ({ v })),
+  [80, 95, 88,110,102,118,122].map(v => ({ v })),
+  [200,350,280,420,380,490,573].map(v => ({ v })),
 ];
 
+const dailyRevenue = [
+  { day: 'Mon', revenue: 32000 },
+  { day: 'Tue', revenue: 48000 },
+  { day: 'Wed', revenue: 41000 },
+  { day: 'Thu', revenue: 61000 },
+  { day: 'Fri', revenue: 54000 },
+  { day: 'Sat', revenue: 72000 },
+  { day: 'Sun', revenue: 68000 },
+];
+const weeklyRevenue = [
+  { day: 'W1', revenue: 180000 },
+  { day: 'W2', revenue: 220000 },
+  { day: 'W3', revenue: 195000 },
+  { day: 'W4', revenue: 260000 },
+];
+const monthlyRevenue = [
+  { day: 'Jan', revenue: 420000 },
+  { day: 'Feb', revenue: 380000 },
+  { day: 'Mar', revenue: 510000 },
+  { day: 'Apr', revenue: 470000 },
+  { day: 'May', revenue: 620000 },
+  { day: 'Jun', revenue: 590000 },
+];
+
+const trafficData = [
+  { name: 'Direct',   value: 45, color: '#3b82f6' },
+  { name: 'Organic',  value: 30, color: '#10b981' },
+  { name: 'Social',   value: 15, color: '#8b5cf6' },
+  { name: 'Referral', value: 10, color: '#f59e0b' },
+];
+
+const goalsData = [
+  { label: 'New Signups',      current: 842,   target: '04/21/232', pct: 84, color: '#696cff' },
+  { label: 'Revenue Target',   current: 34200, target: '34000/50000', pct: 68, color: '#10b981' },
+  { label: 'Feature Adoption', current: 6285,  target: '62855',    pct: 63, color: '#ff9f43' },
+];
+
+const STAT_CARDS = [
+  {
+    label: 'Total Revenue',
+    value: '$45,231.89',
+    icon: TrendingUpIcon,
+    iconColor: '#10b981',
+    change: '+20.1%',
+    sub: 'from last month',
+    positive: true,
+    sparkIdx: 0,
+    lineColor: '#10b981',
+  },
+  {
+    label: 'Active Users',
+    value: '16',
+    icon: PeopleIcon,
+    iconColor: '#3b82f6',
+    change: '+180.1%',
+    sub: 'from last month',
+    positive: true,
+    sparkIdx: 1,
+    lineColor: '#3b82f6',
+  },
+  {
+    label: 'Sales',
+    value: '+12,234',
+    icon: ShoppingCartIcon,
+    iconColor: '#ec4899',
+    change: '+19%',
+    sub: 'from last month',
+    positive: true,
+    sparkIdx: 2,
+    lineColor: '#ec4899',
+  },
+  {
+    label: 'Active Now',
+    value: '+573',
+    icon: FlashOnIcon,
+    iconColor: '#f59e0b',
+    change: '+201',
+    sub: 'since last hour',
+    positive: true,
+    sparkIdx: 3,
+    lineColor: '#f59e0b',
+  },
+];
+
+const rangeDataMap: Record<string, typeof dailyRevenue> = {
+  '1d': dailyRevenue,
+  '3d': weeklyRevenue,
+  '1m': monthlyRevenue,
+};
+
+
+
+/* ─── Component ─────────────────────────────────────────────── */
 export default function Dashboard() {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [loading, setLoading] = useState(true);
   const { token } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [revenueRange, setRevenueRange] = useState<'1d' | '3d' | '1m'>('1d');
+  const revenueData = rangeDataMap[revenueRange];
 
   useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/admin/contacts', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setContacts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch contacts", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchContacts();
+    axios.get('http://localhost:8000/admin/contacts', {
+      headers: { Authorization: `Bearer ${token}` },
+    }).finally(() => setLoading(false));
   }, [token]);
 
-  // ─── Stat cards data (matching the 4 cards in the image) ──────────────────
-  const statCards = [
-    {
-      label: 'Total Contacts',
-      value: loading ? null : contacts.length,
-      icon: <PersonIcon />,
-      change: '+55%',
-    },
-    {
-      label: 'Click Events',
-      value: '2500',
-      icon: <TouchAppIcon />,
-      change: '+124%',
-    },
-    {
-      label: 'Service Inquiries',
-      value: '123.50',
-      icon: <ShoppingCartIcon />,
-      change: '+15%',
-    },
-    {
-      label: 'Likes',
-      value: '54',
-      icon: <ThumbUpIcon />,
-      change: '+90%',
-    },
-  ];
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
+        <CircularProgress sx={{ color: '#696cff' }} />
+      </Box>
+    );
+  }
 
   return (
-    <Box sx={{ bgcolor: PAGE_BG, minHeight: '100vh', p: 3 }}>
+    <Box sx={{ p: { xs: 2, md: 3 }, bgcolor: C.pageBg, minHeight: '100%' }}>
 
-      {/* ── Page Title ────────────────────────────────────────────────────── */}
-      <Typography
-        variant="h5"
-        sx={{ fontWeight: 700, color: TEXT_MAIN, mb: 3, fontFamily: "'Nunito', sans-serif" }}
-      >
-        Dashboard
-      </Typography>
+      {/* ── Page Header ─────────────────────────────────────── */}
+      <Box sx={{ mb: 3 }}>
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
+          Dashboard
+        </Typography>
+        <Typography sx={{ fontSize: '0.85rem', color: C.textMuted, mt: 0.25 }}>
+          Welcome back, Admin. Here's what's happening.
+        </Typography>
+      </Box>
 
-      {/* ── Row 1: Stat Cards ─────────────────────────────────────────────── */}
-      <Grid container spacing={2.5} sx={{ mb: 3 }}>
-        {statCards.map((card, i) => (
-          <Grid xs={12} sm={6} md={3} key={card.label}>
-            <Card sx={{ bgcolor: CARD_BG, borderRadius: RADIUS, boxShadow: SHADOW, overflow: 'visible' }}>
-              <CardContent sx={{ p: 2.5, pb: '20px !important' }}>
-                {/* Icon bubble — coloured circle like the image */}
-                <Box
-                  sx={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: '50%',
-                    bgcolor: STAT_ICON_COLORS[i],
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#fff',
-                    mb: 1.5,
-                    boxShadow: `0 4px 14px ${STAT_ICON_COLORS[i]}55`,
-                  }}
-                >
-                  {card.icon}
+      {/* ── Row 1: Stat Cards ───────────────────────────────── */}
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: 'repeat(4, 1fr)' }, gap: 2.5, mb: 2.5 }}>
+        {STAT_CARDS.map((card) => {
+          const Icon = card.icon;
+          return (
+            <Card key={card.label} elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2, overflow: 'visible' }}>
+              <CardContent sx={{ p: '20px !important' }}>
+                {/* Top Row: Label + Icon */}
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 1 }}>
+                  <Typography sx={{ fontSize: '0.78rem', color: C.textMuted, fontWeight: 500, fontFamily: 'Inter,sans-serif', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                    {card.label}
+                  </Typography>
+                  <Box sx={{
+                    width: 38, height: 38, borderRadius: 1.5,
+                    bgcolor: `${card.iconColor}18`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                  }}>
+                    <Icon sx={{ fontSize: 20, color: card.iconColor }} />
+                  </Box>
                 </Box>
 
-                <Typography variant="h4" sx={{ fontWeight: 700, color: TEXT_MAIN, lineHeight: 1, fontFamily: "'Nunito', sans-serif" }}>
-                  {card.value !== null ? card.value : <CircularProgress size={22} />}
-                </Typography>
-                <Typography variant="body2" sx={{ color: TEXT_MUTED, mt: 0.5, fontWeight: 500 }}>
-                  {card.label}
+                {/* Value */}
+                <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: C.textMain, lineHeight: 1.2, fontFamily: 'Inter,sans-serif', mb: 1 }}>
+                  {card.value}
                 </Typography>
 
-                {/* Divider + change */}
-                <Box sx={{ borderTop: '1px solid #e9ecef', mt: 1.5, pt: 1.2, display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <ArrowUpwardIcon sx={{ fontSize: 14, color: '#4caf50' }} />
-                  <Typography variant="caption" sx={{ color: '#4caf50', fontWeight: 700 }}>{card.change}</Typography>
-                  <Typography variant="caption" sx={{ color: TEXT_MUTED }}>&nbsp;since last month</Typography>
+                {/* Sparkline */}
+                <Box sx={{ height: 44, mb: 1 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={sparkSets[card.sparkIdx]}>
+                      <Line type="monotone" dataKey="v" stroke={card.lineColor} strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
 
-      {/* ── Row 2: Social Cards ───────────────────────────────────────────── */}
-      <Grid container spacing={2.5} sx={{ mb: 3 }}>
-        {SOCIAL.map((s) => (
-          <Grid xs={12} sm={6} md={3} key={s.label}>
-            <Card sx={{ bgcolor: s.color, borderRadius: RADIUS, boxShadow: SHADOW, color: '#fff' }}>
-              <CardContent sx={{ p: 0, pb: '0 !important' }}>
-                {/* Top section: icon + label */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, pb: 1.5 }}>
-                  <Box sx={{ opacity: 0.9, display: 'flex' }}>{s.icon}</Box>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 700, fontFamily: "'Nunito', sans-serif" }}>
-                    {s.label}
+                {/* Change */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  {card.positive
+                    ? <ArrowUpIcon sx={{ fontSize: 13, color: '#10b981' }} />
+                    : <ArrowDownIcon sx={{ fontSize: 13, color: '#ef4444' }} />}
+                  <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: card.positive ? '#10b981' : '#ef4444' }}>
+                    {card.change}
+                  </Typography>
+                  <Typography sx={{ fontSize: '0.78rem', color: C.textMuted }}>
+                    {card.sub}
                   </Typography>
                 </Box>
-                {/* Bottom section: fans / likes — slightly darker */}
-                <Box
-                  sx={{
-                    bgcolor: 'rgba(0,0,0,0.18)',
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    py: 1,
-                    px: 2,
-                  }}
-                >
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{s.fans}</Typography>
-                    <Typography variant="caption" sx={{ opacity: 0.8 }}>Fans</Typography>
-                  </Box>
-                  <Box sx={{ width: '1px', bgcolor: 'rgba(255,255,255,0.2)' }} />
-                  <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>{s.likes}</Typography>
-                    <Typography variant="caption" sx={{ opacity: 0.8 }}>Likes</Typography>
-                  </Box>
-                </Box>
               </CardContent>
             </Card>
-          </Grid>
-        ))}
-      </Grid>
+          );
+        })}
+      </Box>
 
-      {/* ── Row 3: Submissions Table + Client Sentiment ───────────────────── */}
-      <Grid container spacing={2.5}>
+      {/* ── Row 2: Revenue Chart + Right Panel ──────────────── */}
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 340px' }, gap: 2.5, alignItems: 'start' }}>
 
-        {/* Submissions Table */}
-        <Grid xs={12} md={8}>
-          <Card sx={{ bgcolor: CARD_BG, borderRadius: RADIUS, boxShadow: SHADOW, height: '100%' }}>
-            <Box sx={{ p: 2.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e9ecef' }}>
+        {/* Revenue Area Chart */}
+        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2 }}>
+          <CardContent sx={{ p: '20px !important' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 0.5 }}>
               <Box>
-                <Typography variant="h6" sx={{ fontWeight: 700, color: TEXT_MAIN, fontFamily: "'Nunito', sans-serif" }}>
-                  Recent Submissions
+                <Typography sx={{ fontSize: '1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
+                  Revenue
                 </Typography>
-                <Typography variant="body2" sx={{ color: TEXT_MUTED, display: 'flex', alignItems: 'center', mt: 0.3 }}>
-                  <Box component="span" sx={{ color: '#4caf50', display: 'flex', mr: 0.5 }}>
-                    <ArrowUpwardIcon fontSize="small" />
-                  </Box>
-                  <Box component="span" sx={{ fontWeight: 700, color: TEXT_MAIN }}>30 done</Box>
-                  &nbsp;this month
+                <Typography sx={{ fontSize: '0.78rem', color: C.textMuted }}>
+                  Gross revenue by day
                 </Typography>
               </Box>
-              <IconButton size="small">
-                <MoreVertIcon />
-              </IconButton>
+              <ToggleButtonGroup
+                size="small"
+                value={revenueRange}
+                exclusive
+                onChange={(_, v) => v && setRevenueRange(v)}
+                sx={{
+                  '& .MuiToggleButton-root': {
+                    fontSize: '0.72rem', fontWeight: 600, px: 1.5, py: 0.4, border: '1px solid #e0e0e0',
+                    color: C.textMuted, textTransform: 'none',
+                    '&.Mui-selected': { bgcolor: '#696cff', color: '#fff', borderColor: '#696cff' },
+                    '&.Mui-selected:hover': { bgcolor: '#5a5de0' },
+                  },
+                }}
+              >
+                <ToggleButton value="1d">1d</ToggleButton>
+                <ToggleButton value="3d">3d</ToggleButton>
+                <ToggleButton value="1m">1m</ToggleButton>
+              </ToggleButtonGroup>
             </Box>
 
-            <TableContainer>
-              <Table aria-label="contacts table">
-                <TableHead>
-                  <TableRow sx={{ bgcolor: '#fafbfc' }}>
-                    {['Client / Service', 'Email', 'Message'].map((h) => (
-                      <TableCell
-                        key={h}
-                        sx={{
-                          color: TEXT_MUTED,
-                          fontWeight: 700,
-                          fontSize: '0.72rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.05em',
-                          borderBottom: '1px solid #e9ecef',
-                          py: 1.2,
-                        }}
-                      >
-                        {h}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {loading ? (
-                    <TableRow>
-                      <TableCell colSpan={3} align="center" sx={{ py: 4, border: 0 }}>
-                        <CircularProgress />
-                      </TableCell>
-                    </TableRow>
-                  ) : contacts.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={3} align="center" sx={{ py: 4, border: 0, color: TEXT_MUTED }}>
-                        No submissions found.
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    contacts.slice(0, 5).map((row) => (
-                      <TableRow key={row.id} hover sx={{ '&:last-child td': { border: 0 } }}>
-                        <TableCell sx={{ py: 1.8, borderBottom: '1px solid #e9ecef' }}>
-                          <Typography variant="subtitle2" sx={{ fontWeight: 700, color: TEXT_MAIN }}>
-                            {row.name}
-                          </Typography>
-                          <Typography variant="caption" sx={{ color: TEXT_MUTED }}>
-                            {row.service || 'General Query'}
-                          </Typography>
-                        </TableCell>
-                        <TableCell sx={{ py: 1.8, borderBottom: '1px solid #e9ecef', color: TEXT_MUTED, fontSize: '0.84rem' }}>
-                          {row.email}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            py: 1.8,
-                            borderBottom: '1px solid #e9ecef',
-                            maxWidth: 200,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            color: TEXT_MUTED,
-                            fontSize: '0.84rem',
-                          }}
-                        >
-                          {row.message}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
-        </Grid>
+            <Box sx={{ height: 260, mt: 2 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={revenueData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%"  stopColor="#10b981" stopOpacity={0.25} />
+                      <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#8a8d93' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 11, fill: '#8a8d93' }} axisLine={false} tickLine={false}
+                    tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                  <Tooltip
+                    contentStyle={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 8, fontSize: 12 }}
+                    formatter={(v: number) => [`$${v.toLocaleString()}`, 'Revenue']}
+                  />
+                  <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={2.5} fill="url(#revGrad)" dot={false} activeDot={{ r: 5, fill: '#10b981' }} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </Box>
+          </CardContent>
+        </Card>
 
-        {/* Client Sentiment */}
-        <Grid xs={12} md={4}>
-          <Card sx={{ bgcolor: CARD_BG, borderRadius: RADIUS, boxShadow: SHADOW, height: '100%' }}>
-            <CardContent sx={{ p: 2.5 }}>
-              <Typography variant="h6" sx={{ fontWeight: 700, color: TEXT_MAIN, mb: 2.5, fontFamily: "'Nunito', sans-serif" }}>
-                Client Sentiment
+        {/* Right Panel: Traffic + Goals */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+
+          {/* Traffic Sources */}
+          <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2 }}>
+            <CardContent sx={{ p: '20px !important' }}>
+              <Typography sx={{ fontSize: '1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.25 }}>
+                Traffic Sources
+              </Typography>
+              <Typography sx={{ fontSize: '0.78rem', color: C.textMuted, mb: 1.5 }}>
+                Where your visitors came from
               </Typography>
 
-              {[
-                { label: 'Positive Reviews', pct: 80, color: ORANGE },
-                { label: 'Neutral Reviews', pct: 17, color: DARK_NAVY },
-                { label: 'Negative Reviews', pct: 3, color: '#ea0606' },
-              ].map((item) => (
-                <Box sx={{ mb: 2.5 }} key={item.label}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.8 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600, color: TEXT_MAIN }}>
-                      {item.label}
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: 600, color: TEXT_MUTED }}>
-                      {item.pct}%
-                    </Typography>
+              {/* Donut */}
+              <Box sx={{ height: 160, position: 'relative' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={trafficData}
+                      cx="50%" cy="50%"
+                      innerRadius={52} outerRadius={72}
+                      paddingAngle={2}
+                      dataKey="value"
+                      startAngle={90} endAngle={-270}
+                    >
+                      {trafficData.map((entry, i) => (
+                        <Cell key={i} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                {/* Center label overlay */}
+                <Box sx={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  textAlign: 'center', pointerEvents: 'none',
+                }}>
+                  <Typography sx={{ fontSize: '1.3rem', fontWeight: 700, color: '#2d3748', lineHeight: 1.1, fontFamily: 'Inter,sans-serif' }}>100</Typography>
+                  <Typography sx={{ fontSize: '0.7rem', color: '#8a8d93' }}>Total</Typography>
+                </Box>
+              </Box>
+
+              {/* Legend */}
+              <Box sx={{ mt: 1 }}>
+                {trafficData.map((src) => (
+                  <Box key={src.name} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.75 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: src.color, flexShrink: 0 }} />
+                      <Typography sx={{ fontSize: '0.8rem', color: C.textMuted }}>{src.name}</Typography>
+                    </Box>
+                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: C.textMain }}>{src.value}%</Typography>
+                  </Box>
+                ))}
+              </Box>
+            </CardContent>
+          </Card>
+
+          {/* Goals */}
+          <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2 }}>
+            <CardContent sx={{ p: '20px !important' }}>
+              <Typography sx={{ fontSize: '1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.25 }}>
+                Goals
+              </Typography>
+              <Typography sx={{ fontSize: '0.78rem', color: C.textMuted, mb: 2 }}>
+                Quarterly progress
+              </Typography>
+
+              {goalsData.map((goal) => (
+                <Box key={goal.label} sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.6 }}>
+                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: C.textMain }}>{goal.label}</Typography>
+                    <Typography sx={{ fontSize: '0.75rem', color: C.textMuted }}>{goal.target}</Typography>
                   </Box>
                   <LinearProgress
                     variant="determinate"
-                    value={item.pct}
+                    value={goal.pct}
                     sx={{
-                      height: 6,
-                      borderRadius: 5,
-                      bgcolor: '#e9ecef',
-                      '& .MuiLinearProgress-bar': { bgcolor: item.color, borderRadius: 5 },
+                      height: 6, borderRadius: 3,
+                      bgcolor: '#f0f0f5',
+                      '& .MuiLinearProgress-bar': { bgcolor: goal.color, borderRadius: 3 },
                     }}
                   />
                 </Box>
               ))}
-
-              <Typography variant="body2" sx={{ color: TEXT_MUTED, lineHeight: 1.7, mt: 1 }}>
-                More than <strong style={{ color: TEXT_MAIN }}>1,500,000</strong> clients trust our professional
-                services and consulting expertise.
-              </Typography>
-
-              <Box
-                component="button"
-                sx={{
-                  mt: 3,
-                  width: '100%',
-                  bgcolor: DARK_NAVY,
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 2,
-                  py: 1.4,
-                  fontWeight: 700,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                  fontFamily: "'Nunito', sans-serif",
-                  transition: 'background 0.2s',
-                  '&:hover': { bgcolor: '#16202e' },
-                }}
-              >
-                View all reviews
-              </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+
+        </Box>
+      </Box>
     </Box>
   );
 }

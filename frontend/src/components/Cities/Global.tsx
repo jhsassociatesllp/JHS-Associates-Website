@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Global.css'
 
-import globalBg from '../../image/Global.png'
+import globalBg from '../../image/global.jpeg'
 
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (
@@ -192,10 +192,10 @@ export default function Global() {
               </div>
             </div>
             <div className="glb-hero__card-info-item">
-              <div>
+              {/* <div>
                 <span className="glb-hero__card-info-label">Business Hours</span>
                 <span className="glb-hero__card-info-val">Mon–Fri, 9:00 AM – 6:00 PM</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -19,6 +19,8 @@ import Taxation from './components/services/Taxation'
 import Assurance from './components/services/Assurance'
 import SingleWindowAssistance from './components/services/SingleWindowAssistance'
 import SOCAttestation from './components/services/SOCAttestation'
+import CorporateFinance from './components/services/CorporateFinance'
+import ComplianceLearning from './components/services/ComplianceLearning'
 
 // Financial Services components
 import Banking from './components/sectors/Financial Services/Banking'
@@ -148,6 +150,8 @@ export default function App() {
         <Route path="/services/assurance" element={<Assurance />} />
         <Route path="/services/single-window-assistance" element={<SingleWindowAssistance />} />
         <Route path="/services/soc-attestation" element={<SOCAttestation />} />
+        <Route path="/services/corporate-finance" element={<CorporateFinance />} />
+        <Route path="/services/compliance-learning" element={<ComplianceLearning />} />
 
         {/* Financial Services */}
         <Route path="/sectors/financial-services/banking" element={<Banking />} />

@@ -101,8 +101,8 @@ export default function Stats() {
         {/* Stat row inside left panel */}
         <div className="stats__row">
           {[
-            { 
-              number: "44+", 
+            {
+              number: "45+",
               label: "Years of Excellence",
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -111,8 +111,8 @@ export default function Stats() {
                 </svg>
               )
             },
-            { 
-              number: "1000+", 
+            {
+              number: "1,000+",
               label: "Clients Served",
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -121,8 +121,8 @@ export default function Stats() {
                 </svg>
               )
             },
-            { 
-              number: "13", 
+            {
+              number: "13",
               label: "Offices",
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -131,8 +131,8 @@ export default function Stats() {
                 </svg>
               )
             },
-            { 
-              number: "700+", 
+            {
+              number: "700+",
               label: "Team Size",
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

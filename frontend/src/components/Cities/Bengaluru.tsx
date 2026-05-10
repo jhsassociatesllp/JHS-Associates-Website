@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
 import './Bengaluru.css'
 
-import bengaluruBg from '../../image/Bengluru.avif'
-import imgSaurabh from '../../image/Saurabh-Shah-removebg-preview.png'
-import imgHitesh from '../../image/Hitesh-Khandelwal-removebg-preview.png'
-import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
+import bengaluruBg from '../../image/Bangaluru.jpg'
+import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
 
 const PARTNERS = [
-  { name: 'Saurabh Shah', image: imgSaurabh, qualifications: 'FCA', designation: 'Statutory Audit & Ind AS', email: 'saurabh.shah.blr@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah-blr' },
-  { name: 'Hitesh Khandelwal', image: imgHitesh, qualifications: 'FCA', designation: 'Risk Advisory & Internal Audit', email: 'hitesh.khandelwal.blr@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/hitesh-khandelwal-blr' },
-  { name: 'Alpesh Vaniya', image: imgAlpesh, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya.blr@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-blr' },
+  { name: 'Narayan Rao Mala', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -58,16 +54,16 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.6263!3d12.9352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1680000000005',
     address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037'
   },
-  {
-    id: 'koramangala', name: 'Koramangala', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Prestige%20Meridian,%2029%20MG%20Road,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034'
-  },
-  {
-    id: 'whitefield', name: 'Whitefield', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Salarpuria%20Softzone,%20Whitefield,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '502, 5th Floor, Salarpuria Softzone, Whitefield, Bengaluru, Karnataka – 560066'
-  },
+  // {
+  //   id: 'koramangala', name: 'Koramangala', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Prestige%20Meridian,%2029%20MG%20Road,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034'
+  // },
+  // {
+  //   id: 'whitefield', name: 'Whitefield', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Salarpuria%20Softzone,%20Whitefield,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '502, 5th Floor, Salarpuria Softzone, Whitefield, Bengaluru, Karnataka – 560066'
+  // },
 ]
 
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
@@ -98,7 +94,7 @@ export default function Bengaluru() {
           <div className="blr-hero__card-right">
             <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 80 1234 5678</span></div>
             <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">bengaluru@jhsassociates.in</span></div>
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
@@ -204,7 +200,7 @@ export default function Bengaluru() {
         </div>
       </section>
 
-      <section className="blr-branches-section">
+      {/* <section className="blr-branches-section">
         <div className="blr-container">
           <div className="blr-section-hdr">
             <span className="blr-section-hdr__tag">Sub-Offices</span>
@@ -227,7 +223,7 @@ export default function Bengaluru() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

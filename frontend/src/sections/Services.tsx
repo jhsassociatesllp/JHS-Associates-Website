@@ -46,15 +46,13 @@ const industries: ServiceItem[] = [
   { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors, and property managers in the real estate market.", image: imgRealstate },
   { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency, and strategic financial planning.", image: imgHealth },
   { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk, and advisory services tailored for banks, NBFCs, and financial institutions.", image: imgbank },
-  { label: "IT & Technology", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory, and compliance services.", image: imgIt },
+  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory, and compliance services.", image: imgIt },
   { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imgRetail },
   { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imgConstruction },
   { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imgNgo },
   { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation, and compliance in the fast-paced media industry.", image: imgMedia },
-  // { label: "Insurance", href: "/sectors/financial-services/insurance", description: "Risk mitigation, regulatory compliance, and audit services for insurance providers and brokers.", image: imgInsurance },
+  { label: "Logistics", href: "/sectors/other/logistics", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", },
 ];
-
-
 
 export default function Services() {
   const [capOpen, setCapOpen] = useState(false);

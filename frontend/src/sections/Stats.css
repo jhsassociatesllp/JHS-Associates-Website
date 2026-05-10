@@ -71,7 +71,8 @@
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.22em;
-  color: var(--s-navy);
+  /* color: var(--s-navy); */
+  color: #d72020;
   text-transform: uppercase;
   margin: 0;
   animation: fadeUp 0.5s ease both;
@@ -214,7 +215,8 @@
   align-items: center;
   justify-content: center;
   background: rgba(30, 58, 95, 0.06);
-  color: var(--s-navy);
+  /* color: var(--s-navy); */
+  color: #d72020;
   border-radius: 8px;
   margin-bottom: 2px;
   transition: transform 0.3s ease, background 0.3s ease;

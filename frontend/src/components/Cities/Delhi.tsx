@@ -2,20 +2,18 @@ import { useEffect, useState } from 'react'
 import './Delhi.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import delhiBg from '../../image/Dehli.avif'
+import delhiBg from '../../image/Dehli.png'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 import imgNikhel from '../../image/Nikhel-Kochhar-removebg-preview.png'
-import imgSharad from '../../image/Sharad-Mohata-removebg-preview.png'
+import imgJagdish from '../../image/Jagdish-Solanki-removebg-preview.png'
 import imgSunil from '../../image/Sunil-Pathak-removebg-preview.png'
-import imgVirendra from '../../image/Virendra-Nayyar-removebg-preview.png'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhel Kochhar', image: imgNikhel, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'nikhel.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhel-kochhar' },
-  { name: 'Sharad Mohata', image: imgSharad, qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'sharad.mohata@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sharad-mohata' },
-  { name: 'Sunil Pathak', image: imgSunil, qualifications: 'FCA', designation: 'Risk Advisory & Internal Audit', email: 'sunil.pathak@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sunil-pathak' },
-  { name: 'Virendra Nayyar', image: imgVirendra, qualifications: 'FCA', designation: 'Regulatory & Compliance', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar' },
+  { name: 'Nikhil Kochhar', image: imgNikhel, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhel-kochhar' },
+  { name: 'Jagdish Solanki', image: imgJagdish, qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
+  { name: 'Piyush Agarwal', image: imgSunil, qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -76,16 +74,16 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin',
     address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048'
   },
-  {
-    id: 'connaughtplace', name: 'Connaught Place', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Antriksh%20Bhawan,%20Kasturba%20Gandhi%20Marg,%20Connaught%20Place,%20New%20Delhi&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001'
-  },
-  {
-    id: 'noida', name: 'Noida', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Sector%2016,%20Noida,%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301'
-  },
+  // {
+  //   id: 'connaughtplace', name: 'Connaught Place', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Antriksh%20Bhawan,%20Kasturba%20Gandhi%20Marg,%20Connaught%20Place,%20New%20Delhi&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001'
+  // },
+  // {
+  //   id: 'noida', name: 'Noida', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Sector%2016,%20Noida,%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301'
+  // },
 ]
 
 /* ─── Icons ──────────────────────────────────────── */
@@ -120,7 +118,7 @@ export default function Delhi() {
           <div className="del-hero__card-right">
             <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 11 1234 5678</span></div>
             <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">delhi@jhsassociates.in</span></div>
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
@@ -128,7 +126,7 @@ export default function Delhi() {
       {/* ══ STATS RIBBON ══ */}
       <div className="del-ribbon">
         <div className="del-ribbon__inner">
-          {([['4+', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['3', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['4', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['3', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="del-ribbon__item"><span className="del-ribbon__num">{num}</span><span className="del-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -232,7 +230,7 @@ export default function Delhi() {
       </section>
 
       {/* ══ BRANCHES ══ */}
-      <section className="del-branches-section">
+      {/* <section className="del-branches-section">
         <div className="del-container">
           <div className="del-section-hdr">
             <span className="del-section-hdr__tag">Sub-Offices</span>
@@ -255,7 +253,7 @@ export default function Delhi() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

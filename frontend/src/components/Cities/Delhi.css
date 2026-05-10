@@ -525,9 +525,9 @@
 }
 
 .del-special-pill--b {
-  background: rgba(176, 30, 46, 0.18);
-  border: 1px solid rgba(176, 30, 46, 0.28);
-  color: #ffc4c9
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.90);
 }
 
 .del-special-pill--c {

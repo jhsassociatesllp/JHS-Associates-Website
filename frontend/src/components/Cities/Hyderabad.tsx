@@ -3,17 +3,11 @@ import './Hyderabad.css'
 
 import hyderabadBg from '../../image/Hyderabad.png'
 import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
-import imgPic3 from '../../image/Picture3-removebg-preview.png'
-import imgPic4 from '../../image/Picture4-removebg-preview.png'
-import imgPic6 from '../../image/Picture9-removebg-preview.png'
-import imgPic9 from '../../image/Gemini_Generated_Image_c056azc056azc056__1_-removebg-preview.png'
+import imgGeethika from '../../image/Geethika Ghanta.png'
 
 const PARTNERS = [
-  { name: 'Narayana Rao Malla', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
-  { name: 'Ramesh Reddy', image: imgPic3, qualifications: 'FCA', designation: 'Tax Advisory & Compliance', email: 'ramesh.reddy@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ramesh-reddy' },
-  { name: 'Prasad Varma', image: imgPic4, qualifications: 'FCA', designation: 'Risk Advisory & Internal Audit', email: 'prasad.varma@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/prasad-varma' },
-  { name: 'Suresh Kumar', image: imgPic6, qualifications: 'FCA', designation: 'Corporate Governance & Regulatory', email: 'suresh.kumar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/suresh-kumar' },
-  { name: 'Venkat Rao', image: imgPic9, qualifications: 'FCA', designation: 'Accounts Outsourcing & Ind AS', email: 'venkat.rao@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/venkat-rao' },
+  { name: 'Pradeep', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
+  { name: 'Geethika Ghanta', image: imgGeethika, qualifications: 'FCA', designation: 'Risk Advisory & Compliance', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/geethika-ghanta' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -62,16 +56,16 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.3!2d78.3722!3d17.4474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93dc8c5d69df%3A0x19688bef76177fe5!2sHiTech%20City%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1680000000003!5m2!1sen!2sin',
     address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016'
   },
-  {
-    id: 'hiteccity', name: 'HITEC City', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Cyber%20Towers,%20HITEC%20City,%20Madhapur,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081'
-  },
-  {
-    id: 'banjarahills', name: 'Banjara Hills', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Lumbini%20Avenue,%20Road%20No.%202,%20Banjara%20Hills,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '201, 2nd Floor, Lumbini Avenue, Road No. 2, Banjara Hills, Hyderabad, Telangana – 500034'
-  },
+  // {
+  //   id: 'hiteccity', name: 'HITEC City', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Cyber%20Towers,%20HITEC%20City,%20Madhapur,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081'
+  // },
+  // {
+  //   id: 'banjarahills', name: 'Banjara Hills', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Lumbini%20Avenue,%20Road%20No.%202,%20Banjara%20Hills,%20Hyderabad&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '201, 2nd Floor, Lumbini Avenue, Road No. 2, Banjara Hills, Hyderabad, Telangana – 500034'
+  // },
 ]
 
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
@@ -102,7 +96,7 @@ export default function Hyderabad() {
           <div className="hyd-hero__card-right">
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Phone</span><span className="hyd-hero__card-stat-val">+91 40 1234 5678</span></div>
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Email</span><span className="hyd-hero__card-stat-val">hyderabad@jhsassociates.in</span></div>
-            <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Hours</span><span className="hyd-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Hours</span><span className="hyd-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
@@ -208,7 +202,7 @@ export default function Hyderabad() {
         </div>
       </section>
 
-      <section className="hyd-branches-section">
+      {/* <section className="hyd-branches-section">
         <div className="hyd-container">
           <div className="hyd-section-hdr">
             <span className="hyd-section-hdr__tag">Sub-Offices</span>
@@ -231,7 +225,7 @@ export default function Hyderabad() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

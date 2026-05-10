@@ -3,9 +3,6 @@ import './Kolkata.css'
 
 import kolkataBg from '../../image/Kolkata.png'
 import imgSharad from '../../image/Sharad-Mohata-removebg-preview.png'
-import imgViranch from '../../image/Viranch-Modi-removebg-preview.png'
-import imgJagdish from '../../image/Jagdish-Solanki-removebg-preview.png'
-import imgSunil from '../../image/Sunil-Pathak-removebg-preview.png'
 
 const PARTNERS = [
   {
@@ -13,32 +10,8 @@ const PARTNERS = [
     image: imgSharad,
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
-    email: 'sharad.mohata.kol@jhsassociates.in',
-    linkedin: 'https://www.linkedin.com/in/sharad-mohata-kol',
-  },
-  {
-    name: 'Viranch Modi',
-    image: imgViranch,
-    qualifications: 'FCA',
-    designation: 'GST & Indirect Tax',
-    email: 'viranch.modi.kol@jhsassociates.in',
-    linkedin: 'https://www.linkedin.com/in/viranch-modi-kol',
-  },
-  {
-    name: 'Jagdish Solanki',
-    image: imgJagdish,
-    qualifications: 'FCA',
-    designation: 'Statutory Audit & Assurance',
-    email: 'jagdish.solanki.kol@jhsassociates.in',
-    linkedin: 'https://www.linkedin.com/in/jagdish-solanki-kol',
-  },
-  {
-    name: 'Sunil Pathak',
-    image: imgSunil,
-    qualifications: 'FCA',
-    designation: 'Risk Advisory & Compliance',
-    email: 'sunil.pathak.kol@jhsassociates.in',
-    linkedin: 'https://www.linkedin.com/in/sunil-pathak-kol',
+    email: 'sharad.mohata@jhsassociates.in',
+    linkedin: 'https://www.linkedin.com/in/sharad-mohata',
   },
 ]
 
@@ -158,30 +131,30 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
     address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
   },
-  {
-    id: 'parkstreet',
-    name: 'Park Street',
-    mapUrl: 'https://maps.google.com/maps?q=Chatterjee%20International,%20Jawaharlal%20Nehru%20Road,%20Park%20Street,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071'
-  },
-  {
-    id: 'saltlake',
-    name: 'Salt Lake',
-    mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
-  }
+  // {
+  //   id: 'parkstreet',
+  //   name: 'Park Street',
+  //   mapUrl: 'https://maps.google.com/maps?q=Chatterjee%20International,%20Jawaharlal%20Nehru%20Road,%20Park%20Street,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071'
+  // },
+  // {
+  //   id: 'saltlake',
+  //   name: 'Salt Lake',
+  //   mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
+  // }
 ]
 
-const BRANCHES = [
-  {
-    name: 'Park Street',
-    address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071',
-  },
-  {
-    name: 'Salt Lake',
-    address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091',
-  },
-]
+// const BRANCHES = [
+//   // {
+//   //   name: 'Park Street',
+//   //   address: '6th Floor, Chatterjee International, 33A Jawaharlal Nehru Road, Park Street, Kolkata, West Bengal – 700071',
+//   // },
+//   // {
+//   //   name: 'Salt Lake',
+//   //   address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091',
+//   // },
+// ]
 
 function PartnerAvatar({ image, name }: { image: string; name: string }) {
   return (
@@ -254,8 +227,8 @@ export default function Kolkata() {
             </div>
             <div className="kol-hero__card-info-item">
               <div>
-                <span className="kol-hero__card-info-label">Business Hours</span>
-                <span className="kol-hero__card-info-val">Mon–Sat, 9:30 AM – 6:30 PM</span>
+                {/* <span className="kol-hero__card-info-label">Business Hours</span> */}
+                {/* <span className="kol-hero__card-info-val">Mon–Sat, 9:30 AM – 6:30 PM</span> */}
               </div>
             </div>
           </div>

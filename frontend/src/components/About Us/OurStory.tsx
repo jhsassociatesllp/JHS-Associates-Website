@@ -21,11 +21,11 @@ export default function OurStory() {
 
         {/* Stats bar */}
         <div className="ap-hero__stats">
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">1992</span><span className="ap-hero__stat-label">Year Founded</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">1981</span><span className="ap-hero__stat-label">Year Founded</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">30+</span><span className="ap-hero__stat-label">Years of Trust</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">45</span><span className="ap-hero__stat-label">Years of Trust</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">8</span><span className="ap-hero__stat-label">Cities Conquered</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">14</span><span className="ap-hero__stat-label">Cities Conquered</span></div>
         </div>
       </section>
 

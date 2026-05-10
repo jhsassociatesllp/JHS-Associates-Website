@@ -5,16 +5,16 @@ import './Ahmedabad.css'
 import ahmedabadBg from '../../image/Ahmedabad.png'
 
 /* ─── Partner Image Imports ─────────────────────────── */
-import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
-import imgDhaval from '../../image/Dhaval-Thakkar-removebg-preview.png'
-import imgHitesh from '../../image/Hitesh-Khandelwal-removebg-preview.png'
-import imgJagdish from '../../image/Jagdish-Solanki-removebg-preview.png'
-import imgKalpesh from '../../image/Kalpesh-Parmar-removebg-preview.png'
-import imgMehul from '../../image/Mehul-Shah-removebg-preview.png'
-import imgMilin from '../../image/Milin-Parekh-removebg-preview.png'
-import imgRaj from '../../image/Raj-Shah-removebg-preview.png'
+import imgVirendra from '../../image/Virendra-Nayyar-removebg-preview.png'
 import imgSaurabh from '../../image/Saurabh-Shah-removebg-preview.png'
+import imgDhaval from '../../image/Dhaval-Thakkar-removebg-preview.png'
 import imgViranch from '../../image/Viranch-Modi-removebg-preview.png'
+import imgShreena from '../../image/Shreena Parana.png'
+import imgMilin from '../../image/Milin-Parekh-removebg-preview.png'
+import imgMehul from '../../image/Mehul-Shah-removebg-preview.png'
+import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
+import imgRaj from '../../image/Raj-Shah-removebg-preview.png'
+
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
 const SectorIcons: Record<string, JSX.Element> = {
@@ -82,16 +82,17 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Alpesh Vaniya', image: imgAlpesh, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya' },
-  { name: 'Dhaval Thakkar', image: imgDhaval, qualifications: 'FCA', designation: 'Tax & Regulatory Advisory', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar' },
-  { name: 'Hitesh Khandelwal', image: imgHitesh, qualifications: 'FCA', designation: 'Risk Advisory & Internal Audit', email: 'hitesh.khandelwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/hitesh-khandelwal' },
-  { name: 'Jagdish Solanki', image: imgJagdish, qualifications: 'FCA', designation: 'Statutory Audit', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
-  { name: 'Kalpesh Parmar', image: imgKalpesh, qualifications: 'FCA', designation: 'Accounts Outsourcing & Compliance', email: 'kalpesh.parmar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/kalpesh-parmar' },
-  { name: 'Mehul Shah', image: imgMehul, qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah' },
-  { name: 'Milin Parekh', image: imgMilin, qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh' },
-  { name: 'Raj Shah', image: imgRaj, qualifications: 'B.Com, ACA', designation: 'Tax & Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/raj-shah' },
+  { name: 'Virendra Nayyar', image: imgVirendra, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar' },
   { name: 'Saurabh Shah', image: imgSaurabh, qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
+  { name: 'Dhaval Thakkar', image: imgDhaval, qualifications: 'FCA', designation: 'Tax & Regulatory Advisory', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar' },
   { name: 'Viranch Modi', image: imgViranch, qualifications: 'B.Com, FCA', designation: 'Income Tax & GST', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi' },
+  { name: 'Shreena Panara', image: imgShreena, qualifications: 'FCA', designation: 'Audit & Compliance', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/shreena-panara' },
+  { name: 'Milin Parekh', image: imgMilin, qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh' },
+  { name: 'Mehul Shah', image: imgMehul, qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah' },
+  { name: 'Alpesh Vaniya', image: imgAlpesh, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya' },
+  { name: 'Raj Shah', image: imgRaj, qualifications: 'B.Com, ACA', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/raj-shah' },
+  { name: 'Parth Shah', image: imgRaj, qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah' },
+  { name: 'Jhankhna Patel', image: imgShreena, qualifications: 'ACA', designation: 'Audit & Regulatory Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhna-patel' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -188,7 +189,7 @@ export default function Ahmedabad() {
           <div className="ahm-hero__card-right">
             <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Phone</span><span className="ahm-hero__card-stat-val">+91 79 1234 5678</span></div>
             <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Email</span><span className="ahm-hero__card-stat-val">ahmedabad@jhsassociates.in</span></div>
-            <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Hours</span><span className="ahm-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Hours</span><span className="ahm-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
@@ -196,7 +197,7 @@ export default function Ahmedabad() {
       {/* ══ STATS RIBBON ══ */}
       <div className="ahm-ribbon">
         <div className="ahm-ribbon__inner">
-          {([['10+', 'Expert Partners'], ['6', 'Sectors Served'], ['7+', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['10', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="ahm-ribbon__item">
               <span className="ahm-ribbon__num">{num}</span>
               <span className="ahm-ribbon__lbl">{lbl}</span>

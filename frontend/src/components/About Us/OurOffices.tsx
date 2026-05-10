@@ -12,7 +12,6 @@ const OFFICES = [
     route: '/city/mumbai',
     phone: '1800 120 1022',
     email: 'connect@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: true,
     branches: [
       { name: 'Andheri (East) — Head Office', address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059' },
@@ -28,7 +27,6 @@ const OFFICES = [
     route: '/city/ahmedabad',
     phone: '+91 79 1234 5678',
     email: 'ahmedabad@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: false,
     branches: [
       { name: 'SG Highway — Head Office', address: 'B-1204, Westgate Business Bay, Near YMCA Club, SG Highway, Ahmedabad, Gujarat – 380054' },
@@ -42,7 +40,6 @@ const OFFICES = [
     route: '/city/delhi',
     phone: '+91 11 1234 5678',
     email: 'delhi@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: false,
     branches: [
       { name: 'Connaught Place — Head Office', address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001' },
@@ -56,7 +53,6 @@ const OFFICES = [
     route: '/city/hyderabad',
     phone: '+91 40 1234 5678',
     email: 'hyderabad@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: false,
     branches: [
       { name: 'HITEC City — Head Office', address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081' },
@@ -70,7 +66,6 @@ const OFFICES = [
     route: '/city/bengaluru',
     phone: '+91 80 1234 5678',
     email: 'bengaluru@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: false,
     branches: [
       { name: 'Koramangala — Head Office', address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034' },
@@ -84,7 +79,6 @@ const OFFICES = [
     route: '/city/kolkata',
     phone: '+91 33 1234 5678',
     email: 'kolkata@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
     isPrimary: false,
     branches: [
       { name: 'Park Street — Head Office', address: '6th Floor, Chatterjee International, 33A JL Nehru Road, Park Street, Kolkata, West Bengal – 700071' },
@@ -98,7 +92,7 @@ const OFFICES = [
     route: '/city/chennai',
     phone: '+91 44 1234 5678',
     email: 'chennai@jhsassociates.in',
-    hours: 'Mon–Sat, 9:30 AM – 6:30 PM',
+
     isPrimary: false,
     branches: [
       { name: 'T. Nagar — Head Office', address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017' },
@@ -112,7 +106,7 @@ const OFFICES = [
     route: '/city/global',
     phone: '',
     email: 'global@jhsassociates.in',
-    hours: 'Mon–Fri, 9:00 AM – 6:00 PM',
+
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },
@@ -262,7 +256,7 @@ export default function OurOffices() {
       </section>
 
       {/* ════ ALL OFFICES GRID ════ */}
-      <section className="oo-grid-section">
+      {/* <section className="oo-grid-section">
         <div className="oo-container">
           <div className="oo-section-hdr">
             <span className="oo-section-hdr__tag">Pan-India Network</span>
@@ -300,7 +294,7 @@ export default function OurOffices() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

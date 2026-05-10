@@ -93,15 +93,15 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imgHuzeifa, qualifications: 'FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)', designation: 'Statutory Audit', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imgTasnim, qualifications: 'FCA | ND AS & IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Chatriwala', image: imgJamal, qualifications: 'B.Com, ACA', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imgTaher, qualifications: 'B.Com, FCA, CISA, ACCA', designation: 'Assurance & Tech | SOC | Audit Expert', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/Taher Pepermintwala' },
-  { name: 'Sahil Shah', image: imgSahil, qualifications: 'FCA', designation: 'Risk Advisory, IA, IPO & IPO Certification', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Huzeifa Unwala', image: imgHuzeifa, qualifications: 'FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)', designation: '', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imgTasnim, qualifications: 'FCA IndAS & IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imgJamal, qualifications: 'B.Com, ACA', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imgTaher, qualifications: 'B.Com, FCA, CISA', designation: 'Assurance & Tech | SOC | Audit Expert', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/Taher Pepermintwala' },
+  { name: 'Sahil Shah', image: imgSahil, qualifications: 'FCA', designation: 'Risk Advisory, ACA,FCA', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
   { name: 'Tausif Shaikh', image: imgTausif, qualifications: 'B.COM, ACA', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
   { name: 'Samad Dhanani', image: imgSamad, qualifications: 'M.COM, CS, ACA', designation: 'Statutory & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
   { name: 'Disha Shah', image: imgDisha, qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi', image: imgDhanlaxmi, qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Dhanlaxmi Nair', image: imgDhanlaxmi, qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -127,14 +127,14 @@ const SPECIALIZATIONS = [
 /* ─── Map Locations ───────────────────────────────── */
 const MAP_LOCATIONS = [
   {
-    id: 'andheri', name: 'Andheri (Head Office)', tag: 'Head Office',
+    id: 'andheri', name: 'Andheri ', tag: 'Head Office',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin',
     address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059'
   },
   {
     id: 'masjid', name: 'Masjid', tag: 'Branch',
     mapUrl: "https://maps.google.com/maps?q=Nav%20Vyapar%20Bhavan,%20P.D'mello%20Road,%20Mumbai,%20Maharashtra%20400009&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra – 400009"
+    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, M, Maharashtra – 400009"
   },
   {
     id: 'kalyan', name: 'Kalyan', tag: 'Branch',
@@ -199,7 +199,7 @@ export default function Mumbai() {
           <div className="mum-hero__card-right">
             <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Phone</span><span className="mum-hero__card-stat-val">1800 120 1022</span></div>
             <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Email</span><span className="mum-hero__card-stat-val">connect@jhsassociates.in</span></div>
-            <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Hours</span><span className="mum-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Hours</span><span className="mum-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
@@ -207,7 +207,7 @@ export default function Mumbai() {
       {/* ══ STATS RIBBON ══ */}
       <div className="mum-ribbon">
         <div className="mum-ribbon__inner">
-          {([['9+', 'Expert Partners'], ['7', 'Sectors Served'], ['13+', 'Specialisations'], ['4', 'Mumbai Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['9', 'Expert Partners'], ['7', 'Sectors Served'], ['13', 'Specialisations'], ['4', 'Mumbai Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="mum-ribbon__item">
               <span className="mum-ribbon__num">{num}</span>
               <span className="mum-ribbon__lbl">{lbl}</span>
@@ -222,7 +222,7 @@ export default function Mumbai() {
           <div className="mum-section-hdr">
             <span className="mum-section-hdr__tag">Industries</span>
             <h2 className="mum-section-hdr__title">Sectors Served</h2>
-            <p className="mum-section-hdr__sub">Deep domain expertise across Mumbai's most dynamic industries — built through years of hands-on client engagement.</p>
+            <p className="mum-section-hdr__sub">Deep domain expertise across Mumbai's most dynamic industries built through years of hands on client engagement.</p>
           </div>
           <div className="mum-sectors-grid">
             {SECTORS.map((s, i) => (
@@ -319,7 +319,7 @@ export default function Mumbai() {
       </section>
 
       {/* ══ BRANCHES ══ */}
-      <section className="mum-branches-section">
+      {/* <section className="mum-branches-section">
         <div className="mum-container">
           <div className="mum-section-hdr">
             <span className="mum-section-hdr__tag">Sub-Offices</span>
@@ -343,7 +343,7 @@ export default function Mumbai() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

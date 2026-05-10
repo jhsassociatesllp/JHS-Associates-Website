@@ -2,16 +2,12 @@ import { useEffect, useState } from 'react'
 import './Chennai.css'
 
 import chennaiBg from '../../image/Chennai.png'
-import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
-import imgVirendra from '../../image/Virendra-Nayyar-removebg-preview.png'
-import imgDhaval from '../../image/Dhaval-Thakkar-removebg-preview.png'
-import imgSunil from '../../image/Sunil-Pathak-removebg-preview.png'
+import imgChandra from '../../image/Chandra Shekaran.png'
+import imgParnal from '../../image/Pranal p.png'
 
 const PARTNERS = [
-  { name: 'Narayana Rao Malla', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla.chn@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla-chn' },
-  { name: 'Virendra Nayyar', image: imgVirendra, qualifications: 'FCA', designation: 'Regulatory & Compliance', email: 'virendra.nayyar.chn@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-chn' },
-  { name: 'Dhaval Thakkar', image: imgDhaval, qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'dhaval.thakkar.chn@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-chn' },
-  { name: 'Sunil Pathak', image: imgSunil, qualifications: 'FCA', designation: 'Risk Advisory & Internal Audit', email: 'sunil.pathak.chn@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sunil-pathak-chn' },
+  { name: 'Chandra', image: imgChandra, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chandra-jhs' },
+  { name: 'Parnal P', image: imgParnal, qualifications: 'ACA', designation: 'Tax & Regulatory Advisory', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -60,16 +56,16 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9!2d80.2337!3d13.0416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c07a1e3b3d%3A0x4c9b5e9a8b9a8b9a!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000007',
     address: 'No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017'
   },
-  {
-    id: 'tnagar', name: 'T. Nagar', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Abacus%20Tower,%20Venkatnarayana%20Road,%20T.%20Nagar,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017'
-  },
-  {
-    id: 'annanagar', name: 'Anna Nagar', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Anna%20Nagar%20Eastern%20Extn,%20Chennai,%20Tamil%20Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102'
-  },
+  // {
+  //   id: 'tnagar', name: 'T. Nagar', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Abacus%20Tower,%20Venkatnarayana%20Road,%20T.%20Nagar,%20Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017'
+  // },
+  // {
+  //   id: 'annanagar', name: 'Anna Nagar', tag: 'Branch',
+  //   mapUrl: 'https://maps.google.com/maps?q=Anna%20Nagar%20Eastern%20Extn,%20Chennai,%20Tamil%20Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed',
+  //   address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102'
+  // },
 ]
 
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
@@ -100,14 +96,14 @@ export default function Chennai() {
           <div className="chn-hero__card-right">
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 44 1234 5678</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chennai@jhsassociates.in</span></div>
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+            {/* <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
         </div>
       </section>
 
       <div className="chn-ribbon">
         <div className="chn-ribbon__inner">
-          {([['4+', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['3', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['4', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['3', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -206,7 +202,7 @@ export default function Chennai() {
         </div>
       </section>
 
-      <section className="chn-branches-section">
+      {/* <section className="chn-branches-section">
         <div className="chn-container">
           <div className="chn-section-hdr">
             <span className="chn-section-hdr__tag">Sub-Offices</span>
@@ -229,7 +225,7 @@ export default function Chennai() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

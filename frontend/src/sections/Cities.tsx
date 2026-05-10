@@ -4,9 +4,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Cities.css";
 import Mumbai from '../image/Mumbai.png'
-import Delhi from '../image/Dehli.avif'
-import Bengaluru from '../image/Bengluru.avif'
-import GlobalOffices from '../image/Global.png'
+import Delhi from '../image/Dehli.png'
+import Bengaluru from '../image/Bangaluru.jpg'
+import GlobalOffices from '../image/Global.jpeg'
 import Ahmedabad from '../image/Ahmedabad.png'
 import Hyderabad from '../image/Hyderabad.png'
 import Kolkata from '../image/Kolkata.png'
@@ -106,10 +106,10 @@ export default function Cities() {
         <div className="cities__header">
           <span className="cities__eyebrow">Our Presence</span>
           <h2 className="cities__headline">
-            Connecting expertise <br /> across major cities
+            Connecting expertise <br /> across multiple cities.
           </h2>
           <p className="cities__sub">
-            We provide strategic financial and advisory services to our clients from multiple strategic locations.
+            We provide strategic financial and advisory services to our clients from multiple locations.
           </p>
         </div>
 

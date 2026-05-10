@@ -1,197 +1,182 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowUpRight, Receipt, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
+import { Shield } from 'lucide-react'
 import './Taxation.css'
+import heroImg from '../../image/Fainance-report.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const HIGHLIGHTS = [
-  {
-    icon: <Receipt size={20} strokeWidth={1.5} />,
-    title: 'Direct Tax Advisory',
-    desc: 'Comprehensive income tax planning, return filing, and advisory for corporates, LLPs, HUFs, and individuals — structured to minimise tax liability within the law.',
-  },
-  {
-    icon: <Globe2 size={20} strokeWidth={1.5} />,
-    title: 'International Tax',
-    desc: 'Transfer pricing documentation, DTAA advisory, FEMA compliance, and cross-border structuring for multinationals and businesses with overseas operations.',
-  },
-  {
-    icon: <FileText size={20} strokeWidth={1.5} />,
-    title: 'GST & Indirect Tax',
-    desc: 'GST registration, return filing, ITC reconciliation, e-invoicing compliance, and advisory on complex GST transactions across industries.',
-  },
-  {
-    icon: <ShieldCheck size={20} strokeWidth={1.5} />,
-    title: 'Tax Litigation & Representation',
-    desc: 'Representation before Income Tax Authorities, CIT(A), ITAT, GST appellate bodies, and High Courts — from drafting to oral hearings.',
-  },
-  {
-    icon: <BarChart2 size={20} strokeWidth={1.5} />,
-    title: 'Tax Due Diligence',
-    desc: 'Pre-acquisition and pre-investment tax due diligence, identifying contingent liabilities, treaty risks, and structuring recommendations for M&A transactions.',
-  },
-  {
-    icon: <Scale size={20} strokeWidth={1.5} />,
-    title: 'Corporate Tax Structuring',
-    desc: 'Business restructuring, demergers, amalgamations, and holding company structures designed for tax efficiency across corporate groups.',
-  },
+// Left column items (01–06)
+const leftItems = [
+  { id: "01", title: "Representation before tax authorities for assessments, refunds & rectifications", desc: "Direct representation & dispute resolution" },
+  { id: "02", title: "Tax structuring, budgeting, forecasting & M&A advisory", desc: "Strategic tax planning & deal structuring" },
+  { id: "03", title: "Corporate & Non-Corporate Return Filing (Direct Tax)", desc: "Income tax return preparation & filing" },
+  { id: "04", title: "Tax Planning, TDS & Advance Tax Compliance", desc: "Withholding tax & advance tax management" },
+  { id: "05", title: "GST Return Filing, Retainership & Indirect Tax Advisory", desc: "End-to-end GST compliance & advisory" },
+  { id: "06", title: "Tax Advisory, GST Health Check & Dispute Resolution", desc: "Tax review & litigation support" },
 ]
 
-const STATS = [
-  { num: '500+', label: 'Tax Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Pan India', label: 'Coverage' },
-]
-
-const WHY = [
-  'Full-spectrum tax advisory — direct, indirect, and international under one team',
-  'Senior partner-led representation before tax authorities and appellate tribunals',
-  'Specialist GST team handling complex sectoral transactions across industries',
-  'Transfer pricing documentation and OECD BEPS advisory for multinationals',
-  'Proactive tax planning aligned with regulatory changes and budget updates',
+// Right column items (07–12)
+const rightItems = [
+  { id: "07", title: "Survey, Search & Seizure Support", desc: "Emergency response & regulatory support" },
+  { id: "08", title: "Scrutiny & Faceless Representation", desc: "Assessment proceedings & e-proceedings" },
+  { id: "09", title: "Assessments, Appeals & Litigation", desc: "CIT(A), ITAT & High Court representation" },
+  { id: "10", title: "Transfer Pricing (Domestic & International), Reviews & Certifications", desc: "TP documentation & OECD BEPS advisory" },
+  { id: "11", title: "International Tax & Inbound/Outbound Structuring", desc: "DTAA, FEMA & cross-border compliance" },
+  { id: "12", title: "Tax Audits, Digitalization, Registration (PAN, GSTIN, TAN, Charitable Trusts)", desc: "Tax audit & registration services" },
 ]
 
 export default function Taxation() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ['.tx-hero__eyebrow', '.tx-hero__title', '.tx-hero__sub', '.tx-hero__stats'],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
+        '.tx-hero__content > *',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
-      gsap.fromTo('.tx-card',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+
+      gsap.utils.toArray('.tx-section-header').forEach((header: any) => {
+        gsap.fromTo(header,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: header, start: 'top 85%' } }
+        )
+      })
+
+      gsap.fromTo('.tx-spoke-hub',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.tx-spoke-diagram', start: 'top 75%' } }
       )
-      gsap.fromTo('.tx-why__item',
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
-      )
+
+      gsap.utils.toArray('.tx-spoke-row--left').forEach((row: any, i) => {
+        gsap.fromTo(row,
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.tx-spoke-diagram', start: 'top 75%' } }
+        )
+      })
+
+      gsap.utils.toArray('.tx-spoke-row--right').forEach((row: any, i) => {
+        gsap.fromTo(row,
+          { opacity: 0, x: 50 },
+          { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.tx-spoke-diagram', start: 'top 75%' } }
+        )
+      })
     })
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <div className="tx-page">
+    <div className="tx-page" ref={containerRef}>
 
-      {/* ── HERO ── */}
-      <section className="tx-hero" ref={heroRef}>
-        <div className="tx-hero__inner">
-          {/* <p className="tx-hero__eyebrow">Services &nbsp;·&nbsp; JHS & Associates</p> */}
-          <h1 className="tx-hero__title">Taxation<br /><em>Services</em></h1>
-          <p className="tx-hero__sub">
-            Full-spectrum direct tax, indirect tax, and international tax advisory
-            for corporates, businesses, and individuals — backed by two decades
-            of expertise and senior partner-led delivery.
-          </p>
-          {/* <div className="tx-hero__stats">
-            {STATS.map((s) => (
-              <div key={s.label} className="tx-hero__stat">
-                <span className="tx-hero__stat-num">{s.num}</span>
-                <span className="tx-hero__stat-label">{s.label}</span>
-              </div>
-            ))}
-          </div> */}
+      {/* ════ HERO SECTION ════ */}
+      <section className="tx-hero">
+        <div className="tx-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="tx-hero__overlay" />
+        <div className="tx-container">
+          <div className="tx-hero__content">
+            <span className="tx-eyebrow">Tax & Compliance</span>
+            <h1 className="tx-title">Taxation Solutions</h1>
+            <p className="tx-subtitle">
+              Expert tax planning and compliance for smarter financial outcomes.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── OVERVIEW ── */}
-      <section className="tx-overview container">
-        <div className="tx-overview__inner">
-          <div className="tx-overview__text">
-            <span className="tx-tag">Our Approach</span>
-            <h2 className="tx-overview__title">Tax Advisory That Goes Beyond Compliance</h2>
-            <p className="tx-overview__body">
-              Tax is not just a compliance obligation — it is a strategic lever.
-              JHS delivers tax advisory that looks beyond the return filing cycle,
-              helping businesses structure transactions, plan for the future, and
-              manage disputes proactively. From direct tax to GST, from transfer
-              pricing to M&amp;A structuring, our integrated tax practice covers
-              every dimension of a business's tax exposure.
-            </p>
-            <a href="/contact" className="tx-btn tx-btn--solid">
-              Talk to Our Experts <ArrowUpRight size={15} />
-            </a>
+      {/* ════ SPOKE DIAGRAM SECTION ════ */}
+      <section className="tx-coverage">
+        <div className="tx-container">
+          <div className="tx-section-header">
+            <h2>Our Taxation Capabilities</h2>
+            <div className="tx-divider" />
+            <p>Comprehensive tax services covering every obligation and opportunity from compliance and return filing to strategic structuring and litigation support.</p>
           </div>
-          <div className="tx-overview__visual">
-            <div className="tx-overview__badge">
-              <span className="tx-overview__badge-icon">📋</span>
-              <span className="tx-overview__badge-label">Full-spectrum tax advisory</span>
+
+          {/* ── SPOKE DIAGRAM ── */}
+          <div className="tx-spoke-diagram">
+
+            {/* LEFT COLUMN */}
+            <div className="tx-spoke-col tx-spoke-col--left">
+              {leftItems.map((item) => (
+                <div key={item.id} className="tx-spoke-row tx-spoke-row--left">
+                  <div className="tx-spoke-text tx-spoke-text--left">
+                    <h3 className="tx-spoke-title">{item.title}</h3>
+                    <p className="tx-spoke-desc">{item.desc}</p>
+                  </div>
+                  <div className="tx-spoke-connector tx-spoke-connector--left">
+                    <div className="tx-spoke-line" />
+                    <div className="tx-spoke-badge tx-spoke-badge--navy">{item.id}</div>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            {/* CENTER HUB */}
+            <div className="tx-spoke-center">
+              <div className="tx-spoke-hub">
+                <div className="tx-spoke-hub__ring" />
+                <div className="tx-spoke-hub__inner">
+                  <span className="tx-spoke-hub__label">Taxation</span>
+                  <span className="tx-spoke-hub__label">Solutions</span>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN */}
+            <div className="tx-spoke-col tx-spoke-col--right">
+              {rightItems.map((item) => (
+                <div key={item.id} className="tx-spoke-row tx-spoke-row--right">
+                  <div className="tx-spoke-connector tx-spoke-connector--right">
+                    <div className="tx-spoke-badge tx-spoke-badge--red">{item.id}</div>
+                    <div className="tx-spoke-line" />
+                  </div>
+                  <div className="tx-spoke-text tx-spoke-text--right">
+                    <h3 className="tx-spoke-title">{item.title}</h3>
+                    <p className="tx-spoke-desc">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>{/* end tx-spoke-diagram */}
+
+          {/* Mobile fallback grid */}
+          <div className="tx-spoke-mobile-grid">
+            {[...leftItems, ...rightItems]
+              .sort((a, b) => parseInt(a.id) - parseInt(b.id))
+              .map((item) => (
+                <div key={item.id} className="tx-spoke-mobile-card">
+                  <div className={`tx-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'tx-spoke-badge--navy' : 'tx-spoke-badge--red'}`}>
+                    {item.id}
+                  </div>
+                  <div>
+                    <h3 className="tx-spoke-title">{item.title}</h3>
+                    <p className="tx-spoke-desc">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="tx-certification">
+            <Shield className="tx-certification__icon" size={28} />
+            <p className="tx-certification__text">JHS & Associates LLP · Full-Spectrum Tax Advisory — Direct, Indirect & International under One Team</p>
           </div>
         </div>
       </section>
 
-      {/* ── SERVICE HIGHLIGHTS ── */}
-      <section className="tx-highlights container" ref={hlRef}>
-        <div className="tx-section-hd">
-          <h2 className="tx-section-hd__title">What We Offer</h2>
-          <p className="tx-section-hd__sub">
-            Comprehensive tax services covering every obligation and opportunity for businesses and individuals.
-          </p>
-        </div>
-        <div className="tx-grid">
-          {HIGHLIGHTS.map((h, i) => (
-            <article key={i} className="tx-card">
-              <div className="tx-card__accent" />
-              <div className="tx-card__icon">{h.icon}</div>
-              <h3 className="tx-card__title">{h.title}</h3>
-              <p className="tx-card__desc">{h.desc}</p>
-              <button className="tx-card__cta" type="button">
-                Learn More <ArrowUpRight size={13} />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ── WHY JHS ── */}
-      <section className="tx-why container" ref={whyRef}>
-        <div className="tx-why__inner">
-          <div className="tx-why__left">
-            <span className="tx-tag">Why JHS</span>
-            <h2 className="tx-why__title">The JHS Advantage in Taxation</h2>
-            <p className="tx-why__sub">
-              We combine technical tax depth with practical business understanding
-              to deliver advisory that creates real value — not just compliance.
-            </p>
-            <a href="/contact" className="tx-btn tx-btn--ghost">
-              Start a Conversation <ArrowUpRight size={14} />
-            </a>
+      {/* ════ BOTTOM CTA ════ */}
+      <section className="tx-cta">
+        <div className="tx-container">
+          <div className="tx-cta__box">
+            <h2>Ready to optimise your tax position?</h2>
+            <p>Speak with a JHS tax specialist and get a tailored advisory proposal for your organisation.</p>
+            <button className="tx-btn">Schedule a Consultation</button>
           </div>
-          <ul className="tx-why__list">
-            {WHY.map((item, i) => (
-              <li key={i} className="tx-why__item">
-                <span className="tx-why__dot" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="tx-cta container">
-        <div className="tx-cta__inner">
-          <div className="tx-cta__content">
-            <p className="tx-cta__eyebrow">Get Started</p>
-            <h2 className="tx-cta__title">Ready to optimise your tax position?</h2>
-            <p className="tx-cta__sub">
-              Speak with a JHS tax specialist and get a tailored advisory proposal.
-            </p>
-          </div>
-          <a href="/contact" className="tx-btn tx-btn--cta">
-            Contact Us <ArrowUpRight size={16} />
-          </a>
         </div>
       </section>
 

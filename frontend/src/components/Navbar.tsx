@@ -61,8 +61,10 @@ const NAV_ITEMS: NavItem[] = [
         children: [
           { label: "Consulting", description: "Holistic advisory across functions", href: '/services/consulting' },
           { label: "Assurance", description: "Audit, risk & compliance", href: '/services/assurance' },
-          { label: "Taxation Services", description: "Direct & indirect tax advisory", href: '/services/taxation' },
-          { label: "Outsourcing Services", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
+          { label: "Taxation ", description: "Direct & indirect tax advisory", href: '/services/taxation' },
+          { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
+          { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
+          { label: "Compliance & Learning", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/compliance-learning' },
         ],
       },
       {

@@ -8,17 +8,17 @@ import {
 import './Assurance.css'
 import heroImg from '../../image/Assurance.png'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger)   
 
 const continuousCoverage = [
   { id: "01", title: "Statutory Audit", desc: "Annual statutory financial review", icon: <FileCheck size={28} strokeWidth={1.5} /> },
   { id: "02", title: "Internal Audit", desc: "Process, risk & control assurance", icon: <Search size={28} strokeWidth={1.5} /> },
-  { id: "03", title: "IT / Cyber Security", desc: "CERT-In empanelled assessment", icon: <Shield size={28} strokeWidth={1.5} /> },
-  { id: "04", title: "Forensic Investigation", desc: "Fraud detection & digital forensics", icon: <Activity size={28} strokeWidth={1.5} /> },
-  { id: "05", title: "Concurrent Audit", desc: "Real-time transaction monitoring", icon: <BarChart3 size={28} strokeWidth={1.5} /> },
-  { id: "06", title: "SOC 1 & SOC 2", desc: "Service organisation controls", icon: <Calculator size={28} strokeWidth={1.5} /> },
-  { id: "07", title: "Channel / Dealer Audit", desc: "Supply chain & distributor review", icon: <Truck size={28} strokeWidth={1.5} /> },
-  { id: "08", title: "ESG & Ethics Audit", desc: "Sustainability & governance review", icon: <Leaf size={28} strokeWidth={1.5} /> },
+  { id: "03", title: "Concurrent Audit", desc: "Real-time transaction monitoring", icon: <BarChart3 size={28} strokeWidth={1.5} /> },
+  { id: "04", title: "ESG & Ethics Audit", desc: "Sustainability & governance review", icon: <Leaf size={28} strokeWidth={1.5} /> },
+  { id: "05", title: "Channel / Dealer Audit", desc: "Supply chain & distributor review", icon: <Truck size={28} strokeWidth={1.5} /> },
+  { id: "06", title: "IT / Cyber Security", desc: "CERT-In empanelled assessment", icon: <Shield size={28} strokeWidth={1.5} /> },
+  { id: "07", title: "Forensic Investigation", desc: "Fraud detection & digital forensics", icon: <Activity size={28} strokeWidth={1.5} /> },
+  { id: "08", title: "SOC 1 & SOC 2", desc: "Service organisation controls", icon: <Calculator size={28} strokeWidth={1.5} /> },
   { id: "09", title: "DPDP Act Compliance", desc: "Data protection impact assessment", icon: <Database size={28} strokeWidth={1.5} /> },
 ]
 
@@ -105,24 +105,24 @@ const caseStudies = [
     title: "Video KYC Concurrent Audit",
     sector: "Banking",
     label: "CASE STUDY",
-    problem: "Per RBI's Master Direction on KYC, all accounts opened via Video Customer Identification Process (V-CIP) must undergo concurrent audit clearance before activation. A large private sector bank engaged JHS to provide real-time daily KYC validation — detecting fake documents, duplicates, and ensuring database alignment with KRA, NSDL, and Aadhaar at scale.",
+    problem: "Per RBI's Master Direction on KYC, all accounts opened via Video Customer Identification Process (V-CIP) must undergo concurrent audit clearance before activation. A large private sector bank engaged JHS to provide real-time daily KYC validation — detecting fake documents, duplicates, and ensuring database alignment with KYC, NSDL, and Aadhaar at scale.",
     response: [
-      "Validated 500+ V-CIP account openings daily against full regulatory checklist",
-      "Cross-verified all customer documents against KRA, NSDL, and Aadhaar databases",
-      "Executed systematic de-duplication checks to prevent account fraud",
+      "Validated 4000+ V-CIP account openings daily against full regulatory checklist",
+      "Cross-verified all customer documents against KYC, NSDL, and Aadhaar databases",
+      "Executed systematic de-dupe checks to prevent account fraud",
       "Identified and flagged fake identity documents in real time",
-      "Maintained 98%+ daily compliance rate — accounts activated only post-clearance",
+      "Maintained 100% daily compliance rate — accounts activated only post-clearance",
       "Delivered daily management reports enabling immediate corrective action"
     ],
     metrics: [
-      { value: "500+", label: "Daily Validations" },
-      { value: "KRA/NSDL/Aadhaar", label: "DB Cross-Check" },
-      { value: "98%+", label: "Compliance Rate" },
+      { value: "4000+", label: "Daily Validations" },
+      { value: "KYC / NSDL / Aadhaar", label: "DB Cross-Check" },
+      { value: "100%", label: "Compliance Rate" },
       { value: "Full Compliance", label: "RBI Directive" }
     ]
   },
   {
-    title: "ECL Model Validation — IndAS 109",
+    title: "ECL Model Validation IndAS 109",
     sector: "NBFC",
     label: "CASE STUDY",
     problem: "An NBFC required independent validation of its Expected Credit Loss (ECL) computation model as mandated under IndAS 109. The model processed 10 years of historical data with over 1 crore line items. The NBFC needed assurance that PD and LGD calculations were accurate and that provisioning outcomes were reliable for financial reporting.",
@@ -211,7 +211,7 @@ export default function Assurance() {
           <div className="a-section-header">
             <h2>Continuous Assurance Coverage</h2>
             <div className="a-divider" />
-            <p>JHS's assurance practice runs continuously — providing an independent expert lens across every stage of your journey, every year, without interruption.</p>
+            <p>JHS's assurance practice runs continuously providing an independent expert lens across every stage of your journey every year without interruption.</p>
           </div>
 
           <div className="a-services-grid">
@@ -225,8 +225,8 @@ export default function Assurance() {
           </div>
 
           <div className="a-certification">
-             <Shield className="a-certification__icon" size={28} />
-             <p className="a-certification__text">CERT-In Empanelled Information Security Auditing Organisation · Valid until September 2028</p>
+            <Shield className="a-certification__icon" size={28} />
+            <p className="a-certification__text">CERT-In Empanelled Information Security Auditing Organisation · Valid until September 2028</p>
           </div>
         </div>
       </section>
@@ -294,7 +294,7 @@ export default function Assurance() {
             <div className="a-divider" />
             <p>Exploring complex assurance challenges and our rigorous methodologies deployed to solve them.</p>
           </div>
-          
+
           <div className="a-case-studies-grid">
             {caseStudies.map((cs, i) => (
               <div key={i} className="a-case-study">
@@ -303,7 +303,7 @@ export default function Assurance() {
                   <span className="a-case-study__label">{cs.label}</span>
                 </div>
                 <h3 className="a-case-study__title">{cs.title}</h3>
-                
+
                 <div className="a-case-study__content" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
                   <div>
                     <h4 className="a-case-study__section-title">Problem Statement</h4>
@@ -313,10 +313,10 @@ export default function Assurance() {
                     <h4 className="a-case-study__section-title">JHS Response</h4>
                     <ul className="a-case-study__list">
                       {cs.response.map((res, j) => (
-                         <li key={j} className="a-case-study__list-item">
-                           <CheckCircle2 size={18} className="a-case-study__check" />
-                           {res}
-                         </li>
+                        <li key={j} className="a-case-study__list-item">
+                          <CheckCircle2 size={18} className="a-case-study__check" />
+                          {res}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -344,7 +344,7 @@ export default function Assurance() {
             <div className="a-divider" />
             <p>Snapshot of our high-impact assurance engagements.</p>
           </div>
-          
+
           <div className="a-featured-grid">
             {featuredEngagements.map((item, i) => (
               <div key={i} className="a-featured-item">

@@ -177,7 +177,15 @@ const NAV_ITEMS: NavItem[] = [
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
+
+  const menuOpenRef = useRef(menuOpen);
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  const lastScrollY = useRef(0);
 
   // For inlineExpand items (Services & Sectors):
   // which sub-item is selected → drives the right panel
@@ -193,9 +201,21 @@ const Navbar = () => {
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 10);
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        if (!menuOpenRef.current) setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -263,7 +283,7 @@ const Navbar = () => {
   return (
     <>
       {/* ══════════════ TOP NAVBAR ══════════════ */}
-      <header className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""}`}>
+      <header className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""} ${hidden ? "nb--hidden" : ""}`}>
         <div className="nb__left">
           <button
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}

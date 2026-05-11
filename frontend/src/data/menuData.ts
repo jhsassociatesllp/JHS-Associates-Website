@@ -21,7 +21,8 @@ export const menuData: MenuItem[] = [
       { name: 'Resources', href: '/insights/resources' },
       { name: 'Articles', href: '/insights/articles' },
       { name: 'Case Studies', href: '/insights/case-studies' },
-      { name: 'Thought Leadership', href: '/insights/thought-leadership' }
+      { name: 'Thought Leadership', href: '/insights/thought-leadership' },
+      { name: 'Newsletters', href: '/insights/newsletters' }
     ]
   },
   {

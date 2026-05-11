@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Resources() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [filteredResources, setFilteredResources] = useState(RESOURCES)
-  const heroRef   = useRef<HTMLDivElement>(null)
-  const gridRef   = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
   const filterRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function Resources() {
                     </div>
 
                     <div className="res-featured__actions">
-                      <button className="res-btn res-btn--ghost" onClick={() => {}} type="button">
+                      <button className="res-btn res-btn--ghost" onClick={() => { }} type="button">
                         Preview <ArrowUpRight size={14} />
                       </button>
                       <button
@@ -238,7 +238,7 @@ export default function Resources() {
                         <button
                           className="res-card__icon-btn"
                           title="Preview"
-                          onClick={() => {}}
+                          onClick={() => { }}
                           type="button"
                         >
                           <ArrowUpRight size={14} />

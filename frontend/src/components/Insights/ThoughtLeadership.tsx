@@ -61,15 +61,15 @@ const EVENTS = [
 ]
 
 const TYPE_COLORS: Record<string, string> = {
-  Opinion:      'tl-chip--opinion',
+  Opinion: 'tl-chip--opinion',
   'Policy Brief': 'tl-chip--policy',
-  Perspective:  'tl-chip--perspective',
+  Perspective: 'tl-chip--perspective',
 }
 
 export default function ThoughtLeadership() {
-  const heroRef  = useRef<HTMLDivElement>(null)
-  const bodyRef  = useRef<HTMLDivElement>(null)
-  const evtRef   = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
+  const evtRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)

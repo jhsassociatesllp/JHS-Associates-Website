@@ -59,6 +59,7 @@ import Articles from './components/Insights/Articles'
 import CaseStudies from './components/Insights/CaseStudies'
 import CaseStudyDetail from './components/Insights/CaseStudyDetail'
 import ThoughtLeadership from './components/Insights/ThoughtLeadership'
+import Newsletters from './components/Insights/Newsletters'
 import Blog from './components/Insights/Blog'
 import Podcasts from './components/Insights/Podcasts'
 import Excellencia from './components/Insights/Excellencia'
@@ -190,6 +191,7 @@ export default function App() {
         <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
         <Route path="/thought-leadership" element={<ThoughtLeadership />} />
+        <Route path="/newsletters" element={<Newsletters />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/podcasts" element={<Podcasts />} />
         <Route path="/excellencia" element={<Excellencia />} />

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { 
-  CheckCircle, 
-  FileCheck, 
-  Building2, 
-  Clock, 
-  Shield, 
+import {
+  CheckCircle,
+  FileCheck,
+  Building2,
+  Clock,
+  Shield,
   ArrowRight,
   Download,
   PhoneCall,
@@ -126,7 +126,7 @@ const SingleWindowAssistance: React.FC = () => {
             Single Window <em>Assistance</em>
           </h1>
           <p className="swa-hero__sub">
-            Your one-stop solution for all business regulatory, licensing, and compliance needs. 
+            Your one-stop solution for all business regulatory, licensing, and compliance needs.
             We simplify government interactions so you can focus on growing your business.
           </p>
           <div className="swa-hero__cta">
@@ -152,7 +152,7 @@ const SingleWindowAssistance: React.FC = () => {
             <span className="swa-accent">Seamless Experience</span>
           </h2>
           <p className="swa-section-sub">
-            We provide end-to-end assistance across all regulatory touchpoints, 
+            We provide end-to-end assistance across all regulatory touchpoints,
             ensuring your business stays compliant and competitive.
           </p>
         </div>

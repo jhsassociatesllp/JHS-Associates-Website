@@ -1,8 +1,6 @@
-/* =============================================
-   Hero Section — Clean Cards (No Blur)
-   ============================================= */
-
+/* =============================================Hero Section — Clean Cards (No Blur)=============================================*/
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+*/
 
 /* --- CSS Variables --- */
 :root {
@@ -26,9 +24,9 @@
 /* --- Section Wrapper --- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: auto;
   background-color: var(--hero-bg);
-  padding: 60px 48px 96px;
+  padding: 60px 48px 20px;
   overflow-x: clip;
   font-family: var(--font-body);
 }
@@ -105,10 +103,7 @@
   animation: fadeUp 0.8s 0.15s ease both;
 }
 
-/* =============================================
-   CAROUSEL STYLES - NO BLUR, ONLY IMAGES ON SIDE
-   ============================================= */
-
+/* ============================================= CAROUSEL STYLES - NO BLUR, ONLY IMAGES ON SIDE ============================================= */
 .hero__carousel {
   position: relative;
   z-index: 2;
@@ -129,7 +124,7 @@
 .hero__carousel-track {
   position: relative;
   width: 100%;
-  height: 540px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -449,10 +444,7 @@
   transform: scale(1.2);
 }
 
-/* =============================================
-   SPOTLIGHT TAB SECTION
-   ============================================= */
-
+/* ============================================= SPOTLIGHT TAB SECTION ============================================= */
 .hero__spotlight {
   position: relative;
   z-index: 2;
@@ -606,10 +598,7 @@
   }
 }
 
-/* =============================================
-   RESPONSIVE DESIGN
-   ============================================= */
-
+/* ============================================= RESPONSIVE DESIGN ============================================= */
 @media (max-width: 1100px) {
   .hero {
     padding: 50px 30px 80px;
@@ -664,12 +653,12 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 40px 20px 60px;
+    padding: 40px 20px 20px;
   }
 
   .hero__header {
     /* margin-bottom: 50px; */
-    margin-top: 60px;
+    margin-top: 80px;
   }
 
   .hero__headline {
@@ -678,6 +667,10 @@
 
   .hero__carousel-card-title {
     font-size: 13px;
+  }
+
+  .hero__carousel-container {
+    min-height: 360px;
   }
 }
 

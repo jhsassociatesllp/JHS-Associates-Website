@@ -5,9 +5,15 @@
 
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap");
 
-.spotlight {
+/* .spotlight {
   background: #ffffff;
   padding: 80px 20px;
+  width: 100%;
+} */
+
+.spotlight {
+  background: #ffffff;
+  padding: 30px 20px 80px;
   width: 100%;
 }
 
@@ -203,7 +209,7 @@
 
 @media (max-width: 576px) {
   .spotlight {
-    padding: 60px 15px;
+    padding: 20px 16px 60px;
   }
 
   .spotlight__title {

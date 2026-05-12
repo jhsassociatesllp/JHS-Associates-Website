@@ -5,6 +5,9 @@ import heroImg from '../../image/WebPoster3.jpeg';
 import imgRiddhi from '../../image/Riddhi Kishnadwala.jpeg'
 import imgPrernaJain from '../../image/Prerna Jain.jpeg'
 import imgAnkitMehta from '../../image/Ankit Mehta.jpeg'
+import imgPratik from '../../image/Pratik mantri.jpeg'
+import imgRiya from '../../image/Riya Almeida.jpeg'
+import imgShabbir from '../../image/Shabbir Shaikh.jpeg'
 
 const ALUMNI_PROFILES = [
   {
@@ -27,6 +30,27 @@ const ALUMNI_PROFILES = [
     role: "Alumnus, Consulting",
     desc: "At JHS, I was entrusted with responsibilities in Internal Audit despite starting from scratch, which accelerated my learning. The freedom to work independently, along with consistent support, helped me build confidence and leadership abilities.",
     image: imgAnkitMehta
+  },
+  {
+    id: 4,
+    name: "Pratik Mantri",
+    role: "Alumnus, Consulting",
+    desc: "The work culture at JHS encouraged learning, accountability, and collaborative problem-solving. Being part of the Risk Advisory & Internal Audit team provided invaluable exposure to build a strong foundation in risk assessment, controls, and compliance.",
+    image: imgPratik
+  },
+  {
+    id: 5,
+    name: "Riya Almeida",
+    role: "Articleship",
+    desc: "My stint at JHS & Associates LLP provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
+    image: imgRiya
+  },
+  {
+    id: 6,
+    name: "Shabbir Shaikh",
+    role: "Alumnus, Consulting",
+    desc: "My experience at JHS helped me build a strong foundation in risk assessment, internal controls, and business process understanding. It shaped my professional approach towards analytical review, compliance, and operational efficiency, which continues to help me in my business and decision-making today.",
+    image: imgShabbir
   }
 ];
 
@@ -112,11 +136,10 @@ export default function Alumni() {
   return (
     <div className="sp-page">
       {/* Hero Section */}
-      <section className="alumni-hero">
-        <div
-          className="alumni-hero__bg"
-          style={{ backgroundImage: `url(${heroImg})` }}
-        />
+      <section
+        className="alumni-hero"
+        style={{ backgroundImage: `url(${heroImg})` }}
+      >
         <div className="alumni-hero__overlay" />
         <div className="alumni-hero__content">
           <span className="alumni-hero__eyebrow">EST. 1981</span>

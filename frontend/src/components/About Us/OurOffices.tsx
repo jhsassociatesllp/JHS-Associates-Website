@@ -14,9 +14,9 @@ const OFFICES = [
     email: 'connect@jhsassociates.in',
     isPrimary: true,
     branches: [
-      { name: 'Andheri (East) — Head Office', address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059' },
+      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059' },
       { name: 'Mazgaon', address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010' },
-      { name: 'Masjid Bunder', address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra – 400009" },
+      { name: 'Masjid', address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra – 400009" },
       { name: 'Kalyan', address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301' },
     ],
   },
@@ -29,7 +29,7 @@ const OFFICES = [
     email: 'ahmedabad@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'SG Highway — Head Office', address: 'B-1204, Westgate Business Bay, Near YMCA Club, SG Highway, Ahmedabad, Gujarat – 380054' },
+      { name: 'SG Highway ', address: 'B-1204, Westgate Business Bay, Near YMCA Club, SG Highway, Ahmedabad, Gujarat – 380054' },
       { name: 'Navrangpura', address: '302, Shilp Zaveri, Near Law Garden, Navrangpura, Ahmedabad, Gujarat – 380009' },
     ],
   },
@@ -42,8 +42,7 @@ const OFFICES = [
     email: 'delhi@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Connaught Place — Head Office', address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001' },
-      { name: 'Noida', address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301' },
+      { name: 'Connaught Place', address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001' },
     ],
   },
   {
@@ -55,8 +54,7 @@ const OFFICES = [
     email: 'hyderabad@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'HITEC City — Head Office', address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081' },
-      { name: 'Banjara Hills', address: '201, 2nd Floor, Lumbini Avenue, Road No. 2, Banjara Hills, Hyderabad, Telangana – 500034' },
+      { name: 'HITEC City ', address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081' },
     ],
   },
   {
@@ -68,8 +66,7 @@ const OFFICES = [
     email: 'bengaluru@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Koramangala — Head Office', address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034' },
-      { name: 'Whitefield', address: '502, 5th Floor, Salarpuria Softzone, Whitefield, Bengaluru, Karnataka – 560066' },
+      { name: 'Koramangala ', address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034' },
     ],
   },
   {
@@ -81,8 +78,7 @@ const OFFICES = [
     email: 'kolkata@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Park Street — Head Office', address: '6th Floor, Chatterjee International, 33A JL Nehru Road, Park Street, Kolkata, West Bengal – 700071' },
-      { name: 'Salt Lake', address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091' },
+      { name: 'Park Street ', address: '6th Floor, Chatterjee International, 33A JL Nehru Road, Park Street, Kolkata, West Bengal – 700071' },
     ],
   },
   {
@@ -92,11 +88,9 @@ const OFFICES = [
     route: '/city/chennai',
     phone: '+91 44 1234 5678',
     email: 'chennai@jhsassociates.in',
-
     isPrimary: false,
     branches: [
-      { name: 'T. Nagar — Head Office', address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017' },
-      { name: 'Anna Nagar', address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102' },
+      { name: 'T. Nagar ', address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017' },
     ],
   },
   {
@@ -106,7 +100,6 @@ const OFFICES = [
     route: '/city/global',
     phone: '',
     email: 'global@jhsassociates.in',
-
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },
@@ -162,14 +155,14 @@ export default function OurOffices() {
           <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p>
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
-            8 cities &nbsp;·&nbsp; 16+ locations &nbsp;·&nbsp; Pan-India presence
+            8 cities · 12+ locations · Pan-India &amp; Global
           </p>
         </div>
         {/* Stats bar */}
         <div className="oo-hero__stats">
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">8</span><span className="oo-hero__stat-label">Cities</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">16+</span><span className="oo-hero__stat-label">Locations</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">12+</span><span className="oo-hero__stat-label">Locations</span></div>
           <div className="oo-hero__stat-div" />
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">200+</span><span className="oo-hero__stat-label">Professionals</span></div>
           <div className="oo-hero__stat-div" />

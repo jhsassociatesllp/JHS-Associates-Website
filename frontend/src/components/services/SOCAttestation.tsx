@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { 
-  Shield, 
-  FileCheck, 
-  TrendingUp, 
-  Lock, 
+import {
+  Shield,
+  FileCheck,
+  TrendingUp,
+  Lock,
   ArrowRight,
   Download,
   PhoneCall,
@@ -173,10 +173,10 @@ const SOCAttestation: React.FC = () => {
             SOC <em>Attestation</em>
           </h1>
           <p className="soc-hero__sub">
-            System and Organization Controls (SOC) attestation services that validate your 
+            System and Organization Controls (SOC) attestation services that validate your
             internal controls, build customer trust, and demonstrate your commitment to security.
           </p>
-          <div className="soc-hero__cta">
+          {/* <div className="soc-hero__cta">
             <button className="soc-btn soc-btn--primary">
               Get a Quote <ArrowRight size={16} />
             </button>
@@ -184,7 +184,7 @@ const SOCAttestation: React.FC = () => {
               <PhoneCall size={14} />
               +91 98765 43210
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 

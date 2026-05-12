@@ -14,6 +14,7 @@ import imgMilin from '../../image/Milin-Parekh-removebg-preview.png'
 import imgMehul from '../../image/Mehul-Shah-removebg-preview.png'
 import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
 import imgRaj from '../../image/Raj-Shah-removebg-preview.png'
+import imgJhankana from '../../image/Jhankana Patel.jpeg'
 
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -92,7 +93,7 @@ const PARTNERS = [
   { name: 'Alpesh Vaniya', image: imgAlpesh, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya' },
   { name: 'Raj Shah', image: imgRaj, qualifications: 'B.Com, ACA', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/raj-shah' },
   { name: 'Parth Shah', image: imgRaj, qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah' },
-  { name: 'Jhankhna Patel', image: imgShreena, qualifications: 'ACA', designation: 'Audit & Regulatory Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhna-patel' },
+  { name: 'Jhankhna Patel', image: imgJhankana, qualifications: 'ACA', designation: 'Audit & Regulatory Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhna-patel' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */

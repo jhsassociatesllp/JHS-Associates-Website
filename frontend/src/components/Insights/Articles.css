@@ -178,7 +178,8 @@
   align-items: center;
   gap: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.85rem;
+  /* font-size: 1rem; */
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -895,14 +896,14 @@
 
 @media (max-width: 480px) {
   .art-hero__title {
-  font-family: var(--font);
-  font-size: clamp(3.5rem, 6vw, 5rem);
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+    font-family: var(--font);
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
 
   .art-grid {
     gap: 1.25rem;

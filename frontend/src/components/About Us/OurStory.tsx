@@ -15,7 +15,7 @@ export default function OurStory() {
           <p className="ap-hero__eyebrow">Heritage &amp; History</p>
           <h1 className="ap-hero__title">Our Story</h1>
           <p className="ap-hero__sub">
-            From humble beginnings to becoming a leading Pan-India advisory network.
+            From humble beginnings to becoming a leading Pan India advisory network.
           </p>
         </div>
 

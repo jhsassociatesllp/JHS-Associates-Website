@@ -54,26 +54,26 @@ const WHY = [
 ]
 
 export default function Retail() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const heroRef    = useRef<HTMLDivElement>(null)
+  const servRef    = useRef<HTMLDivElement>(null)
+  const whyRef     = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ['.rt-hero__eyebrow', '.rt-hero__title', '.rt-hero__sub', '.rt-hero__stats'],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
+        '.rt-eyebrow, .rt-title, .rt-subtitle, .rt-hero__stats',
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
       )
       gsap.fromTo('.rt-card',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power2.out',
+          scrollTrigger: { trigger: servRef.current, start: 'top 82%' } }
       )
       gsap.fromTo('.rt-why__item',
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out',
           scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
       )
     })
@@ -85,115 +85,111 @@ export default function Retail() {
 
       {/* ── HERO ── */}
       <section className="rt-hero" ref={heroRef}>
-        <div className="rt-hero__inner">
-          <p className="rt-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p>
-          <h1 className="rt-hero__title">Retail<br /><em>Services</em></h1>
-          <p className="rt-hero__sub">
+        <div className="rt-hero__inner rt-container">
+          <span className="rt-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
+          <h1 className="rt-title">Retail<br />Services</h1>
+          <p className="rt-subtitle">
             Integrated financial, tax, and compliance advisory for retail businesses —
             from single-store independents to large omnichannel chains operating
             across India and internationally.
           </p>
           <div className="rt-hero__stats">
             {STATS.map((s) => (
-              <div key={s.label} className="rt-hero__stat">
-                <span className="rt-hero__stat-num">{s.num}</span>
-                <span className="rt-hero__stat-label">{s.label}</span>
+              <div key={s.label} className="rt-stat">
+                <strong>{s.num}</strong>
+                <span>{s.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── OVERVIEW ── */}
-      <section className="rt-overview container">
-        <div className="rt-overview__inner">
-          <div className="rt-overview__text">
-            <span className="rt-tag">Our Approach</span>
-            <h2 className="rt-overview__title">Built for the Pace and Scale of Modern Retail</h2>
-            <p className="rt-overview__body">
-              Retail businesses operate at extraordinary velocity — high transaction
-              volumes, complex multi-state GST obligations, omnichannel complexity,
-              and constant margin pressure. JHS delivers advisory that keeps pace,
-              combining deep GST expertise, store-level audit capability, and
-              strategic tax structuring for retail businesses at every stage of growth.
-            </p>
-            <a href="/contact" className="rt-btn rt-btn--solid">
-              Talk to Our Experts <ArrowUpRight size={15} />
-            </a>
-          </div>
-          <div className="rt-overview__visual">
-            <div className="rt-overview__badge">
-              <span className="rt-overview__badge-icon">🛍️</span>
-              <span className="rt-overview__badge-label">End-to-end retail advisory</span>
+      <main className="rt-main">
+
+        {/* ── OVERVIEW ── */}
+        <section className="rt-overview rt-container">
+          <div className="rt-overview__inner">
+            <div>
+              <span className="rt-section-kicker">Our Approach</span>
+              <h2 className="rt-overview__title">Built for the Pace and Scale of Modern Retail</h2>
+            </div>
+            <div>
+              <p className="rt-overview__body">
+                Retail businesses operate at extraordinary velocity — high transaction volumes,
+                complex multi-state GST obligations, omnichannel complexity, and constant margin
+                pressure. JHS delivers advisory that keeps pace, combining deep GST expertise,
+                store-level audit capability, and strategic tax structuring for retail businesses
+                at every stage of growth.
+              </p>
+              <a href="/contact" className="rt-btn rt-btn--solid">
+                Talk to Our Experts <ArrowUpRight size={15} />
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── SERVICE HIGHLIGHTS ── */}
-      <section className="rt-highlights container" ref={hlRef}>
-        <div className="rt-section-hd">
-          <h2 className="rt-section-hd__title">What We Offer</h2>
-          <p className="rt-section-hd__sub">
-            Comprehensive services tailored to the pace and complexity of retail operations.
-          </p>
-        </div>
-        <div className="rt-grid">
-          {HIGHLIGHTS.map((h, i) => (
-            <article key={i} className="rt-card">
-              <div className="rt-card__accent" />
-              <div className="rt-card__icon">{h.icon}</div>
-              <h3 className="rt-card__title">{h.title}</h3>
-              <p className="rt-card__desc">{h.desc}</p>
-              <button className="rt-card__cta" type="button">
-                Learn More <ArrowUpRight size={13} />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
+        {/* ── SERVICES ── */}
+        <section className="rt-services rt-container" ref={servRef}>
+          <div className="rt-services__header">
+            <div>
+              <span className="rt-section-kicker">What We Offer</span>
+              <h2>Our Services</h2>
+            </div>
+            <p>Comprehensive services tailored to the pace and complexity of retail operations.</p>
+          </div>
+          <div className="rt-grid">
+            {HIGHLIGHTS.map((h, i) => (
+              <article key={i} className="rt-card">
+                <div className="rt-card__aside">
+                  <span className="rt-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="rt-card__icon">{h.icon}</div>
+                </div>
+                <div className="rt-card__body">
+                  <h3 className="rt-card__title">{h.title}</h3>
+                  <p className="rt-card__desc">{h.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      {/* ── WHY JHS ── */}
-      <section className="rt-why container" ref={whyRef}>
-        <div className="rt-why__inner">
-          <div className="rt-why__left">
-            <span className="rt-tag">Why JHS</span>
-            <h2 className="rt-why__title">The JHS Advantage in Retail</h2>
-            <p className="rt-why__sub">
-              We understand the commercial realities of retail —
-              thin margins, high volumes, and the need for real-time compliance clarity.
-            </p>
+        {/* ── WHY JHS ── */}
+        <section className="rt-why rt-container" ref={whyRef}>
+          <div className="rt-why__header">
+            <span className="rt-section-kicker">Why JHS</span>
+            <h2>The JHS Advantage in Retail</h2>
+            <p>We understand the commercial realities of retail — thin margins, high volumes, and the need for real-time compliance clarity.</p>
             <a href="/contact" className="rt-btn rt-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />
             </a>
           </div>
-          <ul className="rt-why__list">
+          <div className="rt-why__grid">
             {WHY.map((item, i) => (
-              <li key={i} className="rt-why__item">
-                <span className="rt-why__dot" />
-                <span>{item}</span>
-              </li>
+              <div key={i} className="rt-why__item">
+                <div className="rt-why__item-header">
+                  <span className="rt-why__num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p>{item}</p>
+              </div>
             ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="rt-cta container">
-        <div className="rt-cta__inner">
-          <div className="rt-cta__content">
-            <p className="rt-cta__eyebrow">Get Started</p>
-            <h2 className="rt-cta__title">Ready to strengthen your retail operations?</h2>
-            <p className="rt-cta__sub">
-              Speak with a JHS retail specialist and get a tailored advisory proposal.
-            </p>
           </div>
-          <a href="/contact" className="rt-btn rt-btn--cta">
-            Contact Us <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </section>
+        </section>
 
+        {/* ── CTA ── */}
+        <section className="rt-cta rt-container">
+          <div className="rt-cta__inner">
+            <div className="rt-cta__content">
+              <p className="rt-cta__eyebrow">Get Started</p>
+              <h2 className="rt-cta__title">Ready to strengthen your retail operations?</h2>
+              <p className="rt-cta__sub">Speak with a JHS retail specialist and get a tailored advisory proposal.</p>
+            </div>
+            <a href="/contact" className="rt-btn rt-btn--cta">
+              Contact Us <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </section>
+
+      </main>
     </div>
   )
 }

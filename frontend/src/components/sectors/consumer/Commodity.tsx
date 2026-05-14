@@ -40,8 +40,8 @@ const HIGHLIGHTS = [
 ]
 
 const STATS = [
-  { num: '20+', label: 'Years of Experience' },
   { num: '200+', label: 'Commodity Clients' },
+  { num: '20+', label: 'Years Experience' },
   { num: '100%', label: 'Compliance Record' },
 ]
 
@@ -54,171 +54,140 @@ const WHY = [
 ]
 
 export default function Commodity() {
-  const heroRef     = useRef<HTMLDivElement>(null)
-  const hlRef       = useRef<HTMLDivElement>(null)
-  const whyRef      = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const servRef = useRef<HTMLDivElement>(null)
+  const whyRef  = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-
     const ctx = gsap.context(() => {
-      /* Hero */
       gsap.fromTo(
-        ['.com-hero__eyebrow', '.com-hero__title', '.com-hero__sub', '.com-hero__stats'],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
+        '.com-eyebrow, .com-title, .com-subtitle, .com-hero__stats',
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
       )
-
-      /* Highlights cards */
-      gsap.fromTo(
-        '.com-card',
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' },
-        }
+      gsap.fromTo('.com-card',
+        { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power2.out',
+          scrollTrigger: { trigger: servRef.current, start: 'top 82%' } }
       )
-
-      /* Why list items */
-      gsap.fromTo(
-        '.com-why__item',
-        { opacity: 0, x: -24 },
-        {
-          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' },
-        }
+      gsap.fromTo('.com-why__item',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
       )
     })
-
     return () => ctx.revert()
   }, [])
 
   return (
     <div className="com-page">
 
-      {/* ══════════════════════════════════════
-          HERO
-      ══════════════════════════════════════ */}
+      {/* ── HERO ── */}
       <section className="com-hero" ref={heroRef}>
-        <div className="com-hero__inner">
-
-          <h1 className="com-hero__title">
-            Commodity<br /><em>Services</em>
-          </h1>
-
-          <p className="com-hero__sub">
-            Expert financial, tax, and compliance advisory for commodity traders,
-            exchanges, and market participants — built on deep sectoral knowledge
-            and regulatory expertise.
+        <div className="com-hero__inner com-container">
+          <span className="com-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
+          <h1 className="com-title">Commodity<br />Services</h1>
+          <p className="com-subtitle">
+            Expert financial, tax, and compliance advisory for commodity traders, exchanges,
+            and market participants — built on deep sectoral knowledge and regulatory expertise.
           </p>
-
+          <div className="com-hero__stats">
+            {STATS.map((s) => (
+              <div key={s.label} className="com-stat">
+                <strong>{s.num}</strong>
+                <span>{s.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          OVERVIEW STRIP
-      ══════════════════════════════════════ */}
-      <section className="com-overview container">
-        <div className="com-overview__inner">
-          <div className="com-overview__text">
-            <span className="com-overview__tag">Our Approach</span>
-            <h2 className="com-overview__title">
-              Navigating Complexity in Commodity Markets
-            </h2>
-            <p className="com-overview__body">
-              India's commodity sector operates at the intersection of volatile global
-              markets, complex domestic regulations, and evolving tax frameworks. JHS
-              provides integrated advisory — combining financial structuring, tax
-              optimisation, and compliance management — to help commodity businesses
-              operate with confidence and efficiency.
-            </p>
-            <a href="/contact" className="com-btn com-btn--solid">
-              Talk to Our Experts <ArrowUpRight size={15} />
-            </a>
-          </div>
-          <div className="com-overview__visual">
-            <div className="com-overview__badge">
-              <span className="com-overview__badge-num">₹</span>
-              <span className="com-overview__badge-label">End-to-end commodity advisory</span>
+      <main className="com-main">
+
+        {/* ── OVERVIEW ── */}
+        <section className="com-overview com-container">
+          <div className="com-overview__inner">
+            <div>
+              <span className="com-section-kicker">Our Approach</span>
+              <h2 className="com-overview__title">Navigating Complexity in Commodity Markets</h2>
+            </div>
+            <div>
+              <p className="com-overview__body">
+                India's commodity sector operates at the intersection of volatile global markets,
+                complex domestic regulations, and evolving tax frameworks. JHS provides integrated
+                advisory — combining financial structuring, tax optimisation, and compliance management
+                — to help commodity businesses operate with confidence and efficiency.
+              </p>
+              <a href="/contact" className="com-btn com-btn--solid">
+                Talk to Our Experts <ArrowUpRight size={15} />
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ══════════════════════════════════════
-          SERVICE HIGHLIGHTS
-      ══════════════════════════════════════ */}
-      <section className="com-highlights container" ref={hlRef}>
-        <div className="com-section-hd">
-          <h2 className="com-section-hd__title">What We Offer</h2>
-          <p className="com-section-hd__sub">
-            Comprehensive services tailored to the unique demands of commodity markets.
-          </p>
-        </div>
+        {/* ── SERVICES ── */}
+        <section className="com-services com-container" ref={servRef}>
+          <div className="com-services__header">
+            <div>
+              <span className="com-section-kicker">What We Offer</span>
+              <h2>Our Services</h2>
+            </div>
+            <p>Comprehensive services tailored to the unique demands of commodity markets.</p>
+          </div>
+          <div className="com-grid">
+            {HIGHLIGHTS.map((h, i) => (
+              <article key={i} className="com-card">
+                <div className="com-card__aside">
+                  <span className="com-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="com-card__icon">{h.icon}</div>
+                </div>
+                <div className="com-card__body">
+                  <h3 className="com-card__title">{h.title}</h3>
+                  <p className="com-card__desc">{h.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        <div className="com-grid">
-          {HIGHLIGHTS.map((h, i) => (
-            <article key={i} className="com-card">
-              <div className="com-card__accent" />
-              <div className="com-card__icon">{h.icon}</div>
-              <h3 className="com-card__title">{h.title}</h3>
-              <p className="com-card__desc">{h.desc}</p>
-              <button className="com-card__cta" type="button">
-                Learn More <ArrowUpRight size={13} />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════
-          WHY JHS
-      ══════════════════════════════════════ */}
-      <section className="com-why container" ref={whyRef}>
-        <div className="com-why__inner">
-          <div className="com-why__left">
-            <span className="com-overview__tag">Why JHS</span>
-            <h2 className="com-why__title">
-              The JHS Advantage in Commodity
-            </h2>
-            <p className="com-why__sub">
-              We don't just advise — we embed ourselves in your operations
-              to deliver measurable outcomes.
-            </p>
+        {/* ── WHY JHS ── */}
+        <section className="com-why com-container" ref={whyRef}>
+          <div className="com-why__header">
+            <span className="com-section-kicker">Why JHS</span>
+            <h2>The JHS Advantage in Commodity</h2>
+            <p>We don't just advise — we embed ourselves in your operations to deliver measurable outcomes.</p>
             <a href="/contact" className="com-btn com-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />
             </a>
           </div>
-
-          <ul className="com-why__list">
+          <div className="com-why__grid">
             {WHY.map((item, i) => (
-              <li key={i} className="com-why__item">
-                <span className="com-why__item-dot" />
-                <span>{item}</span>
-              </li>
+              <div key={i} className="com-why__item">
+                <div className="com-why__item-header">
+                  <span className="com-why__num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p>{item}</p>
+              </div>
             ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════
-          CTA BANNER
-      ══════════════════════════════════════ */}
-      {/* <section className="com-cta container">
-        <div className="com-cta__inner">
-          <div className="com-cta__content">
-            <p className="com-cta__eyebrow">Get Started</p>
-            <h2 className="com-cta__title">Ready to strengthen your commodity operations?</h2>
-            <p className="com-cta__sub">
-              Speak with a JHS commodity specialist and get a tailored advisory proposal.
-            </p>
           </div>
-          <a href="/contact" className="com-btn com-btn--cta">
-            Contact Us <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </section> */}
+        </section>
 
+        {/* ── CTA ── */}
+        <section className="com-cta com-container">
+          <div className="com-cta__inner">
+            <div className="com-cta__content">
+              <p className="com-cta__eyebrow">Get Started</p>
+              <h2 className="com-cta__title">Ready to strengthen your commodity operations?</h2>
+              <p className="com-cta__sub">Speak with a JHS commodity specialist and get a tailored advisory proposal.</p>
+            </div>
+            <a href="/contact" className="com-btn com-btn--cta">
+              Contact Us <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </section>
+
+      </main>
     </div>
   )
 }

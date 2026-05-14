@@ -55,25 +55,25 @@ const WHY = [
 
 export default function OilAndGasIndustry() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
+  const servRef = useRef<HTMLDivElement>(null)
   const whyRef  = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ['.og-hero__eyebrow', '.og-hero__title', '.og-hero__sub', '.og-hero__stats'],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
+        '.og-eyebrow, .og-title, .og-subtitle, .og-hero__stats',
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
       )
       gsap.fromTo('.og-card',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power2.out',
+          scrollTrigger: { trigger: servRef.current, start: 'top 82%' } }
       )
       gsap.fromTo('.og-why__item',
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out',
           scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
       )
     })
@@ -85,115 +85,111 @@ export default function OilAndGasIndustry() {
 
       {/* ── HERO ── */}
       <section className="og-hero" ref={heroRef}>
-        <div className="og-hero__inner">
-          <p className="og-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p>
-          <h1 className="og-hero__title">Oil &amp; Gas<br /><em>Industry</em></h1>
-          <p className="og-hero__sub">
-            Specialised financial, tax, and compliance advisory for oil &amp; gas
-            operators, refiners, and distribution companies — built on deep knowledge
-            of PSC contracts, DGH regulations, and sector-specific accounting.
+        <div className="og-hero__inner og-container">
+          <span className="og-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
+          <h1 className="og-title">Oil &amp; Gas<br />Industry</h1>
+          <p className="og-subtitle">
+            Specialised financial, tax, and compliance advisory for oil &amp; gas operators,
+            refiners, and distribution companies — built on deep knowledge of PSC contracts,
+            DGH regulations, and sector-specific accounting.
           </p>
           <div className="og-hero__stats">
             {STATS.map((s) => (
-              <div key={s.label} className="og-hero__stat">
-                <span className="og-hero__stat-num">{s.num}</span>
-                <span className="og-hero__stat-label">{s.label}</span>
+              <div key={s.label} className="og-stat">
+                <strong>{s.num}</strong>
+                <span>{s.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── OVERVIEW ── */}
-      <section className="og-overview container">
-        <div className="og-overview__inner">
-          <div className="og-overview__text">
-            <span className="og-tag">Our Approach</span>
-            <h2 className="og-overview__title">Navigating the Complexity of India's Energy Sector</h2>
-            <p className="og-overview__body">
-              India's oil &amp; gas sector operates under a uniquely complex framework —
-              PSC cost recovery rules, profit petroleum calculations, royalty regimes, and
-              evolving HELP and DSF contract structures demand advisors who understand
-              both the commercial and regulatory landscape. JHS brings specialist expertise
-              across the full value chain, from exploration accounting to downstream distribution.
-            </p>
-            <a href="/contact" className="og-btn og-btn--solid">
-              Talk to Our Experts <ArrowUpRight size={15} />
-            </a>
-          </div>
-          <div className="og-overview__visual">
-            <div className="og-overview__badge">
-              <span className="og-overview__badge-icon">⛽</span>
-              <span className="og-overview__badge-label">Full value chain O&amp;G advisory</span>
+      <main className="og-main">
+
+        {/* ── OVERVIEW ── */}
+        <section className="og-overview og-container">
+          <div className="og-overview__inner">
+            <div>
+              <span className="og-section-kicker">Our Approach</span>
+              <h2 className="og-overview__title">Navigating the Complexity of India's Energy Sector</h2>
+            </div>
+            <div>
+              <p className="og-overview__body">
+                India's oil &amp; gas sector operates under a uniquely complex framework — PSC cost
+                recovery rules, profit petroleum calculations, royalty regimes, and evolving HELP
+                and DSF contract structures demand advisors who understand both the commercial and
+                regulatory landscape. JHS brings specialist expertise across the full value chain,
+                from exploration accounting to downstream distribution.
+              </p>
+              <a href="/contact" className="og-btn og-btn--solid">
+                Talk to Our Experts <ArrowUpRight size={15} />
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── SERVICE HIGHLIGHTS ── */}
-      <section className="og-highlights container" ref={hlRef}>
-        <div className="og-section-hd">
-          <h2 className="og-section-hd__title">What We Offer</h2>
-          <p className="og-section-hd__sub">
-            Comprehensive services covering every financial and compliance need of oil &amp; gas businesses.
-          </p>
-        </div>
-        <div className="og-grid">
-          {HIGHLIGHTS.map((h, i) => (
-            <article key={i} className="og-card">
-              <div className="og-card__accent" />
-              <div className="og-card__icon">{h.icon}</div>
-              <h3 className="og-card__title">{h.title}</h3>
-              <p className="og-card__desc">{h.desc}</p>
-              <button className="og-card__cta" type="button">
-                Learn More <ArrowUpRight size={13} />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
+        {/* ── SERVICES ── */}
+        <section className="og-services og-container" ref={servRef}>
+          <div className="og-services__header">
+            <div>
+              <span className="og-section-kicker">What We Offer</span>
+              <h2>Our Services</h2>
+            </div>
+            <p>Comprehensive services covering every financial and compliance need of oil &amp; gas businesses.</p>
+          </div>
+          <div className="og-grid">
+            {HIGHLIGHTS.map((h, i) => (
+              <article key={i} className="og-card">
+                <div className="og-card__aside">
+                  <span className="og-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="og-card__icon">{h.icon}</div>
+                </div>
+                <div className="og-card__body">
+                  <h3 className="og-card__title">{h.title}</h3>
+                  <p className="og-card__desc">{h.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      {/* ── WHY JHS ── */}
-      <section className="og-why container" ref={whyRef}>
-        <div className="og-why__inner">
-          <div className="og-why__left">
-            <span className="og-tag">Why JHS</span>
-            <h2 className="og-why__title">The JHS Advantage in Oil &amp; Gas</h2>
-            <p className="og-why__sub">
-              We understand the commercial, contractual, and regulatory complexity
-              of India's energy sector — and deliver advisory that keeps pace with it.
-            </p>
+        {/* ── WHY JHS ── */}
+        <section className="og-why og-container" ref={whyRef}>
+          <div className="og-why__header">
+            <span className="og-section-kicker">Why JHS</span>
+            <h2>The JHS Advantage in Oil &amp; Gas</h2>
+            <p>We understand the commercial, contractual, and regulatory complexity of India's energy sector — and deliver advisory that keeps pace with it.</p>
             <a href="/contact" className="og-btn og-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />
             </a>
           </div>
-          <ul className="og-why__list">
+          <div className="og-why__grid">
             {WHY.map((item, i) => (
-              <li key={i} className="og-why__item">
-                <span className="og-why__dot" />
-                <span>{item}</span>
-              </li>
+              <div key={i} className="og-why__item">
+                <div className="og-why__item-header">
+                  <span className="og-why__num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p>{item}</p>
+              </div>
             ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="og-cta container">
-        <div className="og-cta__inner">
-          <div className="og-cta__content">
-            <p className="og-cta__eyebrow">Get Started</p>
-            <h2 className="og-cta__title">Ready to power your compliance forward?</h2>
-            <p className="og-cta__sub">
-              Speak with a JHS oil &amp; gas specialist and get a tailored advisory proposal.
-            </p>
           </div>
-          <a href="/contact" className="og-btn og-btn--cta">
-            Contact Us <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </section>
+        </section>
 
+        {/* ── CTA ── */}
+        <section className="og-cta og-container">
+          <div className="og-cta__inner">
+            <div className="og-cta__content">
+              <p className="og-cta__eyebrow">Get Started</p>
+              <h2 className="og-cta__title">Ready to power your compliance forward?</h2>
+              <p className="og-cta__sub">Speak with a JHS oil &amp; gas specialist and get a tailored advisory proposal.</p>
+            </div>
+            <a href="/contact" className="og-btn og-btn--cta">
+              Contact Us <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </section>
+
+      </main>
     </div>
   )
 }

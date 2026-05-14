@@ -55,25 +55,25 @@ const WHY = [
 
 export default function Housing() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
+  const servRef = useRef<HTMLDivElement>(null)
   const whyRef  = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ['.hs-hero__eyebrow', '.hs-hero__title', '.hs-hero__sub', '.hs-hero__stats'],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
+        '.hs-eyebrow, .hs-title, .hs-subtitle, .hs-hero__stats',
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
       )
       gsap.fromTo('.hs-card',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power2.out',
+          scrollTrigger: { trigger: servRef.current, start: 'top 82%' } }
       )
       gsap.fromTo('.hs-why__item',
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out',
           scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
       )
     })
@@ -85,115 +85,110 @@ export default function Housing() {
 
       {/* ── HERO ── */}
       <section className="hs-hero" ref={heroRef}>
-        <div className="hs-hero__inner">
-          {/* <p className="hs-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
-          <h1 className="hs-hero__title">Housing<br /><em>Services</em></h1>
-          <p className="hs-hero__sub">
-            Comprehensive financial, tax, and compliance advisory for housing
-            developers, affordable housing projects, and real estate businesses
-            — from RERA registration to project completion.
+        <div className="hs-hero__inner hs-container">
+          <span className="hs-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
+          <h1 className="hs-title">Housing<br />Services</h1>
+          <p className="hs-subtitle">
+            Comprehensive financial, tax, and compliance advisory for housing developers,
+            affordable housing projects, and real estate businesses — from RERA registration
+            to project completion.
           </p>
-          {/* <div className="hs-hero__stats">
+          <div className="hs-hero__stats">
             {STATS.map((s) => (
-              <div key={s.label} className="hs-hero__stat">
-                <span className="hs-hero__stat-num">{s.num}</span>
-                <span className="hs-hero__stat-label">{s.label}</span>
+              <div key={s.label} className="hs-stat">
+                <strong>{s.num}</strong>
+                <span>{s.label}</span>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </section>
 
-      {/* ── OVERVIEW ── */}
-      <section className="hs-overview container">
-        <div className="hs-overview__inner">
-          <div className="hs-overview__text">
-            <span className="hs-tag">Our Approach</span>
-            <h2 className="hs-overview__title">Building Financial Foundations for Housing Businesses</h2>
-            <p className="hs-overview__body">
-              India's housing sector operates under one of the most complex regulatory
-              environments — RERA, GST, income tax, and Ind AS all intersect in ways
-              that demand specialist expertise. JHS provides integrated advisory that
-              covers the full lifecycle of a housing project, from land acquisition
-              structuring to final handover and project close-out.
-            </p>
-            <a href="/contact" className="hs-btn hs-btn--solid">
-              Talk to Our Experts <ArrowUpRight size={15} />
-            </a>
-          </div>
-          <div className="hs-overview__visual">
-            <div className="hs-overview__badge">
-              <span className="hs-overview__badge-icon">🏗️</span>
-              <span className="hs-overview__badge-label">Full lifecycle housing advisory</span>
+      <main className="hs-main">
+
+        {/* ── OVERVIEW ── */}
+        <section className="hs-overview hs-container">
+          <div className="hs-overview__inner">
+            <div>
+              <span className="hs-section-kicker">Our Approach</span>
+              <h2 className="hs-overview__title">Building Financial Foundations for Housing Businesses</h2>
+            </div>
+            <div>
+              <p className="hs-overview__body">
+                India's housing sector operates under one of the most complex regulatory environments
+                — RERA, GST, income tax, and Ind AS all intersect in ways that demand specialist expertise.
+                JHS provides integrated advisory that covers the full lifecycle of a housing project,
+                from land acquisition structuring to final handover and project close-out.
+              </p>
+              <a href="/contact" className="hs-btn hs-btn--solid">
+                Talk to Our Experts <ArrowUpRight size={15} />
+              </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── SERVICE HIGHLIGHTS ── */}
-      <section className="hs-highlights container" ref={hlRef}>
-        <div className="hs-section-hd">
-          <h2 className="hs-section-hd__title">What We Offer</h2>
-          <p className="hs-section-hd__sub">
-            Specialised services covering every financial and compliance need of a housing developer.
-          </p>
-        </div>
-        <div className="hs-grid">
-          {HIGHLIGHTS.map((h, i) => (
-            <article key={i} className="hs-card">
-              <div className="hs-card__accent" />
-              <div className="hs-card__icon">{h.icon}</div>
-              <h3 className="hs-card__title">{h.title}</h3>
-              <p className="hs-card__desc">{h.desc}</p>
-              <button className="hs-card__cta" type="button">
-                Learn More <ArrowUpRight size={13} />
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
+        {/* ── SERVICES ── */}
+        <section className="hs-services hs-container" ref={servRef}>
+          <div className="hs-services__header">
+            <div>
+              <span className="hs-section-kicker">What We Offer</span>
+              <h2>Our Services</h2>
+            </div>
+            <p>Specialised services covering every financial and compliance need of a housing developer.</p>
+          </div>
+          <div className="hs-grid">
+            {HIGHLIGHTS.map((h, i) => (
+              <article key={i} className="hs-card">
+                <div className="hs-card__aside">
+                  <span className="hs-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  <div className="hs-card__icon">{h.icon}</div>
+                </div>
+                <div className="hs-card__body">
+                  <h3 className="hs-card__title">{h.title}</h3>
+                  <p className="hs-card__desc">{h.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      {/* ── WHY JHS ── */}
-      <section className="hs-why container" ref={whyRef}>
-        <div className="hs-why__inner">
-          <div className="hs-why__left">
-            <span className="hs-tag">Why JHS</span>
-            <h2 className="hs-why__title">The JHS Advantage in Housing</h2>
-            <p className="hs-why__sub">
-              We combine sector-specific regulatory knowledge with hands-on
-              project experience to deliver outcomes that matter.
-            </p>
+        {/* ── WHY JHS ── */}
+        <section className="hs-why hs-container" ref={whyRef}>
+          <div className="hs-why__header">
+            <span className="hs-section-kicker">Why JHS</span>
+            <h2>The JHS Advantage in Housing</h2>
+            <p>We combine sector-specific regulatory knowledge with hands-on project experience to deliver outcomes that matter.</p>
             <a href="/contact" className="hs-btn hs-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />
             </a>
           </div>
-          <ul className="hs-why__list">
+          <div className="hs-why__grid">
             {WHY.map((item, i) => (
-              <li key={i} className="hs-why__item">
-                <span className="hs-why__dot" />
-                <span>{item}</span>
-              </li>
+              <div key={i} className="hs-why__item">
+                <div className="hs-why__item-header">
+                  <span className="hs-why__num">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p>{item}</p>
+              </div>
             ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="hs-cta container">
-        <div className="hs-cta__inner">
-          <div className="hs-cta__content">
-            <p className="hs-cta__eyebrow">Get Started</p>
-            <h2 className="hs-cta__title">Ready to build on solid financial ground?</h2>
-            <p className="hs-cta__sub">
-              Speak with a JHS housing specialist and get a tailored advisory proposal.
-            </p>
           </div>
-          <a href="/contact" className="hs-btn hs-btn--cta">
-            Contact Us <ArrowUpRight size={16} />
-          </a>
-        </div>
-      </section>
+        </section>
 
+        {/* ── CTA ── */}
+        <section className="hs-cta hs-container">
+          <div className="hs-cta__inner">
+            <div className="hs-cta__content">
+              <p className="hs-cta__eyebrow">Get Started</p>
+              <h2 className="hs-cta__title">Ready to build on solid financial ground?</h2>
+              <p className="hs-cta__sub">Speak with a JHS housing specialist and get a tailored advisory proposal.</p>
+            </div>
+            <a href="/contact" className="hs-btn hs-btn--cta">
+              Contact Us <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </section>
+
+      </main>
     </div>
   )
 }

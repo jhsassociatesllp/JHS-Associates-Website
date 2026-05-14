@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ShoppingBag, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './Retail.css'
+import heroImg from '../../../image/Fainance4.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -39,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'Retail Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Omni', label: 'Channel Coverage' },
-]
-
 const WHY = [
   'Deep experience with large-format retail, specialty stores, and D2C brands',
   'Specialist GST team for high-volume, multi-location retail environments',
@@ -54,17 +49,17 @@ const WHY = [
 ]
 
 export default function Retail() {
-  const heroRef    = useRef<HTMLDivElement>(null)
-  const servRef    = useRef<HTMLDivElement>(null)
-  const whyRef     = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const servRef = useRef<HTMLDivElement>(null)
+  const whyRef  = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        '.rt-eyebrow, .rt-title, .rt-subtitle, .rt-hero__stats',
-        { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.75, stagger: 0.09, ease: 'power3.out' }
+        '.rt-hero__content > *',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
       gsap.fromTo('.rt-card',
         { opacity: 0, y: 34 },
@@ -85,21 +80,17 @@ export default function Retail() {
 
       {/* ── HERO ── */}
       <section className="rt-hero" ref={heroRef}>
-        <div className="rt-hero__inner rt-container">
-          <span className="rt-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
-          <h1 className="rt-title">Retail<br />Services</h1>
-          <p className="rt-subtitle">
-            Integrated financial, tax, and compliance advisory for retail businesses —
-            from single-store independents to large omnichannel chains operating
-            across India and internationally.
-          </p>
-          <div className="rt-hero__stats">
-            {STATS.map((s) => (
-              <div key={s.label} className="rt-stat">
-                <strong>{s.num}</strong>
-                <span>{s.label}</span>
-              </div>
-            ))}
+        <div className="rt-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="rt-hero__overlay" />
+        <div className="rt-container">
+          <div className="rt-hero__content">
+            <span className="rt-eyebrow">Sectors &nbsp;·&nbsp; Consumer</span>
+            <h1 className="rt-title">Retail Services</h1>
+            <p className="rt-subtitle">
+              Integrated financial, tax, and compliance advisory for retail businesses —
+              from single-store independents to large omnichannel chains operating
+              across India and internationally.
+            </p>
           </div>
         </div>
       </section>

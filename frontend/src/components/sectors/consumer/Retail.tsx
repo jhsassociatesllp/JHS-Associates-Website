@@ -86,21 +86,21 @@ export default function Retail() {
       {/* ── HERO ── */}
       <section className="rt-hero" ref={heroRef}>
         <div className="rt-hero__inner">
-          {/* <p className="rt-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
+          <p className="rt-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p>
           <h1 className="rt-hero__title">Retail<br /><em>Services</em></h1>
           <p className="rt-hero__sub">
             Integrated financial, tax, and compliance advisory for retail businesses —
             from single-store independents to large omnichannel chains operating
             across India and internationally.
           </p>
-          {/* <div className="rt-hero__stats">
+          <div className="rt-hero__stats">
             {STATS.map((s) => (
               <div key={s.label} className="rt-hero__stat">
                 <span className="rt-hero__stat-num">{s.num}</span>
                 <span className="rt-hero__stat-label">{s.label}</span>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </section>
 

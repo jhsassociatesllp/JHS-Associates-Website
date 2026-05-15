@@ -12,7 +12,7 @@ services:
       # Mount the external uploads directory into nginx so images are served
       # directly without being bundled into the Docker image.
       # Host path   : /www/wwwroot/JHS Website/Uploads/images
-      # Inside nginx: /usr/share/nginx/uploads  (aliased → /Uploads/images/)
-      - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads:ro"
+      # Inside nginx: /usr/share/nginx/uploads/images  (aliased → /Uploads/images/)
+      - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads/images:ro"
     depends_on:
       - backend

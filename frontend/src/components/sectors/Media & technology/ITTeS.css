@@ -215,6 +215,7 @@
   border-radius: 4px;
   font-weight: 600;
   margin-bottom: 1.1rem;
+  margin-top: 3rem;
 }
 
 /* ── OVERVIEW ── */
@@ -375,6 +376,7 @@
 /* ── GRID + CARDS ── */
 .ites-highlights {
   padding-bottom: 5rem;
+  margin-top: 3rem;
 }
 
 .ites-grid {

@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Shield } from 'lucide-react'
 import './Outsourcing.css'
-import heroImg from '../../image/outsourcing.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -75,7 +75,7 @@ export default function Outsourcing() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="o-hero">
-        <div className="o-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="o-hero__bg" style={{ backgroundImage: `url('${imageUrl('outsourcing.png')}')` }} />
         <div className="o-hero__overlay" />
         <div className="o-container">
           <div className="o-hero__content">

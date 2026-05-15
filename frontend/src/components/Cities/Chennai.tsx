@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import './Chennai.css'
 
-import chennaiBg from '../../image/Chennai.png'
-import imgChandra from '../../image/Chandra Shekaran.png'
-import imgParnal from '../../image/Pranal p.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
-  { name: 'Chandra', image: imgChandra, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chandra-jhs' },
-  { name: 'Parnal P', image: imgParnal, qualifications: 'ACA', designation: 'Tax & Regulatory Advisory', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
+  { name: 'Chandra', image: imageUrl('Chandra Shekaran.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chandra-jhs' },
+  { name: 'Parnal P', image: imageUrl('Pranal p.png'), qualifications: 'ACA', designation: 'Tax & Regulatory Advisory', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -80,7 +78,7 @@ export default function Chennai() {
   return (
     <div className="chn-page">
       <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${chennaiBg})` }} />
+        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
           <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span>

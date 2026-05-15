@@ -2,18 +2,9 @@ import { useEffect, useState } from 'react'
 import './Mumbai.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import mumbaiBg from '../../image/Mumbai 2.jpg'
+import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Image Imports ─────────────────────────── */
-import imgHuzeifa from '../../image/Huzefa-Unwala-removebg-preview.png'
-import imgTasnim from '../../image/Tasnim-Tankiwala-removebg-preview.png'
-import imgJamal from '../../image/Jamal-Chatriwala-removebg-preview.png'
-import imgTaher from '../../image/Taher-Pepermintwala-removebg-preview.png'
-import imgSahil from '../../image/Sahil-Shah-removebg-preview.png'
-import imgTausif from '../../image/Tausif-Shaikh-removebg-preview.png'
-import imgSamad from '../../image/Samad-Dhanani-removebg-preview.png'
-import imgDisha from '../../image/Disha Shah-removebg-preview.png'
-import imgDhanlaxmi from '../../image/Dhanlaxmi.png'
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
 const SectorIcons: Record<string, JSX.Element> = {
@@ -93,15 +84,15 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imgHuzeifa, qualifications: 'FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)', designation: '', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imgTasnim, qualifications: 'FCA IndAS & IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Ashraf Chatriwala', image: imgJamal, qualifications: 'B.Com, ACA', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imgTaher, qualifications: 'B.Com, FCA, CISA', designation: 'Assurance & Tech | SOC | Audit Expert', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/Taher Pepermintwala' },
-  { name: 'Sahil Shah', image: imgSahil, qualifications: 'FCA', designation: 'Risk Advisory, ACA,FCA', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
-  { name: 'Tausif Shaikh', image: imgTausif, qualifications: 'B.COM, ACA', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
-  { name: 'Samad Dhanani', image: imgSamad, qualifications: 'M.COM, CS, ACA', designation: 'Statutory & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
-  { name: 'Disha Shah', image: imgDisha, qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi Nair', image: imgDhanlaxmi, qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)', designation: '', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA IndAS & IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'B.Com, ACA', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'B.Com, FCA, CISA', designation: 'Assurance & Tech | SOC | Audit Expert', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/Taher Pepermintwala' },
+  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Risk Advisory, ACA,FCA', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'B.COM, ACA', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
+  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'M.COM, CS, ACA', designation: 'Statutory & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
+  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
+  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -180,7 +171,7 @@ export default function Mumbai() {
 
       {/* ══ HERO ══ */}
       <section className="mum-hero">
-        <div className="mum-hero__photo" style={{ backgroundImage: `url(${mumbaiBg})` }} />
+        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.jpg')}")` }} />
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">
           <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span>

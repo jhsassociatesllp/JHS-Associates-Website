@@ -5,6 +5,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap");
 
+
 /* --- Variables --- */
 :root {
   --s-navy: #1e3a5f;
@@ -277,7 +278,7 @@
 .stats__image {
   position: absolute;
   inset: 0;
-  background-image: url("../image/StatsImage.png");
+  background-image: url("/Uploads/images/StatsImage.png");
   background-size: cover;
   background-position: center;
   /* transition: transform 8s ease-out; */
@@ -341,24 +342,110 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .stats {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .stats__right {
+    height: 260px;
+    order: -1;
+  }
+
+  .stats__left {
+    padding: 44px 36px 36px;
+    border-right: none;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats__content {
+    align-items: center;
+  }
+
+  .stats__description {
+    text-align: center;
+  }
+
+  .stats__cta {
+    margin: 4px auto 0;
+  }
+
+  .stats__tabs {
+    justify-content: center;
+  }
+
+  .stats__row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stats__stat {
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats__stat-content {
+    align-items: center;
+  }
+}
+
 @media (max-width: 640px) {
   .stats__left {
-    padding: 36px 24px 28px;
+    padding: 48px 24px 36px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats__content {
+    align-items: center;
+    gap: 20px;
+    /* was 14px — more space between eyebrow/heading/desc/cta/tabs */
   }
 
   .stats__heading {
     font-size: 26px;
+    text-align: center;
+  }
+
+  .stats__description {
+    text-align: center;
+  }
+
+  .stats__cta {
+    margin: 6px auto 0;
+  }
+
+  .stats__tabs {
+    justify-content: center;
+    margin-top: 4px;
   }
 
   .stats__row {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px 0;
+    gap: 28px 0;
+    /* more vertical gap between the 2x2 stat cards */
+    margin-top: 40px;
+    /* push the stat row further down from the content block */
+    padding-top: 28px;
   }
 
   .stats__stat {
+    align-items: center;
+    text-align: center;
     border-right: none;
-    padding: 0 0 16px 0 !important;
+    padding: 0 12px 28px !important;
+    /* extra bottom padding inside each card */
     border-bottom: 1px solid var(--s-stat-divider);
+  }
+
+  .stats__stat-content {
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stats__stat-icon {
+    margin-bottom: 6px;
   }
 
   .stats__stat:nth-child(3),
@@ -371,3 +458,60 @@
     height: 200px;
   }
 }
+
+
+/* @media (max-width: 640px) {
+  .stats__left {
+    padding: 36px 24px 28px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats__content {
+    align-items: center;
+  }
+
+  .stats__heading {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .stats__description {
+    text-align: center;
+  }
+
+  .stats__cta {
+    margin: 4px auto 0;
+  }
+
+  .stats__tabs {
+    justify-content: center;
+  }
+
+  .stats__row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 0;
+  }
+
+  .stats__stat {
+    align-items: center;
+    text-align: center;
+    border-right: none;
+    padding: 0 0 16px 0 !important;
+    border-bottom: 1px solid var(--s-stat-divider);
+  }
+
+  .stats__stat-content {
+    align-items: center;
+  }
+
+  .stats__stat:nth-child(3),
+  .stats__stat:nth-child(4) {
+    border-bottom: none;
+    padding-bottom: 0 !important;
+  }
+
+  .stats__right {
+    height: 200px;
+  }
+} */

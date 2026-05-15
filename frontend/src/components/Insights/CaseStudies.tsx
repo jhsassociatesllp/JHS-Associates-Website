@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CASE_STUDIES, CASE_STUDY_CATEGORIES, getCaseStudiesByCategory } from '../../data/CaseStudies'
 import './CaseStudies.css'
-import HeroImg from '../../image/Case Studies.png'
+import { imageUrl } from '../../utils/imageUrl'
 // import img1 from '../../image/Fainance3.jpg';
 // import img2 from '../../image/WebPoster2.jpeg';
 // import img3 from '../../image/StatsImage.png';
@@ -23,7 +23,7 @@ export default function CaseStudies() {
   return (
     <div className="cs-page">
       {/* Hero Section */}
-      <section className="cs-hero" style={{ backgroundImage: `url('${HeroImg}')` }}>
+      <section className="cs-hero" style={{ backgroundImage: `url('${imageUrl('Case Studies.png')}')` }}>
         <div className="cs-hero__overlay" />
         <div className="cs-hero__content">
           <h1 className="cs-title">Our Success Stories</h1>

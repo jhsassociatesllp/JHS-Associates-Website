@@ -1,20 +1,9 @@
-import img1 from '../image/Fainance3.jpg';
-import img2 from '../image/WebPoster2.jpeg';
-import img3 from '../image/StatsImage.png';
-import img4 from '../image/Fainance4.jpg';
-// import img5 from '../image/Fainance5.jpg';
-// import img6 from '../image/Fainance6.jpg';
-// import img7 from '../image/Fainance7.jpg';
-// import img8 from '../image/Fainance8.jpg';
-// import img9 from '../image/Fainance9.jpg';
-// import img10 from '../image/Fainance10.jpg';
-// import img11 from '../image/Fainance11.jpg';
-// import img12 from '../image/Fainance12.jpg';
+import { imageUrl } from '../utils/imageUrl';
 
 const CASE_STUDIES = [
   {
     id: 1,
-    image: img1,
+    image: imageUrl('Fainance3.jpg'),
     title: "Independent Risk Management Review for a Broking Company",
     sector: "Brokerage",
     solution: "Risk Management Review",
@@ -35,7 +24,7 @@ const CASE_STUDIES = [
   },
   {
     id: 2,
-    image: img2,
+    image: imageUrl('WebPoster2.jpeg'),
     title: "Developed Risk Management Systems & Processes for a Payment Bank",
     sector: "Payment Bank",
     solution: "ERM Manuals",
@@ -52,7 +41,7 @@ const CASE_STUDIES = [
   },
   {
     id: 3,
-    image: img3,
+    image: imageUrl('StatsImage.png'),
     title: "Developed Train the Trainer training module on Risk Management for leading Financial Service Group",
     sector: "Financial Services",
     solution: "Develop Train the Trainer training content and training delivery",
@@ -68,7 +57,7 @@ const CASE_STUDIES = [
   },
   {
     id: 4,
-    image: img4,
+    image: imageUrl('Fainance4.jpg'),
     title: "Developed Risk Management Policy and Manual for Leading Bank",
     sector: "Banking",
     solution: "ERM Manuals",

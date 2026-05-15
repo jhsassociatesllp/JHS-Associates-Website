@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Shield } from 'lucide-react'
 import './CorporateFinance.css'
-import heroImg from '../../image/corporate-advisory.avif'
+import { imageUrl } from '../../utils/imageUrl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -71,7 +71,7 @@ export default function CorporateFinance() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="cf-hero">
-        <div className="cf-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="cf-hero__bg" style={{ backgroundImage: `url('${imageUrl('corporate-advisory.avif')}')` }} />
         <div className="cf-hero__overlay" />
         <div className="cf-container">
           <div className="cf-hero__content">

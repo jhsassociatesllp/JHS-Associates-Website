@@ -2,19 +2,9 @@ import { useEffect, useState } from 'react'
 import './Ahmedabad.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import ahmedabadBg from '../../image/Ahmedabad.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Image Imports ─────────────────────────── */
-import imgVirendra from '../../image/Virendra-Nayyar-removebg-preview.png'
-import imgSaurabh from '../../image/Saurabh-Shah-removebg-preview.png'
-import imgDhaval from '../../image/Dhaval-Thakkar-removebg-preview.png'
-import imgViranch from '../../image/Viranch-Modi-removebg-preview.png'
-import imgShreena from '../../image/Shreena Parana.png'
-import imgMilin from '../../image/Milin-Parekh-removebg-preview.png'
-import imgMehul from '../../image/Mehul-Shah-removebg-preview.png'
-import imgAlpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
-import imgRaj from '../../image/Raj-Shah-removebg-preview.png'
-import imgJhankana from '../../image/Jhankana Patel.jpeg'
 
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -83,17 +73,17 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Virendra Nayyar', image: imgVirendra, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar' },
-  { name: 'Saurabh Shah', image: imgSaurabh, qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
-  { name: 'Dhaval Thakkar', image: imgDhaval, qualifications: 'FCA', designation: 'Tax & Regulatory Advisory', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar' },
-  { name: 'Viranch Modi', image: imgViranch, qualifications: 'B.Com, FCA', designation: 'Income Tax & GST', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi' },
-  { name: 'Shreena Panara', image: imgShreena, qualifications: 'FCA', designation: 'Audit & Compliance', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/shreena-panara' },
-  { name: 'Milin Parekh', image: imgMilin, qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh' },
-  { name: 'Mehul Shah', image: imgMehul, qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah' },
-  { name: 'Alpesh Vaniya', image: imgAlpesh, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya' },
-  { name: 'Raj Shah', image: imgRaj, qualifications: 'B.Com, ACA', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/raj-shah' },
-  { name: 'Parth Shah', image: imgRaj, qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah' },
-  { name: 'Jhankhna Patel', image: imgJhankana, qualifications: 'ACA', designation: 'Audit & Regulatory Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhna-patel' },
+  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar' },
+  { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.png'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
+  { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Regulatory Advisory', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar' },
+  { name: 'Viranch Modi', image: imageUrl('Viranch-Modi-removebg-preview.png'), qualifications: 'B.Com, FCA', designation: 'Income Tax & GST', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi' },
+  { name: 'Shreena Panara', image: imageUrl('Shreena Parana.png'), qualifications: 'FCA', designation: 'Audit & Compliance', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/shreena-panara' },
+  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh' },
+  { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah' },
+  { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya' },
+  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'B.Com, ACA', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/raj-shah' },
+  { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah' },
+  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA', designation: 'Audit & Regulatory Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhna-patel' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -115,12 +105,12 @@ const MAP_LOCATIONS = [
   {
     id: 'ahmedabad', name: 'Ahmedabad ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin',
-    address: '1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059'
+    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road,Thaltej, Ahmedabad,Gujarat – 380054'
   },
   {
     id: 'vadodara', name: 'Vadodara', tag: 'Branch',
     mapUrl: 'https://maps.google.com/maps?q=Lila%20Chambers,%20Notus%20Pride,%20Vadodara,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023'
+    address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023'
   },
   {
     id: 'vapi', name: 'Vapi', tag: 'Branch',
@@ -171,11 +161,11 @@ export default function Ahmedabad() {
 
       {/* ══ HERO ══ */}
       <section className="ahm-hero">
-        <div className="ahm-hero__photo" style={{ backgroundImage: `url(${ahmedabadBg})` }} />
+        <div className="ahm-hero__photo" style={{ backgroundImage: `url(${imageUrl('Ahmedabad.png')})` }} />
         <div className="ahm-hero__overlay" />
         <div className="ahm-hero__content">
           <span className="ahm-hero__eyebrow">JHS &amp; Associates LLP</span>
-          <h1 className="ahm-hero__title">Ahmedabad</h1>
+          <h1 className="ahm-hero__title">Gujarat</h1>
           <p className="ahm-hero__sub">Regional Hub &amp; Key Western India Office</p>
         </div>
         <div className="ahm-hero__card">

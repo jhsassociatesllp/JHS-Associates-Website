@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './OurOffices.css'
-import officeBg from '../../image/OfficesBG.avif'
+import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Office Data ─────────────────────────────────────────── */
 const OFFICES = [
@@ -21,7 +21,7 @@ const OFFICES = [
     ],
   },
   {
-    city: 'Ahmedabad',
+    city: 'Gujarat',
     badge: 'Regional Hub',
     state: 'Gujarat',
     route: '/city/ahmedabad',
@@ -29,8 +29,11 @@ const OFFICES = [
     email: 'ahmedabad@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'SG Highway ', address: 'B-1204, Westgate Business Bay, Near YMCA Club, SG Highway, Ahmedabad, Gujarat – 380054' },
-      { name: 'Navrangpura', address: '302, Shilp Zaveri, Near Law Garden, Navrangpura, Ahmedabad, Gujarat – 380009' },
+      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road, Thaltej, Ahmedabad,Gujarat – 380054' },
+      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara.Gujarat - 390023' },
+      { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001' },
+      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 39500 ' },
+      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi.Gujarat - 396215 ' },
     ],
   },
   {
@@ -42,7 +45,7 @@ const OFFICES = [
     email: 'delhi@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Connaught Place', address: '301, 3rd Floor, Antriksh Bhawan, 22 Kasturba Gandhi Marg, Connaught Place, New Delhi – 110001' },
+      { name: 'Dehli', address: 'Unit No.306, DIF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
   {
@@ -54,7 +57,9 @@ const OFFICES = [
     email: 'hyderabad@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'HITEC City ', address: '8th Floor, Cyber Towers, HITEC City, Madhapur, Hyderabad, Telangana – 500081' },
+      {
+        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, Badhe House, First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
+      },
     ],
   },
   {
@@ -66,7 +71,7 @@ const OFFICES = [
     email: 'bengaluru@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Koramangala ', address: '4th Floor, Prestige Meridian, 29 MG Road, Koramangala, Bengaluru, Karnataka – 560034' },
+      { name: 'Bengaluru ', address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037' },
     ],
   },
   {
@@ -78,7 +83,9 @@ const OFFICES = [
     email: 'kolkata@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Park Street ', address: '6th Floor, Chatterjee International, 33A JL Nehru Road, Park Street, Kolkata, West Bengal – 700071' },
+      {
+        name: 'Kolkata ', address: 'Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016'
+      },
     ],
   },
   {
@@ -90,7 +97,9 @@ const OFFICES = [
     email: 'chennai@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'T. Nagar ', address: '7th Floor, Abacus Tower, 1-F Venkatnarayana Road, T. Nagar, Chennai, Tamil Nadu – 600017' },
+      {
+        name: 'T. Nagar ', address: 'No: 43/65, South West Boag Road,T- Nagar,Chennai – 600017'
+      },
     ],
   },
   {
@@ -149,24 +158,24 @@ export default function OurOffices() {
 
       {/* ════ HERO ════ */}
       <section className="oo-hero">
-        <div className="oo-hero__bg" style={{ backgroundImage: `url(${officeBg})` }} />
+        <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('OfficesBG.avif')})` }} />
         <div className="oo-hero__overlay" />
         <div className="oo-hero__content">
           <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p>
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
-            8 cities · 12+ locations · Pan-India &amp; Global
+            10 cities · 14+ locations · Pan-India &amp; Global
           </p>
         </div>
         {/* Stats bar */}
         <div className="oo-hero__stats">
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">8</span><span className="oo-hero__stat-label">Cities</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">10</span><span className="oo-hero__stat-label">Cities</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">12+</span><span className="oo-hero__stat-label">Locations</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">14+</span><span className="oo-hero__stat-label">Locations</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">200+</span><span className="oo-hero__stat-label">Professionals</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">600+</span><span className="oo-hero__stat-label">Professionals</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">30+</span><span className="oo-hero__stat-label">Years of Trust</span></div>
+          {/* <div className="oo-hero__stat"><span className="oo-hero__stat-num">30+</span><span className="oo-hero__stat-label">Years of Trust</span></div> */}
         </div>
       </section>
 

@@ -523,7 +523,22 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
+
+  /* center the text block */
+  .spotlight__heading,
+  .spotlight__description,
+  .spotlight__content {
+    text-align: center;
+    align-items: center;
+  }
+
+  .spotlight__cta {
+    margin: 0 auto;
+  }
+}
+
+/* @media (max-width: 640px) {
   .services__left {
     padding: 48px 24px;
   }
@@ -557,4 +572,4 @@
   .services__right-title {
     font-size: 24px;
   }
-}
+} */

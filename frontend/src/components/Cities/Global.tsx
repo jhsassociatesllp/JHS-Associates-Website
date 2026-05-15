@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Global.css'
+import { imageUrl } from '../../utils/imageUrl'
 
-// import globalBg from '../../image/global.jpeg'
-import globalBg from "../../image/Global.jpeg";
 
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (
@@ -169,7 +168,7 @@ export default function Global() {
   return (
     <div className="glb-page">
       <section className="glb-hero">
-        <div className="glb-hero__photo" style={{ backgroundImage: `url(${globalBg})` }} />
+        <div className="glb-hero__photo" style={{ backgroundImage: `url(${imageUrl('Global.jpeg')})` }} />
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">
           <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p>

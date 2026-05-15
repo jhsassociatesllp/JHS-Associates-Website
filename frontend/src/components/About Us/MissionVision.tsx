@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
-import heroBg from '../../image/Mumbai 2.jpg'
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function MissionVision() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -9,7 +9,7 @@ export default function MissionVision() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Mumbai 2.jpg')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Guiding Principles</p>

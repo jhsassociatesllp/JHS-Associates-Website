@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import './Hyderabad.css'
 
-import hyderabadBg from '../../image/Hyderabad.png'
-import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
-import imgGeethika from '../../image/Geethika Ghanta.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
-  { name: 'Pradeep', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
-  { name: 'Geethika Ghanta', image: imgGeethika, qualifications: 'FCA', designation: 'Risk Advisory & Compliance', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/geethika-ghanta' },
+  { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
+  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'FCA', designation: 'Risk Advisory & Compliance', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/geethika-ghanta' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -80,7 +78,7 @@ export default function Hyderabad() {
   return (
     <div className="hyd-page">
       <section className="hyd-hero">
-        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${hyderabadBg})` }} />
+        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.png')})` }} />
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
           <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span>

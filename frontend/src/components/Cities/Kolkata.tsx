@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import './Kolkata.css'
 
-import kolkataBg from '../../image/Kolkata.png'
-import imgSharad from '../../image/Sharad-Mohata-removebg-preview.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
   {
     name: 'Sharad Mohata',
-    image: imgSharad,
+    image: imageUrl('Sharad-Mohata-removebg-preview.png'),
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
     email: 'sharad.mohata@jhsassociates.in',
@@ -196,7 +195,7 @@ export default function Kolkata() {
   return (
     <div className="kol-page">
       <section className="kol-hero">
-        <div className="kol-hero__photo" style={{ backgroundImage: `url(${kolkataBg})` }} />
+        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.png')})` }} />
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
           <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p>
@@ -350,7 +349,7 @@ export default function Kolkata() {
         </div>
       </section>
 
-      <section className="kol-branches-section">
+      {/* <section className="kol-branches-section">
         <div className="kol-container">
           <div className="kol-section-hdr">
             <span className="kol-section-hdr__tag kol-section-hdr__tag--light">Sub-Offices</span>
@@ -370,7 +369,7 @@ export default function Kolkata() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

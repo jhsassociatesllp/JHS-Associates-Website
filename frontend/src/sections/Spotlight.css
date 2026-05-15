@@ -163,7 +163,8 @@
   color: #64748b;
   line-height: 1.6;
   max-width: 90%;
-  padding-left: 48px;
+  /* padding-left: 48px; */
+  margin-left: 1.5rem;
   /* aligns text with the title by skipping icon (32px) + gap (16px) */
 }
 
@@ -224,6 +225,7 @@
 
   .spotlight__item-title {
     font-size: 1.25rem;
+    /* margin-left: 2rem; */
   }
 
   .spotlight__item-desc {
@@ -234,9 +236,13 @@
 
   .spotlight__item {
     padding: 24px 0;
+    text-align: center;
+    padding: 1.5rem;
   }
 
   .spotlight__item-header {
     margin-bottom: 0;
+    text-align: center;
+    margin-left: 3rem;
   }
 }

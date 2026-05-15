@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
-import heroBg from '../../image/Ahmedabad.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function Awards() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -9,7 +9,7 @@ export default function Awards() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Ahmedabad.png')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Recognition</p>

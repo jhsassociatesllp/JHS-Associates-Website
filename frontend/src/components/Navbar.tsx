@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import JHS_logo from '../image/logo.png';
+import { imageUrl } from '../utils/imageUrl'
 
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
@@ -94,7 +94,7 @@ const NAV_ITEMS: NavItem[] = [
         children: [
           { label: "Media", description: "", href: '/sectors/media-technology/media' },
           { label: "IT System Audit", description: "", href: '/sectors/media-technology/it-system-audit' },
-          { label: "IT /ITeS", description: "", href: '/sectors/media-technology/it-ites' },
+          { label: "IT /ITeS", description: "", href: 'sectors/media-technology/it-tes' },
         ],
       },
       {
@@ -103,11 +103,11 @@ const NAV_ITEMS: NavItem[] = [
         children: [
           { label: "FMCG", description: "", href: '/sectors/consumer/fmcg' },
           { label: "Retail ", description: "", href: '/sectors/consumer/retail' },
-          { label: "Oil & Gas", description: "", href: '/sectors/consumer/oil-gas' },
+          { label: "Oil & Gas", description: "", href: '/sectors/consumer/OilAndGasIndustry' },
           { label: "Housing ", description: "", href: '/sectors/consumer/housing' },
           { label: "Real Estate", description: "", href: '/sectors/consumer/real-estate' },
-          { label: "Commoditiy", description: "", href: '/sectors/consumer/commodities' },
-          { label: "Gems & Jewelry", description: "", href: '/sectors/consumer/gems-jewelry' },
+          { label: "Commoditiy", description: "", href: '/sectors/consumer/commodity' },
+          { label: "Gems & Jewelry", description: "", href: '/sectors/consumer/GemsAndJewellery' },
         ],
       },
       {
@@ -129,10 +129,10 @@ const NAV_ITEMS: NavItem[] = [
         label: "Others",
         description: "Cross-industry specialist practices",
         children: [
-          { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/others/healthcare' },
-          { label: "Constructions", description: "", href: '/sectors/others/constructions' },
-          { label: "Manufacturing", description: "", href: '/sectors/others/manufacturing' },
-          { label: "NGO", description: "", href: '/sectors/others/ngo' },
+          { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/other/healthcare' },
+          { label: "Constructions", description: "", href: '/sectors/other/construction' },
+          { label: "Manufacturing", description: "", href: '/sectors/other/manufacturing' },
+          { label: "NGO", description: "", href: '/sectors/other/ngo' },
         ],
       },
     ],
@@ -298,7 +298,7 @@ const Navbar = () => {
 
           <a href="/" className="nb__brand" onClick={closeMenu}>
             <img
-              src={JHS_logo}
+              src={imageUrl('logo.png')}
               alt="JHS & Associates LLP"
               className="nb__logo"
             />

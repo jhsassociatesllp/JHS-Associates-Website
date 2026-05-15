@@ -3,55 +3,56 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Cities.css";
-import Mumbai from '../image/Mumbai.png'
-import Delhi from '../image/Dehli.png'
-import Bengaluru from '../image/Bangaluru.jpg'
-import GlobalOffices from '../image/Global.jpeg'
-import Ahmedabad from '../image/Ahmedabad.png'
-import Hyderabad from '../image/Hyderabad.png'
-import Kolkata from '../image/Kolkata.png'
-import Chennai from '../image/Chennai.png'
+import { imageUrl } from '../utils/imageUrl'
 
 const citiesList = [
   {
     name: "Mumbai",
+    slug: "mumbai",
     address: "Headquarters, Andheri",
-    image: Mumbai,
+    image: imageUrl('Mumbai.png'),
   },
   {
-    name: "Delhi",
-    address: "Connaught Place",
-    image: Delhi,
+    name: "Dehli",
+    slug: "delhi",
+    // address: "Connaught Place",
+    image: imageUrl('Dehli.png'),
   },
   {
     name: "Bengaluru",
-    address: "UB City, Vittal Mallya Road",
-    image: Bengaluru,
+    slug: "bengaluru",
+    // address: "UB City, Vittal Mallya Road",
+    image: imageUrl('Bangaluru.jpg'),
   },
   {
-    name: "Ahmedabad",
-    address: "SG Highway",
-    image: Ahmedabad,
+    name: "Gujarat",
+    slug: "ahmedabad",
+    // address: "Ahmedabad",
+    image: imageUrl('Ahmedabad.png'),
   },
   {
     name: "Hyderabad",
-    address: "HITEC City",
-    image: Hyderabad,
+    slug: "hyderabad",
+    // address: "HITEC City",
+    image: imageUrl('Hyderabad.png'),
   },
   {
     name: "Kolkata",
-    address: "Salt Lake City",
-    image: Kolkata,
+    slug: "kolkata",
+    // address: "Salt Lake City",
+    image: imageUrl('Kolkata.png'),
   },
   {
     name: "Chennai",
-    address: "T Nagar",
-    image: Chennai,
+    slug: "chennai",
+    // address: "T Nagar",
+    image: imageUrl('Chennai.png'),
   },
   {
     name: "Global",
+    slug: "global",
     address: "International",
-    image: GlobalOffices,
+    image: imageUrl('Global.jpeg'),
   }
 ];
 
@@ -128,7 +129,7 @@ export default function Cities() {
               <div className="cities__card-content">
                 <h3 className="cities__card-title">{city.name}</h3>
                 <p className="cities__card-address">{city.address}</p>
-                <Link to={`/city/${city.name.toLowerCase()}`} className="cities__card-btn">
+                <Link to={`/city/${city.slug}`} className="cities__card-btn">
                   View Details
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>

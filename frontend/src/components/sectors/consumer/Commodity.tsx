@@ -54,9 +54,9 @@ const WHY = [
 ]
 
 export default function Commodity() {
-  const heroRef     = useRef<HTMLDivElement>(null)
-  const hlRef       = useRef<HTMLDivElement>(null)
-  const whyRef      = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)

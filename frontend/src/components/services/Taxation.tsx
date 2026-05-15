@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Shield } from 'lucide-react'
 import './Taxation.css'
-import heroImg from '../../image/Fainance-report.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -75,7 +75,7 @@ export default function Taxation() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="tx-hero">
-        <div className="tx-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="tx-hero__bg" style={{ backgroundImage: `url('${imageUrl('Fainance-report.png')}')` }} />
         <div className="tx-hero__overlay" />
         <div className="tx-container">
           <div className="tx-hero__content">

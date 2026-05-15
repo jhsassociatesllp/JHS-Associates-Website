@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import './SpotlightPages.css';
 import './Alumni.css';
-import heroImg from '../../image/WebPoster3.jpeg';
-import imgRiddhi from '../../image/Riddhi Kishnadwala.jpeg'
-import imgPrernaJain from '../../image/Prerna Jain.jpeg'
-import imgAnkitMehta from '../../image/Ankit Mehta.jpeg'
-import imgPratik from '../../image/Pratik mantri.jpeg'
-import imgRiya from '../../image/Riya Almeida.jpeg'
-import imgShabbir from '../../image/Shabbir Shaikh.jpeg'
+import { imageUrl } from '../../utils/imageUrl'
 
 const ALUMNI_PROFILES = [
   {
@@ -15,42 +9,42 @@ const ALUMNI_PROFILES = [
     name: "Riddhi Kishnadwala",
     role: "Former Audit Partner",
     desc: "JHS was my first job post CA qualification. It was a great learning experience and guidance was provided whenever needed. Executional excellence and quality deliverables were the key corners of all the projects I worked on. A good place to learn and grow.",
-    image: imgRiddhi
+    image: imageUrl('Riddhi Kishnadwala.jpeg')
   },
   {
     id: 2,
     name: "Prerna Jain",
     role: "Ex-Director, Tax Advisory",
     desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
-    image: imgPrernaJain
+    image: imageUrl('Prerna Jain.jpeg')
   },
   {
     id: 3,
     name: "Ankit Mehta",
     role: "Alumnus, Consulting",
     desc: "At JHS, I was entrusted with responsibilities in Internal Audit despite starting from scratch, which accelerated my learning. The freedom to work independently, along with consistent support, helped me build confidence and leadership abilities.",
-    image: imgAnkitMehta
+    image: imageUrl('Ankit Mehta.jpeg')
   },
   {
     id: 4,
     name: "Pratik Mantri",
     role: "Alumnus, Consulting",
     desc: "The work culture at JHS encouraged learning, accountability, and collaborative problem-solving. Being part of the Risk Advisory & Internal Audit team provided invaluable exposure to build a strong foundation in risk assessment, controls, and compliance.",
-    image: imgPratik
+    image: imageUrl('Pratik mantri.jpeg')
   },
   {
     id: 5,
     name: "Riya Almeida",
     role: "Articleship",
     desc: "My stint at JHS & Associates LLP provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
-    image: imgRiya
+    image: imageUrl('Riya Almeida.jpeg')
   },
   {
     id: 6,
     name: "Shabbir Shaikh",
     role: "Alumnus, Consulting",
     desc: "My experience at JHS helped me build a strong foundation in risk assessment, internal controls, and business process understanding. It shaped my professional approach towards analytical review, compliance, and operational efficiency, which continues to help me in my business and decision-making today.",
-    image: imgShabbir
+    image: imageUrl('Shabbir Shaikh.jpeg')
   }
 ];
 
@@ -138,7 +132,7 @@ export default function Alumni() {
       {/* Hero Section */}
       <section
         className="alumni-hero"
-        style={{ backgroundImage: `url(${heroImg})` }}
+        style={{ backgroundImage: `url(${imageUrl('WebPoster3.jpeg')})` }}
       >
         <div className="alumni-hero__overlay" />
         <div className="alumni-hero__content">

@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Shield } from 'lucide-react'
 import './ComplianceLearning.css'
-import heroImg from '../../image/Risk.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -49,7 +49,7 @@ export default function ComplianceLearning() {
   return (
     <div className="cl-page" ref={containerRef}>
       <section className="cl-hero">
-        <div className="cl-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="cl-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.png')}')` }} />
         <div className="cl-hero__overlay" />
         <div className="cl-container">
           <div className="cl-hero__content">

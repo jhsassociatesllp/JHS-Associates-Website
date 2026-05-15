@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# External uploads — images are managed on the server independently.
+# Keep the folder stub (.gitkeep) but ignore the actual image files.
+public/Uploads/images/*
+!public/Uploads/images/.gitkeep
+
+# Legacy bundled image folder (migrated to external Uploads/images)
+src/image/

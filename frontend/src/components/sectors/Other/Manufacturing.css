@@ -52,7 +52,6 @@
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
-  padding-top: 90px;
   scroll-behavior: smooth;
 }
 
@@ -179,7 +178,7 @@
   text-align: center;
   overflow: hidden;
   padding: 4rem 2rem;
-  background-image: url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=1800&q=80&auto=format&fit=crop');
+  background-image: url('/Uploads/images/manufacturing.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -564,10 +563,12 @@
   .container {
     padding: 0 1.5rem;
   }
+
   .man-hero {
     background-attachment: scroll;
     min-height: 450px;
   }
+
   .man-services,
   .man-expertise,
   .man-benefits-approach,

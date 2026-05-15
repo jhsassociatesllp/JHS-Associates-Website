@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Lightbulb, Briefcase, Rocket, Settings, CheckCircle, Search } from 'lucide-react';
 import './SpotlightPages.css';
-import heroImg from '../../image/WebPoster4.jpeg';
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function Solutions() {
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Solutions() {
       <section className="sp-hero">
         <div
           className="sp-hero__bg"
-          style={{ backgroundImage: `url(${heroImg})` }}
+          style={{ backgroundImage: `url(${imageUrl('WebPoster4.jpeg')})` }}
         />
         <div className="sp-hero__overlay" />
         <div className="sp-container">

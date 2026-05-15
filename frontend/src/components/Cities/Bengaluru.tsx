@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import './Bengaluru.css'
 
-import bengaluruBg from '../../image/Bangaluru.jpg'
-import imgNarayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Mala', image: imgNarayana, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -78,7 +77,7 @@ export default function Bengaluru() {
   return (
     <div className="blr-page">
       <section className="blr-hero">
-        <div className="blr-hero__photo" style={{ backgroundImage: `url(${bengaluruBg})` }} />
+        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.jpg')})` }} />
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
           <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
-import heroBg from '../../image/Fainance4.jpg'
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function OurStory() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -9,7 +9,7 @@ export default function OurStory() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Fainance4.jpg')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Heritage &amp; History</p>

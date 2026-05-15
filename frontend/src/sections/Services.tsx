@@ -3,25 +3,9 @@ import { Link } from "react-router-dom";
 import "./Services.css";
 
 // industries_Images
-import imgAssurance from '../image/Assurance.png'
-import imgTaxation from '../image/Taxposter.jpg'
-import imgGST from '../image/gst-im.png'
-import imgFinancialReporting from '../image/Fainance-report.png'
-import imgCorporateAdvisory from '../image/Blogimg.png'
-import imgRiskAndGovernance from '../image/Risk.png'
-import imgOutsourcing from '../image/outsourcing.png'
-import imgSingleWindowAssistance from '../image/single-w-A.avif'
+import { imageUrl } from '../utils/imageUrl'
 
 // service_images
-import imgManufacturing from '../image/manufacturing.png'
-import imgRealstate from '../image/Real-State.avif'
-import imgHealth from '../image/healthcare.avif'
-import imgbank from '../image/reserve-bank-of-india-rbi-.jpg'
-import imgIt from '../image/IT-Technology.avif'
-import imgRetail from '../image/Retail.avif'
-import imgConstruction from '../image/construction.avif'
-import imgNgo from '../image/NGO.avif'
-import imgMedia from '../image/media.avif'
 
 type ServiceItem = {
   label: string;
@@ -31,26 +15,26 @@ type ServiceItem = {
 };
 
 const capabilities: ServiceItem[] = [
-  { label: "Audit & Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive audit and assurance services, tailored to meet your business needs.", image: imgAssurance },
-  { label: "Tax Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imgTaxation },
-  { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imgGST },
-  { label: "Financial Reporting", href: "/services/consulting", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imgFinancialReporting },
-  { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions, and overall business growth.", image: imgCorporateAdvisory },
-  { label: "Risk & Governance", href: "/services/soc-attestation", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imgRiskAndGovernance },
-  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll, and compliance outsourcing needs.", image: imgOutsourcing },
-  { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imgSingleWindowAssistance },
+  { label: "Audit & Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive audit and assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
+  { label: "Tax Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.jpg') },
+  { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.png') },
+  { label: "Financial Reporting", href: "/services/consulting", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },
+  { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions, and overall business growth.", image: imageUrl('Blogimg.png') },
+  { label: "Risk & Governance", href: "/services/soc-attestation", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
+  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll, and compliance outsourcing needs.", image: imageUrl('outsourcing.png') },
+  { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.avif') },
 ];
 
 const industries: ServiceItem[] = [
-  { label: "Manufacturing", href: "/sectors/other/manufacturing", description: "Optimizing supply chains, improving operational efficiency, and navigating regulatory landscapes in the manufacturing sector.", image: imgManufacturing },
-  { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors, and property managers in the real estate market.", image: imgRealstate },
-  { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency, and strategic financial planning.", image: imgHealth },
-  { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk, and advisory services tailored for banks, NBFCs, and financial institutions.", image: imgbank },
-  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory, and compliance services.", image: imgIt },
-  { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imgRetail },
-  { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imgConstruction },
-  { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imgNgo },
-  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation, and compliance in the fast-paced media industry.", image: imgMedia },
+  { label: "Manufacturing", href: "/sectors/other/manufacturing", description: "Optimizing supply chains, improving operational efficiency, and navigating regulatory landscapes in the manufacturing sector.", image: imageUrl('manufacturing.png') },
+  { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors, and property managers in the real estate market.", image: imageUrl('Real-State.avif') },
+  { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency, and strategic financial planning.", image: imageUrl('healthcare.avif') },
+  { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk, and advisory services tailored for banks, NBFCs, and financial institutions.", image: imageUrl('reserve-bank-of-india-rbi-.jpg') },
+  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory, and compliance services.", image: imageUrl('IT-Technology.avif') },
+  { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
+  { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.avif') },
+  { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.avif') },
+  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation, and compliance in the fast-paced media industry.", image: imageUrl('media.avif') },
   { label: "Logistics", href: "/sectors/other/logistics", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", },
 ];
 

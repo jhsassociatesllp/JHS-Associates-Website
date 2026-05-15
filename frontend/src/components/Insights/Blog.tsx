@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './SimpleInsight.css'
-import blogImg from '../../image/Blogs.avif'
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function Blog() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -20,7 +20,7 @@ export default function Blog() {
       {/* ════ CONTENT ════ */}
       <section className="simple-insight-content">
         <article className="blog-article">
-          <img src={blogImg} alt="Tax Compliance" className="blog-article__img" />
+          <img src={imageUrl('Blogs.avif')} alt="Tax Compliance" className="blog-article__img" />
           
           <div className="blog-article__body">
             <p>

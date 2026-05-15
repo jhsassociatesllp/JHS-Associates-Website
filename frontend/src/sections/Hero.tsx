@@ -1,17 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-// import card1 from '../image/card1.jpeg'
-// import card2 from '../image/card2.jpeg'
-// import card3 from '../image/card3.jpeg'
-// import card4 from '../image/card4.jpeg'
-// import card5 from '../image/card5.jpeg'
+// import imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp') from '../image/imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp').jpeg'
+// import imageUrl('Data-Governance.png') from '../image/imageUrl('Data-Governance.png').jpeg'
+// import imageUrl('Investment-Opportunities.png.webp') from '../image/imageUrl('Investment-Opportunities.png.webp').jpeg'
+// import imageUrl('Card4.jpeg') from '../image/imageUrl('Card4.jpeg').jpeg'
+// import imageUrl('2-1.png.webp') from '../image/imageUrl('2-1.png.webp').jpeg'
 
-import card1 from '../image/BOARDROOMS-IN-TRANSITION-.png.webp'
-import card2 from '../image/Data-Governance.png'
-import card3 from '../image/Investment-Opportunities.png.webp'
-import card4 from '../image/Card4.jpeg'
-import card5 from '../image/2-1.png.webp'
+import { imageUrl } from '../utils/imageUrl'
 
 interface Card {
   id: number;
@@ -26,7 +22,7 @@ interface Card {
 const cards: Card[] = [
   {
     id: 1,
-    image: card1,
+    image: imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp'),
     category: "ARTICLES",
     meta: "SLIDESHOW • December 20, 2026",
     title: "BOARDROOMS IN TRANSITION: HOW INDIA’S GRC FRAMEWORK IS REDEFINING CORPORATE GOVERNANCE",
@@ -36,7 +32,7 @@ const cards: Card[] = [
   },
   {
     id: 2,
-    image: card2,
+    image: imageUrl('Data-Governance.png'),
     category: "RESOURCES",
     meta: "Resources • April 27, 2026",
     title: "The Rule 6 Maze: A Boardroom Perspective on Data Governance in India",
@@ -46,7 +42,7 @@ const cards: Card[] = [
   },
   {
     id: 3,
-    image: card3,
+    image: imageUrl('Investment-Opportunities.png.webp'),
     category: "TECHNOLOGY",
     meta: "Thought Leadership • January 22, 2025",
     title: "Investment Opportunities: A Strategic Roadmap for India”",
@@ -56,7 +52,7 @@ const cards: Card[] = [
   },
   {
     id: 4,
-    image: card4,
+    image: imageUrl('Card4.jpeg'),
     category: "SUSTAINABILITY",
     meta: "INSIGHT • MARCH 30, 2026",
     title: "The Green Transition: Turning Climate Risk into Competitive Advantage",
@@ -66,7 +62,7 @@ const cards: Card[] = [
   },
   {
     id: 5,
-    image: card5,
+    image: imageUrl('2-1.png.webp'),
     category: "DIGITAL",
     meta: "AI & Automation • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",

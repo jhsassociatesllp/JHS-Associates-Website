@@ -2,18 +2,15 @@ import { useEffect, useState } from 'react'
 import './Delhi.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import delhiBg from '../../image/Dehli.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Image Imports ─────────────────────────── */
-import imgNikhel from '../../image/Nikhel-Kochhar-removebg-preview.png'
-import imgJagdish from '../../image/Jagdish-Solanki-removebg-preview.png'
-import imgSunil from '../../image/Sunil-Pathak-removebg-preview.png'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhil Kochhar', image: imgNikhel, qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhel-kochhar' },
-  { name: 'Jagdish Solanki', image: imgJagdish, qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
-  { name: 'Piyush Agarwal', image: imgSunil, qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
+  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhel-kochhar' },
+  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
+  { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -102,7 +99,7 @@ export default function Delhi() {
 
       {/* ══ HERO ══ */}
       <section className="del-hero">
-        <div className="del-hero__photo" style={{ backgroundImage: `url(${delhiBg})` }} />
+        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.png')})` }} />
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
           <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span>

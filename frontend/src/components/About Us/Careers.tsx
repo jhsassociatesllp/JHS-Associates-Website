@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
-import heroBg from '../../image/WebPoster4.jpeg'
-import officeCulture from '../../image/growthposter.jpg' // Using generic for culture
+import { imageUrl } from '../../utils/imageUrl'
 
 export default function Careers() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -10,7 +9,7 @@ export default function Careers() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('WebPoster4.jpeg')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Join JHS</p>
@@ -57,7 +56,7 @@ export default function Careers() {
           </div>
 
           <div className="ap-map-container" style={{ height: 'auto', border: 'none', boxShadow: 'none' }}>
-             <img src={officeCulture} alt="JHS Office Culture" style={{ width: '100%', borderRadius: '20px', objectFit: 'cover', height: '350px' }} />
+             <img src={imageUrl('growthposter.jpg')} alt="JHS Office Culture" style={{ width: '100%', borderRadius: '20px', objectFit: 'cover', height: '350px' }} />
           </div>
 
           <div className="ap-card">

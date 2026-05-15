@@ -6,7 +6,7 @@ import {
   Truck, Leaf, Database, CheckCircle2, Target, TrendingUp, BarChart3
 } from 'lucide-react'
 import './Assurance.css'
-import heroImg from '../../image/Assurance.png'
+import { imageUrl } from '../../utils/imageUrl'
 
 gsap.registerPlugin(ScrollTrigger)   
 
@@ -192,7 +192,7 @@ export default function Assurance() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="a-hero">
-        <div className="a-hero__bg" style={{ backgroundImage: `url('${heroImg}')` }} />
+        <div className="a-hero__bg" style={{ backgroundImage: `url('${imageUrl('Assurance.png')}')` }} />
         <div className="a-hero__overlay" />
         <div className="a-container">
           <div className="a-hero__content">

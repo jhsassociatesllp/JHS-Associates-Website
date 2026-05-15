@@ -1,34 +1,9 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
 import './Partners.css'
-import heroBg from '../../image/WebPoster3.jpeg'
+import { imageUrl } from '../../utils/imageUrl'
 
 // Images
-import huzeifa from '../../image/Huzefa-Unwala-removebg-preview.png'
-import nikhel from '../../image/Nikhel-Kochhar-removebg-preview.png'
-import kalpesh from '../../image/Kalpesh-Parmar-removebg-preview.png'
-import sharad from '../../image/Sharad-Mohata-removebg-preview.png'
-import tasnim from '../../image/Tasnim-Tankiwala-removebg-preview.png'
-import jamal from '../../image/Jamal-Chatriwala-removebg-preview.png'
-import taher from '../../image/Taher-Pepermintwala-removebg-preview.png'
-import sahil from '../../image/Sahil-Shah-removebg-preview.png'
-import tausif from '../../image/Tausif-Shaikh-removebg-preview.png'
-import samad from '../../image/Samad-Dhanani-removebg-preview.png'
-import hitesh from '../../image/Hitesh-Khandelwal-removebg-preview.png'
-import sunil from '../../image/Sunil-Pathak-removebg-preview.png'
-import jagdish from '../../image/Jagdish-Solanki-removebg-preview.png'
-import narayana from '../../image/Narayana-Rao-Malla-removebg-preview.png'
-import virendra from '../../image/Virendra-Nayyar-removebg-preview.png'
-import dhaval from '../../image/Dhaval-Thakkar-removebg-preview.png'
-import viranch from '../../image/Viranch-Modi-removebg-preview.png'
-import milin from '../../image/Milin-Parekh-removebg-preview.png'
-import mehul from '../../image/Mehul-Shah-removebg-preview.png'
-import alpesh from '../../image/Alpesh-Vaniya-removebg-preview.png'
-import raj from '../../image/Raj-Shah-removebg-preview.png'
-import saurabh from '../../image/Saurabh-Shah-removebg-preview.png'
-import disha from '../../image/Disha Shah-removebg-preview.png'
-import Dhanlaxmi from '../../image/Dhanlaxmi.png'
-import Vinod from '../../image/vinod joshi.png'
 
 const PARTNER_DATA = [
   {
@@ -36,35 +11,35 @@ const PARTNER_DATA = [
     members: [
       {
         name: "Huzeifa Unwala",
-        image: huzeifa,
+        image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
         creds: "FCA, CISA, ISO 27001, NISM, Social Auditor",
         desc: "Specializes in IT risk governance, cyber security frameworks, and complex systems audits across BFSI sectors.",
-        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/"
+        linkedin: "https://www.linkedin.com/in/ca-imageUrl('Huzefa-Unwala-removebg-preview.png')-unwala/"
       },
       {
         name: "Nikhel Kochhar",
-        image: nikhel,
+        image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
         creds: "FCA, CIA",
         desc: "Over 25 years of expertise in internal audits, corporate governance, and strategic management consulting.",
-        linkedin: "https://www.linkedin.com/in/nikhel-kochhar"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Nikhel-Kochhar-removebg-preview.png')-kochhar"
       },
       {
         name: "Kalpesh Parmar",
-        image: kalpesh,
+        image: imageUrl('Kalpesh-Parmar-removebg-preview.png'),
         creds: "B.Com (Hons), FCA",
         desc: "Leads the statutory audit practice. Expert in Ind AS implementation and complex consolidation for listed entities.",
-        linkedin: "https://www.linkedin.com/in/kalpesh-parmar"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Kalpesh-Parmar-removebg-preview.png')-parmar"
       },
       {
         name: "Sharad Mohata",
-        image: sharad,
+        image: imageUrl('Sharad-Mohata-removebg-preview.png'),
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Specializes in direct taxation, corporate restructuring, and international tax advisory.",
-        linkedin: "https://www.linkedin.com/in/sharad-mohata-kol"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Sharad-Mohata-removebg-preview.png')-mohata-kol"
       },
       {
         name: "Vinod Joshi",
-        image: Vinod,
+        image: imageUrl('vinod joshi.png'),
         creds: "FCA, MBA (Finance)",
         desc: "Renowned for financial modeling, M&A restructuring, and cross-border strategic alliances.",
         linkedin: "https://linkedin.com/"
@@ -76,56 +51,56 @@ const PARTNER_DATA = [
     members: [
       {
         name: "Tasnim Tankiwala",
-        image: tasnim,
+        image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in risk management audits and SOX compliance.",
-        linkedin: "https://www.linkedin.com/in/tasnim-tankiwala"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Tasnim-Tankiwala-removebg-preview.png')-tankiwala"
       },
       {
         name: "Jamal Chatriwala",
-        image: jamal,
+        image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
         creds: "FCA",
         desc: "Specializes in indirect tax litigation and GST advisory.",
         linkedin: "https://www.linkedin.com/in/chatriwala"
       },
       {
         name: "Taher Pepermintwala",
-        image: taher,
+        image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
         creds: "FCA, DISA",
         desc: "Leads technology assurance and ERP implementation audits.",
         linkedin: "https://www.linkedin.com/in/Taher Pepermintwala"
       },
       {
         name: "Sahil Shah",
-        image: sahil,
+        image: imageUrl('Sahil-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Focuses on capital restructuring and VC funding advisory.",
-        linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Sahil-Shah-removebg-preview.png')-shah-664a5312a"
       },
       {
         name: "Tausif Shaikh",
-        image: tausif,
+        image: imageUrl('Tausif-Shaikh-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in forensic accounting and fraud investigation.",
-        linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh"
+        linkedin: "https://www.linkedin.com/in/ca-imageUrl('Tausif-Shaikh-removebg-preview.png')-shaikh"
       },
       {
         name: "Samad Dhanani",
-        image: samad,
+        image: imageUrl('Samad-Dhanani-removebg-preview.png'),
         creds: "FCA",
         desc: "Drive growth through comprehensive financial planning and analysis.",
-        linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Samad-Dhanani-removebg-preview.png')-dhanani-9b342562"
       },
       {
         name: "Disha Shah",
-        image: disha,
+        image: imageUrl('Disha Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Leads women-entrepreneur advisory and compliance initiatives.",
         linkedin: "https://linkedin.com/"
       },
       {
         name: "Dhanlaxmi Nair",
-        image: Dhanlaxmi,
+        image: imageUrl('Dhanlaxmi.png'),
         creds: "FCA",
         desc: "Leads women-entrepreneur advisory and compliance initiatives.",
         linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206"
@@ -133,32 +108,53 @@ const PARTNER_DATA = [
     ]
   },
   {
-    category: "Delhi, Bengaluru & Chennai Partners",
+    category: "Delhi, Bengaluru, Chennai & Hyderabad Partners",
     members: [
       {
-        name: "Hitesh Khandelwal",
-        image: hitesh,
+        name: "Geethika Ghanta",
+        image: imageUrl('Geethika Ghanta.png'),
         creds: "FCA",
-        desc: "Leads North India operations with expertise in corporate tax.",
-        linkedin: "https://www.linkedin.com/in/hitesh-khandelwal-blr"
+        desc: "Partner based in Hyderabad specializing in audit and assurance.",
+        linkedin: "https://linkedin.com/"
+      },
+      {
+        name: "Chandra Sekaran",
+        image: imageUrl('Chandra Shekaran.png'),
+        creds: "FCA",
+        desc: "Partner specializing in risk advisory and corporate governance.",
+        linkedin: "https://linkedin.com/"
+      },
+      {
+        name: "Pranal P",
+        image: imageUrl('Pranal p.png'),
+        creds: "FCA",
+        desc: "Focuses on strategic financial planning and regulatory compliance.",
+        linkedin: "https://linkedin.com/"
+      },
+      {
+        name: "NM Pradeep",
+        image: imageUrl('NM Pradeep.png'),
+        creds: "FCA",
+        desc: "Leads operations and advisory services.",
+        linkedin: "https://linkedin.com/"
       },
       {
         name: "Sunil Pathak",
-        image: sunil,
+        image: imageUrl('Sunil-Pathak-removebg-preview.png'),
         creds: "FCA",
         desc: "Drives South India expansion, specializing in start-up advisory.",
-        linkedin: "https://www.linkedin.com/in/sunil-pathak"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Sunil-Pathak-removebg-preview.png')-pathak"
       },
       {
         name: "Jagdish Solanki",
-        image: jagdish,
+        image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in transfer pricing and cross-border transactions.",
         linkedin: "https://linkedin.com/"
       },
       {
         name: "Narayana Rao Malla",
-        image: narayana,
+        image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
         creds: "FCA",
         desc: "Spearheads the IT/ITES industry group for internal audits.",
         linkedin: "https://linkedin.com/"
@@ -170,59 +166,59 @@ const PARTNER_DATA = [
     members: [
       {
         name: "Virendra Nayyar",
-        image: virendra,
+        image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
         creds: "FCA",
         desc: "Senior guide for Gujarat manufacturing sector audits.",
         linkedin: "https://linkedin.com/"
       },
       {
         name: "Dhaval Thakkar",
-        image: dhaval,
+        image: imageUrl('Dhaval-Thakkar-removebg-preview.png'),
         creds: "FCA",
         desc: "Ahmedabad operations lead, focusing on SME growth advisory.",
-        linkedin: "https://www.linkedin.com/in/dhaval-thakkar"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Dhaval-Thakkar-removebg-preview.png')-thakkar"
       },
       {
         name: "Viranch Modi",
-        image: viranch,
+        image: imageUrl('Viranch-Modi-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in real estate structuring and RERA compliance.",
-        linkedin: "https://www.linkedin.com/in/viranch-modi"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Viranch-Modi-removebg-preview.png')-modi"
       },
       {
         name: "Milin Parekh",
-        image: milin,
+        image: imageUrl('Milin-Parekh-removebg-preview.png'),
         creds: "FCA",
         desc: "Specializes in concurrent and statutory bank audits.",
-        linkedin: "https://www.linkedin.com/in/milin-parekh"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Milin-Parekh-removebg-preview.png')-parekh"
       },
       {
         name: "Mehul Shah",
-        image: mehul,
+        image: imageUrl('Mehul-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Focuses on supply chain and process audits.",
-        linkedin: "https://www.linkedin.com/in/mehul-shah"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Mehul-Shah-removebg-preview.png')-shah"
       },
       {
         name: "Alpesh Vaniya",
-        image: alpesh,
+        image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
         creds: "FCA",
         desc: "Tax optimization specialist for HNIs and family offices.",
-        linkedin: "https://www.linkedin.com/in/alpesh-vaniya"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Alpesh-Vaniya-removebg-preview.png')-vaniya"
       },
       {
         name: "Raj Shah",
-        image: raj,
+        image: imageUrl('Raj-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Drives valuation and due diligence practices in Vadodara.",
-        linkedin: "https://www.linkedin.com/in/raj-shah"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Raj-Shah-removebg-preview.png')-shah"
       },
       {
         name: "Saurabh Shah",
-        image: saurabh,
+        image: imageUrl('Saurabh-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Core team member for industrial and chemical sector audits.",
-        linkedin: "https://www.linkedin.com/in/saurabh-shah"
+        linkedin: "https://www.linkedin.com/in/imageUrl('Saurabh-Shah-removebg-preview.png')-shah"
       }
     ]
   }
@@ -241,7 +237,7 @@ export default function Partners() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('WebPoster3.jpeg')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Experts</p>

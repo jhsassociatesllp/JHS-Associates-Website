@@ -53,8 +53,11 @@ jobs:
             echo "🧹 Removing old frontend container"
             docker rm -f jhs_frontend || true
 
-            echo "🚀 Starting new containers"
-            FRONTEND_PORT=$PORT docker compose up -d --build --force-recreate
+            echo "🚀 Rebuilding frontend without cache"
+            docker compose build --no-cache frontend
+
+            echo "🚀 Starting containers"
+            FRONTEND_PORT=$PORT docker compose up -d --force-recreate
 
             echo "🧹 Cleanup"
             docker system prune -af

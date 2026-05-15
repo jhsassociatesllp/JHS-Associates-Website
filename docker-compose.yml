@@ -13,6 +13,6 @@ services:
       # directly without being bundled into the Docker image.
       # Host path   : /www/wwwroot/JHS Website/Uploads/images
       # Inside nginx: /usr/share/nginx/uploads  (aliased → /Uploads/images/)
-      - "/www/wwwroot/JHS Website/Uploads/images:/usr/share/nginx/uploads:ro"
+      - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads:ro"
     depends_on:
       - backend

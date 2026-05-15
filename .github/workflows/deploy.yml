@@ -48,10 +48,13 @@ jobs:
             git reset --hard origin/$BRANCH
 
             echo "🛑 Stopping old containers"
-            docker compose down || true
+            docker compose down --remove-orphans || true
+
+            echo "🧹 Removing old frontend container"
+            docker rm -f jhs_frontend || true
 
             echo "🚀 Starting new containers"
-            FRONTEND_PORT=$PORT docker compose up -d --build
+            FRONTEND_PORT=$PORT docker compose up -d --build --force-recreate
 
             echo "🧹 Cleanup"
             docker system prune -af

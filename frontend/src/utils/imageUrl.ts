@@ -22,7 +22,7 @@
  */
 
 const IMAGE_BASE =
-  (import.meta.env.VITE_IMAGE_BASE as string | undefined) ?? '/uploads/';
+  (import.meta.env.VITE_IMAGE_BASE as string | undefined) ?? '/uploads/images';
 
 /**
  * Returns the full URL path for the given image filename.

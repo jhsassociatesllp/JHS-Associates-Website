@@ -52,6 +52,7 @@ import HealthCare from './components/sectors/Other/HealthCare'
 import Construction from './components/sectors/Other/Construction'
 import NGO from './components/sectors/Other/NGO'
 import Manufacturing from './components/sectors/Other/Manufacturing'
+import Logistics from './components/sectors/Other/Logistics'
 
 // Insights components
 import Resources from './components/Insights/Resources'
@@ -184,6 +185,7 @@ export default function App() {
         <Route path="/sectors/other/construction" element={<Construction />} />
         <Route path="/sectors/other/ngo" element={<NGO />} />
         <Route path="/sectors/other/manufacturing" element={<Manufacturing />} />
+        <Route path="/sectors/other/logistics" element={<Logistics />} />
 
         {/* Insights — paths must match navbar hrefs exactly */}
         <Route path="/resources" element={<Resources />} />

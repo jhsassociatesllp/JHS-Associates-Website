@@ -1,0 +1,110 @@
+/* Lazy Image Loading States */
+.lazy-image {
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.lazy-image.loading {
+  opacity: 0.8;
+  filter: blur(1px);
+  background-color: #f8f9fa;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+  filter: none;
+  transform: scale(1);
+}
+
+.lazy-image.error {
+  opacity: 0.6;
+  background-color: #f8f9fa;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21,15 16,10 5,21'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48px 48px;
+}
+
+/* Skeleton loading animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.lazy-image.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  background-size: 200px 100%;
+  animation: skeleton-shimmer 1.8s infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Lazy Background Loading States */
+.lazy-bg {
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  position: relative;
+}
+
+.lazy-bg.loading {
+  background-color: #f8f9fa;
+  background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  animation: skeleton-shimmer 2s infinite linear;
+}
+
+.lazy-bg.loaded {
+  opacity: 1;
+  filter: none;
+}
+
+.lazy-bg.error {
+  background-color: #f8f9fa;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 24 24' fill='none' stroke='%23ccc' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21,15 16,10 5,21'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 64px 64px;
+}
+
+/* Fade in animation for loaded images */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lazy-image.loaded,
+.lazy-bg.loaded {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Responsive improvements */
+@media (prefers-reduced-motion: reduce) {
+  .lazy-image,
+  .lazy-bg {
+    transition: none;
+    animation: none;
+  }
+  
+  .lazy-image.loading::before {
+    animation: none;
+  }
+}

@@ -441,7 +441,9 @@
 .services__right-desc {
   font-family: var(--font-body);
   font-size: 15.5px;
-  color: var(--sv-text-secondary);
+  /* color: var(--sv-text-secondary); */
+  /* color : black; */
+  color: var(--sv-text-primary);
   line-height: 1.6;
   margin: 0 0 24px 0;
 }
@@ -450,9 +452,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #3ac067;
+  background: #D62049;
   /* BCG inspired green */
-  color: #000;
+  color: #ffff;
   padding: 12px 24px;
   border-radius: 40px;
   font-weight: 600;

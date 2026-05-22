@@ -37,7 +37,7 @@
 .partner-category__title {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #B01E2E;
+  color: #D62049;
   margin-bottom: 2.5rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid rgba(0, 0, 0, 0.06);
@@ -63,7 +63,9 @@
 }
 
 .partner-grid--senior {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  max-width: 100%;
 }
 
 /* Card */
@@ -146,7 +148,7 @@
 .partner-card__creds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #B01E2E;
+  color: #D62049;
   margin-bottom: 0.85rem;
   letter-spacing: 0.02em;
 }
@@ -184,6 +186,12 @@
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+@media (max-width: 1200px) {
+  .partner-grid--senior {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .partner-category__title {
     font-size: 1.5rem;

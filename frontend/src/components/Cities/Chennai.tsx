@@ -159,7 +159,7 @@ export default function Chennai() {
           <div className="chn-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="chn-pc-card">
-                <div className="chn-pc-avatar"><img src={p.image} alt={p.name} className="chn-pc-avatar__img" /></div>
+                <div className="chn-pc-avatar"><img src={p.image} alt={p.name} className="chn-pc-avatar__img" loading="lazy" /></div>
                 <div className="chn-pc-info"><h3 className="chn-pc-name">{p.name}</h3><p className="chn-pc-quals">{p.qualifications}</p><p className="chn-pc-desig">{p.designation}</p></div>
                 <div className="chn-pc-social">
                   <a href={`mailto:${p.email}`} className="chn-pc-btn chn-pc-btn--mail"><IconMail /><span>Email</span></a>

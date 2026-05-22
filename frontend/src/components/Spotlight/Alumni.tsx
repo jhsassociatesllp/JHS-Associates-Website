@@ -190,9 +190,9 @@ export default function Alumni() {
                 <div className="alumni-card__role">{profile.role}</div>
                 <p className="alumni-card__desc">"{profile.desc}"</p>
 
-                <a href="#" className="alumni-card__link">
+                {/*<a href="#" className="alumni-card__link">
                   View Profile &rarr;
-                </a>
+                </a>*/}
               </div>
             ))}
           </div>

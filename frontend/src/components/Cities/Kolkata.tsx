@@ -158,7 +158,7 @@ const MAP_LOCATIONS = [
 function PartnerAvatar({ image, name }: { image: string; name: string }) {
   return (
     <div className="kol-pc-avatar">
-      <img src={image} alt={name} className="kol-pc-avatar__img" />
+      <img src={image} alt={name} className="kol-pc-avatar__img" loading="lazy" />
     </div>
   )
 }

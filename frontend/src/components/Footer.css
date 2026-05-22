@@ -14,7 +14,7 @@
   --ft-bottom: #2a5080;
   /* bottom bar  — same as strip       */
 
-  --ft-red: #B01E2E;
+  --ft-red: #D62049;
   --ft-white: #ffffff;
   --ft-text: rgba(255, 255, 255, 0.88);
   /* brighter text on lighter bg */
@@ -205,13 +205,13 @@
   /* ↑ taller pill */
   border-radius: 100px;
   /* background: var(--ft-pill-bg); */
-  background: rgb(236, 46, 46);
+  background: #D62049;
   border: 1px solid var(--ft-pill-bd);
   font-size: 0.85rem;
   /* ↑ larger */
   font-weight: 600;
-  color: var(--ft-text);
-  /* color: black; */
+  /* color: var(--ft-text); */
+  color: white !important;
   letter-spacing: 0.01em;
   transition: background var(--ft-dur) var(--ft-ease),
     border-color var(--ft-dur) var(--ft-ease),

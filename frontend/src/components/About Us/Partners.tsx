@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import './SharedAbout.css'
 import './Partners.css'
 import { imageUrl } from '../../utils/imageUrl'
+import LazyImage from '../common/LazyImage'
 
 // Images
 
 const PARTNER_DATA = [
   {
     category: "Senior Board of Partners",
-    members: [
+    members: [  
       {
         name: "Huzeifa Unwala",
         image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
@@ -219,6 +220,27 @@ const PARTNER_DATA = [
         creds: "FCA",
         desc: "Core team member for industrial and chemical sector audits.",
         linkedin: "https://www.linkedin.com/in/imageUrl('Saurabh-Shah-removebg-preview.png')-shah"
+      },
+      {
+        name: "Parth Shah",
+        image: imageUrl('Parth_shah.jpeg'),
+        creds: "FCA",
+        desc: "Direct & Indirect Tax",
+        linkedin: ""
+      },
+      {
+        name: "Shreena Panara",
+        image: imageUrl('Shreena Parana.png'),
+        creds: "FCA",
+        desc: "Audit & Compliance",
+        linkedin: ""
+      },
+      {
+        name: "Jhankhna Patel",
+        image: imageUrl('Jhankana Patel.jpeg'),
+        creds: "ACA",
+        desc: "Audit & Regulatory Compliance",
+        linkedin: "https://www.linkedin.com/in/jhankhna-patel"
       }
     ]
   }
@@ -267,7 +289,7 @@ export default function Partners() {
                     <div key={mIdx} className="partner-card">
                       <div className="partner-card__img-wrapper">
                         {member.image ? (
-                          <img src={member.image} alt={member.name} className="partner-card__img" />
+                          <LazyImage src={member.image} alt={member.name} className="partner-card__img" />
                         ) : (
                           <div className="partner-card__placeholder">
                             <span>{member.name.charAt(0)}</span>

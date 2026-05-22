@@ -1,0 +1,531 @@
+/* ============================================================
+   Logistics.css  —  Premium · JHS & Associates
+   Same design system as Articles, Resources, CaseStudies
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap');
+
+/* ── Tokens ── */
+:root {
+  --red: #c0392b;
+  --red-hi: #e74c3c;
+  --red-deep: #8e1a0e;
+  --red-tint: rgba(192, 57, 43, 0.08);
+  --red-glow: rgba(192, 57, 43, 0.25);
+  --red-border: rgba(192, 57, 43, 0.22);
+
+  --ink: #0d0d0d;
+  --ink-2: #222;
+  --ink-3: #555;
+  --ink-4: #888;
+  --ink-5: #bbb;
+
+  --white: #ffffff;
+  --bg: #f6f5f3;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.07);
+  --border-md: rgba(0, 0, 0, 0.12);
+
+  --r-card: 18px;
+  --r-sm: 9px;
+  --r-pill: 100px;
+
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lift: 0 16px 48px rgba(192, 57, 43, 0.14), 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 0.35s;
+
+  --font: 'Montserrat', sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.log-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO — logistics theme with blue-orange gradient
+═══════════════════════════════════════════════════════════ */
+
+.log-hero {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 6rem 2rem 5rem;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #1e3a5f; /* Fallback color */
+}
+
+/* Red bottom accent line */
+.log-hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), var(--red-hi), transparent);
+  z-index: 2;
+}
+
+/* Grain overlay */
+.log-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.log-hero__inner {
+  position: relative;
+  z-index: 3;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.log-hero__eyebrow {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.log-hero__title {
+  font-family: var(--font);
+  font-size: clamp(3.5rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.log-hero__title em {
+  font-style: italic;
+  color: #ffd700;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.log-hero__sub {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OVERVIEW STRIP
+═══════════════════════════════════════════════════════════ */
+
+.log-overview {
+  padding: 6rem 0;
+}
+
+.log-overview__inner {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 4rem;
+  align-items: center;
+}
+
+.log-overview__tag {
+  display: inline-block;
+  background: var(--red-tint);
+  color: var(--red);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  margin-top: 3rem;
+}
+
+.log-overview__title {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.log-overview__body {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink-3);
+  margin-bottom: 2.5rem;
+}
+
+.log-overview__visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-overview__badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.log-overview__badge-num {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.log-overview__badge-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════════════ */
+
+.log-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--r-pill);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.log-btn--solid {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.log-btn--solid:hover {
+  background: var(--red-hi);
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-2px);
+}
+
+.log-btn--ghost {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+
+.log-btn--ghost:hover {
+  background: var(--red-tint);
+  border-color: var(--red);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SERVICE HIGHLIGHTS
+═══════════════════════════════════════════════════════════ */
+
+.log-highlights {
+  padding: 6rem 0;
+  margin-bottom: 3rem;
+}
+
+.log-section-hd {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.log-section-hd__title {
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.log-section-hd__sub {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.log-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.log-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-card);
+  transition: all var(--dur) var(--ease);
+  overflow: hidden;
+}
+
+.log-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--red-border);
+}
+
+.log-card__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--red-hi));
+}
+
+.log-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--red-tint);
+  color: var(--red);
+  border-radius: var(--r-sm);
+  margin-bottom: 1.5rem;
+}
+
+.log-card__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.log-card__desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-3);
+  margin-bottom: 2rem;
+}
+
+.log-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--red);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+
+.log-card__cta:hover {
+  color: var(--red-hi);
+  gap: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WHY JHS
+═══════════════════════════════════════════════════════════ */
+
+.log-why {
+  padding: 6rem 0;
+  background: var(--surface);
+  margin-top: 3rem;
+}
+
+.log-why__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+  max-width: 1240px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+}
+
+.log-why__left {
+  padding-right: 2rem;
+}
+
+.log-why__title {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+.log-why__sub {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink-3);
+  margin-bottom: 2.5rem;
+}
+
+.log-why__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  padding-left: 1rem;
+}
+
+.log-why__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  padding: 0.5rem 0;
+}
+
+.log-why__item-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--red);
+  border-radius: 50%;
+  margin-top: 0.7rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+
+  .log-overview__inner,
+  .log-why__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .log-why__inner {
+    padding: 0 2rem;
+  }
+
+  .log-why__left {
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .log-why__list {
+    padding-left: 0;
+  }
+
+  .log-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .log-hero {
+    min-height: 420px;
+    padding: 5rem 1.5rem 4rem;
+    background-attachment: scroll;
+  }
+
+  .log-overview,
+  .log-highlights,
+  .log-why {
+    padding: 4rem 0;
+  }
+
+  .log-why__inner {
+    padding: 0 1.5rem;
+    gap: 2.5rem;
+  }
+
+  .log-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .log-overview__inner {
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .log-hero__title {
+    font-size: 2.5rem;
+  }
+
+  .log-hero__sub {
+    font-size: 1rem;
+  }
+
+  .log-card {
+    padding: 1.5rem;
+  }
+
+  .log-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}

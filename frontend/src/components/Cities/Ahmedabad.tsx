@@ -253,7 +253,7 @@ export default function Ahmedabad() {
           <div className="ahm-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="ahm-pc-card">
-                <div className="ahm-pc-avatar"><img src={p.image} alt={p.name} className="ahm-pc-avatar__img" /></div>
+                <div className="ahm-pc-avatar"><img src={p.image} alt={p.name} className="ahm-pc-avatar__img" loading="lazy" /></div>
                 <div className="ahm-pc-info">
                   <h3 className="ahm-pc-name">{p.name}</h3>
                   <p className="ahm-pc-quals">{p.qualifications}</p>

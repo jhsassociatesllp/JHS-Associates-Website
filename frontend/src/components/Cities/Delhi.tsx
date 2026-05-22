@@ -184,7 +184,7 @@ export default function Delhi() {
           <div className="del-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="del-pc-card">
-                <div className="del-pc-avatar"><img src={p.image} alt={p.name} className="del-pc-avatar__img" /></div>
+                <div className="del-pc-avatar"><img src={p.image} alt={p.name} className="del-pc-avatar__img" loading="lazy" /></div>
                 <div className="del-pc-info"><h3 className="del-pc-name">{p.name}</h3><p className="del-pc-quals">{p.qualifications}</p><p className="del-pc-desig">{p.designation}</p></div>
                 <div className="del-pc-social">
                   <a href={`mailto:${p.email}`} className="del-pc-btn del-pc-btn--mail"><IconMail /><span>Email</span></a>

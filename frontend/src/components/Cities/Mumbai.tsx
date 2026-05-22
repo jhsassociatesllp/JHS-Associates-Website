@@ -263,7 +263,7 @@ export default function Mumbai() {
           <div className="mum-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="pc-card">
-                <div className="pc-avatar"><img src={p.image} alt={p.name} className="pc-avatar__img" /></div>
+                <div className="pc-avatar"><img src={p.image} alt={p.name} className="pc-avatar__img" loading="lazy" /></div>
                 <div className="pc-info">
                   <h3 className="pc-name">{p.name}</h3>
                   <p className="pc-quals">{p.qualifications}</p>

@@ -1,0 +1,793 @@
+/* Professional CSS-based Icons */
+.simple-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.simple-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #B01E2E;
+}
+
+/* Logistics/Truck Icon */
+.simple-icon--logistics::before {
+  content: '';
+  width: 60%;
+  height: 40%;
+  background: #333;
+  border-radius: 2px;
+  position: relative;
+}
+
+.simple-icon--logistics::after {
+  content: '';
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background: #333;
+  border-radius: 50%;
+  bottom: 15%;
+  right: 20%;
+  box-shadow: -25px 0 0 #333;
+}
+
+/* Compliance/Check Icon */
+.simple-icon--compliance::before {
+  content: '✓';
+  font-size: 60%;
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Analysis/Chart Icon */
+.simple-icon--analysis::before {
+  content: '';
+  width: 70%;
+  height: 70%;
+  background: linear-gradient(45deg, 
+    transparent 40%, 
+    #333 40%, 
+    #333 45%, 
+    transparent 45%, 
+    transparent 55%, 
+    #333 55%, 
+    #333 60%, 
+    transparent 60%
+  );
+}
+
+/* Globe Icon */
+.simple-icon--globe::before {
+  content: '';
+  width: 70%;
+  height: 70%;
+  border: 2px solid #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.simple-icon--globe::after {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 2px;
+  background: #333;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Tech/Gear Icon */
+.simple-icon--tech::before {
+  content: '⚙';
+  font-size: 70%;
+  color: #333;
+}
+
+/* Document Icon */
+.simple-icon--document::before {
+  content: '';
+  width: 60%;
+  height: 75%;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 2px;
+  position: relative;
+}
+
+.simple-icon--document::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 2px;
+  background: #333;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 6px 0 #333, 0 12px 0 #333;
+}
+
+/* Arrow Right Icon */
+.simple-icon--arrow-right::before {
+  content: '→';
+  font-size: 80%;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Healthcare Icon */
+.simple-icon--healthcare::before {
+  content: '+';
+  font-size: 80%;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Construction Icon */
+.simple-icon--construction::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: #333;
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+/* Manufacturing Icon */
+.simple-icon--manufacturing::before {
+  content: '';
+  width: 70%;
+  height: 60%;
+  background: #333;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+
+.simple-icon--manufacturing::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background: #333;
+  border-radius: 50%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* BFSI/Bank Icon */
+.simple-icon--bfsi::before {
+  content: '';
+  width: 70%;
+  height: 60%;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    transparent 20%, 
+    #333 20%, 
+    #333 25%, 
+    transparent 25%, 
+    transparent 75%, 
+    #333 75%, 
+    #333 100%
+  );
+  position: relative;
+}
+
+.simple-icon--bfsi::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: #333;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 8px 0 -1px #333, 0 16px 0 -1px #333, 0 24px 0 -1px #333;
+}
+
+/* Media Icon */
+.simple-icon--media::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: #333;
+  border-radius: 4px;
+  position: relative;
+}
+
+.simple-icon--media::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #fff;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -50%);
+}
+
+/* Hospitality Icon */
+.simple-icon--hospitality::before {
+  content: '';
+  width: 60%;
+  height: 70%;
+  background: #333;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+
+.simple-icon--hospitality::after {
+  content: '';
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background: #333;
+  border-radius: 2px;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Calendar Icon */
+.simple-icon--calendar::before {
+  content: '';
+  width: 70%;
+  height: 60%;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.simple-icon--calendar::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background: #333;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 6px 0 #333;
+}
+
+/* Clock Icon */
+.simple-icon--clock::before {
+  content: '';
+  width: 70%;
+  height: 70%;
+  border: 2px solid #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.simple-icon--clock::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 25%;
+  background: #333;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+/* Shield/Security Icon */
+.simple-icon--shield::before {
+  content: '';
+  width: 60%;
+  height: 70%;
+  background: #333;
+  clip-path: polygon(50% 0%, 0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%);
+}
+
+/* Check/Success Icon */
+.simple-icon--check::before {
+  content: '✓';
+  font-size: 70%;
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Search Icon */
+.simple-icon--search::before {
+  content: '';
+  width: 50%;
+  height: 50%;
+  border: 2px solid #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.simple-icon--search::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 25%;
+  background: #333;
+  bottom: -15%;
+  right: -15%;
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+/* Lightbulb/Ideas Icon */
+.simple-icon--lightbulb::before {
+  content: '';
+  width: 50%;
+  height: 60%;
+  background: #333;
+  border-radius: 50% 50% 20% 20%;
+  position: relative;
+}
+
+.simple-icon--lightbulb::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 3px;
+  background: #333;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Briefcase Icon */
+.simple-icon--briefcase::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.simple-icon--briefcase::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 3px;
+  background: #fff;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid #333;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+
+/* Rocket Icon */
+.simple-icon--rocket::before {
+  content: '';
+  width: 40%;
+  height: 70%;
+  background: #333;
+  clip-path: polygon(50% 0%, 20% 100%, 80% 100%);
+  position: relative;
+}
+
+.simple-icon--rocket::after {
+  content: '';
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background: #333;
+  border-radius: 50%;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Settings/Gear Icon */
+.simple-icon--settings::before {
+  content: '⚙';
+  font-size: 70%;
+  color: #333;
+}
+
+/* Heart Icon */
+.simple-icon--heart::before {
+  content: '♥';
+  font-size: 70%;
+  color: #dc3545;
+}
+
+/* Users/Team Icon */
+.simple-icon--users::before {
+  content: '';
+  width: 30%;
+  height: 30%;
+  background: #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.simple-icon--users::after {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  background: #333;
+  border-radius: 50%;
+  top: 0;
+  right: -20%;
+  box-shadow: -40px 0 0 #333;
+}
+
+/* Chart/Analytics Icon */
+.simple-icon--chart::before {
+  content: '';
+  width: 70%;
+  height: 70%;
+  background: linear-gradient(45deg, 
+    transparent 40%, 
+    #333 40%, 
+    #333 45%, 
+    transparent 45%, 
+    transparent 55%, 
+    #333 55%, 
+    #333 60%, 
+    transparent 60%
+  );
+}
+
+/* Scale/Legal Icon */
+.simple-icon--scale::before {
+  content: '⚖';
+  font-size: 70%;
+  color: #333;
+}
+
+/* Building Icon */
+.simple-icon--building::before {
+  content: '';
+  width: 60%;
+  height: 70%;
+  background: #333;
+  border-radius: 2px;
+  position: relative;
+}
+
+.simple-icon--building::after {
+  content: '';
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background: #fff;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 25px 0 -10px #fff, -15px 10px 0 -10px #fff, 15px 10px 0 -10px #fff;
+}
+
+/* Monitor/IT Icon */
+.simple-icon--monitor::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.simple-icon--monitor::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 3px;
+  background: #333;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Trending Up Icon */
+.simple-icon--trending::before {
+  content: '';
+  width: 70%;
+  height: 2px;
+  background: #333;
+  position: relative;
+  transform: rotate(25deg);
+}
+
+.simple-icon--trending::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid #333;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Shopping Cart Icon */
+.simple-icon--cart::before {
+  content: '';
+  width: 60%;
+  height: 40%;
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 0 0 3px 3px;
+  position: relative;
+}
+
+.simple-icon--cart::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #333;
+  border-radius: 50%;
+  bottom: -15px;
+  left: 20%;
+  box-shadow: 20px 0 0 #333;
+}
+
+/* Truck/Delivery Icon */
+.simple-icon--truck::before {
+  content: '';
+  width: 70%;
+  height: 40%;
+  background: #333;
+  border-radius: 2px;
+  position: relative;
+}
+
+.simple-icon--truck::after {
+  content: '';
+  position: absolute;
+  width: 15%;
+  height: 15%;
+  background: #333;
+  border-radius: 50%;
+  bottom: -20%;
+  right: 15%;
+  box-shadow: -35px 0 0 #333;
+}
+
+/* Flame/Energy Icon */
+.simple-icon--flame::before {
+  content: '';
+  width: 40%;
+  height: 70%;
+  background: #ff6b35;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+}
+
+/* Gem/Diamond Icon */
+.simple-icon--gem::before {
+  content: '';
+  width: 50%;
+  height: 60%;
+  background: #333;
+  clip-path: polygon(50% 0%, 0% 35%, 20% 100%, 80% 100%, 100% 35%);
+}
+
+/* Layers Icon */
+.simple-icon--layers::before {
+  content: '';
+  width: 70%;
+  height: 3px;
+  background: #333;
+  position: relative;
+  box-shadow: 0 8px 0 #333, 0 16px 0 #333;
+}
+
+/* Code Icon */
+.simple-icon--code::before {
+  content: '</>';
+  font-size: 50%;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Pie Chart Icon */
+.simple-icon--pie::before {
+  content: '';
+  width: 70%;
+  height: 70%;
+  background: conic-gradient(#333 0deg 120deg, #ccc 120deg 240deg, #666 240deg 360deg);
+  border-radius: 50%;
+}
+
+/* CPU/Processor Icon */
+.simple-icon--cpu::before {
+  content: '';
+  width: 60%;
+  height: 60%;
+  background: #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.simple-icon--cpu::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+}
+
+/* Umbrella/Insurance Icon */
+.simple-icon--umbrella::before {
+  content: '';
+  width: 70%;
+  height: 35%;
+  background: #333;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.simple-icon--umbrella::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 40%;
+  background: #333;
+  bottom: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Shopping Bag Icon */
+.simple-icon--bag::before {
+  content: '';
+  width: 60%;
+  height: 60%;
+  background: #333;
+  border-radius: 0 0 3px 3px;
+  position: relative;
+}
+
+.simple-icon--bag::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 20%;
+  background: transparent;
+  border: 2px solid #333;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Radio/Media Icon */
+.simple-icon--radio::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: #333;
+  border-radius: 3px;
+  position: relative;
+}
+
+.simple-icon--radio::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 30%;
+  background: #333;
+  top: -30%;
+  right: 20%;
+  border-radius: 1px;
+}
+
+/* Landmark/Bank Icon */
+.simple-icon--landmark::before {
+  content: '';
+  width: 70%;
+  height: 50%;
+  background: linear-gradient(to bottom, 
+    transparent 0%, 
+    transparent 20%, 
+    #333 20%, 
+    #333 25%, 
+    transparent 25%, 
+    transparent 75%, 
+    #333 75%, 
+    #333 100%
+  );
+  position: relative;
+}
+
+.simple-icon--landmark::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: #333;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 8px 0 -1px #333, 0 16px 0 -1px #333, 0 24px 0 -1px #333;
+}
+
+/* Color variations for different contexts */
+.simple-icon--primary {
+  background: rgba(176, 30, 46, 0.1);
+  border-color: #B01E2E;
+}
+
+.simple-icon--primary::before,
+.simple-icon--primary::after {
+  color: #B01E2E;
+  border-color: #B01E2E;
+  background: #B01E2E;
+}
+
+.simple-icon--secondary {
+  background: rgba(108, 117, 125, 0.1);
+  border-color: #6c757d;
+}
+
+/* Hover effects */
+.simple-icon:hover {
+  background: rgba(176, 30, 46, 0.1);
+  border-color: #B01E2E;
+}
+
+.simple-icon:hover::before,
+.simple-icon:hover::after {
+  color: #B01E2E;
+}
+
+/* Size variations */
+.simple-icon--small {
+  width: 32px;
+  height: 32px;
+}
+
+.simple-icon--medium {
+  width: 40px;
+  height: 40px;
+}
+
+.simple-icon--large {
+  width: 48px;
+  height: 48px;
+}
+
+/* Animation */
+@keyframes icon-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+.simple-icon--animated {
+  animation: icon-bounce 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .simple-icon {
+    width: 36px;
+    height: 36px;
+  }
+}

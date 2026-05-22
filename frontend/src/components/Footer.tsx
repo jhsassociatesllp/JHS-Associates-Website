@@ -2,6 +2,7 @@ import './Footer.css'
 import { Link } from 'react-router-dom'
 import { MapPin, Mail, Phone } from 'lucide-react'
 import { imageUrl } from '../utils/imageUrl'
+import LazyImage from './common/LazyImage'
 
 /* ─── Column Data ────────────────────────────────────── */
 const INSIGHTS = [
@@ -12,12 +13,12 @@ const INSIGHTS = [
 ]
 
 const USEFUL_LINKS = [
-  { name: 'Locations', path: '/locations' },
+  { name: 'Locations', path: '/about/our-offices' },
   { name: 'Contact', path: '/contact' },
-  { name: 'Feedback', path: '/feedback' },
-  { name: 'RFP', path: '/rfp' },
-  { name: 'Know JHS', path: '/about' },
-  { name: 'Careers', path: '/careers' },
+  // { name: 'Feedback', path: '/feedback' },
+  // { name: 'RFP', path: '/rfp' },
+  { name: 'Know JHS', path: '/about/leadership' },
+  // { name: 'Careers', path: '/careers' },
 ]
 
 const SERVICES = [
@@ -98,7 +99,7 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <img src={imageUrl('logo.png')} alt="JHS & Associates LLP" />
+              <LazyImage src={imageUrl('logo.png')} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
               Trusted Chartered Accountants and advisory partners for businesses across India.
@@ -128,7 +129,7 @@ export default function Footer() {
 
           {/* Col 3 — Useful Links */}
           <div className="footer__col">
-            <h4 className="footer__col-heading">Useful Links</h4>
+            <h4 className="footer__col-heading">Connect</h4>
             <div className="footer__col-rule" />
             <ul className="footer__col-list">
               {USEFUL_LINKS.map(item => (

@@ -5,6 +5,7 @@ from app.database.connection import connect_to_mongo, close_mongo_connection
 from app.routes import contact, alumni, admin
 from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
+from app.routes.knowledge import router as knowledge_router # ✅ NEW
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -24,10 +25,27 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://localhost:5173", 
+        "http://localhost:5174",  # Admin panel port
+        "http://127.0.0.1:3000", 
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174"   # Admin panel port
+    ],
+    allow_credentials=True,  # Allow credentials for authentication
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=[
+        "Accept",
+        "Accept-Language", 
+        "Content-Language",
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Origin",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers"
+    ],
 )
 
 # Include routers
@@ -36,6 +54,7 @@ app.include_router(alumni.router)
 app.include_router(admin.router)
 app.include_router(articles_router)   # ✅ NEW
 app.include_router(blogs_router)      # ✅ NEW
+app.include_router(knowledge_router)  # ✅ NEW
 
 @app.get("/")
 async def root():

@@ -132,6 +132,7 @@ const NAV_ITEMS: NavItem[] = [
           { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/other/healthcare' },
           { label: "Constructions", description: "", href: '/sectors/other/construction' },
           { label: "Manufacturing", description: "", href: '/sectors/other/manufacturing' },
+          { label: "Logistics", description: "Supply chain & transportation", href: '/sectors/other/logistics' },
           { label: "NGO", description: "", href: '/sectors/other/ngo' },
         ],
       },
@@ -149,7 +150,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Leadership", description: "Meet the partners", href: "/know-us/leadership" },
       // { label: "Culture", description: "Our values & ways of working", href: "/know-us/culture" },
       // { label: "Partnerships", description: "Strategic alliances & networks", href: "/know-us/partnerships" },
-      { label: "Awards", description: "Recognition & accolades", href: "/know-us/awards" },
+      // { label: "Awards", description: "Recognition & accolades", href: "/know-us/awards" },
     ],
   },
   {

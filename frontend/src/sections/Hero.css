@@ -4,7 +4,7 @@
 :root {
   /* --hero-bg: #f9f9f7; */
   --hero-bg: #ffffff;
-  --hero-text-primary: #1a1a1a;
+  --hero-text-primary: #1a1a1a;  
   --hero-text-secondary: #6b6b6b;
   --hero-text-muted: #9a9a9a;
   --hero-accent: #16305a;
@@ -13,7 +13,7 @@
   --hero-shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
   --hero-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
   --hero-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.2);
-  --hero-radius: 16px;
+  --hero-radius: 16px;   
   --hero-transition: 0.3s ease;
   --font-display: sans-serif serif;
   --font-body: "DM Sans", "Helvetica Neue", sans-serif;
@@ -55,7 +55,8 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.22em;
-  color: #d72020;
+  /* color: #d72020; */
+  color: #D62049;
   text-transform: uppercase;
 }
 

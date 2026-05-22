@@ -159,7 +159,7 @@ export default function Hyderabad() {
           <div className="hyd-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="hyd-pc-card">
-                <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" /></div>
+                <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" loading="lazy" /></div>
                 <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
                 <div className="hyd-pc-social">
                   <a href={`mailto:${p.email}`} className="hyd-pc-btn hyd-pc-btn--mail"><IconMail /><span>Email</span></a>

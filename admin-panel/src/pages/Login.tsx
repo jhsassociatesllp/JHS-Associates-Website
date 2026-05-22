@@ -10,7 +10,6 @@ import {
   Visibility, VisibilityOff,
   Dashboard as DashboardIcon,
 } from '@mui/icons-material';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -27,13 +26,27 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8000/admin/login', { email, password });
-      if (res.data?.access_token) {
-        login(res.data.access_token);
-        navigate('/');
+      const response = await fetch('http://localhost:8000/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data?.access_token) {
+          login(data.access_token);
+          navigate('/');
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({ detail: 'Login failed' }));
+        setError(errorData.detail || 'Login failed. Please try again.');
       }
     } catch (err: any) {
-      setError(err.response?.data?.detail ?? 'Login failed. Please try again.');
+      console.error('Login error:', err);
+      setError('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -76,19 +89,22 @@ export default function Login() {
         <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.8rem', textAlign: 'center', lineHeight: 1.3, fontFamily: 'Inter, sans-serif', mb: 2 }}>
           Welcome to JHS &amp; Associates
         </Typography>
-        <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', textAlign: 'center', lineHeight: 1.6 }}>
+        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', textAlign: 'center', lineHeight: 1.6, mb: 1 }}>
           Admin panel for managing contacts, articles, and blog content.
+        </Typography>
+        <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', textAlign: 'center', lineHeight: 1.5 }}>
+          Secure access to your business management dashboard
         </Typography>
 
         {/* Stats */}
-        <Box sx={{ display: 'flex', gap: 4, mt: 6 }}>
-          {[['500+', 'Contacts'], ['120+', 'Articles'], ['60+', 'Blogs']].map(([val, lbl]) => (
+        {/* <Box sx={{ display: 'flex', gap: 4, mt: 6 }}>
+          {[['500+', 'Contacts'], ['120+', 'Articles'], ['80+', 'Alumni']].map(([val, lbl]) => (
             <Box key={lbl} sx={{ textAlign: 'center' }}>
               <Typography sx={{ color: '#696cff', fontWeight: 700, fontSize: '1.4rem', fontFamily: 'Inter, sans-serif' }}>{val}</Typography>
               <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }}>{lbl}</Typography>
             </Box>
           ))}
-        </Box>
+        </Box> */}
       </Box>
 
       {/* ── Right Form Panel ─────────────────────────────────── */}
@@ -111,21 +127,37 @@ export default function Login() {
               <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', color: '#2d3748', fontFamily: 'Inter, sans-serif' }}>JHS Admin</Typography>
             </Box>
 
-            <Typography sx={{ fontSize: '1.5rem', fontWeight: 700, color: '#2d3748', fontFamily: 'Inter, sans-serif', mb: 0.5 }}>
+            <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, color: '#2d3748', fontFamily: 'Inter, sans-serif', mb: 0.5 }}>
               Sign in to your account
             </Typography>
-            <Typography sx={{ fontSize: '0.875rem', color: '#8a8d93' }}>
+            <Typography sx={{ fontSize: '0.9rem', color: '#8a8d93', mb: 0.5 }}>
               Enter your credentials to access the dashboard
+            </Typography>
+            <Typography sx={{ fontSize: '0.8rem', color: '#a0a3a8' }}>
+              Secure login to JHS Associates Admin Panel
             </Typography>
           </Box>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 3, borderRadius: 2, fontSize: '0.85rem' }}>{error}</Alert>
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 3, 
+                borderRadius: 2, 
+                fontSize: '0.85rem',
+                backgroundColor: '#fef2f2',
+                border: '1px solid #fecaca',
+                '& .MuiAlert-icon': { color: '#dc2626' },
+                '& .MuiAlert-message': { color: '#991b1b' }
+              }}
+            >
+              {error}
+            </Alert>
           )}
 
           <Box component="form" onSubmit={handleLogin}>
             {/* Email */}
-            <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#2d3748', mb: 0.75, fontFamily: 'Inter, sans-serif' }}>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600, color: '#2d3748', mb: 0.75, fontFamily: 'Inter, sans-serif' }}>
               Email / Username
             </Typography>
             <TextField
@@ -134,26 +166,32 @@ export default function Login() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
+                    </InputAdornment>
+                  ),
+                }
               }}
               sx={{
                 mb: 2.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, fontSize: '0.875rem',
-                  '& fieldset': { borderColor: '#e0e0e0' },
-                  '&:hover fieldset': { borderColor: '#696cff' },
-                  '&.Mui-focused fieldset': { borderColor: '#696cff' },
+                  borderRadius: 2, 
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fafbfc',
+                  transition: 'all 0.2s',
+                  '& fieldset': { borderColor: '#e2e8f0' },
+                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
+                  '&.Mui-focused': { backgroundColor: '#fff' },
                 },
               }}
             />
 
             {/* Password */}
-            <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#2d3748', mb: 0.75, fontFamily: 'Inter, sans-serif' }}>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600, color: '#2d3748', mb: 0.75, fontFamily: 'Inter, sans-serif' }}>
               Password
             </Typography>
             <TextField
@@ -163,54 +201,92 @@ export default function Login() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton size="small" onClick={() => setShowPw(!showPw)} edge="end">
-                      {showPw ? <VisibilityOff sx={{ fontSize: 18 }} /> : <Visibility sx={{ fontSize: 18 }} />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton size="small" onClick={() => setShowPw(!showPw)} edge="end">
+                        {showPw ? <VisibilityOff sx={{ fontSize: 18, color: '#8a8d93' }} /> : <Visibility sx={{ fontSize: 18, color: '#8a8d93' }} />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }
               }}
               sx={{
                 mb: 1.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, fontSize: '0.875rem',
-                  '& fieldset': { borderColor: '#e0e0e0' },
-                  '&:hover fieldset': { borderColor: '#696cff' },
-                  '&.Mui-focused fieldset': { borderColor: '#696cff' },
+                  borderRadius: 2, 
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fafbfc',
+                  transition: 'all 0.2s',
+                  '& fieldset': { borderColor: '#e2e8f0' },
+                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
+                  '&.Mui-focused': { backgroundColor: '#fff' },
                 },
               }}
             />
 
             {/* Remember me */}
-            <FormControlLabel
-              control={<Checkbox size="small" sx={{ color: '#8a8d93', '&.Mui-checked': { color: '#696cff' } }} />}
-              label={<Typography sx={{ fontSize: '0.8rem', color: '#8a8d93' }}>Remember me</Typography>}
-              sx={{ mb: 3 }}
-            />
+            {/* <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+              <FormControlLabel
+                control={<Checkbox size="small" sx={{ color: '#8a8d93', '&.Mui-checked': { color: '#696cff' } }} />}
+                // label={<Typography sx={{ fontSize: '0.8rem', color: '#8a8d93' }}>Remember me</Typography>}
+              />
+              <Typography sx={{ fontSize: '0.8rem', color: '#696cff', cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>
+                Forgot password?
+              </Typography>
+            </Box> */}
 
             {/* Submit */}
             <Button
               type="submit" fullWidth variant="contained"
               disabled={loading}
               sx={{
-                py: 1.4, borderRadius: 2,
+                py: 1.5, 
+                borderRadius: 2,
                 background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)',
-                fontWeight: 600, fontSize: '0.9rem', textTransform: 'none',
+                fontWeight: 600, 
+                fontSize: '0.95rem', 
+                textTransform: 'none',
                 fontFamily: 'Inter, sans-serif',
                 boxShadow: '0 4px 16px rgba(105,108,255,0.4)',
-                '&:hover': { background: 'linear-gradient(135deg, #5a5de0 0%, #3a3cd8 100%)', boxShadow: '0 6px 20px rgba(105,108,255,0.5)' },
-                '&.Mui-disabled': { background: '#e0e0e0', color: '#9e9e9e', boxShadow: 'none' },
+                transition: 'all 0.3s ease',
+                '&:hover': { 
+                  background: 'linear-gradient(135deg, #5a5de0 0%, #3a3cd8 100%)', 
+                  boxShadow: '0 6px 20px rgba(105,108,255,0.5)',
+                  transform: 'translateY(-1px)'
+                },
+                '&.Mui-disabled': { 
+                  background: '#e0e0e0', 
+                  color: '#9e9e9e', 
+                  boxShadow: 'none',
+                  transform: 'none'
+                },
               }}
             >
               {loading ? 'Signing in…' : 'Sign In'}
             </Button>
+
+            {/* Additional Info */}
+            <Box sx={{ mt: 4, textAlign: 'center' }}>
+              <Typography sx={{ fontSize: '0.75rem', color: '#a0a3a8', mb: 1 }}>
+                Secure login protected by enterprise-grade security
+              </Typography>
+              {/* <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                <Typography sx={{ fontSize: '0.7rem', color: '#c1c5ca' }}>
+                  🔒 SSL Encrypted
+                </Typography>
+                <Typography sx={{ fontSize: '0.7rem', color: '#c1c5ca' }}>
+                  🛡️ 2FA Ready
+                </Typography>
+              </Box> */}
+            </Box>
           </Box>
         </Box>
       </Box>

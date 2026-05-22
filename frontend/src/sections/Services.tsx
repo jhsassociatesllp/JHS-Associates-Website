@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import LazyImage from '../components/common/LazyImage';
 import "./Services.css";
 
 // industries_Images
@@ -236,7 +237,7 @@ export default function Services() {
       <div className="services__right" aria-hidden="true">
         {activeItem ? (
           <div className="services__right-dynamic fade-in">
-            <img src={activeItem.image} alt={activeItem.label} className="services__right-image" />
+            <img src={activeItem.image} alt={activeItem.label} className="services__right-image" loading="lazy" />
             <div className="services__right-overlay">
               <h3 className="services__right-title">{activeItem.label}</h3>
               <p className="services__right-desc">{activeItem.description}</p>

@@ -56,7 +56,7 @@ export default function Careers() {
           </div>
 
           <div className="ap-map-container" style={{ height: 'auto', border: 'none', boxShadow: 'none' }}>
-             <img src={imageUrl('growthposter.jpg')} alt="JHS Office Culture" style={{ width: '100%', borderRadius: '20px', objectFit: 'cover', height: '350px' }} />
+             <img src={imageUrl('growthposter.jpg')} alt="JHS Office Culture" style={{ width: '100%', borderRadius: '20px', objectFit: 'cover', height: '350px' }} loading="lazy" />
           </div>
 
           <div className="ap-card">

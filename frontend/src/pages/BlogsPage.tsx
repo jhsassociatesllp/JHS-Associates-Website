@@ -87,7 +87,7 @@ export default function BlogsPage() {
                         {blogs.map((blog) => (
                             <article key={blog.id} style={styles.card}>
                                 {blog.image_url ? (
-                                    <img src={blog.image_url} alt={blog.title} style={styles.cardImage} />
+                                    <img src={blog.image_url} alt={blog.title} style={styles.cardImage} loading="lazy" />
                                 ) : (
                                     <div style={styles.cardImagePlaceholder}>
                                         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#42a5f5" strokeWidth="1.5">

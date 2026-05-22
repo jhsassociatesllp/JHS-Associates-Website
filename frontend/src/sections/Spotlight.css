@@ -43,7 +43,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #d72020;
+  color: #D62049;
   /* JHS Navy */
   margin-bottom: 20px;
 }
@@ -86,7 +86,7 @@
 }
 
 .spotlight__cta:hover {
-  background: #B01E2E;
+  background: #D62049;
   /* JHS Red */
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(176, 30, 46, 0.2);
@@ -139,7 +139,7 @@
 }
 
 .spotlight__item:hover .spotlight__icon {
-  color: #B01E2E;
+  color: #D62049;
   /* JHS Red */
 }
 
@@ -154,7 +154,7 @@
 }
 
 .spotlight__item:hover .spotlight__item-title {
-  color: #B01E2E;
+  color: #D62049;
 }
 
 .spotlight__item-desc {

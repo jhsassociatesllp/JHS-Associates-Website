@@ -8,6 +8,9 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AdminArticles from './pages/AdminArticles';   // ✅ NEW
 import AdminBlogs from './pages/AdminBlogs';         // ✅ NEW
+import AdminKnowledge from './pages/AdminKnowledge'; // ✅ NEW
+import AdminContacts from './pages/AdminContacts';   // ✅ NEW
+import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
 
 const theme = createTheme({
   palette: {
@@ -34,6 +37,9 @@ export default function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/articles" element={<AdminArticles />} />  {/* ✅ NEW */}
               <Route path="/blogs" element={<AdminBlogs />} />        {/* ✅ NEW */}
+              <Route path="/knowledge" element={<AdminKnowledge />} /> {/* ✅ NEW */}
+              <Route path="/contacts" element={<AdminContacts />} />   {/* ✅ NEW */}
+              <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
             </Route>
           </Route>
 

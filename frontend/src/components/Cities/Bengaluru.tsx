@@ -158,7 +158,7 @@ export default function Bengaluru() {
           <div className="blr-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="blr-pc-card">
-                <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" /></div>
+                <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" loading="lazy" /></div>
                 <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
                 <div className="blr-pc-social">
                   <a href={`mailto:${p.email}`} className="blr-pc-btn blr-pc-btn--mail"><IconMail /><span>Email</span></a>

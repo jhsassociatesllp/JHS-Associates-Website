@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Filter } from 'lucide-react'
+import LazyImage from '../common/LazyImage'
 import './Newsletters.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -155,11 +156,10 @@ export default function Newsletters() {
               <article key={nl.id} className="nl-card">
 
                 {/* Background Image */}
-                <img
+                <LazyImage
                   src={nl.image}
                   alt={nl.title}
                   className="nl-card__bg-img"
-                  onError={(e) => { e.currentTarget.style.display = 'none' }}
                 />
 
                 {/* Default State: White Box at Bottom */}

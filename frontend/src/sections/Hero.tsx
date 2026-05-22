@@ -104,7 +104,7 @@ export default function Hero() {
     return () => {
       if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
-  }, [currentIndex]);
+  }, [currentIndex]);  
 
   const pauseAutoSlide = () => {
     if (autoSlideRef.current) clearInterval(autoSlideRef.current);
@@ -119,8 +119,8 @@ export default function Hero() {
   const handleTouchStart = (e: React.TouchEvent) => {
     touchEndX.current = null;
     touchStartX.current = e.targetTouches[0].clientX;
-    pauseAutoSlide();
-  };
+    pauseAutoSlide();  
+  };  
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.targetTouches[0].clientX;

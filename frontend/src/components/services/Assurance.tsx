@@ -2,145 +2,135 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  FileCheck, Shield, Search, Activity, Calculator,
-  Truck, Leaf, Database, CheckCircle2, Target, TrendingUp, BarChart3
+  Shield, Search, Activity, Database, CheckCircle2, Target, TrendingUp,
+  Server, Lock, RefreshCw, Monitor, Users, GitBranch, Settings,
+  AlertTriangle, Cloud, Cpu, Eye, HardDrive, Wifi, FileText, Layers
 } from 'lucide-react'
 import './Assurance.css'
 import { imageUrl } from '../../utils/imageUrl'
 
-gsap.registerPlugin(ScrollTrigger)   
+gsap.registerPlugin(ScrollTrigger)
 
-const continuousCoverage = [
-  { id: "01", title: "Statutory Audit", desc: "Annual statutory financial review", icon: <FileCheck size={28} strokeWidth={1.5} /> },
-  { id: "02", title: "Internal Audit", desc: "Process, risk & control assurance", icon: <Search size={28} strokeWidth={1.5} /> },
-  { id: "03", title: "Concurrent Audit", desc: "Real-time transaction monitoring", icon: <BarChart3 size={28} strokeWidth={1.5} /> },
-  { id: "04", title: "ESG & Ethics Audit", desc: "Sustainability & governance review", icon: <Leaf size={28} strokeWidth={1.5} /> },
-  { id: "05", title: "Channel / Dealer Audit", desc: "Supply chain & distributor review", icon: <Truck size={28} strokeWidth={1.5} /> },
-  { id: "06", title: "IT / Cyber Security", desc: "CERT-In empanelled assessment", icon: <Shield size={28} strokeWidth={1.5} /> },
-  { id: "07", title: "Forensic Investigation", desc: "Fraud detection & digital forensics", icon: <Activity size={28} strokeWidth={1.5} /> },
-  { id: "08", title: "SOC 1 & SOC 2", desc: "Service organisation controls", icon: <Calculator size={28} strokeWidth={1.5} /> },
-  { id: "09", title: "DPDP Act Compliance", desc: "Data protection impact assessment", icon: <Database size={28} strokeWidth={1.5} /> },
+/* ─── IT Assurance Services ─── */
+const itServices = [
+  { id: "01", title: "End-to-End Information Security Reviews", icon: <Shield size={26} strokeWidth={1.5} /> },
+  { id: "02", title: "Third Party Reviews", icon: <Users size={26} strokeWidth={1.5} /> },
+  { id: "03", title: "BCP / Resilience Reviews", icon: <RefreshCw size={26} strokeWidth={1.5} /> },
+  { id: "04", title: "ERP / Application Reviews", icon: <Layers size={26} strokeWidth={1.5} /> },
+  { id: "05", title: "Data Migration Reviews", icon: <Database size={26} strokeWidth={1.5} /> },
+  { id: "06", title: "User Access Control & Role Reviews", icon: <Lock size={26} strokeWidth={1.5} /> },
+  { id: "07", title: "IT Project Management Reviews", icon: <GitBranch size={26} strokeWidth={1.5} /> },
+  { id: "08", title: "IT General Control Reviews", icon: <Settings size={26} strokeWidth={1.5} /> },
+  { id: "09", title: "ISO 27001 Gap Assessments", icon: <Search size={26} strokeWidth={1.5} /> },
+  { id: "10", title: "IT Internal Audits", icon: <FileText size={26} strokeWidth={1.5} /> },
+  { id: "11", title: "Vulnerability Assessments", icon: <AlertTriangle size={26} strokeWidth={1.5} /> },
 ]
 
-const programsData = [
+/* ─── End-to-End Technology Audit Domains ─── */
+const technologyAuditDomains = [
   {
-    id: "casp",
-    title: "Compliance Assurance & Self Certification Programme (CASP)",
-    scope: "Implementation Assistance on Compliance Assurance & Self Certification Programme",
-    sector: "Payment System",
-    methodology: [
-      "Continuous Improvement & Reporting",
-      "Identification of Compliance Requirements",
-      "Development of Self-Certification Framework",
-      "Implementation & Self-Certification Process",
-      "Compliance Monitoring & Gap Assessment",
-      "Development of Compliance Effectiveness Dashboard"
-    ],
-    deliverables: [
-      "Master Compliance Checklist",
-      "Self-Assessment Certification Formats & Checklists",
-      "Self-Certification Reports",
-      "Compliance Gap Analysis Report",
-      "Corrective Action Plan",
-      "CEO/ CFO Compliance Dashboard",
-      "Compliance Monitoring & Audit Reports",
-      "Training & Awareness Materials",
-      "Final Compliance Assurance Report"
-    ],
-    valueAdded: [
-      "Enhanced Regulatory Compliance",
-      "Improved Accountability & Ownership",
-      "Proactive Risk Mitigation",
-      "Operational Efficiency",
-      "Real-Time Compliance Insights",
-      "Regulatory Confidence & Reputation",
-      "Continuous Improvement & Adaptability"
+    category: "Policy & Architecture",
+    icon: <FileText size={22} strokeWidth={1.5} />,
+    items: [
+      "IT Policy & Procedures Review",
+      "Network Management & Architecture Review",
+      "IT Strategy Review",
+      "IT Security & Organisational Structure Review",
     ]
   },
   {
-    id: "rap",
-    title: "Revenue Assurance Program",
-    scope: "Review of client invoicing process, Identify invoicing errors, Recommend process improvements",
-    sector: "Logistics Sector",
-    methodology: [
-      "Risk Identification - Detect revenue leakage points",
-      "Data Collection & Validation - Gather and verify financial data",
-      "Gap Analysis - Compare actual vs. expected revenue",
-      "Control Implementation - Enforce corrective measures",
-      "Monitoring & Reporting - Continuously track metrics",
-      "Process Optimization - Improve systems and controls",
-      "Developed monthly revenue assurance SOP",
-      "Conducted rigorous invoice reviews"
-    ],
-    deliverables: [
-      "Monthly Revenue Assurance SOP",
-      "Invoice Review Reports",
-      "Discrepancy Reports",
-      "Correction & Mitigation Plan",
-      "Performance Dashboard",
-      "Monthly audit report on invoices",
-      "Root cause analysis for identified issues"
-    ],
-    valueAdded: [
-      "Revenue Protection - Identifies and prevents leakages",
-      "Enhanced Accuracy - Ensures correct billing and invoicing",
-      "Operational Efficiency - Streamlines financial processes",
-      "Risk Mitigation - Reduces financial risks and issues",
-      "Data-Driven Decision Making - Strategic improvements",
-      "Revenue Leakage Scorecard - Tracks potential losses",
-      "Pre-identification of Client Rejections",
-      "Reduction in Revenue Recognition Errors"
-    ]
-  }
-]
-
-const featuredEngagements = [
-  { title: "Forensic Investigation", client: "Logistics Co., 8 offices", impact: "Rs. 17 Crore fraud quantified", icon: <Activity size={24} strokeWidth={1.5} /> },
-  { title: "ECL Model Validation", client: "NBFC", impact: "Rs. 30 Crore provision corrected under IndAS 109", icon: <Calculator size={24} strokeWidth={1.5} /> },
-  { title: "Retail Revenue Leakage", client: "Fashion Retailer", impact: "Rs. 5,425 Lakh operational impact", icon: <TrendingUp size={24} strokeWidth={1.5} /> }
-]
-
-const caseStudies = [
-  {
-    title: "Video KYC Concurrent Audit",
-    sector: "Banking",
-    label: "CASE STUDY",
-    problem: "Per RBI's Master Direction on KYC, all accounts opened via Video Customer Identification Process (V-CIP) must undergo concurrent audit clearance before activation. A large private sector bank engaged JHS to provide real-time daily KYC validation — detecting fake documents, duplicates, and ensuring database alignment with KYC, NSDL, and Aadhaar at scale.",
-    response: [
-      "Validated 4000+ V-CIP account openings daily against full regulatory checklist",
-      "Cross-verified all customer documents against KYC, NSDL, and Aadhaar databases",
-      "Executed systematic de-dupe checks to prevent account fraud",
-      "Identified and flagged fake identity documents in real time",
-      "Maintained 100% daily compliance rate — accounts activated only post-clearance",
-      "Delivered daily management reports enabling immediate corrective action"
-    ],
-    metrics: [
-      { value: "4000+", label: "Daily Validations" },
-      { value: "KYC / NSDL / Aadhaar", label: "DB Cross-Check" },
-      { value: "100%", label: "Compliance Rate" },
-      { value: "Full Compliance", label: "RBI Directive" }
+    category: "Access & Application Controls",
+    icon: <Lock size={22} strokeWidth={1.5} />,
+    items: [
+      "Access Controls System & Monitoring",
+      "Application Controls Review",
+      "IT Operations Review",
+      "IT Asset Management Review",
     ]
   },
   {
-    title: "ECL Model Validation IndAS 109",
-    sector: "NBFC",
-    label: "CASE STUDY",
-    problem: "An NBFC required independent validation of its Expected Credit Loss (ECL) computation model as mandated under IndAS 109. The model processed 10 years of historical data with over 1 crore line items. The NBFC needed assurance that PD and LGD calculations were accurate and that provisioning outcomes were reliable for financial reporting.",
-    response: [
-      "Analysed 10 years of historical loan data across all product segments",
-      "Re-performed calculations across 1 crore+ data line items using MS Access and IDEA",
-      "Validated PD formula logic and LGD computation methodology in full",
-      "Analysed DPD patterns and validated staging criteria vs. RBI norms and IndAS",
-      "Identified formula errors causing material overstatement of ECL provisions",
-      "Correction reduced ECL provisions by ₹30 Crores — improving the NBFC's capital position"
-    ],
-    metrics: [
-      { value: "1 Crore+", label: "Data Lines Analysed" },
-      { value: "10 Years", label: "Historical Period" },
-      { value: "₹30 Crore", label: "ECL Provision Corrected" },
-      { value: "Validated", label: "IndAS 109" }
+    category: "Development & Change",
+    icon: <GitBranch size={22} strokeWidth={1.5} />,
+    items: [
+      "System Development Review",
+      "Change Control",
+      "IT Project Management Reviews",
+      "ERP / Application Reviews",
     ]
-  }
+  },
+  {
+    category: "Physical & Environmental Security",
+    icon: <Eye size={22} strokeWidth={1.5} />,
+    items: [
+      "Physical & Environmental Security",
+      "Building Management Systems",
+      "Surveillance Systems & Camera Monitoring",
+      "Backup, Fire Detection & Prevention System",
+      "Temperature & Humidity, Power Supply & Backup",
+      "Lightning Protection & Pest Control",
+    ]
+  },
+  {
+    category: "Compliance & Access Registers",
+    icon: <Monitor size={22} strokeWidth={1.5} />,
+    items: [
+      "Maintenance of Visitors Register",
+      "Attendance Register",
+      "Material In & Out Register",
+    ]
+  },
+  {
+    category: "Resilience & Cyber Security",
+    icon: <Shield size={22} strokeWidth={1.5} />,
+    items: [
+      "Business Continuity Management Review",
+      "Disaster Recovery Drills Review",
+      "Backup & Recovery Controls",
+      "Anti-Virus and Malware Protection Controls",
+      "Incident Management",
+      "End-Point Security Controls",
+      "Cyber Security Controls & Cloud Privacy / Security",
+    ]
+  },
+]
+
+/* ─── Benchmarks ─── */
+const benchmarks = [
+  { label: "COBIT / ISACA", desc: "Global framework for IT governance & management", icon: <Cpu size={22} strokeWidth={1.5} /> },
+  { label: "CERT-In", desc: "Government of India's national nodal agency for cyber security", icon: <Shield size={22} strokeWidth={1.5} /> },
+]
+
+/* ─── VAPT Details ─── */
+const vaptProcess = [
+  { step: "01", title: "Annual VAPT Plan", desc: "Prepare a comprehensive annual plan for Vulnerability Assessment & Penetration Testing" },
+  { step: "02", title: "Execution", desc: "Execute VAPT using Black Box or White Box approach as per management preference, from JHS office remotely" },
+  { step: "03", title: "Vulnerability Reporting", desc: "Report identified vulnerabilities with severity ratings and recommended mitigating controls" },
+  { step: "04", title: "Action Tracking", desc: "Track status of management's plan of action devised to mitigate reported risks" },
+]
+
+const threatTypes = [
+  { label: "Virus & Malware", icon: <AlertTriangle size={20} strokeWidth={1.5} /> },
+  { label: "Ransomware", icon: <Lock size={20} strokeWidth={1.5} /> },
+  { label: "Phishing Attacks", icon: <Wifi size={20} strokeWidth={1.5} /> },
+  { label: "DOS / DDOS", icon: <Server size={20} strokeWidth={1.5} /> },
+  { label: "Cloud Threats", icon: <Cloud size={20} strokeWidth={1.5} /> },
+  { label: "Data Breaches", icon: <HardDrive size={20} strokeWidth={1.5} /> },
+]
+
+/* ─── Approach Cards ─── */
+const approaches = [
+  {
+    label: "Black Box",
+    icon: <Eye size={28} strokeWidth={1.5} />,
+    desc: "Zero prior knowledge approach — our team simulates an external attacker with no internal access, replicating real-world threat scenarios.",
+    tag: "External Attacker Simulation"
+  },
+  {
+    label: "White Box",
+    icon: <Monitor size={28} strokeWidth={1.5} />,
+    desc: "Full-knowledge approach — JHS is granted access to credentials and architecture details (IP whitelisted) to perform deep internal security validation.",
+    tag: "Full-Knowledge Internal Review"
+  },
 ]
 
 export default function Assurance() {
@@ -153,13 +143,7 @@ export default function Assurance() {
       gsap.fromTo(
         '.a-hero__content > *',
         { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-        }
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
 
       gsap.utils.toArray('.a-section-header').forEach((header: any) => {
@@ -172,14 +156,14 @@ export default function Assurance() {
       gsap.utils.toArray('.a-service-card').forEach((card: any, i) => {
         gsap.fromTo(card,
           { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.5, delay: i * 0.05, scrollTrigger: { trigger: '.a-services-grid', start: 'top 80%' } }
+          { opacity: 1, y: 0, duration: 0.5, delay: i * 0.04, scrollTrigger: { trigger: '.a-services-grid', start: 'top 80%' } }
         )
       })
 
-      gsap.utils.toArray('.a-program-card, .a-featured-item, .a-case-study').forEach((el: any) => {
+      gsap.utils.toArray('.a-domain-card, .a-vapt-step, .a-approach-card, .a-benchmark-card').forEach((el: any) => {
         gsap.fromTo(el,
           { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 0.7, scrollTrigger: { trigger: el, start: 'top 85%' } }
+          { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: el, start: 'top 88%' } }
         )
       })
     })
@@ -190,36 +174,36 @@ export default function Assurance() {
   return (
     <div className="a-page" ref={containerRef}>
 
-      {/* ════ HERO SECTION ════ */}
+      {/* ════ HERO ════ */}
       <section className="a-hero">
         <div className="a-hero__bg" style={{ backgroundImage: `url('${imageUrl('Assurance.png')}')` }} />
         <div className="a-hero__overlay" />
         <div className="a-container">
           <div className="a-hero__content">
-            <span className="a-eyebrow">Trust & Integrity</span>
-            <h1 className="a-title">Assurance Solutions</h1>
+            <span className="a-eyebrow">CERT-In Empanelled · ISO 27001 · COBIT / ISACA</span>
+            <h1 className="a-title">IT Assurance &amp; Technology Audit</h1>
             <p className="a-subtitle">
-              Independent, rigorous, and technologically advanced audit services designed to build stakeholder confidence and bulletproof your compliance.
+              End-to-end information security reviews, vulnerability assessments, and technology audits — delivered by a CERT-In empanelled organisation to protect what matters most.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ════ CONTINUOUS COVERAGE (ALWAYS ON) ════ */}
+      {/* ════ IT ASSURANCE SERVICES ════ */}
       <section className="a-coverage">
         <div className="a-container">
           <div className="a-section-header">
-            <h2>Continuous Assurance Coverage</h2>
+            <h2>IT Assurance Services</h2>
             <div className="a-divider" />
-            <p>JHS's assurance practice runs continuously providing an independent expert lens across every stage of your journey every year without interruption.</p>
+            <p>A comprehensive suite of technology audit services covering every layer of your IT environment — from security reviews to compliance assessments.</p>
           </div>
 
           <div className="a-services-grid">
-            {continuousCoverage.map((item) => (
+            {itServices.map((item) => (
               <div key={item.id} className="a-service-card">
+                <div className="a-service-card__num">{item.id}</div>
                 <div className="a-service-card__icon">{item.icon}</div>
                 <h3 className="a-service-card__title">{item.title}</h3>
-                <p className="a-service-card__description">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -231,131 +215,134 @@ export default function Assurance() {
         </div>
       </section>
 
-      {/* ════ FLAGSHIP PROGRAMS ════ */}
+      {/* ════ END-TO-END TECHNOLOGY AUDIT ════ */}
       <section className="a-programs">
         <div className="a-container">
           <div className="a-section-header">
-            <h2>Flagship Assurance Programs</h2>
+            <h2>End-to-End Technology Audit</h2>
             <div className="a-divider" />
-            <p>Comprehensive frameworks designed to systematically address complex compliance and revenue protection challenges.</p>
+            <p>A structured, domain-by-domain technology audit that leaves no blind spots — from IT strategy and network architecture through to physical security and cyber resilience.</p>
           </div>
 
-          <div className="a-programs-wrap">
-            {programsData.map(program => (
-              <div key={program.id} className="a-program-card">
-                <div className="a-program-header">
-                  <h3>{program.title}</h3>
-                  <p><strong>Scope:</strong> {program.scope}</p>
-                  <p><strong>Sector:</strong> {program.sector}</p>
+          <div className="a-domains-grid">
+            {technologyAuditDomains.map((domain, i) => (
+              <div key={i} className="a-domain-card">
+                <div className="a-domain-card__header">
+                  <div className="a-domain-card__icon">{domain.icon}</div>
+                  <h3 className="a-domain-card__title">{domain.category}</h3>
                 </div>
-                <div className="a-program-body">
-                  <div className="a-program-col">
-                    <div className="a-program-col-title">
-                      <Target size={24} /> Methodology
-                    </div>
-                    <ul className="a-program-list">
-                      {program.methodology.map((item, i) => (
-                        <li key={i}><CheckCircle2 size={16} /> {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="a-program-col">
-                    <div className="a-program-col-title">
-                      <FileCheck size={24} /> Deliverables
-                    </div>
-                    <ul className="a-program-list">
-                      {program.deliverables.map((item, i) => (
-                        <li key={i}><CheckCircle2 size={16} /> {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="a-program-col">
-                    <div className="a-program-col-title">
-                      <TrendingUp size={24} /> Value Added
-                    </div>
-                    <ul className="a-program-list">
-                      {program.valueAdded.map((item, i) => (
-                        <li key={i}><CheckCircle2 size={16} /> {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════ IN-DEPTH CASE STUDIES ════ */}
-      <section className="a-case-studies">
-        <div className="a-container">
-          <div className="a-section-header">
-            <h2>Featured Case Studies</h2>
-            <div className="a-divider" />
-            <p>Exploring complex assurance challenges and our rigorous methodologies deployed to solve them.</p>
-          </div>
-
-          <div className="a-case-studies-grid">
-            {caseStudies.map((cs, i) => (
-              <div key={i} className="a-case-study">
-                <div className="a-case-study__header">
-                  <span className="a-case-study__sector">{cs.sector}</span>
-                  <span className="a-case-study__label">{cs.label}</span>
-                </div>
-                <h3 className="a-case-study__title">{cs.title}</h3>
-
-                <div className="a-case-study__content" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
-                  <div>
-                    <h4 className="a-case-study__section-title">Problem Statement</h4>
-                    <p className="a-case-study__text">{cs.problem}</p>
-                  </div>
-                  <div>
-                    <h4 className="a-case-study__section-title">JHS Response</h4>
-                    <ul className="a-case-study__list">
-                      {cs.response.map((res, j) => (
-                        <li key={j} className="a-case-study__list-item">
-                          <CheckCircle2 size={18} className="a-case-study__check" />
-                          {res}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="a-case-study__metrics">
-                  {cs.metrics.map((metric, k) => (
-                    <div key={k} className="a-metric">
-                      <div className="a-metric__value">{metric.value}</div>
-                      <div className="a-metric__label">{metric.label}</div>
-                    </div>
+                <ul className="a-domain-list">
+                  {domain.items.map((item, j) => (
+                    <li key={j} className="a-domain-list__item">
+                      <CheckCircle2 size={14} className="a-domain-list__check" />
+                      {item}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
+          </div>
+
+          {/* Benchmarks */}
+          <div className="a-benchmarks">
+            <p className="a-benchmarks__label">Benchmarked Against Best Practices</p>
+            <div className="a-benchmarks__row">
+              {benchmarks.map((b, i) => (
+                <div key={i} className="a-benchmark-card">
+                  <div className="a-benchmark-card__icon">{b.icon}</div>
+                  <div>
+                    <p className="a-benchmark-card__title">{b.label}</p>
+                    <p className="a-benchmark-card__desc">{b.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ════ FEATURED ENGAGEMENTS ════ */}
-      <section className="a-featured">
+      {/* ════ VULNERABILITY ASSESSMENTS ════ */}
+      <section className="a-vapt">
         <div className="a-container">
           <div className="a-section-header">
-            <h2>Real Client Work, Real Numbers</h2>
+            <h2>Vulnerability Assessment &amp; Penetration Testing</h2>
             <div className="a-divider" />
-            <p>Snapshot of our high-impact assurance engagements.</p>
+            <p>Proactive, periodic security testing to detect weaknesses before attackers do — protecting the confidentiality, integrity, availability and privacy of your information assets.</p>
           </div>
 
-          <div className="a-featured-grid">
-            {featuredEngagements.map((item, i) => (
-              <div key={i} className="a-featured-item">
-                <div className="a-featured-item__header">
-                  <div className="a-featured-item__icon">{item.icon}</div>
-                  <h3 className="a-featured-item__title">{item.title}</h3>
+          {/* Threat landscape */}
+          <div className="a-threats">
+            <p className="a-threats__label">Threats We Test Against</p>
+            <div className="a-threats__grid">
+              {threatTypes.map((t, i) => (
+                <div key={i} className="a-threat-chip">
+                  {t.icon}
+                  <span>{t.label}</span>
                 </div>
-                <p className="a-featured-item__client">{item.client}</p>
-                <p className="a-featured-item__impact">{item.impact}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* VAPT Process */}
+          <div className="a-vapt-process">
+            <p className="a-vapt__section-label">Our VAPT Programme</p>
+            <div className="a-vapt-steps">
+              {vaptProcess.map((step, i) => (
+                <div key={i} className="a-vapt-step">
+                  <div className="a-vapt-step__num">{step.step}</div>
+                  <div className="a-vapt-step__content">
+                    <h4 className="a-vapt-step__title">{step.title}</h4>
+                    <p className="a-vapt-step__desc">{step.desc}</p>
+                  </div>
+                  {i < vaptProcess.length - 1 && <div className="a-vapt-step__connector" />}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Black Box / White Box */}
+          <div className="a-approaches">
+            <p className="a-vapt__section-label">Approach Options</p>
+            <div className="a-approaches__grid">
+              {approaches.map((a, i) => (
+                <div key={i} className="a-approach-card">
+                  <div className="a-approach-card__icon">{a.icon}</div>
+                  <span className="a-approach-card__tag">{a.tag}</span>
+                  <h3 className="a-approach-card__label">{a.label} Approach</h3>
+                  <p className="a-approach-card__desc">{a.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="a-vapt-note">
+              <Activity size={16} />
+              <p>All assessments are executed remotely from JHS Office. Planned activities are scheduled on weekends / holidays to avoid impact on business operations.</p>
+            </div>
+          </div>
+
+          {/* Value Proposition */}
+          <div className="a-vapt-value">
+            <div className="a-vapt-value__inner">
+              <div className="a-vapt-value__left">
+                <TrendingUp size={32} strokeWidth={1.5} />
+                <h3>Value Proposition</h3>
+                <p>Development &amp; Maintenance of a Vulnerability Assessment &amp; Penetration Testing Programme</p>
               </div>
-            ))}
+              <div className="a-vapt-value__right">
+                {[
+                  "Preparation of an annual VAPT plan",
+                  "Execution of assessments using industry-grade tooling",
+                  "Detailed vulnerability reports with mitigating controls",
+                  "Tracking management's corrective action plan",
+                  "Black Box &amp; White Box methodologies as required",
+                  "Scheduled to minimise operational disruption"
+                ].map((pt, i) => (
+                  <div key={i} className="a-vapt-value__point">
+                    <CheckCircle2 size={16} />
+                    <span dangerouslySetInnerHTML={{ __html: pt }} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -364,8 +351,9 @@ export default function Assurance() {
       <section className="a-cta">
         <div className="a-container">
           <div className="a-cta__box">
-            <h2>Need absolute clarity?</h2>
-            <p>Speak to our senior Assurance partners to design the right audit framework for your organization.</p>
+            <Target size={36} className="a-cta__icon" />
+            <h2>Strengthen Your Security Posture</h2>
+            <p>Speak to our senior IT Assurance partners to design the right technology audit and VAPT framework for your organisation.</p>
             <button className="a-btn">Schedule a Consultation</button>
           </div>
         </div>

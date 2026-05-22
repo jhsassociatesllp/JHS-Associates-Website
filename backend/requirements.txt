@@ -7,3 +7,4 @@ python-dotenv
 PyJWT
 passlib[bcrypt]
 bcrypt
+python-multipart

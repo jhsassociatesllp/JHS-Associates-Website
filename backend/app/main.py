@@ -7,6 +7,7 @@ from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
 from app.routes.knowledge import router as knowledge_router # ✅ NEW
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup

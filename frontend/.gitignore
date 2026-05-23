@@ -30,3 +30,5 @@ public/Uploads/images/*
 
 # Legacy bundled image folder (migrated to external Uploads/images)
 src/image/
+
+.env.production

@@ -1,7 +1,3 @@
-# ==========================================
-# BUILD STAGE
-# ==========================================
-
 FROM node:20 AS build
 
 WORKDIR /app
@@ -12,16 +8,11 @@ RUN npm install
 
 COPY . .
 
-# IMPORTANT
 ARG VITE_API_BASE_URL
 
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 RUN npm run build
-
-# ==========================================
-# NGINX STAGE
-# ==========================================
 
 FROM nginx:alpine
 

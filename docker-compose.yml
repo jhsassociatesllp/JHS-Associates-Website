@@ -1,18 +1,42 @@
 services:
+
   backend:
     build: ./backend
     container_name: jhs_backend
 
+    ports:
+      - "${BACKEND_PORT}:8000"
+
+    volumes:
+      - "/www/wwwroot/jhs-website-content/uploads:/app/uploads"
+
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+
     container_name: jhs_frontend
+
     ports:
       - "${FRONTEND_PORT}:80"
+
+    depends_on:
+      - backend
+
     volumes:
-      # Mount the external uploads directory into nginx so images are served
-      # directly without being bundled into the Docker image.
-      # Host path   : /www/wwwroot/JHS Website/Uploads/images
-      # Inside nginx: /usr/share/nginx/uploads/images  (aliased → /Uploads/images/)
       - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads:ro"
+
+  admin:
+    build:
+      context: ./admin-panel
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+
+    container_name: jhs_admin
+
+    ports:
+      - "${ADMIN_PORT}:80"
+
     depends_on:
       - backend

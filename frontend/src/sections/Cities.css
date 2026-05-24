@@ -66,7 +66,7 @@
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transform: translateZ(0);
+  /* transform: translateZ(0); */
   /* Hardware acceleration */
 }
 
@@ -75,7 +75,7 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); */
   z-index: 1;
 }
 
@@ -89,7 +89,7 @@
       rgba(0, 0, 0, 0.2) 40%,
       rgba(0, 0, 0, 0.8) 100%);
   z-index: 2;
-  transition: background 0.4s ease;
+  /* transition: background 0.4s ease; */
 }
 
 .cities__card:hover .cities__card-overlay {

@@ -462,79 +462,8 @@
 }
 
 /* ────────────────────────────────────────────────────────────
-   INLINE SUB-ITEMS  (Services → India/Global, Sectors → 4 types)
+   LEFT PANEL NAVIGATION
    ──────────────────────────────────────────────────────────── */
-.mega__inline-list {
-  list-style: none;
-  background: #ffffff;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  animation: inlineSlide 0.22s var(--ease);
-}
-
-@keyframes inlineSlide {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mega__inline-li {
-  border: none;
-}
-
-.mega__inline-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: calc(100% - 32px);
-  margin: 2px 16px;
-  padding: 10px 24px 10px 40px;
-  background: none;
-  border: none;
-  border-radius: 20px;
-  /* Pill shape */
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.15s;
-  position: relative;
-}
-
-.mega__inline-btn::before {
-  display: none;
-  /* Remove left thin accent */
-}
-
-.mega__inline-btn:hover {
-  background: transparent;
-}
-
-.mega__inline-btn--active {
-  background: #f1f1f1;
-}
-
-.mega__inline-label {
-  font-family: var(--sans);
-  font-size: 19px;
-  font-weight: 400;
-  color: #333;
-  transition: color 0.15s, font-weight 0.15s;
-}
-
-.mega__inline-btn:hover .mega__inline-label,
-.mega__inline-btn--active .mega__inline-label {
-  color: #000;
-}
-
-.mega__inline-arr {
-  display: none;
-  /* Hide arrow */
-}
 
 /* ── RIGHT PANEL ── */
 .mega__right {
@@ -574,103 +503,107 @@
 
 /* Right panel heading - BCG style */
 .mega__right-hdr {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .mega__right-title {
   font-family: var(--sans);
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 28px;
+  font-weight: 500;
   color: #1a1a1a;
   letter-spacing: -0.01em;
+  margin-bottom: 12px;
 }
 
 .mega__right-desc {
-  margin-top: 10px;
   font-family: var(--sans);
-  font-size: 18px;
-  color: #333;
+  font-size: 16px;
+  color: #666;
   line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 .mega__right-rule {
-  margin-top: 20px;
-  height: 1px;
-  background: #e5e5e5;
+  height: 2px;
+  background: linear-gradient(90deg, #1e3a5f 0%, rgba(30, 58, 95, 0.1) 100%);
+  border-radius: 1px;
 }
 
-/* 2-column grid - BCG style */
-.mega__sub-grid {
-  list-style: none;
+/* Simple grid layout matching the theme - 2 columns only */
+.mega__simple-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px 40px;
-  /* Wider gaps to match BCG */
-  padding-top: 10px;
+  gap: 20px 40px;
+  margin-top: 24px;
 }
 
-.mega__sub-cell {
+.mega__simple-item {
+  background: none;
   border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.mega__sub-link {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 0;
-  /* Remove padding */
-  margin-left: 0;
-  /* Remove negative margin */
+.mega__simple-item:hover {
+  transform: translateY(-2px);
+}
+
+.mega__simple-link {
+  display: block;
   text-decoration: none;
-  border-radius: 0;
-  background: transparent;
-  transition: color 0.18s;
-  position: relative;
-}
-
-.mega__sub-link:hover {
-  background: transparent;
-  box-shadow: none;
-}
-
-/* Items without a link */
-.mega__sub-link--plain {
-  cursor: default;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  color: inherit;
   padding: 0;
-  margin-left: 0;
 }
 
-.mega__sub-name {
+.mega__simple-item h3,
+.mega__simple-item h4 {
   font-family: var(--sans);
   font-size: 20px;
   font-weight: 400;
   color: #1a1a1a;
-  /* transition: color 0.18s; */
+  margin: 0 0 8px 0;
+  transition: color 0.2s ease;
 }
 
-.mega__sub-link:hover .mega__sub-name {
+.mega__simple-item:hover h3,
+.mega__simple-item:hover h4 {
   color: #1e3a5f;
-  border-radius: 24px;
-  /* Change to primary color on hover */
+}
+
+.mega__simple-item p {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Back button - simple style */
+.mega__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.mega__back-btn:hover {
+  color: #1e3a5f;
 }
 
 /* Hide descriptions to match BCG strictly */
 .mega__sub-desc {
   display: none;
-}
-
-/* Placeholder shown when inlineExpand item is active but no sub selected */
-.mega__inline-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60%;
-  font-family: var(--sans);
-  font-size: 14px;
-  color: #999;
 }
 
 /* ================================================================
@@ -688,6 +621,11 @@
 
   .mega__right-panel {
     padding: 28px 32px;
+  }
+
+  .mega__simple-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
   }
 
   .mega__desktop {
@@ -716,5 +654,10 @@
 
   .mega__topbar {
     padding: 0 16px;
+  }
+
+  .mega__simple-item h3,
+  .mega__simple-item h4 {
+    font-size: 18px;
   }
 }

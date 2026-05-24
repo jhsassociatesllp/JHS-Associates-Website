@@ -83,7 +83,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
+  /* transition: transform 0.8s ease; */
 }
 
 /* .vision-mission__graphic:hover .vision-mission__image {

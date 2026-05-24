@@ -1,12 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-// import imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp') from '../image/imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp').jpeg'
-// import imageUrl('Data-Governance.png') from '../image/imageUrl('Data-Governance.png').jpeg'
-// import imageUrl('Investment-Opportunities.png.webp') from '../image/imageUrl('Investment-Opportunities.png.webp').jpeg'
-// import imageUrl('Card4.jpeg') from '../image/imageUrl('Card4.jpeg').jpeg'
-// import imageUrl('2-1.png.webp') from '../image/imageUrl('2-1.png.webp').jpeg'
-
 import { imageUrl } from '../utils/imageUrl'
 
 interface Card {
@@ -36,7 +30,7 @@ const cards: Card[] = [
     category: "RESOURCES",
     meta: "Resources • April 27, 2026",
     title: "The Rule 6 Maze: A Boardroom Perspective on Data Governance in India",
-    hoverTitle: "The Rule 6 Maze:",
+    hoverTitle: "Infrastructure Strategy 2026",
     hoverDescription:
       "This strategic briefing examines the evolving role of data governance under the Digital Personal Data Protection (DPDP) framework, with a focused lens on Rule 6 and its implications for CEOs, Boards, and senior leadership. It highlights the shift from treating data privacy as a compliance function to positioning it as a critical element of governance, accountability, and institutional trust.",
   },
@@ -104,7 +98,7 @@ export default function Hero() {
     return () => {
       if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
-  }, [currentIndex]);  
+  }, [currentIndex]);
 
   const pauseAutoSlide = () => {
     if (autoSlideRef.current) clearInterval(autoSlideRef.current);
@@ -119,8 +113,8 @@ export default function Hero() {
   const handleTouchStart = (e: React.TouchEvent) => {
     touchEndX.current = null;
     touchStartX.current = e.targetTouches[0].clientX;
-    pauseAutoSlide();  
-  };  
+    pauseAutoSlide();
+  };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.targetTouches[0].clientX;
@@ -240,7 +234,7 @@ export default function Hero() {
         <h1 className="hero__headline">
           Building Trust.
           <br />
-          Delivering Excellence.
+          Delivering Excellence
           <br />
           Shaping Better Futures.
         </h1>
@@ -263,6 +257,8 @@ export default function Hero() {
             {renderCard(visible.next2, "next2")}
           </div>
         </div>
+
+
 
         <div className="hero__carousel-dots">
           {cards.map((_, idx) => (

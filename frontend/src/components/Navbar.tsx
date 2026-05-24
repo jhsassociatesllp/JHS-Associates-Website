@@ -143,7 +143,7 @@ const NAV_ITEMS: NavItem[] = [
     id: "knowus",
     label: "Know Us",
     subLabel: "Know Us",
-    subDesc: "Discover who we are, what we stand for, and how we work.",
+    subDesc: "Discover who we are what we stand for and how we work.",
     subItems: [
       { label: "Our Story", description: "History & founding vision", href: "/know-us/our-story" },
       { label: "Mission & Vision", description: "What drives us", href: "/know-us/mission-vision" },
@@ -157,7 +157,7 @@ const NAV_ITEMS: NavItem[] = [
     id: "aboutus",
     label: "About Us",
     subLabel: "About Us",
-    subDesc: "JHS & Associates LLP — your trusted partners in finance.",
+    subDesc: "JHS & Associates LLP your trusted partners in finance.",
     subItems: [
       // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
@@ -229,7 +229,7 @@ const Navbar = () => {
   }, [menuOpen]);
 
   const openMenu = () => {
-    setActiveId(NAV_ITEMS[0].id);
+    setActiveId('insights'); // Default to Insights instead of Home
     setActiveSubLabel(null);
     setMobileState({ view: 'root' });
     setMenuOpen(true);
@@ -376,33 +376,7 @@ const Navbar = () => {
                       </button>
                     )}
 
-                    {/* ── INLINE SUB-ITEMS (Services & Sectors only) ── */}
-                    {item.inlineExpand && activeId === item.id && item.subItems && (
-                      <ul className="mega__inline-list">
-                        {item.subItems.map((sub) => (
-                          <li key={sub.label} className="mega__inline-li">
-                            <button
-                              className={`mega__inline-btn ${activeSubLabel === sub.label ? "mega__inline-btn--active" : ""}`}
-                              onClick={() =>
-                                setActiveSubLabel((prev) =>
-                                  prev === sub.label ? null : sub.label
-                                )
-                              }
-                            >
-                              <span className="mega__inline-label">{sub.label}</span>
-                              <svg
-                                className="mega__inline-arr"
-                                width="12" height="12"
-                                viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" strokeWidth="2.5"
-                              >
-                                <polyline points="9 18 15 12 9 6" />
-                              </svg>
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+
 
                   </li>
                 ))}
@@ -412,61 +386,130 @@ const Navbar = () => {
             {/* ════ RIGHT PANEL ════ */}
             <div className="mega__right">
 
-              {/* Single unified right panel — updates based on active state */}
-              <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
-
-                {/* Heading */}
-                {rightTitle && (
+              {/* Services/Sectors Selection Panel */}
+              {isInline && !activeSubLabel && (
+                <div className="mega__right-panel mega__right-panel--vis">
                   <div className="mega__right-hdr">
+                    <h2 className="mega__right-title">
+                      {activeNavItem.id === 'services' ? 'Our Services' : 'Our Sectors'}
+                    </h2>
+                    <p className="mega__right-desc">
+                      {activeNavItem.id === 'services' 
+                        ? 'Choose your market to explore our comprehensive service offerings'
+                        : 'Select a sector to explore our specialized industry expertise'
+                      }
+                    </p>
+                    <div className="mega__right-rule" />
+                  </div>
+
+                  <div className="mega__simple-grid">
+                    {activeNavItem.subItems?.map((subItem) => (
+                      <button
+                        key={subItem.label}
+                        className="mega__simple-item"
+                        onClick={() => setActiveSubLabel(subItem.label)}
+                      >
+                        <h3>{subItem.label}</h3>
+                        <p>{subItem.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Services/Sectors Detail Panel */}
+              {isInline && activeSubLabel && rightChildren && (
+                <div className="mega__right-panel mega__right-panel--vis">
+                  <div className="mega__right-hdr">
+                    <button 
+                      className="mega__back-btn"
+                      onClick={() => setActiveSubLabel(null)}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="15 18 9 12 15 6" />
+                      </svg>
+                      Back
+                    </button>
                     <h2 className="mega__right-title">{rightTitle}</h2>
                     {rightDesc && (
                       <p className="mega__right-desc">{rightDesc}</p>
                     )}
                     <div className="mega__right-rule" />
                   </div>
-                )}
 
-                {/* 2-column grid */}
-                {rightChildren && rightChildren.length > 0 && (
-                  <ul className="mega__sub-grid">
+                  <div className="mega__simple-grid">
                     {(rightChildren as Array<{
                       label: string;
                       description?: string;
                       href?: string;
                     }>).map((item) => (
-                      <li key={item.label} className="mega__sub-cell">
+                      <div key={item.label} className="mega__simple-item">
                         {item.href ? (
                           <Link
                             to={item.href}
-                            className="mega__sub-link"
+                            className="mega__simple-link"
                             onClick={closeMenu}
                           >
-                            <span className="mega__sub-name">{item.label}</span>
-                            {item.description && (
-                              <span className="mega__sub-desc">{item.description}</span>
-                            )}
+                            <h4>{item.label}</h4>
+                            {item.description && <p>{item.description}</p>}
                           </Link>
                         ) : (
-                          <span className="mega__sub-link mega__sub-link--plain">
-                            <span className="mega__sub-name">{item.label}</span>
-                            {item.description && (
-                              <span className="mega__sub-desc">{item.description}</span>
-                            )}
-                          </span>
+                          <div className="mega__simple-link">
+                            <h4>{item.label}</h4>
+                            {item.description && <p>{item.description}</p>}
+                          </div>
                         )}
-                      </li>
+                      </div>
                     ))}
-                  </ul>
-                )}
-
-                {/* Placeholder when inlineExpand item selected but no sub clicked yet */}
-                {isInline && !activeSubLabel && (
-                  <div className="mega__inline-placeholder">
-                    <p>Select a category from the left to explore</p>
                   </div>
-                )}
+                </div>
+              )}
 
-              </div>
+              {/* Regular panels for non-inline items (Know Us, About Us, etc.) */}
+              {!isInline && (
+                <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
+                  {/* Heading */}
+                  {rightTitle && (
+                    <div className="mega__right-hdr">
+                      <h2 className="mega__right-title">{rightTitle}</h2>
+                      {rightDesc && (
+                        <p className="mega__right-desc">{rightDesc}</p>
+                      )}
+                      <div className="mega__right-rule" />
+                    </div>
+                  )}
+
+                  {/* Simple grid like Know Us */}
+                  {rightChildren && rightChildren.length > 0 && (
+                    <div className="mega__simple-grid">
+                      {(rightChildren as Array<{
+                        label: string;
+                        description?: string;
+                        href?: string;
+                      }>).map((item) => (
+                        <div key={item.label} className="mega__simple-item">
+                          {item.href ? (
+                            <Link
+                              to={item.href}
+                              className="mega__simple-link"
+                              onClick={closeMenu}
+                            >
+                              <h4>{item.label}</h4>
+                              {item.description && <p>{item.description}</p>}
+                            </Link>
+                          ) : (
+                            <div className="mega__simple-link">
+                              <h4>{item.label}</h4>
+                              {item.description && <p>{item.description}</p>}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
             </div>
 
           </div>

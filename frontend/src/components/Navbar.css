@@ -9,6 +9,7 @@
 /* ── Variables ─────────────────────────────────────────────── */
 :root {
   --nb-h: 70px;
+  --nb-h-mobile: 60px;
   --bg: #ffffff;
   --text: #1a1a1a;
   --muted: #666666;
@@ -17,11 +18,16 @@
   --accent-bg: rgba(30, 58, 95, 0.06);
 
   --left-w: 320px;
+  --left-w-mobile: 280px;
   /* Matched to BCG width */
 
   /* Use a clean corporate sans-serif to match BCG */
   --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Touch targets */
+  --touch-target: 44px;
+  --touch-target-sm: 36px;
 }
 
 *,
@@ -33,23 +39,36 @@
 }
 
 /* ================================================================
-   TOP NAVBAR
+   TOP NAVBAR - MOBILE FIRST
    ================================================================ */
 .nb {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 23%;
-  min-width: 320px;
+  top: 16px;
+  left: 16px;
+  width: calc(100% - 32px);
   z-index: 1000;
-  height: var(--nb-h);
+  height: var(--nb-h-mobile);
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  border-radius: 15px;
+  padding: 0 20px;
+  border-radius: 12px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .nb {
+    top: 20px;
+    left: 20px;
+    width: 23%;
+    min-width: 320px;
+    height: var(--nb-h);
+    padding: 0 32px;
+    border-radius: 15px;
+  }
 }
 
 .nb--hidden {
@@ -63,11 +82,19 @@
 .nb--open {
   top: 0 !important;
   left: 0 !important;
-  width: var(--left-w) !important;
+  width: 100% !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   border-bottom: 1px solid var(--border) !important;
-  border-right: 1px solid var(--border) !important;
+  height: var(--nb-h-mobile) !important;
+}
+
+@media (min-width: 768px) {
+  .nb--open {
+    width: var(--left-w) !important;
+    border-right: 1px solid var(--border) !important;
+    height: var(--nb-h) !important;
+  }
 }
 
 .nb__left {
@@ -82,15 +109,15 @@
   gap: 18px;
 }
 
-/* Hamburger */
+/* Hamburger - Mobile Optimized */
 .nb__burger {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  width: 45px;
-  height: 45px;
+  gap: 4px;
+  width: var(--touch-target);
+  height: var(--touch-target);
   background: rgba(0, 0, 0, 0.40);
   border: none;
   cursor: pointer;
@@ -98,11 +125,22 @@
   border-radius: 8px;
   flex-shrink: 0;
   transition: background 0.18s;
+  /* Better touch feedback */
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .nb__burger {
+    width: 45px;
+    height: 45px;
+    gap: 5px;
+  }
+}
 }
 
 .nb__bar {
   display: block;
-  width: 22px;
+  width: 18px;
   height: 2px;
   background: #ffffff;
   border-radius: 2px;
@@ -110,8 +148,20 @@
   transform-origin: center;
 }
 
+@media (min-width: 768px) {
+  .nb__bar {
+    width: 22px;
+  }
+}
+
 .nb__burger--open .nb__bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(6px) rotate(45deg);
+}
+
+@media (min-width: 768px) {
+  .nb__burger--open .nb__bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
 }
 
 .nb__burger--open .nb__bar:nth-child(2) {
@@ -120,10 +170,16 @@
 }
 
 .nb__burger--open .nb__bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-6px) rotate(-45deg);
 }
 
-/* Logo */
+@media (min-width: 768px) {
+  .nb__burger--open .nb__bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+/* Logo - Responsive */
 .nb__brand {
   display: flex;
   align-items: center;
@@ -131,53 +187,84 @@
 }
 
 .nb__logo {
-  height: 60px;
+  height: 40px;
   width: auto;
-  max-width: 200px;
+  max-width: 160px;
   object-fit: contain;
 }
 
-/* Right controls */
+@media (min-width: 768px) {
+  .nb__logo {
+    height: 60px;
+    max-width: 200px;
+  }
+}
+
+/* Right controls - Mobile Optimized */
 .nb__icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: var(--touch-target-sm);
+  height: var(--touch-target-sm);
   background: none;
   border: none;
   cursor: pointer;
   color: var(--text);
   border-radius: 4px;
   transition: background 0.18s, color 0.18s;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nb__icon-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: #1e3a5f;
+@media (min-width: 768px) {
+  .nb__icon-btn {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nb__icon-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1e3a5f;
+  }
 }
 
 .nb__login {
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text);
   text-decoration: none;
-  padding: 8px 18px;
+  padding: 6px 14px;
   border: 1.5px solid var(--text);
-  border-radius: 15px;
+  border-radius: 12px;
   transition: background 0.2s, color 0.2s;
+  min-height: var(--touch-target-sm);
+  display: flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nb__login:hover {
-  background: var(--text);
-  color: #fff;
+@media (min-width: 768px) {
+  .nb__login {
+    font-size: 11.5px;
+    padding: 8px 18px;
+    border-radius: 15px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nb__login:hover {
+    background: var(--text);
+    color: #fff;
+  }
 }
 
 /* ================================================================
-   MEGA MENU
+   MEGA MENU - MOBILE FIRST
    ================================================================ */
 .mega {
   position: fixed;
@@ -193,7 +280,13 @@
   transition: transform 0.42s var(--ease);
   overflow: hidden;
   pointer-events: none;
-  padding-top: var(--nb-h);
+  padding-top: var(--nb-h-mobile);
+}
+
+@media (min-width: 768px) {
+  .mega {
+    padding-top: var(--nb-h);
+  }
 }
 
 .mega--open {
@@ -201,28 +294,44 @@
   pointer-events: all;
 }
 
-/* ── Top bar ── */
+/* ── Top bar - Mobile Optimized ── */
 .mega__topbar {
   display: flex;
   align-items: center;
-  height: var(--nb-h);
-  padding: 0 32px;
+  height: var(--nb-h-mobile);
+  padding: 0 20px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  gap: 24px;
+  gap: 16px;
 }
 
-/* Search bar */
+@media (min-width: 768px) {
+  .mega__topbar {
+    height: var(--nb-h);
+    padding: 0 32px;
+    gap: 24px;
+  }
+}
+
+/* Search bar - Mobile Optimized */
 .mega__topbar-search {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
+  gap: 8px;
+  padding: 8px 12px;
   background: #f2f2f2;
   border-radius: 6px;
   border: 1px solid transparent;
   transition: border-color 0.2s, background 0.2s;
+  min-height: var(--touch-target-sm);
+}
+
+@media (min-width: 768px) {
+  .mega__topbar-search {
+    gap: 10px;
+    padding: 10px 16px;
+  }
 }
 
 .mega__topbar-search:focus-within {
@@ -241,8 +350,16 @@
   border: none;
   outline: none;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
+  /* Prevent zoom on iOS */
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .mega__search-inp {
+    font-size: 13px;
+  }
 }
 
 .mega__search-inp::placeholder {
@@ -250,7 +367,7 @@
 }
 
 /* ================================================================
-   MODAL BODY — LEFT | RIGHT
+   MODAL BODY — RESPONSIVE LAYOUT
    ================================================================ */
 .mega__body {
   display: flex;
@@ -258,18 +375,32 @@
   overflow: hidden;
 }
 
+/* Desktop Layout */
 .mega__desktop {
-  display: flex;
+  display: none;
   flex: 1;
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .mega__desktop {
+    display: flex;
+  }
+}
+
+/* Mobile Layout */
 .mega__mobile {
-  display: none;
+  display: flex;
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .mega__mobile {
+    display: none;
+  }
 }
 
 .mega__mobile-slider {
@@ -285,12 +416,21 @@
   height: 100%;
   overflow-y: auto;
   background: #ffffff;
+  /* Improve scroll performance */
+  -webkit-overflow-scrolling: touch;
 }
 
 .mega__mobile-list,
 .mega__mobile-sublist {
   list-style: none;
-  padding: 12px 0;
+  padding: 16px 0;
+}
+
+@media (min-width: 480px) {
+  .mega__mobile-list,
+  .mega__mobile-sublist {
+    padding: 12px 0;
+  }
 }
 
 .mega__mobile-list li,

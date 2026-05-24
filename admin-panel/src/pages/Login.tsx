@@ -166,15 +166,13 @@ export default function Login() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
-                    </InputAdornment>
-                  ),
-                }
-              }}
+              InputProps={{
+  startAdornment: (
+    <InputAdornment position="start">
+      <EmailIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
+    </InputAdornment>
+  ),
+}}
               sx={{
                 mb: 2.5,
                 '& .MuiOutlinedInput-root': {
@@ -201,22 +199,28 @@ export default function Login() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton size="small" onClick={() => setShowPw(!showPw)} edge="end">
-                        {showPw ? <VisibilityOff sx={{ fontSize: 18, color: '#8a8d93' }} /> : <Visibility sx={{ fontSize: 18, color: '#8a8d93' }} />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }
-              }}
+              InputProps={{
+  startAdornment: (
+    <InputAdornment position="start">
+      <LockIcon sx={{ fontSize: 18, color: '#8a8d93' }} />
+    </InputAdornment>
+  ),
+  endAdornment: (
+    <InputAdornment position="end">
+      <IconButton
+        size="small"
+        onClick={() => setShowPw(!showPw)}
+        edge="end"
+      >
+        {showPw ? (
+          <VisibilityOff sx={{ fontSize: 18, color: '#8a8d93' }} />
+        ) : (
+          <Visibility sx={{ fontSize: 18, color: '#8a8d93' }} />
+        )}
+      </IconButton>
+    </InputAdornment>
+  ),
+}}
               sx={{
                 mb: 1.5,
                 '& .MuiOutlinedInput-root': {

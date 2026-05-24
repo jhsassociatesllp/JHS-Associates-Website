@@ -32,3 +32,4 @@ public/Uploads/images/*
 src/image/
 
 .env.production
+.env

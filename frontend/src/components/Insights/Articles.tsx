@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger)
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)
   ?? 'http://45.198.225.149:9030'
 
-  console.log(API_BASE)
+  // console.log(API_BASE)
 /* ── Types ───────────────────────────────────────────────────── */
 interface Article {
   id: string

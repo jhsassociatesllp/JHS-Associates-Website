@@ -102,22 +102,22 @@ const Manufacturing: React.FC = () => {
     {
       icon: <Shield size={32} />,
       title: 'Quality Management',
-      description: 'ISO certification, quality control systems, and continuous improvement frameworks.',
+      description: 'ISO certification, quality control systems and continuous improvement frameworks.',
     },
     {
       icon: <Truck size={32} />,
       title: 'Supply Chain Optimization',
-      description: 'End-to-end supply chain management, vendor development, and logistics efficiency.',
+      description: 'End-to-end supply chain management, vendor development and logistics efficiency.',
     },
     {
       icon: <Factory size={32} />,
       title: 'Plant Setup & Expansion',
-      description: 'Greenfield projects, facility planning, and capacity expansion advisory.',
+      description: 'Greenfield projects, facility planning and capacity expansion advisory.',
     },
     {
       icon: <FileCheck size={32} />,
       title: 'Regulatory Compliance',
-      description: 'Environmental, safety, and industry-specific regulatory compliance management.',
+      description: 'Environmental, safety and industry-specific regulatory compliance management.',
     },
   ]
 
@@ -158,7 +158,7 @@ const Manufacturing: React.FC = () => {
     { 
       step: '01', 
       title: 'Diagnostic Assessment', 
-      description: 'Comprehensive evaluation of current operations, processes, and performance metrics.' 
+      description: 'Comprehensive evaluation of current operations, processes and performance metrics.' 
     },
     { 
       step: '02', 
@@ -207,7 +207,7 @@ const Manufacturing: React.FC = () => {
             Transform your manufacturing operations with our comprehensive consulting solutions. 
             From operational efficiency to regulatory compliance, we help you build world-class manufacturing capabilities.
           </p>
-          <div className="man-hero__cta">
+          {/* <div className="man-hero__cta">
             <button className="man-btn man-btn--primary">
               Consult an Expert <ArrowRight size={16} />
             </button>
@@ -215,7 +215,7 @@ const Manufacturing: React.FC = () => {
               <PhoneCall size={14} />
               +91 98765 43210
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -363,10 +363,10 @@ const Manufacturing: React.FC = () => {
                 <Mail size={14} />
                 connect@jhsassociates.com
               </button>
-              <button className="man-btn man-btn--light">
+              {/* <button className="man-btn man-btn--light">
                 <PhoneCall size={14} />
                 +91 98765 43210
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

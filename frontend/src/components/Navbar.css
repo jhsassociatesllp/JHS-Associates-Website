@@ -186,16 +186,16 @@
 }
 
 .nb__logo {
-  height: 40px;
+  height: 65px;
   width: auto;
-  max-width: 160px;
+  max-width: 220px;
   object-fit: contain;
 }
 
 @media (min-width: 768px) {
   .nb__logo {
-    height: 60px;
-    max-width: 200px;
+    height: 75px;
+    max-width: 150px;
   }
 }
 

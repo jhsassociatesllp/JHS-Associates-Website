@@ -15,12 +15,12 @@ const HIGHLIGHTS = [
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'SEBI AIF Compliance',
-    desc: 'End-to-end compliance for SEBI-registered AIFs — Category I, II, and III — periodic filings, disclosure obligations, and SEBI inspection preparedness.',
+    desc: 'End-to-end compliance for SEBI-registered AIFs Category I, II and III periodic filings, disclosure obligations and SEBI inspection preparedness.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Fund Audit & Reporting',
-    desc: 'Statutory audit of AIF schemes, NAV certification, investor reporting support, and Ind AS-compliant financial statement preparation for fund entities.',
+    desc: 'Statutory audit of AIF schemes, NAV certification, investor reporting support and Ind AS-compliant financial statement preparation for fund entities.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
@@ -30,12 +30,12 @@ const HIGHLIGHTS = [
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Cross-border & FEMA',
-    desc: 'FEMA advisory for foreign LP investments, overseas investment by Indian funds, and cross-border structuring for funds with global limited partners.',
+    desc: 'FEMA advisory for foreign LP investments, overseas investment by Indian funds and cross-border structuring for funds with global limited partners.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Portfolio Company Advisory',
-    desc: 'Tax and compliance advisory for VC-backed portfolio companies — ESOP structuring, fundraising due diligence support, and pre-IPO tax planning.',
+    desc: 'Tax and compliance advisory for VC-backed portfolio companies ESOP structuring, fundraising due diligence support and pre-IPO tax planning.',
   },
 ]
 
@@ -46,7 +46,7 @@ const STATS = [
 ]
 
 const WHY = [
-  'Specialist SEBI AIF compliance expertise across Category I, II, and III structures',
+  'Specialist SEBI AIF compliance expertise across Category I, II and III structures',
   'Pass-through tax advisory for fund managers and limited partners',
   'ESOP and equity structuring for VC-backed portfolio companies',
   'Cross-border fund structuring with FEMA and tax treaty advisory',
@@ -90,8 +90,8 @@ export default function VentureCapital() {
           <h1 className="vc-hero__title">Venture<br /><em>Capital</em></h1>
           <p className="vc-hero__sub">
             Specialist audit, tax, and regulatory compliance advisory for
-            SEBI-registered AIFs, venture capital funds, and their portfolio
-            companies — built on deep expertise in AIF regulations and fund taxation.
+            SEBI-registered AIFs, venture capital funds and their portfolio
+            companies built on deep expertise in AIF regulations and fund taxation.
           </p>
           {/* <div className="vc-hero__stats">
             {STATS.map((s) => (
@@ -111,11 +111,11 @@ export default function VentureCapital() {
             <span className="vc-tag">Our Approach</span>
             <h2 className="vc-overview__title">Advisory Built for India's Venture Ecosystem</h2>
             <p className="vc-overview__body">
-              India's venture capital ecosystem has grown rapidly — but regulatory
+              India's venture capital ecosystem has grown rapidly but regulatory
               complexity has grown with it. SEBI AIF regulations, pass-through
-              taxation structures, FEMA compliance for foreign LPs, and portfolio
+              taxation structures, FEMA compliance for foreign LPs and portfolio
               company advisory all demand specialist expertise. JHS provides
-              integrated advisory across the fund lifecycle — from structuring
+              integrated advisory across the fund lifecycle from structuring
               and registration through to exit and wind-down.
             </p>
             <a href="/contact" className="vc-btn vc-btn--solid">
@@ -124,7 +124,7 @@ export default function VentureCapital() {
           </div>
           <div className="vc-overview__visual">
             <div className="vc-overview__badge">
-              <span className="vc-overview__badge-icon">🚀</span>
+              {/* <span className="vc-overview__badge-icon">🚀</span> */}
               <span className="vc-overview__badge-label">Full lifecycle fund advisory</span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function VentureCapital() {
         <div className="vc-section-hd">
           <h2 className="vc-section-hd__title">What We Offer</h2>
           <p className="vc-section-hd__sub">
-            Comprehensive services for VC funds, AIF managers, and their portfolio companies.
+            Comprehensive services for VC funds, AIF managers and their portfolio companies.
           </p>
         </div>
         <div className="vc-grid">
@@ -146,9 +146,9 @@ export default function VentureCapital() {
               <div className="vc-card__icon">{h.icon}</div>
               <h3 className="vc-card__title">{h.title}</h3>
               <p className="vc-card__desc">{h.desc}</p>
-              <button className="vc-card__cta" type="button">
+              {/* <button className="vc-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -161,7 +161,7 @@ export default function VentureCapital() {
             <span className="vc-tag">Why JHS</span>
             <h2 className="vc-why__title">The JHS Advantage in Venture Capital</h2>
             <p className="vc-why__sub">
-              We understand the speed and ambition of the venture ecosystem —
+              We understand the speed and ambition of the venture ecosystem
               and deliver advisory that keeps fund managers focused on returns,
               not compliance.
             </p>

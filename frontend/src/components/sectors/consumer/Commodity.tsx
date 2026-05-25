@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <TrendingUp size={20} strokeWidth={1.5} />,
     title: 'Price Risk Management',
-    desc: 'Structured hedging strategies to protect your business from commodity price volatility across metals, energy, and agri markets.',
+    desc: 'Structured hedging strategies to protect your business from commodity price volatility across metals, energy and agri markets.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Regulatory Compliance',
-    desc: 'Full compliance support for SEBI, FMC, and international commodity exchange regulations — from registration to reporting.',
+    desc: 'Full compliance support for SEBI, FMC and international commodity exchange regulations from registration to reporting.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Market Analysis & Research',
-    desc: 'In-depth commodity market intelligence, price forecasting, and sector research to support informed decision-making.',
+    desc: 'In-depth commodity market intelligence, price forecasting and sector research to support informed decision-making.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Cross-border Trading',
-    desc: 'Advisory on international commodity trading structures, transfer pricing, and customs duty optimisation.',
+    desc: 'Advisory on international commodity trading structures, transfer pricing and customs duty optimisation.',
   },
   {
     icon: <Layers size={20} strokeWidth={1.5} />,
     title: 'Inventory & Valuation',
-    desc: 'Accurate commodity inventory valuation, impairment testing, and stock audit services aligned with Ind AS and IFRS.',
+    desc: 'Accurate commodity inventory valuation, impairment testing and stock audit services aligned with Ind AS and IFRS.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax & Structuring',
-    desc: 'End-to-end tax planning for commodity traders — GST, customs, income tax, and FEMA compliance under one roof.',
+    desc: 'End-to-end tax planning for commodity traders GST, customs, income tax and FEMA compliance under one roof.',
   },
 ]
 
@@ -46,9 +46,9 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep domain expertise in metals, agri, and energy sectors',
+  'Deep domain expertise in metals, agri and energy sectors',
   'Dedicated commodity desk with real-time regulatory updates',
-  'Seamless coordination between tax, audit, and advisory teams',
+  'Seamless coordination between tax, audit and advisory teams',
   'Proven track record with large commodity trading houses',
   'International advisory capability across key trading hubs',
 ]
@@ -108,7 +108,7 @@ export default function Commodity() {
 
           <p className="com-hero__sub">
             Expert financial, tax, and compliance advisory for commodity traders,
-            exchanges, and market participants — built on deep sectoral knowledge
+            exchanges and market participants built on deep sectoral knowledge
             and regulatory expertise.
           </p>
 
@@ -127,9 +127,9 @@ export default function Commodity() {
             </h2>
             <p className="com-overview__body">
               India's commodity sector operates at the intersection of volatile global
-              markets, complex domestic regulations, and evolving tax frameworks. JHS
-              provides integrated advisory — combining financial structuring, tax
-              optimisation, and compliance management — to help commodity businesses
+              markets, complex domestic regulations and evolving tax frameworks. JHS
+              provides integrated advisory combining financial structuring, tax
+              optimisation and compliance management to help commodity businesses
               operate with confidence and efficiency.
             </p>
             <a href="/contact" className="com-btn com-btn--solid">
@@ -163,9 +163,9 @@ export default function Commodity() {
               <div className="com-card__icon">{h.icon}</div>
               <h3 className="com-card__title">{h.title}</h3>
               <p className="com-card__desc">{h.desc}</p>
-              <button className="com-card__cta" type="button">
+              {/* <button className="com-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -182,7 +182,7 @@ export default function Commodity() {
               The JHS Advantage in Commodity
             </h2>
             <p className="com-why__sub">
-              We don't just advise — we embed ourselves in your operations
+              We don't just advise we embed ourselves in your operations
               to deliver measurable outcomes.
             </p>
             <a href="/contact" className="com-btn com-btn--ghost">

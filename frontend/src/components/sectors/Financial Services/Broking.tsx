@@ -10,17 +10,17 @@ const HIGHLIGHTS = [
   {
     icon: <TrendingUp size={20} strokeWidth={1.5} />,
     title: 'SEBI Regulatory Compliance',
-    desc: 'End-to-end compliance support for stock brokers, sub-brokers, and depository participants — SEBI circulars, net worth requirements, and KYC/AML obligations.',
+    desc: 'End-to-end compliance support for stock brokers, sub-brokers and depository participants SEBI circulars, net worth requirements and KYC/AML obligations.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Internal & Concurrent Audit',
-    desc: 'SEBI-mandated internal audits, concurrent audits, and system audit support for broking entities registered with NSE, BSE, and MCX.',
+    desc: 'SEBI-mandated internal audits, concurrent audits and system audit support for broking entities registered with NSE, BSE and MCX.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Financial Reporting & Ind AS',
-    desc: 'Statutory audit, financial statement preparation, and Ind AS advisory for listed and unlisted broking companies and holding structures.',
+    desc: 'Statutory audit, financial statement preparation and Ind AS advisory for listed and unlisted broking companies and holding structures.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
@@ -30,12 +30,12 @@ const HIGHLIGHTS = [
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Client Fund & Margin Compliance',
-    desc: 'Advisory on SEBI client fund segregation rules, peak margin reporting, and compliance with SEBI circular on use of client securities.',
+    desc: 'Advisory on SEBI client fund segregation rules, peak margin reporting and compliance with SEBI circular on use of client securities.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Risk & Compliance Framework',
-    desc: 'Risk-based compliance framework design, PMLA/AML program advisory, and regulatory inspection support for broking entities.',
+    desc: 'Risk-based compliance framework design, PMLA/AML program advisory and regulatory inspection support for broking entities.',
   },
 ]
 
@@ -48,9 +48,9 @@ const STATS = [
 const WHY = [
   'Deep expertise in SEBI regulations for stock brokers and depository participants',
   'Specialist team for SEBI-mandated concurrent and internal audit assignments',
-  'Experience across equity, commodity, currency, and derivative broking segments',
+  'Experience across equity, commodity, currency and derivative broking segments',
   'Proven track record with large broking houses and boutique investment firms',
-  'Integrated tax, audit, and compliance delivery under one engagement team',
+  'Integrated tax, audit and compliance delivery under one engagement team',
 ]
 
 export default function Broking() {
@@ -90,7 +90,7 @@ export default function Broking() {
           <h1 className="br-hero__title">Broking<br /><em>Services</em></h1>
           <p className="br-hero__sub">
             Specialised audit, tax, and regulatory compliance advisory for stock
-            brokers, sub-brokers, and depository participants — built on deep
+            brokers, sub-brokers and depository participants built on deep
             knowledge of SEBI regulations and capital market frameworks.
           </p>
           {/* <div className="br-hero__stats">
@@ -112,10 +112,10 @@ export default function Broking() {
             <h2 className="br-overview__title">Precision Compliance for Capital Market Intermediaries</h2>
             <p className="br-overview__body">
               Broking entities operate under one of India's most closely scrutinised
-              regulatory environments — SEBI's evolving circular framework, peak margin
-              requirements, client fund segregation rules, and KYC/AML obligations
+              regulatory environments SEBI's evolving circular framework, peak margin
+              requirements, client fund segregation rules and KYC/AML obligations
               demand constant vigilance. JHS provides specialist advisory that keeps
-              broking businesses compliant, audit-ready, and operationally efficient.
+              broking businesses compliant, audit-ready and operationally efficient.
             </p>
             <a href="/contact" className="br-btn br-btn--solid">
               Talk to Our Experts <ArrowUpRight size={15} />
@@ -145,9 +145,9 @@ export default function Broking() {
               <div className="br-card__icon">{h.icon}</div>
               <h3 className="br-card__title">{h.title}</h3>
               <p className="br-card__desc">{h.desc}</p>
-              <button className="br-card__cta" type="button">
+              {/* <button className="br-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -160,7 +160,7 @@ export default function Broking() {
             <span className="br-tag">Why JHS</span>
             <h2 className="br-why__title">The JHS Advantage in Broking</h2>
             <p className="br-why__sub">
-              We understand the speed and complexity of capital markets — and deliver
+              We understand the speed and complexity of capital markets and deliver
               compliance advisory that keeps pace with SEBI's evolving framework.
             </p>
             <a href="/contact" className="br-btn br-btn--ghost">

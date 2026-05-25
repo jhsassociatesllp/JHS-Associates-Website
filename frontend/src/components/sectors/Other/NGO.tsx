@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Heart size={20} strokeWidth={1.5} />,
     title: 'FCRA Compliance',
-    desc: 'End-to-end Foreign Contribution Regulation Act compliance — FCRA registration, renewal, annual returns, designated account management, and MHA reporting obligations.',
+    desc: 'End-to-end Foreign Contribution Regulation Act compliance FCRA registration, renewal, annual returns, designated account management, and MHA reporting obligations.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Statutory & Trust Audit',
-    desc: 'Statutory audit of NGOs, charitable trusts, and Section 8 companies — aligned with Income Tax Act requirements and donor reporting standards.',
+    desc: 'Statutory audit of NGOs, charitable trusts and Section 8 companiesaligned with Income Tax Act requirements and donor reporting standards.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax Exemption Advisory',
-    desc: 'Section 12A/12AB registration, 80G approval, 80GGA and DPIIT advisory, and ongoing compliance to maintain tax-exempt status for charitable entities.',
+    desc: 'Section 12A/12AB registration, 80G approval, 80GGA and DPIIT advisory and ongoing compliance to maintain tax-exempt status for charitable entities.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'CSR Fund Utilisation',
-    desc: 'Advisory on CSR fund receipt, utilisation reporting, Form CSR-2 compliance, and impact reporting frameworks for NGOs receiving corporate CSR contributions.',
+    desc: 'Advisory on CSR fund receipt, utilisation reporting, Form CSR-2 compliance and impact reporting frameworks for NGOs receiving corporate CSR contributions.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Grant Management & Reporting',
-    desc: 'Grant accounting, utilisation certificates, fund accountability frameworks, and donor reporting support for international and bilateral grant recipients.',
+    desc: 'Grant accounting, utilisation certificates, fund accountability frameworks and donor reporting support for international and bilateral grant recipients.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Registration & Structuring',
-    desc: 'Advisory on optimal legal structure — Section 8 company, public charitable trust, or society — and end-to-end registration support with relevant authorities.',
+    desc: 'Advisory on optimal legal structure Section 8 company, public charitable trust, or society and end-to-end registration support with relevant authorities.',
   },
 ]
 
@@ -46,9 +46,9 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep expertise in FCRA compliance, MHA reporting, and foreign fund management',
-  'Specialist knowledge of Section 12AB, 80G, and CSR regulatory frameworks',
-  'Trusted by international NGOs, bilateral aid recipients, and Indian foundations',
+  'Deep expertise in FCRA compliance, MHA reporting and foreign fund management',
+  'Specialist knowledge of Section 12AB, 80G and CSR regulatory frameworks',
+  'Trusted by international NGOs, bilateral aid recipients and Indian foundations',
   'Grant accounting and utilisation certificate capability for diverse donor types',
   'Sensitive and confidential advisory aligned with the mission of each organisation',
 ]
@@ -90,8 +90,8 @@ export default function NGO() {
           <h1 className="ngo-hero__title">NGO<br /><em>Services</em></h1>
           <p className="ngo-hero__sub">
             Specialist audit, tax, and regulatory compliance advisory for
-            non-governmental organisations, charitable trusts, and Section 8
-            companies — built on deep expertise in FCRA, 12AB, and CSR frameworks.
+            non-governmental organisations, charitable trusts and Section 8
+            companies built on deep expertise in FCRA, 12AB and CSR frameworks.
           </p>
           {/* <div className="ngo-hero__stats">
             {STATS.map((s) => (
@@ -112,7 +112,7 @@ export default function NGO() {
             <h2 className="ngo-overview__title">Advisory That Serves the Mission</h2>
             <p className="ngo-overview__body">
               NGOs and charitable organisations operate under unique regulatory
-              obligations — FCRA compliance, 12AB/80G registration, CSR fund
+              obligations FCRA compliance, 12AB/80G registration, CSR fund
               management, and grant accountability frameworks all demand specialist
               expertise. JHS provides advisory that understands the purpose-driven
               nature of the sector, helping organisations focus on their mission
@@ -124,7 +124,7 @@ export default function NGO() {
           </div>
           <div className="ngo-overview__visual">
             <div className="ngo-overview__badge">
-              <span className="ngo-overview__badge-icon">🤝</span>
+              {/* <span className="ngo-overview__badge-icon">🤝</span> */}
               <span className="ngo-overview__badge-label">Purpose-driven advisory</span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function NGO() {
         <div className="ngo-section-hd">
           <h2 className="ngo-section-hd__title">What We Offer</h2>
           <p className="ngo-section-hd__sub">
-            Comprehensive services covering every compliance, audit, and tax need of NGOs and charitable entities.
+            Comprehensive services covering every compliance, audit and tax need of NGOs and charitable entities.
           </p>
         </div>
         <div className="ngo-grid">
@@ -146,9 +146,9 @@ export default function NGO() {
               <div className="ngo-card__icon">{h.icon}</div>
               <h3 className="ngo-card__title">{h.title}</h3>
               <p className="ngo-card__desc">{h.desc}</p>
-              <button className="ngo-card__cta" type="button">
+              {/* <button className="ngo-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -161,7 +161,7 @@ export default function NGO() {
             <span className="ngo-tag">Why JHS</span>
             <h2 className="ngo-why__title">The JHS Advantage for NGOs</h2>
             <p className="ngo-why__sub">
-              We understand that compliance is in service of the mission —
+              We understand that compliance is in service of the mission
               and we deliver advisory that protects organisations so they
               can focus on the work that matters.
             </p>

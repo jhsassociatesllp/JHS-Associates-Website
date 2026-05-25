@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Users size={20} strokeWidth={1.5} />,
     title: 'Succession Planning',
-    desc: 'Structured succession advisory to ensure smooth generational transitions — legal structuring, family constitutions, and governance frameworks.',
+    desc: 'Structured succession advisory to ensure smooth generational transitions legal structuring, family constitutions, and governance frameworks.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Family Settlement & Partition',
-    desc: 'Expert advisory on family business partitions, settlement deeds, asset distribution, and tax-efficient restructuring of family-held entities.',
+    desc: 'Expert advisory on family business partitions, settlement deeds, asset distribution and tax-efficient restructuring of family-held entities.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Wealth & Estate Planning',
-    desc: 'Holistic wealth structuring, trust formation, will drafting advisory, and estate planning to protect and preserve family wealth across generations.',
+    desc: 'Holistic wealth structuring, trust formation, will drafting advisory and estate planning to protect and preserve family wealth across generations.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Business Restructuring',
-    desc: 'Tax-efficient demergers, holding company structures, group reorganisations, and consolidation advisory for complex family business groups.',
+    desc: 'Tax-efficient demergers, holding company structures, group reorganisations and consolidation advisory for complex family business groups.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax & Compliance',
-    desc: 'HUF taxation, trust taxation, income tax planning for promoter families, and compliance management across multiple family-held entities.',
+    desc: 'HUF taxation, trust taxation, income tax planning for promoter families and compliance management across multiple family-held entities.',
   },
   {
     icon: <Heart size={20} strokeWidth={1.5} />,
     title: 'Governance & Family Office',
-    desc: 'Family council advisory, governance charter design, and family office setup support for multi-generational business families.',
+    desc: 'Family council advisory, governance charter design and family office setup support for multi-generational business families.',
   },
 ]
 
@@ -46,10 +46,10 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep expertise in HUF structures, family trusts, and succession frameworks',
+  'Deep expertise in HUF structures, family trusts and succession frameworks',
   'Sensitive and confidential advisory for complex family dynamics',
   'Proven track record in multi-generational business family engagements',
-  'Integrated tax, legal structuring, and governance advisory under one team',
+  'Integrated tax, legal structuring and governance advisory under one team',
   'Trusted across prominent Mumbai and pan-India business families',
 ]
 
@@ -89,9 +89,9 @@ export default function FamilyOrientedBusinesses() {
           {/* <p className="fb-hero__eyebrow">Sectors &nbsp;·&nbsp; Financial Services</p> */}
           <h1 className="fb-hero__title">Family Oriented<br /><em>Businesses</em></h1>
           <p className="fb-hero__sub">
-            Trusted advisory for family-owned businesses and promoter families —
-            succession planning, wealth structuring, and governance frameworks
-            built on discretion, expertise, and long-term relationships.
+            Trusted advisory for family-owned businesses and promoter families
+            succession planning, wealth structuring and governance frameworks
+            built on discretion, expertise and long-term relationships.
           </p>
           {/* <div className="fb-hero__stats">
             {STATS.map((s) => (
@@ -111,9 +111,9 @@ export default function FamilyOrientedBusinesses() {
             <span className="fb-tag">Our Approach</span>
             <h2 className="fb-overview__title">Advisory Built on Trust, Not Just Expertise</h2>
             <p className="fb-overview__body">
-              Family businesses are India's economic backbone — but they face unique
+              Family businesses are India's economic backbone but they face unique
               challenges that go beyond compliance. Succession disputes, wealth
-              preservation across generations, governance gaps, and complex holding
+              preservation across generations, governance gaps and complex holding
               structures all require advisors who understand both the commercial and
               personal dimensions of family enterprise. JHS brings two decades of
               trusted, confidential advisory to India's leading business families.
@@ -124,7 +124,7 @@ export default function FamilyOrientedBusinesses() {
           </div>
           <div className="fb-overview__visual">
             <div className="fb-overview__badge">
-              <span className="fb-overview__badge-icon">🏛️</span>
+              {/* <span className="fb-overview__badge-icon">🏛️</span> */}
               <span className="fb-overview__badge-label">Trusted family business advisory</span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function FamilyOrientedBusinesses() {
         <div className="fb-section-hd">
           <h2 className="fb-section-hd__title">What We Offer</h2>
           <p className="fb-section-hd__sub">
-            Comprehensive services covering every financial, governance, and succession need of family businesses.
+            Comprehensive services covering every financial, governance and succession need of family businesses.
           </p>
         </div>
         <div className="fb-grid">
@@ -146,9 +146,9 @@ export default function FamilyOrientedBusinesses() {
               <div className="fb-card__icon">{h.icon}</div>
               <h3 className="fb-card__title">{h.title}</h3>
               <p className="fb-card__desc">{h.desc}</p>
-              <button className="fb-card__cta" type="button">
+              {/* <button className="fb-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -161,7 +161,7 @@ export default function FamilyOrientedBusinesses() {
             <span className="fb-tag">Why JHS</span>
             <h2 className="fb-why__title">The JHS Advantage for Family Businesses</h2>
             <p className="fb-why__sub">
-              We have been trusted by India's business families for two decades —
+              We have been trusted by India's business families for two decades
               because we treat every engagement with the discretion and care it deserves.
             </p>
             <a href="/contact" className="fb-btn fb-btn--ghost">
@@ -186,7 +186,7 @@ export default function FamilyOrientedBusinesses() {
             <p className="fb-cta__eyebrow">Get Started</p>
             <h2 className="fb-cta__title">Ready to secure your family's financial future?</h2>
             <p className="fb-cta__sub">
-              Speak with a JHS family business specialist — in complete confidence.
+              Speak with a JHS family business specialist in complete confidence.
             </p>
           </div>
           <a href="/contact" className="fb-btn fb-btn--cta">

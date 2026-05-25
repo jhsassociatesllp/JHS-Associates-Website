@@ -10,22 +10,22 @@ const HIGHLIGHTS = [
   {
     icon: <HardHat size={20} strokeWidth={1.5} />,
     title: 'Project Finance & Structuring',
-    desc: 'Advisory on debt-equity structuring, SPV setup, project cost accounting, and financial modelling for infrastructure, residential, and commercial construction projects.',
+    desc: 'Advisory on debt-equity structuring, SPV setup, project cost accounting and financial modelling for infrastructure, residential and commercial construction projects.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'GST & Indirect Tax',
-    desc: 'GST advisory on works contracts, sub-contracting arrangements, reverse charge mechanisms, and input tax credit optimisation for construction businesses.',
+    desc: 'GST advisory on works contracts, sub-contracting arrangements, reverse charge mechanisms and input tax credit optimisation for construction businesses.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
-    desc: 'Statutory audit, internal audit, and project cost audit for construction companies — covering revenue recognition under Ind AS 115 and percentage of completion method.',
+    desc: 'Statutory audit, internal audit and project cost audit for construction companies covering revenue recognition under Ind AS 115 and percentage of completion method.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Contract & WIP Accounting',
-    desc: 'Work-in-progress accounting, contract revenue recognition, mobilisation advance treatment, and retention money accounting for long-duration construction projects.',
+    desc: 'Work-in-progress accounting, contract revenue recognition, mobilisation advance treatment and retention money accounting for long-duration construction projects.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
@@ -35,7 +35,7 @@ const HIGHLIGHTS = [
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Labour & Compliance',
-    desc: 'Labour law compliance, contractor payment compliance, ESI/PF advisory, and regulatory compliance for construction site operations across multiple states.',
+    desc: 'Labour law compliance, contractor payment compliance, ESI/PF advisory and regulatory compliance for construction site operations across multiple states.',
   },
 ]
 
@@ -89,8 +89,8 @@ export default function Construction() {
           {/* <p className="cn-hero__eyebrow">Sectors &nbsp;·&nbsp; Other</p> */}
           <h1 className="cn-hero__title">Construction<br /><em>Services</em></h1>
           <p className="cn-hero__sub">
-            Specialised financial, tax, and compliance advisory for construction
-            companies, infrastructure developers, and EPC contractors — built on
+            Specialised financial, tax and compliance advisory for construction
+            companies, infrastructure developers and EPC contractors built on
             deep expertise in project accounting and works contract GST.
           </p>
           {/* <div className="cn-hero__stats">
@@ -112,9 +112,9 @@ export default function Construction() {
             <h2 className="cn-overview__title">Building Financial Clarity for Construction Businesses</h2>
             <p className="cn-overview__body">
               Construction companies face some of the most complex accounting
-              and tax challenges in Indian business — Ind AS 115 revenue
+              and tax challenges in Indian business Ind AS 115 revenue
               recognition on long-duration contracts, works contract GST
-              complexity, multi-state labour compliance, and project cost
+              complexity, multi-state labour compliance and project cost
               audits all demand specialist expertise. JHS brings deep
               construction sector knowledge to deliver advisory that gives
               developers and contractors financial clarity at every stage.
@@ -125,7 +125,7 @@ export default function Construction() {
           </div>
           <div className="cn-overview__visual">
             <div className="cn-overview__badge">
-              <span className="cn-overview__badge-icon">🏗️</span>
+              {/* <span className="cn-overview__badge-icon">🏗️</span> */}
               <span className="cn-overview__badge-label">Full lifecycle construction advisory</span>
             </div>
           </div>
@@ -147,9 +147,9 @@ export default function Construction() {
               <div className="cn-card__icon">{h.icon}</div>
               <h3 className="cn-card__title">{h.title}</h3>
               <p className="cn-card__desc">{h.desc}</p>
-              <button className="cn-card__cta" type="button">
+              {/* <button className="cn-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -162,8 +162,8 @@ export default function Construction() {
             <span className="cn-tag">Why JHS</span>
             <h2 className="cn-why__title">The JHS Advantage in Construction</h2>
             <p className="cn-why__sub">
-              We understand the financial complexity of construction — long project
-              cycles, multi-party contracts, and evolving tax obligations — and
+              We understand the financial complexity of construction long project
+              cycles, multi-party contracts and evolving tax obligations and
               deliver advisory that keeps pace.
             </p>
             <a href="/contact" className="cn-btn cn-btn--ghost">

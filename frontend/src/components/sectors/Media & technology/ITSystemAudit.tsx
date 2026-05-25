@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Monitor size={20} strokeWidth={1.5} />,
     title: 'IT General Controls Audit',
-    desc: 'Comprehensive review of IT general controls — access management, change management, IT operations, and business continuity aligned with COBIT and ISO 27001 frameworks.',
+    desc: 'Comprehensive review of IT general controls access management, change management, IT operations and business continuity aligned with COBIT and ISO 27001 frameworks.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Cybersecurity Assessment',
-    desc: 'Vulnerability assessments, penetration testing advisory, and cybersecurity framework reviews to identify and remediate risks across enterprise IT environments.',
+    desc: 'Vulnerability assessments, penetration testing advisory and cybersecurity framework reviews to identify and remediate risks across enterprise IT environments.',
   },
   {
     icon: <Cpu size={20} strokeWidth={1.5} />,
     title: 'ERP & Application Controls',
-    desc: 'Application controls review for SAP, Oracle, Tally, and custom ERP systems — covering input, processing, and output controls for financial reporting integrity.',
+    desc: 'Application controls review for SAP, Oracle, Tally and custom ERP systems covering input, processing and output controls for financial reporting integrity.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Data Analytics & CAAT',
-    desc: 'Computer-Assisted Audit Techniques (CAAT) using ACL, IDEA, and Python-based tools for large-dataset analysis, exception reporting, and fraud detection.',
+    desc: 'Computer-Assisted Audit Techniques (CAAT) using ACL, IDEA and Python-based tools for large-dataset analysis, exception reporting and fraud detection.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Regulatory IT Compliance',
-    desc: 'IT compliance reviews for RBI, SEBI, IRDAI, and DPDPA — mapping technology controls to regulatory requirements and identifying compliance gaps.',
+    desc: 'IT compliance reviews for RBI, SEBI, IRDAI and DPDPA mapping technology controls to regulatory requirements and identifying compliance gaps.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'IS Audit & SOX IT Controls',
-    desc: 'Information Systems audit, SOX IT general controls testing, and internal audit of IT infrastructure for listed companies and MNC subsidiaries.',
+    desc: 'Information Systems audit, SOX IT general controls testing and internal audit of IT infrastructure for listed companies and MNC subsidiaries.',
   },
 ]
 
@@ -47,8 +47,8 @@ const STATS = [
 
 const WHY = [
   'CISA-certified professionals with deep ERP and enterprise IT audit experience',
-  'Specialist CAAT capability for large-volume data analysis and fraud detection',
-  'Regulatory IT compliance expertise across RBI, SEBI, IRDAI, and DPDPA',
+  'Specialist CAAT capability for large volume data analysis and fraud detection',
+  'Regulatory IT compliance expertise across RBI, SEBI, IRDAI and DPDPA',
   'SOX IT controls testing experience for listed companies and MNC subsidiaries',
   'Integrated IT audit delivery alongside financial audit and internal audit teams',
 ]
@@ -89,8 +89,8 @@ export default function ITSystemAudit() {
           {/* <p className="it-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
           <h1 className="it-hero__title">IT System<br /><em>Audit</em></h1>
           <p className="it-hero__sub">
-            Specialist IT audit, cybersecurity assessment, and technology controls
-            advisory for enterprises — built on CISA-certified expertise and
+            Specialist IT audit, cybersecurity assessment and technology controls
+            advisory for enterprises built on CISA-certified expertise and
             deep knowledge of Indian regulatory IT compliance frameworks.
           </p>
           {/* <div className="it-hero__stats">
@@ -113,11 +113,11 @@ export default function ITSystemAudit() {
             <p className="it-overview__body">
               As businesses become increasingly technology-dependent, IT audit has
               moved from a nice-to-have to a board-level priority. Regulatory
-              mandates from RBI, SEBI, and IRDAI, combined with India's Digital
+              mandates from RBI, SEBI and IRDAI, combined with India's Digital
               Personal Data Protection Act, have made robust IT controls essential.
               JHS brings CISA-certified specialists who understand both the
-              technology and the business — delivering IT audit that creates
-              genuine assurance, not just a checklist.
+              technology and the business delivering IT audit that creates
+              genuine assurance not just a checklist.
             </p>
             <a href="/contact" className="it-btn it-btn--solid">
               Talk to Our Experts <ArrowUpRight size={15} />
@@ -125,7 +125,7 @@ export default function ITSystemAudit() {
           </div>
           <div className="it-overview__visual">
             <div className="it-overview__badge">
-              <span className="it-overview__badge-icon">🖥️</span>
+              {/* <span className="it-overview__badge-icon">🖥️</span> */}
               <span className="it-overview__badge-label">Enterprise IT audit advisory</span>
             </div>
           </div>
@@ -147,9 +147,9 @@ export default function ITSystemAudit() {
               <div className="it-card__icon">{h.icon}</div>
               <h3 className="it-card__title">{h.title}</h3>
               <p className="it-card__desc">{h.desc}</p>
-              <button className="it-card__cta" type="button">
+              {/* <button className="it-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -162,7 +162,7 @@ export default function ITSystemAudit() {
             <span className="it-tag">Why JHS</span>
             <h2 className="it-why__title">The JHS Advantage in IT System Audit</h2>
             <p className="it-why__sub">
-              We bridge the gap between technology and assurance — combining
+              We bridge the gap between technology and assurance combining
               CISA-certified expertise with deep regulatory knowledge to deliver
               IT audit that boards and regulators trust.
             </p>

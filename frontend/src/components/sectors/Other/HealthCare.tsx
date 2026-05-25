@@ -10,41 +10,41 @@ const HIGHLIGHTS = [
   {
     icon: <HeartPulse size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
-    desc: 'Statutory audit, internal audit, and revenue assurance for hospitals, nursing homes, diagnostic centres, and pharmaceutical companies — aligned with sector-specific accounting norms.',
+    desc: 'Statutory audit, internal audit and revenue assurance for hospitals, nursing homes, diagnostic centres and pharmaceutical companies aligned with sector-specific accounting norms.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'GST & Indirect Tax',
-    desc: 'GST advisory for healthcare entities — exemptions on medical services, ITC on capital equipment, pharmacy GST compliance, and health insurance transaction structuring.',
+    desc: 'GST advisory for healthcare entities exemptions on medical services, ITC on capital equipment, pharmacy GST compliance and health insurance transaction structuring.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Regulatory Compliance',
-    desc: 'NABH, NABL, and clinical establishment compliance advisory — statutory registrations, licensing, and compliance management for healthcare facilities across India.',
+    desc: 'NABH, NABL, and clinical establishment compliance advisory statutory registrations, licensing and compliance management for healthcare facilities across India.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Tax & Structuring',
-    desc: 'Income tax planning for hospitals, medical trusts, and pharma companies — including Section 80IC and 80IB deductions, MAT advisory, and transfer pricing for healthcare groups.',
+    desc: 'Income tax planning for hospitals, medical trusts and pharma companies including Section 80IC and 80IB deductions, MAT advisory, and transfer pricing for healthcare groups.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Medical Tourism & Cross-border',
-    desc: 'Advisory on medical tourism structuring, FEMA compliance for foreign patient revenue, and cross-border healthcare service arrangements for hospital groups.',
+    desc: 'Advisory on medical tourism structuring, FEMA compliance for foreign patient revenue and cross-border healthcare service arrangements for hospital groups.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'M&A & Due Diligence',
-    desc: 'Tax and financial due diligence, valuation advisory, and deal structuring for healthcare M&A — hospital acquisitions, pharma deals, and PE investment into healthcare.',
+    desc: 'Tax and financial due diligence, valuation advisory and deal structuring for healthcare M&A hospital acquisitions, pharma deals and PE investment into healthcare.',
   },
 ]
 
 const WHY = [
-  'Deep sectoral knowledge across hospitals, diagnostics, pharma, and medical devices',
+  'Deep sectoral knowledge across hospitals, diagnostics, pharma and medical devices',
   'Specialist GST team for healthcare service exemptions and ITC optimisation',
   'Transfer pricing expertise for large hospital groups and pharma multinationals',
   'NABH/NABL compliance and clinical establishment advisory across all states',
-  'Trusted by leading hospital chains, diagnostic labs, and pharmaceutical companies',
+  'Trusted by leading hospital chains, diagnostic labs and pharmaceutical companies',
 ]
 
 export default function HealthCare() {
@@ -83,9 +83,9 @@ export default function HealthCare() {
           {/* <p className="hc-hero__eyebrow">Sectors &nbsp;·&nbsp; Other</p> */}
           <h1 className="hc-hero__title">Healthcare<br /><em>Services</em></h1>
           <p className="hc-hero__sub">
-            Specialised audit, tax, and compliance advisory for hospitals,
-            diagnostic centres, pharmaceutical companies, and healthcare
-            groups — built on deep expertise in healthcare sector regulations
+            Specialised audit, tax and compliance advisory for hospitals,
+            diagnostic centres, pharmaceutical companies and healthcare
+            groups built on deep expertise in healthcare sector regulations
             and GST exemption frameworks.
           </p>
         </div>
@@ -99,11 +99,11 @@ export default function HealthCare() {
             <h2 className="hc-overview__title">Advisory That Supports Better Healthcare</h2>
             <p className="hc-overview__body">
               India's healthcare sector operates under a unique blend of social
-              purpose and commercial reality — complex GST exemption frameworks,
-              NABH regulatory requirements, transfer pricing for hospital groups,
+              purpose and commercial reality complex GST exemption frameworks,
+              NABH regulatory requirements, transfer pricing for hospital groups
               and evolving pharma tax structures demand specialist advisors.
               JHS brings deep healthcare sector expertise, helping hospitals,
-              diagnostics, and pharma companies manage their compliance burden
+              diagnostics and pharma companies manage their compliance burden
               so they can focus on patient outcomes.
             </p>
             <a href="/contact" className="hc-btn hc-btn--solid">
@@ -112,7 +112,7 @@ export default function HealthCare() {
           </div>
           <div className="hc-overview__visual">
             <div className="hc-overview__badge">
-              <span className="hc-overview__badge-icon">🏥</span>
+              {/* <span className="hc-overview__badge-icon">🏥</span> */}
               <span className="hc-overview__badge-label">Full-spectrum healthcare advisory</span>
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function HealthCare() {
         <div className="hc-section-hd">
           <h2 className="hc-section-hd__title">What We Offer</h2>
           <p className="hc-section-hd__sub">
-            Comprehensive services covering every financial, tax, and compliance need of healthcare businesses.
+            Comprehensive services covering every financial, tax and compliance need of healthcare businesses.
           </p>
         </div>
         <div className="hc-grid">
@@ -134,9 +134,9 @@ export default function HealthCare() {
               <div className="hc-card__icon">{h.icon}</div>
               <h3 className="hc-card__title">{h.title}</h3>
               <p className="hc-card__desc">{h.desc}</p>
-              <button className="hc-card__cta" type="button">
+              {/* <button className="hc-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -149,8 +149,8 @@ export default function HealthCare() {
             <span className="hc-tag">Why JHS</span>
             <h2 className="hc-why__title">The JHS Advantage in Healthcare</h2>
             <p className="hc-why__sub">
-              We understand the dual mandate of healthcare — commercial
-              sustainability and social purpose — and deliver advisory
+              We understand the dual mandate of healthcare commercial
+              sustainability and social purpose and deliver advisory
               that serves both.
             </p>
             <a href="/contact" className="hc-btn hc-btn--ghost">

@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <ShoppingBag size={20} strokeWidth={1.5} />,
     title: 'GST & Indirect Tax',
-    desc: 'GST compliance, ITC reconciliation, e-invoicing, and indirect tax advisory tailored to high-volume multi-location retail operations.',
+    desc: 'GST compliance, ITC reconciliation, e-invoicing and indirect tax advisory tailored to high-volume multi-location retail operations.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Revenue & Margin Analytics',
-    desc: 'Category-level profitability analysis, shrinkage audits, markdown optimisation, and financial KPI dashboards for retail management.',
+    desc: 'Category-level profitability analysis, shrinkage audits, markdown optimisation and financial KPI dashboards for retail management.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Franchise & License Compliance',
-    desc: 'Compliance support for franchise agreements, royalty accounting, licence fee structuring, and multi-party retail arrangements.',
+    desc: 'Compliance support for franchise agreements, royalty accounting, licence fee structuring and multi-party retail arrangements.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Audit & Internal Controls',
-    desc: 'Store-level internal audits, inventory controls, shrinkage reviews, and fraud risk assessment across retail networks.',
+    desc: 'Store-level internal audits, inventory controls, shrinkage reviews and fraud risk assessment across retail networks.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Omnichannel & E-commerce Tax',
-    desc: 'Tax and compliance advisory for omnichannel retailers — managing GST, TDS on marketplace commissions, and digital transaction reporting.',
+    desc: 'Tax and compliance advisory for omnichannel retailers managing GST, TDS on marketplace commissions and digital transaction reporting.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Business Structuring',
-    desc: 'Entity structuring, PE risk mitigation for foreign retailers, FDI advisory, and tax-efficient retail expansion strategies.',
+    desc: 'Entity structuring, PE risk mitigation for foreign retailers, FDI advisory and tax-efficient retail expansion strategies.',
   },
 ]
 
@@ -46,7 +46,7 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep experience with large-format retail, specialty stores, and D2C brands',
+  'Deep experience with large-format retail, specialty stores and D2C brands',
   'Specialist GST team for high-volume, multi-location retail environments',
   'Proven track record with listed retailers and fast-growing omnichannel brands',
   'Store-level internal audit capability across pan-India retail networks',
@@ -93,7 +93,7 @@ export default function Retail() {
           {/* <p className="rt-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
           <h1 className="rt-hero__title">Retail<br /><em>Services</em></h1>
           <p className="rt-hero__sub">
-            Integrated financial, tax, and compliance advisory for retail businesses —
+            Integrated financial, tax and compliance advisory for retail businesses
             from single-store independents to large omnichannel chains operating
             across India and internationally.
           </p>
@@ -115,10 +115,10 @@ export default function Retail() {
             <span className="rt-tag">Our Approach</span>
             <h2 className="rt-overview__title">Built for the Pace and Scale of Modern Retail</h2>
             <p className="rt-overview__body">
-              Retail businesses operate at extraordinary velocity — high transaction
-              volumes, complex multi-state GST obligations, omnichannel complexity,
+              Retail businesses operate at extraordinary velocity high transaction
+              volumes, complex multi-state GST obligations, omnichannel complexity
               and constant margin pressure. JHS delivers advisory that keeps pace,
-              combining deep GST expertise, store-level audit capability, and
+              combining deep GST expertise, store-level audit capability and
               strategic tax structuring for retail businesses at every stage of growth.
             </p>
             <a href="/contact" className="rt-btn rt-btn--solid">
@@ -168,7 +168,7 @@ export default function Retail() {
             <h2 className="rt-why__title">The JHS Advantage in Retail</h2>
             <p className="rt-why__sub">
               We understand the commercial realities of retail —
-              thin margins, high volumes, and the need for real-time compliance clarity.
+              thin margins, high volumes and the need for real-time compliance clarity.
             </p>
             <a href="/contact" className="rt-btn rt-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />

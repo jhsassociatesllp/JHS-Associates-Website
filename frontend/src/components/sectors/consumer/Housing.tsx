@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Building2 size={20} strokeWidth={1.5} />,
     title: 'Project Finance & Structuring',
-    desc: 'Advisory on funding structures, debt-equity mix, and financial modelling for residential and affordable housing projects.',
+    desc: 'Advisory on funding structures, debt-equity mix and financial modelling for residential and affordable housing projects.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'RERA Compliance',
-    desc: 'End-to-end support for RERA registration, project accounting, quarterly filings, and audit requirements across states.',
+    desc: 'End-to-end support for RERA registration, project accounting, quarterly filings and audit requirements across states.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'GST & Indirect Tax',
-    desc: 'GST advisory on under-construction properties, affordable housing schemes, JDA transactions, and input tax credit optimisation.',
+    desc: 'GST advisory on under-construction properties, affordable housing schemes, JDA transactions and input tax credit optimisation.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Audit & Assurance',
-    desc: 'Statutory audit, internal audit, and revenue recognition reviews for housing developers under Ind AS 115.',
+    desc: 'Statutory audit, internal audit and revenue recognition reviews for housing developers under Ind AS 115.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Land & JDA Advisory',
-    desc: 'Tax and legal structuring for joint development agreements, land acquisition, slum rehabilitation, and redevelopment projects.',
+    desc: 'Tax and legal structuring for joint development agreements, land acquisition, slum rehabilitation and redevelopment projects.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Affordable Housing Schemes',
-    desc: 'Advisory on PMAY, CLSS, and government housing schemes — compliance, subsidy claims, and financial reporting.',
+    desc: 'Advisory on PMAY, CLSS and government housing schemes compliance, subsidy claims and financial reporting.',
   },
 ]
 
@@ -46,9 +46,9 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep expertise in RERA accounting, reporting, and audit obligations',
-  'Specialist GST team handling JDA, under-construction, and redevelopment transactions',
-  'Experience across affordable, mid-segment, and luxury housing developers',
+  'Deep expertise in RERA accounting, reporting and audit obligations',
+  'Specialist GST team handling JDA, under-construction and redevelopment transactions',
+  'Experience across affordable, mid-segment and luxury housing developers',
   'Ind AS 115 revenue recognition advisory for complex project structures',
   'Trusted by leading Mumbai and pan-India housing developers',
 ]
@@ -89,9 +89,9 @@ export default function Housing() {
           {/* <p className="hs-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
           <h1 className="hs-hero__title">Housing<br /><em>Services</em></h1>
           <p className="hs-hero__sub">
-            Comprehensive financial, tax, and compliance advisory for housing
-            developers, affordable housing projects, and real estate businesses
-            — from RERA registration to project completion.
+            Comprehensive financial, tax and compliance advisory for housing
+            developers, affordable housing projects and real estate businesses
+            from RERA registration to project completion.
           </p>
           {/* <div className="hs-hero__stats">
             {STATS.map((s) => (
@@ -112,9 +112,9 @@ export default function Housing() {
             <h2 className="hs-overview__title">Building Financial Foundations for Housing Businesses</h2>
             <p className="hs-overview__body">
               India's housing sector operates under one of the most complex regulatory
-              environments — RERA, GST, income tax, and Ind AS all intersect in ways
+              environments RERA, GST, income tax and Ind AS all intersect in ways
               that demand specialist expertise. JHS provides integrated advisory that
-              covers the full lifecycle of a housing project, from land acquisition
+              covers the full lifecycle of a housing project from land acquisition
               structuring to final handover and project close-out.
             </p>
             <a href="/contact" className="hs-btn hs-btn--solid">
@@ -123,7 +123,7 @@ export default function Housing() {
           </div>
           <div className="hs-overview__visual">
             <div className="hs-overview__badge">
-              <span className="hs-overview__badge-icon">🏗️</span>
+              {/* <span className="hs-overview__badge-icon">🏗️</span> */}
               <span className="hs-overview__badge-label">Full lifecycle housing advisory</span>
             </div>
           </div>

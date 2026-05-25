@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <ShoppingCart size={20} strokeWidth={1.5} />,
     title: 'Trade & Distribution Compliance',
-    desc: 'GST structuring, trade discount optimisation, and distribution chain compliance for multi-tier FMCG networks.',
+    desc: 'GST structuring, trade discount optimisation and distribution chain compliance for multi-tier FMCG networks.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Revenue & Margin Analytics',
-    desc: 'SKU-level profitability analysis, trade spend audits, and margin improvement advisory for growing FMCG brands.',
+    desc: 'SKU-level profitability analysis, trade spend audits and margin improvement advisory for growing FMCG brands.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Regulatory & Licensing',
-    desc: 'End-to-end support for FSSAI, BIS, and other statutory registrations, renewals, and compliance management.',
+    desc: 'End-to-end support for FSSAI, BIS and other statutory registrations, renewals and compliance management.',
   },
   {
     icon: <Truck size={20} strokeWidth={1.5} />,
     title: 'Supply Chain Advisory',
-    desc: 'Transfer pricing, customs duty optimisation, and tax-efficient supply chain structuring for domestic and import-heavy FMCG businesses.',
+    desc: 'Transfer pricing, customs duty optimisation and tax-efficient supply chain structuring for domestic and import-heavy FMCG businesses.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax & Indirect Tax',
-    desc: 'GST return filing, reconciliations, ITC management, and litigation support — tailored for high-volume FMCG operations.',
+    desc: 'GST return filing, reconciliations, ITC management and litigation support  tailored for high-volume FMCG operations.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Market Entry & Expansion',
-    desc: 'Financial structuring, entity setup, and regulatory guidance for FMCG brands entering or expanding within India.',
+    desc: 'Financial structuring, entity setup and regulatory guidance for FMCG brands entering or expanding within India.',
   },
 ]
 
@@ -46,10 +46,10 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep understanding of FMCG distribution, trade terms, and margin structures',
+  'Deep understanding of FMCG distribution, trade terms and margin structures',
   'Specialist GST and indirect tax team for high-volume transaction environments',
   'Dedicated support for both listed FMCG corporates and emerging D2C brands',
-  'Integrated tax, audit, and compliance delivery under one engagement',
+  'Integrated tax, audit and compliance delivery under one engagement',
   'Proven track record with consumer goods companies across categories',
 ]
 
@@ -89,8 +89,8 @@ export default function FMCG() {
           {/* <p className="fmcg-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
           <h1 className="fmcg-hero__title">FMCG<br /><em>Services</em></h1>
           <p className="fmcg-hero__sub">
-            Integrated financial, tax, and compliance advisory for Fast Moving Consumer
-            Goods companies — from emerging D2C brands to large distribution-led businesses.
+            Integrated financial, tax and compliance advisory for Fast Moving Consumer
+            Goods companies from emerging D2C brands to large distribution-led businesses.
           </p>
           {/* <div className="fmcg-hero__stats">
             {STATS.map((s) => (
@@ -110,9 +110,9 @@ export default function FMCG() {
             <span className="fmcg-tag">Our Approach</span>
             <h2 className="fmcg-overview__title">Built for the Speed of FMCG</h2>
             <p className="fmcg-overview__body">
-              FMCG businesses operate at high velocity — large transaction volumes, complex
-              distribution chains, and constant regulatory scrutiny. JHS delivers advisory
-              that keeps pace: proactive GST management, trade compliance, and financial
+              FMCG businesses operate at high velocity large transaction volumes, complex
+              distribution chains and constant regulatory scrutiny. JHS delivers advisory
+              that keeps pace: proactive GST management, trade compliance and financial
               structuring designed for businesses where margins and timing matter.
             </p>
             <a href="/contact" className="fmcg-btn fmcg-btn--solid">
@@ -121,7 +121,7 @@ export default function FMCG() {
           </div>
           <div className="fmcg-overview__visual">
             <div className="fmcg-overview__badge">
-              <span className="fmcg-overview__badge-icon">🛒</span>
+              {/* <span className="fmcg-overview__badge-icon">🛒</span> */}
               <span className="fmcg-overview__badge-label">360° FMCG advisory</span>
             </div>
           </div>
@@ -143,9 +143,9 @@ export default function FMCG() {
               <div className="fmcg-card__icon">{h.icon}</div>
               <h3 className="fmcg-card__title">{h.title}</h3>
               <p className="fmcg-card__desc">{h.desc}</p>
-              <button className="fmcg-card__cta" type="button">
+              {/* <button className="fmcg-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -158,8 +158,8 @@ export default function FMCG() {
             <span className="fmcg-tag">Why JHS</span>
             <h2 className="fmcg-why__title">The JHS Advantage in FMCG</h2>
             <p className="fmcg-why__sub">
-              We understand the commercial realities of FMCG — fast cycles,
-              thin margins, and relentless compliance demands.
+              We understand the commercial realities of FMCG fast cycles,
+              thin margins and relentless compliance demands.
             </p>
             <a href="/contact" className="fmcg-btn fmcg-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />

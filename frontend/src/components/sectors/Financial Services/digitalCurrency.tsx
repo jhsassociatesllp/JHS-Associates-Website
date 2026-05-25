@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Crypto Tax & Compliance',
-    desc: 'Income tax advisory on VDA (Virtual Digital Assets) — Section 115BBH computation, TDS under Section 194S, and filing obligations for crypto traders and investors.',
+    desc: 'Income tax advisory on VDA (Virtual Digital Assets) Section 115BBH computation, TDS under Section 194S and filing obligations for crypto traders and investors.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'GST on Digital Assets',
-    desc: 'GST advisory for crypto exchanges, NFT platforms, and Web3 businesses — transaction classification, liability structuring, and compliance management.',
+    desc: 'GST advisory for crypto exchanges, NFT platforms and Web3 businesses transaction classification, liability structuring and compliance management.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'FEMA & Cross-border Advisory',
-    desc: 'FEMA compliance for overseas crypto holdings, foreign exchange implications of digital asset transactions, and RBI regulatory guidance for VDA businesses.',
+    desc: 'FEMA compliance for overseas crypto holdings, foreign exchange implications of digital asset transactions and RBI regulatory guidance for VDA businesses.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Exchange & Platform Audit',
-    desc: 'Statutory audit, internal audit, and financial reporting for crypto exchanges, DeFi platforms, and digital asset custodians operating in India.',
+    desc: 'Statutory audit, internal audit and financial reporting for crypto exchanges, DeFi platforms and digital asset custodians operating in India.',
   },
   {
     icon: <Cpu size={20} strokeWidth={1.5} />,
     title: 'Web3 Business Structuring',
-    desc: 'Entity structuring, jurisdictional advisory, and tax-efficient setup for Web3 startups, NFT platforms, and blockchain businesses entering India.',
+    desc: 'Entity structuring, jurisdictional advisory and tax-efficient setup for Web3 startups, NFT platforms and blockchain businesses entering India.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'PMLA & AML Compliance',
-    desc: 'PMLA compliance framework for VDA service providers as per FIU-IND guidelines — KYC/AML program design, reporting obligations, and risk assessment.',
+    desc: 'PMLA compliance framework for VDA service providers as per FIU-IND guidelines KYC/AML program design, reporting obligations and risk assessment.',
   },
 ]
 
@@ -47,9 +47,9 @@ const STATS = [
 
 const WHY = [
   'First-mover expertise in India\'s evolving VDA tax and regulatory framework',
-  'Deep knowledge of Section 115BBH, 194S, and PMLA obligations for VDA businesses',
-  'Trusted by crypto exchanges, DeFi protocols, and institutional crypto investors',
-  'Cross-border advisory spanning FEMA, foreign jurisdiction structuring, and treaties',
+  'Deep knowledge of Section 115BBH, 194S and PMLA obligations for VDA businesses',
+  'Trusted by crypto exchanges, DeFi protocols and institutional crypto investors',
+  'Cross-border advisory spanning FEMA, foreign jurisdiction structuring and treaties',
   'Proactive updates as India\'s digital asset regulatory landscape evolves',
 ]
 
@@ -89,8 +89,8 @@ export default function DigitalCurrency() {
           {/* <p className="dc-hero__eyebrow">Sectors &nbsp;·&nbsp; Financial Services</p> */}
           <h1 className="dc-hero__title">Digital<br /><em>Currency</em></h1>
           <p className="dc-hero__sub">
-            Specialist tax, compliance, and regulatory advisory for cryptocurrency
-            businesses, VDA service providers, and Web3 platforms — built on deep
+            Specialist tax, compliance and regulatory advisory for cryptocurrency
+            businesses, VDA service providers and Web3 platforms built on deep
             expertise in India's evolving digital asset framework.
           </p>
           {/* <div className="dc-hero__stats">
@@ -111,9 +111,9 @@ export default function DigitalCurrency() {
             <span className="dc-tag">Our Approach</span>
             <h2 className="dc-overview__title">Navigating India's Digital Asset Regulatory Frontier</h2>
             <p className="dc-overview__body">
-              India's VDA tax framework — introduced in Budget 2022 — created sweeping
-              obligations for crypto traders, exchanges, and investors. Section 115BBH
-              flat tax, TDS under 194S, PMLA obligations for VDA service providers, and
+              India's VDA tax framework introduced in Budget 2022 created sweeping
+              obligations for crypto traders, exchanges and investors. Section 115BBH
+              flat tax, TDS under 194S, PMLA obligations for VDA service providers and
               an evolving FEMA landscape demand advisors who stay ahead of the curve.
               JHS provides specialist advisory that keeps digital asset businesses
               compliant as India's regulatory framework continues to mature.
@@ -136,7 +136,7 @@ export default function DigitalCurrency() {
         <div className="dc-section-hd">
           <h2 className="dc-section-hd__title">What We Offer</h2>
           <p className="dc-section-hd__sub">
-            Comprehensive services for crypto traders, exchanges, and Web3 businesses navigating India's VDA framework.
+            Comprehensive services for crypto traders, exchanges and Web3 businesses navigating India's VDA framework.
           </p>
         </div>
         <div className="dc-grid">
@@ -146,9 +146,9 @@ export default function DigitalCurrency() {
               <div className="dc-card__icon">{h.icon}</div>
               <h3 className="dc-card__title">{h.title}</h3>
               <p className="dc-card__desc">{h.desc}</p>
-              <button className="dc-card__cta" type="button">
+              {/* <button className="dc-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -162,7 +162,7 @@ export default function DigitalCurrency() {
             <h2 className="dc-why__title">The JHS Advantage in Digital Currency</h2>
             <p className="dc-why__sub">
               We were among India's first CAs to build specialist VDA tax
-              expertise — and we stay ahead as the framework evolves.
+              expertise and we stay ahead as the framework evolves.
             </p>
             <a href="/contact" className="dc-btn dc-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />

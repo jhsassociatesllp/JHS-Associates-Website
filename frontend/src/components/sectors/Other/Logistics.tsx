@@ -12,12 +12,12 @@ const HIGHLIGHTS = [
   {
     icon: <SimpleIcon type="logistics" size={40} />,
     title: 'Supply Chain Excellence',
-    desc: 'We help you streamline operations, cut costs, and boost efficiency across your entire logistics network. Our team knows what works in real-world supply chains.',
+    desc: 'We help you streamline operations, cut costs and boost efficiency across your entire logistics network. Our team knows what works in real-world supply chains.',
   },
   {
     icon: <SimpleIcon type="compliance" size={40} />,
     title: 'Stay Compliant, Stay Ahead',
-    desc: 'Navigate transportation rules, GST requirements, and customs procedures with confidence. We keep you updated on every regulation that matters to your business.',
+    desc: 'Navigate transportation rules, GST requirements and customs procedures with confidence. We keep you updated on every regulation that matters to your business.',
   },
   {
     icon: <SimpleIcon type="analysis" size={40} />,
@@ -27,7 +27,7 @@ const HIGHLIGHTS = [
   {
     icon: <SimpleIcon type="globe" size={40} />,
     title: 'Global Logistics Made Simple',
-    desc: 'Expand internationally without the headaches. We guide you through cross-border logistics, customs optimization, and multi-modal strategies.',
+    desc: 'Expand internationally without the headaches. We guide you through cross-border logistics, customs optimization and multi-modal strategies.',
   },
   {
     icon: <SimpleIcon type="tech" size={40} />,
@@ -48,7 +48,7 @@ const STATS = [
 ]
 
 const WHY = [
-  'We understand logistics inside and out - from warehouse operations to last-mile delivery',
+  'We understand logistics inside and out from warehouse operations to last-mile delivery',
   'Our team stays current with transportation laws and GST changes that affect your business',
   'We have helped logistics companies save millions through smart GST planning and compliance',
   'Strong relationships with regulatory bodies mean faster approvals and smoother operations',
@@ -182,10 +182,10 @@ export default function Logistics() {
               <div className="log-card__accent" />
               <div className="log-card__icon">{h.icon}</div>
               <h3 className="log-card__title">{h.title}</h3>
-              <p className="log-card__desc">{h.desc}</p>
+              {/* <p className="log-card__desc">{h.desc}</p>
               <button className="log-card__cta" type="button">
                 Learn More <SimpleIcon type="arrow-right" size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

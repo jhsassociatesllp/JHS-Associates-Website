@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'SEBI PMS Compliance',
-    desc: 'End-to-end compliance for SEBI-registered Portfolio Managers — SEBI (Portfolio Managers) Regulations 2020, disclosure norms, minimum investment requirements, and periodic reporting.',
+    desc: 'End-to-end compliance for SEBI-registered Portfolio Managers SEBI (Portfolio Managers) Regulations 2020, disclosure norms, minimum investment requirements, and periodic reporting.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Audit & Assurance',
-    desc: 'Statutory audit, internal audit, and SEBI-mandated annual audit for PMS entities — fund-level reconciliation, client account verification, and compliance certification.',
+    desc: 'Statutory audit, internal audit and SEBI-mandated annual audit for PMS entities fund-level reconciliation, client account verification and compliance certification.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax & Pass-through Advisory',
-    desc: 'Tax advisory on discretionary and non-discretionary PMS structures, capital gains pass-through, TDS obligations, and tax reporting for clients and portfolio managers.',
+    desc: 'Tax advisory on discretionary and non-discretionary PMS structures, capital gains pass-through, TDS obligations and tax reporting for clients and portfolio managers.',
   },
   {
     icon: <TrendingUp size={20} strokeWidth={1.5} />,
     title: 'Performance Reporting',
-    desc: 'XIRR-based performance calculation advisory, benchmark comparison frameworks, and SEBI-compliant performance disclosure standards for PMS entities.',
+    desc: 'XIRR-based performance calculation advisory, benchmark comparison frameworks and SEBI-compliant performance disclosure standards for PMS entities.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Offshore & Cross-border PMS',
-    desc: 'FEMA advisory for NRI portfolios, overseas investment compliance, and cross-border PMS structuring for foreign investors accessing Indian markets.',
+    desc: 'FEMA advisory for NRI portfolios, overseas investment compliance and cross-border PMS structuring for foreign investors accessing Indian markets.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Registration & Licensing',
-    desc: 'SEBI PMS registration support, net worth compliance, principal officer qualification advisory, and ongoing regulatory change management.',
+    desc: 'SEBI PMS registration support, net worth compliance, principal officer qualification advisory and ongoing regulatory change management.',
   },
 ]
 
@@ -47,10 +47,10 @@ const STATS = [
 
 const WHY = [
   'Specialist knowledge of SEBI Portfolio Managers Regulations 2020',
-  'Deep expertise in PMS tax structures, pass-through taxation, and XIRR reporting',
+  'Deep expertise in PMS tax structures, pass-through taxation and XIRR reporting',
   'Trusted by discretionary and non-discretionary portfolio managers across India',
   'NRI and cross-border portfolio compliance capability under FEMA',
-  'Integrated audit, tax, and regulatory compliance under one engagement team',
+  'Integrated audit, tax and regulatory compliance under one engagement team',
 ]
 
 export default function PortfolioManagement() {
@@ -89,9 +89,9 @@ export default function PortfolioManagement() {
           {/* <p className="pm-hero__eyebrow">Sectors &nbsp;·&nbsp; Financial Services</p> */}
           <h1 className="pm-hero__title">Portfolio<br /><em>Management</em></h1>
           <p className="pm-hero__sub">
-            Specialised audit, tax, and regulatory compliance advisory for
+            Specialised audit, tax and regulatory compliance advisory for
             SEBI-registered Portfolio Managers built on deep expertise in
-            PMS regulations, performance reporting, and pass-through taxation.
+            PMS regulations, performance reporting and pass-through taxation.
           </p>
           {/* <div className="pm-hero__stats">
             {STATS.map((s) => (
@@ -112,8 +112,8 @@ export default function PortfolioManagement() {
             <h2 className="pm-overview__title">Precision Advisory for Portfolio Managers</h2>
             <p className="pm-overview__body">
               SEBI's Portfolio Managers Regulations 2020 significantly elevated the
-              compliance bar for PMS entities — minimum corpus requirements, enhanced
-              disclosure norms, and stringent audit obligations demand specialist
+              compliance bar for PMS entities minimum corpus requirements, enhanced
+              disclosure norms and stringent audit obligations demand specialist
               advisory. Combined with complex pass-through tax structures and NRI
               portfolio compliance, JHS brings the depth of expertise that PMS entities
               need to operate with confidence and precision.
@@ -124,7 +124,7 @@ export default function PortfolioManagement() {
           </div>
           <div className="pm-overview__visual">
             <div className="pm-overview__badge">
-              <span className="pm-overview__badge-icon">📉</span>
+              {/* <span className="pm-overview__badge-icon">📉</span> */}
               <span className="pm-overview__badge-label">Full-spectrum PMS advisory</span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function PortfolioManagement() {
         <div className="pm-section-hd">
           <h2 className="pm-section-hd__title">What We Offer</h2>
           <p className="pm-section-hd__sub">
-            Comprehensive services covering every compliance, audit, and tax need of PMS entities.
+            Comprehensive services covering every compliance, audit and tax need of PMS entities.
           </p>
         </div>
         <div className="pm-grid">
@@ -146,9 +146,9 @@ export default function PortfolioManagement() {
               <div className="pm-card__icon">{h.icon}</div>
               <h3 className="pm-card__title">{h.title}</h3>
               <p className="pm-card__desc">{h.desc}</p>
-              <button className="pm-card__cta" type="button">
+              {/* <button className="pm-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

@@ -139,7 +139,7 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
 
-  {
+  {  
     id: "knowus",
     label: "Know Us",
     subLabel: "Know Us",

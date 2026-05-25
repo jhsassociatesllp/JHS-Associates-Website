@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Code2 size={20} strokeWidth={1.5} />,
     title: 'Transfer Pricing & BEPS',
-    desc: 'Transfer pricing documentation, benchmarking studies, and OECD BEPS compliance for IT/ITeS companies with cross-border intercompany transactions and captive service centres.',
+    desc: 'Transfer pricing documentation, benchmarking studies and OECD BEPS compliance for IT/ITeS companies with cross-border intercompany transactions and captive service centres.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'SEZ & Export Incentives',
-    desc: 'SEZ compliance, STPI advisory, export-oriented unit structuring, and Section 10AA deduction planning for IT exporters and software development companies.',
+    desc: 'SEZ compliance, STPI advisory, export-oriented unit structuring and Section 10AA deduction planning for IT exporters and software development companies.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'GST & Indirect Tax',
-    desc: 'GST advisory on software services, SaaS subscriptions, cloud services, and export of services — including place of supply rules and LUT/RFD-11 compliance.',
+    desc: 'GST advisory on software services, SaaS subscriptions, cloud services and export of services — including place of supply rules and LUT/RFD-11 compliance.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
-    desc: 'Statutory audit, internal audit, and revenue assurance for IT services companies, BPO/KPO entities, and technology-enabled service providers.',
+    desc: 'Statutory audit, internal audit and revenue assurance for IT services companies, BPO/KPO entities and technology-enabled service providers.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'ESOP & Equity Structuring',
-    desc: 'ESOP plan design, taxation advisory for employees and the company, cross-border ESOP compliance, and equity structuring for PE/VC-backed IT companies.',
+    desc: 'ESOP plan design, taxation advisory for employees and the company, cross-border ESOP compliance and equity structuring for PE/VC-backed IT companies.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'M&A & Due Diligence',
-    desc: 'Tax and financial due diligence, deal structuring, and post-acquisition integration advisory for IT/ITeS mergers, acquisitions, and PE investments.',
+    desc: 'Tax and financial due diligence, deal structuring and post-acquisition integration advisory for IT/ITeS mergers, acquisitions and PE investments.',
   },
 ]
 
@@ -94,9 +94,9 @@ export default function ITTeS() {
           <h1 className="ites-hero__title">IT / ITeS<br /><em>Services</em></h1>
           <p className="ites-hero__sub">
             Specialised tax, audit, and compliance advisory for IT services,
-            software companies, BPO/KPO entities, and technology-enabled
-            service providers — built on deep expertise in transfer pricing,
-            SEZ incentives, and IT sector regulations.
+            software companies, BPO/KPO entities and technology enabled
+            service providers built on deep expertise in transfer pricing,
+            SEZ incentives and IT sector regulations.
           </p>
           {/* <div className="ites-hero__stats">
             {STATS.map((s) => (
@@ -116,12 +116,12 @@ export default function ITTeS() {
             <span className="ites-tag">Our Approach</span>
             <h2 className="ites-overview__title">Advisory Built for India's Technology Sector</h2>
             <p className="ites-overview__body">
-              India's IT and ITeS sector drives significant export revenues — but
+              India's IT and ITeS sector drives significant export revenues but
               navigating transfer pricing scrutiny, SEZ compliance, GST on software
-              exports, and cross-border ESOP structures demands specialist expertise.
+              exports and cross-border ESOP structures demands specialist expertise.
               JHS brings two decades of IT sector advisory experience, helping
               companies ranging from large listed IT firms to high-growth SaaS
-              startups manage tax, audit, and compliance with confidence.
+              startups manage tax, audit and compliance with confidence.
             </p>
             <a href="/contact" className="ites-btn ites-btn--solid">
               Talk to Our Experts <ArrowUpRight size={15} />
@@ -129,7 +129,7 @@ export default function ITTeS() {
           </div>
           <div className="ites-overview__visual">
             <div className="ites-overview__badge">
-              <span className="ites-overview__badge-icon">💻</span>
+              {/* <span className="ites-overview__badge-icon">💻</span> */}
               <span className="ites-overview__badge-label">Full-spectrum IT/ITeS advisory</span>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function ITTeS() {
         <div className="ites-section-hd">
           <h2 className="ites-section-hd__title">What We Offer</h2>
           <p className="ites-section-hd__sub">
-            Comprehensive services covering every tax, audit, and compliance need of IT/ITeS businesses.
+            Comprehensive services covering every tax, audit and compliance need of IT/ITeS businesses.
           </p>
         </div>
         <div className="ites-grid">
@@ -151,9 +151,9 @@ export default function ITTeS() {
               <div className="ites-card__icon">{h.icon}</div>
               <h3 className="ites-card__title">{h.title}</h3>
               <p className="ites-card__desc">{h.desc}</p>
-              <button className="ites-card__cta" type="button">
+              {/* <button className="ites-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -166,8 +166,8 @@ export default function ITTeS() {
             <span className="ites-tag">Why JHS</span>
             <h2 className="ites-why__title">The JHS Advantage in IT / ITeS</h2>
             <p className="ites-why__sub">
-              We understand the commercial realities of India's IT sector —
-              export pressures, transfer pricing risk, and the need for
+              We understand the commercial realities of India's IT sector
+              export pressures, transfer pricing risk and the need for
               tax-efficient growth structures.
             </p>
             <a href="/contact" className="ites-btn ites-btn--ghost">

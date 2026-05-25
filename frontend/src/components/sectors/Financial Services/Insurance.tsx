@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'IRDAI Regulatory Compliance',
-    desc: 'End-to-end compliance support for insurance companies — IRDAI circulars, solvency margin requirements, investment norms, and periodic regulatory filings.',
+    desc: 'End-to-end compliance support for insurance companies IRDAI circulars, solvency margin requirements, investment norms, and periodic regulatory filings.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Statutory & Concurrent Audit',
-    desc: 'Statutory audit, concurrent audit, and revenue audit for life insurers, general insurers, and health insurance companies under IRDAI guidelines.',
+    desc: 'Statutory audit, concurrent audit and revenue audit for life insurers, general insurers and health insurance companies under IRDAI guidelines.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Ind AS & Financial Reporting',
-    desc: 'Financial statement preparation, IFRS 17 readiness, Ind AS 104 advisory, and financial reporting for insurance entities and holding companies.',
+    desc: 'Financial statement preparation, IFRS 17 readiness, Ind AS 104 advisory and financial reporting for insurance entities and holding companies.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'Tax & GST Advisory',
-    desc: 'Income tax planning, GST on insurance premiums and commissions, reinsurance tax structures, and deferred tax advisory for insurance businesses.',
+    desc: 'Income tax planning, GST on insurance premiums and commissions, reinsurance tax structures and deferred tax advisory for insurance businesses.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Reinsurance & Cross-border',
-    desc: 'Transfer pricing for reinsurance arrangements, FEMA compliance for foreign reinsurers, and cross-border reinsurance treaty advisory.',
+    desc: 'Transfer pricing for reinsurance arrangements, FEMA compliance for foreign reinsurers and cross-border reinsurance treaty advisory.',
   },
   {
     icon: <Umbrella size={20} strokeWidth={1.5} />,
     title: 'Risk & Internal Audit',
-    desc: 'Risk-based internal audit, claims fraud risk reviews, underwriting controls assessment, and internal financial controls for insurers.',
+    desc: 'Risk-based internal audit, claims fraud risk reviews, underwriting controls assessment and internal financial controls for insurers.',
   },
 ]
 
@@ -46,9 +46,9 @@ const STATS = [
 ]
 
 const WHY = [
-  'Specialist knowledge of IRDAI regulations for life, general, and health insurers',
+  'Specialist knowledge of IRDAI regulations for life, general and health insurers',
   'Deep expertise in insurance-specific accounting under Ind AS 104 and IFRS 17',
-  'Experienced across public sector, private, and foreign insurance companies',
+  'Experienced across public sector, private and foreign insurance companies',
   'Concurrent audit capability across large branch and distribution networks',
   'Trusted advisor for IRDAI inspection preparedness and regulatory advisory',
 ]
@@ -89,8 +89,8 @@ export default function Insurance() {
           {/* <p className="ins-hero__eyebrow">Sectors &nbsp;·&nbsp; Financial Services</p> */}
           <h1 className="ins-hero__title">Insurance<br /><em>Services</em></h1>
           <p className="ins-hero__sub">
-            Specialised audit, tax, and regulatory compliance advisory for
-            insurance companies, reinsurers, and intermediaries — built on
+            Specialised audit, tax and regulatory compliance advisory for
+            insurance companies, reinsurers and intermediaries built on
             deep knowledge of IRDAI regulations and insurance-specific accounting.
           </p>
           {/* <div className="ins-hero__stats">
@@ -111,11 +111,11 @@ export default function Insurance() {
             <span className="ins-tag">Our Approach</span>
             <h2 className="ins-overview__title">Trusted Advisory for India's Insurance Sector</h2>
             <p className="ins-overview__body">
-              Insurance companies operate under IRDAI's demanding regulatory framework —
-              solvency margins, investment norms, claims reserving, and evolving
+              Insurance companies operate under IRDAI's demanding regulatory framework
+              solvency margins, investment norms, claims reserving and evolving
               accounting standards like IFRS 17 create a compliance landscape that
               demands specialist expertise. JHS brings two decades of insurance sector
-              experience, delivering audit, tax, and regulatory advisory that helps
+              experience, delivering audit, tax and regulatory advisory that helps
               insurers operate with confidence and precision.
             </p>
             <a href="/contact" className="ins-btn ins-btn--solid">
@@ -146,9 +146,9 @@ export default function Insurance() {
               <div className="ins-card__icon">{h.icon}</div>
               <h3 className="ins-card__title">{h.title}</h3>
               <p className="ins-card__desc">{h.desc}</p>
-              <button className="ins-card__cta" type="button">
+              {/* <button className="ins-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

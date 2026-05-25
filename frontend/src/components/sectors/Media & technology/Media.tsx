@@ -10,32 +10,32 @@ const HIGHLIGHTS = [
   {
     icon: <Radio size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
-    desc: 'Statutory audit, internal audit, and revenue assurance for broadcast media, OTT platforms, digital publishers, and entertainment companies.',
+    desc: 'Statutory audit, internal audit and revenue assurance for broadcast media, OTT platforms, digital publishers and entertainment companies.',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
     title: 'Tax & GST Advisory',
-    desc: 'GST advisory on subscription revenues, advertising income, content licensing, and co-production arrangements — plus income tax planning for media entities.',
+    desc: 'GST advisory on subscription revenues, advertising income, content licensing and co-production arrangements plus income tax planning for media entities.',
   },
   {
     icon: <Globe2 size={20} strokeWidth={1.5} />,
     title: 'Content Licensing & Royalties',
-    desc: 'Tax structuring for content licensing, royalty income, IP transfers, and co-production agreements across domestic and international media transactions.',
+    desc: 'Tax structuring for content licensing, royalty income, IP transfers and co-production agreements across domestic and international media transactions.',
   },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Regulatory Compliance',
-    desc: 'MIB, TRAI, and ASCI compliance advisory for broadcasters, advertisers, and digital media companies operating under India\'s evolving media regulations.',
+    desc: 'MIB, TRAI and ASCI compliance advisory for broadcasters, advertisers, and digital media companies operating under India\'s evolving media regulations.',
   },
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Revenue Recognition',
-    desc: 'Ind AS 115 revenue recognition advisory for multi-element media arrangements — subscription bundles, advertising contracts, and content licensing deals.',
+    desc: 'Ind AS 115 revenue recognition advisory for multi-element media arrangements subscription bundles, advertising contracts and content licensing deals.',
   },
   {
     icon: <Scale size={20} strokeWidth={1.5} />,
     title: 'M&A & Structuring',
-    desc: 'Tax and financial structuring advisory for media M&A, platform acquisitions, and investment by PE/VC funds into media and entertainment businesses.',
+    desc: 'Tax and financial structuring advisory for media M&A, platform acquisitions and investment by PE/VC funds into media and entertainment businesses.',
   },
 ]
 
@@ -46,7 +46,7 @@ const STATS = [
 ]
 
 const WHY = [
-  'Deep sectoral knowledge across broadcast, OTT, print, and digital media',
+  'Deep sectoral knowledge across broadcast, OTT, print and digital media',
   'Specialist GST and revenue recognition advisory for complex media arrangements',
   'Content licensing and royalty structuring expertise for cross-border media deals',
   'TRAI and MIB regulatory compliance advisory for broadcasters and publishers',
@@ -89,9 +89,9 @@ export default function Media() {
           {/* <p className="md-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
           <h1 className="md-hero__title">Media<br /><em>Services</em></h1>
           <p className="md-hero__sub">
-            Specialised audit, tax, and regulatory compliance advisory for
-            broadcast media, OTT platforms, digital publishers, and entertainment
-            companies — built on deep knowledge of India's media sector.
+            Specialised audit, tax and regulatory compliance advisory for
+            broadcast media, OTT platforms, digital publishers and entertainment
+            companies built on deep knowledge of India's media sector.
           </p>
           {/* <div className="md-hero__stats">
             {STATS.map((s) => (
@@ -111,12 +111,12 @@ export default function Media() {
             <span className="md-tag">Our Approach</span>
             <h2 className="md-overview__title">Advisory for India's Fast-Moving Media Landscape</h2>
             <p className="md-overview__body">
-              India's media and entertainment sector is undergoing rapid transformation —
+              India's media and entertainment sector is undergoing rapid transformation 
               OTT disruption, evolving TRAI regulations, complex content licensing
-              structures, and Ind AS 115 revenue recognition challenges demand
+              structures and Ind AS 115 revenue recognition challenges demand
               advisors who truly understand the industry. JHS brings specialist
-              expertise across broadcast, digital, and entertainment media,
-              delivering audit, tax, and regulatory advisory that keeps media
+              expertise across broadcast, digital and entertainment media,
+              delivering audit, tax and regulatory advisory that keeps media
               businesses compliant and competitive.
             </p>
             <a href="/contact" className="md-btn md-btn--solid">
@@ -125,7 +125,7 @@ export default function Media() {
           </div>
           <div className="md-overview__visual">
             <div className="md-overview__badge">
-              <span className="md-overview__badge-icon">🎬</span>
+              {/* <span className="md-overview__badge-icon">🎬</span> */}
               <span className="md-overview__badge-label">Full-spectrum media advisory</span>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function Media() {
         <div className="md-section-hd">
           <h2 className="md-section-hd__title">What We Offer</h2>
           <p className="md-section-hd__sub">
-            Comprehensive services covering every financial, tax, and compliance need of media businesses.
+            Comprehensive services covering every financial, tax and compliance need of media businesses.
           </p>
         </div>
         <div className="md-grid">
@@ -147,9 +147,9 @@ export default function Media() {
               <div className="md-card__icon">{h.icon}</div>
               <h3 className="md-card__title">{h.title}</h3>
               <p className="md-card__desc">{h.desc}</p>
-              <button className="md-card__cta" type="button">
+              {/* <button className="md-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>
@@ -162,8 +162,8 @@ export default function Media() {
             <span className="md-tag">Why JHS</span>
             <h2 className="md-why__title">The JHS Advantage in Media</h2>
             <p className="md-why__sub">
-              We understand the commercial complexity of media — multi-platform
-              revenues, content deals, and regulatory pressures — and deliver
+              We understand the commercial complexity of media multi-platform
+              revenues, content deals and regulatory pressures and deliver
               advisory that keeps pace with the industry.
             </p>
             <a href="/contact" className="md-btn md-btn--ghost">

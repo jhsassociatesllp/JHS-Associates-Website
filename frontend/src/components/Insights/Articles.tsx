@@ -11,8 +11,9 @@ gsap.registerPlugin(ScrollTrigger)
 
 /* ── API base — reads from .env, falls back to localhost ─────── */
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)
-  ?? 'http://localhost:8000'
+  ?? 'http://45.198.225.149:9030'
 
+  console.log(API_BASE)
 /* ── Types ───────────────────────────────────────────────────── */
 interface Article {
   id: string

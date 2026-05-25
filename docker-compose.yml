@@ -1,101 +1,22 @@
-# services:
-
-#   backend:
-#     build: ./backend
-#     container_name: jhs_backend
-
-#     ports:
-#       - "${BACKEND_PORT}:8000"
-
-#     volumes:
-#       - "/www/wwwroot/jhs-website-content/uploads:/app/uploads"
-
-#   frontend:
-#     build:
-#       context: ./frontend
-#       args:
-#         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
-
-#     container_name: jhs_frontend
-
-#     ports:
-#       - "${FRONTEND_PORT}:80"
-
-#     depends_on:
-#       - backend
-
-#     volumes:
-#       - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads:ro"
-
-#   admin:
-#     build:
-#       context: ./admin-panel
-#       args:
-#         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
-
-#     container_name: jhs_admin
-
-#     ports:
-#       - "${ADMIN_PORT}:80"
-
-#     depends_on:
-#       - backend
-
-version: '3.9'
-
 services:
 
-  # ==========================================
-  # MONGODB
-  # ==========================================
-  mongodb:
-    image: mongo:7
-
-    container_name: jhs_mongodb
-
-    restart: always
-
-    ports:
-      - "27017:27017"
-
-    volumes:
-      - mongodb_data:/data/db
-
-  # ==========================================
-  # BACKEND
-  # ==========================================
   backend:
     build: ./backend
-
     container_name: jhs_backend
-
-    restart: always
 
     ports:
       - "${BACKEND_PORT}:8000"
 
-    depends_on:
-      - mongodb
-
-    environment:
-      MONGO_URI: mongodb://mongodb:27017
-
     volumes:
       - "/www/wwwroot/jhs-website-content/uploads:/app/uploads"
 
-  # ==========================================
-  # FRONTEND
-  # ==========================================
   frontend:
     build:
       context: ./frontend
-
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
 
     container_name: jhs_frontend
-
-    restart: always
 
     ports:
       - "${FRONTEND_PORT}:80"
@@ -103,28 +24,19 @@ services:
     depends_on:
       - backend
 
-  # ==========================================
-  # ADMIN PANEL
-  # ==========================================
+    volumes:
+      - "/www/wwwroot/jhs-website-content/uploads/images:/usr/share/nginx/uploads:ro"
+
   admin:
     build:
       context: ./admin-panel
-
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
 
     container_name: jhs_admin
-
-    restart: always
 
     ports:
       - "${ADMIN_PORT}:80"
 
     depends_on:
       - backend
-
-# ==========================================
-# VOLUMES
-# ==========================================
-volumes:
-  mongodb_data:

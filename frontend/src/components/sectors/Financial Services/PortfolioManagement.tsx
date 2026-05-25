@@ -79,7 +79,7 @@ export default function PortfolioManagement() {
     })
     return () => ctx.revert()
   }, [])
-
+   
   return (
     <div className="pm-page">
 

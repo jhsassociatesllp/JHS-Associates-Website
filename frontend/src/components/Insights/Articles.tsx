@@ -25,7 +25,7 @@ interface Article {
   publish_date?: string  // Optional for backward compatibility
   created_at: string
 }
-
+console.log(API_BASE)
 /* ── Helpers ─────────────────────────────────────────────────── */
 const articleImageUrl = (image_id: string) =>
   `${API_BASE}/articles/image/${image_id}`

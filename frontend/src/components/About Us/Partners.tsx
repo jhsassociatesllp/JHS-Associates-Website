@@ -15,28 +15,28 @@ const PARTNER_DATA = [
         image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
         creds: "FCA, CISA, ISO 27001, NISM, Social Auditor",
         desc: "Specializes in IT risk governance, cyber security frameworks, and complex systems audits across BFSI sectors.",
-        linkedin: "https://www.linkedin.com/in/ca-imageUrl('Huzefa-Unwala-removebg-preview.png')-unwala/"
+        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/"
       },
       {
         name: "Nikhel Kochhar",
         image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
         creds: "FCA, CIA",
         desc: "Over 25 years of expertise in internal audits, corporate governance, and strategic management consulting.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Nikhel-Kochhar-removebg-preview.png')-kochhar"
+        linkedin: "https://www.linkedin.com/in/nikhel-kochhar"
       },
       {
         name: "Kalpesh Parmar",
         image: imageUrl('Kalpesh-Parmar-removebg-preview.png'),
         creds: "B.Com (Hons), FCA",
         desc: "Leads the statutory audit practice. Expert in Ind AS implementation and complex consolidation for listed entities.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Kalpesh-Parmar-removebg-preview.png')-parmar"
+        linkedin: ""
       },
       {
         name: "Sharad Mohata",
         image: imageUrl('Sharad-Mohata-removebg-preview.png'),
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Specializes in direct taxation, corporate restructuring, and international tax advisory.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Sharad-Mohata-removebg-preview.png')-mohata-kol"
+        linkedin: "https://www.linkedin.com/in/sharad-mohata"
       },
       {
         name: "Vinod Joshi",
@@ -55,7 +55,7 @@ const PARTNER_DATA = [
         image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in risk management audits and SOX compliance.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Tasnim-Tankiwala-removebg-preview.png')-tankiwala"
+        linkedin: "https://www.linkedin.com/in/tasnim-tankiwala"
       },
       {
         name: "Jamal Chatriwala",
@@ -69,35 +69,35 @@ const PARTNER_DATA = [
         image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
         creds: "FCA, DISA",
         desc: "Leads technology assurance and ERP implementation audits.",
-        linkedin: "https://www.linkedin.com/in/Taher Pepermintwala"
+        linkedin: "https://www.linkedin.com/in/taherpepermintwala/"
       },
       {
         name: "Sahil Shah",
         image: imageUrl('Sahil-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Focuses on capital restructuring and VC funding advisory.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Sahil-Shah-removebg-preview.png')-shah-664a5312a"
+        linkedin: "https://www.linkedin.com/in/linkedin.com/in/sahil-shah-664a5312a/"
       },
       {
         name: "Tausif Shaikh",
         image: imageUrl('Tausif-Shaikh-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in forensic accounting and fraud investigation.",
-        linkedin: "https://www.linkedin.com/in/ca-imageUrl('Tausif-Shaikh-removebg-preview.png')-shaikh"
+        linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh"
       },
       {
         name: "Samad Dhanani",
         image: imageUrl('Samad-Dhanani-removebg-preview.png'),
         creds: "FCA",
         desc: "Drive growth through comprehensive financial planning and analysis.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Samad-Dhanani-removebg-preview.png')-dhanani-9b342562"
+        linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/"
       },
       {
         name: "Disha Shah",
         image: imageUrl('Disha Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Leads women-entrepreneur advisory and compliance initiatives.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/"
       },
       {
         name: "Dhanlaxmi Nair",
@@ -144,21 +144,21 @@ const PARTNER_DATA = [
         image: imageUrl('Sunil-Pathak-removebg-preview.png'),
         creds: "FCA",
         desc: "Drives South India expansion, specializing in start-up advisory.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Sunil-Pathak-removebg-preview.png')-pathak"
+        linkedin: "https://www.linkedin.com/in/casunilpathak"
       },
       {
         name: "Jagdish Solanki",
         image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in transfer pricing and cross-border transactions.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://linkedin.com/jagdish-solanki"
       },
       {
         name: "Narayana Rao Malla",
         image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
         creds: "FCA",
         desc: "Spearheads the IT/ITES industry group for internal audits.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://linkedin.com/narayana-rao-malla"
       }
     ]
   },
@@ -170,21 +170,21 @@ const PARTNER_DATA = [
         image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
         creds: "FCA",
         desc: "Senior guide for Gujarat manufacturing sector audits.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://linkedin.com/virendra-nayyar-3114a9227/"
       },
       {
         name: "Dhaval Thakkar",
         image: imageUrl('Dhaval-Thakkar-removebg-preview.png'),
         creds: "FCA",
         desc: "Ahmedabad operations lead, focusing on SME growth advisory.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Dhaval-Thakkar-removebg-preview.png')-thakkar"
+        linkedin: "https://www.linkedin.com/in/dhaval-thakkar-210846122/"
       },
       {
         name: "Viranch Modi",
         image: imageUrl('Viranch-Modi-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in real estate structuring and RERA compliance.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Viranch-Modi-removebg-preview.png')-modi"
+        linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/"
       },
       {
         name: "Milin Parekh",
@@ -198,7 +198,7 @@ const PARTNER_DATA = [
         image: imageUrl('Mehul-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Focuses on supply chain and process audits.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Mehul-Shah-removebg-preview.png')-shah"
+        linkedin: "https://www.linkedin.com/in/mehul-shah/"
       },
       {
         name: "Alpesh Vaniya",
@@ -212,21 +212,21 @@ const PARTNER_DATA = [
         image: imageUrl('Raj-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Drives valuation and due diligence practices in Vadodara.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Raj-Shah-removebg-preview.png')-shah"
+        linkedin: "https://www.linkedin.com/in/raj-shah/"
       },
       {
         name: "Saurabh Shah",
         image: imageUrl('Saurabh-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Core team member for industrial and chemical sector audits.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Saurabh-Shah-removebg-preview.png')-shah"
+        linkedin: "https://www.linkedin.com/in/saurabh-shah/"
       },
       {
         name: "Parth Shah",
         image: imageUrl('Parth_shah.jpeg'),
         creds: "FCA",
         desc: "Direct & Indirect Tax",
-        linkedin: ""
+        linkedin: "https://www.linkedin.com/in/parth-shah/"
       },
       {
         name: "Shreena Panara",

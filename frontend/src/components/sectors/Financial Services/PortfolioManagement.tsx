@@ -90,7 +90,7 @@ export default function PortfolioManagement() {
           <h1 className="pm-hero__title">Portfolio<br /><em>Management</em></h1>
           <p className="pm-hero__sub">
             Specialised audit, tax, and regulatory compliance advisory for
-            SEBI-registered Portfolio Managers — built on deep expertise in
+            SEBI-registered Portfolio Managers built on deep expertise in
             PMS regulations, performance reporting, and pass-through taxation.
           </p>
           {/* <div className="pm-hero__stats">

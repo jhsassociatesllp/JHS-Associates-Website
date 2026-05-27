@@ -68,7 +68,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/Uploads/images/ITTeS.avif');
+    url('/Uploads/ITTeS.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -131,8 +131,9 @@
 }
 
 /* Teal / turquoise — innovation, digital, modern tech */
-.ites-hero__title em {
-  font-style: italic;
+.ites-hero__title span {
+  filter: brightness(1.2);
+   font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #99f6e4 0%, #2dd4bf 45%, #0d9488 85%, #99f6e4 100%);
   -webkit-background-clip: text;

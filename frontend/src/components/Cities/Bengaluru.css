@@ -116,8 +116,7 @@
 }
 
 .blr-hero__title {
-  /* font-size: clamp(3rem, 10vw, 8.5rem); */
-  font-size: 6.5rem;
+  font-size: clamp(2.5rem, 12vw, 6.5rem);
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.03em;
@@ -1013,25 +1012,66 @@
 @media(max-width:560px) {
   .blr-hero {
     height: auto;
-    min-height: 580px;
-    padding-top: 80px;
+    min-height: 600px;
+    max-height: none;
+    padding: 120px 0 40px;
     justify-content: flex-start
   }
 
   .blr-hero__content {
-    position: relative;
-    top: auto;
-    left: auto;
+    position: static;
     transform: none;
-    margin: 60px auto 28px;
-    width: 100%
+    margin: 0 auto 28px;
+    width: 92%;
+    padding: 0 1rem;
+    animation: none
+  }
+
+  .blr-hero__eyebrow {
+    font-size: 9px;
+    padding: 5px 16px;
+    letter-spacing: 0.18em
+  }
+
+  .blr-hero__title {
+    font-size: 2.8rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8px
+  }
+
+  .blr-hero__sub {
+    font-size: 0.8rem;
+    line-height: 1.5
   }
 
   .blr-hero__card {
-    position: relative;
+    position: static;
     width: calc(100% - 2rem);
-    margin: 0 auto;
-    border-radius: 16px
+    margin: 0 auto 0;
+    padding: 20px 20px 22px;
+    border-radius: 14px
+  }
+
+  .blr-hero__card-left {
+    gap: 8px
+  }
+
+  .blr-hero__card-badge {
+    font-size: 9px;
+    padding: 4px 12px
+  }
+
+  .blr-hero__card-addr {
+    font-size: 12px
+  }
+
+  .blr-hero__card-stat-label {
+    font-size: 8px
+  }
+
+  .blr-hero__card-stat-val {
+    font-size: 12px
   }
 
   .blr-container {

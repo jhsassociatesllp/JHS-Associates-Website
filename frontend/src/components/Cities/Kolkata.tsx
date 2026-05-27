@@ -10,7 +10,7 @@ const PARTNERS = [
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
     email: 'sharad.mohata@jhsassociates.in',
-    linkedin: 'https://www.linkedin.com/in/sharad-mohata',
+    linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
   },
 ]
 

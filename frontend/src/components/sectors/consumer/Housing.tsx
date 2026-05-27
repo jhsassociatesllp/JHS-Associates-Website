@@ -87,7 +87,7 @@ export default function Housing() {
       <section className="hs-hero" ref={heroRef}>
         <div className="hs-hero__inner">
           {/* <p className="hs-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
-          <h1 className="hs-hero__title">Housing<br /><em>Services</em></h1>
+          <h1 className="hs-hero__title">Housing<br /><span>Services</span></h1>
           <p className="hs-hero__sub">
             Comprehensive financial, tax and compliance advisory for housing
             developers, affordable housing projects and real estate businesses

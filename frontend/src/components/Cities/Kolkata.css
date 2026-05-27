@@ -90,8 +90,7 @@
 }
 
 .kol-hero__title {
-  /* font-size: clamp(3.2rem, 9vw, 8rem); */
-  font-size: 6.5rem;
+  font-size: clamp(2.5rem, 12vw, 6.5rem);
   font-weight: 800;
   color: var(--kol-white);
   letter-spacing: -0.04em;
@@ -583,24 +582,54 @@
 @media(max-width:640px) {
   .kol-hero {
     height: auto;
-    min-height: 620px;
-    padding: 80px 16px 32px;
+    min-height: 600px;
+    max-height: none;
+    padding: 120px 16px 40px;
     justify-content: flex-start
   }
 
   .kol-hero__content {
-    position: relative;
-    top: auto;
-    left: auto;
+    position: static;
     transform: none;
-    margin: 60px auto 24px;
-    width: 100%
+    margin: 0 auto 28px;
+    width: 92%;
+    padding: 0 1rem;
+    animation: none
+  }
+
+  .kol-hero__eyebrow {
+    font-size: 9px;
+    padding: 5px 16px;
+    letter-spacing: 0.18em
+  }
+
+  .kol-hero__title {
+    font-size: 2.8rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8px
+  }
+
+  .kol-hero__sub {
+    font-size: 0.8rem;
+    line-height: 1.5
   }
 
   .kol-hero__card {
-    position: relative;
-    margin: 0 auto;
-    width: 100%
+    position: static;
+    margin: 0 auto 0;
+    width: calc(100% - 2rem);
+    padding: 20px 20px 22px;
+    border-radius: 14px
+  }
+
+  .kol-hero__card-badge {
+    font-size: 9px;
+    padding: 4px 12px
+  }
+
+  .kol-hero__card-addr {
+    font-size: 12px
   }
 
   .kol-hero__card-info {

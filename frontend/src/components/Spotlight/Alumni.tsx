@@ -136,7 +136,7 @@ export default function Alumni() {
       >
         <div className="alumni-hero__overlay" />
         <div className="alumni-hero__content">
-          <span className="alumni-hero__eyebrow">EST. 1981</span>
+          {/* <span className="alumni-hero__eyebrow">EST. 1981</span> */}
           <h1 className="alumni-hero__title">Celebrating Our Legacy, Connecting Our Future</h1>
           <p className="alumni-hero__subtitle">
             A global network of excellence, bringing together generations of leaders, innovators, and visionaries from around the world.

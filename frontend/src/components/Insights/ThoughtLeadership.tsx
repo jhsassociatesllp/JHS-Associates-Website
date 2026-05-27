@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Lightbulb, CalendarDays, Users, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import './ThoughtLeadership.css'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger)  
 
 const PIECES = [
   {
@@ -12,7 +12,7 @@ const PIECES = [
     title: "The CFO as a Strategic Partner: India's Finance Function Is Evolving",
     author: 'Managing Partner, JHS & Associates',
     preview:
-      "The traditional CFO role — focused on compliance and reporting — is giving way to something more expansive. As Indian businesses scale and compete globally, the finance function must become a genuine seat at the strategy table.",
+      "The traditional CFO role focused on compliance and reporting is giving way to something more expansive. As Indian businesses scale and compete globally, the finance function must become a genuine seat at the strategy table.",
     highlight: '"Compliance is the floor, not the ceiling."',
   },
   {
@@ -26,7 +26,7 @@ const PIECES = [
   {
     type: 'Perspective',
     title: 'ESG Assurance: The Next Frontier for Indian Chartered Accountants',
-    author: 'Partner – Assurance, JHS',
+    author: 'Partner Assurance, JHS',
     preview:
       "SEBI's BRSR Core mandate and global sustainability reporting standards are converging. CAs who build ESG assurance capabilities now will lead the next decade of professional services.",
     highlight: '"Sustainability data is becoming as auditable as financial data."',
@@ -120,12 +120,12 @@ export default function ThoughtLeadership() {
           </p> */}
 
           <h1 className="tl-hero__title">
-            Our&nbsp;<em>Perspectives</em>
+            Our&nbsp; <br/> <em>Perspectives</em>
           </h1>
 
           <p className="tl-hero__sub">
             JHS partners and senior advisors share their views on the forces reshaping finance,
-            taxation, and professional services in India and beyond.
+            taxation and professional services in India and beyond.
           </p>
         </div>
       </section>
@@ -175,11 +175,11 @@ export default function ThoughtLeadership() {
               </blockquote>
 
               {/* CTA */}
-              <div className="tl-card__footer">
+              {/* <div className="tl-card__footer">
                 <button className="tl-card__cta" type="button">
                   Read More <ArrowUpRight size={14} />
                 </button>
-              </div>
+              </div> */}
             </article>
           ))}
         </div>
@@ -188,7 +188,7 @@ export default function ThoughtLeadership() {
       {/* ══════════════════════════════════════
           UPCOMING EVENTS
       ══════════════════════════════════════ */}
-      <section className="tl-section container" ref={evtRef}>
+      {/* <section className="tl-section container" ref={evtRef}>
         <div className="tl-section__header">
           <span className="tl-section__label">Upcoming Events</span>
           <div className="tl-section__line" />
@@ -198,13 +198,13 @@ export default function ThoughtLeadership() {
           {EVENTS.map((e, i) => (
             <div key={i} className="tl-event">
 
-              {/* Calendar block */}
+             
               <div className="tl-event__cal">
                 <span className="tl-event__cal-month">{e.month}</span>
                 <span className="tl-event__cal-day">{e.day}</span>
               </div>
 
-              {/* Info */}
+              
               <div className="tl-event__info">
                 <h4 className="tl-event__title">{e.title}</h4>
                 <div className="tl-event__meta">
@@ -218,7 +218,7 @@ export default function ThoughtLeadership() {
                 </div>
               </div>
 
-              {/* Register */}
+             
               <button className="tl-event__cta" type="button">
                 Register <ArrowUpRight size={13} />
               </button>
@@ -226,7 +226,7 @@ export default function ThoughtLeadership() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ══════════════════════════════════════
           CTA BANNER

@@ -67,7 +67,7 @@
   padding: 1rem 2rem 3rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/Uploads/images/retail.avif');
+    url('/Uploads/Retail.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -130,19 +130,20 @@
 }
 
 /* Violet / indigo gradient — modern retail / commerce */
-.rt-hero__title em {
-  font-style: italic;
+.rt-hero__title span {
+  font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #c4b5fd 0%, #a78bfa 45%, #818cf8 85%, #c4b5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: filter 0.4s var(--ease);
-}
-
-.rt-hero__title em:hover {
   filter: brightness(1.2);
 }
+
+/* .rt-hero__title em:hover {
+  filter: brightness(1.2);
+} */
 
 .rt-hero__sub {
   font-size: 1rem;
@@ -214,8 +215,9 @@
   border-radius: 4px;
   font-weight: 600;
   margin-bottom: 1.1rem;
+  margin-top: 3rem;
 }
-
+ 
 /* ── OVERVIEW ── */
 .rt-overview {
   padding: 5rem 0 4rem;

@@ -67,7 +67,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1800&q=80&auto=format&fit=crop');
+    url('/Uploads/VentureCapital.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

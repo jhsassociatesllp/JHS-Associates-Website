@@ -21,7 +21,7 @@
   --sv-border-hover: rgba(30, 58, 95, 0.35);
   --sv-shadow: 0 4px 24px rgba(30, 58, 95, 0.1);
   --sv-shadow-lg: 0 12px 40px rgba(30, 58, 95, 0.18);
-  --font-display: sans-serif, serif;
+  /* --font-display: sans-serif, serif; */
   --font-body: "DM Sans", sans-serif;
   --sv-radius: 14px;
   --sv-transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -180,7 +180,7 @@
 
 /* Heading */
 .services__heading {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(32px, 3.5vw, 48px);
   font-weight: 500;
   line-height: 1.12;

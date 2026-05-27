@@ -87,7 +87,7 @@ export default function Construction() {
       <section className="cn-hero" ref={heroRef}>
         <div className="cn-hero__inner">
           {/* <p className="cn-hero__eyebrow">Sectors &nbsp;·&nbsp; Other</p> */}
-          <h1 className="cn-hero__title">Construction<br /><em>Services</em></h1>
+          <h1 className="cn-hero__title">Construction<br /><span>Services</span></h1>
           <p className="cn-hero__sub">
             Specialised financial, tax and compliance advisory for construction
             companies, infrastructure developers and EPC contractors built on

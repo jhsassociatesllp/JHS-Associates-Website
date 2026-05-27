@@ -87,7 +87,7 @@ export default function NGO() {
       <section className="ngo-hero" ref={heroRef}>
         <div className="ngo-hero__inner">
           {/* <p className="ngo-hero__eyebrow">Sectors &nbsp;·&nbsp; Other</p> */}
-          <h1 className="ngo-hero__title">NGO<br /><em>Services</em></h1>
+          <h1 className="ngo-hero__title">NGO<br /><span>Services</span></h1>
           <p className="ngo-hero__sub">
             Specialist audit, tax, and regulatory compliance advisory for
             non-governmental organisations, charitable trusts and Section 8

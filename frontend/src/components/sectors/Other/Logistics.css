@@ -75,6 +75,9 @@
   text-align: center;
   overflow: hidden;
   padding: 6rem 2rem 5rem;
+  background-image:
+    linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
+    url('/Uploads/Logistics1.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -138,10 +141,11 @@
   margin-bottom: 24px;
 }
 
-.log-hero__title em {
-  font-style: italic;
+.log-hero__title span {
+  /* font-style: italic; */
+  font-family: var(--font);
   color: #ffd700;
-  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  /* text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3); */
 }
 
 .log-hero__sub {

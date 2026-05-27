@@ -87,7 +87,7 @@ export default function GemsAndJewellery() {
       <section className="gj-hero" ref={heroRef}>
         <div className="gj-hero__inner">
           {/* <p className="gj-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
-          <h1 className="gj-hero__title">Gems &amp; Jewellery<br /><em>Services</em></h1>
+          <h1 className="gj-hero__title">Gems &amp; Jewellery<br /><span>Services</span></h1>
           <p className="gj-hero__sub">
             Specialised financial, tax and compliance advisory for gems traders,
             jewellery manufacturers and retail chains trusted by India's leading

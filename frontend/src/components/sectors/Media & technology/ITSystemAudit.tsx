@@ -87,10 +87,10 @@ export default function ITSystemAudit() {
       <section className="it-hero" ref={heroRef}>
         <div className="it-hero__inner">
           {/* <p className="it-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
-          <h1 className="it-hero__title">IT System<br /><em>Audit</em></h1>
+          <h1 className="it-hero__title">IT System<br /><span>Audit</span></h1>
           <p className="it-hero__sub">
             Specialist IT audit, cybersecurity assessment and technology controls
-            advisory for enterprises built on CISA-certified expertise and
+            advisory for enterprises built on CISA certified expertise and
             deep knowledge of Indian regulatory IT compliance frameworks.
           </p>
           {/* <div className="it-hero__stats">

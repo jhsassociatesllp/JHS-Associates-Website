@@ -1,0 +1,445 @@
+/* ============================================================
+   Solutions.css — JHS & Associates Solutions Page
+   Compact, elegant design with light theme
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap");
+
+:root {
+  --jhs-red: #D62049;
+  --jhs-navy: #1e3a5f;
+  --jhs-text-primary: #1a2a40;
+  --jhs-text-secondary: #64748b;
+  --jhs-text-muted: #94a3b8;
+  --jhs-bg: #fafafa;
+  --jhs-surface: #ffffff;
+  --jhs-border: #e5e7eb;
+  --jhs-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --jhs-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --jhs-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --jhs-radius: 12px;
+  --jhs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --font-primary: "DM Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.sol-page {
+  min-height: 100vh;
+  background: var(--jhs-bg);
+  font-family: var(--font-primary);
+}
+
+.sol-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO SECTION - Compact with Image
+   ═══════════════════════════════════════════════════════════ */
+
+.sol-hero {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 100px 24px 60px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2a4a6f 100%);
+}
+
+.sol-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  opacity: 0.12;
+}
+
+.sol-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(30, 58, 95, 0.92) 0%, rgba(42, 74, 111, 0.88) 100%);
+  z-index: 2;
+}
+
+.sol-hero__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sol-eyebrow {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--jhs-red);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.sol-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.sol-subtitle {
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENT SECTION - Compact Cards
+   ═══════════════════════════════════════════════════════════ */
+
+.sol-content {
+  padding: 50px 0 70px;
+}
+
+.sol-section {
+  margin-bottom: 50px;
+  padding: 32px 28px;
+  background: var(--jhs-surface);
+  border-radius: var(--jhs-radius);
+  box-shadow: var(--jhs-shadow-sm);
+  border-left: 4px solid var(--jhs-red);
+  transition: all 0.3s var(--jhs-ease);
+}
+
+.sol-section:hover {
+  box-shadow: var(--jhs-shadow-md);
+}
+
+.sol-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Color variants */
+.sol-section--red {
+  border-left-color: var(--jhs-red);
+}
+
+.sol-section--blue {
+  border-left-color: #3b82f6;
+}
+
+.sol-section--green {
+  border-left-color: #10b981;
+}
+
+.sol-section--purple {
+  border-left-color: #8b5cf6;
+}
+
+/* Section Header - Compact */
+.sol-section__header {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--jhs-border);
+}
+
+.sol-section__title {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 800;
+  color: var(--jhs-text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+}
+
+.sol-section__subtitle {
+  font-size: 0.875rem;
+  color: var(--jhs-text-secondary);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Sectors Grid - Compact */
+.sol-sectors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Sector Card - Compact & Elegant */
+.sol-sector-card {
+  background: var(--jhs-bg);
+  border: 1px solid var(--jhs-border);
+  border-radius: 10px;
+  padding: 20px 18px;
+  transition: all 0.25s var(--jhs-ease);
+}
+
+.sol-sector-card:hover {
+  border-color: var(--jhs-red);
+  box-shadow: var(--jhs-shadow-sm);
+  transform: translateY(-2px);
+  background: var(--jhs-surface);
+}
+
+.sol-sector-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--jhs-border);
+}
+
+.sol-sector-icon {
+  font-size: 1.1rem;
+  color: var(--jhs-red);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.sol-section--blue .sol-sector-icon {
+  color: #3b82f6;
+}
+
+.sol-section--green .sol-sector-icon {
+  color: #10b981;
+}
+
+.sol-section--purple .sol-sector-icon {
+  color: #8b5cf6;
+}
+
+.sol-sector-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--jhs-text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Service List - Compact */
+.sol-service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sol-service-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--jhs-text-secondary);
+  transition: all 0.2s var(--jhs-ease);
+  padding: 4px 0;
+}
+
+.sol-service-item:hover {
+  color: var(--jhs-text-primary);
+  transform: translateX(3px);
+}
+
+.sol-bullet {
+  color: var(--jhs-red);
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 700;
+}
+
+.sol-section--blue .sol-bullet {
+  color: #3b82f6;
+}
+
+.sol-section--green .sol-bullet {
+  color: #10b981;
+}
+
+.sol-section--purple .sol-bullet {
+  color: #8b5cf6;
+}
+
+.sol-service-text {
+  flex: 1;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE - MOBILE FIRST
+   ═══════════════════════════════════════════════════════════ */
+
+/* Small Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .sol-container {
+    padding: 0 16px;
+  }
+
+  .sol-hero {
+    min-height: 280px;
+    padding: 80px 16px 50px;
+  }
+
+  .sol-eyebrow {
+    font-size: 0.6rem;
+    padding: 0.35rem 0.9rem;
+  }
+
+  .sol-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .sol-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .sol-content {
+    padding: 36px 0 50px;
+  }
+
+  .sol-section {
+    margin-bottom: 36px;
+    padding: 20px 16px;
+    border-left-width: 3px;
+  }
+
+  .sol-section__header {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .sol-section__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .sol-section__subtitle {
+    font-size: 0.8rem;
+  }
+
+  .sol-sectors-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sol-sector-card {
+    padding: 16px 14px;
+  }
+
+  .sol-sector-card__header {
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .sol-sector-icon {
+    font-size: 1rem;
+  }
+
+  .sol-sector-card__title {
+    font-size: 0.95rem;
+  }
+
+  .sol-service-list {
+    gap: 8px;
+  }
+
+  .sol-service-item {
+    font-size: 0.8rem;
+    gap: 8px;
+    padding: 3px 0;
+  }
+
+  .sol-bullet {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile (481px - 640px) */
+@media (min-width: 481px) and (max-width: 640px) {
+  .sol-container {
+    padding: 0 20px;
+  }
+
+  .sol-hero {
+    padding: 85px 20px 55px;
+  }
+
+  .sol-content {
+    padding: 42px 0 56px;
+  }
+
+  .sol-section {
+    padding: 24px 20px;
+    margin-bottom: 42px;
+  }
+
+  .sol-sectors-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* Tablet Portrait (641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+  .sol-hero {
+    padding: 90px 24px 60px;
+  }
+
+  .sol-content {
+    padding: 46px 0 60px;
+  }
+
+  .sol-section {
+    padding: 28px 24px;
+    margin-bottom: 46px;
+  }
+
+  .sol-sectors-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+}
+
+/* Tablet Landscape (769px - 900px) */
+@media (min-width: 769px) and (max-width: 900px) {
+  .sol-content {
+    padding: 48px 0 65px;
+  }
+
+  .sol-section {
+    padding: 30px 26px;
+    margin-bottom: 48px;
+  }
+
+  .sol-sectors-grid {
+    gap: 20px;
+  }
+}
+
+/* Desktop (901px and above) */
+@media (min-width: 901px) {
+  .sol-sectors-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}

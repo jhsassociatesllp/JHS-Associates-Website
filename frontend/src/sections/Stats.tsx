@@ -11,22 +11,22 @@ interface InsightItem {
 
 const insights: InsightItem[] = [
   {
-    eyebrow: "FINANCIAL INTEGRITY · TRUST · PRECISION",
+    eyebrow: "FINANCIAL INTEGRITY ",
     heading: "The JHS Insights Index",
     description:
-      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS Associates brings decades of expertise — transforming complexity into clarity.",
+      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS Associates brings decades of expertise transforming complexity into clarity.",
   },
   {
-    eyebrow: "TAX STRATEGY · COMPLIANCE · ADVISORY",
+    eyebrow: "TAX STRATEGY ",
     heading: "Navigating India's New Tax Landscape",
     description:
       "From GST reforms to direct tax overhauls, staying compliant while optimising your tax position demands expert guidance. Our advisors keep you ahead of every regulatory shift.",
   },
   {
-    eyebrow: "AUDIT · ASSURANCE · GOVERNANCE",
+    eyebrow: "AUDIT ",
     heading: "Assurance That Goes Beyond Numbers",
     description:
-      "Our audit practice doesn't just verify — it uncovers hidden risks and opportunities. Rigorous, independent, and forward-looking assurance for businesses that demand more.",
+      "Our audit practice doesn't just verify it uncovers hidden risks and opportunities. Rigorous, independent, and forward-looking assurance for businesses that demand more.",
   },
 ];
 

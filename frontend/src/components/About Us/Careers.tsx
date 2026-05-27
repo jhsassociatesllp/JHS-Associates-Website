@@ -21,7 +21,7 @@ export default function Careers() {
         
         {/* Stats bar */}
         <div className="ap-hero__stats">
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">200+</span><span className="ap-hero__stat-label">Team Members</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">700+</span><span className="ap-hero__stat-label">Team Members</span></div>
           <div className="ap-hero__stat-div" />
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">50+</span><span className="ap-hero__stat-label">Annual Hires</span></div>
           <div className="ap-hero__stat-div" />

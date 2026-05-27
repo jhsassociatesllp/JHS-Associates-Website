@@ -91,7 +91,7 @@ export default function ITTeS() {
       <section className="ites-hero" ref={heroRef}>
         <div className="ites-hero__inner">
           {/* <p className="ites-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
-          <h1 className="ites-hero__title">IT / ITeS<br /><em>Services</em></h1>
+          <h1 className="ites-hero__title">IT / ITeS<br /><span>Services</span></h1>
           <p className="ites-hero__sub">
             Specialised tax, audit, and compliance advisory for IT services,
             software companies, BPO/KPO entities and technology enabled

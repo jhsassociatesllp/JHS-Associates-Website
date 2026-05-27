@@ -201,7 +201,7 @@ const Manufacturing: React.FC = () => {
         <div className="man-hero__inner container">
           {/* <span className="man-hero__badge">JHS & Associates</span> */}
           <h1 className="man-hero__title">
-            Manufacturing <em>Excellence</em>
+            Manufacturing <br /> <span>Excellence</span>
           </h1>
           <p className="man-hero__sub">
             Transform your manufacturing operations with our comprehensive consulting solutions. 

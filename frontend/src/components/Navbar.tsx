@@ -97,17 +97,17 @@ const NAV_ITEMS: NavItem[] = [
           { label: "IT /ITeS", description: "", href: 'sectors/media-technology/it-tes' },
         ],
       },
-      {
+      { 
         label: "Consumer",
         description: "FMCG to luxury retail",
         children: [
           { label: "FMCG", description: "", href: '/sectors/consumer/fmcg' },
-          { label: "Retail ", description: "", href: '/sectors/consumer/retail' },
-          { label: "Oil & Gas", description: "", href: '/sectors/consumer/OilAndGasIndustry' },
-          { label: "Housing ", description: "", href: '/sectors/consumer/housing' },
+          { label: "Retail", description: "", href: '/sectors/consumer/retail' },
+          { label: "Oil & Gas", description: "", href: '/sectors/consumer/oil-gas-industry' },
+          { label: "Housing", description: "", href: '/sectors/consumer/housing' },
           { label: "Real Estate", description: "", href: '/sectors/consumer/real-estate' },
-          { label: "Commoditiy", description: "", href: '/sectors/consumer/commodity' },
-          { label: "Gems & Jewelry", description: "", href: '/sectors/consumer/GemsAndJewellery' },
+          { label: "Commodity", description: "", href: '/sectors/consumer/commodity' },
+          { label: "Gems & Jewellery", description: "", href: '/sectors/consumer/gems-jewellery' },
         ],
       },
       {
@@ -147,7 +147,7 @@ const NAV_ITEMS: NavItem[] = [
     subItems: [
       { label: "Our Story", description: "History & founding vision", href: "/know-us/our-story" },
       { label: "Mission & Vision", description: "What drives us", href: "/know-us/mission-vision" },
-      { label: "Leadership", description: "Meet the partners", href: "/know-us/leadership" },
+      // { label: "Leadership", description: "Meet the partners", href: "/know-us/leadership" },
       // { label: "Culture", description: "Our values & ways of working", href: "/know-us/culture" },
       // { label: "Partnerships", description: "Strategic alliances & networks", href: "/know-us/partnerships" },
       // { label: "Awards", description: "Recognition & accolades", href: "/know-us/awards" },

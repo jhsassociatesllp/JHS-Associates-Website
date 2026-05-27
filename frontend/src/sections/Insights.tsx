@@ -1,15 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Insights.css";
+
+import { imageUrl } from '../utils/imageUrl'
 
 export default function Insights() {
   const sectionRef = useRef<HTMLElement>(null);
   const leftCardRef = useRef<HTMLDivElement>(null);
   const rightTopRef = useRef<HTMLDivElement>(null);
   const rightBottomRef = useRef<HTMLDivElement>(null);
-
+  const [blogImageLoaded, setBlogImageLoaded] = useState(false);
+ 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -51,13 +54,25 @@ export default function Insights() {
     return () => ctx.revert();
   }, []);
 
+  // Lazy load blog background image
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl('Taxblog.png');
+    img.onload = () => setBlogImageLoaded(true);
+  }, []);
+
   return (
     <section className="insights" ref={sectionRef}>
       <div className="insights__container">
 
-        {/* LEFT COLUMN - BLOGS */}
+        {/* LEFT COLUMN - BLOGS */} 
         <div className="insights__card insights__card--blogs" ref={leftCardRef}>
-          <div className="insights__card-bg-blogs"></div>
+          <div 
+            className={`insights__card-bg-blogs ${blogImageLoaded ? 'insights__card-bg-blogs--loaded' : ''}`}
+            style={{ 
+              backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxblog.png')})` : 'none'
+            }}
+          ></div>
           <div className="insights__card-overlay-blogs"></div>
 
           <div className="insights__card-content">

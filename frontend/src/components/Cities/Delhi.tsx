@@ -8,7 +8,7 @@ import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhel-kochhar' },
+  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
   { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
   { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]

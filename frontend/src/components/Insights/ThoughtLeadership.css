@@ -216,6 +216,7 @@
   color: var(--ink-4);
   white-space: nowrap;
   font-weight: 400;
+  margin-top: 3rem;
 }
 
 .tl-section__line {

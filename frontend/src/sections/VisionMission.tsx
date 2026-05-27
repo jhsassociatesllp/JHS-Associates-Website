@@ -8,7 +8,7 @@ export default function VisionMission() {
   const sectionRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
- 
+   
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -141,3 +141,4 @@ export default function VisionMission() {
     </section >
   );
 }
+

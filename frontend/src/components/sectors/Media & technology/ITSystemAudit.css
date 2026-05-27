@@ -67,7 +67,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/Uploads/images/ITSystem.Avif');
+    url('/Uploads/ITSystem.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -130,19 +130,20 @@
 }
 
 /* Electric blue / neon — technology, systems, digital security */
-.it-hero__title em {
-  font-style: italic;
+.it-hero__title span {
+  font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #bae6fd 0%, #38bdf8 40%, #0284c7 80%, #bae6fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: filter 0.4s var(--ease);
-}
-
-.it-hero__title em:hover {
   filter: brightness(1.2);
 }
+
+/* .it-hero__title em:hover {
+  filter: brightness(1.2);
+} */
 
 .it-hero__sub {
   font-size: 1rem;

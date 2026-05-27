@@ -180,10 +180,10 @@ export default function Assurance() {
         <div className="a-hero__overlay" />
         <div className="a-container">
           <div className="a-hero__content">
-            <span className="a-eyebrow">CERT-In Empanelled · ISO 27001 · COBIT / ISACA</span>
+            {/* <span className="a-eyebrow">CERT-In Empanelled · ISO 27001 · COBIT / ISACA</span> */}
             <h1 className="a-title">IT Assurance &amp; Technology Audit</h1>
             <p className="a-subtitle">
-              End-to-end information security reviews, vulnerability assessments, and technology audits — delivered by a CERT-In empanelled organisation to protect what matters most.
+              End to end information security reviews, vulnerability assessments and technology audits delivered by a CERT In empanelled organisation to protect what matters most.
             </p>
           </div>
         </div>
@@ -267,7 +267,7 @@ export default function Assurance() {
           <div className="a-section-header">
             <h2>Vulnerability Assessment &amp; Penetration Testing</h2>
             <div className="a-divider" />
-            <p>Proactive, periodic security testing to detect weaknesses before attackers do — protecting the confidentiality, integrity, availability and privacy of your information assets.</p>
+            <p>Proactive, periodic security testing to detect weaknesses before attackers do protecting the confidentiality, integrity, availability and privacy of your information assets.</p>
           </div>
 
           {/* Threat landscape */}

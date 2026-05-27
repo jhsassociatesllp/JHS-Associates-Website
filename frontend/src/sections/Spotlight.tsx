@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Spotlight.css";
-
+ 
 interface SpotlightItem {
   id: string;
   label: string;

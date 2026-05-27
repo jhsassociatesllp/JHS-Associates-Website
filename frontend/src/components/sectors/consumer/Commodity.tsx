@@ -4,6 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, TrendingUp, ShieldCheck, BarChart2, Globe2, Layers, FileText } from 'lucide-react'
 import './Commodity.css'
 
+// import { imageUrl } from '../utils/imageUrl'
+
 gsap.registerPlugin(ScrollTrigger)
 
 const HIGHLIGHTS = [
@@ -103,7 +105,7 @@ export default function Commodity() {
         <div className="com-hero__inner">
 
           <h1 className="com-hero__title">
-            Commodity<br /><em>Services</em>
+            Commodity<br /><span>Services</span>
           </h1>
 
           <p className="com-hero__sub">

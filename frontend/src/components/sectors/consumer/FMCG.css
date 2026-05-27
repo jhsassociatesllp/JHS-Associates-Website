@@ -67,7 +67,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/Uploads/images/FMCG.avif');
+    url('/Uploads/FMCG.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -130,8 +130,9 @@
 }
 
 /* Green gradient — FMCG / fresh / consumer */
-.fmcg-hero__title em {
-  font-style: italic;
+.fmcg-hero__title span {
+  font-family: var(--font);
+  filter: brightness(1.2);
   font-weight: 800;
   background: linear-gradient(90deg, #86efac 0%, #22c55e 50%, #86efac 100%);
   -webkit-background-clip: text;
@@ -214,6 +215,7 @@
   border-radius: 4px;
   font-weight: 600;
   margin-bottom: 1.1rem;
+  margin-top: 3rem;
 }
 
 /* ── OVERVIEW ── */

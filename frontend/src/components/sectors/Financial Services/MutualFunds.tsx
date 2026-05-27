@@ -146,9 +146,9 @@ export default function MutualFunds() {
               <div className="mf-card__icon">{h.icon}</div>
               <h3 className="mf-card__title">{h.title}</h3>
               <p className="mf-card__desc">{h.desc}</p>
-              <button className="mf-card__cta" type="button">
+              {/* <button className="mf-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

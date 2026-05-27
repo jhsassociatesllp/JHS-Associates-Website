@@ -123,7 +123,7 @@ export default function Logistics() {
         <div className="log-hero__inner">
 
           <h1 className="log-hero__title">
-            Logistics &<br /><em>Supply Chain</em>
+            Logistics &<br /><span>Supply Chain</span>
           </h1>
 
           <p className="log-hero__sub">

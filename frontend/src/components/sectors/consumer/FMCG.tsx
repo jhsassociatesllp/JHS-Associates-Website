@@ -87,7 +87,7 @@ export default function FMCG() {
       <section className="fmcg-hero" ref={heroRef}>
         <div className="fmcg-hero__inner">
           {/* <p className="fmcg-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
-          <h1 className="fmcg-hero__title">FMCG<br /><em>Services</em></h1>
+          <h1 className="fmcg-hero__title">FMCG<br /><span>Services</span></h1>
           <p className="fmcg-hero__sub">
             Integrated financial, tax and compliance advisory for Fast Moving Consumer
             Goods companies from emerging D2C brands to large distribution-led businesses.

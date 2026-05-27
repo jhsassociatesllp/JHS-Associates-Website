@@ -87,11 +87,11 @@ export default function OilAndGasIndustry() {
       <section className="og-hero" ref={heroRef}>
         <div className="og-hero__inner">
           <p className="og-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p>
-          <h1 className="og-hero__title">Oil &amp; Gas<br /><em>Industry</em></h1>
+          <h1 className="og-hero__title">Oil &amp; Gas<br /><span>Industry</span></h1>
           <p className="og-hero__sub">
             Specialised financial, tax, and compliance advisory for oil &amp; gas
             operators, refiners, and distribution companies built on deep knowledge
-            of PSC contracts, DGH regulations and sector-specific accounting.
+            of PSC contracts, DGH regulations and sector specific accounting.
           </p>
           <div className="og-hero__stats">
             {STATS.map((s) => (

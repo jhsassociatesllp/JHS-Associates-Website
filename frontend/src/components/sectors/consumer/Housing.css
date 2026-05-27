@@ -53,7 +53,7 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 2.5rem;
-}
+} 
 
 /* ── HERO ── */
 .hs-hero {
@@ -67,7 +67,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/uploads/images/housing.avif');
+    url('/Uploads/Housing.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -130,19 +130,21 @@
 }
 
 /* Sky blue / cyan gradient — housing / architecture */
-.hs-hero__title em {
-  font-style: italic;
+.hs-hero__title span {
+  /* font-style: italic; */
+  font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #7dd3fc 0%, #38bdf8 50%, #7dd3fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: filter 0.4s var(--ease);
-}
-
-.hs-hero__title em:hover {
   filter: brightness(1.2);
 }
+
+/* .hs-hero__title em:hover {
+  filter: brightness(1.2);
+} */
 
 .hs-hero__sub {
   font-size: 1rem;
@@ -214,6 +216,7 @@
   border-radius: 4px;
   font-weight: 600;
   margin-bottom: 1.1rem;
+  margin-top: 3rem;
 }
 
 /* ── OVERVIEW ── */

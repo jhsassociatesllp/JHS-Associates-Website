@@ -81,7 +81,7 @@ export default function HealthCare() {
       <section className="hc-hero" ref={heroRef}>
         <div className="hc-hero__inner">
           {/* <p className="hc-hero__eyebrow">Sectors &nbsp;·&nbsp; Other</p> */}
-          <h1 className="hc-hero__title">Healthcare<br /><em>Services</em></h1>
+          <h1 className="hc-hero__title">Healthcare<br /><span>Services</span></h1>
           <p className="hc-hero__sub">
             Specialised audit, tax and compliance advisory for hospitals,
             diagnostic centres, pharmaceutical companies and healthcare

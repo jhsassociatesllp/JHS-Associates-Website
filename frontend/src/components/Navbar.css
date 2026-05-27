@@ -186,9 +186,9 @@
 }
 
 .nb__logo {
-  height: 65px;
+  height: 60px;
   width: auto;
-  max-width: 220px;
+  max-width: 350px;
   object-fit: contain;
 }
 

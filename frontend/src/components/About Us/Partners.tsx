@@ -22,28 +22,28 @@ const PARTNER_DATA = [
         image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
         creds: "FCA, CIA",
         desc: "Over 25 years of expertise in internal audits, corporate governance, and strategic management consulting.",
-        linkedin: "https://www.linkedin.com/in/nikhel-kochhar"
+        linkedin: "https://www.linkedin.com/in/nikhelkochhar"
       },
       {
         name: "Kalpesh Parmar",
         image: imageUrl('Kalpesh-Parmar-removebg-preview.png'),
         creds: "B.Com (Hons), FCA",
         desc: "Leads the statutory audit practice. Expert in Ind AS implementation and complex consolidation for listed entities.",
-        linkedin: ""
+        linkedin: "https://www.linkedin.com/in/kalpesh-parmar-016a502b"
       },
       {
         name: "Sharad Mohata",
         image: imageUrl('Sharad-Mohata-removebg-preview.png'),
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Specializes in direct taxation, corporate restructuring, and international tax advisory.",
-        linkedin: "https://www.linkedin.com/in/sharad-mohata"
+        linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082"
       },
       {
         name: "Vinod Joshi",
         image: imageUrl('vinod joshi.png'),
         creds: "FCA, MBA (Finance)",
         desc: "Renowned for financial modeling, M&A restructuring, and cross-border strategic alliances.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://linkedin.com/in/vinod-joshi-fca"
       }
     ]
   },
@@ -76,7 +76,7 @@ const PARTNER_DATA = [
         image: imageUrl('Sahil-Shah-removebg-preview.png'),
         creds: "FCA",
         desc: "Focuses on capital restructuring and VC funding advisory.",
-        linkedin: "https://www.linkedin.com/in/linkedin.com/in/sahil-shah-664a5312a/"
+        linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a"
       },
       {
         name: "Tausif Shaikh",
@@ -123,7 +123,7 @@ const PARTNER_DATA = [
         image: imageUrl('Chandra Shekaran.png'),
         creds: "FCA",
         desc: "Partner specializing in risk advisory and corporate governance.",
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29"
       },
       {
         name: "Pranal P",
@@ -151,14 +151,14 @@ const PARTNER_DATA = [
         image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in transfer pricing and cross-border transactions.",
-        linkedin: "https://linkedin.com/jagdish-solanki"
+        linkedin: "https://www.linkedin.com/in/jagdish-solanki"
       },
       {
         name: "Narayana Rao Malla",
         image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
         creds: "FCA",
         desc: "Spearheads the IT/ITES industry group for internal audits.",
-        linkedin: "https://linkedin.com/narayana-rao-malla"
+        linkedin: "https://www.linkedin.com/in/narayana-rao-malla"
       }
     ]
   },
@@ -170,7 +170,7 @@ const PARTNER_DATA = [
         image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
         creds: "FCA",
         desc: "Senior guide for Gujarat manufacturing sector audits.",
-        linkedin: "https://linkedin.com/virendra-nayyar-3114a9227/"
+        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227"
       },
       {
         name: "Dhaval Thakkar",
@@ -191,7 +191,7 @@ const PARTNER_DATA = [
         image: imageUrl('Milin-Parekh-removebg-preview.png'),
         creds: "FCA",
         desc: "Specializes in concurrent and statutory bank audits.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Milin-Parekh-removebg-preview.png')-parekh"
+        linkedin: "https://www.linkedin.com/in/milin-parekh-63692061"
       },
       {
         name: "Mehul Shah",
@@ -205,7 +205,7 @@ const PARTNER_DATA = [
         image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
         creds: "FCA",
         desc: "Tax optimization specialist for HNIs and family offices.",
-        linkedin: "https://www.linkedin.com/in/imageUrl('Alpesh-Vaniya-removebg-preview.png')-vaniya"
+        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190"
       },
       {
         name: "Raj Shah",
@@ -233,14 +233,14 @@ const PARTNER_DATA = [
         image: imageUrl('Shreena Parana.png'),
         creds: "FCA",
         desc: "Audit & Compliance",
-        linkedin: ""
+        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a"
       },
       {
         name: "Jhankhna Patel",
         image: imageUrl('Jhankana Patel.jpeg'),
         creds: "ACA",
         desc: "Audit & Regulatory Compliance",
-        linkedin: "https://www.linkedin.com/in/jhankhna-patel"
+        linkedin: "https://www.linkedin.com/in/jhankhnapatel09"
       }
     ]
   }

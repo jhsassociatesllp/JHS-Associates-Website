@@ -91,7 +91,7 @@ export default function Retail() {
       <section className="rt-hero" ref={heroRef}>
         <div className="rt-hero__inner">
           {/* <p className="rt-hero__eyebrow">Sectors &nbsp;·&nbsp; Consumer</p> */}
-          <h1 className="rt-hero__title">Retail<br /><em>Services</em></h1>
+          <h1 className="rt-hero__title">Retail<br /><span>Services</span></h1>
           <p className="rt-hero__sub">
             Integrated financial, tax and compliance advisory for retail businesses
             from single-store independents to large omnichannel chains operating
@@ -152,9 +152,9 @@ export default function Retail() {
               <div className="rt-card__icon">{h.icon}</div>
               <h3 className="rt-card__title">{h.title}</h3>
               <p className="rt-card__desc">{h.desc}</p>
-              <button className="rt-card__cta" type="button">
+              {/* <button className="rt-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

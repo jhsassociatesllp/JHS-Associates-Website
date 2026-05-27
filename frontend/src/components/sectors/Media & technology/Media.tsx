@@ -87,7 +87,7 @@ export default function Media() {
       <section className="md-hero" ref={heroRef}>
         <div className="md-hero__inner">
           {/* <p className="md-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
-          <h1 className="md-hero__title">Media<br /><em>Services</em></h1>
+          <h1 className="md-hero__title">Media<br /><span>Services</span></h1>
           <p className="md-hero__sub">
             Specialised audit, tax and regulatory compliance advisory for
             broadcast media, OTT platforms, digital publishers and entertainment

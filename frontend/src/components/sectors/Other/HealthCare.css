@@ -67,7 +67,7 @@
   padding: 6rem 2rem 5rem;
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('/Uploads/images/healthcare1.avif');
+    url('/Uploads/Healthcare1.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -130,8 +130,9 @@
 }
 
 /* Medical blue / aqua — care, health, life, trust */
-.hc-hero__title em {
-  font-style: italic;
+.hc-hero__title span {
+  filter: brightness(1.15);
+  font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #a5f3fc 0%, #22d3ee 45%, #0891b2 85%, #a5f3fc 100%);
   -webkit-background-clip: text;

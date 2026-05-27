@@ -5,6 +5,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap');
 
+
+
 /* ── Tokens ── */
 :root {
   --red: #c0392b;
@@ -78,7 +80,7 @@
 
   background-image:
     linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-    url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1800&q=80&auto=format&fit=crop');
+    url('/Uploads/FMCG.avif');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -143,19 +145,21 @@
 }
 
 /* Orange/amber gradient — commodity markets feel */
-.com-hero__title em {
-  font-style: italic;
+.com-hero__title span {
+  /* font-style: italic; */
+  font-family: var(--font);
   font-weight: 800;
   background: linear-gradient(90deg, #fdba74 0%, #f97316 50%, #fdba74 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   transition: filter 0.4s var(--ease);
-}
-
-.com-hero__title em:hover {
   filter: brightness(1.2);
 }
+
+/* .com-hero__title em:hover {
+  filter: brightness(1.2);
+} */
 
 .com-hero__sub {
   font-size: 1rem;
@@ -249,6 +253,7 @@
   border-radius: 4px;
   font-weight: 600;
   margin-bottom: 1.1rem;
+  margin-top: 3rem;
 }
 
 .com-overview__title {

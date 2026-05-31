@@ -192,12 +192,12 @@
   object-fit: contain;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .nb__logo {
     height: 75px;
     max-width: 150px;
   }
-}
+} */
 
 /* Right controls - Mobile Optimized */
 .nb__icon-btn {

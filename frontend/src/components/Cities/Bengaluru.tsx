@@ -100,7 +100,7 @@ export default function Bengaluru() {
 
       <div className="blr-ribbon">
         <div className="blr-ribbon__inner">
-          {([['3+', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['3', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['1', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['1', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="blr-ribbon__item"><span className="blr-ribbon__num">{num}</span><span className="blr-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -124,13 +124,13 @@ export default function Bengaluru() {
           </div>
         </div>
       </section>
-
+  
       <section className="blr-section blr-specials-section">
         <div className="blr-container">
           <div className="blr-specials-inner">
             <div className="blr-specials-left">
               <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
-              <h2 className="blr-specials-title">We Specialise In</h2>
+              <h2 className="blr-specials-title">We Specialised In</h2>
               <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
               <div className="blr-specials-accent-line" />
               <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

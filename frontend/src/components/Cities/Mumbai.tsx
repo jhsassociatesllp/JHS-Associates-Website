@@ -95,7 +95,7 @@ const PARTNERS = [
   { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'FCA', designation: 'Risk Advisory, IA & IPC', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
 ]
 
-/* ─── Sectors ─────────────────────────────────────── */
+/* ─── Sectors ─────────────────────────────────────── */ 
 const SECTORS = ['Construction', 'BFSI', 'Healthcare', 'Hospitality', 'Media & Education', 'Manufacturing', 'Logistics']
 
 /* ─── Specialisations ─────────────────────────────── */
@@ -233,7 +233,7 @@ export default function Mumbai() {
           <div className="mum-specials-inner">
             <div className="mum-specials-left">
               <span className="mum-section-hdr__tag mum-section-hdr__tag--white">Expertise</span>
-              <h2 className="mum-specials-title">We Specialise In</h2>
+              <h2 className="mum-specials-title">We Specialised In</h2>
               <p className="mum-specials-body">From cutting-edge cyber assurance to niche social-sector audits, our Mumbai team brings a breadth of specialised capabilities unmatched in the region.</p>
               <div className="mum-specials-accent-line" />
               <p className="mum-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

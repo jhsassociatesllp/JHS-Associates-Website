@@ -260,7 +260,7 @@ export default function Kolkata() {
           <div className="kol-specials-inner">
             <div className="kol-specials-left">
               <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
-              <h2 className="kol-specials-title">We Specialise In</h2>
+              <h2 className="kol-specials-title">We Specialised In</h2>
               <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
               <div className="kol-specials-accent-line" />
               <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

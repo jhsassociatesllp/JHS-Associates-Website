@@ -6,7 +6,7 @@ import { imageUrl } from '../utils/imageUrl'
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
   label: string;
-  description?: string;
+  description?: string;  
   href?: string;
   children?: RightItem[]; // ← Services & Sectors ke right-panel items
 }

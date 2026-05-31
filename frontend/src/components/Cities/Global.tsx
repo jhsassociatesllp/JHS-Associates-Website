@@ -14,7 +14,7 @@ const SectorIcons: Record<string, JSX.Element> = {
       <rect x="5" y="30" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="20" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
     </svg>
-  ),
+  ), 
   Manufacturing: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="20" cy="20" r="6" stroke="currentColor" strokeWidth="1.8" />

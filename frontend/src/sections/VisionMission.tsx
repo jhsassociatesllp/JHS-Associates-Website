@@ -138,7 +138,96 @@ export default function VisionMission() {
         </div>
 
       </div>
+
+      {/* JHS GOLD STANDARD SECTION */}
+      <div className="gold-standard">
+        <div className="gold-standard__container">
+          
+          {/* Header */}
+          <div className="gold-standard__header">
+            <h2 className="gold-standard__title">
+              <span className="gold-standard__title-jhs">JHS</span>{" "}
+              <span className="gold-standard__title-gold">GOLD</span>{" "}
+              <span className="gold-standard__title-standard">STANDARD</span>
+            </h2>
+          </div>
+  
+          {/* Circular Badges */}
+          <div className="gold-standard__badges">
+            
+            {/* Quality */}
+            <div className="gold-standard__badge">
+              <div className="gold-standard__circle">
+                Quality
+              </div>
+              <div className="gold-standard__details">
+                <ul className="gold-standard__list">
+                  <li>Delighting stakeholders by exceeding expectations</li>
+                  <li>Aiming for excellence by maintaining high standards of professional practice and service execution</li>
+                  <li>Displaying high levels of commitment and passion</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Objectivity */}
+            <div className="gold-standard__badge">
+              <div className="gold-standard__circle">
+                Objectivity
+              </div>
+              <div className="gold-standard__details">
+                <ul className="gold-standard__list">
+                  <li>Committing to integrity, independence & accountability aside value to clients as an objective source of assurance</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Mutual Trust & Respect */}
+            <div className="gold-standard__badge">
+              <div className="gold-standard__circle">
+                Mutual<br />Trust &<br />Respect
+              </div>
+              <div className="gold-standard__details">
+                <ul className="gold-standard__list">
+                  <li>Working relationships are based on fulfilling commitments to develop trust</li>
+                  <li>Honesty and integrity as the best business ethics</li>
+                  <li>Transparent dealings</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Fairness in Dealings */}
+            <div className="gold-standard__badge">
+              <div className="gold-standard__circle">
+                Fairness<br />in<br />Dealings
+              </div>
+              <div className="gold-standard__details">
+                <ul className="gold-standard__list">
+                  <li>Fairness in dealings with customers, employees and vendors</li>
+                  <li>Open and co-operative dealings with regulators</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Result Oriented Approach */}
+            <div className="gold-standard__badge">
+              <div className="gold-standard__circle">
+                Result<br />Oriented<br />Approach
+              </div>
+              <div className="gold-standard__details">
+                <ul className="gold-standard__list">
+                  <li>Analytical thinking coupled with business understanding and problem-solving</li>
+                  <li>Working as a catalyst for improvement through effective assessment of risks</li>
+                  <li>Personalized attention to clients and result orientation</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </section >
   );
 }
 
+ 

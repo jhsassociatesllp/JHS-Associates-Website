@@ -33,11 +33,10 @@ services:
       - mongodb
 
     environment:
-      MONGO_URI: mongodb://mongodb:27017
+      MONGODB_URL: mongodb://mongodb:27017
 
     volumes:
       - "/www/wwwroot/jhs-website-content/uploads:/app/uploads"
-
   # ==========================================
   # FRONTEND
   # ==========================================

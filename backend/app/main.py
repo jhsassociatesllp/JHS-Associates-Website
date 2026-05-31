@@ -6,6 +6,7 @@ from app.routes import contact, alumni, admin
 from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
 from app.routes.knowledge import router as knowledge_router # ✅ NEW
+from app.routes.feedback import router as feedback_router   # ✅ FEEDBACK
 
 
 @asynccontextmanager
@@ -56,7 +57,10 @@ app.include_router(admin.router)
 app.include_router(articles_router)   # ✅ NEW
 app.include_router(blogs_router)      # ✅ NEW
 app.include_router(knowledge_router)  # ✅ NEW
+app.include_router(feedback_router)   # ✅ FEEDBACK
 
 @app.get("/")
 async def root():
     return {"message": "Welcome to JHS Associates API"}
+
+

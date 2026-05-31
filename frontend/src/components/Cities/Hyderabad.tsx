@@ -101,7 +101,7 @@ export default function Hyderabad() {
 
       <div className="hyd-ribbon">
         <div className="hyd-ribbon__inner">
-          {([['5+', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['3', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="hyd-ribbon__item"><span className="hyd-ribbon__num">{num}</span><span className="hyd-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -131,7 +131,7 @@ export default function Hyderabad() {
           <div className="hyd-specials-inner">
             <div className="hyd-specials-left">
               <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
-              <h2 className="hyd-specials-title">We Specialise In</h2>
+              <h2 className="hyd-specials-title">We Specialised In</h2>
               <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
               <div className="hyd-specials-accent-line" />
               <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

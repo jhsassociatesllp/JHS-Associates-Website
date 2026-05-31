@@ -11,6 +11,7 @@ import AdminBlogs from './pages/AdminBlogs';         // ✅ NEW
 import AdminKnowledge from './pages/AdminKnowledge'; // ✅ NEW
 import AdminContacts from './pages/AdminContacts';   // ✅ NEW
 import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
+import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
 
 const theme = createTheme({
   palette: {
@@ -40,6 +41,7 @@ export default function App() {
               <Route path="/knowledge" element={<AdminKnowledge />} /> {/* ✅ NEW */}
               <Route path="/contacts" element={<AdminContacts />} />   {/* ✅ NEW */}
               <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
+              <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}
             </Route>
           </Route>
 

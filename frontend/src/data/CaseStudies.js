@@ -2,19 +2,25 @@
 // Each case study matches the shape expected by CaseStudies.jsx:
 //   id, title, sector, category, scope, image, approach[], delivery[], valueAdded[]
 
-// Placeholder image helper – replace URLs with your own hosted assets.
-// These are profession-neutral finance/business themed images.
+import { imageUrl } from '../utils/imageUrl';
+
+// Case study images - using local assets from public/Uploads folder
 const IMAGES = {
-  compliance: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
-  audit: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80',
-  risk: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
-  finance: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
-  operations: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-  banking: 'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=800&q=80',
-  insurance: 'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=800&q=80',
-  realestate: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
-  manufacturing: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
-  it: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+  compliance: imageUrl('Risk.png'),
+  audit: imageUrl('Auditposter.jpg'),
+  risk: imageUrl('Risk.png'),
+  finance: imageUrl('MutualFund.avif'),
+  operations: imageUrl('outsourcing.png'),
+  banking: imageUrl('Banking.avif'),
+  insurance: imageUrl('Insurance.avif'),
+  realestate: imageUrl('Real-State.avif'),
+  manufacturing: imageUrl('manufacturing.png'),
+  it: imageUrl('IT-Technology.avif'),
+  NBFC: imageUrl('NBFC.avif'),
+  Logistics: imageUrl('Logistics1.png'),
+  fainance_report: imageUrl('Fainance-report.png'),
+  payment: imageUrl('Payment.jpeg'),
+  media: imageUrl('Media.png')
 };
 
 export const CASE_STUDIES = [
@@ -26,7 +32,7 @@ export const CASE_STUDIES = [
     category: 'Compliance',
     scope:
       'Implementation assistance on Compliance Assurance & Self Certification Programme (CASP) for a Payment System Service Provider — developing master checklists, self-assessment formats, and CEO/CFO compliance dashboards.',
-    image: IMAGES.compliance,
+    image: IMAGES.payment,
     approach: [
       'Preparation of Master Checklist for various laws applicable to the company',
       'Development of Self-Assessment Certification Formats and checklists and obtaining self-certificates from process owners',
@@ -56,7 +62,7 @@ export const CASE_STUDIES = [
     scope:
       'Undertaking comprehensive vendor audit for a payment bank — covering vendor master creation controls, voucher duplication controls, and detection of unauthorised payments using data analytics (CAAT).',
     image: IMAGES.audit,
-    approach: [
+    approach: [  
       'Developing checklist of data analytics to be executed',
       'Preparing data for analysis (format, size, masters, etc.)',
       'Review of RCMs and Process Maps — mapping with walkthrough',
@@ -146,7 +152,7 @@ export const CASE_STUDIES = [
     category: 'Risk & Governance',
     scope:
       'Implementing Governance Policies & Enterprise Risk Management for a Local Search Engine and Media company, covering ethical conduct policies, board charters, insider trading policy, and a top-10 risk framework.',
-    image: IMAGES.risk,
+    image: IMAGES.media,
     approach: [
       'Research on global best practices & regulatory requirements',
       'Extensive discussions with the client on needs and existing governance practices',
@@ -172,7 +178,7 @@ export const CASE_STUDIES = [
     category: 'Audit',
     scope:
       'Review of client invoicing process, identification of invoicing errors, and recommendation of process improvements for a logistics sector client through a rigorous monthly revenue assurance SOP.',
-    image: IMAGES.operations,
+    image: IMAGES.Logistics,
     approach: [
       'Designed a monthly revenue assurance SOP',
       'Rigorous review of each client invoice against route masters, diesel consumption norms, etc.',
@@ -248,7 +254,7 @@ export const CASE_STUDIES = [
     category: 'Audit',
     scope:
       'Undertaking a comprehensive Payroll Review using Computer Assisted Audit Techniques (CAAT) for an NBFC — assuring payroll accuracy, identifying deviations, and verifying correctness of statutory deductions.',
-    image: IMAGES.finance,
+    image: IMAGES.NBFC,
     approach: [
       'Developing checklist of data analytics to be executed for payroll data',
       'Preparing data for analysis (format, size, etc.)',
@@ -520,7 +526,7 @@ export const CASE_STUDIES = [
     category: 'Business Excellence',
     scope:
       'Review of procurement processes across group companies and documentation of Standard Operating Procedures for the Procurement function of a Financial Services group, enabling automation and control standardization.',
-    image: IMAGES.finance,
+    image: IMAGES.fainance_report,
     approach: [
       'Process walkthrough covering multiple lines of service and variety of procurement requirements',
       'Data analytics on procurement transactions, identification of process gaps and IT functional bottlenecks',

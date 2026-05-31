@@ -11,7 +11,7 @@ const PARTNERS = [
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /> 
       <rect x="5" y="16" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
       <rect x="8" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
       <rect x="17.5" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
@@ -101,7 +101,7 @@ export default function Chennai() {
 
       <div className="chn-ribbon">
         <div className="chn-ribbon__inner">
-          {([['4', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['3', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>

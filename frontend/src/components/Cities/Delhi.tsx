@@ -123,7 +123,7 @@ export default function Delhi() {
       {/* ══ STATS RIBBON ══ */}
       <div className="del-ribbon">
         <div className="del-ribbon__inner">
-          {([['4', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['3', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['3', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="del-ribbon__item"><span className="del-ribbon__num">{num}</span><span className="del-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -155,7 +155,7 @@ export default function Delhi() {
           <div className="del-specials-inner">
             <div className="del-specials-left">
               <span className="del-section-hdr__tag del-section-hdr__tag--white">Expertise</span>
-              <h2 className="del-specials-title">We Specialise In</h2>
+              <h2 className="del-specials-title">We Specialised In</h2>
               <p className="del-specials-body">From risk-based audit frameworks to dispute resolution, our Delhi team delivers targeted advisory across North India's real estate and infrastructure sectors.</p>
               <div className="del-specials-accent-line" />
               <p className="del-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-import { imageUrl } from '../utils/imageUrl'
+import { imageUrl } from '../utils/imageUrl'   
 
 interface Card {
   id: number;
@@ -9,8 +9,9 @@ interface Card {
   category: string;
   meta: string;
   title: string;
-  hoverTitle: string;
+  hoverTitle: string; 
   hoverDescription: string;
+  route: string;
 }
 
 const cards: Card[] = [
@@ -19,10 +20,11 @@ const cards: Card[] = [
     image: imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp'),
     category: "ARTICLES",
     meta: "SLIDESHOW • December 20, 2026",
-    title: "BOARDROOMS IN TRANSITION: HOW INDIA’S GRC FRAMEWORK IS REDEFINING CORPORATE GOVERNANCE",
+    title: "BOARDROOMS IN TRANSITION: HOW INDIA'S GRC FRAMEWORK IS REDEFINING CORPORATE GOVERNANCE",
     hoverTitle: "BOARDROOMS IN TRANSITION",
     hoverDescription:
-      "India’s corporate governance ecosystem has witnessed a decisive shift over the past decade. Landmark regulatory reforms led by SEBI, RBI, and IRDAI have elevated boardroom expectations and redefined the role of Governance, Risk, and Compliance (GRC). No longer limited to defensive oversight, GRC has become a strategic pillar enabling better board performance, organizational resilience, and sustainable long-term value creation.",
+      "India's corporate governance ecosystem has witnessed a decisive shift over the past decade. Landmark regulatory reforms led by SEBI, RBI, and IRDAI have elevated boardroom expectations and redefined the role of Governance, Risk, and Compliance (GRC). No longer limited to defensive oversight, GRC has become a strategic pillar enabling better board performance, organizational resilience, and sustainable long-term value creation.",
+    route: "/articles/boardrooms-in-transition",
   },
   {
     id: 2,
@@ -33,16 +35,18 @@ const cards: Card[] = [
     hoverTitle: "Infrastructure Strategy 2026",
     hoverDescription:
       "This strategic briefing examines the evolving role of data governance under the Digital Personal Data Protection (DPDP) framework, with a focused lens on Rule 6 and its implications for CEOs, Boards, and senior leadership. It highlights the shift from treating data privacy as a compliance function to positioning it as a critical element of governance, accountability, and institutional trust.",
+    route: "/resources/data-governance-rule-6",
   },
   {
     id: 3,
     image: imageUrl('Investment-Opportunities.png.webp'),
     category: "TECHNOLOGY",
     meta: "Thought Leadership • January 22, 2025",
-    title: "Investment Opportunities: A Strategic Roadmap for India”",
+    title: "Investment Opportunities: A Strategic Roadmap for India",
     hoverTitle: "Generative AI at Scale",
     hoverDescription:
       "India, with its dynamic economy, presents numerous investment opportunities across sectors. From emerging technologies like Artificial Intelligence and renewable energy to traditional industries such as manufacturing and infrastructure, the nation offers diverse avenues for growth.",
+    route: "/technology/investment-opportunities-india",
   },
   {
     id: 4,
@@ -53,6 +57,7 @@ const cards: Card[] = [
     hoverTitle: "Sustainability & Climate 2026",
     hoverDescription:
       "Companies that embed sustainability into their core strategy are outperforming peers. Learn how to navigate the energy transition and create lasting stakeholder value.",
+    route: "/sustainability/green-transition",
   },
   {
     id: 5,
@@ -63,6 +68,7 @@ const cards: Card[] = [
     hoverTitle: "Digital Transformation 2026",
     hoverDescription:
       "Digital twins are revolutionizing how companies design, operate, and maintain complex systems. Early adopters are seeing 30% efficiency gains.",
+    route: "/digital/digital-twins",
   },
 ];
 
@@ -70,7 +76,7 @@ export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
-  const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
+  const autoSlideRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const navigate = useNavigate();
 
   // Touch Swipe Refs
@@ -200,10 +206,16 @@ export default function Hero() {
               </span>
               <h3 className="hero__carousel-card-hover-title">{card.hoverTitle}</h3>
               <p className="hero__carousel-card-hover-desc">{card.hoverDescription}</p>
-              <a href="#" className="hero__carousel-card-cta">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(card.route);
+                }}
+                className="hero__carousel-card-cta"
+              >
                 LEARN MORE
                 <span className="hero__carousel-card-cta-arrow">→</span>
-              </a>
+              </button>
             </div>
           </div>
         )}
@@ -232,9 +244,9 @@ export default function Hero() {
       <div className="hero__header">
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
-          Building Trust.
+          Building Trust. 
           <br />
-          Delivering Excellence
+          Delivering Excellence.
           <br />
           Shaping Better Futures.
         </h1>

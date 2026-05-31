@@ -13,7 +13,7 @@ const citiesList = [
     image: imageUrl('Mumbai.png'),
   },
   {
-    name: "Dehli",
+    name: "Delhi",
     slug: "delhi",
     // address: "Connaught Place",
     image: imageUrl('Dehli.png'),

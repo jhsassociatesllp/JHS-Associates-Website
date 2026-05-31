@@ -14,11 +14,11 @@ const INSIGHTS = [
 
 const USEFUL_LINKS = [
   { name: 'Locations', path: '/about/our-offices' },
-  { name: 'Contact', path: '/contact' },
-  // { name: 'Feedback', path: '/feedback' },
+  { name: 'Contact', path: '/contact' }, 
+  { name: 'Feedback', path: '/feedback' },
   // { name: 'RFP', path: '/rfp' },
   { name: 'Know JHS', path: '/about/leadership' },
-  // { name: 'Careers', path: '/careers' },
+  // { name: 'Careers', path: '/careers' }, 
 ]
 
 const SERVICES = [

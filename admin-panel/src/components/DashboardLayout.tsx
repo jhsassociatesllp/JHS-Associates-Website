@@ -26,6 +26,7 @@ import {
   Psychology as KnowledgeIcon,
   ContactMail as ContactIcon,
   School as AlumniIcon,
+  Feedback as FeedbackIcon,
   Search as SearchIcon,
   Notifications as NotificationsIcon,
   Settings as SettingsIcon,
@@ -58,6 +59,7 @@ const menuGroups = [
     items: [
       { text: 'Contacts', icon: ContactIcon, path: '/contacts', requiredFeature: 'contacts' },
       { text: 'Alumni', icon: AlumniIcon, path: '/alumni', requiredFeature: 'alumni' },
+      { text: 'Client Feedback', icon: FeedbackIcon, path: '/feedback', requiredFeature: 'feedback' },
     ],
   },
 ];

@@ -181,14 +181,14 @@ export default function Ahmedabad() {
             <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Phone</span><span className="ahm-hero__card-stat-val">+91 79 1234 5678</span></div>
             <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Email</span><span className="ahm-hero__card-stat-val">ahmedabad@jhsassociates.in</span></div>
             {/* <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Hours</span><span className="ahm-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
-          </div>
+          </div> 
         </div>
       </section>
 
       {/* ══ STATS RIBBON ══ */}
       <div className="ahm-ribbon">
         <div className="ahm-ribbon__inner">
-          {([['10', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['11', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="ahm-ribbon__item">
               <span className="ahm-ribbon__num">{num}</span>
               <span className="ahm-ribbon__lbl">{lbl}</span>
@@ -223,7 +223,7 @@ export default function Ahmedabad() {
           <div className="ahm-specials-inner">
             <div className="ahm-specials-left">
               <span className="ahm-section-hdr__tag ahm-section-hdr__tag--white">Expertise</span>
-              <h2 className="ahm-specials-title">We Specialise In</h2>
+              <h2 className="ahm-specials-title">We Specialised In</h2>
               <p className="ahm-specials-body">From individual tax planning to global accounts outsourcing, our Ahmedabad team brings specialised capabilities across tax, compliance, and advisory services.</p>
               <div className="ahm-specials-accent-line" />
               <p className="ahm-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

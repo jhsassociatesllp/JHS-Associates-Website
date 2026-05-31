@@ -7,7 +7,7 @@ import './Articles.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Force cache refresh - v2.0
+// Force cache refresh - v2.0 
 
 /* ── API base — reads from .env, falls back to localhost ─────── */
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)
@@ -429,30 +429,21 @@ export default function Articles() {
             onClick={(e) => e.stopPropagation()}
           >
 
-            {/* Header image */}
-            <div className="art-modal__img-wrap">
-              <LazyImage
-                src={articleImageUrl(selectedArticle.image_id)}
-                alt={selectedArticle.title}
-                className="art-modal__img"
-                onError={() => console.log('Modal image failed to load')}
-              />
-              <div className="art-modal__img-overlay" />
-              <button
-                className="art-modal__close"
-                onClick={() => setSelectedArticle(null)}
-                aria-label="Close"
-              >
-                <X size={20} />
-              </button>
-            </div>
+            {/* Close button */}
+            <button
+              className="art-modal__close"
+              onClick={() => setSelectedArticle(null)}
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
 
             {/* Body */}
             <div
-  className="art-modal__body"
-  ref={modalBodyRef}
-  onWheel={(e) => e.stopPropagation()}
->
+              className="art-modal__body"
+              ref={modalBodyRef}
+              onWheel={(e) => e.stopPropagation()}
+            >
               {/* Meta */}
               <div className="art-modal__meta">
                 <span className="art-tag">Article</span>

@@ -98,6 +98,16 @@ import Partnerships from './components/About Us/Partnerships'
 // Contact page
 import Contact from './components/Contact'
 
+// Feedback page
+import Feedback from './pages/Feedback'
+
+// Hero Card Detail Pages
+import BoardroomsInTransition from './pages/BoardroomsInTransition'
+import DataGovernanceRule6 from './pages/DataGovernanceRule6'
+import InvestmentOpportunitiesIndia from './pages/InvestmentOpportunitiesIndia'
+import GreenTransition from './pages/GreenTransition'
+import DigitalTwins from './pages/DigitalTwins'
+
 gsap.registerPlugin(ScrollTrigger)
 
 function HomePage() {
@@ -216,6 +226,16 @@ export default function App() {
 
         {/* Contact */}
         <Route path="/contact" element={<Contact />} />
+
+        {/* Feedback */}
+        <Route path="/feedback" element={<Feedback />} />
+
+        {/* Hero Card Detail Pages */}
+        <Route path="/articles/boardrooms-in-transition" element={<BoardroomsInTransition />} />
+        <Route path="/resources/data-governance-rule-6" element={<DataGovernanceRule6 />} />
+        <Route path="/technology/investment-opportunities-india" element={<InvestmentOpportunitiesIndia />} />
+        <Route path="/sustainability/green-transition" element={<GreenTransition />} />
+        <Route path="/digital/digital-twins" element={<DigitalTwins />} />
       </Routes>
       <Footer />
     </>

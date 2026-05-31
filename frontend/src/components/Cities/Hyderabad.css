@@ -532,9 +532,9 @@
 }
 
 .hyd-special-pill--c {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  color: rgba(255, 255, 255, 0.68)
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.90);
 }
 
 .hyd-special-pill__check {
@@ -554,7 +554,7 @@
 }
 
 .hyd-special-pill--c .hyd-special-pill__check {
-  color: rgba(255, 255, 255, 0.50)
+  color: #ffc4c9
 }
 
 /* PARTNERS */

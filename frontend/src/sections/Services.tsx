@@ -43,12 +43,26 @@ export default function Services() {
   const [capOpen, setCapOpen] = useState(false);
   const [indOpen, setIndOpen] = useState(false);
   const [activeItem, setActiveItem] = useState<ServiceItem | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   const capRef = useRef<HTMLDivElement>(null);
   const indRef = useRef<HTMLDivElement>(null);
 
   const isCapability = activeItem ? capabilities.some(c => c.label === activeItem.label) : false;
   const isIndustry = activeItem ? industries.some(i => i.label === activeItem.label) : false;
+
+  // Preload all images on component mount
+  useEffect(() => {
+    const allImages = [...capabilities, ...industries].map(item => item.image);
+    
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        setLoadedImages(prev => new Set([...prev, src]));
+      };
+    });
+  }, []);
 
   // Close dropdowns when clicking outside either dropdown
   useEffect(() => {
@@ -59,11 +73,26 @@ export default function Services() {
       if (outsideCap && outsideInd) {
         setCapOpen(false);
         setIndOpen(false);
-      }
+      }   
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleItemSelect = (item: ServiceItem) => {
+    // Check if image is already loaded
+    if (loadedImages.has(item.image)) {
+      setActiveItem(item);
+    } else {
+      // Preload the image before setting active
+      const img = new Image();
+      img.src = item.image;
+      img.onload = () => {
+        setLoadedImages(prev => new Set([...prev, item.image]));
+        setActiveItem(item);
+      };
+    }
+  };
 
   return (
     <section className="services">
@@ -132,7 +161,7 @@ export default function Services() {
                         className={`services__dropdown-item ${activeItem?.label === item.label ? "active" : ""
                           }`}
                         onClick={() => {
-                          setActiveItem(item);
+                          handleItemSelect(item);
                           setCapOpen(false);
                         }}
                       >
@@ -205,7 +234,7 @@ export default function Services() {
                         className={`services__dropdown-item ${activeItem?.label === item.label ? "active" : ""
                           }`}
                         onClick={() => {
-                          setActiveItem(item);
+                          handleItemSelect(item);
                           setIndOpen(false);
                         }}
                       >
@@ -236,8 +265,13 @@ export default function Services() {
       {/* Right — abstract decorative image panel */}
       <div className="services__right" aria-hidden="true">
         {activeItem ? (
-          <div className="services__right-dynamic fade-in">
-            <img src={activeItem.image} alt={activeItem.label} className="services__right-image" loading="lazy" />
+          <div className="services__right-dynamic fade-in" key={activeItem.label}>
+            <LazyImage
+              src={activeItem.image}
+              alt={activeItem.label}
+              className="services__right-image"
+              threshold={0.1}
+            />
             <div className="services__right-overlay">
               <h3 className="services__right-title">{activeItem.label}</h3>
               <p className="services__right-desc">{activeItem.description}</p>

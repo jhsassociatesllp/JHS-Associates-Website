@@ -160,7 +160,7 @@ export default function Stats() {
       {/* Right panel — image */}
       <div className="stats__right" aria-hidden="true">
         <img 
-          src={imageUrl('images/Insights2.png')}
+          src={imageUrl('Insights2.png')}
           alt="JHS Insights"
           className={`stats__image ${imageLoaded ? 'stats__image--loaded' : ''}`}
           onLoad={() => setImageLoaded(true)}

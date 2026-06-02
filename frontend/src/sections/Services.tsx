@@ -22,7 +22,7 @@ const capabilities: ServiceItem[] = [
   { label: "Financial Reporting", href: "/services/consulting", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },
   { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions and overall business growth.", image: imageUrl('Blogimg.png') },
   { label: "Risk & Governance", href: "/services/soc-attestation", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
-  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('images/Outsourcing.png') },
+  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('Outsourcing.png') },
   { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.avif') },
 ];
 
@@ -35,7 +35,7 @@ const industries: ServiceItem[] = [
   { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
   { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.avif') },
   { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.avif') },
-  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('media.avif') },
+  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.png') },
   { label: "Logistics", href: "/sectors/other/logistics", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('logistics1.png') },
 ];
 

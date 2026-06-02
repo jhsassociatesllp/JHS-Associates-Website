@@ -57,7 +57,7 @@ export default function Insights() {
   // Lazy load blog background image
   useEffect(() => {
     const img = new Image();
-    img.src = imageUrl('images/Taxation2.jpg');
+    img.src = imageUrl('Taxation2.png');
     img.onload = () => setBlogImageLoaded(true);
   }, []);
 

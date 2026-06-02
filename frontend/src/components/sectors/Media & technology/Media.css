@@ -95,10 +95,7 @@
 .md-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg,
-      rgba(2, 6, 8, 0.92) 0%,
-      rgba(4, 20, 28, 0.80) 50%,
-      rgba(2, 6, 8, 0.94) 100%);
+  background: linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%);
   z-index: 1;
 }
 

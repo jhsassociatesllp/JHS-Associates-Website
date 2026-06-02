@@ -11,8 +11,8 @@
 #     runs-on: ubuntu-latest
 
 #     steps:
-#       - name: Deploy via SSH
-#         uses: appleboy/ssh-action@v0.1.0
+#       - name: 🚀 Deploy via SSH
+#         uses: appleboy/ssh-action@v1.2.0
 
 #         with:
 #           host: ${{ secrets.SERVER_HOST }}
@@ -21,62 +21,88 @@
 #           port: ${{ secrets.SERVER_PORT }}
 
 #           script: |
+
 #             set -e
 
 #             BRANCH="${{ github.ref_name }}"
 
 #             echo "🌿 Branch: $BRANCH"
 
+#             # ==========================================
+#             # ENVIRONMENT CONFIG
+#             # ==========================================
+
 #             if [ "$BRANCH" = "main" ]; then
-#               PORT=9030
+#               FRONTEND_PORT=9030
+#               BACKEND_PORT=9035
+#               ADMIN_PORT=9040
 #               ENV=production
+
 #             elif [ "$BRANCH" = "staging" ]; then
-#               PORT=9025
+#               FRONTEND_PORT=9025
+#               BACKEND_PORT=9030
+#               ADMIN_PORT=9035
 #               ENV=staging
+
 #             else
 #               echo "❌ Unsupported branch: $BRANCH"
 #               exit 1
 #             fi
 
-#             echo "🌍 ENV: $ENV"
-#             echo "🔌 PORT: $PORT"
+#             echo "🌍 Environment: $ENV"
+#             echo "🌐 Frontend Port: $FRONTEND_PORT"
+#             echo "⚙️ Backend Port: $BACKEND_PORT"
+#             echo "🛠️ Admin Port: $ADMIN_PORT"
 
 #             PROJECT_DIR="/www/wwwroot/JHS-Associates-Website"
 
-#             # Clone if not exists
+#             # ==========================================
+#             # CLONE REPO IF NOT EXISTS
+#             # ==========================================
+
 #             if [ ! -d "$PROJECT_DIR" ]; then
 #               echo "📥 Cloning repository..."
+
 #               git clone https://github.com/jhsassociatesllp/JHS-Associates-Website.git $PROJECT_DIR
 #             fi
 
 #             cd $PROJECT_DIR
 
+#             # ==========================================
+#             # PULL LATEST CODE
+#             # ==========================================
+
 #             echo "📦 Pulling latest code..."
+
 #             git fetch --all
 #             git reset --hard origin/$BRANCH
 
-#             echo "🛑 Stopping old containers..."
-#             docker compose down --volumes --remove-orphans || true
+#             # ==========================================
+#             # CREATE MEDIA DIRECTORY
+#             # ==========================================
 
-#             echo "🧹 Removing old project containers..."
-#             docker ps -a --filter "name=jhs_" -q | xargs -r docker rm -f
+#             mkdir -p media
 
-#             echo "🧹 Removing dangling images..."
-#             docker image prune -af || true
+#             # ==========================================
+#             # STOP OLD CONTAINERS
+#             # ==========================================
 
-#             echo "🚀 Rebuilding ALL services without cache..."
-#             FRONTEND_PORT=$PORT docker compose build --no-cache
+#             echo "🛑 Restarting containers..."
 
-#             echo "🚀 Starting fresh containers..."
-#             FRONTEND_PORT=$PORT docker compose up -d --force-recreate
+#             FRONTEND_PORT=$FRONTEND_PORT \
+#             BACKEND_PORT=$BACKEND_PORT \
+#             ADMIN_PORT=$ADMIN_PORT \
+#             docker compose up -d --build
 
-#             echo "📋 Active containers:"
+#             # ==========================================
+#             # SHOW RUNNING CONTAINERS
+#             # ==========================================
+
+#             echo "📋 Running Containers"
+
 #             docker ps
 
-#             echo "✅ Deployment completed successfully"
-
-
-
+#             echo "✅ Deployment Completed Successfully"
 
 
 
@@ -94,7 +120,7 @@ jobs:
 
     steps:
       - name: 🚀 Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v0.1.0
 
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -171,9 +197,18 @@ jobs:
 
             echo "🛑 Restarting containers..."
 
-            FRONTEND_PORT=$FRONTEND_PORT \
-            BACKEND_PORT=$BACKEND_PORT \
-            ADMIN_PORT=$ADMIN_PORT \
+            export FRONTEND_PORT=$FRONTEND_PORT
+            export BACKEND_PORT=$BACKEND_PORT
+            export ADMIN_PORT=$ADMIN_PORT
+
+            # API URL
+            export VITE_API_BASE_URL="http://${{ secrets.SERVER_HOST }}:$BACKEND_PORT"
+
+            # Backend ENV
+            export MONGODB_URL="${{ secrets.MONGODB_URL }}"
+            export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+
+            docker compose down --remove-orphans
             docker compose up -d --build
 
             # ==========================================

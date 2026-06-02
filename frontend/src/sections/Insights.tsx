@@ -70,7 +70,7 @@ export default function Insights() {
           <div 
             className={`insights__card-bg-blogs ${blogImageLoaded ? 'insights__card-bg-blogs--loaded' : ''}`}
             style={{ 
-              backgroundImage: blogImageLoaded ? `url(${imageUrl('images/Taxation2.jpg')})` : 'none'
+              backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxation2.png')})` : 'none'
             }}
           ></div>
           <div className="insights__card-overlay-blogs"></div>

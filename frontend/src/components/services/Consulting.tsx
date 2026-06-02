@@ -75,7 +75,7 @@ export default function Consulting() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="c-hero">
-        <div className="c-hero__bg" style={{ backgroundImage: `url('${imageUrl('Consulting.png')}')` }} />
+        <div className="c-hero__bg" style={{ backgroundImage: `url('${imageUrl('images/Consulting.png')}')` }} />
         <div className="c-hero__overlay" />
         <div className="c-container">
           <div className="c-hero__content">

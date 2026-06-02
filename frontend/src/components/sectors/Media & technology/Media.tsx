@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Radio, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
+import { imageUrl } from '../../../utils/imageUrl'
 import './Media.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const HIGHLIGHTS = [
+const HIGHLIGHTS = [  
   {
     icon: <Radio size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
@@ -57,6 +58,7 @@ export default function Media() {
   const heroRef = useRef<HTMLDivElement>(null)
   const hlRef   = useRef<HTMLDivElement>(null)
   const whyRef  = useRef<HTMLDivElement>(null)
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -85,6 +87,13 @@ export default function Media() {
 
       {/* ── HERO ── */}
       <section className="md-hero" ref={heroRef}>
+        <img 
+          src={imageUrl('media.avif')}
+          alt="Media Services Background"
+          className={`md-hero__bg-image ${heroImageLoaded ? 'md-hero__bg-image--loaded' : ''}`}
+          onLoad={() => setHeroImageLoaded(true)}
+        />
+        <div className="md-hero__overlay" />
         <div className="md-hero__inner">
           {/* <p className="md-hero__eyebrow">Sectors &nbsp;·&nbsp; Media &amp; Technology</p> */}
           <h1 className="md-hero__title">Media<br /><span>Services</span></h1>

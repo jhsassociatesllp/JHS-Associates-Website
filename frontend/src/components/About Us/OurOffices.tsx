@@ -158,7 +158,7 @@ export default function OurOffices() {
 
       {/* ════ HERO ════ */}
       <section className="oo-hero">
-        <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('OfficesBG.avif')})` }} />
+        <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('images/OfficesBG.png')})` }} />
         <div className="oo-hero__overlay" />
         <div className="oo-hero__content">
           <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p>

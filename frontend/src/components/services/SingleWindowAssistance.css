@@ -81,6 +81,7 @@
   padding: 0.3rem 1rem;
   border-radius: var(--r-pill);
   margin-bottom: 1rem;
+  margin-top: 3rem;
 }
 
 .swa-section-title {
@@ -208,7 +209,7 @@
 .swa-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%);
+  background: linear-gradient(135deg, rgba(22, 41, 70, 0.50) 0%, rgba(34, 53, 82, 0.50) 100%);
 }
 
 .swa-hero__inner {

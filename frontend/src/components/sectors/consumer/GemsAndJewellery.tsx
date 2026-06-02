@@ -123,7 +123,7 @@ export default function GemsAndJewellery() {
           </div>
           <div className="gj-overview__visual">
             <div className="gj-overview__badge">
-              <span className="gj-overview__badge-icon">💎</span>
+              {/* <span className="gj-overview__badge-icon">💎</span> */}
               <span className="gj-overview__badge-label">Specialist gems &amp; jewellery advisory</span>
             </div>
           </div>

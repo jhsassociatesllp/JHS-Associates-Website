@@ -129,7 +129,7 @@ const SingleWindowAssistance: React.FC = () => {
             Your one-stop solution for all business regulatory, licensing, and compliance needs.
             We simplify government interactions so you can focus on growing your business.
           </p>
-          <div className="swa-hero__cta">
+          {/* <div className="swa-hero__cta">
             <button className="swa-btn swa-btn--primary">
               Get Started <ArrowRight size={16} />
             </button>
@@ -137,7 +137,7 @@ const SingleWindowAssistance: React.FC = () => {
               <PhoneCall size={14} />
               +91 98765 43210
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -237,7 +237,7 @@ const SingleWindowAssistance: React.FC = () => {
               <p className="swa-cta__sub">
                 Get in touch with our experts today for a free consultation.
               </p>
-              <div className="swa-cta__buttons">
+              {/* <div className="swa-cta__buttons">
                 <button className="swa-btn swa-btn--light">
                   <Mail size={14} />
                   info@jhsassociates.com
@@ -246,11 +246,11 @@ const SingleWindowAssistance: React.FC = () => {
                   <PhoneCall size={14} />
                   +91 98765 43210
                 </button>
-              </div>
+              </div> */}
             </div>
             <div className="swa-cta__stats">
               <div className="swa-stat">
-                <span className="swa-stat__number">500+</span>
+                <span className="swa-stat__number">1,000+</span>
                 <span className="swa-stat__label">Businesses Served</span>
               </div>
               <div className="swa-stat">
@@ -258,7 +258,7 @@ const SingleWindowAssistance: React.FC = () => {
                 <span className="swa-stat__label">Success Rate</span>
               </div>
               <div className="swa-stat">
-                <span className="swa-stat__number">7+</span>
+                <span className="swa-stat__number">45+</span>
                 <span className="swa-stat__label">Years of Excellence</span>
               </div>
             </div>

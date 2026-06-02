@@ -12,7 +12,7 @@ export default function Insights() {
   const rightTopRef = useRef<HTMLDivElement>(null);
   const rightBottomRef = useRef<HTMLDivElement>(null);
   const [blogImageLoaded, setBlogImageLoaded] = useState(false);
- 
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -57,7 +57,7 @@ export default function Insights() {
   // Lazy load blog background image
   useEffect(() => {
     const img = new Image();
-    img.src = imageUrl('Taxblog.png');
+    img.src = imageUrl('images/Taxation2.png');
     img.onload = () => setBlogImageLoaded(true);
   }, []);
 
@@ -70,7 +70,7 @@ export default function Insights() {
           <div 
             className={`insights__card-bg-blogs ${blogImageLoaded ? 'insights__card-bg-blogs--loaded' : ''}`}
             style={{ 
-              backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxblog.png')})` : 'none'
+              backgroundImage: blogImageLoaded ? `url(${imageUrl('images/Taxation2.png')})` : 'none'
             }}
           ></div>
           <div className="insights__card-overlay-blogs"></div>

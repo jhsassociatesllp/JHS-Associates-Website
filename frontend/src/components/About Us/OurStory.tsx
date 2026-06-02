@@ -9,7 +9,7 @@ export default function OurStory() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Fainance4.jpg')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('images/Ourstory.png')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Heritage &amp; History</p>
@@ -25,7 +25,7 @@ export default function OurStory() {
           <div className="ap-hero__stat-div" />
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">45</span><span className="ap-hero__stat-label">Years of Trust</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">14</span><span className="ap-hero__stat-label">Cities Conquered</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">14</span><span className="ap-hero__stat-label">Cities Presence</span></div>
         </div>
       </section>
 

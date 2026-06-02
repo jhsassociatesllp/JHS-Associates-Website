@@ -193,7 +193,7 @@ export default function Resources() {
         style={{
           backgroundImage: `
             linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-            url('${imageUrl('Resource_knowledge.png')}')
+            url('${imageUrl('images/Resources.png') }')
           `,
           backgroundColor: '#1e3a5f' // Fallback color if image fails to load
         }}

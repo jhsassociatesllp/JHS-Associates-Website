@@ -83,11 +83,10 @@ export default function Footer() {
         <div className="footer__social-strip-inner">
           <span className="footer__social-strip-label">Get connected with us on social networks:</span>
           <div className="footer__social-icons">
-            <a href="https://facebook.com/jhsassociates" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="footer__social-icon"><IconFacebook /></a>
-            <a href="https://x.com/jhsassociates" target="_blank" rel="noopener noreferrer" aria-label="X" className="footer__social-icon"><IconX /></a>
-            <a href="https://linkedin.com/company/jhsassociates" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-icon"><IconLinkedIn /></a>
-            <a href="https://instagram.com/jhsassociates" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-icon"><IconInstagram /></a>
-            <a href="https://youtube.com/@jhsassociates" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
+            <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="footer__social-icon"><IconFacebook /></a>
+            <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-icon"><IconLinkedIn /></a>
+            <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-icon"><IconInstagram /></a>
+            <a href="https://www.youtube.com/@JHS-Consulting" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
           </div>
         </div>
       </div>

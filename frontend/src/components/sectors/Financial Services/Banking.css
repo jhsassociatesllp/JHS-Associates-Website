@@ -73,7 +73,7 @@
   background-position: center;
   background-attachment: fixed;
 }
-
+ 
 .bk-hero::before {
   content: '';
   position: absolute;

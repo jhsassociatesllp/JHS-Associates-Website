@@ -107,6 +107,8 @@ import DataGovernanceRule6 from './pages/DataGovernanceRule6'
 import InvestmentOpportunitiesIndia from './pages/InvestmentOpportunitiesIndia'
 import GreenTransition from './pages/GreenTransition'
 import DigitalTwins from './pages/DigitalTwins'
+import SEBIDraftCircular from './pages/SEBIDraftCircular'
+import RBICoolingOffPeriod from './pages/RBICoolingOffPeriod'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -236,6 +238,8 @@ export default function App() {
         <Route path="/technology/investment-opportunities-india" element={<InvestmentOpportunitiesIndia />} />
         <Route path="/sustainability/green-transition" element={<GreenTransition />} />
         <Route path="/digital/digital-twins" element={<DigitalTwins />} />
+        <Route path="/regulatory/sebi-draft-circular" element={<SEBIDraftCircular />} />
+        <Route path="/regulatory/rbi-cooling-off-period" element={<RBICoolingOffPeriod />} />
       </Routes>
       <Footer />
     </>

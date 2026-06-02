@@ -315,7 +315,7 @@
 .it-btn--solid {
   background: linear-gradient(135deg, var(--red), var(--red-hi));
   color: var(--white);
-  box-shadow: 0 3px 14px var(--red-glow);
+  /* box-shadow: 0 3px 14px var(--red-glow); */
 }
 
 .it-btn--solid:hover {

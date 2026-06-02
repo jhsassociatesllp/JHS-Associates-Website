@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
@@ -17,6 +17,7 @@ import {
   BarChart3,
   Eye
 } from 'lucide-react'
+import { imageUrl } from '../../utils/imageUrl'
 import './SOCAttestation.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -25,6 +26,7 @@ const SOCAttestation: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const standardsRef = useRef<HTMLDivElement>(null)
   const benefitsRef = useRef<HTMLDivElement>(null)
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -166,6 +168,12 @@ const SOCAttestation: React.FC = () => {
           HERO SECTION
       ══════════════════════════════════════ */}
       <section className="soc-hero" ref={heroRef}>
+        <img 
+          src={imageUrl('images/SOCAttest.png')}
+          alt="SOC Attestation Background"
+          className={`soc-hero__bg-image ${heroImageLoaded ? 'soc-hero__bg-image--loaded' : ''}`}
+          onLoad={() => setHeroImageLoaded(true)}
+        />
         <div className="soc-hero__overlay" />
         <div className="soc-hero__inner container">
           <span className="soc-hero__badge">JHS & Associates</span>
@@ -268,10 +276,10 @@ const SOCAttestation: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <button className="soc-btn soc-btn--primary soc-btn--download">
+              {/* <button className="soc-btn soc-btn--primary soc-btn--download">
                 <Download size={14} />
                 Download SOC Service Guide
-              </button>
+              </button> */}
             </div>
 
             {/* Process Steps */}
@@ -322,7 +330,7 @@ const SOCAttestation: React.FC = () => {
             </div>
             <div className="soc-trust__quote">
               <p>"JHS provided exceptional SOC 2 guidance. Their team was knowledgeable, responsive, and helped us achieve attestation within 3 months."</p>
-              <span className="soc-trust__author">— CTO, Leading SaaS Platform</span>
+              {/* <span className="soc-trust__author"> CTO, Leading SaaS Platform</span> */}
             </div>
           </div>
         </div>
@@ -338,7 +346,7 @@ const SOCAttestation: React.FC = () => {
             <p className="soc-cta__sub">
               Start your compliance journey today. Get a free consultation with our SOC specialists.
             </p>
-            <div className="soc-cta__buttons">
+            {/* <div className="soc-cta__buttons">
               <button className="soc-btn soc-btn--light">
                 <Mail size={14} />
                 connect@jhsassociates.com
@@ -347,7 +355,7 @@ const SOCAttestation: React.FC = () => {
                 <PhoneCall size={14} />
                 +91 98765 43210
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

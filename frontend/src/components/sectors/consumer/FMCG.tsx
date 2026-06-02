@@ -82,7 +82,7 @@ export default function FMCG() {
 
   return (
     <div className="fmcg-page">
-
+  
       {/* ── HERO ── */}
       <section className="fmcg-hero" ref={heroRef}>
         <div className="fmcg-hero__inner">

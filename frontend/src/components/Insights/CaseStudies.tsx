@@ -23,7 +23,7 @@ export default function CaseStudies() {
   return (
     <div className="cs-page">
       {/* Hero Section */}
-      <section className="cs-hero" style={{ backgroundImage: `url('${imageUrl('Case Studies.png')}')` }}>
+      <section className="cs-hero" style={{ backgroundImage: `url('${imageUrl('images/Case_studies.png') }')` }}>
         <div className="cs-hero__overlay" />
         <div className="cs-hero__content">
           <h1 className="cs-title">Our Success Stories</h1>

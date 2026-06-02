@@ -61,7 +61,7 @@
 .a-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(22, 41, 70, 0.82) 0%, rgba(34, 53, 82, 0.70) 100%);
+  background: linear-gradient(135deg, rgba(22, 41, 70, 0.50) 0%, rgba(34, 53, 82, 0.50) 100%);
   z-index: 2;
 }
 

@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Lightbulb, CalendarDays, Users, AlertTriangle, CheckCircle2 } from 'lucide-react'
+import { imageUrl } from '../../utils/imageUrl'
 import './ThoughtLeadership.css'
 
 gsap.registerPlugin(ScrollTrigger)  
@@ -70,6 +71,7 @@ export default function ThoughtLeadership() {
   const heroRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const evtRef = useRef<HTMLDivElement>(null)
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -113,6 +115,13 @@ export default function ThoughtLeadership() {
           HERO
       ══════════════════════════════════════ */}
       <section className="tl-hero" ref={heroRef}>
+        <img 
+          src={imageUrl('images/Thought.png')}
+          alt="Thought Leadership Background"
+          className={`tl-hero__bg-image ${heroImageLoaded ? 'tl-hero__bg-image--loaded' : ''}`}
+          onLoad={() => setHeroImageLoaded(true)}
+        />
+        <div className="tl-hero__overlay" />
         <div className="tl-hero__inner">
           {/* <p className="tl-hero__eyebrow">
             <Lightbulb size={12} strokeWidth={1.5} />
@@ -127,7 +136,7 @@ export default function ThoughtLeadership() {
             JHS partners and senior advisors share their views on the forces reshaping finance,
             taxation and professional services in India and beyond.
           </p>
-        </div>
+        </div> 
       </section>
 
       {/* ══════════════════════════════════════

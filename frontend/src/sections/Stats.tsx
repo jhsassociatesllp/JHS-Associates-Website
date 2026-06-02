@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Stats.css";
-// import { imageUrl } from "@/utils/imageUrl";
+import { imageUrl } from "../utils/imageUrl";
 
 interface InsightItem {
   eyebrow: string;
@@ -33,6 +33,7 @@ const insights: InsightItem[] = [
 export default function Stats() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -158,7 +159,12 @@ export default function Stats() {
 
       {/* Right panel — image */}
       <div className="stats__right" aria-hidden="true">
-        <div className="stats__image" />
+        <img 
+          src={imageUrl('images/Insights2.png')}
+          alt="JHS Insights"
+          className={`stats__image ${imageLoaded ? 'stats__image--loaded' : ''}`}
+          onLoad={() => setImageLoaded(true)}
+        />
         <div className="stats__image-overlay" />
       </div>
 

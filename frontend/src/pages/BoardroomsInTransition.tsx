@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { imageUrl } from '../utils/imageUrl';
+import LazyImage from '../components/common/LazyImage';
 
 export default function BoardroomsInTransition() {
-    const [imageLoaded, setImageLoaded] = useState(false);
     return (
         <section style={styles.section}>
             <div style={styles.container}>
@@ -23,20 +23,11 @@ export default function BoardroomsInTransition() {
                 {/* Main Content */}
                 <article style={styles.content}>
                     <div style={styles.imageWrapper}>
-                        {!imageLoaded && (
-                            <div style={styles.imagePlaceholder}>
-                                <div style={styles.spinner} />
-                            </div>
-                        )}
-                        <img
+                        <LazyImage
                             src={imageUrl('BOARDROOMS-IN-TRANSITION-.png.webp')}
                             alt="Boardrooms in Transition"
-                            loading="lazy"
-                            style={{
-                                ...styles.image,
-                                display: imageLoaded ? 'block' : 'none'
-                            }}
-                            onLoad={() => setImageLoaded(true)}
+                            className="detail-page-image"
+                            threshold={0.1}
                         />
                     </div>
 
@@ -164,28 +155,13 @@ const styles: Record<string, React.CSSProperties> = {
         overflow: 'hidden',
         position: 'relative',
         backgroundColor: '#f3f4f6',
-    },
-    imagePlaceholder: {
-        width: '100%',
-        height: 400,
-        backgroundColor: '#f3f4f6',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        minHeight: '400px',
     },
     image: {
         width: '100%',
         height: 'auto',
         objectFit: 'cover',
         borderRadius: 16,
-    },
-    spinner: {
-        width: 48,
-        height: 48,
-        border: '4px solid #e5e7eb',
-        borderTop: '4px solid #3765b0',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite',
     },
     textContent: {
         lineHeight: 1.8,
@@ -243,17 +219,41 @@ const styles: Record<string, React.CSSProperties> = {
     },
 };
 
-// Add keyframe animation for spinner
-const styleSheet = document.styleSheets[0];
-const keyframes = `
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+// Add custom styles for LazyImage
+const styleElement = document.createElement('style');
+styleElement.textContent = `
+    .detail-page-image.lazy-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 16px;
+        min-height: 400px;
+    }
+    
+    .detail-page-image.lazy-image.loading {
+        background-color: #f3f4f6;
+        filter: blur(8px);
+    }
+    
+    .detail-page-image.lazy-image.loaded {
+        filter: none;
+        animation: fadeInImage 0.5s ease-out;
+    }
+    
+    @keyframes fadeInImage {
+        from {
+            opacity: 0;
+            filter: blur(8px);
+        }
+        to {
+            opacity: 1;
+            filter: none;
+        }
+    }
 `;
-try {
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-} catch (e) {
-    // Animation already exists
+
+if (!document.head.querySelector('style[data-detail-page-styles]')) {
+    styleElement.setAttribute('data-detail-page-styles', 'true');
+    document.head.appendChild(styleElement);
 }
 

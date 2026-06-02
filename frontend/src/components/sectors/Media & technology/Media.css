@@ -273,7 +273,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  box-shadow: 0 20px 60px rgba(192, 57, 43, 0.28);
+  /* box-shadow: 0 20px 60px rgba(192, 57, 43, 0.28); */
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
@@ -318,7 +318,7 @@
 .md-btn--solid {
   background: linear-gradient(135deg, var(--red), var(--red-hi));
   color: var(--white);
-  box-shadow: 0 3px 14px var(--red-glow);
+  /* box-shadow: 0 3px 14px var(--red-glow); */
 }
 
 .md-btn--solid:hover {
@@ -595,13 +595,13 @@
   padding: 3.25rem 4rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(192, 57, 43, 0.32);
+  /* box-shadow: 0 24px 64px rgba(192, 57, 43, 0.32); */
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .md-cta__inner:hover {
   transform: translateY(-3px);
-  box-shadow: 0 32px 80px rgba(192, 57, 43, 0.38);
+  /* box-shadow: 0 32px 80px rgba(192, 57, 43, 0.38); */
 }
 
 .md-cta__inner::before {

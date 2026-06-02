@@ -145,9 +145,9 @@ export default function Housing() {
               <div className="hs-card__icon">{h.icon}</div>
               <h3 className="hs-card__title">{h.title}</h3>
               <p className="hs-card__desc">{h.desc}</p>
-              <button className="hs-card__cta" type="button">
+              {/* <button className="hs-card__cta" type="button">
                 Learn More <ArrowUpRight size={13} />
-              </button>
+              </button> */}
             </article>
           ))}
         </div>

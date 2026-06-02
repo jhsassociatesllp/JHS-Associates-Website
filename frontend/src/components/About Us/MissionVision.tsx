@@ -9,7 +9,7 @@ export default function MissionVision() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('images/visionmission.png')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('visionmission.png')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Guiding Principles</p>

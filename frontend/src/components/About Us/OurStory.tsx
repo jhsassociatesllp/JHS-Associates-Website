@@ -9,7 +9,7 @@ export default function OurStory() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('images/Ourstory.png')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Ourstory.png')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Heritage &amp; History</p>

@@ -71,7 +71,7 @@ export default function CorporateFinance() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="cf-hero">
-        <div className="cf-hero__bg" style={{ backgroundImage: `url('${imageUrl('images/Corporate_fainance.png')}')` }} />
+        <div className="cf-hero__bg" style={{ backgroundImage: `url('${imageUrl('Corporate_fainance.png')}')` }} />
         <div className="cf-hero__overlay" />
         <div className="cf-container">
           <div className="cf-hero__content">

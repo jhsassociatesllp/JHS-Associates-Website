@@ -259,7 +259,7 @@ export default function Partners() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('images/Leadership.png')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Leadership.png')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Experts</p>

@@ -46,7 +46,9 @@ const AdminArticles: React.FC = () => {
     pdf: null
   });
 
-  const API_BASE = 'http://localhost:8000';
+  // const API_BASE = 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+  console.log("API Base URL", API_BASE_URL)
 
   // Helper function to get auth headers
   const getAuthHeaders = () => {
@@ -61,7 +63,7 @@ const AdminArticles: React.FC = () => {
   const fetchArticles = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/articles/`, {
+      const response = await fetch(`${API_BASE_URL}/articles/`, {
         headers: getAuthHeaders()
       });
       if (response.ok) {
@@ -115,14 +117,14 @@ const AdminArticles: React.FC = () => {
       
       if (editingId) {
         formDataToSend.append('edited_by', 'Admin User');
-        response = await fetch(`${API_BASE}/articles/${editingId}`, {
+        response = await fetch(`${API_BASE_URL}/articles/${editingId}`, {
           method: 'PUT',
           headers,
           body: formDataToSend,
         });
       } else {
         // Use the correct endpoint for creating articles
-        response = await fetch(`${API_BASE}/articles/upload`, {
+        response = await fetch(`${API_BASE_URL}/articles/upload`, {
           method: 'POST',
           headers,
           body: formDataToSend,
@@ -183,7 +185,7 @@ const AdminArticles: React.FC = () => {
     if (!confirm('Are you sure you want to delete this article?')) return;
 
     try {
-      const response = await fetch(`${API_BASE}/articles/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
         method: 'DELETE',
         headers: getAuthHeaders()
       });
@@ -351,7 +353,7 @@ const AdminArticles: React.FC = () => {
                           >
                           </button>
                           <a
-                            href={`${API_BASE}/articles/pdf/${article.pdf_id}`}
+                            href={`${API_BASE_URL}/articles/pdf/${article.pdf_id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="articles-action-btn articles-action-download"

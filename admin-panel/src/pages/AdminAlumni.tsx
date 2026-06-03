@@ -24,13 +24,15 @@ const AdminAlumni: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const API_BASE = 'http://localhost:8000';
+  // const API_BASE = 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+  console.log("API Base URL", API_BASE_URL)
 
   // Fetch alumni
   const fetchAlumni = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/admin/alumni`, {
+      const response = await fetch(`${API_BASE_URL}/admin/alumni`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

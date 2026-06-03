@@ -44,7 +44,9 @@ const AdminBlogs: React.FC = () => {
     image: null
   });
 
-  const API_BASE = 'http://localhost:8000';
+  // const API_BASE = 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+  console.log("API Base URL", API_BASE_URL)
 
   // Blog categories
   const categories = [
@@ -64,7 +66,7 @@ const AdminBlogs: React.FC = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/blogs/`);
+      const response = await fetch(`${API_BASE_URL}/blogs/`);
       if (response.ok) {
         const data = await response.json();
         setBlogs(data);
@@ -108,12 +110,12 @@ const AdminBlogs: React.FC = () => {
       let response;
       if (editingId) {
         formDataToSend.append('edited_by', 'Admin User');
-        response = await fetch(`${API_BASE}/blogs/${editingId}`, {
+        response = await fetch(`${API_BASE_URL}/blogs/${editingId}`, {
           method: 'PUT',
           body: formDataToSend,
         });
       } else {
-        response = await fetch(`${API_BASE}/blogs/`, {
+        response = await fetch(`${API_BASE_URL}/blogs/`, {
           method: 'POST',
           body: formDataToSend,
         });
@@ -165,7 +167,7 @@ const AdminBlogs: React.FC = () => {
     if (!confirm('Are you sure you want to delete this blog post?')) return;
 
     try {
-      const response = await fetch(`${API_BASE}/blogs/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
         method: 'DELETE',
       });
 
@@ -327,7 +329,7 @@ const AdminBlogs: React.FC = () => {
                           >
                           </button>
                           <a
-                            href={`${API_BASE}/blogs/image/${blog.image_id}`}
+                            href={`${API_BASE_URL}/blogs/image/${blog.image_id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="blogs-action-btn blogs-action-view"

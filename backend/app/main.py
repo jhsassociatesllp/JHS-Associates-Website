@@ -38,6 +38,13 @@ app.add_middleware(
 
 api_router = APIRouter(prefix="/api")
 
+@api_router.get("/")
+async def api_root():
+    return {
+        "message": "JHS Associates API",
+        "docs": "/api/docs"
+    }
+
 # Include routers
 api_router.include_router(contact.router)
 api_router.include_router(alumni.router)

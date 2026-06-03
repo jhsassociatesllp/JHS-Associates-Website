@@ -238,9 +238,9 @@ export default function Dashboard() {
     const fetchStats = async () => {
       try {
         const [articlesRes, blogsRes, knowledgeRes, contactsRes, alumniRes] = await Promise.all([
-          axios.get(`${API_BASE_URL}/articles`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/blogs`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/knowledge`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/articles/`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/blogs/`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/knowledge/`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API_BASE_URL}/admin/contacts`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API_BASE_URL}/admin/alumni`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);

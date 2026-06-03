@@ -18,6 +18,9 @@ import {
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 /* ─── Design Tokens ────────────────────────────────────────── */
 const C = {
   pageBg:   '#f4f5fa',
@@ -235,11 +238,11 @@ export default function Dashboard() {
     const fetchStats = async () => {
       try {
         const [articlesRes, blogsRes, knowledgeRes, contactsRes, alumniRes] = await Promise.all([
-          axios.get('http://localhost:8000/articles', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:8000/blogs', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:8000/knowledge', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:8000/admin/contacts', { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get('http://localhost:8000/admin/alumni', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/articles`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/blogs`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/knowledge`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}admin/contacts`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE_URL}/admin/alumni`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);
 
         const articles = articlesRes.data || [];

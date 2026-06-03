@@ -69,13 +69,14 @@ const AdminFeedback: React.FC = () => {
   const [selectedFeedback, setSelectedFeedback] = useState<Feedback | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const API_BASE = 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+  console.log("API Base URL", API_BASE_URL)
 
   // Fetch feedbacks
   const fetchFeedbacks = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/feedback/`, {
+      const response = await fetch(`${API_BASE_URL}/feedback/`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

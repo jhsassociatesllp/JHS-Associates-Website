@@ -38,13 +38,14 @@ const AdminKnowledge: React.FC = () => {
     pdf: null
   });
 
-  const API_BASE = 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+  console.log("API Base URL", API_BASE_URL)
 
   // Fetch knowledge resources
   const fetchKnowledgeResources = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/knowledge/`);
+      const response = await fetch(`${API_BASE_URL}/knowledge/`);
       if (response.ok) {
         const data = await response.json();
         setKnowledgeResources(data);

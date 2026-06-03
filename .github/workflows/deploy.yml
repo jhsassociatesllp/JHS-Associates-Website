@@ -202,8 +202,8 @@ jobs:
             export ADMIN_PORT=$ADMIN_PORT
 
             # API URL
-            # export VITE_API_BASE_URL="http://${{ secrets.SERVER_HOST }}:$BACKEND_PORT"
-            export VITE_API_BASE_URL="/api"
+            export VITE_API_BASE_URL="http://${{ secrets.SERVER_HOST }}:$BACKEND_PORT/api"
+            # export VITE_API_BASE_URL="/api"
 
             # Backend ENV
             export MONGODB_URL="${{ secrets.MONGODB_URL }}"

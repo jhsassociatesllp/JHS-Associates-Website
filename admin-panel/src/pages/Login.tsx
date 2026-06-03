@@ -12,6 +12,8 @@ import {
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Login() {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +28,7 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/admin/login', {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

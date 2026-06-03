@@ -145,7 +145,7 @@ const AdminFeedback: React.FC = () => {
     if (!window.confirm('Are you sure you want to delete this feedback?')) return;
     
     try {
-      const response = await fetch(`${API_BASE}/feedback/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/feedback/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

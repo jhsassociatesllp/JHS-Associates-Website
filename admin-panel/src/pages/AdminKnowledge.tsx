@@ -89,12 +89,12 @@ const AdminKnowledge: React.FC = () => {
       let response;
       if (editingId) {
         formDataToSend.append('edited_by', 'Admin User');
-        response = await fetch(`${API_BASE}/knowledge/${editingId}`, {
+        response = await fetch(`${API_BASE_URL}/knowledge/${editingId}`, {
           method: 'PUT',
           body: formDataToSend,
         });
       } else {
-        response = await fetch(`${API_BASE}/knowledge/upload`, {
+        response = await fetch(`${API_BASE_URL}/knowledge/upload`, {
           method: 'POST',
           body: formDataToSend,
         });
@@ -142,7 +142,7 @@ const AdminKnowledge: React.FC = () => {
     if (!confirm('Are you sure you want to delete this knowledge resource?')) return;
 
     try {
-      const response = await fetch(`${API_BASE}/knowledge/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/knowledge/${id}`, {
         method: 'DELETE',
       });
 
@@ -297,7 +297,7 @@ const AdminKnowledge: React.FC = () => {
                           >
                           </button>
                           <a
-                            href={`${API_BASE}/knowledge/pdf/${resource.pdf_id}`}
+                            href={`${API_BASE_URL}/knowledge/pdf/${resource.pdf_id}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="knowledge-action-btn knowledge-action-download"

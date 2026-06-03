@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.database.connection import connect_to_mongo, close_mongo_connection
@@ -21,7 +21,9 @@ app = FastAPI(
     title="JHS Associates Backend",
     description="FastAPI Backend for JHS Associates Website",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
 )
 
 # Configure CORS
@@ -43,14 +45,18 @@ app.add_middleware(
     ],
 )
 
+api_router = APIRouter(prefix="/api")
+
 # Include routers
-app.include_router(contact.router, prefix="/api")
-app.include_router(alumni.router, prefix="/api")
-app.include_router(admin.router, prefix="/api")
-app.include_router(articles_router, prefix="/api")   # ✅ NEW
-app.include_router(blogs_router, prefix="/api")      # ✅ NEW
-app.include_router(knowledge_router, prefix="/api")  # ✅ NEW
-app.include_router(feedback_router, prefix="/api")   # ✅ FEEDBACK
+api_router.include_router(contact.router)
+api_router.include_router(alumni.router)
+api_router.include_router(admin.router)
+api_router.include_router(articles_router)   # ✅ NEW
+api_router.include_router(blogs_router)      # ✅ NEW
+api_router.include_router(knowledge_router)  # ✅ NEW
+api_router.include_router(feedback_router)   # ✅ FEEDBACK
+
+app.include_router(api_router)
 
 @app.get("/")
 async def root():

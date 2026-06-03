@@ -44,13 +44,13 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(contact.router)
-app.include_router(alumni.router)
-app.include_router(admin.router)
-app.include_router(articles_router)   # ✅ NEW
-app.include_router(blogs_router)      # ✅ NEW
-app.include_router(knowledge_router)  # ✅ NEW
-app.include_router(feedback_router)   # ✅ FEEDBACK
+app.include_router(contact.router, prefix="/api")
+app.include_router(alumni.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(articles_router, prefix="/api")   # ✅ NEW
+app.include_router(blogs_router, prefix="/api")      # ✅ NEW
+app.include_router(knowledge_router, prefix="/api")  # ✅ NEW
+app.include_router(feedback_router, prefix="/api")   # ✅ FEEDBACK
 
 @app.get("/")
 async def root():

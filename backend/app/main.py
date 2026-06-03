@@ -32,17 +32,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,  # Allow credentials for authentication
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=[
-        "Accept",
-        "Accept-Language", 
-        "Content-Language",
-        "Content-Type",
-        "Authorization",
-        "X-Requested-With",
-        "Origin",
-        "Access-Control-Request-Method",
-        "Access-Control-Request-Headers"
-    ],
+    allow_headers=["*"],
 )
 
 api_router = APIRouter(prefix="/api")

@@ -32,7 +32,7 @@ const AdminAlumni: React.FC = () => {
   const fetchAlumni = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/admin/alumni`, {
+      const response = await fetch(`${API_BASE_URL}/admin/alumni/`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

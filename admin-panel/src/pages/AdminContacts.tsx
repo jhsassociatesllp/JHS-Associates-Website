@@ -28,7 +28,7 @@ const AdminContacts: React.FC = () => {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/admin/contacts`, {
+      const response = await fetch(`${API_BASE_URL}/admin/contacts/`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',

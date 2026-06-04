@@ -3,6 +3,9 @@ import './SpotlightPages.css';
 import './Alumni.css';
 import { imageUrl } from '../../utils/imageUrl'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 const ALUMNI_PROFILES = [
   {
     id: 1,
@@ -96,7 +99,7 @@ export default function Alumni() {
     e.preventDefault();
     setLoading(true);
     try {
-      const apiUrl = `http://${window.location.hostname}:8000/alumni/`;
+      const apiUrl = `${API_BASE_URL}/alumni/`;
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -215,7 +218,7 @@ export default function Alumni() {
               </div>
               <div className="alumni-contact-item">
                 <IconPhone />
-                <span>+91 22 2345 6789</span>
+                <span>1800 120 1022</span>
               </div>
               <div className="alumni-contact-item">
                 <IconPin />

@@ -10,9 +10,12 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Force cache refresh - v2.0
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 /* ── API base — reads from .env, falls back to localhost ─────── */
-const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)
-  ?? 'http://localhost:8000'
+// const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)
+//   ?? 'http://localhost:8000'
 
 /* ── Types ───────────────────────────────────────────────────── */
 interface KnowledgeResource {
@@ -22,7 +25,7 @@ interface KnowledgeResource {
   content: string
   image_id: string
   pdf_id: string
-  created_at: string
+  created_at: string  
 }
 
 /* ── Helpers ─────────────────────────────────────────────────── */

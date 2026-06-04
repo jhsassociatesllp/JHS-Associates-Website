@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 interface Article {
     id: string;
     heading: string;
@@ -14,10 +17,10 @@ export default function ArticlesPage() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-
+ 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/articles')
+            .get(`${API_BASE_URL}/articles`)
             .then((res) => setArticles(res.data))
             .catch(() => setError('Failed to load articles. Please try again later.'))
             .finally(() => setLoading(false));

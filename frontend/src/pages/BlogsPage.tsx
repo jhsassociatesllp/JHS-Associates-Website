@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 interface Blog {
     id: string;
     title: string;
@@ -15,10 +18,10 @@ export default function BlogsPage() {
     const [selected, setSelected] = useState<Blog | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-
+  
     useEffect(() => {
         axios
-            .get('http://localhost:8000/blogs')
+            .get(`${API_BASE_URL}/blogs`)
             .then((res) => setBlogs(res.data))
             .catch(() => setError('Failed to load blogs. Please try again later.'))
             .finally(() => setLoading(false));

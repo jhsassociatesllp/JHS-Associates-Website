@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './Feedback.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 interface ReferenceRow {
   id: string
   companyName: string
@@ -146,7 +149,7 @@ export default function Feedback() {
         designation: formData.designation
       }
 
-      const response = await axios.post('http://localhost:8000/feedback/', payload)
+      const response = await axios.post(`${API_BASE_URL}/feedback/`, payload)
       
       if (response.status === 201) {
         alert('Thank you! Your feedback has been submitted successfully.')

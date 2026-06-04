@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './Contact.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+console.log("API Base URL", API_BASE_URL)
+
 /* ─── Types ─────────────────────────────────────────────── */
 interface FormData {
   name: string
@@ -195,7 +198,7 @@ export default function Contact() {
     setLoading(true)
 
     try {
-      const apiUrl = `http://${window.location.hostname}:8000/contact/`
+      const apiUrl = `${API_BASE_URL}/contact/`
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {

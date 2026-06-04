@@ -141,7 +141,7 @@ export default function Alumni() {
           <p className="alumni-hero__subtitle">
             A global network of excellence, bringing together generations of leaders, innovators, and visionaries from around the world.
           </p>
-          <div className="alumni-hero__actions">
+          {/* <div className="alumni-hero__actions">
             <button
               onClick={() => {
                 document.getElementById('alumni-directory')?.scrollIntoView({ behavior: 'smooth' });
@@ -153,7 +153,7 @@ export default function Alumni() {
             <a href="/about/story" className="alumni-hero__btn alumni-hero__btn--secondary">
               Our History
             </a>
-          </div>
+          </div> */}
         </div>
       </section>
 

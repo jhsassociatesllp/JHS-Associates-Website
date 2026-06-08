@@ -61,7 +61,7 @@ const cards: Card[] = [
   },
   {
     id: 5,
-    image: imageUrl('2-1.png'),
+    image: imageUrl('2-1.png.webp'),
     category: "DIGITAL",
     meta: "AI & Automation • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",

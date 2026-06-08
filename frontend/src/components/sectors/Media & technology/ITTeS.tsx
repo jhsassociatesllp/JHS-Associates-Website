@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Code2, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
-import './ITTeS.css'
+import './ITTeS.css'  
 
 gsap.registerPlugin(ScrollTrigger)
 

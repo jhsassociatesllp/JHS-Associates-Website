@@ -24,6 +24,7 @@ const capabilities: ServiceItem[] = [
   { label: "Risk & Governance", href: "/services/soc-attestation", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
   { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('Outsourcing.png') },
   { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.avif') },
+  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.avif') }
 ];
 
 const industries: ServiceItem[] = [
@@ -31,7 +32,6 @@ const industries: ServiceItem[] = [
   { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors and property managers in the real estate market.", image: imageUrl('Real-State.avif') },
   { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency and strategic financial planning.", image: imageUrl('healthcare.avif') },
   { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk and advisory services tailored for banks, NBFCs and financial institutions.", image: imageUrl('reserve-bank-of-india-rbi-.jpg') },
-  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.avif') },
   { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
   { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.avif') },
   { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.avif') },

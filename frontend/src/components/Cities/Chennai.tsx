@@ -5,7 +5,7 @@ import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
   { name: 'G Chandra sekaran', image: imageUrl('Chandra Shekaran.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
-  { name: 'Parnal P', image: imageUrl('Pranal p.png'), qualifications: 'ACA', designation: 'Tax & Regulatory Advisory', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
+  { name: 'Pranal P', image: imageUrl('Pranal p.png'), qualifications: 'ACA', designation: 'Tax & Regulatory Advisory', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {

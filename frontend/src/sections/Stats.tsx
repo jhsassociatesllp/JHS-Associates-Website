@@ -20,7 +20,7 @@ const insights: InsightItem[] = [
     eyebrow: "TAX STRATEGY ",
     heading: "Navigating India's New Tax Landscape",
     description:
-      "From GST reforms to direct tax overhauls, staying compliant while optimising your tax position demands expert guidance. Our advisors keep you ahead of every regulatory shift.",
+      "From GST compliance and income tax management to mutual fund advisory and wealth planning, we provide comprehensive financial solutions for individuals and businesses. Our experts help you navigate regulatory changes, optimise tax efficiency, and build a stronger financial future with confidence.",
   },
   {
     eyebrow: "AUDIT ",

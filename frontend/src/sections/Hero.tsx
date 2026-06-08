@@ -61,7 +61,7 @@ const cards: Card[] = [
   },
   {
     id: 5,
-    image: imageUrl('Card5.jpeg'),
+    image: imageUrl('card7.jpg'),
     category: "DIGITAL",
     meta: "AI & Automation • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",
@@ -244,11 +244,11 @@ export default function Hero() {
       <div className="hero__header">
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
-          Building Trust. 
+          Building Trust
           <br />
-          Delivering Excellence.
+          Delivering Excellence
           <br />
-          Shaping Better Futures.
+          Shaping Better Futures
         </h1>
         {/* <span className="hero__badge">RESPONSIBLE AI</span> */}
       </div>

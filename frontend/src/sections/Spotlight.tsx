@@ -5,7 +5,7 @@ interface SpotlightItem {
   id: string;
   label: string;
   description: string;
-  path: string;
+  path: string;   
   icon: JSX.Element;
 }
 

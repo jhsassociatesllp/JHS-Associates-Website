@@ -7,7 +7,7 @@
 
 /* .spotlight {
   background: #ffffff;
-  padding: 80px 20px;
+  padding: 80px 20px;  
   width: 100%;
 } */
 
@@ -160,7 +160,7 @@
 .spotlight__item-desc {
   font-family: "DM Sans", sans-serif;
   font-size: 0.95rem;
-  color: #64748b;
+  color: #1a2a40;
   line-height: 1.6;
   max-width: 90%;
   /* padding-left: 48px; */

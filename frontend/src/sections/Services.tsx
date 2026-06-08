@@ -9,7 +9,7 @@ import { imageUrl } from '../utils/imageUrl'
 // service_images
 
 type ServiceItem = {
-  label: string; 
+  label: string;   
   href: string;
   description: string;
   image: string;

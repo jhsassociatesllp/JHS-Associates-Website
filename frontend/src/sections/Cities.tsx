@@ -7,7 +7,7 @@ import { imageUrl } from '../utils/imageUrl'
 
 const citiesList = [
   {
-    name: "Mumbai",
+    name: "Mumbai",  
     slug: "mumbai",
     address: "Headquarters, Andheri",
     image: imageUrl('Mumbai.png'),

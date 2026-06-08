@@ -10,14 +10,14 @@ const ALUMNI_PROFILES = [
   {
     id: 1,
     name: "Riddhi Kishnadwala",
-    role: "Former Audit Partner",
+    role: "Articleship",
     desc: "JHS was my first job post CA qualification. It was a great learning experience and guidance was provided whenever needed. Executional excellence and quality deliverables were the key corners of all the projects I worked on. A good place to learn and grow.",
     image: imageUrl('Riddhi Kishnadwala.jpeg')
   },
   {
     id: 2,
     name: "Prerna Jain",
-    role: "Ex-Director, Tax Advisory",
+    role: " Tax Advisory",
     desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
     image: imageUrl('Prerna Jain.jpeg')
   },
@@ -31,7 +31,7 @@ const ALUMNI_PROFILES = [
   {
     id: 4,
     name: "Pratik Mantri",
-    role: "Alumnus, Consulting",
+    role: "Auditor, Risk Advisory",
     desc: "The work culture at JHS encouraged learning, accountability, and collaborative problem-solving. Being part of the Risk Advisory & Internal Audit team provided invaluable exposure to build a strong foundation in risk assessment, controls, and compliance.",
     image: imageUrl('Pratik mantri.jpeg')
   },

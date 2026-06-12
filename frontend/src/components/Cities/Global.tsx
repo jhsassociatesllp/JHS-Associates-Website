@@ -196,7 +196,7 @@ export default function Global() {
                 <span className="glb-hero__card-info-label">Business Hours</span>
                 <span className="glb-hero__card-info-val">Mon–Fri, 9:00 AM – 6:00 PM</span>
               </div> */}
-            </div>
+            </div>  
           </div>
         </div>
       </section>

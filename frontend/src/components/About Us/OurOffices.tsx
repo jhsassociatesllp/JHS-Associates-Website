@@ -222,13 +222,13 @@ export default function OurOffices() {
                     <a href={`mailto:${activeOffice.email}`} className="oo-detail__contact-val">{activeOffice.email}</a>
                   </div>
                 </div>
-                <div className="oo-detail__contact-item">
+                {/* <div className="oo-detail__contact-item">
                   <span className="oo-detail__contact-icon"><IconClock /></span>
                   <div>
                     <span className="oo-detail__contact-label">Business Hours</span>
                     <span className="oo-detail__contact-val">{activeOffice.hours}</span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <Link to={activeOffice.route} className="oo-detail__cta">

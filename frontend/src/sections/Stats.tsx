@@ -6,7 +6,7 @@ import { imageUrl } from "../utils/imageUrl";
 interface InsightItem {
   eyebrow: string;
   heading: string;
-  description: string;
+  description: string;  
 }
 
 const insights: InsightItem[] = [

@@ -231,7 +231,7 @@ export default function Kolkata() {
               </div>
             </div>
           </div>
-        </div>
+        </div>  
       </section>
 
       {/* ════════════ SECTORS SERVED ════════════ */}

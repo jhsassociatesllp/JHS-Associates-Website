@@ -262,7 +262,8 @@
 .stats__stat-label {
   font-size: 10px;
   font-weight: 500;
-  color: var(--s-text-muted);
+  /* color: var(--s-text-muted); */
+  color: #1a2a40;
   letter-spacing: 0.03em;
   line-height: 1.35;
 }

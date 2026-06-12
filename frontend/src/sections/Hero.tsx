@@ -59,7 +59,7 @@ const cards: Card[] = [
       "Companies that embed sustainability into their core strategy are outperforming peers. Learn how to navigate the energy transition and create lasting stakeholder value.",
     route: "/sustainability/green-transition",
   },
-  {
+  {  
     id: 5,
     image: imageUrl('Card6.png'),
     category: "DIGITAL",

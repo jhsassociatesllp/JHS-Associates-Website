@@ -183,7 +183,7 @@ export default function Housing() {
         <div className="hs-cta__inner">
           <div className="hs-cta__content">
             <p className="hs-cta__eyebrow">Get Started</p>
-            <h2 className="hs-cta__title">Ready to build on solid financial ground?</h2>
+            <h2 className="hs-cta__title">Ready to construct on solid financial ground?</h2>
             <p className="hs-cta__sub">
               Speak with a JHS housing specialist and get a tailored advisory proposal.
             </p>

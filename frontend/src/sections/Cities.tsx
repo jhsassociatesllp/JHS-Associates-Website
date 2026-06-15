@@ -7,52 +7,53 @@ import { imageUrl } from '../utils/imageUrl'
 
 const citiesList = [
   {
-    name: "Mumbai",  
+    name: "Maharashtra",
     slug: "mumbai",
-    address: "Headquarters, Andheri",
+    address: "Mumbai, Headquarters, Andheri",
     image: imageUrl('Mumbai.png'),
   },
   {
     name: "Delhi",
     slug: "delhi",
-    // address: "Connaught Place",
+    address: "Delhi",
     image: imageUrl('Dehli.png'),
-  },
-  {
-    name: "Bengaluru",
-    slug: "bengaluru",
-    // address: "UB City, Vittal Mallya Road",
-    image: imageUrl('Bangaluru.jpg'),
   },
   {
     name: "Gujarat",
     slug: "ahmedabad",
-    // address: "Ahmedabad",
+    address: "Vadodara",
     image: imageUrl('Ahmedabad.png'),
-  },
-  {
-    name: "Hyderabad",
-    slug: "hyderabad",
-    // address: "HITEC City",
-    image: imageUrl('Hyderabad.png'),
-  },
-  {
-    name: "Kolkata",
-    slug: "kolkata",
-    // address: "Salt Lake City",
-    image: imageUrl('Kolkata.png'),
-  },
-  {
-    name: "Chennai",
-    slug: "chennai",
-    // address: "T Nagar",
-    image: imageUrl('Chennai.png'),
   },
   {
     name: "Global",
     slug: "global",
     address: "International",
     image: imageUrl('Global.jpeg'),
+  },
+  {
+    name: "Karnataka",
+    slug: "bengaluru",
+    address: "Bengaluru",
+    image: imageUrl('Bangaluru.jpg'),
+  },
+
+  {
+    name: "Telangana",
+    slug: "hyderabad",
+    address: "Hyderabad",
+    image: imageUrl('Hyderabad.png'),
+  },
+  {
+    name: "Tamil Nadu",
+    slug: "chennai",
+    address: "Chennai",
+    image: imageUrl('Chennai.png'),
+  },
+  {
+    name: "West Bengal",
+    slug: "kolkata",
+    address: "Kolkata",
+    image: imageUrl('Kolkata.png'),
   }
 ];
 

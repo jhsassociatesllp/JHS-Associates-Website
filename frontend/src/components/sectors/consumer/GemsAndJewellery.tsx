@@ -7,11 +7,11 @@ import './GemsAndJewellery.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const HIGHLIGHTS = [
-  {
-    icon: <Gem size={20} strokeWidth={1.5} />,
-    title: 'Valuation & Certification',
-    desc: 'Independent valuation of gems, diamonds and jewellery for insurance, estate planning, business reporting and dispute resolution.',
-  },
+  // {
+  //   icon: <Gem size={20} strokeWidth={1.5} />,
+  //   title: 'Valuation & Certification',
+  //   desc: 'Independent valuation of gems, diamonds and jewellery for insurance, estate planning, business reporting and dispute resolution.',
+  // },
   {
     icon: <ShieldCheck size={20} strokeWidth={1.5} />,
     title: 'Regulatory Compliance',

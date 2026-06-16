@@ -73,7 +73,7 @@
   background-position: center;
   background-attachment: fixed;
 }
- 
+
 .bk-hero::before {
   content: '';
   position: absolute;
@@ -594,7 +594,7 @@
   padding: 3.25rem 4rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(192, 57, 43, 0.32);
+  /* box-shadow: 0 24px 64px rgba(192, 57, 43, 0.32); */
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 

@@ -40,9 +40,9 @@ const HIGHLIGHTS = [
 ]
 
 const STATS = [
-  { num: '25+', label: 'O&G Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'PSC & HELP', label: 'Contract Expertise' },
+  // { num: '25+', label: 'O&G Clients' },
+  // { num: '20+', label: 'Years Experience' },
+  // { num: 'PSC & HELP', label: 'Contract Expertise' },
 ]
 
 const WHY = [
@@ -55,8 +55,8 @@ const WHY = [
 
 export default function OilAndGasIndustry() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -68,13 +68,17 @@ export default function OilAndGasIndustry() {
       )
       gsap.fromTo('.og-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.og-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -109,7 +113,7 @@ export default function OilAndGasIndustry() {
         <div className="og-overview__inner">
           <div className="og-overview__text">
             <span className="og-tag">Our Approach</span>
-            <h2 className="og-overview__title">Navigating the Complexity of India's Energy Sector</h2>
+            <h2 className="og-overview__title">Navigating the Complexity of India's Oil &amp; Gas Landscape</h2>
             <p className="og-overview__body">
               India's oil &amp; gas sector operates under a uniquely complex framework
               PSC cost recovery rules, profit petroleum calculations, royalty regimes and
@@ -161,7 +165,7 @@ export default function OilAndGasIndustry() {
             <h2 className="og-why__title">The JHS Advantage in Oil &amp; Gas</h2>
             <p className="og-why__sub">
               We understand the commercial, contractual and regulatory complexity
-              of India's energy sector and deliver advisory that keeps pace with it.
+              of India's oil &amp; gas industry and deliver advisory that keeps pace with it.
             </p>
             <a href="/contact" className="og-btn og-btn--ghost">
               Start a Conversation <ArrowUpRight size={14} />

@@ -27,6 +27,7 @@ import {
   ContactMail as ContactIcon,
   School as AlumniIcon,
   Feedback as FeedbackIcon,
+  Work as WorkIcon,
   Search as SearchIcon,
   Notifications as NotificationsIcon,
   Settings as SettingsIcon,
@@ -60,6 +61,7 @@ const menuGroups = [
       { text: 'Contacts', icon: ContactIcon, path: '/contacts', requiredFeature: 'contacts' },
       { text: 'Alumni', icon: AlumniIcon, path: '/alumni', requiredFeature: 'alumni' },
       { text: 'Client Feedback', icon: FeedbackIcon, path: '/feedback', requiredFeature: 'feedback' },
+      { text: 'Careers', icon: WorkIcon, path: '/careers', requiredFeature: 'careers' },
     ],
   },
 ];

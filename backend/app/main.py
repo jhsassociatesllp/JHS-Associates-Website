@@ -2,7 +2,7 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.database.connection import connect_to_mongo, close_mongo_connection
-from app.routes import contact, alumni, admin
+from app.routes import contact, alumni, admin, careers
 from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
 from app.routes.knowledge import router as knowledge_router # ✅ NEW
@@ -49,6 +49,7 @@ async def api_root():
 api_router.include_router(contact.router)
 api_router.include_router(alumni.router)
 api_router.include_router(admin.router)
+api_router.include_router(careers.router)
 api_router.include_router(articles_router)   # ✅ NEW
 api_router.include_router(blogs_router)      # ✅ NEW
 api_router.include_router(knowledge_router)  # ✅ NEW

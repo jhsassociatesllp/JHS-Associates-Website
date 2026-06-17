@@ -83,9 +83,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     const permissions = {
       // Super Admin has access to everything
-      super_admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'contacts', 'alumni', 'feedback', 'users'],
+      super_admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'contacts', 'alumni', 'feedback', 'careers', 'users'],
       // HR Admin has access to HR features only (NO content management)
-      hr_admin: ['dashboard', 'contacts', 'alumni', 'feedback'],
+      hr_admin: ['dashboard', 'contacts', 'alumni', 'feedback', 'careers'],
       // Regular Admin only has content access (NO HR features)
       admin: ['dashboard', 'articles', 'blogs', 'knowledge']
     };

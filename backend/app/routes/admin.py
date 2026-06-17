@@ -2,7 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from app.schemas.admin import Token, AdminLogin, AdminResponse, AdminInDB, AdminRole
 from app.auth.security import verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
-from app.auth.deps import get_current_admin, require_super_admin, require_admin_or_above
+from app.auth.deps import (
+    find_admin_by_email,
+    get_current_admin,
+    normalize_admin_data,
+    require_admin_or_above,
+    require_super_admin,
+)
 from app.database.connection import get_database
 from datetime import timedelta, datetime, timezone
 
@@ -11,7 +17,7 @@ router = APIRouter(prefix="/admin", tags=["Admin"])
 @router.post("/login", response_model=Token)
 async def login_for_access_token(admin: AdminLogin):
     db = get_database()
-    admin_data = await db["admins"].find_one({"email": admin.email})
+    admin_data = await find_admin_by_email(admin.email)
     
     if not admin_data or admin_data["password"] != admin.password:
         raise HTTPException(
@@ -22,9 +28,11 @@ async def login_for_access_token(admin: AdminLogin):
     
     # Update last login
     await db["admins"].update_one(
-        {"email": admin.email},
+        {"_id": admin_data["_id"]},
         {"$set": {"last_login": datetime.now(timezone.utc).isoformat()}}
     )
+
+    admin_data = normalize_admin_data(admin_data, admin.email)
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
@@ -36,7 +44,7 @@ async def login_for_access_token(admin: AdminLogin):
 @router.post("/login-form", response_model=Token)
 async def login_for_access_token_form(form_data: OAuth2PasswordRequestForm = Depends()):
     db = get_database()
-    admin_data = await db["admins"].find_one({"email": form_data.username})
+    admin_data = await find_admin_by_email(form_data.username)
     
     if not admin_data or admin_data["password"] != form_data.password:
         raise HTTPException(
@@ -47,9 +55,11 @@ async def login_for_access_token_form(form_data: OAuth2PasswordRequestForm = Dep
     
     # Update last login
     await db["admins"].update_one(
-        {"email": form_data.username},
+        {"_id": admin_data["_id"]},
         {"$set": {"last_login": datetime.now(timezone.utc).isoformat()}}
     )
+
+    admin_data = normalize_admin_data(admin_data, form_data.username)
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(

@@ -25,7 +25,7 @@ const HIGHLIGHTS = [
   {
     icon: <BarChart2 size={20} strokeWidth={1.5} />,
     title: 'Inventory & Stock Audit',
-    desc: 'Specialised stock verification, consignment stock audits and inventory reconciliation for retail jewellers and wholesale traders.',
+    desc: 'Specialised stock verification, consignment stock audits and inventory reconciliation for retail jewellers and wholesale traders. Exchange and False or Boolean and jems',
   },
   {
     icon: <FileText size={20} strokeWidth={1.5} />,
@@ -55,8 +55,8 @@ const WHY = [
 
 export default function GemsAndJewellery() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -68,13 +68,17 @@ export default function GemsAndJewellery() {
       )
       gsap.fromTo('.gj-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.gj-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -115,7 +119,7 @@ export default function GemsAndJewellery() {
               PMLA, BIS hallmarking, customs duties and complex GST rules create a
               compliance landscape that demands specialist knowledge. JHS brings
               decades of sector-specific experience to help jewellery businesses
-              stay compliant, optimise tax and plan for long-term growth.
+              stay compliant, optimise tax and plan for long-term growth. We are certified sss as per the IAGES.
             </p>
             <a href="/contact" className="gj-btn gj-btn--solid">
               Talk to Our Experts <ArrowUpRight size={15} />

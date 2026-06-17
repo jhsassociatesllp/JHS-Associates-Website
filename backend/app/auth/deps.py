@@ -75,6 +75,27 @@ from typing import List
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/admin/login-form")
 
 
+async def find_admin_by_email(email: str):
+    db = get_database()
+    return await db["admins"].find_one({
+        "$or": [
+            {"email": email},
+            {"emails": email},
+        ]
+    })
+
+
+def normalize_admin_data(admin_data: dict, email: str) -> dict:
+    admin_data["id"] = str(admin_data["_id"])
+    admin_data.pop("_id", None)
+    admin_data["email"] = admin_data.get("email") or email
+    admin_data["role"] = admin_data.get("role") or AdminRole.SUPER_ADMIN
+    admin_data["name"] = admin_data.get("name") or email.split("@")[0].replace(".", " ").title()
+    admin_data["created_at"] = admin_data.get("created_at")
+    admin_data["last_login"] = admin_data.get("last_login")
+    return admin_data
+
+
 async def get_current_admin(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -96,18 +117,12 @@ async def get_current_admin(token: str = Depends(oauth2_scheme)):
     except InvalidTokenError:
         raise credentials_exception
 
-    db = get_database()
-
-    admin_data = await db["admins"].find_one(
-        {"email": token_data.email}
-    )
+    admin_data = await find_admin_by_email(token_data.email)
 
     if admin_data is None:
         raise credentials_exception
 
-    admin_data["id"] = str(admin_data["_id"])
-    del admin_data["_id"]
-
+    admin_data = normalize_admin_data(admin_data, token_data.email)
     return AdminInDB(**admin_data)
 
 

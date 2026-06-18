@@ -399,7 +399,7 @@ export default function Careers() {
           <div>
             <span style={ss.boardEyebrow}>Current Openings</span>
             <h2 style={ss.boardTitle}>Explore Open Roles</h2>
-            <p style={ss.boardSub}>Find your next challenge — we're looking for passionate people to join our teams.</p>
+            <p style={ss.boardSub}>Find your next challenge we're looking for passionate people to join our teams.</p>
           </div>
           <div className="careers-search-wrap" style={ss.searchWrap}>
             <span style={{ fontSize: '1rem', color: '#aaa', flexShrink: 0 }}>🔍</span>
@@ -701,3 +701,4 @@ const fs = {
   checkbox: { width: '15px', height: '15px', accentColor: BRAND, cursor: 'pointer', flexShrink: 0 },
   checkboxLabel: { fontSize: '0.82rem', color: '#444', cursor: 'pointer', lineHeight: 1.4 },
 }
+

@@ -9,7 +9,7 @@ import LazyImage from '../common/LazyImage'
 const PARTNER_DATA = [
   {
     category: "Senior Board of Partners",
-    members: [  
+    members: [
       {
         name: "Huzeifa Unwala",
         image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
@@ -139,13 +139,13 @@ const PARTNER_DATA = [
         desc: "Leads operations and advisory services.",
         linkedin: "https://linkedin.com/"
       },
-      {
-        name: "Sunil Pathak",
-        image: imageUrl('Sunil-Pathak-removebg-preview.png'),
-        creds: "FCA",
-        desc: "Drives South India expansion, specializing in start-up advisory.",
-        linkedin: "https://www.linkedin.com/in/casunilpathak"
-      },
+      // {
+      //   name: "Sunil Pathak",
+      //   image: imageUrl('Sunil-Pathak-removebg-preview.png'),
+      //   creds: "FCA",
+      //   desc: "Drives South India expansion, specializing in start-up advisory.",
+      //   linkedin: "https://www.linkedin.com/in/casunilpathak"
+      // },
       {
         name: "Jagdish Solanki",
         image: imageUrl('Jagdish-Solanki-removebg-preview.png'),

@@ -187,9 +187,9 @@
   /* transition: all 0.25s ease; */
 }
 
-.tx-spoke-row:hover .tx-spoke-title {
+/* .tx-spoke-row:hover .tx-spoke-title {
   color: var(--tx-red);
-}
+} */
 
 .tx-spoke-row--left {
   flex-direction: row;

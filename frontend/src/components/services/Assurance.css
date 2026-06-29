@@ -165,7 +165,7 @@
   overflow: hidden;
 }
 
-.a-service-card::before {
+/* .a-service-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -176,17 +176,17 @@
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
-}
+} */
 
-.a-service-card:hover {
+/* .a-service-card:hover {
   box-shadow: var(--a-shadow-lg);
   border-color: transparent;
   transform: translateY(-4px);
-}
+} */
 
-.a-service-card:hover::before {
+/* .a-service-card:hover::before {
   transform: scaleX(1);
-}
+} */
 
 .a-service-card__num {
   font-size: 0.7rem;

@@ -90,11 +90,11 @@ export default function Bengaluru() {
             <div className="blr-hero__card-addr"><IconPin /><span>3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037</span></div>
           </div>
           <div className="blr-hero__card-divider" />
-          <div className="blr-hero__card-right">
+          {/* <div className="blr-hero__card-right">
             <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 80 1234 5678</span></div>
             <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">bengaluru@jhsassociates.in</span></div>
-            {/* <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
-          </div>
+            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+          </div> */}
         </div>
       </section>
 
@@ -124,7 +124,7 @@ export default function Bengaluru() {
           </div>
         </div>
       </section>
-  
+
       <section className="blr-section blr-specials-section">
         <div className="blr-container">
           <div className="blr-specials-inner">

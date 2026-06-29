@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "./Spotlight.css";
- 
+
 interface SpotlightItem {
   id: string;
   label: string;
   description: string;
-  path: string;   
+  path: string;
   icon: JSX.Element;
 }
 
@@ -67,7 +67,7 @@ export default function Spotlight() {
         {/* Left Column: Heading & CTA */}
         <div className="spotlight__left">
           <span className="spotlight__eyebrow">SPOTLIGHT</span>
-          <h2 className="spotlight__title">Redefining high stakes excellence.</h2>
+          <h2 className="spotlight__title">Redefining high stakes excellence</h2>
           <p className="spotlight__desc">
             Our core expertise lies at the intersection of technological innovation and executive strategy.
           </p>

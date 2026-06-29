@@ -9,7 +9,7 @@
   /* --hero-bg: #f9f9f7; */
   --hero-bg: #ffffff;
   --hero-text-primary: #1a1a1a;
-  --hero-text-secondary: #6b6b6b;  
+  --hero-text-secondary: #6b6b6b;
   --hero-text-muted: #D62049;
   --hero-accent: #16305a;
   /* --hero-accent-light: #e6f2ec; */
@@ -56,7 +56,7 @@
 
 .hero__eyebrow {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.22em;
   color: var(--hero-text-muted);
@@ -210,6 +210,11 @@
   display: none;
 }
 
+/* Side card gradient overlay — not needed, same look as center */
+.hero__carousel-card-side-overlay {
+  display: none;
+}
+
 /* Content - Floating Gray Box (Unhovered Center) */
 .hero__carousel-card-content {
   position: absolute;
@@ -232,6 +237,14 @@
   pointer-events: none;
 }
 
+/* Side card content — same style, just slightly compact for smaller scale */
+.hero__carousel-card-content--side {
+  padding: 20px 18px;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+
 .hero__carousel-card-badge {
   position: absolute;
   top: 24px;
@@ -245,7 +258,7 @@
   background: transparent;
   /* color: #ffffff; */
   color: black;
-    background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid black;
@@ -624,98 +637,98 @@
     padding: 60px 16px 40px;
     min-height: 100vh;
   }
-  
+
   .hero__header {
     margin-bottom: 60px;
     margin-top: 40px;
     gap: 16px;
   }
-  
+
   .hero__eyebrow {
     font-size: 12px;
     letter-spacing: 1.5px;
     margin-bottom: 12px;
   }
-  
+
   .hero__headline {
     font-size: clamp(24px, 7vw, 32px);
     line-height: 1.2;
     max-width: 100%;
   }
-  
+
   .hero__carousel {
     padding: 0 0 40px;
   }
-  
+
   .hero__carousel-card {
     width: 260px;
     height: 340px;
     margin-left: -130px;
     margin-top: -170px;
   }
-  
+
   .hero__carousel-card--prev2,
   .hero__carousel-card--next2 {
     display: none;
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-90%) scale(0.85);
     opacity: 0.4;
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(90%) scale(0.85);
     opacity: 0.4;
   }
-  
+
   .hero__carousel-card-content {
     padding: 20px 16px;
   }
-  
+
   .hero__carousel-card-title {
     font-size: 12px;
     line-height: 1.3;
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
-  
+
   .hero__carousel-card-meta {
     font-size: 9px;
     margin-bottom: 6px;
   }
-  
+
   .hero__carousel-card-badge {
     font-size: 8px;
     padding: 4px 8px;
     margin-bottom: 12px;
   }
-  
+
   .hero__carousel-card-hover-content {
     padding: 24px 16px;
   }
-  
+
   .hero__carousel-card-hover-title {
     font-size: 16px;
     margin-bottom: 12px;
   }
-  
+
   .hero__carousel-card-hover-desc {
     font-size: 12px;
     margin-bottom: 20px;
   }
-  
+
   .hero__carousel-card-cta {
     padding: 8px 14px;
     font-size: 10px;
     min-height: var(--touch-target-sm);
   }
-  
+
   .hero__nav {
     gap: 20px;
     margin-top: 30px;
   }
-  
+
   .hero__nav-btn {
     width: 40px;
     height: 40px;
@@ -723,33 +736,33 @@
     min-height: var(--touch-target);
     min-width: var(--touch-target);
   }
-  
+
   .hero__nav-dot {
     width: 8px;
     height: 8px;
   }
-  
+
   .hero__nav-dot--active {
     width: 24px;
   }
-  
+
   .hero__modal-overlay {
     padding: 16px;
   }
-  
+
   .hero__modal-content {
     max-height: 90vh;
     border-radius: 8px;
   }
-  
+
   .hero__modal-header {
     padding: 24px 16px 16px 16px;
   }
-  
+
   .hero__modal-body {
     padding: 16px;
   }
-  
+
   .hero__modal-close {
     top: 12px;
     right: 12px;
@@ -757,22 +770,22 @@
     height: 32px;
     font-size: 18px;
   }
-  
+
   .hero__modal-body h2 {
     font-size: 18px;
     margin-bottom: 16px;
   }
-  
+
   .hero__modal-body h3 {
     font-size: 16px;
     margin: 20px 0 12px 0;
   }
-  
+
   .hero__modal-body h4 {
     font-size: 14px;
     margin: 16px 0 8px 0;
   }
-  
+
   .hero__modal-body p,
   .hero__modal-body li {
     font-size: 13px;
@@ -785,42 +798,42 @@
   .hero {
     padding: 70px 20px 50px;
   }
-  
+
   .hero__header {
     margin-bottom: 70px;
     margin-top: 50px;
   }
-  
+
   .hero__headline {
     font-size: clamp(28px, 6vw, 36px);
   }
-  
+
   .hero__carousel-card {
     width: 275px;
     height: 360px;
     margin-left: -137.5px;
     margin-top: -180px;
   }
-  
+
   .hero__carousel-card--prev2,
   .hero__carousel-card--next2 {
     display: none;
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-110%) scale(0.92);
     opacity: 0.5;
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(110%) scale(0.92);
     opacity: 0.5;
   }
-  
+
   .hero__carousel-card-title {
     font-size: 13px;
   }
-  
+
   .hero__carousel-card-hover-title {
     font-size: 18px;
   }
@@ -831,51 +844,51 @@
   .hero {
     padding: 80px 24px 60px;
   }
-  
+
   .hero__header {
     margin-bottom: 80px;
     margin-top: 60px;
   }
-  
+
   .hero__headline {
     font-size: clamp(32px, 5vw, 40px);
   }
-  
+
   .hero__carousel-card {
     width: 300px;
     height: 380px;
     margin-left: -150px;
     margin-top: -190px;
   }
-  
+
   .hero__carousel-card--prev2,
   .hero__carousel-card--next2 {
     display: none;
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-80%) scale(0.9);
     opacity: 0.6;
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(80%) scale(0.9);
     opacity: 0.6;
   }
-  
+
   .hero__carousel-card-title {
     font-size: 15px;
   }
-  
+
   .hero__carousel-card-hover-title {
     font-size: 20px;
   }
-  
+
   .hero__nav {
     gap: 30px;
     margin-top: 40px;
   }
-  
+
   .hero__nav-btn {
     width: 44px;
     height: 44px;
@@ -888,24 +901,24 @@
   .hero {
     padding: 90px 32px 70px;
   }
-  
+
   .hero__carousel-card {
     width: 320px;
     height: 400px;
     margin-left: -160px;
     margin-top: -200px;
   }
-  
+
   .hero__carousel-card--prev2,
   .hero__carousel-card--next2 {
     display: none;
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-70%) scale(0.88);
     opacity: 0.6;
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(70%) scale(0.88);
     opacity: 0.6;
@@ -917,29 +930,29 @@
   .hero {
     padding: 100px 40px 80px;
   }
-  
+
   .hero__carousel-card {
     width: 350px;
     height: 420px;
     margin-left: -175px;
     margin-top: -210px;
   }
-  
+
   .hero__carousel-card--prev2 {
     transform: translateX(-400px) scale(0.7);
     opacity: 0.3;
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-200px) scale(0.85);
     opacity: 0.6;
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(200px) scale(0.85);
     opacity: 0.6;
   }
-  
+
   .hero__carousel-card--next2 {
     transform: translateX(400px) scale(0.7);
     opacity: 0.3;
@@ -951,26 +964,26 @@
   .hero {
     padding: 120px 60px 80px;
   }
-  
+
   .hero__carousel-card {
     width: 380px;
     height: 460px;
     margin-left: -190px;
     margin-top: -230px;
   }
-  
+
   .hero__carousel-card--prev2 {
     transform: translateX(-500px) scale(0.75);
   }
-  
+
   .hero__carousel-card--prev {
     transform: translateX(-250px) scale(0.9);
   }
-  
+
   .hero__carousel-card--next {
     transform: translateX(250px) scale(0.9);
   }
-  
+
   .hero__carousel-card--next2 {
     transform: translateX(500px) scale(0.75);
   }

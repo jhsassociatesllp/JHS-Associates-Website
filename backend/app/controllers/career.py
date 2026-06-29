@@ -12,6 +12,7 @@ from app.schemas.career import (
     JobCreate,
     JobUpdate,
 )
+from app.services.email_service import notify_hr_new_application
 
 JOBS_COLLECTION = "career_jobs"
 APPLICATIONS_COLLECTION = "career_applications"
@@ -99,6 +100,10 @@ async def create_application(data: ApplicationCreate) -> Optional[dict]:
     payload["updated_at"] = now
 
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
+
+    # Send email notifications (fire-and-forget)
+    await notify_hr_new_application(payload, job["title"])
+
     created = await db[APPLICATIONS_COLLECTION].find_one({"_id": result.inserted_id})
     return _serialize(created)
 
@@ -140,6 +145,10 @@ async def create_application_with_resume(
     payload["resume_size"] = len(resume_bytes)
 
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
+
+    # Send email notifications (fire-and-forget)
+    await notify_hr_new_application(payload, job["title"])
+
     created = await db[APPLICATIONS_COLLECTION].find_one({"_id": result.inserted_id})
     return _serialize(created)
 

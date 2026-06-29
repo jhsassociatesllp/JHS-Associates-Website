@@ -172,7 +172,7 @@ export default function Outsourcing() {
       </section>
 
       {/* ════ BOTTOM CTA ════ */}
-      <section className="o-cta">
+      {/* <section className="o-cta">
         <div className="o-container">
           <div className="o-cta__box">
             <h2>Ready to outsource with confidence?</h2>
@@ -180,7 +180,7 @@ export default function Outsourcing() {
             <button className="o-btn">Schedule a Consultation</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

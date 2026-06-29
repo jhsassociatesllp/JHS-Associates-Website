@@ -5,7 +5,7 @@ import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
   { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
-  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'FCA', designation: 'Risk Advisory & Compliance', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/geethika-ghanta' },
+  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'FCA', designation: 'Risk Advisory & Compliance', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -91,11 +91,11 @@ export default function Hyderabad() {
             <div className="hyd-hero__card-addr"><IconPin /><span>6-3-788/36 &amp; 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016</span></div>
           </div>
           <div className="hyd-hero__card-divider" />
-          <div className="hyd-hero__card-right">
+          {/* <div className="hyd-hero__card-right">
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Phone</span><span className="hyd-hero__card-stat-val">+91 40 1234 5678</span></div>
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Email</span><span className="hyd-hero__card-stat-val">hyderabad@jhsassociates.in</span></div>
-            {/* <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Hours</span><span className="hyd-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
-          </div>
+            <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Hours</span><span className="hyd-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+          </div> */}
         </div>
       </section>
 

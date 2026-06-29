@@ -1,5 +1,6 @@
 from app.database.connection import get_database
 from app.schemas.feedback import FeedbackCreate, FeedbackResponse
+from app.services.email_service import notify_hr_new_feedback
 from datetime import datetime, timezone
 
 async def create_feedback(feedback: FeedbackCreate) -> FeedbackResponse:
@@ -12,6 +13,9 @@ async def create_feedback(feedback: FeedbackCreate) -> FeedbackResponse:
     
     # Insert into MongoDB
     result = await collection.insert_one(feedback_dict)
+    
+    # Send email notifications (fire-and-forget)
+    await notify_hr_new_feedback(feedback_dict)
     
     # Return response
     feedback_dict["id"] = str(result.inserted_id)

@@ -181,7 +181,7 @@ export default function Assurance() {
         <div className="a-container">
           <div className="a-hero__content">
             {/* <span className="a-eyebrow">CERT-In Empanelled · ISO 27001 · COBIT / ISACA</span> */}
-            <h1 className="a-title">IT Assurance &amp; Technology Audit</h1>
+            <h1 className="a-title">IT Assurance </h1>
             <p className="a-subtitle">
               End to end information security reviews, vulnerability assessments and technology audits delivered by a CERT In empanelled organisation to protect what matters most.
             </p>
@@ -348,7 +348,7 @@ export default function Assurance() {
       </section>
 
       {/* ════ BOTTOM CTA ════ */}
-      <section className="a-cta">
+      {/* <section className="a-cta">
         <div className="a-container">
           <div className="a-cta__box">
             <Target size={36} className="a-cta__icon" />
@@ -357,7 +357,7 @@ export default function Assurance() {
             <button className="a-btn">Schedule a Consultation</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

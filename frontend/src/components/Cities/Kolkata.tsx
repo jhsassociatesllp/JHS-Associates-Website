@@ -12,8 +12,15 @@ const PARTNERS = [
     email: 'sharad.mohata@jhsassociates.in',
     linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
   },
+  {
+    name: 'Tripti Mohata',
+    image: imageUrl('Tripti Mohata.png'),
+    qualifications: 'FCA',
+    designation: 'Tax & Corporate Advisory',
+    email: 'sharad.mohata@jhsassociates.in',
+    linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
+  }
 ]
-
 
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (
@@ -212,18 +219,18 @@ export default function Kolkata() {
             </div>
           </div>
           <div className="kol-hero__card-info">
-            <div className="kol-hero__card-info-item">
+            {/* <div className="kol-hero__card-info-item">
               <div>
                 <span className="kol-hero__card-info-label">Phone</span>
                 <span className="kol-hero__card-info-val">+91 33 1234 5678</span>
               </div>
+          </div>
+          <div className="kol-hero__card-info-item">
+            <div>
+              <span className="kol-hero__card-info-label">Email</span>
+              <span className="kol-hero__card-info-val">kolkata@jhsassociates.in</span>
             </div>
-            <div className="kol-hero__card-info-item">
-              <div>
-                <span className="kol-hero__card-info-label">Email</span>
-                <span className="kol-hero__card-info-val">kolkata@jhsassociates.in</span>
-              </div>
-            </div>
+          </div> */}
             <div className="kol-hero__card-info-item">
               <div>
                 {/* <span className="kol-hero__card-info-label">Business Hours</span> */}
@@ -231,11 +238,11 @@ export default function Kolkata() {
               </div>
             </div>
           </div>
-        </div>  
-      </section>
+        </div>
+      </section >
 
       {/* ════════════ SECTORS SERVED ════════════ */}
-      <section className="kol-section kol-sectors-section">
+      < section className="kol-section kol-sectors-section" >
         <div className="kol-container">
           <div className="kol-section-hdr">
             <span className="kol-section-hdr__tag">Industries</span>
@@ -252,10 +259,10 @@ export default function Kolkata() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ════════════ WE SPECIALISE IN ════════════ */}
-      <section className="kol-section kol-specials-section">
+      < section className="kol-section kol-specials-section" >
         <div className="kol-container">
           <div className="kol-specials-inner">
             <div className="kol-specials-left">
@@ -277,7 +284,7 @@ export default function Kolkata() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
 
       <section className="kol-section kol-section--light">
@@ -370,6 +377,6 @@ export default function Kolkata() {
           </div>
         </div>
       </section> */}
-    </div>
+    </div >
   )
 }

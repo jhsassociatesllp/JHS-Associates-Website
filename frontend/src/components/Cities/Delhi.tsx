@@ -8,9 +8,9 @@ import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Statutory Audit & Assurance', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
+  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
   { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
-  { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
+  // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -112,11 +112,11 @@ export default function Delhi() {
             <div className="del-hero__card-addr"><IconPin /><span>306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048</span></div>
           </div>
           <div className="del-hero__card-divider" />
-          <div className="del-hero__card-right">
+          {/* <div className="del-hero__card-right">
             <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 11 1234 5678</span></div>
             <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">delhi@jhsassociates.in</span></div>
-            {/* <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
-          </div>
+            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+          </div> */}
         </div>
       </section>
 

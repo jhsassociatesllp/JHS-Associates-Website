@@ -75,7 +75,7 @@ export default function Taxation() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="tx-hero">
-        <div className="tx-hero__bg" style={{ backgroundImage: `url('${imageUrl('Taxation2.png') }')` }} />
+        <div className="tx-hero__bg" style={{ backgroundImage: `url('${imageUrl('Taxation2.png')}')` }} />
         <div className="tx-hero__overlay" />
         <div className="tx-container">
           <div className="tx-hero__content">
@@ -170,7 +170,7 @@ export default function Taxation() {
       </section>
 
       {/* ════ BOTTOM CTA ════ */}
-      <section className="tx-cta">
+      {/* <section className="tx-cta">
         <div className="tx-container">
           <div className="tx-cta__box">
             <h2>Ready to optimise your tax position?</h2>
@@ -178,7 +178,7 @@ export default function Taxation() {
             <button className="tx-btn">Schedule a Consultation</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

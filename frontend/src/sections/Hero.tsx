@@ -164,6 +164,8 @@ export default function Hero() {
     if (!card) return null;
     const isHovered = hoveredCard === card.id;
     const isCenter = position === "current";
+    const isSide = position === "prev" || position === "next";
+    const showContent = isCenter || isSide;
 
     return (
       <article
@@ -194,6 +196,9 @@ export default function Hero() {
           style={{ backgroundImage: `url(${card.image})` }}
         />
 
+        {/* Gradient overlay for text readability on side cards */}
+        {isSide && <div className="hero__carousel-card-side-overlay" />}
+
         {/* Dark Gradient Overlay - Only for center card */}
         {isCenter && <div className="hero__carousel-card-overlay" />}
 
@@ -220,13 +225,13 @@ export default function Hero() {
           </div>
         )}
 
-        {/* Content - Only visible on center card */}
-        {isCenter && (
+        {/* Badge & Content - Visible on center, prev, and next cards */}
+        {showContent && (
           <>
-            <div className={`hero__carousel-card-badge ${isHovered ? "hero__carousel-card-badge--hidden" : ""}`}>
+            <div className={`hero__carousel-card-badge ${isHovered && isCenter ? "hero__carousel-card-badge--hidden" : ""}`}>
               {card.category}
             </div>
-            <div className={`hero__carousel-card-content ${isHovered ? "hero__carousel-card-content--hidden" : ""}`}>
+            <div className={`hero__carousel-card-content ${isSide ? "hero__carousel-card-content--side" : ""} ${isHovered && isCenter ? "hero__carousel-card-content--hidden" : ""}`}>
               <p className="hero__carousel-card-meta">{card.meta}</p>
               <h3 className="hero__carousel-card-title">{card.title}</h3>
             </div>

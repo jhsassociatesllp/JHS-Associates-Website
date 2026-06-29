@@ -1,5 +1,6 @@
 from app.database.connection import get_database
 from app.schemas.contact import ContactCreate, ContactResponse
+from app.services.email_service import notify_hr_new_contact
 from datetime import datetime, timezone
 
 async def create_contact_message(contact: ContactCreate) -> ContactResponse:
@@ -12,6 +13,9 @@ async def create_contact_message(contact: ContactCreate) -> ContactResponse:
     
     # Insert into MongoDB
     result = await collection.insert_one(contact_dict)
+    
+    # Send email notifications (fire-and-forget)
+    await notify_hr_new_contact(contact_dict)
     
     # Return response
     contact_dict["id"] = str(result.inserted_id)

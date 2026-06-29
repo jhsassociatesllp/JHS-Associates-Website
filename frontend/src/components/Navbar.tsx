@@ -6,7 +6,7 @@ import { imageUrl } from '../utils/imageUrl'
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
   label: string;
-  description?: string;  
+  description?: string;
   href?: string;
   children?: RightItem[]; // ← Services & Sectors ke right-panel items
 }
@@ -60,7 +60,7 @@ const NAV_ITEMS: NavItem[] = [
         description: "Tailored solutions for the Indian market",
         children: [
           { label: "Consulting", description: "Holistic advisory across functions", href: '/services/consulting' },
-          { label: "Assurance", description: "Audit, risk & compliance", href: '/services/assurance' },
+          { label: "IT Assurance", description: "risk & compliance", href: '/services/assurance' },
           { label: "Taxation ", description: "Direct & indirect tax advisory", href: '/services/taxation' },
           { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
           { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
@@ -97,7 +97,7 @@ const NAV_ITEMS: NavItem[] = [
           { label: "IT /ITeS", description: "", href: 'sectors/media-technology/it-tes' },
         ],
       },
-      { 
+      {
         label: "Consumer",
         description: "FMCG to luxury retail",
         children: [
@@ -139,7 +139,7 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
 
-  {  
+  {
     id: "knowus",
     label: "Know Us",
     subLabel: "Know Us",
@@ -394,7 +394,7 @@ const Navbar = () => {
                       {activeNavItem.id === 'services' ? 'Our Services' : 'Our Sectors'}
                     </h2>
                     <p className="mega__right-desc">
-                      {activeNavItem.id === 'services' 
+                      {activeNavItem.id === 'services'
                         ? 'Choose your market to explore our comprehensive service offerings'
                         : 'Select a sector to explore our specialized industry expertise'
                       }
@@ -421,7 +421,7 @@ const Navbar = () => {
               {isInline && activeSubLabel && rightChildren && (
                 <div className="mega__right-panel mega__right-panel--vis">
                   <div className="mega__right-hdr">
-                    <button 
+                    <button
                       className="mega__back-btn"
                       onClick={() => setActiveSubLabel(null)}
                     >

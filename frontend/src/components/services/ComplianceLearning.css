@@ -161,9 +161,9 @@
   padding: 14px 0;
 }
 
-.cl-spoke-row:hover .cl-spoke-title {
+/* .cl-spoke-row:hover .cl-spoke-title {
   color: var(--cl-red);
-}
+} */
 
 .cl-spoke-row--left {
   flex-direction: row;

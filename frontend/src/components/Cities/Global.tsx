@@ -14,7 +14,7 @@ const SectorIcons: Record<string, JSX.Element> = {
       <rect x="5" y="30" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="20" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
     </svg>
-  ), 
+  ),
   Manufacturing: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="20" cy="20" r="6" stroke="currentColor" strokeWidth="1.8" />
@@ -145,18 +145,18 @@ const MAP_LOCATIONS = [
     mapUrl: 'https://maps.google.com/maps?q=Merritt%20House,%20Hill%20Avenue,%20Amersham%20HP6%205BQ,%20United%20Kingdom&t=&z=15&ie=UTF8&iwloc=&output=embed',
     address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom'
   },
-  {
-    id: 'kenya',
-    name: 'Nairobi, Kenya',
-    mapUrl: 'https://maps.google.com/maps?q=Nairobi,%20Kenya&t=&z=13&ie=UTF8&iwloc=&output=embed',
-    address: 'Nairobi, Kenya'
-  },
-  {
-    id: 'usa',
-    name: 'USA',
-    mapUrl: 'https://maps.google.com/maps?q=New%20York,%20USA&t=&z=12&ie=UTF8&iwloc=&output=embed',
-    address: 'United States of America'
-  }
+  // {
+  //   id: 'kenya',
+  //   name: 'Nairobi, Kenya',
+  //   mapUrl: 'https://maps.google.com/maps?q=Nairobi,%20Kenya&t=&z=13&ie=UTF8&iwloc=&output=embed',
+  //   address: 'Nairobi, Kenya'
+  // },
+  // {
+  //   id: 'usa',
+  //   name: 'USA',
+  //   mapUrl: 'https://maps.google.com/maps?q=New%20York,%20USA&t=&z=12&ie=UTF8&iwloc=&output=embed',
+  //   address: 'United States of America'
+  // }
 ]
 
 const IconPin = () => (
@@ -193,22 +193,22 @@ export default function Global() {
           <div className="glb-hero__card-body">
             <div className="glb-hero__card-addr">
               <IconPin />
-              <span>International Hubs: UAE, Oman, United Kingdom, Kenya and USA</span>
+              <span>International Hubs: UAE, Oman and United Kingdom</span>
             </div>
           </div>
           <div className="glb-hero__card-info">
             <div className="glb-hero__card-info-item">
-              <div>
+              {/* <div>
                 <span className="glb-hero__card-info-label">Email</span>
                 <span className="glb-hero__card-info-val">global@jhsassociates.in</span>
-              </div>
+              </div> */}
             </div>
             <div className="glb-hero__card-info-item">
               {/* <div>
                 <span className="glb-hero__card-info-label">Business Hours</span>
                 <span className="glb-hero__card-info-val">Mon–Fri, 9:00 AM – 6:00 PM</span>
               </div> */}
-            </div>  
+            </div>
           </div>
         </div>
       </section>

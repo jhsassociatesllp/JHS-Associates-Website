@@ -9,22 +9,23 @@ import { imageUrl } from '../utils/imageUrl'
 // service_images
 
 type ServiceItem = {
-  label: string;   
+  label: string;
   href: string;
   description: string;
   image: string;
 };
 
 const capabilities: ServiceItem[] = [
-  { label: "Audit & Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive audit and assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
-  { label: "Tax Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.jpg') },
-  { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.png') },
-  { label: "Financial Reporting", href: "/services/consulting", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },
-  { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions and overall business growth.", image: imageUrl('Blogimg.png') },
-  { label: "Risk & Governance", href: "/services/soc-attestation", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
+  { label: "IT Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive  assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
+  { label: "Tax & GST Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.jpg') },
+  // { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.png') },
+  { label: "Financial Reporting", href: "/services/corporate-finance", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },
+  // { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions and overall business growth.", image: imageUrl('Blogimg.png') },
+  { label: "Risk & Governance", href: "/services/compliance-learning", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
   { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('Outsourcing.png') },
   { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.avif') },
-  { label: "IT & Cybersecurity", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.avif') }
+  // { label: "Learning & Development", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.avif') }
+
 ];
 
 const industries: ServiceItem[] = [
@@ -32,7 +33,7 @@ const industries: ServiceItem[] = [
   { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors and property managers in the real estate market.", image: imageUrl('Real-State.avif') },
   { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency and strategic financial planning.", image: imageUrl('healthcare.avif') },
   { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk and advisory services tailored for banks, NBFCs and financial institutions.", image: imageUrl('reserve-bank-of-india-rbi-.jpg') },
-  { label: "Retail & FMCG", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
+  { label: "Retail", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
   { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.avif') },
   { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.avif') },
   { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.png') },
@@ -54,7 +55,7 @@ export default function Services() {
   // Preload all images on component mount
   useEffect(() => {
     const allImages = [...capabilities, ...industries].map(item => item.image);
-    
+
     allImages.forEach(src => {
       const img = new Image();
       img.src = src;
@@ -73,23 +74,22 @@ export default function Services() {
       if (outsideCap && outsideInd) {
         setCapOpen(false);
         setIndOpen(false);
-      }   
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleItemSelect = (item: ServiceItem) => {
-    // Check if image is already loaded
-    if (loadedImages.has(item.image)) {
-      setActiveItem(item);
-    } else {
-      // Preload the image before setting active
+    // Always update the panel immediately
+    setActiveItem(item);
+
+    // Preload the image in the background if not already loaded
+    if (!loadedImages.has(item.image)) {
       const img = new Image();
       img.src = item.image;
       img.onload = () => {
         setLoadedImages(prev => new Set([...prev, item.image]));
-        setActiveItem(item);
       };
     }
   };

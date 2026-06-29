@@ -170,7 +170,7 @@ export default function Consulting() {
       </section>
 
       {/* ════ BOTTOM CTA ════ */}
-      <section className="c-cta">
+      {/* <section className="c-cta">
         <div className="c-container">
           <div className="c-cta__box">
             <h2>Looking for tailored solutions?</h2>
@@ -178,7 +178,7 @@ export default function Consulting() {
             <button className="c-btn">Schedule a Consultation</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

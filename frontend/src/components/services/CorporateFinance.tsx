@@ -165,7 +165,7 @@ export default function CorporateFinance() {
       </section>
 
       {/* ════ BOTTOM CTA ════ */}
-      <section className="cf-cta">
+      {/* <section className="cf-cta">
         <div className="cf-container">
           <div className="cf-cta__box">
             <h2>Need strategic financial advisory?</h2>
@@ -173,7 +173,7 @@ export default function CorporateFinance() {
             <button className="cf-btn">Schedule a Consultation</button>
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

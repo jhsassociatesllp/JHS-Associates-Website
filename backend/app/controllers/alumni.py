@@ -1,5 +1,6 @@
 from app.database.connection import get_database
 from app.schemas.alumni import AlumniCreate, AlumniResponse
+from app.services.email_service import notify_hr_new_alumni
 from datetime import datetime, timezone
 
 async def create_alumni_registration(alumni: AlumniCreate) -> AlumniResponse:
@@ -12,6 +13,9 @@ async def create_alumni_registration(alumni: AlumniCreate) -> AlumniResponse:
     
     # Insert into MongoDB
     result = await collection.insert_one(alumni_dict)
+    
+    # Send email notifications (fire-and-forget)
+    await notify_hr_new_alumni(alumni_dict)
     
     # Return response
     alumni_dict["id"] = str(result.inserted_id)

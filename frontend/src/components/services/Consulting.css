@@ -185,9 +185,9 @@
   transition: all 0.25s ease;
 }
 
-.c-spoke-row:hover .c-spoke-title {
+/* .c-spoke-row:hover .c-spoke-title {
   color: var(--c-red);
-}
+} */
 
 .c-spoke-row--left {
   flex-direction: row;

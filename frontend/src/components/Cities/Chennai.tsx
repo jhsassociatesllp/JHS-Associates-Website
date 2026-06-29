@@ -11,7 +11,7 @@ const PARTNERS = [
 const SectorIcons: Record<string, JSX.Element> = {
   BFSI: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /> 
+      <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="5" y="16" width="30" height="2.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
       <rect x="8" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
       <rect x="17.5" y="20" width="5" height="10" rx="0.5" stroke="currentColor" strokeWidth="1.6" />
@@ -91,11 +91,11 @@ export default function Chennai() {
             <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
           </div>
           <div className="chn-hero__card-divider" />
-          <div className="chn-hero__card-right">
+          {/* <div className="chn-hero__card-right">
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 44 1234 5678</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chennai@jhsassociates.in</span></div>
-            {/* <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
-          </div>
+            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
+          </div> */}
         </div>
       </section>
 

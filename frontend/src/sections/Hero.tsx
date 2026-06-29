@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
-import { imageUrl } from '../utils/imageUrl'   
+import { imageUrl } from '../utils/imageUrl'
 
 interface Card {
   id: number;
@@ -9,7 +9,7 @@ interface Card {
   category: string;
   meta: string;
   title: string;
-  hoverTitle: string; 
+  hoverTitle: string;
   hoverDescription: string;
   route: string;
 }
@@ -59,9 +59,9 @@ const cards: Card[] = [
       "Companies that embed sustainability into their core strategy are outperforming peers. Learn how to navigate the energy transition and create lasting stakeholder value.",
     route: "/sustainability/green-transition",
   },
-  {  
+  {
     id: 5,
-    image: imageUrl('Card6.png'),
+    image: imageUrl('card6.png'),
     category: "DIGITAL",
     meta: "AI & Automation • APRIL 5, 2026",
     title: "Digital Twins: The Future of Industrial Operations",
@@ -211,7 +211,7 @@ export default function Hero() {
               </span>
               <h3 className="hero__carousel-card-hover-title">{card.hoverTitle}</h3>
               <p className="hero__carousel-card-hover-desc">{card.hoverDescription}</p>
-              <button 
+              <button
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(card.route);

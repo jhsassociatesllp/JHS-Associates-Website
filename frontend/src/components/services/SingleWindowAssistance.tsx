@@ -182,10 +182,10 @@ const SingleWindowAssistance: React.FC = () => {
               <p className="swa-section-sub">
                 From incorporation to ongoing compliance — we handle it all under one roof.
               </p>
-              <button className="swa-btn swa-btn--primary swa-btn--download">
+              {/* <button className="swa-btn swa-btn--primary swa-btn--download">
                 <Download size={14} />
                 Download Service Brochure
-              </button>
+              </button> */}
             </div>
             <div className="swa-services__list">
               {servicesList.map((service, idx) => (
@@ -258,7 +258,7 @@ const SingleWindowAssistance: React.FC = () => {
                 <span className="swa-stat__label">Success Rate</span>
               </div>
               <div className="swa-stat">
-                <span className="swa-stat__number">45+</span>
+                <span className="swa-stat__number">45</span>
                 <span className="swa-stat__label">Years of Excellence</span>
               </div>
             </div>

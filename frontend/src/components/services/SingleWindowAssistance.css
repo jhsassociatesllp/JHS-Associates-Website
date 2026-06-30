@@ -317,11 +317,11 @@
   transition: all var(--dur) var(--ease);
 }
 
-.swa-feature-card:hover .swa-feature-card__icon {
+/* .swa-feature-card:hover .swa-feature-card__icon {
   background: linear-gradient(135deg, var(--red), var(--red-hi));
   color: var(--white);
   transform: scale(1.05);
-}
+} */
 
 .swa-feature-card__title {
   font-size: 1.2rem;

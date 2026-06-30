@@ -224,7 +224,7 @@
 .soc-hero__overlay {
   position: absolute;
   inset: 0;
-  background:linear-gradient(135deg, rgba(22, 41, 70, 0.75) 0%, rgba(34, 53, 82, 0.70) 100%);
+  background: linear-gradient(135deg, rgba(22, 41, 70, 0.75) 0%, rgba(34, 53, 82, 0.70) 100%);
   z-index: 1;
 }
 
@@ -330,11 +330,11 @@
   transition: all var(--dur) var(--ease);
 }
 
-.soc-standard-card:hover .soc-standard-card__icon {
+/* .soc-standard-card:hover .soc-standard-card__icon {
   background: linear-gradient(135deg, var(--red), var(--red-hi));
   color: var(--white);
   transform: scale(1.05);
-}
+} */
 
 .soc-standard-card__title {
   font-size: 1.3rem;

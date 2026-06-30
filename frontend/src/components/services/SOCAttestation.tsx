@@ -168,8 +168,8 @@ const SOCAttestation: React.FC = () => {
           HERO SECTION
       ══════════════════════════════════════ */}
       <section className="soc-hero" ref={heroRef}>
-        <img 
-          src={imageUrl('images/SOCAttest.png')}
+        <img
+          src={imageUrl('images/SOCAttest.webp')}
           alt="SOC Attestation Background"
           className={`soc-hero__bg-image ${heroImageLoaded ? 'soc-hero__bg-image--loaded' : ''}`}
           onLoad={() => setHeroImageLoaded(true)}

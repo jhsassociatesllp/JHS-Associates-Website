@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Delhi.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -92,7 +92,20 @@ const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="n
 /* ─── Page ───────────────────────────────────────── */
 export default function Delhi() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="del-page">
@@ -187,7 +200,54 @@ export default function Delhi() {
                 <div className="del-pc-avatar"><img src={p.image} alt={p.name} className="del-pc-avatar__img" loading="lazy" /></div>
                 <div className="del-pc-info"><h3 className="del-pc-name">{p.name}</h3><p className="del-pc-quals">{p.qualifications}</p><p className="del-pc-desig">{p.designation}</p></div>
                 <div className="del-pc-social">
-                  <a href={`mailto:${p.email}`} className="del-pc-btn del-pc-btn--mail"><IconMail /><span>Email</span></a>
+                  <div className="del-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                    <button
+                      type="button"
+                      className={`del-pc-btn del-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.email && (
+                      <div className="del-pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="del-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="del-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="del-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="del-pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="del-pc-btn del-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                 </div>
               </div>
@@ -254,4 +314,4 @@ export default function Delhi() {
 
     </div>
   )
-}  
+}

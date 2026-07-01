@@ -703,6 +703,114 @@
   color: #fff
 }
 
+/* EMAIL DROPDOWN (Partner card "Email" button) */
+.del-pc-mail-wrap {
+  position: relative;
+  flex: 1;
+  display: flex
+}
+
+.del-pc-mail-wrap .del-pc-btn--mail {
+  width: 100%
+}
+
+.del-pc-mail-wrap .del-pc-btn--mail.is-open {
+  background: var(--del-navy);
+  border-color: var(--del-navy);
+  color: #fff
+}
+
+.del-pc-mail-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  min-width: 196px;
+  background: var(--del-white);
+  border: 1.5px solid var(--del-border);
+  border-radius: 14px;
+  box-shadow: var(--del-shadow-lg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: delMailDropIn 0.18s var(--del-ease) both
+}
+
+@keyframes delMailDropIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0)
+  }
+}
+
+.del-pc-mail-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background: var(--del-white);
+  border-left: 1.5px solid var(--del-border);
+  border-top: 1.5px solid var(--del-border);
+  border-radius: 2px 0 0 0
+}
+
+.del-pc-mail-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--del-font);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--del-ink-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--del-dur) var(--del-ease), color var(--del-dur) var(--del-ease)
+}
+
+.del-pc-mail-option::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--del-border);
+  flex-shrink: 0;
+  transition: background var(--del-dur) var(--del-ease)
+}
+
+.del-pc-mail-option:hover {
+  background: var(--del-navy-lt);
+  color: var(--del-navy-dk)
+}
+
+.del-pc-mail-option:hover::before {
+  background: var(--del-red)
+}
+
+.del-pc-mail-option:nth-child(4) {
+  border-top: 1px solid var(--del-border);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 9px 9px
+}
+
 /* MAP */
 .del-map-section {
   background: var(--del-white);
@@ -1088,6 +1196,28 @@
   .del-branches-grid {
     grid-template-columns: 1fr
   }
+
+  .del-pc-mail-dropdown {
+    left: 0;
+    transform: none;
+    right: auto
+  }
+
+  .del-pc-mail-dropdown::before {
+    left: 24px
+  }
+
+  @keyframes delMailDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px)
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0)
+    }
+  }
 }
 
 @media(max-width:400px) {
@@ -1101,6 +1231,10 @@
     width: 36px;
     height: 36px;
     border-radius: 50%
+  }
+
+  .del-pc-mail-wrap .del-pc-btn--mail {
+    width: 36px
   }
 
   .del-pc-social {

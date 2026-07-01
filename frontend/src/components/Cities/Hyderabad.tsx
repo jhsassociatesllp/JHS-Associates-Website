@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Hyderabad.css'
 
 import { imageUrl } from '../../utils/imageUrl'
@@ -73,7 +73,20 @@ const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="n
 
 export default function Hyderabad() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="hyd-page">
@@ -162,7 +175,54 @@ export default function Hyderabad() {
                 <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" loading="lazy" /></div>
                 <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
                 <div className="hyd-pc-social">
-                  <a href={`mailto:${p.email}`} className="hyd-pc-btn hyd-pc-btn--mail"><IconMail /><span>Email</span></a>
+                  <div className="hyd-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                    <button
+                      type="button"
+                      className={`hyd-pc-btn hyd-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.email && (
+                      <div className="hyd-pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hyd-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hyd-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="hyd-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="hyd-pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="hyd-pc-btn hyd-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                 </div>
               </div>

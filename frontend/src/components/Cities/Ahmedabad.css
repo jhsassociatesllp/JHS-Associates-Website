@@ -736,6 +736,116 @@
 }
 
 /* ============================================================
+   EMAIL DROPDOWN (Partner card "Email" button)
+   ============================================================ */
+.ahm-pc-mail-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.ahm-pc-mail-wrap .ahm-pc-btn--mail {
+  width: 100%;
+}
+
+.ahm-pc-mail-wrap .ahm-pc-btn--mail.is-open {
+  background: var(--ahm-navy);
+  border-color: var(--ahm-navy);
+  color: #fff;
+}
+
+.ahm-pc-mail-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  min-width: 196px;
+  background: var(--ahm-white);
+  border: 1.5px solid var(--ahm-border);
+  border-radius: 14px;
+  box-shadow: var(--ahm-shadow-lg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: ahmMailDropIn 0.18s var(--ahm-ease) both;
+}
+
+@keyframes ahmMailDropIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.ahm-pc-mail-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background: var(--ahm-white);
+  border-left: 1.5px solid var(--ahm-border);
+  border-top: 1.5px solid var(--ahm-border);
+  border-radius: 2px 0 0 0;
+}
+
+.ahm-pc-mail-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--ahm-font);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ahm-ink-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--ahm-dur) var(--ahm-ease), color var(--ahm-dur) var(--ahm-ease);
+}
+
+.ahm-pc-mail-option::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ahm-border);
+  flex-shrink: 0;
+  transition: background var(--ahm-dur) var(--ahm-ease);
+}
+
+.ahm-pc-mail-option:hover {
+  background: var(--ahm-navy-lt);
+  color: var(--ahm-navy-dk);
+}
+
+.ahm-pc-mail-option:hover::before {
+  background: var(--ahm-red);
+}
+
+.ahm-pc-mail-option:nth-child(4) {
+  border-top: 1px solid var(--ahm-border);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 9px 9px;
+}
+
+/* ============================================================
    MAP SECTION
    ============================================================ */
 .ahm-map-section {
@@ -1140,6 +1250,28 @@
   .ahm-branches-grid {
     grid-template-columns: 1fr;
   }
+
+  .ahm-pc-mail-dropdown {
+    left: 0;
+    transform: none;
+    right: auto;
+  }
+
+  .ahm-pc-mail-dropdown::before {
+    left: 24px;
+  }
+
+  @keyframes ahmMailDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @media (max-width: 400px) {
@@ -1153,6 +1285,10 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
+  }
+
+  .ahm-pc-mail-wrap .ahm-pc-btn--mail {
+    width: 36px;
   }
 
   .ahm-pc-social {

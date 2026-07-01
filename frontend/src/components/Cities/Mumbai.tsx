@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Mumbai.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -164,7 +164,20 @@ const IconCheck = () => (
 /* ─── Page ───────────────────────────────────────── */
 export default function Mumbai() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="mum-page">
@@ -270,7 +283,54 @@ export default function Mumbai() {
                   <p className="pc-desig">{p.designation}</p>
                 </div>
                 <div className="pc-social">
-                  <a href={`mailto:${p.email}`} className="pc-btn pc-btn--mail"><IconMail /><span>Email</span></a>
+                  <div className="pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                    <button
+                      type="button"
+                      className="pc-btn pc-btn--mail"
+                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.email && (
+                      <div className="pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="pc-btn pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                 </div>
               </div>

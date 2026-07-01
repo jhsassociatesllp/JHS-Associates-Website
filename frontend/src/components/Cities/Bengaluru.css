@@ -714,6 +714,114 @@
   color: #fff
 }
 
+/* EMAIL DROPDOWN (Partner card "Email" button) */
+.blr-pc-mail-wrap {
+  position: relative;
+  flex: 1;
+  display: flex
+}
+
+.blr-pc-mail-wrap .blr-pc-btn--mail {
+  width: 100%
+}
+
+.blr-pc-mail-wrap .blr-pc-btn--mail.is-open {
+  background: var(--blr-navy);
+  border-color: var(--blr-navy);
+  color: #fff
+}
+
+.blr-pc-mail-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  min-width: 196px;
+  background: var(--blr-white);
+  border: 1.5px solid var(--blr-border);
+  border-radius: 14px;
+  box-shadow: var(--blr-shadow-lg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: blrMailDropIn 0.18s var(--blr-ease) both
+}
+
+@keyframes blrMailDropIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0)
+  }
+}
+
+.blr-pc-mail-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background: var(--blr-white);
+  border-left: 1.5px solid var(--blr-border);
+  border-top: 1.5px solid var(--blr-border);
+  border-radius: 2px 0 0 0
+}
+
+.blr-pc-mail-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--blr-font);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--blr-ink-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--blr-dur) var(--blr-ease), color var(--blr-dur) var(--blr-ease)
+}
+
+.blr-pc-mail-option::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blr-border);
+  flex-shrink: 0;
+  transition: background var(--blr-dur) var(--blr-ease)
+}
+
+.blr-pc-mail-option:hover {
+  background: var(--blr-navy-lt);
+  color: var(--blr-navy-dk)
+}
+
+.blr-pc-mail-option:hover::before {
+  background: var(--blr-red)
+}
+
+.blr-pc-mail-option:nth-child(4) {
+  border-top: 1px solid var(--blr-border);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 9px 9px
+}
+
 /* MAP */
 .blr-map-section {
   background: var(--blr-white);
@@ -1100,6 +1208,28 @@
   .blr-branches-grid {
     grid-template-columns: 1fr
   }
+
+  .blr-pc-mail-dropdown {
+    left: 0;
+    transform: none;
+    right: auto
+  }
+
+  .blr-pc-mail-dropdown::before {
+    left: 24px
+  }
+
+  @keyframes blrMailDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px)
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0)
+    }
+  }
 }
 
 @media(max-width:400px) {
@@ -1113,6 +1243,10 @@
     width: 36px;
     height: 36px;
     border-radius: 50%
+  }
+
+  .blr-pc-mail-wrap .blr-pc-btn--mail {
+    width: 36px
   }
 
   .blr-pc-social {

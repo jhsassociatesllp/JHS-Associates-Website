@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Kolkata.css'
 
 import { imageUrl } from '../../utils/imageUrl'
@@ -109,24 +109,14 @@ const SectorIcons: Record<string, JSX.Element> = {
   )
 }
 
-
 /* ─── Sectors ─────────────────────────────────────── */
 const SECTORS = ["Real Estate", "Infrastructure", "FMCG", "Retail", "Family-Owned Business"]
 
 /* ─── Specialisations ─────────────────────────────── */
 const SPECIALIZATIONS = [
-  {
-    "label": "Risk-Based Internal Audit",
-    "g": "a"
-  },
-  {
-    "label": "SOP's",
-    "g": "b"
-  },
-  {
-    "label": "Dispute Resolution",
-    "g": "c"
-  }
+  { "label": "Risk-Based Internal Audit", "g": "a" },
+  { "label": "SOP's", "g": "b" },
+  { "label": "Dispute Resolution", "g": "c" }
 ]
 
 /* ─── Map Locations ───────────────────────────────────────── */
@@ -187,8 +177,6 @@ const IconPin = () => (
     <circle cx="12" cy="10" r="3" />
   </svg>
 )
-
-
 const IconCheck = () => (
   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
@@ -197,8 +185,21 @@ const IconCheck = () => (
 
 export default function Kolkata() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   return (
     <div className="kol-page">
       <section className="kol-hero">
@@ -239,10 +240,10 @@ export default function Kolkata() {
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* ════════════ SECTORS SERVED ════════════ */}
-      < section className="kol-section kol-sectors-section" >
+      <section className="kol-section kol-sectors-section">
         <div className="kol-container">
           <div className="kol-section-hdr">
             <span className="kol-section-hdr__tag">Industries</span>
@@ -259,10 +260,10 @@ export default function Kolkata() {
             ))}
           </div>
         </div>
-      </section >
+      </section>
 
       {/* ════════════ WE SPECIALISE IN ════════════ */}
-      < section className="kol-section kol-specials-section" >
+      <section className="kol-section kol-specials-section">
         <div className="kol-container">
           <div className="kol-specials-inner">
             <div className="kol-specials-left">
@@ -284,8 +285,7 @@ export default function Kolkata() {
             </div>
           </div>
         </div>
-      </section >
-
+      </section>
 
       <section className="kol-section kol-section--light">
         <div className="kol-container">
@@ -306,7 +306,54 @@ export default function Kolkata() {
                   <p className="kol-pc-desig">{p.designation}</p>
                 </div>
                 <div className="kol-pc-social">
-                  <a href={`mailto:${p.email}`} className="kol-pc-btn kol-pc-btn--mail"><IconMail /><span>Email</span></a>
+                  <div className="kol-pc-mail-wrap" ref={openMailFor === p.name ? mailRef : null}>
+                    <button
+                      type="button"
+                      className={`kol-pc-btn kol-pc-btn--mail ${openMailFor === p.name ? 'is-open' : ''}`}
+                      onClick={() => setOpenMailFor(openMailFor === p.name ? null : p.name)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.name && (
+                      <div className="kol-pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="kol-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="kol-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="kol-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="kol-pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="kol-pc-btn kol-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                 </div>
               </div>
@@ -377,6 +424,6 @@ export default function Kolkata() {
           </div>
         </div>
       </section> */}
-    </div >
+    </div>
   )
 }

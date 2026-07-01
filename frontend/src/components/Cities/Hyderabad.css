@@ -336,7 +336,6 @@
 
 /* SECTORS */
 .hyd-sectors-section {
-  /* background: var(--hyd-bg); */
   background: #ffffff;
   border-bottom: 1px solid var(--hyd-border)
 }
@@ -376,13 +375,6 @@
   }
 }
 
-/* .hyd-sector-card:hover {
-  background: var(--hyd-navy);
-  border-color: var(--hyd-navy);
-  transform: translateY(-6px);
-  box-shadow: var(--hyd-shadow-lg)
-} */
-
 .hyd-sector-card__icon-wrap {
   width: 56px;
   height: 56px;
@@ -398,10 +390,6 @@
   height: 44px
 }
 
-/* .hyd-sector-card:hover .hyd-sector-card__icon-wrap {
-  color: #fff
-} */
-
 .hyd-sector-card__label {
   font-size: 0.72rem;
   font-weight: 700;
@@ -411,12 +399,6 @@
   line-height: 1.45;
   transition: color var(--hyd-dur) var(--hyd-ease)
 }
-
-/* .hyd-sector-card:hover .hyd-sector-card__label {
-  color: #fff
-} */
-
-
 
 /* SPECIALISE */
 .hyd-specials-section {
@@ -528,13 +510,13 @@
 .hyd-special-pill--b {
   background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.90);
+  color: rgba(255, 255, 255, 0.90)
 }
 
 .hyd-special-pill--c {
   background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.90);
+  color: rgba(255, 255, 255, 0.90)
 }
 
 .hyd-special-pill__check {
@@ -559,7 +541,7 @@
 
 /* PARTNERS */
 .hyd-partners-section {
-  background: #ffffff;
+  background: #ffffff
 }
 
 .hyd-partners-grid {
@@ -703,6 +685,114 @@
   background: #0077b5;
   border-color: #0077b5;
   color: #fff
+}
+
+/* EMAIL DROPDOWN */
+.hyd-pc-mail-wrap {
+  position: relative;
+  flex: 1;
+  display: flex
+}
+
+.hyd-pc-mail-wrap .hyd-pc-btn--mail {
+  width: 100%
+}
+
+.hyd-pc-mail-wrap .hyd-pc-btn--mail.is-open {
+  background: var(--hyd-navy);
+  border-color: var(--hyd-navy);
+  color: #fff
+}
+
+.hyd-pc-mail-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  min-width: 196px;
+  background: var(--hyd-white);
+  border: 1.5px solid var(--hyd-border);
+  border-radius: 14px;
+  box-shadow: var(--hyd-shadow-lg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: hydMailDropIn 0.18s var(--hyd-ease) both
+}
+
+@keyframes hydMailDropIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0)
+  }
+}
+
+.hyd-pc-mail-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background: var(--hyd-white);
+  border-left: 1.5px solid var(--hyd-border);
+  border-top: 1.5px solid var(--hyd-border);
+  border-radius: 2px 0 0 0
+}
+
+.hyd-pc-mail-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: var(--hyd-font);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--hyd-ink-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--hyd-dur) var(--hyd-ease), color var(--hyd-dur) var(--hyd-ease)
+}
+
+.hyd-pc-mail-option::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hyd-border);
+  flex-shrink: 0;
+  transition: background var(--hyd-dur) var(--hyd-ease)
+}
+
+.hyd-pc-mail-option:hover {
+  background: var(--hyd-navy-lt);
+  color: var(--hyd-navy-dk)
+}
+
+.hyd-pc-mail-option:hover::before {
+  background: var(--hyd-red)
+}
+
+.hyd-pc-mail-option:nth-child(4) {
+  border-top: 1px solid var(--hyd-border);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 9px 9px
 }
 
 /* MAP */
@@ -1091,6 +1181,28 @@
   .hyd-branches-grid {
     grid-template-columns: 1fr
   }
+
+  .hyd-pc-mail-dropdown {
+    left: 0;
+    transform: none;
+    right: auto
+  }
+
+  .hyd-pc-mail-dropdown::before {
+    left: 24px
+  }
+
+  @keyframes hydMailDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px)
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0)
+    }
+  }
 }
 
 @media(max-width:400px) {
@@ -1104,6 +1216,10 @@
     width: 36px;
     height: 36px;
     border-radius: 50%
+  }
+
+  .hyd-pc-mail-wrap .hyd-pc-btn--mail {
+    width: 36px
   }
 
   .hyd-pc-social {

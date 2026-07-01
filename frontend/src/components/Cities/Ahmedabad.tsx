@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Ahmedabad.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -106,7 +106,7 @@ const MAP_LOCATIONS = [
   {
     id: 'ahmedabad', name: 'Ahmedabad ', tag: '',
     mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin',
-    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road,Thaltej, Ahmedabad,Gujarat – 380054'
+    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road,Thaltej, Ahmedabad,Gujarat – 380054'
   },
   {
     id: 'vadodara', name: 'Vadodara', tag: 'Branch',
@@ -155,7 +155,20 @@ const IconCheck = () => (
 /* ─── Page ───────────────────────────────────────── */
 export default function Ahmedabad() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="ahm-page">
@@ -261,7 +274,54 @@ export default function Ahmedabad() {
                   <p className="ahm-pc-desig">{p.designation}</p>
                 </div>
                 <div className="ahm-pc-social">
-                  <a href={`mailto:${p.email}`} className="ahm-pc-btn ahm-pc-btn--mail"><IconMail /><span>Email</span></a>
+                  <div className="ahm-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                    <button
+                      type="button"
+                      className={`ahm-pc-btn ahm-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.email && (
+                      <div className="ahm-pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ahm-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ahm-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="ahm-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="ahm-pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="ahm-pc-btn ahm-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                 </div>
               </div>

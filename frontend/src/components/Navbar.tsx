@@ -42,7 +42,7 @@ const NAV_ITEMS: NavItem[] = [
     subItems: [
       { label: "Resources", description: "Reports, tools & frameworks", href: '/resources' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
-      { label: "Thought Leadership", description: "CEO & leadership perspectives", href: '/thought-leadership' },
+      { label: "Thought Leadership", description: "Leadership perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
       { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
       { label: "Podcasts", description: "Audio insights on the go", href: '/podcasts' },

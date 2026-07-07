@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { 
-  Factory, 
-  TrendingUp, 
-  Package, 
-  Shield, 
+import {
+  Factory,
+  TrendingUp,
+  Package,
+  Shield,
   ArrowRight,
   Download,
   PhoneCall,
@@ -155,30 +155,30 @@ const Manufacturing: React.FC = () => {
   ]
 
   const approachSteps = [
-    { 
-      step: '01', 
-      title: 'Diagnostic Assessment', 
-      description: 'Comprehensive evaluation of current operations, processes and performance metrics.' 
+    {
+      step: '01',
+      title: 'Diagnostic Assessment',
+      description: 'Comprehensive evaluation of current operations, processes and performance metrics.'
     },
-    { 
-      step: '02', 
-      title: 'Strategy Development', 
-      description: 'Tailored improvement roadmap aligned with business objectives and market demands.' 
+    {
+      step: '02',
+      title: 'Strategy Development',
+      description: 'Tailored improvement roadmap aligned with business objectives and market demands.'
     },
-    { 
-      step: '03', 
-      title: 'Implementation Support', 
-      description: 'Hands-on guidance through execution phase with minimal operational disruption.' 
+    {
+      step: '03',
+      title: 'Implementation Support',
+      description: 'Hands-on guidance through execution phase with minimal operational disruption.'
     },
-    { 
-      step: '04', 
-      title: 'Performance Monitoring', 
-      description: 'Continuous tracking of KPIs and real-time adjustments for optimal results.' 
+    {
+      step: '04',
+      title: 'Performance Monitoring',
+      description: 'Continuous tracking of KPIs and real-time adjustments for optimal results.'
     },
-    { 
-      step: '05', 
-      title: 'Capability Building', 
-      description: 'Knowledge transfer and training to ensure sustainable improvements.' 
+    {
+      step: '05',
+      title: 'Capability Building',
+      description: 'Knowledge transfer and training to ensure sustainable improvements.'
     },
   ]
 
@@ -204,7 +204,7 @@ const Manufacturing: React.FC = () => {
             Manufacturing <br /> <span>Excellence</span>
           </h1>
           <p className="man-hero__sub">
-            Transform your manufacturing operations with our comprehensive consulting solutions. 
+            Transform your manufacturing operations with our comprehensive consulting solutions.
             From operational efficiency to regulatory compliance, we help you build world-class manufacturing capabilities.
           </p>
           {/* <div className="man-hero__cta">
@@ -294,10 +294,10 @@ const Manufacturing: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <button className="man-btn man-btn--primary man-btn--download">
+              {/* <button className="man-btn man-btn--primary man-btn--download">
                 <Download size={14} />
                 Download Service Brochure
-              </button>
+              </button> */}
             </div>
 
             {/* Approach Steps */}
@@ -332,10 +332,10 @@ const Manufacturing: React.FC = () => {
               <span className="man-stat__number">100+</span>
               <span className="man-stat__label">Manufacturing Clients</span>
             </div>
-            <div className="man-stat">
+            {/* <div className="man-stat">
               <span className="man-stat__number">₹500Cr+</span>
               <span className="man-stat__label">Cost Savings Delivered</span>
-            </div>
+            </div> */}
             <div className="man-stat">
               <span className="man-stat__number">35%</span>
               <span className="man-stat__label">Avg. Productivity Gain</span>
@@ -359,10 +359,10 @@ const Manufacturing: React.FC = () => {
               Partner with JHS & Associates for expert guidance and measurable results.
             </p>
             <div className="man-cta__buttons">
-              <button className="man-btn man-btn--light">
+              {/* <button className="man-btn man-btn--light">
                 <Mail size={14} />
                 connect@jhsassociates.com
-              </button>
+              </button> */}
               {/* <button className="man-btn man-btn--light">
                 <PhoneCall size={14} />
                 +91 98765 43210

@@ -187,7 +187,7 @@ export default function Mumbai() {
         <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.jpg')}")` }} />
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">
-          <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="mum-hero__title">Mumbai</h1>
           <p className="mum-hero__sub">Principal Headquarters </p>
         </div>

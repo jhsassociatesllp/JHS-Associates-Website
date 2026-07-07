@@ -206,7 +206,7 @@ export default function Kolkata() {
         <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.png')})` }} />
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
-          <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p>
+          {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}
           <h1 className="kol-hero__title">Kolkata</h1>
           <p className="kol-hero__sub">City of Joy &amp; Eastern India Business Gateway</p>
         </div>

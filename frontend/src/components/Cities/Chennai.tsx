@@ -94,7 +94,7 @@ export default function Chennai() {
         <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
-          <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="chn-hero__title">Chennai</h1>
           <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
         </div>

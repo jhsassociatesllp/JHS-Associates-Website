@@ -23,9 +23,9 @@ export default function OurStory() {
         <div className="ap-hero__stats">
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">1981</span><span className="ap-hero__stat-label">Year Founded</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">45</span><span className="ap-hero__stat-label">Years of Trust</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">45+</span><span className="ap-hero__stat-label">Years of Trust</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">14</span><span className="ap-hero__stat-label">Cities Presence</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">13</span><span className="ap-hero__stat-label">Cities Presence</span></div>
         </div>
       </section>
 
@@ -40,7 +40,7 @@ export default function OurStory() {
             </div>
             <div className="ap-grid-right">
               <p>
-                The journey of JHS &amp; Associates LLP began in 1992 with a simple but profound mission: to provide unparalleled strategic and financial advice to growing businesses. What started as a modest boutique firm in Mumbai quickly gained recognition for its relentless dedication to client success and rigorous ethical standards.
+                The journey of JHS &amp; Associates LLP began in 1981 with a simple but profound mission: to provide unparalleled strategic and financial advice to growing businesses. What started as a modest boutique firm in Mumbai quickly gained recognition for its relentless dedication to client success and rigorous ethical standards.
               </p>
               <p>
                 As the Indian economy opened up and digitized over the decades, JHS evolved alongside it. We expanded our capabilities far beyond statutory audits, rapidly scaling our consulting, risk advisory, and international taxation practices to meet complex global demands. Today, we stand as a unified network across major Indian economic hubs, trusted by start-ups and multinationals alike.

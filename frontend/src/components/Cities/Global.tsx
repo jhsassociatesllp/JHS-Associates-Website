@@ -183,7 +183,7 @@ export default function Global() {
         <div className="glb-hero__photo" style={{ backgroundImage: `url(${imageUrl('Global.jpeg')})` }} />
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">
-          <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p>
+          {/* <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p> */}
           <h1 className="glb-hero__title">Global Presence</h1>
           <p className="glb-hero__sub">Delivering Excellence Across International Borders</p>
         </div>

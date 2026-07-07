@@ -178,7 +178,7 @@ export default function Ahmedabad() {
         <div className="ahm-hero__photo" style={{ backgroundImage: `url(${imageUrl('Ahmedabad.png')})` }} />
         <div className="ahm-hero__overlay" />
         <div className="ahm-hero__content">
-          <span className="ahm-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="ahm-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="ahm-hero__title">Gujarat</h1>
           <p className="ahm-hero__sub">Regional Hub &amp; Key Western India Office</p>
         </div>
@@ -361,7 +361,7 @@ export default function Ahmedabad() {
       </section>
 
       {/* ══ BRANCHES ══ */}
-      <section className="ahm-branches-section">
+      {/* <section className="ahm-branches-section">
         <div className="ahm-container">
           <div className="ahm-section-hdr">
             <span className="ahm-section-hdr__tag">Sub-Offices</span>
@@ -386,7 +386,7 @@ export default function Ahmedabad() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
     </div>
   )

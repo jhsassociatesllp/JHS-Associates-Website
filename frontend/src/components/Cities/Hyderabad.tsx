@@ -94,7 +94,7 @@ export default function Hyderabad() {
         <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.png')})` }} />
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
-          <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="hyd-hero__title">Hyderabad</h1>
           <p className="hyd-hero__sub">South India Tech Hub &amp; Strategic Regional Office</p>
         </div>

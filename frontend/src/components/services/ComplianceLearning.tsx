@@ -137,7 +137,7 @@ export default function ComplianceLearning() {
           <div className="cl-cta__box">
             <h2>Need compliance and governance support?</h2>
             <p>Speak with our compliance specialists to design the right governance framework for your organisation.</p>
-            <button className="cl-btn">Schedule a Consultation</button>
+            {/* <button className="cl-btn">Schedule a Consultation</button> */}
           </div>
         </div>
       </section>

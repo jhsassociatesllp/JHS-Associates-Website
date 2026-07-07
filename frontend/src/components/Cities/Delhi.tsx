@@ -115,7 +115,7 @@ export default function Delhi() {
         <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.png')})` }} />
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
-          <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="del-hero__title">Delhi</h1>
           <p className="del-hero__sub">National Capital &amp; Strategic North India Office</p>
         </div>
@@ -136,7 +136,7 @@ export default function Delhi() {
       {/* ══ STATS RIBBON ══ */}
       <div className="del-ribbon">
         <div className="del-ribbon__inner">
-          {([['3', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="del-ribbon__item"><span className="del-ribbon__num">{num}</span><span className="del-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>

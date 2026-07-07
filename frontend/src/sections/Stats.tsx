@@ -6,7 +6,7 @@ import { imageUrl } from "../utils/imageUrl";
 interface InsightItem {
   eyebrow: string;
   heading: string;
-  description: string;  
+  description: string;
 }
 
 const insights: InsightItem[] = [
@@ -15,12 +15,12 @@ const insights: InsightItem[] = [
     heading: "The JHS Insights Index",
     description:
       "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS Associates brings decades of expertise transforming complexity into clarity.",
-  },  
+  },
   {
-    eyebrow: "TAX STRATEGY ",
-    heading: "Navigating India's New Tax Landscape",
+    eyebrow: "RISK AND GOVERNANCE ",
+    heading: "Strengthening Risk & Governance",
     description:
-      "From GST compliance and income tax management to mutual fund advisory and wealth planning, we provide comprehensive financial solutions for individuals and businesses. Our experts help you navigate regulatory changes, optimise tax efficiency, and build a stronger financial future with confidence.",
+      "Expert insights on governance, compliance, and enterprise risk management to help businesses operate with confidence and resilience.",
   },
   {
     eyebrow: "AUDIT ",
@@ -159,7 +159,7 @@ export default function Stats() {
 
       {/* Right panel — image */}
       <div className="stats__right" aria-hidden="true">
-        <img 
+        <img
           src={imageUrl('Insights2.png')}
           alt="JHS Insights"
           className={`stats__image ${imageLoaded ? 'stats__image--loaded' : ''}`}

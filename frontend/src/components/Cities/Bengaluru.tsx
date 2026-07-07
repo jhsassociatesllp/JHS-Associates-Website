@@ -93,7 +93,7 @@ export default function Bengaluru() {
         <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.jpg')})` }} />
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
-          <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span>
+          {/* <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span> */}
           <h1 className="blr-hero__title">Bengaluru</h1>
           <p className="blr-hero__sub">Silicon Valley of India &amp; South India Tech Office</p>
         </div>

@@ -65,11 +65,11 @@ export default function Insights() {
     <section className="insights" ref={sectionRef}>
       <div className="insights__container">
 
-        {/* LEFT COLUMN - BLOGS */} 
+        {/* LEFT COLUMN - BLOGS */}
         <div className="insights__card insights__card--blogs" ref={leftCardRef}>
-          <div 
+          <div
             className={`insights__card-bg-blogs ${blogImageLoaded ? 'insights__card-bg-blogs--loaded' : ''}`}
-            style={{ 
+            style={{
               backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxation2.png')})` : 'none'
             }}
           ></div>

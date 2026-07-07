@@ -506,6 +506,7 @@
 .hc-why {
   padding: 5rem 0;
   border-top: 1px solid var(--border);
+  margin-top: 3rem;
 }
 
 .hc-why__inner {
@@ -513,6 +514,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
   align-items: center;
+  margin-top: 3rem;
 }
 
 @media (max-width: 900px) {
@@ -589,17 +591,18 @@
   flex-wrap: wrap;
   background: linear-gradient(135deg, var(--red-deep) 0%, var(--red) 45%, var(--red-hi) 100%);
   border-radius: 24px;
-  padding: 3.25rem 4rem;
+  padding: 3.50rem 5rem;
   position: relative;
   overflow: hidden;
   /* box-shadow: 0 24px 64px rgba(192, 57, 43, 0.32); */
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  margin-top: 3rem;
 }
 
-.hc-cta__inner:hover {
+/* .hc-cta__inner:hover {
   transform: translateY(-3px);
   box-shadow: 0 32px 80px rgba(192, 57, 43, 0.38);
-}
+} */
 
 .hc-cta__inner::before {
   content: '';

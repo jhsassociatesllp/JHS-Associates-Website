@@ -62,12 +62,12 @@ const cards: Card[] = [
   {
     id: 5,
     image: imageUrl('Card6.webp'),
-    category: "DIGITAL",
-    meta: "AI & Automation • APRIL 5, 2026",
-    title: "Digital Twins: The Future of Industrial Operations",
+    category: "REGULATORY",
+    meta: "Companies (CSR Policy) Amendment Rules, 2026",
+    title: "MCA Introduces CSR Investment through ZCZP Instruments on Social Stock Exchange",
     hoverTitle: "Digital Transformation 2026",
     hoverDescription:
-      "Digital twins are revolutionizing how companies design, operate, and maintain complex systems. Early adopters are seeing 30% efficiency gains.",
+      "The Ministry of Corporate Affairs has amended the CSR Rules, 2026, permitting eligible companies to subscribe to Zero Coupon Zero Principal (ZCZP) Instruments issued by registered Not-for-Profit Organisations through the Social Stock Exchange, subject to prescribed limits and compliance requirements.",
     route: "/digital/digital-twins",
   },
 ];

@@ -14,7 +14,7 @@ const PARTNERS = [
   },
   {
     name: 'Tripti Mohata',
-    image: imageUrl('Tripti Mohata.png'),
+    image: imageUrl('Tripti-mohta.png'),
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
     email: 'sharad.mohata@jhsassociates.in',

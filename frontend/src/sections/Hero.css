@@ -42,6 +42,61 @@
   z-index: 0;
 }
 
+/* =============================================
+   TOP-RIGHT ACTION BUTTONS
+   ============================================= */
+
+.hero__actions {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  z-index: 20;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.hero__action-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 12px 24px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* Outline (secondary) — Approval for Proposal */
+.hero__action-btn--outline {
+  background: transparent;
+  color: #1e3a5f;
+  border: 1.5px solid #1e3a5f;
+}
+
+.hero__action-btn--outline:hover {
+  background: #1e3a5f;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(30, 58, 95, 0.25);
+}
+
+/* Solid (primary) — Apply Now */
+.hero__action-btn--solid {
+  background: #D62049;
+  color: #ffffff;
+  border: 1.5px solid #D62049;
+}
+
+.hero__action-btn--solid:hover {
+  background: #b81a3d;
+  border-color: #b81a3d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(214, 32, 73, 0.3);
+}
+
 /* --- Header --- */
 .hero__header {
   position: relative;
@@ -630,6 +685,37 @@
 /* =============================================
    MOBILE-FIRST RESPONSIVE DESIGN
    ============================================= */
+
+/* Action buttons — tablet/small desktop */
+@media (max-width: 900px) {
+  .hero__actions {
+    top: 20px;
+    right: 20px;
+    gap: 10px;
+  }
+
+  .hero__action-btn {
+    font-size: 11px;
+    padding: 10px 16px;
+  }
+}
+
+/* Action buttons — mobile: drop below header, centered */
+@media (max-width: 600px) {
+  .hero__actions {
+    position: static;
+    justify-content: center;
+    margin: 12px 0 24px;
+    right: auto;
+    top: auto;
+    flex-wrap: wrap;
+  }
+
+  .hero__action-btn {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
 
 /* Small Mobile Devices (320px - 480px) */
 @media (max-width: 480px) {

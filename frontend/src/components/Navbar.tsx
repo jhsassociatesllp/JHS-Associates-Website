@@ -54,6 +54,8 @@ const NAV_ITEMS: NavItem[] = [
     id: "services",
     label: "Services",
     inlineExpand: true,
+    subLabel: "Our Services",
+    subDesc: "Explore our comprehensive service offerings across India and global markets.",
     subItems: [
       {
         label: "India",
@@ -71,12 +73,12 @@ const NAV_ITEMS: NavItem[] = [
         label: "Global",
         description: "World-class advisory across geographies",
         children: [
-          { label: "Assurance", description: "", href: '/services/assurance' },
-          { label: "Taxation ", description: "", href: '/services/taxation' },
+          // { label: "Assurance", description: "", href: '/services/assurance' },
+          // { label: "Taxation ", description: "", href: '/services/taxation' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
-          { label: "Consulting", description: "", href: '/services/consulting' },
-          { label: "Outsourcing", description: "", href: '/services/outsourcing' },
+          // { label: "Consulting", description: "", href: '/services/consulting' },
+          // { label: "Outsourcing", description: "", href: '/services/outsourcing' },
         ],
       },
     ],
@@ -87,6 +89,8 @@ const NAV_ITEMS: NavItem[] = [
     id: "sectors",
     label: "Sectors",
     inlineExpand: true,
+    subLabel: "Our Sectors",
+    subDesc: "Explore our specialized industry expertise across sectors.",
     subItems: [
       {
         label: "Media & Technology",
@@ -192,6 +196,9 @@ const Navbar = () => {
   // which sub-item is selected → drives the right panel
   const [activeSubLabel, setActiveSubLabel] = useState<string | null>(null);
 
+  // Hover close timer — small delay so moving between burger and mega doesn't flicker close
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // Mobile Drill-Down State
   const [mobileState, setMobileState] = useState<{
     view: 'root' | 'l1' | 'l2';
@@ -220,24 +227,67 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (menuOpen) {
+      // Prevent background page scrolling
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, [menuOpen]);
 
   useEffect(() => {
     if (menuOpen) setTimeout(() => searchRef.current?.focus(), 400);
   }, [menuOpen]);
 
+  // clear any pending close timer on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
   const openMenu = () => {
-    setActiveId('insights'); // Default to Insights instead of Home
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    setActiveId('insights');
     setActiveSubLabel(null);
     setMobileState({ view: 'root' });
     setMenuOpen(true);
   };
   const closeMenu = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
     setMenuOpen(false);
     setActiveSubLabel(null);
     setTimeout(() => setMobileState({ view: 'root' }), 400);
+  };
+
+  // ── HOVER OPEN/CLOSE HANDLERS (desktop) ──────────────────────
+  const handleHoverOpen = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    if (!menuOpenRef.current) openMenu();
+  };
+
+  const handleHoverClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      closeMenu();
+    }, 180); // small grace period to bridge the gap between navbar & mega
   };
 
   // When L1 nav changes, reset sub selection
@@ -250,28 +300,16 @@ const Navbar = () => {
   const isInline = !!activeNavItem.inlineExpand;
 
   // Right panel content:
-  // — inlineExpand items → driven by activeSubLabel
-  // — normal items       → show subItems directly in right panel
+  // — normal items → show subItems directly in right panel
   const rightChildren: RightItem[] | SubItem[] | null = (() => {
-    if (isInline && activeSubLabel) {
-      return (
-        activeNavItem.subItems?.find((s) => s.label === activeSubLabel)
-          ?.children ?? null
-      );
-    }
     if (!isInline) {
       return activeNavItem.subItems ?? null;
     }
     return null;
   })();
 
-  const rightTitle = isInline
-    ? activeSubLabel
-    : activeNavItem.subLabel ?? activeNavItem.label;
-
-  const rightDesc = isInline
-    ? activeNavItem.subItems?.find((s) => s.label === activeSubLabel)?.description
-    : activeNavItem.subDesc;
+  const rightTitle = activeNavItem.subLabel ?? activeNavItem.label;
+  const rightDesc = activeNavItem.subDesc;
 
   // --- Mobile Derived State ---
   const mobileActiveL1 = NAV_ITEMS.find((n) => n.id === mobileState.l1Id) ?? NAV_ITEMS[0];
@@ -284,7 +322,11 @@ const Navbar = () => {
   return (
     <>
       {/* ══════════════ TOP NAVBAR ══════════════ */}
-      <header className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""} ${hidden ? "nb--hidden" : ""}`}>
+      <header
+        className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""} ${hidden ? "nb--hidden" : ""}`}
+        onMouseEnter={handleHoverOpen}
+        onMouseLeave={handleHoverClose}
+      >
         <div className="nb__left">
           <button
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
@@ -318,6 +360,8 @@ const Navbar = () => {
         role="dialog"
         aria-modal="true"
         aria-label="Site navigation"
+        onMouseEnter={handleHoverOpen}
+        onMouseLeave={handleHoverClose}
       >
         {/* ── Modal top bar ── */}
         {/* <div className="mega__topbar">
@@ -353,6 +397,7 @@ const Navbar = () => {
                         to={item.href}
                         className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
                         onClick={closeMenu}
+                        onMouseEnter={() => handleNavHover(item.id)}
                       >
                         <span className="mega__nav-label">{item.label}</span>
                       </Link>
@@ -360,6 +405,7 @@ const Navbar = () => {
                       <button
                         className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
                         onClick={() => handleNavHover(item.id)}
+                        onMouseEnter={() => handleNavHover(item.id)}
                       >
                         <span className="mega__nav-label">{item.label}</span>
                         <svg
@@ -387,86 +433,49 @@ const Navbar = () => {
             {/* ════ RIGHT PANEL ════ */}
             <div className="mega__right">
 
-              {/* Services/Sectors Selection Panel */}
-              {isInline && !activeSubLabel && (
+              {/* Services/Sectors — show ALL items directly, grouped by subcategory */}
+              {isInline && (
                 <div className="mega__right-panel mega__right-panel--vis">
                   <div className="mega__right-hdr">
                     <h2 className="mega__right-title">
                       {activeNavItem.id === 'services' ? 'Our Services' : 'Our Sectors'}
                     </h2>
                     <p className="mega__right-desc">
-                      {activeNavItem.id === 'services'
-                        ? 'Choose your market to explore our comprehensive service offerings'
-                        : 'Select a sector to explore our specialized industry expertise'
-                      }
+                      {activeNavItem.subDesc}
                     </p>
                     <div className="mega__right-rule" />
                   </div>
 
-                  <div className="mega__simple-grid">
-                    {activeNavItem.subItems?.map((subItem) => (
-                      <button
-                        key={subItem.label}
-                        className="mega__simple-item"
-                        onClick={() => setActiveSubLabel(subItem.label)}
-                      >
-                        <h3>{subItem.label}</h3>
-                        <p>{subItem.description}</p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Services/Sectors Detail Panel */}
-              {isInline && activeSubLabel && rightChildren && (
-                <div className="mega__right-panel mega__right-panel--vis">
-                  <div className="mega__right-hdr">
-                    <button
-                      className="mega__back-btn"
-                      onClick={() => setActiveSubLabel(null)}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="15 18 9 12 15 6" />
-                      </svg>
-                      Back
-                    </button>
-                    <h2 className="mega__right-title">{rightTitle}</h2>
-                    {rightDesc && (
-                      <p className="mega__right-desc">{rightDesc}</p>
-                    )}
-                    <div className="mega__right-rule" />
-                  </div>
-
-                  <div className="mega__simple-grid">
-                    {(rightChildren as Array<{
-                      label: string;
-                      description?: string;
-                      href?: string;
-                    }>).map((item) => (
-                      <div key={item.label} className="mega__simple-item">
-                        {item.href ? (
-                          <Link
-                            to={item.href}
-                            className="mega__simple-link"
-                            onClick={closeMenu}
-                          >
-                            <h4>{item.label}</h4>
-                            {item.description && <p>{item.description}</p>}
-                          </Link>
-                        ) : (
-                          <div className="mega__simple-link">
-                            <h4>{item.label}</h4>
-                            {item.description && <p>{item.description}</p>}
+                  {activeNavItem.subItems?.map((group) => (
+                    <div key={group.label} className="mega__group">
+                      <h3 className="mega__group-title">{group.label}</h3>
+                      <div className="mega__simple-grid">
+                        {(group.children ?? []).map((item) => (
+                          <div key={item.label} className="mega__simple-item">
+                            {item.href ? (
+                              <Link
+                                to={item.href}
+                                className="mega__simple-link"
+                                onClick={closeMenu}
+                              >
+                                <h4>{item.label}</h4>
+                                {item.description && <p>{item.description}</p>}
+                              </Link>
+                            ) : (
+                              <div className="mega__simple-link">
+                                <h4>{item.label}</h4>
+                                {item.description && <p>{item.description}</p>}
+                              </div>
+                            )}
                           </div>
-                        )}
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               )}
 
-              {/* Regular panels for non-inline items (Know Us, About Us, etc.) */}
+              {/* Regular panels for non-inline items (Insights, Know Us, About Us, etc.) */}
               {!isInline && (
                 <div className={`mega__right-panel ${rightChildren ? "mega__right-panel--vis" : ""}`}>
                   {/* Heading */}

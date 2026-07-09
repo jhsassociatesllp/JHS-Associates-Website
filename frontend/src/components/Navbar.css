@@ -280,6 +280,8 @@
   overflow: hidden;
   pointer-events: none;
   padding-top: var(--nb-h-mobile);
+  box-sizing: border-box;
+  /* include padding-top in the fixed height so body doesn't overflow */
 }
 
 @media (min-width: 768px) {
@@ -371,6 +373,9 @@
 .mega__body {
   display: flex;
   flex: 1;
+
+  height: calc(100vh - var(--nb-h));
+
   overflow: hidden;
 }
 
@@ -379,6 +384,8 @@
   display: none;
   flex: 1;
   width: 100%;
+  min-height: 0;
+  /* allow left/right panels to scroll instead of overflowing */
 }
 
 @media (min-width: 768px) {
@@ -527,13 +534,22 @@
 
 /* ── LEFT PANEL ── */
 .mega__left {
+
   width: var(--left-w);
+
   flex-shrink: 0;
+
   border-right: 1px solid var(--border);
+
+  height: calc(100vh - var(--nb-h));
+
   overflow-y: auto;
+
+  overscroll-behavior: contain;
+
+  -webkit-overflow-scrolling: touch;
+
   padding: 24px 0;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 }
 
 .mega__left::-webkit-scrollbar {
@@ -608,16 +624,23 @@
 /* ── RIGHT PANEL ── */
 .mega__right {
   flex: 1;
-  overflow-y: auto;
   position: relative;
+
+  height: calc(100vh - var(--nb-h));
+  overflow-y: auto;
+
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-  background: #ffffff;
+  scrollbar-color: rgba(0, 0, 0, .15) transparent;
+
+  background: #fff;
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
-.mega__right::-webkit-scrollbar {
+/* .mega__right::-webkit-scrollbar {
   width: 4px;
-}
+} */
 
 .mega__right::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.1);
@@ -627,12 +650,24 @@
 .mega__right-panel {
   position: absolute;
   inset: 0;
-  padding: 40px 60px;
+
+  padding: 40px 60px 80px;
+
+  overflow-y: auto;
+
+  height: 100%;
+
   opacity: 0;
   pointer-events: none;
+
   transform: translateX(12px);
-  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
-  overflow-y: auto;
+
+  transition:
+    opacity .22s var(--ease),
+    transform .22s var(--ease);
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mega__right-panel--vis {
@@ -669,12 +704,38 @@
   border-radius: 1px;
 }
 
+/* ── Group heading (India / Global / sector groups) ── */
+.mega__group {
+  margin-bottom: 32px;
+}
+
+.mega__group:last-child {
+  margin-bottom: 0;
+}
+
+.mega__group-title {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1e3a5f;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.12);
+}
+
 /* Simple grid layout matching the theme - 2 columns only */
 .mega__simple-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px 40px;
   margin-top: 24px;
+}
+
+/* When a grid sits inside a group, tighten the top gap */
+.mega__group .mega__simple-grid {
+  margin-top: 0;
 }
 
 .mega__simple-item {

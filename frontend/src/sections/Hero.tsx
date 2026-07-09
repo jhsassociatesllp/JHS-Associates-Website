@@ -245,6 +245,22 @@ export default function Hero() {
     <section className="hero">
       <div className="hero__bg" aria-hidden="true" />
 
+      {/* Top-right action buttons */}
+      <div className="hero__actions">
+        <button
+          className="hero__action-btn hero__action-btn--outline"
+          onClick={() => navigate("/approval-for-proposal")}
+        >
+          Request for Proposal
+        </button>
+        <button
+          className="hero__action-btn hero__action-btn--solid"
+          onClick={() => navigate("/about/careers")}
+        >
+          Apply Now
+        </button>
+      </div>
+
       {/* Header */}
       <div className="hero__header">
         <span className="hero__eyebrow">WELCOME TO JHS</span>

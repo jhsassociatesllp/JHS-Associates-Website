@@ -299,12 +299,13 @@ const Navbar = () => {
 
           <a href="/" className="nb__brand" onClick={closeMenu}>
             <img
-              src={imageUrl('logo.png')}
-              alt="JHS & Associates LLP"
+              src={imageUrl('logo.jpeg')}
+              alt="JHS "
               className="nb__logo"
             />
           </a>
         </div>
+
 
         {/* <div className="nb__right">
           <a href="/login" className="nb__login">LOG IN</a>

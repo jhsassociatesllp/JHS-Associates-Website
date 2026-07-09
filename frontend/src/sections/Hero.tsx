@@ -275,8 +275,6 @@ export default function Hero() {
           </div>
         </div>
 
-
-
         <div className="hero__carousel-dots">
           {cards.map((_, idx) => (
             <button

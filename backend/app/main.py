@@ -7,6 +7,7 @@ from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
 from app.routes.knowledge import router as knowledge_router # ✅ NEW
 from app.routes.feedback import router as feedback_router   # ✅ FEEDBACK
+from app.routes.proposal import router as proposal_router   # ✅ PROPOSAL
 
 
 @asynccontextmanager
@@ -54,6 +55,7 @@ api_router.include_router(articles_router)   # ✅ NEW
 api_router.include_router(blogs_router)      # ✅ NEW
 api_router.include_router(knowledge_router)  # ✅ NEW
 api_router.include_router(feedback_router)   # ✅ FEEDBACK
+api_router.include_router(proposal_router)   # ✅ PROPOSAL
 
 app.include_router(api_router)
 

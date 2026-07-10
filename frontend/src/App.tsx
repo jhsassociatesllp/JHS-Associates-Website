@@ -101,6 +101,9 @@ import Contact from './components/Contact'
 // Feedback page
 import Feedback from './pages/Feedback'
 
+// Request for Proposal page
+import RequestForProposal from './pages/RequestForProposal'
+
 // Hero Card Detail Pages
 import BoardroomsInTransition from './pages/BoardroomsInTransition'
 import DataGovernanceRule6 from './pages/DataGovernanceRule6'
@@ -231,6 +234,9 @@ export default function App() {
 
         {/* Feedback */}
         <Route path="/feedback" element={<Feedback />} />
+
+        {/* Request for Proposal */}
+        <Route path="/approval-for-proposal" element={<RequestForProposal />} />
 
         {/* Hero Card Detail Pages */}
         <Route path="/articles/boardrooms-in-transition" element={<BoardroomsInTransition />} />

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 import { imageUrl } from '../utils/imageUrl'
@@ -72,11 +72,16 @@ const cards: Card[] = [
   },
 ];
 
+// Transition duration must match CSS --carousel-transition-duration (700ms)
+const TRANSITION_MS = 700;
+const AUTO_SLIDE_MS = 3500;
+
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const autoSlideRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isPausedRef = useRef(false);
   const navigate = useNavigate();
 
   // Touch Swipe Refs
@@ -85,35 +90,45 @@ export default function Hero() {
 
   const totalCards = cards.length;
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % totalCards);
-    setTimeout(() => setIsAnimating(false), 400);
-  };
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+  }, [isAnimating, totalCards]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev - 1 + totalCards) % totalCards);
-    setTimeout(() => setIsAnimating(false), 400);
-  };
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+  }, [isAnimating, totalCards]);
 
+  // Use a ref to always have the latest nextSlide without recreating the interval
+  const nextSlideRef = useRef(nextSlide);
   useEffect(() => {
-    autoSlideRef.current = setInterval(nextSlide, 3000);
+    nextSlideRef.current = nextSlide;
+  }, [nextSlide]);
+
+  // Single stable auto-slide interval — does not restart on index change
+  useEffect(() => {
+    autoSlideRef.current = setInterval(() => {
+      if (!isPausedRef.current) {
+        nextSlideRef.current();
+      }
+    }, AUTO_SLIDE_MS);
     return () => {
       if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
-  }, [currentIndex]);
+  }, []);
 
-  const pauseAutoSlide = () => {
-    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-  };
+  const pauseAutoSlide = useCallback(() => {
+    isPausedRef.current = true;
+  }, []);
 
-  const resumeAutoSlide = () => {
-    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-    autoSlideRef.current = setInterval(nextSlide, 3000);
-  };
+  const resumeAutoSlide = useCallback(() => {
+    isPausedRef.current = false;
+  }, []);
 
   // --- SWIPE HANDLERS ---
   const handleTouchStart = (e: React.TouchEvent) => {

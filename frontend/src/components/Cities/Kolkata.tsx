@@ -9,6 +9,8 @@ const PARTNERS = [
     image: imageUrl('Sharad-Mohata-removebg-preview.png'),
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
+    teamSize: 8,
+    clientsServed: 30,
     email: 'sharad.mohata@jhsassociates.in',
     linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
   },
@@ -17,6 +19,8 @@ const PARTNERS = [
     image: imageUrl('Tripti-mohta.png'),
     qualifications: 'FCA',
     designation: 'Tax & Corporate Advisory',
+    teamSize: 6,
+    clientsServed: 22,
     email: 'sharad.mohata@jhsassociates.in',
     linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
   }
@@ -304,6 +308,10 @@ export default function Kolkata() {
                   <h3 className="kol-pc-name">{p.name}</h3>
                   <p className="kol-pc-quals">{p.qualifications}</p>
                   <p className="kol-pc-desig">{p.designation}</p>
+                </div>
+                <div className="kol-pc-stats">
+                  <div className="kol-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="kol-pc-stat__val">{p.teamSize}</span><span className="kol-pc-stat__lbl">Team Size</span></div>
+                  <div className="kol-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="kol-pc-stat__val">{p.clientsServed}+</span><span className="kol-pc-stat__lbl">Clients Served</span></div>
                 </div>
                 <div className="kol-pc-social">
                   <div className="kol-pc-mail-wrap" ref={openMailFor === p.name ? mailRef : null}>

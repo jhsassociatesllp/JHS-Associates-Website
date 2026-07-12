@@ -84,15 +84,15 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA, IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO CERTIFIED', designation: 'Banking, NBFC & Insurance Advisory', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Cybersecurity & IT Audit | SOC', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
-  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'ACA | Ex-Mazars', designation: 'Risk Advisory', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
-  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'CA, AICA-L1', designation: 'Assurance, Tax & AI', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
-  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'CS, ACA, AIII', designation: 'Audit, Assurance & Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
-  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA | Ex-EY', designation: 'Governance, Risk & Internal Control', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor', designation: 'IFC, Governance & Risk', teamSize: 12, clientsServed: 45, email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA, IFRS', designation: 'Statutory Audit', teamSize: 10, clientsServed: 38, email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO CERTIFIED', designation: 'Banking, NBFC & Insurance Advisory', teamSize: 8, clientsServed: 32, email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Cybersecurity & IT Audit | SOC', teamSize: 14, clientsServed: 50, email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
+  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'ACA | Ex-Mazars', designation: 'Risk Advisory', teamSize: 6, clientsServed: 28, email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'CA, AICA-L1', designation: 'Assurance, Tax & AI', teamSize: 9, clientsServed: 35, email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
+  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'CS, ACA, AIII', designation: 'Audit, Assurance & Outsourcing', teamSize: 8, clientsServed: 30, email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
+  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA | Ex-EY', designation: 'Governance, Risk & Internal Control', teamSize: 7, clientsServed: 25, email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
+  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'FCA, CMA, SET', designation: 'Risk Advisory & Consulting', teamSize: 5, clientsServed: 22, email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -158,6 +158,16 @@ const IconPin = () => (
 const IconCheck = () => (
   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
+  </svg>
+)
+const IconTeam = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+)
+const IconClients = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
   </svg>
 )
 
@@ -281,6 +291,18 @@ export default function Mumbai() {
                   <h3 className="pc-name">{p.name}</h3>
                   <p className="pc-quals">{p.qualifications}</p>
                   <p className="pc-desig">{p.designation}</p>
+                </div>
+                <div className="pc-stats">
+                  <div className="pc-stat">
+                    <IconTeam />
+                    <span className="pc-stat__val">{p.teamSize}</span>
+                    <span className="pc-stat__lbl">Team Size</span>
+                  </div>
+                  <div className="pc-stat">
+                    <IconClients />
+                    <span className="pc-stat__val">{p.clientsServed}+</span>
+                    <span className="pc-stat__lbl">Clients Served</span>
+                  </div>
                 </div>
                 <div className="pc-social">
                   <div className="pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>

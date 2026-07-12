@@ -8,7 +8,7 @@ import LazyImage from '../common/LazyImage'
 
 const PARTNER_DATA = [
   {
-    category: "Senior Board of Partners",
+    category: "Governace Of Council",
     members: [
       {
         name: "Huzeifa Unwala",
@@ -16,13 +16,6 @@ const PARTNER_DATA = [
         creds: "FCA, CISA, ISO 27001 Lead Auditor",
         desc: "Specializes in IFC, governance, risk and cyber security frameworks across BFSI sectors.",
         linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/"
-      },
-      {
-        name: "Nikhel Kochhar",
-        image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
-        creds: "FCA, CIA",
-        desc: "Over 25 years of expertise in governance, risk, internal audits and strategic management consulting.",
-        linkedin: "https://www.linkedin.com/in/nikhelkochhar"
       },
       {
         name: "Kalpesh Parmar",
@@ -37,6 +30,13 @@ const PARTNER_DATA = [
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Specializes in tax & corporate advisory, direct taxation, corporate restructuring and international tax advisory.",
         linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082"
+      },
+      {
+        name: "Nikhel Kochhar",
+        image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
+        creds: "FCA, CIA",
+        desc: "Over 25 years of expertise in governance, risk, internal audits and strategic management consulting.",
+        linkedin: "https://www.linkedin.com/in/nikhelkochhar"
       },
       {
         name: "Vinod Joshi",

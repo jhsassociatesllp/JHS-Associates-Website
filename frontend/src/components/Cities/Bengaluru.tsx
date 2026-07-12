@@ -4,7 +4,7 @@ import './Bengaluru.css'
 import { imageUrl } from '../../utils/imageUrl'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 8, clientsServed: 30, email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -173,6 +173,18 @@ export default function Bengaluru() {
               <div key={p.name} className="blr-pc-card">
                 <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" loading="lazy" /></div>
                 <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
+                <div className="blr-pc-stats">
+                  <div className="blr-pc-stat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                    <span className="blr-pc-stat__val">{p.teamSize}</span>
+                    <span className="blr-pc-stat__lbl">Team Size</span>
+                  </div>
+                  <div className="blr-pc-stat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                    <span className="blr-pc-stat__val">{p.clientsServed}+</span>
+                    <span className="blr-pc-stat__lbl">Clients Served</span>
+                  </div>
+                </div>
                 <div className="blr-pc-social">
                   <div className="blr-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
                     <button

@@ -73,18 +73,18 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
-  { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.png'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
-  { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.png'), qualifications: 'FCA', designation: 'Fractional CFO & FP&A', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/' },
-  { name: 'Viranch Modi', image: imageUrl('Viranch-Modi-removebg-preview.png'), qualifications: 'FCA', designation: 'Direct Tax, GST & Audit', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi-aa4106227/' },
-  { name: 'Shreena Panara', image: imageUrl('Shreena Parana.png'), qualifications: 'FCA', designation: 'Audit & Compliance', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-shreena-panara-61b27820a' },
-  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
-  { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
-  { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
-  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA | LL.B.', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
+  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 10, clientsServed: 40, email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
+  { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.png'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', teamSize: 8, clientsServed: 35, email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
+  { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.png'), qualifications: 'FCA', designation: 'Fractional CFO & FP&A', teamSize: 7, clientsServed: 30, email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/' },
+  { name: 'Viranch Modi', image: imageUrl('Viranch-Modi-removebg-preview.png'), qualifications: 'FCA', designation: 'Direct Tax, GST & Audit', teamSize: 9, clientsServed: 38, email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi-aa4106227/' },
+  { name: 'Shreena Panara', image: imageUrl('Shreena Parana.png'), qualifications: 'FCA', designation: 'Audit & Compliance', teamSize: 6, clientsServed: 25, email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-shreena-panara-61b27820a' },
+  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', teamSize: 8, clientsServed: 32, email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
+  { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', teamSize: 5, clientsServed: 22, email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
+  { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 7, clientsServed: 28, email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
+  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA | LL.B.', designation: 'Tax, Litigation & Risk Advisory', teamSize: 6, clientsServed: 26, email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
   // { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/' },
-  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA | CPA Australia', designation: 'Strategy, Compliance & Advisory', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
-  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'CA', designation: 'US Taxation, CFO Advisory & SEC Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
+  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA | CPA Australia', designation: 'Strategy, Compliance & Advisory', teamSize: 5, clientsServed: 20, email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
+  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'CA', designation: 'US Taxation, CFO Advisory & SEC Compliance', teamSize: 4, clientsServed: 18, email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -272,6 +272,18 @@ export default function Ahmedabad() {
                   <h3 className="ahm-pc-name">{p.name}</h3>
                   <p className="ahm-pc-quals">{p.qualifications}</p>
                   <p className="ahm-pc-desig">{p.designation}</p>
+                </div>
+                <div className="ahm-pc-stats">
+                  <div className="ahm-pc-stat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                    <span className="ahm-pc-stat__val">{p.teamSize}</span>
+                    <span className="ahm-pc-stat__lbl">Team Size</span>
+                  </div>
+                  <div className="ahm-pc-stat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                    <span className="ahm-pc-stat__val">{p.clientsServed}+</span>
+                    <span className="ahm-pc-stat__lbl">Clients Served</span>
+                  </div>
                 </div>
                 <div className="ahm-pc-social">
                   <div className="ahm-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>

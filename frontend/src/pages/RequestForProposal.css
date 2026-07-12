@@ -19,8 +19,8 @@
   --rfp-field-bg: #f7f9fb;
   --rfp-page-bg: #f4f6f9;
 
-  --rfp-display: "Fraunces", Georgia, serif;
-  --rfp-body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --rfp-display: sans-serif serif;
+  --rfp-body: "DM Sans", "Helvetica Neue", sans-serif;
 
   --rfp-radius: 12px;
   --rfp-ease: cubic-bezier(0.4, 0, 0.2, 1);

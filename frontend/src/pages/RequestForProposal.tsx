@@ -146,7 +146,7 @@ export default function RequestForProposal() {
       {/* ══════════════ HERO ══════════════ */}
       <section
         className="rfp-hero"
-        style={{ backgroundImage: `url(${imageUrl('proposal-hero.jpg')})` }}
+        style={{ backgroundImage: `url(${imageUrl('proposalBG.jpg')})` }}
       >
         <div className="rfp-hero__overlay" />
         <div className="rfp-hero__content">

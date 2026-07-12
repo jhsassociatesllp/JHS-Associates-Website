@@ -8,8 +8,8 @@ import { imageUrl } from '../../utils/imageUrl'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
-  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
+  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Governance, Risk & Internal Audit', teamSize: 11, clientsServed: 42, email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
+  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Risk Advisory', teamSize: 8, clientsServed: 30, email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
   // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
@@ -199,6 +199,10 @@ export default function Delhi() {
               <div key={p.name} className="del-pc-card">
                 <div className="del-pc-avatar"><img src={p.image} alt={p.name} className="del-pc-avatar__img" loading="lazy" /></div>
                 <div className="del-pc-info"><h3 className="del-pc-name">{p.name}</h3><p className="del-pc-quals">{p.qualifications}</p><p className="del-pc-desig">{p.designation}</p></div>
+                <div className="del-pc-stats">
+                  <div className="del-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="del-pc-stat__val">{p.teamSize}</span><span className="del-pc-stat__lbl">Team Size</span></div>
+                  <div className="del-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="del-pc-stat__val">{p.clientsServed}+</span><span className="del-pc-stat__lbl">Clients Served</span></div>
+                </div>
                 <div className="del-pc-social">
                   <div className="del-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
                     <button

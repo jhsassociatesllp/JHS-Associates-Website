@@ -596,17 +596,17 @@
 
 .mum-partners-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   column-gap: 1.5rem;
-  row-gap: 90px;
-  padding-top: 70px;
+  row-gap: 100px;
+  padding-top: 80px;
 }
 
 .pc-card {
   background: var(--mum-white);
   border: 1.5px solid var(--mum-border);
   border-radius: var(--r-card);
-  padding: 80px 1.25rem 1.5rem;
+  padding: 100px 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -642,15 +642,15 @@
 }
 
 .pc-avatar {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #fff;
   box-shadow: 0 0 0 2.5px var(--mum-navy-lt), var(--shadow-sm);
   background: var(--mum-navy-lt);
   position: absolute;
-  top: -45px;
+  top: -60px;
   left: 50%;
   transform: translateX(-50%);
   flex-shrink: 0;
@@ -694,6 +694,51 @@
   color: var(--mum-ink-3);
   line-height: 1.55;
   font-weight: 400;
+}
+
+/* ── Stats Row ── */
+.pc-stats {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--mum-border);
+  border-bottom: 1px solid var(--mum-border);
+}
+
+.pc-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+  color: var(--mum-navy);
+}
+
+.pc-stat:first-child {
+  border-right: 1px solid var(--mum-border);
+}
+
+.pc-stat svg {
+  color: var(--mum-red);
+  margin-bottom: 2px;
+}
+
+.pc-stat__val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--mum-navy-dk);
+  line-height: 1.2;
+}
+
+.pc-stat__lbl {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--mum-ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .pc-social {

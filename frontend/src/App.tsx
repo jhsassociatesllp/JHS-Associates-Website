@@ -98,6 +98,9 @@ import Partnerships from './components/About Us/Partnerships'
 // Contact page
 import Contact from './components/Contact'
 
+// Disclaimer
+import Disclaimer from './components/Disclaimer'
+
 // Feedback page
 import Feedback from './pages/Feedback'
 
@@ -140,6 +143,7 @@ export default function App() {
 
   return (
     <>
+      <Disclaimer />
       <Navbar />
       <Routes>
         {/* Home */}

@@ -98,6 +98,9 @@ import Partnerships from './components/About Us/Partnerships'
 // Contact page
 import Contact from './components/Contact'
 
+// FAQ
+import FAQ from './sections/FAQ'
+
 // Disclaimer
 import Disclaimer from './components/Disclaimer'
 
@@ -128,6 +131,7 @@ function HomePage() {
       <Cities />
       <VisionMission />
       <Insights />
+      <FAQ />
       {/* <Posts />
       <CareerCaseStudy /> */}
 

@@ -120,110 +120,110 @@ export default function Bengaluru() {
         </div>
 
 
-      <section className="blr-section blr-partners-section">
-        <div className="blr-container">
-          <div className="blr-section-hdr">
-            <span className="blr-section-hdr__tag">Our Team</span>
-            <h2 className="blr-section-hdr__title">Bengaluru Partners</h2>
-            <p className="blr-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Bengaluru.</p>
-          </div>
-          <div className="blr-partners-grid">
-            {PARTNERS.map(p => (
-              <div key={p.name} className="blr-pc-card">
-                <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" loading="lazy" /></div>
-                <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
-                <div className="blr-pc-stats">
-                  <div className="blr-pc-stat">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                    <span className="blr-pc-stat__val">{p.teamSize}</span>
-                    <span className="blr-pc-stat__lbl">Team Size</span>
+        <section className="blr-section blr-partners-section">
+          <div className="blr-container">
+            <div className="blr-section-hdr">
+              <span className="blr-section-hdr__tag">Our Team</span>
+              <h2 className="blr-section-hdr__title">Bengaluru Partners</h2>
+              <p className="blr-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Bengaluru.</p>
+            </div>
+            <div className="blr-partners-grid">
+              {PARTNERS.map(p => (
+                <div key={p.name} className="blr-pc-card">
+                  <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" loading="lazy" /></div>
+                  <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
+                  <div className="blr-pc-stats">
+                    <div className="blr-pc-stat">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                      <span className="blr-pc-stat__val">{p.teamSize}</span>
+                      <span className="blr-pc-stat__lbl">Team Size</span>
+                    </div>
+                    <div className="blr-pc-stat">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                      <span className="blr-pc-stat__val">{p.clientsServed}+</span>
+                      <span className="blr-pc-stat__lbl">Clients Served</span>
+                    </div>
                   </div>
-                  <div className="blr-pc-stat">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                    <span className="blr-pc-stat__val">{p.clientsServed}+</span>
-                    <span className="blr-pc-stat__lbl">Clients Served</span>
+                  <div className="blr-pc-social">
+                    <div className="blr-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                      <button
+                        type="button"
+                        className={`blr-pc-btn blr-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                        onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                      >
+                        <IconMail /><span>Email</span>
+                      </button>
+                      {openMailFor === p.email && (
+                        <div className="blr-pc-mail-dropdown">
+                          <a
+                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="blr-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Gmail
+                          </a>
+                          <a
+                            href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="blr-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Outlook Web
+                          </a>
+                          <a
+                            href={`mailto:${p.email}`}
+                            className="blr-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Default Mail App
+                          </a>
+                          <button
+                            type="button"
+                            className="blr-pc-mail-option"
+                            onClick={() => {
+                              navigator.clipboard.writeText(p.email)
+                              setOpenMailFor(null)
+                            }}
+                          >
+                            Copy Email Address
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="blr-pc-btn blr-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
                   </div>
                 </div>
-                <div className="blr-pc-social">
-                  <div className="blr-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
-                    <button
-                      type="button"
-                      className={`blr-pc-btn blr-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
-                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
-                    >
-                      <IconMail /><span>Email</span>
-                    </button>
-                    {openMailFor === p.email && (
-                      <div className="blr-pc-mail-dropdown">
-                        <a
-                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="blr-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Gmail
-                        </a>
-                        <a
-                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="blr-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Outlook Web
-                        </a>
-                        <a
-                          href={`mailto:${p.email}`}
-                          className="blr-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Default Mail App
-                        </a>
-                        <button
-                          type="button"
-                          className="blr-pc-mail-option"
-                          onClick={() => {
-                            navigator.clipboard.writeText(p.email)
-                            setOpenMailFor(null)
-                          }}
-                        >
-                          Copy Email Address
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="blr-pc-btn blr-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        <section className="blr-section blr-specials-section">
+          <div className="blr-container">
+            <div className="blr-specials-inner">
+              <div className="blr-specials-left">
+                <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
+                <h2 className="blr-specials-title">We Specialised In</h2>
+                <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
+                <div className="blr-specials-accent-line" />
+                <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+              </div>
+              <div className="blr-specials-right">
+                <div className="blr-specials-grid">
+                  {SPECIALIZATIONS.map((s, i) => (
+                    <div key={s.label} className={`blr-special-pill blr-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                      <span className="blr-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      <section className="blr-section blr-specials-section">
-        <div className="blr-container">
-          <div className="blr-specials-inner">
-            <div className="blr-specials-left">
-              <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
-              <h2 className="blr-specials-title">We Specialised In</h2>
-              <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
-              <div className="blr-specials-accent-line" />
-              <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="blr-specials-right">
-              <div className="blr-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`blr-special-pill blr-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="blr-special-pill__check"><IconCheck /></span><span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
 
       {/* ══ SECTORS SERVED ══ */}
@@ -347,7 +347,7 @@ export default function Bengaluru() {
             <h2 className="city-rfp-title">Ready to Work With Us?</h2>
             <p className="city-rfp-sub">Submit a Request for Proposal and our Bengaluru team will respond within 24 hours.</p>
           </div>
-          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+          <a href="/approval-for-proposal" className="city-rfp-btn">Request for Proposal</a>
         </div>
       </section>
 

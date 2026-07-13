@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, TrendingUp, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './PortfolioManagement.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -179,6 +180,8 @@ export default function PortfolioManagement() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="PortfolioManagement" sectorLabel="Portfolio Management" />
       {/* ── CTA ── */}
       <section className="pm-cta container">
         <div className="pm-cta__inner">

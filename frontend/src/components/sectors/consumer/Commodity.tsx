@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, TrendingUp, ShieldCheck, BarChart2, Globe2, Layers, FileText } from 'lucide-react'
 import './Commodity.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 // import { imageUrl } from '../utils/imageUrl'
 
@@ -203,6 +204,8 @@ export default function Commodity() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Commodity" sectorLabel="Commodity" />
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, HardHat, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './Construction.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -185,6 +186,8 @@ export default function Construction() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Construction" sectorLabel="Construction" />
       {/* ── CTA ── */}
       <section className="cn-cta container">
         <div className="cn-cta__inner">

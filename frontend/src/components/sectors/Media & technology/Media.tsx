@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Radio, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import { imageUrl } from '../../../utils/imageUrl'
 import './Media.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -190,6 +191,8 @@ export default function Media() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Media" sectorLabel="Media" />
       {/* ── CTA ── */}
       <section className="md-cta container">
         <div className="md-cta__inner">

@@ -1,0 +1,208 @@
+// ─── Sector → Partner Mapping ──────────────────────────────────────────────
+// Maps each sector page to the JHS partner best aligned to it, based on the
+// specialization text already published in components/About Us/Partners.tsx.
+// Keep this in sync if a partner's bio in Partners.tsx changes materially.
+
+import { imageUrl } from '../utils/imageUrl';
+
+export const SECTOR_EXPERTS = {
+  // ── Consumer ──
+  Commodity: {
+    name: 'Dhanlaxmi Nair',
+    image: imageUrl('Dhanlaxmi.png'),
+    creds: 'FCA, CMA, SET',
+    desc: 'Specializes in risk advisory & consulting across diverse industry verticals.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206',
+  },
+  FMCG: {
+    name: 'Samad Dhanani',
+    image: imageUrl('Samad-Dhanani-removebg-preview.png'),
+    creds: 'CS, ACA, AIII',
+    desc: 'Drives growth through audit, assurance & outsourcing and comprehensive financial planning.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562/',
+  },
+  GemsAndJewellery: {
+    name: 'Mehul Shah',
+    image: imageUrl('Mehul-Shah-removebg-preview.png'),
+    creds: 'FCA',
+    desc: 'Focuses on income tax & GST advisory and process audits.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b',
+  },
+  Housing: {
+    name: 'Milin Parekh',
+    image: imageUrl('Milin-Parekh-removebg-preview.png'),
+    creds: 'M.Com, FCA',
+    desc: 'Specializes in internal audit & tax consulting and statutory bank audits.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061',
+  },
+  OilAndGasIndustry: {
+    name: 'Sharad Mohata',
+    image: imageUrl('Sharad-Mohata-removebg-preview.png'),
+    creds: 'B.Com (Hons), FCA, ICWAI',
+    desc: 'Specializes in tax & corporate advisory, direct taxation, corporate restructuring and international tax advisory.',
+    location: 'Kolkata',
+    linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
+  },
+  RealEstate: {
+    name: 'Viranch Modi',
+    image: imageUrl('Viranch-Modi-removebg-preview.png'),
+    creds: 'FCA',
+    desc: 'Expert in direct tax, GST & audit and RERA compliance.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/viranch-modi-aa4106227/',
+  },
+  Retail: {
+    name: 'Tausif Shaikh',
+    image: imageUrl('Tausif-Shaikh-removebg-preview.png'),
+    creds: 'CA, AICA-L1',
+    desc: 'Expert in assurance, tax advisory and AI-driven audit methodologies.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh',
+  },
+
+  // ── Financial Services ──
+  Banking: {
+    name: 'Jamal Ashraf Chatriwala',
+    image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
+    creds: 'ACA, IPO Certified',
+    desc: 'Specializes in banking, NBFC & insurance advisory and indirect tax litigation.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/chatriwala',
+  },
+  Broking: {
+    name: 'Sahil Shah',
+    image: imageUrl('Sahil-Shah-removebg-preview.png'),
+    creds: 'ACA | Ex-Mazars',
+    desc: 'Focuses on risk advisory, capital restructuring and VC funding advisory.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a',
+  },
+  DigitalCurrency: {
+    name: 'Taher Pepermintwala',
+    image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
+    creds: 'FCA, CISA, ACCA, Dip IFRS',
+    desc: 'Leads cybersecurity & IT audit, SOC attestation and ERP implementation audits.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/taherpepermintwala/',
+  },
+  FamilyOrientedBusinesses: {
+    name: 'Alpesh Vaniya',
+    image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
+    creds: 'FCA',
+    desc: 'Statutory audit & assurance specialist for HNIs and family offices.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190',
+  },
+  Insurance: {
+    name: 'Jamal Ashraf Chatriwala',
+    image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
+    creds: 'ACA, IPO Certified',
+    desc: 'Specializes in banking, NBFC & insurance advisory and indirect tax litigation.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/chatriwala',
+  },
+  MutualFunds: {
+    name: 'Vinod Joshi',
+    image: imageUrl('vinod joshi.png'),
+    creds: 'FCA, MBA (Finance)',
+    desc: 'Renowned for financial modeling, M&A restructuring, and cross-border strategic alliances.',
+    location: 'Mumbai',
+    linkedin: 'https://linkedin.com/in/vinod-joshi-fca',
+  },
+  NBFC: {
+    name: 'Jamal Ashraf Chatriwala',
+    image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
+    creds: 'ACA, IPO Certified',
+    desc: 'Specializes in banking, NBFC & insurance advisory and indirect tax litigation.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/chatriwala',
+  },
+  PortfolioManagement: {
+    name: 'Kalpesh Parmar',
+    image: imageUrl('Kalpesh-Parmar-removebg-preview.png'),
+    creds: 'B.Com (Hons), FCA',
+    desc: 'Leads the statutory audit practice. Expert in Ind AS implementation and complex consolidation for listed entities.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/kalpesh-parmar-016a502b',
+  },
+  VentureCapital: {
+    name: 'Sahil Shah',
+    image: imageUrl('Sahil-Shah-removebg-preview.png'),
+    creds: 'ACA | Ex-Mazars',
+    desc: 'Focuses on risk advisory, capital restructuring and VC funding advisory.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a',
+  },
+
+  // ── Media & Technology ──
+  ITSystemAudit: {
+    name: 'Taher Pepermintwala',
+    image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
+    creds: 'FCA, CISA, ACCA, Dip IFRS',
+    desc: 'Leads cybersecurity & IT audit, SOC attestation and ERP implementation audits.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/taherpepermintwala/',
+  },
+  ITTeS: {
+    name: 'Taher Pepermintwala',
+    image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
+    creds: 'FCA, CISA, ACCA, Dip IFRS',
+    desc: 'Leads cybersecurity & IT audit, SOC attestation and ERP implementation audits.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/taherpepermintwala/',
+  },
+  Media: {
+    name: 'Disha Shah',
+    image: imageUrl('Disha Shah-removebg-preview.png'),
+    creds: 'FCA | Ex-EY',
+    desc: 'Leads governance, risk & internal control advisory and women-entrepreneur initiatives.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097/',
+  },
+
+  // ── Other ──
+  Construction: {
+    name: 'NM Pradeep',
+    image: imageUrl('NM Pradeep.png'),
+    creds: 'FCA',
+    desc: 'Hyderabad partner leading statutory audit & tax advisory services.',
+    location: 'Hyderabad',
+    linkedin: 'https://linkedin.com/',
+  },
+  HealthCare: {
+    name: 'Tasnim Tankiwala',
+    image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'),
+    creds: 'FCA, IP (IBBI), DIRM, DISA, IFRS',
+    desc: 'Expert in statutory audit, risk management audits and SOX compliance.',
+    location: 'Mumbai',
+    linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala',
+  },
+  Logistics: {
+    name: 'G Chandra Sekaran',
+    image: imageUrl('Chandra Shekaran.png'),
+    creds: 'FCA',
+    desc: 'Chennai partner specializing in statutory audit & assurance.',
+    location: 'Chennai',
+    linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29',
+  },
+  Manufacturing: {
+    name: 'Virendra Nayyar',
+    image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
+    creds: 'FCA',
+    desc: 'Senior guide for Gujarat statutory audit & assurance engagements.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227',
+  },
+  NGO: {
+    name: 'Jhankhna Patel',
+    image: imageUrl('Jhankana Patel.jpeg'),
+    creds: 'ACA | CPA Australia',
+    desc: 'Strategy, compliance & advisory specialist.',
+    location: 'Ahmedabad',
+    linkedin: 'https://www.linkedin.com/in/jhankhnapatel09',
+  },
+};

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Code2, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './ITTeS.css'  
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -185,6 +186,8 @@ export default function ITTeS() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="ITTeS" sectorLabel="ITeS" />
       {/* ── CTA ── */}
       <section className="ites-cta container">
         <div className="ites-cta__inner">

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Users, FileText, ShieldCheck, BarChart2, Scale, Heart } from 'lucide-react'
 import './FamilyOrientedBusinesses.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -179,6 +180,8 @@ export default function FamilyOrientedBusinesses() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="FamilyOrientedBusinesses" sectorLabel="Family-Oriented Businesses" />
       {/* ── CTA ── */}
       <section className="fb-cta container">
         <div className="fb-cta__inner">

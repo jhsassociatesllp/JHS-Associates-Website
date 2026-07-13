@@ -91,133 +91,133 @@ export default function Chennai() {
 
   return (
     <div className="chn-page">
-    <section className="chn-hero">
-      <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
-      <div className="chn-hero__overlay" />
-      <div className="chn-hero__content">
-        {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
-        <h1 className="chn-hero__title">Chennai</h1>
-        <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
-      </div>
-      <div className="chn-hero__card">
-        <div className="chn-hero__card-left">
-          <span className="chn-hero__card-badge">T. Nagar</span>
-          <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
+      <section className="chn-hero">
+        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
+        <div className="chn-hero__overlay" />
+        <div className="chn-hero__content">
+          {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          <h1 className="chn-hero__title">Chennai</h1>
+          <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
         </div>
-        <div className="chn-hero__card-divider" />
-        {/* <div className="chn-hero__card-right">
+        <div className="chn-hero__card">
+          <div className="chn-hero__card-left">
+            <span className="chn-hero__card-badge">T. Nagar</span>
+            <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
+          </div>
+          <div className="chn-hero__card-divider" />
+          {/* <div className="chn-hero__card-right">
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 44 1234 5678</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chennai@jhsassociates.in</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
           </div> */}
-      </div>
-    </section>
-
-    <div className="chn-ribbon">
-      <div className="chn-ribbon__inner">
-        {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
-          <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
-        ))}
-      </div>
-
-
-      <section className="chn-section chn-partners-section">
-        <div className="chn-container">
-          <div className="chn-section-hdr">
-            <span className="chn-section-hdr__tag">Our Team</span>
-            <h2 className="chn-section-hdr__title">Chennai Partners</h2>
-            <p className="chn-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Chennai.</p>
-          </div>
-          <div className="chn-partners-grid">
-            {PARTNERS.map(p => (
-              <div key={p.name} className="chn-pc-card">
-                <div className="chn-pc-avatar"><img src={p.image} alt={p.name} className="chn-pc-avatar__img" loading="lazy" /></div>
-                <div className="chn-pc-info"><h3 className="chn-pc-name">{p.name}</h3><p className="chn-pc-quals">{p.qualifications}</p><p className="chn-pc-desig">{p.designation}</p></div>
-                <div className="chn-pc-stats">
-                  <div className="chn-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="chn-pc-stat__val">{p.teamSize}</span><span className="chn-pc-stat__lbl">Team Size</span></div>
-                  <div className="chn-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="chn-pc-stat__val">{p.clientsServed}+</span><span className="chn-pc-stat__lbl">Clients Served</span></div>
-                </div>
-                <div className="chn-pc-social">
-                  <div className="chn-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
-                    <button
-                      type="button"
-                      className={`chn-pc-btn chn-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
-                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
-                    >
-                      <IconMail /><span>Email</span>
-                    </button>
-                    {openMailFor === p.email && (
-                      <div className="chn-pc-mail-dropdown">
-                        <a
-                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="chn-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Gmail
-                        </a>
-                        <a
-                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="chn-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Outlook Web
-                        </a>
-                        <a
-                          href={`mailto:${p.email}`}
-                          className="chn-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Default Mail App
-                        </a>
-                        <button
-                          type="button"
-                          className="chn-pc-mail-option"
-                          onClick={() => {
-                            navigator.clipboard.writeText(p.email)
-                            setOpenMailFor(null)
-                          }}
-                        >
-                          Copy Email Address
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="chn-pc-btn chn-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
+      <div className="chn-ribbon">
+        <div className="chn-ribbon__inner">
+          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
+            <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
+          ))}
+        </div>
 
-      <section className="chn-section chn-specials-section">
-        <div className="chn-container">
-          <div className="chn-specials-inner">
-            <div className="chn-specials-left">
-              <span className="chn-section-hdr__tag chn-section-hdr__tag--white">Expertise</span>
-              <h2 className="chn-specials-title">We Specialise In</h2>
-              <p className="chn-specials-body">From GST compliance to concurrent bank audits, our Chennai team brings specialised depth across financial services and real estate sectors.</p>
-              <div className="chn-specials-accent-line" />
-              <p className="chn-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+
+        <section className="chn-section chn-partners-section">
+          <div className="chn-container">
+            <div className="chn-section-hdr">
+              <span className="chn-section-hdr__tag">Our Team</span>
+              <h2 className="chn-section-hdr__title">Chennai Partners</h2>
+              <p className="chn-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Chennai.</p>
             </div>
-            <div className="chn-specials-right">
-              <div className="chn-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`chn-special-pill chn-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="chn-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+            <div className="chn-partners-grid">
+              {PARTNERS.map(p => (
+                <div key={p.name} className="chn-pc-card">
+                  <div className="chn-pc-avatar"><img src={p.image} alt={p.name} className="chn-pc-avatar__img" loading="lazy" /></div>
+                  <div className="chn-pc-info"><h3 className="chn-pc-name">{p.name}</h3><p className="chn-pc-quals">{p.qualifications}</p><p className="chn-pc-desig">{p.designation}</p></div>
+                  <div className="chn-pc-stats">
+                    <div className="chn-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="chn-pc-stat__val">{p.teamSize}</span><span className="chn-pc-stat__lbl">Team Size</span></div>
+                    <div className="chn-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="chn-pc-stat__val">{p.clientsServed}+</span><span className="chn-pc-stat__lbl">Clients Served</span></div>
                   </div>
-                ))}
+                  <div className="chn-pc-social">
+                    <div className="chn-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                      <button
+                        type="button"
+                        className={`chn-pc-btn chn-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                        onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                      >
+                        <IconMail /><span>Email</span>
+                      </button>
+                      {openMailFor === p.email && (
+                        <div className="chn-pc-mail-dropdown">
+                          <a
+                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="chn-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Gmail
+                          </a>
+                          <a
+                            href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="chn-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Outlook Web
+                          </a>
+                          <a
+                            href={`mailto:${p.email}`}
+                            className="chn-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Default Mail App
+                          </a>
+                          <button
+                            type="button"
+                            className="chn-pc-mail-option"
+                            onClick={() => {
+                              navigator.clipboard.writeText(p.email)
+                              setOpenMailFor(null)
+                            }}
+                          >
+                            Copy Email Address
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="chn-pc-btn chn-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        <section className="chn-section chn-specials-section">
+          <div className="chn-container">
+            <div className="chn-specials-inner">
+              <div className="chn-specials-left">
+                <span className="chn-section-hdr__tag chn-section-hdr__tag--white">Expertise</span>
+                <h2 className="chn-specials-title">We Specialise In</h2>
+                <p className="chn-specials-body">From GST compliance to concurrent bank audits, our Chennai team brings specialised depth across financial services and real estate sectors.</p>
+                <div className="chn-specials-accent-line" />
+                <p className="chn-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+              </div>
+              <div className="chn-specials-right">
+                <div className="chn-specials-grid">
+                  {SPECIALIZATIONS.map((s, i) => (
+                    <div key={s.label} className={`chn-special-pill chn-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                      <span className="chn-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
 
       {/* ══ SECTORS SERVED ══ */}
       <section className="chn-section chn-sectors-section">
@@ -340,7 +340,7 @@ export default function Chennai() {
             <h2 className="city-rfp-title">Ready to Work With Us?</h2>
             <p className="city-rfp-sub">Submit a Request for Proposal and our Chennai team will respond within 24 hours.</p>
           </div>
-          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+          <a href="/approval-for-proposal" className="city-rfp-btn">Request for Proposal</a>
         </div>
       </section>
 

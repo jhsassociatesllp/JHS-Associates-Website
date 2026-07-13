@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Cpu, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './DigitalCurrency.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -179,6 +180,8 @@ export default function DigitalCurrency() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="DigitalCurrency" sectorLabel="Digital Currency" />
       {/* ── CTA ── */}
       <section className="dc-cta container">
         <div className="dc-cta__inner">

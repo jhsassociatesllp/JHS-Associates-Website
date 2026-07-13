@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Rocket, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './VentureCapital.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -180,6 +181,8 @@ export default function VentureCapital() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="VentureCapital" sectorLabel="Venture Capital" />
       {/* ── CTA ── */}
       <section className="vc-cta container">
         <div className="vc-cta__inner">

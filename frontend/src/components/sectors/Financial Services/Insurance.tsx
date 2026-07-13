@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ShieldCheck, FileText, BarChart2, Scale, Globe2, Umbrella } from 'lucide-react'
 import './Insurance.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -180,6 +181,8 @@ export default function Insurance() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Insurance" sectorLabel="Insurance" />
       {/* ── CTA ── */}
       <section className="ins-cta container">
         <div className="ins-cta__inner">

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, PieChart, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './MutualFunds.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -180,6 +181,8 @@ export default function MutualFunds() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="MutualFunds" sectorLabel="Mutual Funds" />
       {/* ── CTA ── */}
       <section className="mf-cta container">
         <div className="mf-cta__inner">

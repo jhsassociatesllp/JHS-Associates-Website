@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Heart, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './NGO.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -180,6 +181,8 @@ export default function NGO() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="NGO" sectorLabel="NGO" />
       {/* ── CTA ── */}
       <section className="ngo-cta container">
         <div className="ngo-cta__inner">

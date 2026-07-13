@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Flame, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './OilAndGasIndustry.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -182,6 +183,8 @@ export default function OilAndGasIndustry() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="OilAndGasIndustry" sectorLabel="Oil & Gas" />
       {/* ── CTA ── */}
       <section className="og-cta container">
         <div className="og-cta__inner">

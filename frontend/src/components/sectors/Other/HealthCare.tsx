@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, HeartPulse, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './HealthCare.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -172,6 +173,8 @@ export default function HealthCare() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="HealthCare" sectorLabel="Healthcare" />
       {/* ── CTA ── */}
       <section className="hc-cta container">
         <div className="hc-cta__inner">

@@ -5,6 +5,7 @@ import { useLazyBackground } from '../../../hooks/useLazyBackground'
 import { imageUrl } from '../../../utils/imageUrl'
 import SimpleIcon from '../../common/SimpleIcon'
 import './Logistics.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -221,6 +222,8 @@ export default function Logistics() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Logistics" sectorLabel="Logistics" />
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Building2, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './NBFC.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -179,6 +180,8 @@ export default function NBFC() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="NBFC" sectorLabel="NBFC" />
       {/* ── CTA ── */}
       <section className="nb-cta container">
         <div className="nb-cta__inner">

@@ -121,102 +121,102 @@ export default function Hyderabad() {
         </div>
 
 
-      <section className="hyd-section hyd-partners-section">
-        <div className="hyd-container">
-          <div className="hyd-section-hdr">
-            <span className="hyd-section-hdr__tag">Our Team</span>
-            <h2 className="hyd-section-hdr__title">Hyderabad Partners</h2>
-            <p className="hyd-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Hyderabad.</p>
-          </div>
-          <div className="hyd-partners-grid">
-            {PARTNERS.map(p => (
-              <div key={p.name} className="hyd-pc-card">
-                <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" loading="lazy" /></div>
-                <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
-                <div className="hyd-pc-stats">
-                  <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="hyd-pc-stat__val">{p.teamSize}</span><span className="hyd-pc-stat__lbl">Team Size</span></div>
-                  <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="hyd-pc-stat__val">{p.clientsServed}+</span><span className="hyd-pc-stat__lbl">Clients Served</span></div>
-                </div>
-                <div className="hyd-pc-social">
-                  <div className="hyd-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
-                    <button
-                      type="button"
-                      className={`hyd-pc-btn hyd-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
-                      onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
-                    >
-                      <IconMail /><span>Email</span>
-                    </button>
-                    {openMailFor === p.email && (
-                      <div className="hyd-pc-mail-dropdown">
-                        <a
-                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hyd-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Gmail
-                        </a>
-                        <a
-                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hyd-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Open in Outlook Web
-                        </a>
-                        <a
-                          href={`mailto:${p.email}`}
-                          className="hyd-pc-mail-option"
-                          onClick={() => setOpenMailFor(null)}
-                        >
-                          Default Mail App
-                        </a>
-                        <button
-                          type="button"
-                          className="hyd-pc-mail-option"
-                          onClick={() => {
-                            navigator.clipboard.writeText(p.email)
-                            setOpenMailFor(null)
-                          }}
-                        >
-                          Copy Email Address
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="hyd-pc-btn hyd-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      <section className="hyd-section hyd-specials-section">
-        <div className="hyd-container">
-          <div className="hyd-specials-inner">
-            <div className="hyd-specials-left">
-              <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
-              <h2 className="hyd-specials-title">We Specialised In</h2>
-              <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
-              <div className="hyd-specials-accent-line" />
-              <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+        <section className="hyd-section hyd-partners-section">
+          <div className="hyd-container">
+            <div className="hyd-section-hdr">
+              <span className="hyd-section-hdr__tag">Our Team</span>
+              <h2 className="hyd-section-hdr__title">Hyderabad Partners</h2>
+              <p className="hyd-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Hyderabad.</p>
             </div>
-            <div className="hyd-specials-right">
-              <div className="hyd-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`hyd-special-pill hyd-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="hyd-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+            <div className="hyd-partners-grid">
+              {PARTNERS.map(p => (
+                <div key={p.name} className="hyd-pc-card">
+                  <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" loading="lazy" /></div>
+                  <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
+                  <div className="hyd-pc-stats">
+                    <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="hyd-pc-stat__val">{p.teamSize}</span><span className="hyd-pc-stat__lbl">Team Size</span></div>
+                    <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="hyd-pc-stat__val">{p.clientsServed}+</span><span className="hyd-pc-stat__lbl">Clients Served</span></div>
                   </div>
-                ))}
-              </div>
+                  <div className="hyd-pc-social">
+                    <div className="hyd-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
+                      <button
+                        type="button"
+                        className={`hyd-pc-btn hyd-pc-btn--mail ${openMailFor === p.email ? 'is-open' : ''}`}
+                        onClick={() => setOpenMailFor(openMailFor === p.email ? null : p.email)}
+                      >
+                        <IconMail /><span>Email</span>
+                      </button>
+                      {openMailFor === p.email && (
+                        <div className="hyd-pc-mail-dropdown">
+                          <a
+                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hyd-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Gmail
+                          </a>
+                          <a
+                            href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hyd-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Outlook Web
+                          </a>
+                          <a
+                            href={`mailto:${p.email}`}
+                            className="hyd-pc-mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Default Mail App
+                          </a>
+                          <button
+                            type="button"
+                            className="hyd-pc-mail-option"
+                            onClick={() => {
+                              navigator.clipboard.writeText(p.email)
+                              setOpenMailFor(null)
+                            }}
+                          >
+                            Copy Email Address
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="hyd-pc-btn hyd-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+
+        <section className="hyd-section hyd-specials-section">
+          <div className="hyd-container">
+            <div className="hyd-specials-inner">
+              <div className="hyd-specials-left">
+                <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
+                <h2 className="hyd-specials-title">We Specialised In</h2>
+                <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
+                <div className="hyd-specials-accent-line" />
+                <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+              </div>
+              <div className="hyd-specials-right">
+                <div className="hyd-specials-grid">
+                  {SPECIALIZATIONS.map((s, i) => (
+                    <div key={s.label} className={`hyd-special-pill hyd-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                      <span className="hyd-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
       {/* ══ SECTORS SERVED ══ */}
@@ -340,7 +340,7 @@ export default function Hyderabad() {
             <h2 className="city-rfp-title">Ready to Work With Us?</h2>
             <p className="city-rfp-sub">Submit a Request for Proposal and our Hyderabad team will respond within 24 hours.</p>
           </div>
-          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+          <a href="/approval-for-proposal" className="city-rfp-btn">Request for Proposal</a>
         </div>
       </section>
 

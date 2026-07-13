@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Monitor, FileText, ShieldCheck, BarChart2, Scale, Cpu } from 'lucide-react'
 import './ITSystemAudit.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -181,6 +182,8 @@ export default function ITSystemAudit() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="ITSystemAudit" sectorLabel="IT System Audit" />
       {/* ── CTA ── */}
       <section className="it-cta container">
         <div className="it-cta__inner">

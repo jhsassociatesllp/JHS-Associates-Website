@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ShoppingBag, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
 import './Retail.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -185,6 +186,8 @@ export default function Retail() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Retail" sectorLabel="Retail" />
       {/* ── CTA ── */}
       <section className="rt-cta container">
         <div className="rt-cta__inner">

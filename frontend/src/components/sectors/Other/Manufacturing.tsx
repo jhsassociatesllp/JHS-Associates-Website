@@ -20,6 +20,7 @@ import {
   FileCheck
 } from 'lucide-react'
 import './Manufacturing.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -348,6 +349,8 @@ const Manufacturing: React.FC = () => {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="Manufacturing" sectorLabel="Manufacturing" />
       {/* ══════════════════════════════════════
           CTA SECTION
       ══════════════════════════════════════ */}

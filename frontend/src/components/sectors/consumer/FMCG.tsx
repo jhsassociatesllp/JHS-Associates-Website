@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ShoppingCart, BarChart2, ShieldCheck, Truck, FileText, Globe2 } from 'lucide-react'
 import './FMCG.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -176,6 +177,8 @@ export default function FMCG() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="FMCG" sectorLabel="FMCG" />
       {/* ── CTA ── */}
       <section className="fmcg-cta container">
         <div className="fmcg-cta__inner">

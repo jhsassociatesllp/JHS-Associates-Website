@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ShieldCheck, FileText, Globe2, BarChart2, Scale, Gem } from 'lucide-react'
 import './GemsAndJewellery.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -182,6 +183,8 @@ export default function GemsAndJewellery() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="GemsAndJewellery" sectorLabel="Gems & Jewellery" />
       {/* ── CTA ── */}
       <section className="gj-cta container">
         <div className="gj-cta__inner">

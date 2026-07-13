@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Building, FileText, ShieldCheck, BarChart2, Scale, TrendingUp } from 'lucide-react'
 import './RealEstate.css'
+import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -182,6 +183,8 @@ export default function RealEstate() {
         </div>
       </section>
 
+
+      <SectorEngagement sectorKey="RealEstate" sectorLabel="Real Estate" />
       {/* ── CTA ── */}
       <section className="re-cta container">
         <div className="re-cta__inner">

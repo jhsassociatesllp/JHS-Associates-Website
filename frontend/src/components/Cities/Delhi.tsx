@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Delhi.css'
+import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
@@ -142,50 +143,6 @@ export default function Delhi() {
         </div>
       </div>
 
-      {/* ══ SECTORS SERVED ══ */}
-      <section className="del-section del-sectors-section">
-        <div className="del-container">
-          <div className="del-section-hdr">
-            <span className="del-section-hdr__tag">Industries</span>
-            <h2 className="del-section-hdr__title">Sectors Served</h2>
-            <p className="del-section-hdr__sub">Deep domain expertise across Delhi-NCR's most dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="del-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="del-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="del-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="del-sector-card__label">{s}</span>
-                <div className="del-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ WE SPECIALISE IN ══ */}
-      <section className="del-section del-specials-section">
-        <div className="del-container">
-          <div className="del-specials-inner">
-            <div className="del-specials-left">
-              <span className="del-section-hdr__tag del-section-hdr__tag--white">Expertise</span>
-              <h2 className="del-specials-title">We Specialised In</h2>
-              <p className="del-specials-body">From risk-based audit frameworks to dispute resolution, our Delhi team delivers targeted advisory across North India's real estate and infrastructure sectors.</p>
-              <div className="del-specials-accent-line" />
-              <p className="del-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="del-specials-right">
-              <div className="del-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`del-special-pill del-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="del-special-pill__check"><IconCheck /></span><span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══ PARTNERS ══ */}
       <section className="del-section del-partners-section">
         <div className="del-container">
@@ -260,6 +217,50 @@ export default function Delhi() {
         </div>
       </section>
 
+      {/* ══ WE SPECIALISE IN ══ */}
+      <section className="del-section del-specials-section">
+        <div className="del-container">
+          <div className="del-specials-inner">
+            <div className="del-specials-left">
+              <span className="del-section-hdr__tag del-section-hdr__tag--white">Expertise</span>
+              <h2 className="del-specials-title">We Specialised In</h2>
+              <p className="del-specials-body">From risk-based audit frameworks to dispute resolution, our Delhi team delivers targeted advisory across North India's real estate and infrastructure sectors.</p>
+              <div className="del-specials-accent-line" />
+              <p className="del-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="del-specials-right">
+              <div className="del-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`del-special-pill del-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="del-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="del-section del-sectors-section">
+        <div className="del-container">
+          <div className="del-section-hdr">
+            <span className="del-section-hdr__tag">Industries</span>
+            <h2 className="del-section-hdr__title">Sectors Served</h2>
+            <p className="del-section-hdr__sub">Deep domain expertise across Delhi-NCR's most dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="del-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="del-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="del-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="del-sector-card__label">{s}</span>
+                <div className="del-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ MAP ══ */}
       <section className="del-map-section">
         <div className="del-container">
@@ -315,6 +316,57 @@ export default function Delhi() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="del-container">
+          <div className="del-section-hdr">
+            <span className="del-section-hdr__tag">Case Studies</span>
+            <h2 className="del-section-hdr__title">Success Stories</h2>
+            <p className="del-section-hdr__sub">Real impact delivered for clients across Delhi-NCR — from government advisory to transfer pricing and IFC frameworks.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Government Advisory</span>
+              <h3 className="city-cs-card__title">Internal Audit for a Central PSU</h3>
+              <p className="city-cs-card__body">Conducted a comprehensive internal audit for a Central Public Sector Undertaking, strengthening procurement controls and reporting standards across departments.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Public Sector</span>
+                <span className="city-cs-card__result">40% improvement in control efficiency</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Transfer Pricing</span>
+              <h3 className="city-cs-card__title">TP Documentation for an MNC Subsidiary</h3>
+              <p className="city-cs-card__body">Prepared robust transfer pricing documentation and benchmarking analysis for an MNC's Indian subsidiary, successfully defending a tax authority inquiry.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Multinational</span>
+                <span className="city-cs-card__result">₹3.5Cr exposure defended</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Risk & Governance</span>
+              <h3 className="city-cs-card__title">IFC Rollout for a Diversified Conglomerate</h3>
+              <p className="city-cs-card__body">Designed and deployed Internal Financial Controls across 8 business verticals of a Delhi-based conglomerate, achieving full Board-level compliance reporting.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Conglomerate</span>
+                <span className="city-cs-card__result">8 verticals compliant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Delhi-NCR team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
 
     </div>
   )

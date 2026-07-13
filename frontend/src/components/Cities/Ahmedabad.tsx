@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Ahmedabad.css'
+import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
@@ -211,51 +212,6 @@ export default function Ahmedabad() {
         </div>
       </div>
 
-      {/* ══ SECTORS SERVED ══ */}
-      <section className="ahm-section ahm-sectors-section">
-        <div className="ahm-container">
-          <div className="ahm-section-hdr">
-            <span className="ahm-section-hdr__tag">Industries</span>
-            <h2 className="ahm-section-hdr__title">Sectors Served</h2>
-            <p className="ahm-section-hdr__sub">Deep domain expertise across Gujarat's most dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="ahm-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="ahm-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="ahm-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="ahm-sector-card__label">{s}</span>
-                <div className="ahm-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ WE SPECIALISE IN ══ */}
-      <section className="ahm-section ahm-specials-section">
-        <div className="ahm-container">
-          <div className="ahm-specials-inner">
-            <div className="ahm-specials-left">
-              <span className="ahm-section-hdr__tag ahm-section-hdr__tag--white">Expertise</span>
-              <h2 className="ahm-specials-title">We Specialised In</h2>
-              <p className="ahm-specials-body">From individual tax planning to global accounts outsourcing, our Ahmedabad team brings specialised capabilities across tax, compliance, and advisory services.</p>
-              <div className="ahm-specials-accent-line" />
-              <p className="ahm-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="ahm-specials-right">
-              <div className="ahm-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`ahm-special-pill ahm-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="ahm-special-pill__check"><IconCheck /></span>
-                    <span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══ PARTNERS ══ */}
       <section className="ahm-section ahm-partners-section">
         <div className="ahm-container">
@@ -342,6 +298,51 @@ export default function Ahmedabad() {
         </div>
       </section>
 
+      {/* ══ WE SPECIALISE IN ══ */}
+      <section className="ahm-section ahm-specials-section">
+        <div className="ahm-container">
+          <div className="ahm-specials-inner">
+            <div className="ahm-specials-left">
+              <span className="ahm-section-hdr__tag ahm-section-hdr__tag--white">Expertise</span>
+              <h2 className="ahm-specials-title">We Specialised In</h2>
+              <p className="ahm-specials-body">From individual tax planning to global accounts outsourcing, our Ahmedabad team brings specialised capabilities across tax, compliance, and advisory services.</p>
+              <div className="ahm-specials-accent-line" />
+              <p className="ahm-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="ahm-specials-right">
+              <div className="ahm-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`ahm-special-pill ahm-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="ahm-special-pill__check"><IconCheck /></span>
+                    <span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="ahm-section ahm-sectors-section">
+        <div className="ahm-container">
+          <div className="ahm-section-hdr">
+            <span className="ahm-section-hdr__tag">Industries</span>
+            <h2 className="ahm-section-hdr__title">Sectors Served</h2>
+            <p className="ahm-section-hdr__sub">Deep domain expertise across Gujarat's most dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="ahm-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="ahm-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="ahm-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="ahm-sector-card__label">{s}</span>
+                <div className="ahm-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ MAP ══ */}
       <section className="ahm-map-section">
         <div className="ahm-container">
@@ -399,6 +400,57 @@ export default function Ahmedabad() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="ahm-container">
+          <div className="ahm-section-hdr">
+            <span className="ahm-section-hdr__tag">Case Studies</span>
+            <h2 className="ahm-section-hdr__title">Success Stories</h2>
+            <p className="ahm-section-hdr__sub">Real impact delivered for clients across Ahmedabad — from pharma compliance to MSME advisory and diamond trade audits.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Regulatory Compliance</span>
+              <h3 className="city-cs-card__title">CARO Compliance for a Pharma Manufacturer</h3>
+              <p className="city-cs-card__body">Guided a mid-size pharmaceutical manufacturer through full CARO 2020 compliance, resolving historical reporting gaps and strengthening internal controls.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Pharma</span>
+                <span className="city-cs-card__result">Zero qualification in annual audit</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Forensic Audit</span>
+              <h3 className="city-cs-card__title">Fraud Investigation for a Diamond Trading Firm</h3>
+              <p className="city-cs-card__body">Performed a forensic audit for a diamond trading house, uncovering procurement irregularities and recovering misappropriated inventory through legal proceedings.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Diamond Trade</span>
+                <span className="city-cs-card__result">₹1.8Cr fraud identified</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">MSME Advisory</span>
+              <h3 className="city-cs-card__title">GST & Compliance Overhaul for a Textile Cluster</h3>
+              <p className="city-cs-card__body">Restructured GST filing and bookkeeping practices across a cluster of textile MSMEs, reducing compliance burden and enabling seamless bank credit access.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Textiles / MSME</span>
+                <span className="city-cs-card__result">Bank credit unlocked for 12 units</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Ahmedabad team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
 
     </div>
   )

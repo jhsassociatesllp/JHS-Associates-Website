@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Bengaluru.css'
+import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 
@@ -117,49 +118,7 @@ export default function Bengaluru() {
             <div key={lbl} className="blr-ribbon__item"><span className="blr-ribbon__num">{num}</span><span className="blr-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
-      </div>
 
-      <section className="blr-section blr-sectors-section">
-        <div className="blr-container">
-          <div className="blr-section-hdr">
-            <span className="blr-section-hdr__tag">Industries</span>
-            <h2 className="blr-section-hdr__title">Sectors Served</h2>
-            <p className="blr-section-hdr__sub">Deep domain expertise across Karnataka's most dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="blr-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="blr-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="blr-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="blr-sector-card__label">{s}</span>
-                <div className="blr-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="blr-section blr-specials-section">
-        <div className="blr-container">
-          <div className="blr-specials-inner">
-            <div className="blr-specials-left">
-              <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
-              <h2 className="blr-specials-title">We Specialised In</h2>
-              <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
-              <div className="blr-specials-accent-line" />
-              <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="blr-specials-right">
-              <div className="blr-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`blr-special-pill blr-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="blr-special-pill__check"><IconCheck /></span><span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="blr-section blr-partners-section">
         <div className="blr-container">
@@ -242,6 +201,51 @@ export default function Bengaluru() {
         </div>
       </section>
 
+
+      <section className="blr-section blr-specials-section">
+        <div className="blr-container">
+          <div className="blr-specials-inner">
+            <div className="blr-specials-left">
+              <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
+              <h2 className="blr-specials-title">We Specialised In</h2>
+              <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
+              <div className="blr-specials-accent-line" />
+              <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="blr-specials-right">
+              <div className="blr-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`blr-special-pill blr-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="blr-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="blr-section blr-sectors-section">
+        <div className="blr-container">
+          <div className="blr-section-hdr">
+            <span className="blr-section-hdr__tag">Industries</span>
+            <h2 className="blr-section-hdr__title">Sectors Served</h2>
+            <p className="blr-section-hdr__sub">Deep domain expertise across Karnataka's most dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="blr-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="blr-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="blr-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="blr-sector-card__label">{s}</span>
+                <div className="blr-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="blr-map-section">
         <div className="blr-container">
           <div className="blr-section-hdr">
@@ -295,6 +299,58 @@ export default function Bengaluru() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="blr-container">
+          <div className="blr-section-hdr">
+            <span className="blr-section-hdr__tag">Case Studies</span>
+            <h2 className="blr-section-hdr__title">Success Stories</h2>
+            <p className="blr-section-hdr__sub">Real impact delivered for clients across Bengaluru — from IT audit and cybersecurity to startup advisory and risk governance.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">IT Audit</span>
+              <h3 className="city-cs-card__title">Cybersecurity Assessment for a SaaS Platform</h3>
+              <p className="city-cs-card__body">Executed a comprehensive cybersecurity and IT general controls audit for a fast-growing SaaS company preparing for SOC 2 Type II certification.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Technology</span>
+                <span className="city-cs-card__result">SOC 2 Type II achieved</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Startup Advisory</span>
+              <h3 className="city-cs-card__title">Fund Raise Compliance for a Series B Startup</h3>
+              <p className="city-cs-card__body">Structured FEMA compliance, due diligence readiness, and financial reporting for a Bengaluru startup ahead of a $12M Series B funding round.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Startup / VC</span>
+                <span className="city-cs-card__result">$12M round closed successfully</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Internal Audit</span>
+              <h3 className="city-cs-card__title">Process Audit for an E-Commerce Marketplace</h3>
+              <p className="city-cs-card__body">Designed and executed a risk-based internal audit program covering 14 business processes for a high-growth e-commerce company, uncovering key revenue leakages.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">E-Commerce</span>
+                <span className="city-cs-card__result">₹80L+ in revenue leakage plugged</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Bengaluru team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
+
     </div>
   )
 }

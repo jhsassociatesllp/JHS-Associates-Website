@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Chennai.css'
+import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 
@@ -90,77 +91,35 @@ export default function Chennai() {
 
   return (
     <div className="chn-page">
-      <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
-        <div className="chn-hero__overlay" />
-        <div className="chn-hero__content">
-          {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
-          <h1 className="chn-hero__title">Chennai</h1>
-          <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
+    <section className="chn-hero">
+      <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
+      <div className="chn-hero__overlay" />
+      <div className="chn-hero__content">
+        {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+        <h1 className="chn-hero__title">Chennai</h1>
+        <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
+      </div>
+      <div className="chn-hero__card">
+        <div className="chn-hero__card-left">
+          <span className="chn-hero__card-badge">T. Nagar</span>
+          <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
         </div>
-        <div className="chn-hero__card">
-          <div className="chn-hero__card-left">
-            <span className="chn-hero__card-badge">T. Nagar</span>
-            <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
-          </div>
-          <div className="chn-hero__card-divider" />
-          {/* <div className="chn-hero__card-right">
+        <div className="chn-hero__card-divider" />
+        {/* <div className="chn-hero__card-right">
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 44 1234 5678</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chennai@jhsassociates.in</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
           </div> */}
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <div className="chn-ribbon">
-        <div className="chn-ribbon__inner">
-          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
-            <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
-          ))}
-        </div>
+    <div className="chn-ribbon">
+      <div className="chn-ribbon__inner">
+        {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Chennai Offices']] as [string, string][]).map(([num, lbl]) => (
+          <div key={lbl} className="chn-ribbon__item"><span className="chn-ribbon__num">{num}</span><span className="chn-ribbon__lbl">{lbl}</span></div>
+        ))}
       </div>
 
-      <section className="chn-section chn-sectors-section">
-        <div className="chn-container">
-          <div className="chn-section-hdr">
-            <span className="chn-section-hdr__tag">Industries</span>
-            <h2 className="chn-section-hdr__title">Sectors Served</h2>
-            <p className="chn-section-hdr__sub">Deep domain expertise across Tamil Nadu's most dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="chn-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="chn-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="chn-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="chn-sector-card__label">{s}</span>
-                <div className="chn-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="chn-section chn-specials-section">
-        <div className="chn-container">
-          <div className="chn-specials-inner">
-            <div className="chn-specials-left">
-              <span className="chn-section-hdr__tag chn-section-hdr__tag--white">Expertise</span>
-              <h2 className="chn-specials-title">We Specialise In</h2>
-              <p className="chn-specials-body">From GST compliance to concurrent bank audits, our Chennai team brings specialised depth across financial services and real estate sectors.</p>
-              <div className="chn-specials-accent-line" />
-              <p className="chn-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="chn-specials-right">
-              <div className="chn-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`chn-special-pill chn-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="chn-special-pill__check"><IconCheck /></span><span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="chn-section chn-partners-section">
         <div className="chn-container">
@@ -235,6 +194,51 @@ export default function Chennai() {
         </div>
       </section>
 
+
+      <section className="chn-section chn-specials-section">
+        <div className="chn-container">
+          <div className="chn-specials-inner">
+            <div className="chn-specials-left">
+              <span className="chn-section-hdr__tag chn-section-hdr__tag--white">Expertise</span>
+              <h2 className="chn-specials-title">We Specialise In</h2>
+              <p className="chn-specials-body">From GST compliance to concurrent bank audits, our Chennai team brings specialised depth across financial services and real estate sectors.</p>
+              <div className="chn-specials-accent-line" />
+              <p className="chn-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="chn-specials-right">
+              <div className="chn-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`chn-special-pill chn-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="chn-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="chn-section chn-sectors-section">
+        <div className="chn-container">
+          <div className="chn-section-hdr">
+            <span className="chn-section-hdr__tag">Industries</span>
+            <h2 className="chn-section-hdr__title">Sectors Served</h2>
+            <p className="chn-section-hdr__sub">Deep domain expertise across Tamil Nadu's most dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="chn-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="chn-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="chn-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="chn-sector-card__label">{s}</span>
+                <div className="chn-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="chn-map-section">
         <div className="chn-container">
           <div className="chn-section-hdr">
@@ -288,6 +292,58 @@ export default function Chennai() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="chn-container">
+          <div className="chn-section-hdr">
+            <span className="chn-section-hdr__tag">Case Studies</span>
+            <h2 className="chn-section-hdr__title">Success Stories</h2>
+            <p className="chn-section-hdr__sub">Real impact delivered for clients across Chennai — from auto ancillary audits to export compliance and manufacturing GST restructuring.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Statutory Audit</span>
+              <h3 className="city-cs-card__title">Audit for a Tier-1 Auto Ancillary Supplier</h3>
+              <p className="city-cs-card__body">Conducted a comprehensive statutory audit for a Tier-1 auto ancillary company supplying to major OEMs, strengthening cost accounting and inventory valuation processes.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Auto Ancillary</span>
+                <span className="city-cs-card__result">Clean audit report delivered</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Export Compliance</span>
+              <h3 className="city-cs-card__title">FEMA & RBI Compliance for an IT Exporter</h3>
+              <p className="city-cs-card__body">Regularised accumulated FEMA non-compliances for a Chennai-based software exporter and established a robust ECB and bank account reporting framework going forward.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">IT / Software</span>
+                <span className="city-cs-card__result">FEMA compounding resolved</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">GST Advisory</span>
+              <h3 className="city-cs-card__title">GST Restructuring for a Manufacturing Conglomerate</h3>
+              <p className="city-cs-card__body">Restructured inter-unit GST billing and ITC allocation for a Chennai manufacturing group, eliminating blocked credit and reducing the effective tax burden across entities.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Manufacturing</span>
+                <span className="city-cs-card__result">₹2.4Cr in tax savings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Chennai team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
+
     </div>
   )
 }

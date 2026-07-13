@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Mumbai.css'
+import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
@@ -230,51 +231,6 @@ export default function Mumbai() {
         </div>
       </div>
 
-      {/* ══ SECTORS SERVED ══ */}
-      <section className="mum-section mum-sectors-section">
-        <div className="mum-container">
-          <div className="mum-section-hdr">
-            <span className="mum-section-hdr__tag">Industries</span>
-            <h2 className="mum-section-hdr__title">Sectors Served</h2>
-            <p className="mum-section-hdr__sub">Deep domain expertise across Mumbai's most dynamic industries built through years of hands on client engagement.</p>
-          </div>
-          <div className="mum-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="mum-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="mum-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="mum-sector-card__label">{s}</span>
-                <div className="mum-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ WE SPECIALISE IN ══ */}
-      <section className="mum-section mum-specials-section">
-        <div className="mum-container">
-          <div className="mum-specials-inner">
-            <div className="mum-specials-left">
-              <span className="mum-section-hdr__tag mum-section-hdr__tag--white">Expertise</span>
-              <h2 className="mum-specials-title">We Specialised In</h2>
-              <p className="mum-specials-body">From cutting-edge cyber assurance to niche social-sector audits, our Mumbai team brings a breadth of specialised capabilities unmatched in the region.</p>
-              <div className="mum-specials-accent-line" />
-              <p className="mum-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="mum-specials-right">
-              <div className="mum-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`mum-special-pill mum-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="mum-special-pill__check"><IconCheck /></span>
-                    <span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══ PARTNERS ══ */}
       <section className="mum-section mum-partners-section">
         <div className="mum-container">
@@ -361,6 +317,51 @@ export default function Mumbai() {
         </div>
       </section>
 
+      {/* ══ WE SPECIALISE IN ══ */}
+      <section className="mum-section mum-specials-section">
+        <div className="mum-container">
+          <div className="mum-specials-inner">
+            <div className="mum-specials-left">
+              <span className="mum-section-hdr__tag mum-section-hdr__tag--white">Expertise</span>
+              <h2 className="mum-specials-title">We Specialised In</h2>
+              <p className="mum-specials-body">From cutting-edge cyber assurance to niche social-sector audits, our Mumbai team brings a breadth of specialised capabilities unmatched in the region.</p>
+              <div className="mum-specials-accent-line" />
+              <p className="mum-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="mum-specials-right">
+              <div className="mum-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`mum-special-pill mum-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="mum-special-pill__check"><IconCheck /></span>
+                    <span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="mum-section mum-sectors-section">
+        <div className="mum-container">
+          <div className="mum-section-hdr">
+            <span className="mum-section-hdr__tag">Industries</span>
+            <h2 className="mum-section-hdr__title">Sectors Served</h2>
+            <p className="mum-section-hdr__sub">Deep domain expertise across Mumbai's most dynamic industries built through years of hands on client engagement.</p>
+          </div>
+          <div className="mum-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="mum-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="mum-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="mum-sector-card__label">{s}</span>
+                <div className="mum-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ MAP ══ */}
       <section className="mum-map-section">
         <div className="mum-container">
@@ -417,6 +418,57 @@ export default function Mumbai() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="mum-container">
+          <div className="mum-section-hdr">
+            <span className="mum-section-hdr__tag">Case Studies</span>
+            <h2 className="mum-section-hdr__title">Success Stories</h2>
+            <p className="mum-section-hdr__sub">Real impact delivered for clients across Mumbai — from audit and compliance to strategic advisory and risk frameworks.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Audit & Assurance</span>
+              <h3 className="city-cs-card__title">Statutory Audit for a Leading NBFC</h3>
+              <p className="city-cs-card__body">Delivered end-to-end statutory audit services, identifying critical control gaps and ensuring full RBI compliance within a tight regulatory timeline.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">BFSI</span>
+                <span className="city-cs-card__result">30% reduction in compliance risk</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Tax Advisory</span>
+              <h3 className="city-cs-card__title">GST Restructuring for a Manufacturing Group</h3>
+              <p className="city-cs-card__body">Redesigned the GST input credit chain for a multi-entity manufacturing group, unlocking significant working capital and eliminating prior exposure.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Manufacturing</span>
+                <span className="city-cs-card__result">₹2Cr+ in recovered ITC</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Risk & Governance</span>
+              <h3 className="city-cs-card__title">IFC Framework for a Listed Real Estate Developer</h3>
+              <p className="city-cs-card__body">Built and implemented a robust Internal Financial Controls framework from scratch, meeting SEBI listing obligations with zero audit observations.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Real Estate</span>
+                <span className="city-cs-card__result">Zero SEBI audit observations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Mumbai team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
 
     </div>
   )

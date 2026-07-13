@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Kolkata.css'
+import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 
@@ -246,51 +247,6 @@ export default function Kolkata() {
         </div>
       </section>
 
-      {/* ════════════ SECTORS SERVED ════════════ */}
-      <section className="kol-section kol-sectors-section">
-        <div className="kol-container">
-          <div className="kol-section-hdr">
-            <span className="kol-section-hdr__tag">Industries</span>
-            <h2 className="kol-section-hdr__title">Sectors Served</h2>
-            <p className="kol-section-hdr__sub">Deep domain expertise across dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="kol-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="kol-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="kol-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="kol-sector-card__label">{s}</span>
-                <div className="kol-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════ WE SPECIALISE IN ════════════ */}
-      <section className="kol-section kol-specials-section">
-        <div className="kol-container">
-          <div className="kol-specials-inner">
-            <div className="kol-specials-left">
-              <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
-              <h2 className="kol-specials-title">We Specialised In</h2>
-              <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
-              <div className="kol-specials-accent-line" />
-              <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="kol-specials-right">
-              <div className="kol-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`kol-special-pill kol-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="kol-special-pill__check"><IconCheck /></span>
-                    <span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="kol-section kol-section--light">
         <div className="kol-container">
           <div className="kol-section-hdr">
@@ -370,6 +326,51 @@ export default function Kolkata() {
         </div>
       </section>
 
+      {/* ════════════ WE SPECIALISE IN ════════════ */}
+      <section className="kol-section kol-specials-section">
+        <div className="kol-container">
+          <div className="kol-specials-inner">
+            <div className="kol-specials-left">
+              <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
+              <h2 className="kol-specials-title">We Specialised In</h2>
+              <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
+              <div className="kol-specials-accent-line" />
+              <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="kol-specials-right">
+              <div className="kol-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`kol-special-pill kol-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="kol-special-pill__check"><IconCheck /></span>
+                    <span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="kol-section kol-sectors-section">
+        <div className="kol-container">
+          <div className="kol-section-hdr">
+            <span className="kol-section-hdr__tag">Industries</span>
+            <h2 className="kol-section-hdr__title">Sectors Served</h2>
+            <p className="kol-section-hdr__sub">Deep domain expertise across dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="kol-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="kol-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="kol-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="kol-sector-card__label">{s}</span>
+                <div className="kol-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="kol-map-section">
         <div className="kol-container">
           <div className="kol-section-hdr">
@@ -432,6 +433,58 @@ export default function Kolkata() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="kol-container">
+          <div className="kol-section-hdr">
+            <span className="kol-section-hdr__tag">Case Studies</span>
+            <h2 className="kol-section-hdr__title">Success Stories</h2>
+            <p className="kol-section-hdr__sub">Real impact delivered for clients across Kolkata — from jute and tea sector audits to trading group restructuring and MSME advisory.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Statutory Audit</span>
+              <h3 className="city-cs-card__title">Audit for a Leading Tea Estate Conglomerate</h3>
+              <p className="city-cs-card__body">Performed statutory audits across 6 tea estate subsidiaries, standardising accounting policies and resolving multi-year transfer pricing inconsistencies within the group.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Tea / Agri</span>
+                <span className="city-cs-card__result">6 subsidiaries aligned</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Tax Restructuring</span>
+              <h3 className="city-cs-card__title">GST Overhaul for a Jute Trading Group</h3>
+              <p className="city-cs-card__body">Rationalised GST compliance across a multi-entity jute trading group, recovering ineligible ITC reversals and restructuring the billing chain to maximise credit flow.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Jute / Trade</span>
+                <span className="city-cs-card__result">₹1.2Cr ITC recovered</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">MSME Advisory</span>
+              <h3 className="city-cs-card__title">Restructuring for a Manufacturing MSME Cluster</h3>
+              <p className="city-cs-card__body">Advised a cluster of engineering MSMEs on financial restructuring, government scheme eligibility, and bank credit facilitation, enabling collective capacity expansion.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Engineering / MSME</span>
+                <span className="city-cs-card__result">₹5Cr credit facility secured</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Kolkata team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
+
     </div>
   )
 }

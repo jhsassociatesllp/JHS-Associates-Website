@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './Hyderabad.css'
+import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 
@@ -118,49 +119,7 @@ export default function Hyderabad() {
             <div key={lbl} className="hyd-ribbon__item"><span className="hyd-ribbon__num">{num}</span><span className="hyd-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
-      </div>
 
-      <section className="hyd-section hyd-sectors-section">
-        <div className="hyd-container">
-          <div className="hyd-section-hdr">
-            <span className="hyd-section-hdr__tag">Industries</span>
-            <h2 className="hyd-section-hdr__title">Sectors Served</h2>
-            <p className="hyd-section-hdr__sub">Deep domain expertise across Telangana's most dynamic industries — built through years of hands-on client engagement.</p>
-          </div>
-          <div className="hyd-sectors-grid">
-            {SECTORS.map((s, i) => (
-              <div key={s} className="hyd-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
-                <div className="hyd-sector-card__icon-wrap">{SectorIcons[s]}</div>
-                <span className="hyd-sector-card__label">{s}</span>
-                <div className="hyd-sector-card__line" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="hyd-section hyd-specials-section">
-        <div className="hyd-container">
-          <div className="hyd-specials-inner">
-            <div className="hyd-specials-left">
-              <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
-              <h2 className="hyd-specials-title">We Specialised In</h2>
-              <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
-              <div className="hyd-specials-accent-line" />
-              <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
-            </div>
-            <div className="hyd-specials-right">
-              <div className="hyd-specials-grid">
-                {SPECIALIZATIONS.map((s, i) => (
-                  <div key={s.label} className={`hyd-special-pill hyd-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
-                    <span className="hyd-special-pill__check"><IconCheck /></span><span>{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="hyd-section hyd-partners-section">
         <div className="hyd-container">
@@ -235,6 +194,51 @@ export default function Hyderabad() {
         </div>
       </section>
 
+
+      <section className="hyd-section hyd-specials-section">
+        <div className="hyd-container">
+          <div className="hyd-specials-inner">
+            <div className="hyd-specials-left">
+              <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
+              <h2 className="hyd-specials-title">We Specialised In</h2>
+              <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
+              <div className="hyd-specials-accent-line" />
+              <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>
+            </div>
+            <div className="hyd-specials-right">
+              <div className="hyd-specials-grid">
+                {SPECIALIZATIONS.map((s, i) => (
+                  <div key={s.label} className={`hyd-special-pill hyd-special-pill--${s.g}`} style={{ animationDelay: `${i * 0.04}s` }}>
+                    <span className="hyd-special-pill__check"><IconCheck /></span><span>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      {/* ══ SECTORS SERVED ══ */}
+      <section className="hyd-section hyd-sectors-section">
+        <div className="hyd-container">
+          <div className="hyd-section-hdr">
+            <span className="hyd-section-hdr__tag">Industries</span>
+            <h2 className="hyd-section-hdr__title">Sectors Served</h2>
+            <p className="hyd-section-hdr__sub">Deep domain expertise across Telangana's most dynamic industries — built through years of hands-on client engagement.</p>
+          </div>
+          <div className="hyd-sectors-grid">
+            {SECTORS.map((s, i) => (
+              <div key={s} className="hyd-sector-card" style={{ animationDelay: `${i * 0.06}s` }}>
+                <div className="hyd-sector-card__icon-wrap">{SectorIcons[s]}</div>
+                <span className="hyd-sector-card__label">{s}</span>
+                <div className="hyd-sector-card__line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="hyd-map-section">
         <div className="hyd-container">
           <div className="hyd-section-hdr">
@@ -288,6 +292,58 @@ export default function Hyderabad() {
           </div>
         </div>
       </section> */}
+
+      {/* ══ CASE STUDIES ══ */}
+      <section className="city-cs-section">
+        <div className="hyd-container">
+          <div className="hyd-section-hdr">
+            <span className="hyd-section-hdr__tag">Case Studies</span>
+            <h2 className="hyd-section-hdr__title">Success Stories</h2>
+            <p className="hyd-section-hdr__sub">Real impact delivered for clients across Hyderabad — from pharma regulatory audits to tech transfer pricing and real estate compliance.</p>
+          </div>
+          <div className="city-cs-grid">
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Regulatory Audit</span>
+              <h3 className="city-cs-card__title">Schedule M Compliance for a Pharma Exporter</h3>
+              <p className="city-cs-card__body">Assisted a bulk drug exporter in achieving Schedule M GMP compliance, strengthening documentation and quality control systems ahead of a USFDA inspection.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Pharma</span>
+                <span className="city-cs-card__result">USFDA inspection cleared</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Transfer Pricing</span>
+              <h3 className="city-cs-card__title">TP Study for a Global IT Services Company</h3>
+              <p className="city-cs-card__body">Conducted a benchmarking study and prepared robust TP documentation for a Hyderabad-based IT services subsidiary, successfully defending assessment proceedings.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">IT Services</span>
+                <span className="city-cs-card__result">₹4Cr+ exposure defended</span>
+              </div>
+            </div>
+            <div className="city-cs-card">
+              <span className="city-cs-card__tag">Real Estate Advisory</span>
+              <h3 className="city-cs-card__title">RERA Compliance for a Residential Developer</h3>
+              <p className="city-cs-card__body">Structured RERA compliance framework and quarterly reporting for a residential developer with 3 ongoing projects, ensuring buyer fund protection and regulatory adherence.</p>
+              <div className="city-cs-card__footer">
+                <span className="city-cs-card__sector">Real Estate</span>
+                <span className="city-cs-card__result">3 projects fully RERA compliant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ RFP CTA ══ */}
+      <section className="city-rfp-section">
+        <div className="city-rfp-inner">
+          <div className="city-rfp-text">
+            <h2 className="city-rfp-title">Ready to Work With Us?</h2>
+            <p className="city-rfp-sub">Submit a Request for Proposal and our Hyderabad team will respond within 24 hours.</p>
+          </div>
+          <a href="/contact" className="city-rfp-btn">Request for Proposal</a>
+        </div>
+      </section>
+
     </div>
   )
 }

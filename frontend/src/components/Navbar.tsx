@@ -324,13 +324,13 @@ const Navbar = () => {
       {/* ══════════════ TOP NAVBAR ══════════════ */}
       <header
         className={`nb ${scrolled ? "nb--scrolled" : ""} ${menuOpen ? "nb--open" : ""} ${hidden ? "nb--hidden" : ""}`}
-        onMouseEnter={handleHoverOpen}
-        onMouseLeave={handleHoverClose}
       >
         <div className="nb__left">
           <button
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
             onClick={menuOpen ? closeMenu : openMenu}
+            onMouseEnter={handleHoverOpen}
+            onMouseLeave={handleHoverClose}
             aria-label="Toggle navigation"
             aria-expanded={menuOpen}
           >

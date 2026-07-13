@@ -70,6 +70,28 @@ const cards: Card[] = [
       "The Ministry of Corporate Affairs has amended the CSR Rules, 2026, permitting eligible companies to subscribe to Zero Coupon Zero Principal (ZCZP) Instruments issued by registered Not-for-Profit Organisations through the Social Stock Exchange, subject to prescribed limits and compliance requirements.",
     route: "/digital/digital-twins",
   },
+  {
+    id: 6,
+    image: imageUrl('Card5.jpeg'),
+    category: "EXCELLENCIA",
+    meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
+    title: "JHS Excellencia Library — Premium Research, Benchmarks & Strategic Frameworks",
+    hoverTitle: "JHS Excellencia Library",
+    hoverDescription:
+      "Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks. Access curated whitepapers, regulatory updates, and strategic guides developed by JHS experts to empower informed decision-making.",
+    route: "/excellencia",
+  },
+  {
+    id: 7,
+    image: imageUrl('Fainance-report.png'),
+    category: "WHITE PAPER",
+    meta: "JHS WHITE PAPERS · THOUGHT LEADERSHIP · 2026",
+    title: "In-Depth White Papers on Regulatory, Financial & Strategic Topics",
+    hoverTitle: "JHS White Papers",
+    hoverDescription:
+      "Explore our comprehensive collection of white papers covering regulatory frameworks, financial strategies, taxation insights, and industry-specific intelligence — curated by JHS Associates to keep you ahead of the curve.",
+    route: "/resources",
+  },
 ];
 
 // Transition duration must match CSS --carousel-transition-duration (700ms)

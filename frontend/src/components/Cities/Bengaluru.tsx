@@ -1,8 +1,9 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Bengaluru.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
   { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 8, clientsServed: 30, email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
@@ -130,7 +131,7 @@ export default function Bengaluru() {
             <div className="blr-partners-grid">
               {PARTNERS.map(p => (
                 <div key={p.name} className="blr-pc-card">
-                  <div className="blr-pc-avatar"><img src={p.image} alt={p.name} className="blr-pc-avatar__img" loading="lazy" /></div>
+                  <CityPartnerAvatar image={p.image} name={p.name} className="blr-pc-avatar" imgClassName="blr-pc-avatar__img" />
                   <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
                   <div className="blr-pc-stats">
                     <div className="blr-pc-stat">

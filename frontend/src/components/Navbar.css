@@ -45,14 +45,15 @@
   position: fixed;
   top: 16px;
   left: 16px;
-  width: calc(100% - 32px);
+  width: fit-content;
+  max-width: calc(100% - 32px);
   z-index: 1000;
   height: var(--nb-h-mobile);
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 18px;
   border-radius: 12px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -63,10 +64,10 @@
   .nb {
     top: 20px;
     left: 20px;
-    width: 23%;
-    min-width: 320px;
+    width: fit-content;
+    max-width: calc(100% - 40px);
     height: var(--nb-h);
-    padding: 0 32px;
+    padding: 0 24px;
     border-radius: 15px;
   }
 }
@@ -816,8 +817,8 @@
   }
 
   .nb {
-    width: auto;
-    right: 20px;
+    width: fit-content;
+    max-width: calc(100% - 40px);
   }
 
   .mega__right-panel {
@@ -845,7 +846,8 @@
 
   .nb {
     padding: 0 16px;
-    width: auto;
+    width: fit-content;
+    max-width: calc(100% - 32px);
     background: rgb(255, 255, 255);
   }
 

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+import { patchDomForGoogleTranslate, initPersistedLanguage } from './i18n/googleTranslate'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
@@ -143,6 +144,11 @@ export default function App() {
   useSmoothScroll()
   useEffect(() => {
     document.fonts.ready.then(() => ScrollTrigger.refresh())
+  }, [])
+
+  useEffect(() => {
+    patchDomForGoogleTranslate()
+    initPersistedLanguage()
   }, [])
 
   return (

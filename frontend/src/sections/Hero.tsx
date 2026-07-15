@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 import { imageUrl } from '../utils/imageUrl'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 interface Card {
   id: number;
@@ -296,6 +297,7 @@ export default function Hero() {
         >
           Apply Now
         </button>
+        <LanguageSwitcher />
       </div>
 
       {/* Header */}

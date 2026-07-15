@@ -1,9 +1,10 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Delhi.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
@@ -154,7 +155,7 @@ export default function Delhi() {
           <div className="del-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="del-pc-card">
-                <div className="del-pc-avatar"><img src={p.image} alt={p.name} className="del-pc-avatar__img" loading="lazy" /></div>
+                <CityPartnerAvatar image={p.image} name={p.name} className="del-pc-avatar" imgClassName="del-pc-avatar__img" />
                 <div className="del-pc-info"><h3 className="del-pc-name">{p.name}</h3><p className="del-pc-quals">{p.qualifications}</p><p className="del-pc-desig">{p.designation}</p></div>
                 <div className="del-pc-stats">
                   <div className="del-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="del-pc-stat__val">{p.teamSize}</span><span className="del-pc-stat__lbl">Team Size</span></div>

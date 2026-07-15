@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Kolkata.css'
 import './CityShared.css'
 
@@ -158,9 +158,14 @@ const MAP_LOCATIONS = [
 // ]
 
 function PartnerAvatar({ image, name }: { image: string; name: string }) {
+  const [imgError, setImgError] = useState(false)
   return (
     <div className="kol-pc-avatar">
-      <img src={image} alt={name} className="kol-pc-avatar__img" loading="lazy" />
+      {!imgError ? (
+        <img src={image} alt={name} className="kol-pc-avatar__img" loading="lazy" onError={() => setImgError(true)} />
+      ) : (
+        <div className="kol-pc-avatar__placeholder">{name.charAt(0)}</div>
+      )}
     </div>
   )
 }

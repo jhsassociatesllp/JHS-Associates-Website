@@ -1,9 +1,10 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Ahmedabad.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
@@ -82,10 +83,10 @@ const PARTNERS = [
   { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'IA & Tax Consulting', teamSize: 8, clientsServed: 32, email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
   { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', teamSize: 5, clientsServed: 22, email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
   { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 7, clientsServed: 28, email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
-  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA | LL.B.', designation: 'Tax, Litigation & Risk Advisory', teamSize: 6, clientsServed: 26, email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
+  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA ', designation: 'Tax, Litigation & Risk Advisory', teamSize: 6, clientsServed: 26, email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
   // { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: 'Direct & Indirect Tax', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/' },
   { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA | CPA Australia', designation: 'Strategy, Compliance & Advisory', teamSize: 5, clientsServed: 20, email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
-  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'CA', designation: 'US Taxation, CFO Advisory & SEC Compliance', teamSize: 4, clientsServed: 18, email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
+  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'ACA', designation: 'US Taxation, CFO Advisory & SEC Compliance', teamSize: 4, clientsServed: 18, email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -223,7 +224,7 @@ export default function Ahmedabad() {
           <div className="ahm-partners-grid">
             {PARTNERS.map(p => (
               <div key={p.name} className="ahm-pc-card">
-                <div className="ahm-pc-avatar"><img src={p.image} alt={p.name} className="ahm-pc-avatar__img" loading="lazy" /></div>
+                <CityPartnerAvatar image={p.image} name={p.name} className="ahm-pc-avatar" imgClassName="ahm-pc-avatar__img" />
                 <div className="ahm-pc-info">
                   <h3 className="ahm-pc-name">{p.name}</h3>
                   <p className="ahm-pc-quals">{p.qualifications}</p>

@@ -1,8 +1,9 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Hyderabad.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
   { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', teamSize: 10, clientsServed: 38, email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
@@ -131,7 +132,7 @@ export default function Hyderabad() {
             <div className="hyd-partners-grid">
               {PARTNERS.map(p => (
                 <div key={p.name} className="hyd-pc-card">
-                  <div className="hyd-pc-avatar"><img src={p.image} alt={p.name} className="hyd-pc-avatar__img" loading="lazy" /></div>
+                  <CityPartnerAvatar image={p.image} name={p.name} className="hyd-pc-avatar" imgClassName="hyd-pc-avatar__img" />
                   <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
                   <div className="hyd-pc-stats">
                     <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="hyd-pc-stat__val">{p.teamSize}</span><span className="hyd-pc-stat__lbl">Team Size</span></div>

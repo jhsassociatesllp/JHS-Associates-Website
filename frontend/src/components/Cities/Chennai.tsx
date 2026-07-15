@@ -1,8 +1,9 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Chennai.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
   { name: 'G Chandra sekaran', image: imageUrl('Chandra Shekaran.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 9, clientsServed: 35, email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
@@ -131,7 +132,7 @@ export default function Chennai() {
             <div className="chn-partners-grid">
               {PARTNERS.map(p => (
                 <div key={p.name} className="chn-pc-card">
-                  <div className="chn-pc-avatar"><img src={p.image} alt={p.name} className="chn-pc-avatar__img" loading="lazy" /></div>
+                  <CityPartnerAvatar image={p.image} name={p.name} className="chn-pc-avatar" imgClassName="chn-pc-avatar__img" />
                   <div className="chn-pc-info"><h3 className="chn-pc-name">{p.name}</h3><p className="chn-pc-quals">{p.qualifications}</p><p className="chn-pc-desig">{p.designation}</p></div>
                   <div className="chn-pc-stats">
                     <div className="chn-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="chn-pc-stat__val">{p.teamSize}</span><span className="chn-pc-stat__lbl">Team Size</span></div>

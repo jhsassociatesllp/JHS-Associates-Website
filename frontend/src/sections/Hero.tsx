@@ -91,7 +91,7 @@ const cards: Card[] = [
     hoverTitle: "JHS White Papers",
     hoverDescription:
       "Explore our comprehensive collection of white papers covering regulatory frameworks, financial strategies, taxation insights, and industry-specific intelligence — curated by JHS Associates to keep you ahead of the curve.",
-    route: "/resources",
+    route: "/white-papers",
   },
 ];
 

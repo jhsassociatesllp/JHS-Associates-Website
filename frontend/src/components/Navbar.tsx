@@ -41,6 +41,7 @@ const NAV_ITEMS: NavItem[] = [
     subDesc: "Access our latest thinking, research & perspectives.",
     subItems: [
       { label: "Resources", description: "Reports, tools & frameworks", href: '/resources' },
+      { label: "White Papers", description: "In-depth research & analysis", href: '/white-papers' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
       { label: "Thought Leadership", description: "Leadership perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
@@ -67,20 +68,20 @@ const NAV_ITEMS: NavItem[] = [
           { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
           { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
           { label: "Compliance & Learning", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/compliance-learning' },
-        ],
-      },
-      {
-        label: "Global",
-        description: "World-class advisory across geographies",
-        children: [
-          // { label: "Assurance", description: "", href: '/services/assurance' },
-          // { label: "Taxation ", description: "", href: '/services/taxation' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
-          // { label: "Consulting", description: "", href: '/services/consulting' },
-          // { label: "Outsourcing", description: "", href: '/services/outsourcing' },
         ],
       },
+      // {
+      //   label: "Global",
+      //   description: "World-class advisory across geographies",
+      //   children: [
+      //     { label: "Assurance", description: "", href: '/services/assurance' },
+      //     { label: "Taxation ", description: "", href: '/services/taxation' },
+      //     { label: "Consulting", description: "", href: '/services/consulting' },
+      //     { label: "Outsourcing", description: "", href: '/services/outsourcing' },
+      //   ],
+      // },
     ],
   },
 

@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import AdminArticles from './pages/AdminArticles';   // ✅ NEW
 import AdminBlogs from './pages/AdminBlogs';         // ✅ NEW
 import AdminKnowledge from './pages/AdminKnowledge'; // ✅ NEW
+import AdminWhitePapers from './pages/AdminWhitePapers'; // ✅ NEW
 import AdminContacts from './pages/AdminContacts';   // ✅ NEW
 import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
 import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
@@ -40,6 +41,7 @@ export default function App() {
               <Route path="/articles" element={<AdminArticles />} />  {/* ✅ NEW */}
               <Route path="/blogs" element={<AdminBlogs />} />        {/* ✅ NEW */}
               <Route path="/knowledge" element={<AdminKnowledge />} /> {/* ✅ NEW */}
+              <Route path="/white-papers" element={<AdminWhitePapers />} /> {/* ✅ NEW */}
               <Route path="/contacts" element={<AdminContacts />} />   {/* ✅ NEW */}
               <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
               <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}

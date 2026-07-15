@@ -16,6 +16,9 @@ export const LANGUAGES: LanguageOption[] = [
   { code: 'mr', label: 'Marathi', nativeLabel: 'मराठी' },
   { code: 'gu', label: 'Gujarati', nativeLabel: 'ગુજરાતી' },
   { code: 'ur', label: 'Urdu', nativeLabel: 'اردو' },
+  { code: 'ar', label: 'Arabic', nativeLabel: 'العربية' },
+  { code: 'ta', label: 'Tamil', nativeLabel: 'தமிழ்' },
+  { code: 'te', label: 'Telugu', nativeLabel: 'తెలుగు' },
 ]
 
 const SOURCE_LANG = 'en'

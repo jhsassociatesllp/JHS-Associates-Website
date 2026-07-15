@@ -55,9 +55,10 @@ export default function LanguageSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={open}
         disabled={switching}
+        title={activeOption.label}
       >
         <IconGlobe />
-        <span>{switching ? '…' : activeOption.nativeLabel}</span>
+        <span className="lang-switch__code">{switching ? '…' : activeOption.code.toUpperCase()}</span>
         <IconChevron />
       </button>
 

@@ -24,6 +24,7 @@ import {
   Article as ArticleIcon,
   RssFeed as BlogIcon,
   Psychology as KnowledgeIcon,
+  Description as WhitePaperIcon,
   ContactMail as ContactIcon,
   School as AlumniIcon,
   Feedback as FeedbackIcon,
@@ -53,6 +54,7 @@ const menuGroups = [
       { text: 'Articles', icon: ArticleIcon, path: '/articles', requiredFeature: 'articles' },
       { text: 'Blogs', icon: BlogIcon, path: '/blogs', requiredFeature: 'blogs' },
       { text: 'Knowledge Resources', icon: KnowledgeIcon, path: '/knowledge', requiredFeature: 'knowledge' },
+      { text: 'White Papers', icon: WhitePaperIcon, path: '/white-papers', requiredFeature: 'white_papers' },
     ],
   },
   {

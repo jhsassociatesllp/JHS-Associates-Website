@@ -13,12 +13,14 @@ class WhitePaperCreate(BaseModel):
     title: str
     short_description: str
     pdf_id: str  # GridFS file ID for PDF
+    image_id: Optional[str] = None  # GridFS file ID for cover image
 
 
 class WhitePaperUpdate(BaseModel):
     title: Optional[str] = None
     short_description: Optional[str] = None
     pdf_id: Optional[str] = None
+    image_id: Optional[str] = None
     edited_by: str
 
 
@@ -27,6 +29,7 @@ class WhitePaperResponse(BaseModel):
     title: str
     short_description: str
     pdf_id: str
+    image_id: Optional[str] = None
     created_at: datetime
     last_edited_by: Optional[str] = None
     last_edited_at: Optional[datetime] = None

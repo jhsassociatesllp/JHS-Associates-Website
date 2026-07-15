@@ -6,6 +6,7 @@ interface WhitePaper {
   title: string;
   short_description: string;
   pdf_id: string;
+  image_id?: string;
   created_at: string;
   last_edited_by?: string;
   last_edited_at?: string;
@@ -15,6 +16,7 @@ interface FormData {
   title: string;
   short_description: string;
   pdf: File | null;
+  image: File | null;
 }
 
 const AdminWhitePapers: React.FC = () => {
@@ -29,7 +31,8 @@ const AdminWhitePapers: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     title: '',
     short_description: '',
-    pdf: null
+    pdf: null,
+    image: null
   });
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
@@ -75,6 +78,10 @@ const AdminWhitePapers: React.FC = () => {
         formDataToSend.append('pdf', formData.pdf);
       }
 
+      if (formData.image) {
+        formDataToSend.append('image', formData.image);
+      }
+
       let response;
       if (editingId) {
         formDataToSend.append('edited_by', 'Admin User');
@@ -106,7 +113,8 @@ const AdminWhitePapers: React.FC = () => {
     setFormData({
       title: '',
       short_description: '',
-      pdf: null
+      pdf: null,
+      image: null
     });
     setEditingId(null);
   };
@@ -116,7 +124,8 @@ const AdminWhitePapers: React.FC = () => {
     setFormData({
       title: paper.title,
       short_description: paper.short_description,
-      pdf: null
+      pdf: null,
+      image: null
     });
     setEditingId(paper.id);
     setShowForm(true);
@@ -144,6 +153,14 @@ const AdminWhitePapers: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       setFormData(prev => ({ ...prev, pdf: file }));
+    }
+  };
+
+  // Handle image change
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
     }
   };
 
@@ -476,6 +493,57 @@ const AdminWhitePapers: React.FC = () => {
                               </p>
                               <span className="whitepaper-upload-chip pdf">
                                 PDF files only
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Cover Image Upload */}
+                      <div className="whitepaper-form-field">
+                        <label className="whitepaper-form-label">
+                          Cover Image
+                        </label>
+                        <div
+                          className="whitepaper-upload-zone image"
+                          onClick={() => document.getElementById('whitepaper-image-upload')?.click()}
+                        >
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }}
+                            id="whitepaper-image-upload"
+                          />
+
+                          <div className="whitepaper-upload-avatar image">
+                          </div>
+
+                          <h3 className="whitepaper-upload-title">
+                            {formData.image ? 'Image Selected' : 'Upload Cover Image'}
+                          </h3>
+
+                          {formData.image ? (
+                            <div>
+                              <p className="whitepaper-upload-filename">
+                                {formData.image.name}
+                              </p>
+                              <span className="whitepaper-upload-chip size">
+                                {(formData.image.size / 1024 / 1024).toFixed(2)} MB
+                              </span>
+                            </div>
+                          ) : (
+                            <div>
+                              <p className="whitepaper-upload-description">
+                                Click to browse and select a cover image
+                              </p>
+                              <p className="whitepaper-upload-hint">
+                                {editingId
+                                  ? 'Leave empty to keep the current image'
+                                  : 'Optional — shown as the thumbnail for this white paper'}
+                              </p>
+                              <span className="whitepaper-upload-chip image">
+                                Image files only
                               </span>
                             </div>
                           )}

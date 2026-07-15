@@ -89,11 +89,12 @@ async def delete_whitepaper(whitepaper_id: str) -> bool:
     whitepaper = await collection.find_one({"_id": ObjectId(whitepaper_id)})
     if whitepaper:
         fs = AsyncIOMotorGridFSBucket(db)
-        if "pdf_id" in whitepaper:
-            try:
-                await fs.delete(ObjectId(whitepaper["pdf_id"]))
-            except Exception:
-                pass
+        for field in ("pdf_id", "image_id"):
+            if whitepaper.get(field):
+                try:
+                    await fs.delete(ObjectId(whitepaper[field]))
+                except Exception:
+                    pass
 
     result = await collection.delete_one({"_id": ObjectId(whitepaper_id)})
     return result.deleted_count == 1
@@ -107,6 +108,18 @@ async def upload_pdf_to_gridfs(file_content: bytes, filename: str) -> str:
         filename,
         BytesIO(file_content),
         metadata={"contentType": "application/pdf"}
+    )
+    return str(file_id)
+
+
+async def upload_image_to_gridfs(file_content: bytes, filename: str, content_type: str) -> str:
+    """Upload cover image to GridFS and return the file ID"""
+    db = get_database()
+    fs = AsyncIOMotorGridFSBucket(db)
+    file_id = await fs.upload_from_stream(
+        filename,
+        BytesIO(file_content),
+        metadata={"contentType": content_type or "application/octet-stream"}
     )
     return str(file_id)
 

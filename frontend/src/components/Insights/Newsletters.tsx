@@ -1,56 +1,46 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Filter } from 'lucide-react'
+import { ArrowRight, Mail } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
 import './Newsletters.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const NEWSLETTERS = [
-  {
-    id: 1,
-    title: "Tax & Compliance Weekly - May 2026",
-    description: "Our weekly wrap-up of the latest direct and indirect tax rulings, MCA updates, and key compliance deadlines for businesses in India.",
-    category: "Weekly Digest",
-    date: "May 10, 2026",
-    pdf: "#",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80&auto=format&fit=crop"
-  },
-  {
-    id: 2,
-    title: "CFO Insights Monthly - April 2026",
-    description: "Strategic perspectives on corporate finance, ESG reporting, and navigating the global minimum tax framework.",
-    category: "Monthly Insights",
-    date: "April 30, 2026",
-    pdf: "#",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Global Transfer Pricing Digest",
-    description: "Analyzing the impact of recent OECD guidelines on intercompany transactions and dispute resolution mechanisms.",
-    category: "Tax Updates",
-    date: "April 15, 2026",
-    pdf: "#",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop"
-  }
-];
+const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api'
 
-const CATEGORIES = ['All', 'Weekly Digest', 'Monthly Insights', 'Tax Updates'];
+interface Newsletter {
+  id: string
+  heading: string
+  short_description: string
+  pdf_id: string
+  image_id?: string
+  created_at: string
+}
+
+const pdfUrl = (pdfId: string) => `${API_BASE}/newsletters/pdf/${pdfId}`
+const imageUrl = (imageId: string) => `${API_BASE}/newsletters/image/${imageId}`
+
+const formatDate = (iso?: string) => {
+  if (!iso) return ''
+  try {
+    return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+  } catch {
+    return ''
+  }
+}
 
 export default function Newsletters() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [filteredNewsletters, setFilteredNewsletters] = useState(NEWSLETTERS)
+  const [newsletters, setNewsletters] = useState<Newsletter[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
-  const filterRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
 
     const ctx = gsap.context(() => {
-      /* ── Hero: staggered slide-up ── */
       gsap.fromTo(
         ['.nl-hero__eyebrow', '.nl-hero__title', '.nl-hero__sub'],
         { opacity: 0, y: 40 },
@@ -62,21 +52,33 @@ export default function Newsletters() {
           delay: 0.15,
         }
       )
+    })
 
-      /* ── Filter pills: fade up ── */
-      gsap.fromTo(
-        '.nl-filter__btn',
-        { opacity: 0, y: 14 },
-        {
-          opacity: 1, y: 0,
-          duration: 0.45,
-          stagger: 0.055,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: filterRef.current, start: 'top 90%' },
-        }
-      )
+    return () => ctx.revert()
+  }, [])
 
-      /* ── Grid cards: cascade ── */
+  useEffect(() => {
+    const fetchNewsletters = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const res = await fetch(`${API_BASE}/newsletters/`)
+        if (!res.ok) throw new Error(`Server returned ${res.status}`)
+        const data = await res.json()
+        setNewsletters(Array.isArray(data) ? data : [])
+      } catch (err) {
+        console.error('[Newsletters] fetch error:', err)
+        setError('Could not load newsletters right now.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchNewsletters()
+  }, [])
+
+  useEffect(() => {
+    if (loading || error || newsletters.length === 0) return
+    const ctx = gsap.context(() => {
       gsap.fromTo(
         '.nl-card',
         { opacity: 0, y: 50 },
@@ -89,26 +91,8 @@ export default function Newsletters() {
         }
       )
     })
-
     return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    if (selectedCategory === 'All') {
-      setFilteredNewsletters(NEWSLETTERS);
-    } else {
-      setFilteredNewsletters(NEWSLETTERS.filter(nl => nl.category === selectedCategory));
-    }
-  }, [selectedCategory])
-
-  const handleDownload = (pdfUrl: string, title: string) => {
-    const link = document.createElement('a')
-    link.href = pdfUrl
-    link.download = `${title.replace(/\s+/g, '-').toLowerCase()}.pdf`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+  }, [loading, error, newsletters])
 
   return (
     <div className="nl-page">
@@ -128,67 +112,70 @@ export default function Newsletters() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          FILTER BAR
-      ══════════════════════════════════════ */}
-      <div className="nl-filter container" ref={filterRef}>
-        <span className="nl-filter__label">
-          <Filter size={14} strokeWidth={1.5} />
-          Filter By Category
-        </span>
-        <div className="nl-filter__pills">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              className={`nl-filter__btn${selectedCategory === cat ? ' nl-filter__btn--active' : ''}`}
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* Loading */}
+      {loading && (
+        <section className="container nl-empty">
+          <div className="nl-empty__box">
+            <span className="nl-empty__icon">⟳</span>
+            <h3>Loading newsletters…</h3>
+          </div>
+        </section>
+      )}
 
-      {filteredNewsletters.length > 0 ? (
+      {/* Error */}
+      {!loading && error && (
+        <section className="container nl-empty">
+          <div className="nl-empty__box">
+            <span className="nl-empty__icon">∅</span>
+            <h3>Something went wrong</h3>
+            <p>{error}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Real cards */}
+      {!loading && !error && newsletters.length > 0 && (
         <section className="nl-grid-section container" ref={gridRef}>
           <div className="nl-grid">
-            {filteredNewsletters.map((nl) => (
+            {newsletters.map((nl) => (
               <article key={nl.id} className="nl-card">
 
-                {/* Background Image */}
-                <LazyImage
-                  src={nl.image}
-                  alt={nl.title}
-                  className="nl-card__bg-img"
-                />
+                {/* Background image from GridFS or fallback gradient */}
+                {nl.image_id ? (
+                  <LazyImage
+                    src={imageUrl(nl.image_id)}
+                    alt={nl.heading}
+                    className="nl-card__bg-img"
+                  />
+                ) : (
+                  <div className="nl-card__bg-img" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 30%, #D62049 70%, #8a1725 100%)' }} />
+                )}
 
                 {/* Default State: White Box at Bottom */}
                 <div className="nl-card__default-box">
                   <div className="nl-card__meta">
-                    {nl.category.toUpperCase()} &bull; {nl.date.toUpperCase()}
+                    NEWSLETTER &bull; {formatDate(nl.created_at).toUpperCase()}
                   </div>
-                  <h3 className="nl-card__title">{nl.title}</h3>
+                  <h3 className="nl-card__title">{nl.heading}</h3>
                 </div>
 
                 {/* Hover State: Frosted Overlay */}
                 <div className="nl-card__hover-overlay">
                   <div className="nl-card__hover-content">
                     <div className="nl-card__meta">
-                      {nl.category.toUpperCase()} &bull; {nl.date.toUpperCase()}
+                      NEWSLETTER &bull; {formatDate(nl.created_at).toUpperCase()}
                     </div>
-                    <h3 className="nl-card__hover-title">{nl.title}</h3>
-                    <p className="nl-card__hover-desc">{nl.description}</p>
+                    <h3 className="nl-card__hover-title">{nl.heading}</h3>
+                    <p className="nl-card__hover-desc">{nl.short_description}</p>
                   </div>
 
                   <a
-                    href="#download"
+                    href={pdfUrl(nl.pdf_id)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="nl-card__learn-btn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleDownload(nl.pdf, nl.title);
-                    }}
                   >
-                    Download <ArrowRight size={16} />
+                    Read Newsletter <ArrowRight size={16} />
                   </a>
                 </div>
 
@@ -196,19 +183,15 @@ export default function Newsletters() {
             ))}
           </div>
         </section>
-      ) : (
+      )}
+
+      {/* Coming soon — only when there's genuinely nothing published yet */}
+      {!loading && !error && newsletters.length === 0 && (
         <section className="container nl-empty">
           <div className="nl-empty__box">
-            <span className="nl-empty__icon">∅</span>
-            <h3>No newsletters found</h3>
-            <p>No newsletters match the selected category "{selectedCategory}".</p>
-            <button
-              className="nl-btn nl-btn--solid"
-              onClick={() => setSelectedCategory('All')}
-              type="button"
-            >
-              View All Newsletters
-            </button>
+            <Mail size={44} strokeWidth={1.5} style={{ margin: '0 auto 1rem', display: 'block', color: 'var(--ink-5)' }} />
+            <h3>No newsletters published yet</h3>
+            <p>We're preparing our first digest. Check back soon for updates on tax, compliance, and strategic finance.</p>
           </div>
         </section>
       )}

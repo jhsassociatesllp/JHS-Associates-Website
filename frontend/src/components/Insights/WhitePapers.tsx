@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, ArrowUpRight, Bell, Download, Calendar } from 'lucide-react'
+import { FileText, ArrowUpRight, Bell, Download, Calendar, ArrowRight } from 'lucide-react'
+import LazyImage from '../common/LazyImage'
 import './WhitePapers.css'
 
 const TOPICS = [
@@ -18,10 +19,12 @@ interface WhitePaper {
   title: string
   short_description: string
   pdf_id: string
+  image_id?: string
   created_at: string
 }
 
 const pdfUrl = (pdfId: string) => `${API_BASE}/whitepapers/pdf/${pdfId}`
+const imageUrl = (imageId: string) => `${API_BASE}/whitepapers/image/${imageId}`
 
 const formatDate = (iso?: string) => {
   if (!iso) return ''
@@ -99,24 +102,58 @@ export default function WhitePapers() {
           <div className="wp-grid">
             {papers.map((paper) => (
               <article key={paper.id} className="wp-card">
-                <div className="wp-card__icon">
-                  <FileText size={22} strokeWidth={1.5} />
+
+                {/* Background image from GridFS or fallback gradient */}
+                {paper.image_id ? (
+                  <LazyImage
+                    src={imageUrl(paper.image_id)}
+                    alt={paper.title}
+                    className="wp-card__bg-img"
+                  />
+                ) : (
+                  <div className="wp-card__bg-fallback" />
+                )}
+
+                {/* Default state: white box at bottom */}
+                <div className="wp-card__default-box">
+                  <div className="wp-card__meta">
+                    WHITE PAPER • {formatDate(paper.created_at).toUpperCase()}
+                  </div>
+                  <h3 className="wp-card__title">{paper.title}</h3>
                 </div>
-                <h3 className="wp-card__title">{paper.title}</h3>
-                <p className="wp-card__desc">{paper.short_description}</p>
-                <div className="wp-card__footer">
-                  <span className="wp-card__date">
-                    <Calendar size={13} /> {formatDate(paper.created_at)}
-                  </span>
-                  <a
-                    href={pdfUrl(paper.pdf_id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="wp-card__download"
-                  >
-                    <Download size={14} /> View PDF
-                  </a>
+
+                {/* Hover state: frosted overlay */}
+                <div className="wp-card__hover-overlay">
+                  <div className="wp-card__hover-content">
+                    <div className="wp-card__meta">
+                      WHITE PAPER • {formatDate(paper.created_at).toUpperCase()}
+                    </div>
+                    <h3 className="wp-card__hover-title">{paper.title}</h3>
+                    <p className="wp-card__hover-desc">{paper.short_description}</p>
+                  </div>
+
+                  <div className="wp-card__hover-actions">
+                    <a
+                      href={pdfUrl(paper.pdf_id)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="wp-card__view-btn"
+                    >
+                      View PDF <ArrowRight size={16} />
+                    </a>
+
+                    <a
+                      href={pdfUrl(paper.pdf_id)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="wp-card__download-btn"
+                      title="Download PDF"
+                    >
+                      <Download size={16} />
+                    </a>
+                  </div>
                 </div>
+
               </article>
             ))}
           </div>

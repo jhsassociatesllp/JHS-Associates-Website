@@ -25,6 +25,7 @@ import {
   RssFeed as BlogIcon,
   Psychology as KnowledgeIcon,
   Description as WhitePaperIcon,
+  EmojiEvents as ExcellenciaIcon,
   ContactMail as ContactIcon,
   School as AlumniIcon,
   Feedback as FeedbackIcon,
@@ -55,6 +56,7 @@ const menuGroups = [
       { text: 'Blogs', icon: BlogIcon, path: '/blogs', requiredFeature: 'blogs' },
       { text: 'Knowledge Resources', icon: KnowledgeIcon, path: '/knowledge', requiredFeature: 'knowledge' },
       { text: 'White Papers', icon: WhitePaperIcon, path: '/white-papers', requiredFeature: 'white_papers' },
+      { text: 'Excellencia', icon: ExcellenciaIcon, path: '/excellencia', requiredFeature: 'excellencia' },
     ],
   },
   {

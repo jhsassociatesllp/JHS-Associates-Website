@@ -41,17 +41,6 @@ const cards: Card[] = [
   {
     id: 3,
     image: imageUrl('Card3.jpeg'),
-    category: "REGULATORY",
-    meta: "RBI REGULATORY UPDATE · CO-OPERATIVE BANKING",
-    title: "RBI Introduces Mandatory Cooling-Off Period for Co-operative Bank Directors",
-    hoverTitle: "RBI Introduces Mandatory Cooling-Off Period for Co-operative Bank Directors",
-    hoverDescription:
-      "The Reserve Bank of India (RBI) has issued final amendment directions introducing a mandatory cooling-off period for directors serving on the boards of co-operative banks. The reform aims to strengthen governance standards, improve board independence, and prevent the circumvention of tenure limits.",
-    route: "/regulatory/rbi-cooling-off-period",
-  },
-  {
-    id: 4,
-    image: imageUrl('Card4.jpeg'),
     category: "SUSTAINABILITY",
     meta: "INSIGHT • MARCH 30, 2026",
     title: "The Green Transition: Turning Climate Risk into Competitive Advantage",
@@ -63,17 +52,6 @@ const cards: Card[] = [
   {
     id: 5,
     image: imageUrl('Card6.webp'),
-    category: "REGULATORY",
-    meta: "Companies (CSR Policy) Amendment Rules, 2026",
-    title: "MCA Introduces CSR Investment through ZCZP Instruments on Social Stock Exchange",
-    hoverTitle: "Digital Transformation 2026",
-    hoverDescription:
-      "The Ministry of Corporate Affairs has amended the CSR Rules, 2026, permitting eligible companies to subscribe to Zero Coupon Zero Principal (ZCZP) Instruments issued by registered Not-for-Profit Organisations through the Social Stock Exchange, subject to prescribed limits and compliance requirements.",
-    route: "/digital/digital-twins",
-  },
-  {
-    id: 6,
-    image: imageUrl('Card5.jpeg'),
     category: "EXCELLENCIA",
     meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
     title: "JHS Excellencia Library — Premium Research, Benchmarks & Strategic Frameworks",

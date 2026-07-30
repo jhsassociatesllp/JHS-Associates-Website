@@ -66,6 +66,7 @@ import Blog from './components/Insights/Blog'
 import Podcasts from './components/Insights/Podcasts'
 import Excellencia from './components/Insights/Excellencia'
 import WhitePapers from './components/Insights/WhitePapers'
+import Regulatory from './components/Insights/Regulatory'
 
 // Spotlight pages
 import AIAutomation from './components/Spotlight/AIAutomation'
@@ -220,6 +221,7 @@ export default function App() {
         {/* Insights — paths must match navbar hrefs exactly */}
         <Route path="/resources" element={<Resources />} />
         <Route path="/white-papers" element={<WhitePapers />} />
+        <Route path="/regulatory" element={<Regulatory />} />
         <Route path="/articles" element={<Articles />} />
         <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/case-studies/:id" element={<CaseStudyDetail />} />

@@ -11,6 +11,7 @@ from app.routes.feedback import router as feedback_router   # ✅ FEEDBACK
 from app.routes.proposal import router as proposal_router   # ✅ PROPOSAL
 from app.routes.excellencia import router as excellencia_router # ✅ NEW
 from app.routes.newsletter import router as newsletter_router # ✅ NEW
+from app.routes.regulatory import router as regulatory_router # ✅ NEW
 
 
 @asynccontextmanager
@@ -62,6 +63,7 @@ api_router.include_router(feedback_router)   # ✅ FEEDBACK
 api_router.include_router(proposal_router)   # ✅ PROPOSAL
 api_router.include_router(excellencia_router) # ✅ NEW
 api_router.include_router(newsletter_router) # ✅ NEW
+api_router.include_router(regulatory_router) # ✅ NEW
 
 app.include_router(api_router)
 

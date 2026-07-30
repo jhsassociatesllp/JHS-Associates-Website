@@ -1,0 +1,433 @@
+/* ============================================================
+   Regulatory.css — Image-Based Card Design (Article-style)
+   ============================================================ */
+
+.reg-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: "Inter", "DM Sans", "Helvetica Neue", sans-serif;
+  color: #1a1a2e;
+}
+
+/* ── Hero ── */
+.reg-hero {
+  padding: 160px 5% 64px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #edf2f7;
+  text-align: center;
+}
+
+.reg-hero__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #D62049;
+  margin-bottom: 16px;
+  background: rgba(176, 30, 46, 0.08);
+  padding: 6px 16px;
+  border-radius: 100px;
+}
+
+.reg-hero__title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #0f2340;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.reg-hero__sub {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 620px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.reg-hero__topics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.reg-hero__topic {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0f2340;
+  background: rgba(15, 35, 64, 0.06);
+  border: 1px solid rgba(15, 35, 64, 0.1);
+  border-radius: 100px;
+  padding: 7px 16px;
+}
+
+/* ── Content ── */
+.reg-content {
+  padding: 80px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Status (loading / error) ── */
+.reg-status {
+  text-align: center;
+  padding: 64px 24px;
+  color: #64748b;
+}
+
+.reg-status__spin {
+  display: inline-block;
+  font-size: 1.8rem;
+  color: #D62049;
+  animation: reg-spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes reg-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD GRID  — Article-style image cards
+═══════════════════════════════════════════════════════════ */
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+}
+
+@media (max-width: 1100px) {
+  .reg-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .reg-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ── Card shell ── */
+.reg-card {
+  position: relative;
+  height: 420px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reg-card:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+/* ── Background image from GridFS ── */
+.reg-card__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reg-card:hover .reg-card__bg-img {
+  transform: scale(1.06);
+}
+
+/* ── Fallback gradient when no image is uploaded ── */
+.reg-card__bg-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #0f2340 0%,
+    #1e3a5f 30%,
+    #D62049 70%,
+    #8a1725 100%
+  );
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reg-card:hover .reg-card__bg-fallback {
+  transform: scale(1.06);
+}
+
+/* ── Default State (White Box at bottom) ── */
+.reg-card__default-box {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 2;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.reg-card:hover .reg-card__default-box {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.reg-card__meta {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.reg-card__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1e3a5f;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Hover State (Frosted Overlay) ── */
+.reg-card__hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+
+.reg-card:hover .reg-card__hover-overlay {
+  opacity: 1;
+}
+
+.reg-card__hover-content {
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.reg-card:hover .reg-card__hover-content {
+  transform: translateY(0);
+}
+
+.reg-card__hover-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f2340;
+  line-height: 1.3;
+  margin: 0.75rem 0 1rem;
+}
+
+.reg-card__hover-desc {
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: #475569;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Action buttons in hover ── */
+.reg-card__hover-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.reg-card:hover .reg-card__hover-actions {
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.reg-card__view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #D62049 0%, #d62b3e 100%);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 14px rgba(214, 32, 73, 0.3);
+  transition: all 0.3s ease;
+}
+
+.reg-card__view-btn:hover {
+  box-shadow: 0 8px 24px rgba(214, 32, 73, 0.4);
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.reg-card__download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(15, 35, 64, 0.08);
+  color: #0f2340;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.reg-card__download-btn:hover {
+  background: #0f2340;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMING SOON (empty state)
+═══════════════════════════════════════════════════════════ */
+
+.reg-coming-soon {
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  padding: 64px 40px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.reg-coming-soon__icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(214, 32, 73, 0.08);
+  color: #D62049;
+}
+
+.reg-coming-soon h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0f2340;
+  margin-bottom: 14px;
+}
+
+.reg-coming-soon p {
+  font-size: 1.05rem;
+  color: #64748b;
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+
+.reg-coming-soon__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.reg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.reg-btn--solid {
+  background: #B01E2E;
+  color: #ffffff;
+}
+
+.reg-btn--solid:hover {
+  background: #8e1523;
+  transform: translateY(-2px);
+}
+
+.reg-btn--ghost {
+  background: transparent;
+  color: #0f2340;
+  border: 1.5px solid rgba(15, 35, 64, 0.18);
+}
+
+.reg-btn--ghost:hover {
+  border-color: #0f2340;
+  background: rgba(15, 35, 64, 0.04);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .reg-hero {
+    padding: 130px 6% 48px;
+  }
+
+  .reg-card {
+    height: 360px;
+  }
+
+  .reg-card__default-box {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .reg-card__hover-overlay {
+    padding: 1.5rem;
+  }
+
+  .reg-coming-soon {
+    padding: 44px 24px;
+  }
+
+  .reg-coming-soon__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reg-btn {
+    justify-content: center;
+  }
+}

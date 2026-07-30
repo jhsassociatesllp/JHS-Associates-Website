@@ -42,6 +42,7 @@ const NAV_ITEMS: NavItem[] = [
     subItems: [
       { label: "Resources", description: "Reports, tools & frameworks", href: '/resources' },
       { label: "White Papers", description: "In-depth research & analysis", href: '/white-papers' },
+      { label: "Regulatory", description: "Compliance updates & regulatory filings", href: '/regulatory' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
       { label: "Thought Leadership", description: "Leadership perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },

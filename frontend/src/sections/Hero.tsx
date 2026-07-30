@@ -38,20 +38,10 @@ const cards: Card[] = [
       "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
     route: "/regulatory/sebi-draft-circular",
   },
+
   {
     id: 3,
     image: imageUrl('Card3.jpeg'),
-    category: "SUSTAINABILITY",
-    meta: "INSIGHT • MARCH 30, 2026",
-    title: "The Green Transition: Turning Climate Risk into Competitive Advantage",
-    hoverTitle: "Sustainability & Climate 2026",
-    hoverDescription:
-      "Companies that embed sustainability into their core strategy are outperforming peers. Learn how to navigate the energy transition and create lasting stakeholder value.",
-    route: "/sustainability/green-transition",
-  },
-  {
-    id: 5,
-    image: imageUrl('Card6.webp'),
     category: "EXCELLENCIA",
     meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
     title: "JHS Excellencia Library — Premium Research, Benchmarks & Strategic Frameworks",
@@ -65,10 +55,10 @@ const cards: Card[] = [
     image: imageUrl('Fainance-report.png'),
     category: "WHITE PAPER",
     meta: "JHS WHITE PAPERS · THOUGHT LEADERSHIP · 2026",
-    title: "In-Depth White Papers on Regulatory, Financial & Strategic Topics",
-    hoverTitle: "JHS White Papers",
+    title: "EU Upholds Google's €4.1 Billion Android Fine",
+    hoverTitle: "Read JHS Knowledge Desk's research paper analysing the CJEU's €4.1 billion Android antitrust ruling, its impact on global digital competition law, and the implications for India's competition and technology landscape.",
     hoverDescription:
-      "Explore our comprehensive collection of white papers covering regulatory frameworks, financial strategies, taxation insights, and industry-specific intelligence — curated by JHS Associates to keep you ahead of the curve.",
+      "Read JHS Knowledge Desk's research paper analysing the CJEU's €4.1 billion Android antitrust ruling, its impact on global digital competition law, and the implications for India's competition and technology landscape.",
     route: "/white-papers",
   },
 ];

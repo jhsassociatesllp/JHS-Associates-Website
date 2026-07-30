@@ -11,11 +11,16 @@ export default function Disclaimer() {
 
   useEffect(() => {
     if (visible) {
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
   }, [visible]);
 
   const handleAccept = () => {
@@ -30,7 +35,7 @@ export default function Disclaimer() {
   if (!visible) return null;
 
   return (
-    <div className="disclaimer-backdrop" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title">
+    <div className="disclaimer-backdrop" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" data-lenis-prevent>
       <div className="disclaimer-modal">
         {/* Header */}
         <div className="disclaimer-header">

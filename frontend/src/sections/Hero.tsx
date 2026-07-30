@@ -31,11 +31,11 @@ const cards: Card[] = [
     id: 2,
     image: imageUrl('Card1.jpeg'),
     category: "REGULATORY",
-    meta: "SEBI DRAFT CIRCULAR · MAY 20, 2026",
-    title: "SEBI Draft Proposal: Enabling Third-PartyMF Payments with Stronger Investor Safeguards",
-    hoverTitle: "SEBI Draft Proposal: Enabling Third-PartyMF Payments with Stronger Investor Safeguards",
+    meta: "Maharashtra Introduces Digital Partnership Firm Registration",
+    title: "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
+    hoverTitle: "Maharashtra Introduces Digital Partnership Firm Registration.",
     hoverDescription:
-      "The Securities and Exchange Board of India (SEBI) has released a draft circular proposing the introduction of third-party payments in mutual funds under specific and controlled circumstances. The proposal aims to improve operational flexibility while maintaining strong investor protection and anti-money laundering safeguards.",
+      "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
     route: "/regulatory/sebi-draft-circular",
   },
   {

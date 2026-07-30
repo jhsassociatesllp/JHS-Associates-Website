@@ -5,6 +5,8 @@ import { imageUrl } from '../../utils/imageUrl'
 export default function CSR() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
 
+
+
   return (
     <div className="ap-page">
       {/* ════ HERO ════ */}
@@ -18,7 +20,7 @@ export default function CSR() {
             Committed to driving positive, sustainable change in the communities where we live and work.
           </p>
         </div>
-        
+
         {/* Stats bar */}
         <div className="ap-hero__stats">
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">500+</span><span className="ap-hero__stat-label">Lives Impacted</span></div>
@@ -32,7 +34,7 @@ export default function CSR() {
       {/* ════ CONTENT ════ */}
       <section className="ap-content">
         <div className="ap-container">
-          
+
           <div className="ap-grid">
             <div className="ap-grid-left">
               <h2>Our CSR Vision</h2>

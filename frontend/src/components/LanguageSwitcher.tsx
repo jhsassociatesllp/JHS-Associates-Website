@@ -16,6 +16,8 @@ const IconChevron = () => (
   </svg>
 )
 
+
+
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(() => getStoredLanguage())

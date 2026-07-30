@@ -36,7 +36,7 @@ const cards: Card[] = [
     hoverTitle: "Maharashtra Introduces Digital Partnership Firm Registration.",
     hoverDescription:
       "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
-    route: "/regulatory/sebi-draft-circular",
+    route: "/regulatory",
   },
 
   {

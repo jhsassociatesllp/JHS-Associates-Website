@@ -72,12 +72,7 @@ const OFFICES = [
     region: 'Gujarat',
     address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215',
   },
-  {
-    city: 'Rajkot',
-    region: 'Gujarat',
-    address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001',
 
-  },
   {
     city: 'Bengaluru',
     region: 'Karnataka',

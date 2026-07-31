@@ -6,8 +6,8 @@ import { imageUrl } from '../../utils/imageUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'FCA', designation: 'Statutory Audit & Tax Advisory', teamSize: 10, clientsServed: 38, email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
-  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'FCA', designation: 'Risk Advisory & Compliance', teamSize: 7, clientsServed: 25, email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
+  { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'CA, CMA ', designation: 'Indirect Tax & Advisory ', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
+  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'ACA', designation: ', Taxation & Audit Specialist', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -134,10 +134,10 @@ export default function Hyderabad() {
                 <div key={p.name} className="hyd-pc-card">
                   <CityPartnerAvatar image={p.image} name={p.name} className="hyd-pc-avatar" imgClassName="hyd-pc-avatar__img" />
                   <div className="hyd-pc-info"><h3 className="hyd-pc-name">{p.name}</h3><p className="hyd-pc-quals">{p.qualifications}</p><p className="hyd-pc-desig">{p.designation}</p></div>
-                  <div className="hyd-pc-stats">
+                  {/* <div className="hyd-pc-stats">
                     <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg><span className="hyd-pc-stat__val">{p.teamSize}</span><span className="hyd-pc-stat__lbl">Team Size</span></div>
                     <div className="hyd-pc-stat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg><span className="hyd-pc-stat__val">{p.clientsServed}+</span><span className="hyd-pc-stat__lbl">Clients Served</span></div>
-                  </div>
+                  </div> */}
                   <div className="hyd-pc-social">
                     <div className="hyd-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
                       <button

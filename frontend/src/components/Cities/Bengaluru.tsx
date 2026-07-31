@@ -6,7 +6,7 @@ import { imageUrl } from '../../utils/imageUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: 'Statutory Audit & Assurance', teamSize: 8, clientsServed: 30, email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: ' IA & Risk Advisory, FMCG & Retail ', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -133,7 +133,7 @@ export default function Bengaluru() {
                 <div key={p.name} className="blr-pc-card">
                   <CityPartnerAvatar image={p.image} name={p.name} className="blr-pc-avatar" imgClassName="blr-pc-avatar__img" />
                   <div className="blr-pc-info"><h3 className="blr-pc-name">{p.name}</h3><p className="blr-pc-quals">{p.qualifications}</p><p className="blr-pc-desig">{p.designation}</p></div>
-                  <div className="blr-pc-stats">
+                  {/* <div className="blr-pc-stats">
                     <div className="blr-pc-stat">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
                       <span className="blr-pc-stat__val">{p.teamSize}</span>
@@ -144,7 +144,7 @@ export default function Bengaluru() {
                       <span className="blr-pc-stat__val">{p.clientsServed}+</span>
                       <span className="blr-pc-stat__lbl">Clients Served</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="blr-pc-social">
                     <div className="blr-pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
                       <button

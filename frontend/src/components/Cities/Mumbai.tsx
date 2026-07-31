@@ -86,15 +86,15 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor', designation: 'IFC, Governance & Risk', teamSize: 12, clientsServed: 45, email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA, IFRS', designation: 'Statutory Audit', teamSize: 10, clientsServed: 38, email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO CERTIFIED', designation: 'Banking, NBFC & Insurance Advisory', teamSize: 8, clientsServed: 32, email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Cybersecurity & IT Audit | SOC', teamSize: 14, clientsServed: 50, email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
-  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'ACA ', designation: 'Risk Advisory', teamSize: 6, clientsServed: 28, email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
-  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'CA, AICA-L1', designation: 'Assurance, Tax & AI', teamSize: 9, clientsServed: 35, email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
-  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'CS, ACA, AIII', designation: 'Audit, Assurance & Outsourcing', teamSize: 8, clientsServed: 30, email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
-  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: 'Governance, Risk & Internal Control', teamSize: 7, clientsServed: 25, email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'Mcom, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', teamSize: 5, clientsServed: 22, email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor,NISM(DP), NISM(Social Auditor)', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA, IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO CERTIFICATION', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Cybersecurity & IT Audit | SOC', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
+  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'ACA ,IFC & IPO CERTIFICATION', designation: 'Risk Advisory, IA, IFC', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'CA, AICA-L1', designation: 'Assurance, Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
+  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'CS, ACA, AIII', designation: 'Outsourcing & Accounts', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
+  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: ' Risk Advisory, IA & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
+  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'M.COM, FCA, SET & CMA', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -249,7 +249,7 @@ export default function Mumbai() {
                   <p className="pc-quals">{p.qualifications}</p>
                   <p className="pc-desig">{p.designation}</p>
                 </div>
-                <div className="pc-stats">
+                {/* <div className="pc-stats">
                   <div className="pc-stat">
                     <IconTeam />
                     <span className="pc-stat__val">{p.teamSize}</span>
@@ -260,7 +260,7 @@ export default function Mumbai() {
                     <span className="pc-stat__val">{p.clientsServed}+</span>
                     <span className="pc-stat__lbl">Clients Served</span>
                   </div>
-                </div>
+                </div> */}
                 <div className="pc-social">
                   <div className="pc-mail-wrap" ref={openMailFor === p.email ? mailRef : null}>
                     <button

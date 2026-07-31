@@ -16,8 +16,8 @@ const OFFICES = [
     branches: [
       { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059' },
       { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
-      { name: 'Masjid', address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra – 400009" },
-      { name: 'Kalyan', address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301' },
+      { name: 'Masjid', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MBMaharashtra - 400009" },
+      { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301' },
     ],
   },
   {
@@ -25,15 +25,15 @@ const OFFICES = [
     badge: 'Regional Hub',
     state: 'Gujarat',
     route: '/city/ahmedabad',
-    phone: '+91 79 1234 5678',
-    email: 'ahmedabad@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
-      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road, Thaltej, Ahmedabad,Gujarat – 380054' },
-      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara.Gujarat - 390023' },
+      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054' },
+      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023' },
       { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001' },
-      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 39500 ' },
-      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi.Gujarat - 396215 ' },
+      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003' },
+      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215' },
     ],
   },
   {
@@ -41,8 +41,8 @@ const OFFICES = [
     badge: 'National Capital Office',
     state: 'NCR',
     route: '/city/delhi',
-    phone: '+91 11 1234 5678',
-    email: 'delhi@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
       { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
@@ -53,12 +53,12 @@ const OFFICES = [
     badge: 'South India Tech Hub',
     state: 'Telangana',
     route: '/city/hyderabad',
-    phone: '+91 40 1234 5678',
-    email: 'hyderabad@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
       {
-        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, Badhe House, First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
+        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
       },
     ],
   },
@@ -67,8 +67,8 @@ const OFFICES = [
     badge: 'Silicon Valley Office',
     state: 'Karnataka',
     route: '/city/bengaluru',
-    phone: '+91 80 1234 5678',
-    email: 'bengaluru@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
       { name: 'Bengaluru ', address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037' },
@@ -79,8 +79,8 @@ const OFFICES = [
     badge: 'Eastern India Gateway',
     state: 'West Bengal',
     route: '/city/kolkata',
-    phone: '+91 33 1234 5678',
-    email: 'kolkata@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
       {
@@ -93,12 +93,12 @@ const OFFICES = [
     badge: 'South India Financial Hub',
     state: 'Tamil Nadu',
     route: '/city/chennai',
-    phone: '+91 44 1234 5678',
-    email: 'chennai@jhsassociates.in',
+    phone: '',
+    email: '',
     isPrimary: false,
     branches: [
       {
-        name: 'T. Nagar ', address: 'No: 43/65, South West Boag Road,T- Nagar,Chennai – 600017'
+        name: 'T. Nagar ', address: 'No: 43/65, South West Boag Road,T-Nagar, Chennai – 600017'
       },
     ],
   },
@@ -108,7 +108,7 @@ const OFFICES = [
     state: 'Worldwide',
     route: '/city/global',
     phone: '',
-    email: 'global@jhsassociates.in',
+    email: '',
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },

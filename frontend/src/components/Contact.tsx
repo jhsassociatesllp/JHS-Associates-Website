@@ -40,7 +40,7 @@ const OFFICES = [
   {
     city: 'Kalyan',
     region: 'Maharashtra',
-    address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301',
+    address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301',
   },
   {
     city: 'Masjid Bunder',
@@ -48,9 +48,14 @@ const OFFICES = [
     address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra – 400009",
   },
   {
+    city: 'Mazgaon',
+    region: 'Maharashtra',
+    address: "Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010",
+  },
+  {
     city: 'Ahmedabad',
     region: 'Gujarat',
-    address: '1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059',
+    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054',
   },
   {
     city: 'Vadodara',
@@ -65,38 +70,38 @@ const OFFICES = [
   {
     city: 'Surat',
     region: 'Gujarat',
-    address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003',
+    address: '504, 5th floor, Shubh Square, Opp. Aai Mata Chowk, Near ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003',
   },
   {
     city: 'Vapi',
     region: 'Gujarat',
-    address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215',
+    address: '101, Saga Casa, Near Navjeevan Press, Chala, Vapi, Gujarat – 396195',
   },
 
   {
     city: 'Bengaluru',
     region: 'Karnataka',
-    address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037',
+    address: 'No.589, 1st Floor, 60ft Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037',
   },
   {
     city: 'Delhi',
     region: 'Delhi',
-    address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048',
+    address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048',
   },
   {
     city: 'Kolkata',
     region: 'West Bengal',
-    address: 'Unit No. 402, 4th Floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016',
+    address: 'Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016',
   },
   {
     city: 'Chennai',
     region: 'Tamil Nadu',
-    address: 'No: 43/95, South West Boag Road, T-Nagar, Chennai – 600017',
+    address: 'No: 43/65, South West Boag Road,T-Nagar, Chennai – 600017',
   },
   {
     city: 'Hyderabad',
     region: 'Telangana',
-    address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Durganagar, Ameerpet, Hyderabad, Telangana – 500016',
+    address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016',
   }
 ]
 
@@ -260,7 +265,7 @@ export default function Contact() {
           </span>
           <div>
             <span className="ct-strip__label">Phone</span>
-            <span className="ct-strip__val">+91 22 1234 5678</span>
+            <span className="ct-strip__val">1800 120 1022</span>
           </div>
         </div>
         <div className="ct-strip__divider" />

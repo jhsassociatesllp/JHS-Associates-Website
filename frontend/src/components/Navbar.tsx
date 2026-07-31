@@ -350,7 +350,6 @@ const Navbar = () => {
           </a>
         </div>
 
-
         {/* <div className="nb__right">
           <a href="/login" className="nb__login">LOG IN</a>
         </div> */}

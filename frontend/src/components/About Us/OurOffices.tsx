@@ -14,8 +14,8 @@ const OFFICES = [
     email: 'connect@jhsassociates.in',
     isPrimary: true,
     branches: [
-      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059' },
-      { name: 'Mazgaon', address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010' },
+      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059' },
+      { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
       { name: 'Masjid', address: "Unit No. 402, 4th Floor, Nav Vyapar Bhavan, 49 P D'mello Road, Masjid Bunder, Maharashtra – 400009" },
       { name: 'Kalyan', address: 'Unit No. 11-12, Regency Avenue, Murbad Road, Kalyan (West), Maharashtra – 421301' },
     ],
@@ -45,7 +45,7 @@ const OFFICES = [
     email: 'delhi@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Dehli', address: 'Unit No.306, DIF Centre, Savitri Cinema Complex, Delhi - 110048' },
+      { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
   {

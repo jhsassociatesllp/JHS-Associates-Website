@@ -44,7 +44,7 @@ const cards: Card[] = [
     image: imageUrl('Card3.jpeg'),
     category: "EXCELLENCIA",
     meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
-    title: "JHS Excellencia Library — Premium Research, Benchmarks & Strategic Frameworks",
+    title: "JHS Excellencia Library Premium Research, Benchmarks & Strategic Frameworks",
     hoverTitle: "JHS Excellencia Library",
     hoverDescription:
       "Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks. Access curated whitepapers, regulatory updates, and strategic guides developed by JHS experts to empower informed decision-making.",

@@ -27,7 +27,7 @@ const PARTNER_DATA = [
       {
         name: "Huzeifa Unwala",
         image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
-        creds: "FCA, CISA, ISO 27001 Lead Auditor",
+        creds: "FCA, CISA, ISO 27001 Lead Auditor,NISM(DP),NISM(Social Auditor)",
         desc: "Specializes in IFC, governance, risk and cyber security frameworks across BFSI sectors.",
         location: "Mumbai",
         sector: ["Risk & Governance", "Banking, NBFC & Insurance"],

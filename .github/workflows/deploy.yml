@@ -139,17 +139,28 @@ jobs:
             # ==========================================
             # ENVIRONMENT CONFIG
             # ==========================================
+            # Each branch gets its own project directory, uploads directory,
+            # host ports, and database so main and staging can run side by
+            # side on the same server without colliding.
 
             if [ "$BRANCH" = "main" ]; then
-              FRONTEND_PORT=9030
-              BACKEND_PORT=9035
+              PROJECT_DIR="/www/wwwroot/JHS-Associates-Website-main"
+              UPLOADS_DIR="/www/wwwroot/jhs-website-content-main/uploads"
+              GATEWAY_PORT=9035
               ADMIN_PORT=9040
+              MONGODB_URL="${{ secrets.MONGODB_URL_MAIN }}"
+              DATABASE_NAME="${{ secrets.DATABASE_NAME_MAIN }}"
+              COMPOSE_PROJECT_NAME="jhs-main"
               ENV=production
 
             elif [ "$BRANCH" = "staging" ]; then
-              FRONTEND_PORT=9025
-              BACKEND_PORT=9030
-              ADMIN_PORT=9035
+              PROJECT_DIR="/www/wwwroot/JHS-Associates-Website"
+              UPLOADS_DIR="/www/wwwroot/jhs-website-content/uploads"
+              GATEWAY_PORT=9025
+              ADMIN_PORT=9030
+              MONGODB_URL="${{ secrets.MONGODB_URL }}"
+              DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+              COMPOSE_PROJECT_NAME="jhs-staging"
               ENV=staging
 
             else
@@ -158,11 +169,10 @@ jobs:
             fi
 
             echo "🌍 Environment: $ENV"
-            echo "🌐 Frontend Port: $FRONTEND_PORT"
-            echo "⚙️ Backend Port: $BACKEND_PORT"
+            echo "📁 Project Dir: $PROJECT_DIR"
+            echo "🖼️ Uploads Dir: $UPLOADS_DIR"
+            echo "🌐 Gateway Port: $GATEWAY_PORT"
             echo "🛠️ Admin Port: $ADMIN_PORT"
-
-            PROJECT_DIR="/www/wwwroot/JHS-Associates-Website"
 
             # ==========================================
             # CLONE REPO IF NOT EXISTS
@@ -186,10 +196,11 @@ jobs:
             git reset --hard origin/$BRANCH
 
             # ==========================================
-            # CREATE MEDIA DIRECTORY
+            # CREATE MEDIA / UPLOADS DIRECTORIES
             # ==========================================
 
             mkdir -p media
+            mkdir -p "$UPLOADS_DIR/images"
 
             # ==========================================
             # STOP OLD CONTAINERS
@@ -197,20 +208,20 @@ jobs:
 
             echo "🛑 Restarting containers..."
 
-            export FRONTEND_PORT=$FRONTEND_PORT
-            export BACKEND_PORT=$BACKEND_PORT
+            export UPLOADS_DIR=$UPLOADS_DIR
+            export GATEWAY_PORT=$GATEWAY_PORT
             export ADMIN_PORT=$ADMIN_PORT
+            export COMPOSE_PROJECT_NAME=$COMPOSE_PROJECT_NAME
 
-            # API URL
-            export VITE_API_BASE_URL="http://${{ secrets.SERVER_HOST }}:$FRONTEND_PORT/api"
-            # export VITE_API_BASE_URL="/api"
+            # API URL — relative, resolved by each stack's own gateway/nginx
+            export VITE_API_BASE_URL="/api"
 
             # Backend ENV
-            export MONGODB_URL="${{ secrets.MONGODB_URL }}"
-            export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+            export MONGODB_URL=$MONGODB_URL
+            export DATABASE_NAME=$DATABASE_NAME
 
-            docker compose down --remove-orphans
-            docker compose up -d --build
+            docker compose -p $COMPOSE_PROJECT_NAME down --remove-orphans
+            docker compose -p $COMPOSE_PROJECT_NAME up -d --build
 
             # ==========================================
             # SHOW RUNNING CONTAINERS

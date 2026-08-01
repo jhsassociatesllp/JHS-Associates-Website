@@ -89,7 +89,7 @@ const PARTNER_DATA = [
       {
         name: "Tasnim Tankiwala",
         image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'),
-        creds: "FCA, IP (IBBI), DIRM, DISA, IFRS",
+        creds: "FCA, IP (IBBI), DIRM, DISA",
         desc: "Expert in Statutory Audit, Assurance, Risk Management Audits and SOX Compliance.",
         location: "Mumbai",
         // sector: ["Statutory Audit & Assurance", "Risk & Governance"],
@@ -99,10 +99,33 @@ const PARTNER_DATA = [
         linkedin: "https://www.linkedin.com/in/tasnim-tankiwala"
       },
       {
+        name: "Disha Shah",
+        image: imageUrl('Disha Shah-removebg-preview.png'),
+        creds: "FCA",
+        desc: "Expert in Internal Audit, IFC, Internal Control and Women Entrepreneur Initiatives.",
+        location: "Mumbai",
+        sector: ["Risk & Governance"],
+        // teamSize: 7,
+        // clientsServed: 25,
+        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/"
+      },
+      {
+        name: "Dhanlaxmi Nair",
+        image: imageUrl('Dhanlaxmi.png'),
+        creds: "M.Com, FCA, CMA, SET",
+        desc: "Expert in Accounting, Audit, BFSI, Consulting, Taxation & Regulatory Compliance.",
+        location: "Mumbai",
+        // sector: ["Risk & Governance"],
+        sector: ["Internal, Concurrent & Statutory Audit"],
+        // teamSize: 5,
+        // clientsServed: 22,
+        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206"
+      },
+      {
         name: "Jamal Ashraf Chatriwala",
         image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
         creds: "ACA, IPO Certified",
-        desc: "Specializes in BFSI, NBFC, Asset Management, Insurance Advisory & Concurrent Audit.",
+        desc: "Expert in BFSI, NBFC, Asset Management, Insurance Advisory & Concurrent Audit.",
         location: "Mumbai",
         // sector: ["Banking, NBFC & Insurance"],
         sector: ["IA & Risk Advisory"],
@@ -114,7 +137,7 @@ const PARTNER_DATA = [
         name: "Taher Pepermintwala",
         image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
         creds: "FCA, CISA, ACCA, Dip IFRS",
-        desc: "Leads SOC Attestation, AIF & Mutual Fund, Forensic Audit, Statutory & Internal Audit.",
+        desc: "Expert in SOC Attestation, AIF & Mutual Fund, Forensic Audit, Statutory & Internal Audit.",
         location: "Mumbai",
         // sector: ["IT & Technology"],
         sector: ["Cyber Security & IT"],
@@ -126,7 +149,7 @@ const PARTNER_DATA = [
         name: "Sahil Shah",
         image: imageUrl('Sahil-Shah-removebg-preview.png'),
         creds: "ACA, IPO Certified ",
-        desc: "Focuses on Risk Advisory, Internal Audit, IFC & VC Funding Advisory.",
+        desc: "Expert in Risk Advisory, Internal Audit, IFC & VC Funding Advisory.",
         location: "Mumbai",
         // sector: ["Venture Capital & Private Equity", "Risk & Governance"],
         sector: ["Risk & Governance"],
@@ -156,34 +179,11 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/"
-      },
-      {
-        name: "Disha Shah",
-        image: imageUrl('Disha Shah-removebg-preview.png'),
-        creds: "FCA",
-        desc: "Leads Internal Audit, IFC, Internal Control and Women Entrepreneur Initiatives.",
-        location: "Mumbai",
-        sector: ["Risk & Governance"],
-        // teamSize: 7,
-        // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/"
-      },
-      {
-        name: "Dhanlaxmi Nair",
-        image: imageUrl('Dhanlaxmi.png'),
-        creds: "M.Com, FCA, CMA, SET",
-        desc: "Specializes in Accounting, Audit, BFSI, Consulting, Taxation & Regulatory Compliance.",
-        location: "Mumbai",
-        // sector: ["Risk & Governance"],
-        sector: ["Internal, Concurrent & Statutory Audit"],
-        // teamSize: 5,
-        // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206"
       }
     ]
   },
   {
-    category: "Delhi, Bengaluru, Chennai & Kolkata Partners",
+    category: "Bengaluru, Chennai & Kolkata Partners",
     role: "Partner",
     members: [
       // {
@@ -198,10 +198,32 @@ const PARTNER_DATA = [
       //   linkedin: "https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/"
       // },
       {
+        name: "Jagdish Solanki",
+        image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
+        creds: "B.Com (Hons), FCA",
+        desc: "Expert in Audit and Internal Control.",
+        location: "Bengaluru",
+        sector: ["Direct & Indirect Tax"],
+        // teamSize: 8,
+        // clientsServed: 30,
+        linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b"
+      },
+      {
+        name: "Narayana Rao Malla",
+        image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
+        creds: "FCA",
+        desc: "Expert in Audit, Accounting & Internal Control.",
+        location: "Bengaluru",
+        sector: ["Internal Audit & Risk Advisory"],
+        // teamSize: 8,
+        // clientsServed: 30,
+        linkedin: "https://www.linkedin.com/in/narayana-rao-malla"
+      },
+      {
         name: "G Chandrasekaran",
         image: imageUrl('Chandra Shekaran.png'),
         creds: "DSM, FCA, DISA",
-        desc: "Specializing in Accounting, Internal, Statutory & Corporate Tax Audit.",
+        desc: "Expert in Accounting, Internal, Statutory & Corporate Tax Audit.",
         location: "Chennai",
         sector: ["Audit & Tax"],
         // teamSize: 9,
@@ -231,34 +253,12 @@ const PARTNER_DATA = [
       //   linkedin: "https://linkedin.com/"
       // },
       {
-        name: "Jagdish Solanki",
-        image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
-        creds: "B.Com (Hons), FCA",
-        desc: "Expert in Audit and Internal Control.",
-        location: "Bengaluru",
-        sector: ["Direct & Indirect Tax"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b"
-      },
-      {
-        name: "Narayana Rao Malla",
-        image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
-        creds: "FCA",
-        desc: "Expert in Audit, Accounting & Internal Control.",
-        location: "Bengaluru",
-        sector: ["Internal Audit & Risk Advisory"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/narayana-rao-malla"
-      },
-      {
-        name: "Tripti Mohata",
+        name: "Tripti Mohta",
         image: imageUrl('Tripti-mohta.png'),
         creds: "FCA",
-        desc: "Kolkata partner specializing in tax & corporate advisory.",
+        desc: "Expert in Accounting, Assurance, Governance & Internal Audit.",
         location: "Kolkata",
-        sector: ["Tax & Regulatory"],
+        sector: ["Audit & Tax "],
         // teamSize: 6,
         // clientsServed: 22,
         linkedin: "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/"
@@ -276,34 +276,77 @@ const PARTNER_DATA = [
     role: "Partner",
     members: [
       {
-        name: "Virendra Nayyar",
-        image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
-        creds: "FCA",
-        desc: "Senior guide for Gujarat statutory audit & assurance engagements.",
-        location: "Vadodara",
-        sector: ["Statutory Audit & Assurance"],
-        // teamSize: 10,
-        // clientsServed: 40,
-        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227"
+        name: "Jhankhna Patel",
+        image: imageUrl('Jhankana Patel.jpeg'),
+        creds: "ACA, CBAP, DISA, CPA Australia",
+        desc: "Expert in Accounting, Tax, GST, Statutory & Internal Audit.",
+        location: "Ahmedabad",
+        sector: ["ESG Specialist"],
+        // teamSize: 5,
+        // clientsServed: 20,
+        linkedin: "https://www.linkedin.com/in/jhankhnapatel09"
       },
       {
         name: "Dhaval Thakkar",
         image: imageUrl('Dhaval-Thakkar-removebg-preview.png'),
         creds: "ACA",
-        desc: "Ahmedabad operations lead, focusing on fractional CFO & FP&A advisory.",
+        desc: "Expert in Insurance, Startup Advisory, Corporate Governance & ERP Strategy. ",
         location: "Ahmedabad",
-        sector: ["Financial Advisory & CFO Services"],
+        sector: ["Internal Audit & Risk Advisory"],
         // teamSize: 7,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/"
       },
+      {
+        name: "Nidhi Kotecha",
+        image: imageUrl('Nidhi-kotecha.png'),
+        creds: "ACA",
+        desc: "Expert in Outsourced Finance Services, CFO Advisory & SEC Compliance.",
+        location: "Ahmedabad",
+        sector: ["US Taxation & Compliance"],
+        // teamSize: 4,
+        // clientsServed: 18,
+        linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/"
+      },
+      {
+        name: "Alpesh Vaniya",
+        image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
+        creds: "FCA",
+        desc: "Statutory audit & assurance specialist for HNIs and family offices.",
+        location: "Ahmedabad",
+        sector: ["Internal Audit & Tax Consulting"],
+        // teamSize: 7,
+        // clientsServed: 28,
+        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190"
+      },
+      {
+        name: 'Parth Shah',
+        image: imageUrl('Parth_shah.jpeg'),
+        creds: 'FCA',
+        desc: "Senior guide for Gujarat statutory audit & assurance engagements.",
+        location: "Ahmedabad",
+        sector: ["Financial Strategy Specialist"],
+        linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in'
+      },
+      {
+        name: "Virendra Nayyar",
+        image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
+        creds: "FCA",
+        desc: "Senior guide for Gujarat statutory audit & assurance engagements.",
+        location: "Vadodara",
+        sector: ["Internal Audit & Assurance"],
+        // teamSize: 10,
+        // clientsServed: 40,
+        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227"
+      },
+
       {
         name: "Viranch Modi",
         image: imageUrl('Viranch-Modi-removebg-preview.png'),
         creds: "FCA",
         desc: "Expert in direct tax, GST & audit and RERA compliance.",
         location: "Vadodara",
-        sector: ["Tax & Regulatory", "Real Estate & Infrastructure"],
+        sector: ["Income Tax & GST"],
         // teamSize: 9,
         // clientsServed: 38,
         linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/"
@@ -313,8 +356,8 @@ const PARTNER_DATA = [
         image: imageUrl('Milin-Parekh-removebg-preview.png'),
         creds: "M.Com, FCA",
         desc: "Specializes in internal audit & tax consulting and statutory bank audits.",
-        location: "Ahmedabad",
-        sector: ["Statutory Audit & Assurance", "Tax & Regulatory"],
+        location: "Vadodara",
+        sector: ["Internal Audit & Consulting"],
         // teamSize: 8,
         // clientsServed: 32,
         linkedin: "https://www.linkedin.com/in/milin-parekh-63692061"
@@ -325,29 +368,19 @@ const PARTNER_DATA = [
         creds: "FCA",
         desc: "Focuses on income tax & GST advisory and process audits.",
         location: "Surat",
-        sector: ["Tax & Regulatory"],
+        sector: ["Income Tax & GST"],
         // teamSize: 5,
         // clientsServed: 22,
         linkedin: "https://www.linkedin.com/in/mehul-shah-9aaaa130b"
       },
-      {
-        name: "Alpesh Vaniya",
-        image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
-        creds: "FCA",
-        desc: "Statutory audit & assurance specialist for HNIs and family offices.",
-        location: "Ahmedabad",
-        sector: ["Statutory Audit & Assurance", "Family Business & HNI"],
-        // teamSize: 7,
-        // clientsServed: 28,
-        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190"
-      },
+
       {
         name: "Raj Shah",
         image: imageUrl('Raj-Shah-removebg-preview.png'),
         creds: "ACA ",
         desc: "Drives tax, litigation & risk advisory practices in Surat.",
         location: "Surat",
-        sector: ["Tax & Regulatory", "Risk & Governance"],
+        sector: ["Tax Litigation & Advisory"],
         // teamSize: 6,
         // clientsServed: 26,
         linkedin: "https://www.linkedin.com/in/ca-raj-a-shah"
@@ -358,7 +391,7 @@ const PARTNER_DATA = [
         creds: "FCA, DISA",
         desc: "Core team member for direct & indirect tax advisory.",
         location: "Vadodara",
-        sector: ["Tax & Regulatory"],
+        sector: ["Direct & Indirect Tax "],
         // teamSize: 8,
         // clientsServed: 35,
         linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7"
@@ -369,33 +402,12 @@ const PARTNER_DATA = [
         creds: "FCA",
         desc: "Audit & compliance specialist.",
         location: "Rajkot",
-        sector: ["Statutory Audit & Assurance"],
+        sector: ["Indirect Tax"],
         // teamSize: 6,
         // clientsServed: 25,
         linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a"
       },
-      {
-        name: "Jhankhna Patel",
-        image: imageUrl('Jhankana Patel.jpeg'),
-        creds: "ACA | CPA Australia",
-        desc: "Strategy, compliance & advisory specialist.",
-        location: "Ahmedabad",
-        sector: ["Risk & Governance"],
-        // teamSize: 5,
-        // clientsServed: 20,
-        linkedin: "https://www.linkedin.com/in/jhankhnapatel09"
-      },
-      {
-        name: "Nidhi Kotecha",
-        image: imageUrl('Nidhi-kotecha.png'),
-        creds: "ACA",
-        desc: "Specializes in US taxation, CFO advisory & SEC compliance.",
-        location: "Ahmedabad",
-        sector: ["Tax & Regulatory", "Financial Advisory & CFO Services"],
-        // teamSize: 4,
-        // clientsServed: 18,
-        linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/"
-      }
+
     ]
   }
 ];

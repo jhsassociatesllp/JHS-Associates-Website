@@ -84,7 +84,7 @@ const PARTNERS = [
   { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
   { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'ACA', designation: 'IA & Tax Consulting', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
   { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA ', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
-  { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: ', Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/' },
+  { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: ', Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in' },
   { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA | CPA Australia,CBAP, DISA & ESG Specialist', designation: 'Strategy, Compliance & Advisory', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
   { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'ACA', designation: 'US Taxation, CFO Advisory & SEC Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]

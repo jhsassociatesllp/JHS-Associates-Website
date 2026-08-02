@@ -80,7 +80,7 @@ import Mumbai from './components/Cities/Mumbai'
 import Delhi from './components/Cities/Delhi'
 import Bengaluru from './components/Cities/Bengaluru'
 import Global from './components/Cities/Global'
-import Ahmedabad from './components/Cities/Ahmedabad'
+import Gujarat from './components/Cities/Gujarat'
 import Hyderabad from './components/Cities/Hyderabad'
 import Kolkata from './components/Cities/Kolkata'
 import Chennai from './components/Cities/Chennai'
@@ -173,7 +173,8 @@ export default function App() {
         <Route path="/city/delhi" element={<Delhi />} />
         <Route path="/city/bengaluru" element={<Bengaluru />} />
         <Route path="/city/global" element={<Global />} />
-        <Route path="/city/ahmedabad" element={<Ahmedabad />} />
+        <Route path="/city/gujarat" element={<Gujarat />} />
+        <Route path="/city/ahmedabad" element={<Navigate to="/city/gujarat" replace />} />
         <Route path="/city/hyderabad" element={<Hyderabad />} />
         <Route path="/city/kolkata" element={<Kolkata />} />
         <Route path="/city/chennai" element={<Chennai />} />

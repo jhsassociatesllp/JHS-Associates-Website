@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import './Ahmedabad.css'
+import './Gujarat.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
@@ -155,7 +155,7 @@ const IconCheck = () => (
 )
 
 /* ─── Page ───────────────────────────────────────── */
-export default function Ahmedabad() {
+export default function Gujarat() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)

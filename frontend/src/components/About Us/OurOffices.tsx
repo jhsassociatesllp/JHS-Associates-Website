@@ -24,7 +24,7 @@ const OFFICES = [
     city: 'Gujarat',
     badge: 'Regional Hub',
     state: 'Gujarat',
-    route: '/city/ahmedabad',
+    route: '/city/gujarat',
     phone: '',
     email: '',
     isPrimary: false,

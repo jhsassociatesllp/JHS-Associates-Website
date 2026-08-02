@@ -20,7 +20,7 @@ const citiesList = [
   },
   {
     name: "Gujarat",
-    slug: "ahmedabad",
+    slug: "gujarat",
     address: "Vadodara",
     image: imageUrl('Ahmedabad.png'),
   },

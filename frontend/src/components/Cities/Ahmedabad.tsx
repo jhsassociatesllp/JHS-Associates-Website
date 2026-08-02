@@ -75,18 +75,18 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA', designation: 'IA & Assurance ', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
-  { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.png'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah' },
-  { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.png'), qualifications: 'ACA', designation: 'IA & Risk Advisory, Insurance', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/' },
+  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA', designation: 'Internal Audit & Assurance ', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
+  { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.png'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah-b822791a7/' },
+  { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.png'), qualifications: 'ACA', designation: 'Internal Audit Risk Advisory & Insurance.', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/' },
   { name: 'Viranch Modi', image: imageUrl('Viranch-Modi-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi-aa4106227/' },
-  { name: 'Shreena Panara', image: imageUrl('Shreena Parana.png'), qualifications: 'FCA', designation: 'Indirect Tax', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-shreena-panara-61b27820a' },
-  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'IA & Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
+  { name: 'Shreena Panara', image: imageUrl('Shreena Parana.png'), qualifications: 'ACA', designation: 'Indirect Tax', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-shreena-panara-61b27820a' },
+  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.png'), qualifications: 'M.Com, FCA', designation: 'Internal Audit & Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
   { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.png'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
-  { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'ACA', designation: 'IA & Tax Consulting', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
-  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA ', designation: 'Tax, Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
-  { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: ', Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in' },
-  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA | CPA Australia,CBAP, DISA & ESG Specialist', designation: 'Strategy, Compliance & Advisory', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
-  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'ACA', designation: 'US Taxation, CFO Advisory & SEC Compliance', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
+  { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.png'), qualifications: 'ACA', designation: 'Internal Audit & Tax Consulting', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
+  { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.png'), qualifications: 'ACA ', designation: 'Tax Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
+  { name: 'Parth Shah', image: imageUrl('Parth_shah.jpeg'), qualifications: 'FCA', designation: 'Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in' },
+  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.jpeg'), qualifications: 'ACA, CBAP, DISA, CPA Australia', designation: 'ESG Specialist', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
+  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'ACA', designation: 'US Tax & Compliance', email: '', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */

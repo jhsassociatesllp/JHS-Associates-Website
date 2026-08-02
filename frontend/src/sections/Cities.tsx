@@ -37,12 +37,12 @@ const citiesList = [
     image: imageUrl('Bangaluru.jpg'),
   },
 
-  {
-    name: "Telangana",
-    slug: "hyderabad",
-    address: "Hyderabad",
-    image: imageUrl('Hyderabad.png'),
-  },
+  // {
+  //   name: "Telangana",
+  //   slug: "hyderabad",
+  //   address: "Hyderabad",
+  //   image: imageUrl('Hyderabad.png'),
+  // },
   {
     name: "Tamil Nadu",
     slug: "chennai",

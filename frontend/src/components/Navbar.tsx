@@ -68,7 +68,7 @@ const NAV_ITEMS: NavItem[] = [
           { label: "Taxation ", description: "Direct & indirect tax advisory", href: '/services/taxation' },
           { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
           { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
-          { label: "Compliance & Learning", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/compliance-learning' },
+          { label: "Learning & Development", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/compliance-learning' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
         ],
@@ -331,8 +331,6 @@ const Navbar = () => {
           <button
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
             onClick={menuOpen ? closeMenu : openMenu}
-            onMouseEnter={handleHoverOpen}
-            onMouseLeave={handleHoverClose}
             aria-label="Toggle navigation"
             aria-expanded={menuOpen}
           >
@@ -432,7 +430,7 @@ const Navbar = () => {
             </nav>
 
             {/* ════ RIGHT PANEL ════ */}
-            <div className="mega__right">
+            <div className="mega__right" data-lenis-prevent>
 
               {/* Services/Sectors — show ALL items directly, grouped by subcategory */}
               {isInline && (

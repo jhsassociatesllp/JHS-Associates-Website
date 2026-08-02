@@ -14,7 +14,7 @@ const INSIGHTS = [
 
 const USEFUL_LINKS = [
   { name: 'Locations', path: '/about/our-offices' },
-  { name: 'Contact', path: '/contact' }, 
+  { name: 'Contact', path: '/contact' },
   { name: 'Feedback', path: '/feedback' },
   // { name: 'RFP', path: '/rfp' },
   { name: 'Know JHS', path: '/about/leadership' },
@@ -27,7 +27,7 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Compliance', path: '/services/compliance-learning' }
+  { name: 'Learning & Development', path: '/services/compliance-learning' }
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */

@@ -6,7 +6,8 @@ import { imageUrl } from '../../utils/imageUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: ' IA & Risk Advisory, FMCG & Retail ', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Narayan Rao Malla', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: ' Internal Audit & Risk Advisory', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki-92324b1b/' },
 ]
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -115,7 +116,7 @@ export default function Bengaluru() {
 
       <div className="blr-ribbon">
         <div className="blr-ribbon__inner">
-          {([['1', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['1', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['1', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="blr-ribbon__item"><span className="blr-ribbon__num">{num}</span><span className="blr-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>

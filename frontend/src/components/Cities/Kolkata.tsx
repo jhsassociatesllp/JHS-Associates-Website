@@ -14,11 +14,11 @@ const PARTNERS = [
     linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
   },
   {
-    name: 'Tripti Mohata',
+    name: 'Tripti Mohta',
     image: imageUrl('Tripti-mohta.png'),
     qualifications: 'FCA',
     designation: 'Taxation & Audit Specialist',
-    email: 'sharad.mohata@jhsassociates.in',
+    email: '',
     linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
   }
 ]

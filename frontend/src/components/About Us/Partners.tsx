@@ -291,7 +291,7 @@ const PARTNER_DATA = [
       },
       {
         name: "G Chandrasekaran",
-        image: imageUrl('Chandra Shekaran.png'),
+        image: imageUrl('Chandra-Shekaran.png'),
         creds: "DSM, FCA, DISA",
         desc: "Expert in Accounting, Internal Audit & Tax.",
         location: "Chennai",

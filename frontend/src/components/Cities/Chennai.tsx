@@ -6,7 +6,7 @@ import { imageUrl } from '../../utils/imageUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'G Chandrasekaran', image: imageUrl('Chandra Shekaran.png'), qualifications: 'DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandrasekaran@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
+  { name: 'G Chandrasekaran', image: imageUrl('Chandra-Shekaran.png'), qualifications: 'DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandrasekaran@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
   { name: 'Pranal P', image: imageUrl('Pranal p.png'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 

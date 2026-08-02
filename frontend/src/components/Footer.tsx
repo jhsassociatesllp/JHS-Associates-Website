@@ -163,7 +163,7 @@ export default function Footer() {
       {/* ══ Bottom Bar ══ */}
       <div className="footer__bottom">
         <div className="footer__bottom-inner">
-          <p className="footer__copy">Copyright © {year} JHS Associates</p>
+          <p className="footer__copy">Copyright © {year} JHS & Associates LLP All rights reserved. </p>
         </div>
       </div>
 

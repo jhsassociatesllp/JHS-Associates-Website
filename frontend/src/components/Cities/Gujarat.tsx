@@ -182,10 +182,10 @@ export default function Gujarat() {
         </div>
         <div className="ahm-hero__card">
           <div className="ahm-hero__card-left">
-            <span className="ahm-hero__card-badge">Ahmedabad</span>
+            <span className="ahm-hero__card-badge">Vadodara</span>
             <div className="ahm-hero__card-addr">
               <IconPin />
-              <span>Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054</span>
+              <span>4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023</span>
             </div>
           </div>
           <div className="ahm-hero__card-divider" />
@@ -200,7 +200,7 @@ export default function Gujarat() {
       {/* ══ STATS RIBBON ══ */}
       <div className="ahm-ribbon">
         <div className="ahm-ribbon__inner">
-          {([['11', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['12', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="ahm-ribbon__item">
               <span className="ahm-ribbon__num">{num}</span>
               <span className="ahm-ribbon__lbl">{lbl}</span>

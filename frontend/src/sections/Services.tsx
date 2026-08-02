@@ -16,7 +16,7 @@ type ServiceItem = {
 };
 
 const capabilities: ServiceItem[] = [
-  { label: "IT Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive  assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
+  { label: "IT Assurance", href: "/services/it-assurance", description: "Enhance trust and transparency with our comprehensive  assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
   { label: "Tax & GST Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.jpg') },
   // { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.png') },
   { label: "Financial Reporting", href: "/services/corporate-finance", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },

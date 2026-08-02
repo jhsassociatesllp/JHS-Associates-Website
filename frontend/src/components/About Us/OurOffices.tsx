@@ -16,7 +16,7 @@ const OFFICES = [
     branches: [
       { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059' },
       { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
-      { name: 'Masjid', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MBMaharashtra - 400009" },
+      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009" },
       { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301' },
     ],
   },
@@ -145,13 +145,26 @@ const IconArrow = () => (
   </svg>
 )
 
+/* Builds a Google Maps embed URL from a plain address — lets Google's own
+   geocoder resolve the pin, so it stays accurate without hand-maintained
+   lat/long or place-id lookups per branch. */
+const mapEmbedUrl = (address: string) =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`
+
 /* ─── Component ───────────────────────────────────────────── */
 export default function OurOffices() {
   const [activeCity, setActiveCity] = useState('Mumbai')
+  const [activeBranchIdx, setActiveBranchIdx] = useState(0)
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
 
   const activeOffice = OFFICES.find(o => o.city === activeCity) ?? OFFICES[0]
+  const activeBranch = activeOffice.branches[activeBranchIdx] ?? activeOffice.branches[0]
+
+  const handleCityChange = (city: string) => {
+    setActiveCity(city)
+    setActiveBranchIdx(0)
+  }
 
   return (
     <div className="oo-page">
@@ -189,7 +202,7 @@ export default function OurOffices() {
               <button
                 key={o.city}
                 className={`oo-tab ${activeCity === o.city ? 'oo-tab--active' : ''}`}
-                onClick={() => setActiveCity(o.city)}
+                onClick={() => handleCityChange(o.city)}
               >
                 {o.city}
                 {o.isPrimary && <span className="oo-tab__hq">HQ</span>}
@@ -243,15 +256,45 @@ export default function OurOffices() {
               </h3>
               <div className="oo-detail__branches">
                 {activeOffice.branches.map((b, i) => (
-                  <div key={b.name} className="oo-detail__branch">
+                  <button
+                    key={b.name}
+                    type="button"
+                    className={`oo-detail__branch ${i === activeBranchIdx ? 'oo-detail__branch--active' : ''}`}
+                    onClick={() => setActiveBranchIdx(i)}
+                  >
                     <div className="oo-detail__branch-num">0{i + 1}</div>
                     <div className="oo-detail__branch-info">
                       <span className="oo-detail__branch-name">{b.name}</span>
                       <span className="oo-detail__branch-addr">{b.address}</span>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* ── MAP ── */}
+          <div className="oo-map" key={`${activeOffice.city}-${activeBranchIdx}`}>
+            <div className="oo-map__info">
+              <span className="oo-map__label">{activeBranch.name}</span>
+              <p className="oo-map__addr"><IconPin /> {activeBranch.address}</p>
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(activeBranch.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="oo-map__directions"
+              >
+                Get Directions <IconArrow />
+              </a>
+            </div>
+            <div className="oo-map__frame">
+              <iframe
+                title={`JHS ${activeOffice.city} — ${activeBranch.name}`}
+                src={mapEmbedUrl(activeBranch.address)}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

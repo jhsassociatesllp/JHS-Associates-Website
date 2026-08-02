@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
@@ -18,10 +18,12 @@ import Outsourcing from './components/services/Outsourcing'
 import Consulting from './components/services/Consulting'
 import Taxation from './components/services/Taxation'
 import Assurance from './components/services/Assurance'
+import ITAssurance from './components/services/ITAssurance'
 import SingleWindowAssistance from './components/services/SingleWindowAssistance'
 import SOCAttestation from './components/services/SOCAttestation'
 import CorporateFinance from './components/services/CorporateFinance'
 import ComplianceLearning from './components/services/ComplianceLearning'
+import LearningDevelopment from './components/services/LearningDevelopment'
 
 // Financial Services components
 import Banking from './components/sectors/Financial Services/Banking'
@@ -181,10 +183,13 @@ export default function App() {
         <Route path="/services/consulting" element={<Consulting />} />
         <Route path="/services/taxation" element={<Taxation />} />
         <Route path="/services/assurance" element={<Assurance />} />
+        <Route path="/services/it-assurance" element={<ITAssurance />} />
+        <Route path="/services/audit-assurance" element={<Navigate to="/services/assurance" replace />} />
         <Route path="/services/single-window-assistance" element={<SingleWindowAssistance />} />
         <Route path="/services/soc-attestation" element={<SOCAttestation />} />
         <Route path="/services/corporate-finance" element={<CorporateFinance />} />
         <Route path="/services/compliance-learning" element={<ComplianceLearning />} />
+        <Route path="/services/learning-development" element={<LearningDevelopment />} />
 
         {/* Financial Services */}
         <Route path="/sectors/financial-services/banking" element={<Banking />} />

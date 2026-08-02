@@ -33,7 +33,8 @@ const PARTNER_DATA = [
         sector: ["Risk & Governance"],
         // teamSize: 12,
         // clientsServed: 45,
-        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/"
+        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/",
+        email: 'huzeifa.unwala@jhsassociates.in',
       },
       {
         name: "Kalpesh Parmar",
@@ -44,7 +45,8 @@ const PARTNER_DATA = [
         sector: ["Statutory Audit & Assurance"],
         // teamSize: 15,
         // clientsServed: 55,
-        linkedin: "https://www.linkedin.com/in/kalpesh-parmar-016a502b"
+        linkedin: "https://www.linkedin.com/in/kalpesh-parmar-016a502b",
+        email: 'kalpesh.parmar@jhsassociates.in',
       },
       {
         name: "Sharad Mohata",
@@ -55,7 +57,8 @@ const PARTNER_DATA = [
         sector: ["Tax & Corporate Advisory"],
         // teamSize: 8,
         // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082"
+        linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082",
+        email: 'sharad.mohata@jhsassociates.in',
       },
       {
         name: "Nikhel Kochhar",
@@ -66,7 +69,8 @@ const PARTNER_DATA = [
         sector: ["Governance, Risk & Internal Audit"],
         // teamSize: 11,
         // clientsServed: 42,
-        linkedin: "https://www.linkedin.com/in/nikhelkochhar"
+        linkedin: "https://www.linkedin.com/in/nikhelkochhar",
+        email: 'nikhil.kochhar@jhsassociates.in',
       },
       {
         name: "Vinod Joshi",
@@ -78,7 +82,8 @@ const PARTNER_DATA = [
         sector: ["Financial Advisory & CFO Services"],
         // teamSize: 10,
         // clientsServed: 40,
-        linkedin: "https://linkedin.com/in/vinod-joshi-fca"
+        linkedin: "https://linkedin.com/in/vinod-joshi-fca",
+        email: 'vinod.joshi@jhsassociates.in',
       }
     ]
   },
@@ -96,7 +101,8 @@ const PARTNER_DATA = [
         sector: ["Stautory Audit"],
         // teamSize: 10,
         // clientsServed: 38,
-        linkedin: "https://www.linkedin.com/in/tasnim-tankiwala"
+        linkedin: "https://www.linkedin.com/in/tasnim-tankiwala",
+        email: 'tasnim.tankiwala@jhsassociates.in',
       },
       {
         name: "Disha Shah",
@@ -107,7 +113,8 @@ const PARTNER_DATA = [
         sector: ["Risk Advisory, Internal Audit & IFC"],
         // teamSize: 7,
         // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/"
+        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/",
+        email: 'disha.shah@jhsassociates.in',
       },
       {
         name: "Dhanlaxmi Nair",
@@ -119,7 +126,8 @@ const PARTNER_DATA = [
         sector: ["Risk Advisory & Consulting"],
         // teamSize: 5,
         // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206"
+        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206",
+        email: 'dhanlaxmi.nair@jhsassociates.in',
       },
       {
         name: "Jamal Ashraf Chatriwala",
@@ -131,7 +139,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit & Risk Advisory"],
         // teamSize: 8,
         // clientsServed: 32,
-        linkedin: "https://www.linkedin.com/in/chatriwala"
+        linkedin: "https://www.linkedin.com/in/chatriwala",
+        email: 'jamal.chatriwala@jhsassociates.in',
       },
       {
         name: "Taher Pepermintwala",
@@ -143,11 +152,12 @@ const PARTNER_DATA = [
         sector: ["Assurance, Tech & SOC Audit"],
         // teamSize: 14,
         // clientsServed: 50,
-        linkedin: "https://www.linkedin.com/in/taherpepermintwala/"
+        linkedin: "https://www.linkedin.com/in/taherpepermintwala/",
+        email: 'taher.pepermintwala@jhsassociates.in',
       },
       {
         name: "Sahil Shah",
-        image: imageUrl('Sahil-Shah-removebg-preview.png'),
+        image: imageUrl('Sahil-Shah-removebg-preview.jpeg'),
         creds: "ACA, IPO Certified ",
         desc: "Expert in Accounting, Internal Control & VC Funding Advisory.",
         location: "Mumbai",
@@ -155,7 +165,8 @@ const PARTNER_DATA = [
         sector: ["Risk Advisory, Internal Audit & IFC"],
         // teamSize: 6,
         // clientsServed: 28,
-        linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a"
+        linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a",
+        email: 'sahil.shah@jhsassociates.in',
       },
       {
         name: "Tausif Shaikh",
@@ -167,7 +178,8 @@ const PARTNER_DATA = [
         sector: ["Assurance & Tax"],
         // teamSize: 9,
         // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh"
+        linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh",
+        email: 'tausif.shaikh@jhsassociates.in',
       },
       {
         name: "Samad Dhanani",
@@ -178,7 +190,63 @@ const PARTNER_DATA = [
         sector: ["Statutory Audit & Accounts Outsourcing"],
         // teamSize: 8,
         // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/"
+        linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/",
+        email: 'samad.dhanani@jhsassociates.in',
+      },
+      {
+        name: 'Huzefa Kaka',
+        image: '',
+        creds: '',
+        desc: '',
+        location: "Mumbai",
+        sector: [],
+        role: "Director",
+        linkedin: 'https://www.linkedin.com/in/huzefakaka/',
+        email: 'huzefa.kaka@jhsassociates.in',
+      },
+      {
+        name: 'Amit More',
+        image: '',
+        creds: '',
+        desc: '',
+        location: "Mumbai",
+        sector: [],
+        role: "Director",
+        linkedin: 'https://www.linkedin.com/in/amitkumarmore/',
+        email: 'amitkumar.more@jhsconsulting.in',
+      },
+      {
+        name: 'Dipika Bisawa',
+        image: '',
+        creds: '',
+        desc: '',
+        location: "Mumbai",
+        sector: [],
+        role: "Director",
+        linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/',
+        email: 'dipika.bisawa@jhsconsulting.in',
+      },
+      {
+        name: 'Raj Dabburi',
+        image: '',
+        creds: '',
+        desc: '',
+        location: "Mumbai",
+        sector: [],
+        role: "Director",
+        linkedin: 'https://www.linkedin.com/in/rajdabburi/',
+        email: 'raj.d@jhsconsulting.in',
+      },
+      {
+        name: 'Huzefa Mala',
+        image: '',
+        creds: '',
+        desc: '',
+        location: "Mumbai",
+        sector: [],
+        role: "Director",
+        linkedin: 'https://www.linkedin.com/in/huzefamala/',
+        email: 'huzefa.mala@jhsconsulting.in',
       }
     ]
   },
@@ -206,7 +274,8 @@ const PARTNER_DATA = [
         sector: ["Direct & Indirect Tax"],
         // teamSize: 8,
         // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b"
+        linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b",
+        email: 'jagdish.solanki@jhsassociates.in',
       },
       {
         name: "Narayana Rao Malla",
@@ -217,7 +286,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit & Risk Advisory"],
         // teamSize: 8,
         // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/narayana-rao-malla"
+        linkedin: "https://www.linkedin.com/in/narayana-rao-malla",
+        email: 'narayana.malla@jhsassociates.in',
       },
       {
         name: "G Chandrasekaran",
@@ -228,7 +298,8 @@ const PARTNER_DATA = [
         sector: ["Statutory & Corporate Tax Audits"],
         // teamSize: 9,
         // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29"
+        linkedin: "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29",
+        email: 'chandrasekaran@jhsassociates.in',
       },
       {
         name: "Pranal P",
@@ -239,7 +310,8 @@ const PARTNER_DATA = [
         sector: ["Specialising in GST"],
         // teamSize: 6,
         // clientsServed: 22,
-        linkedin: "https://linkedin.com/"
+        linkedin: "https://linkedin.com/",
+        email: 'parnal@jhsassociates.in',
       },
       // {
       //   name: "NM Pradeep",
@@ -261,7 +333,8 @@ const PARTNER_DATA = [
         sector: ["Taxation & Audit Specialist "],
         // teamSize: 6,
         // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/"
+        linkedin: "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/",
+        email: 'tripti.mohta@jhsassociates.in',
       }
     ]
   },
@@ -284,7 +357,8 @@ const PARTNER_DATA = [
         sector: ["ESG Specialist"],
         // teamSize: 5,
         // clientsServed: 20,
-        linkedin: "https://www.linkedin.com/in/jhankhnapatel09"
+        linkedin: "https://www.linkedin.com/in/jhankhnapatel09",
+        email: 'jhankhna.patel@jhsassociates.in',
       },
       {
         name: "Dhaval Thakkar",
@@ -295,7 +369,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit Risk Advisory & Insurance."],
         // teamSize: 7,
         // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/"
+        linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/",
+        email: 'dhaval.thakkar@jhsassociates.in',
       },
       {
         name: "Nidhi Kotecha",
@@ -306,7 +381,8 @@ const PARTNER_DATA = [
         sector: ["US Taxation & Compliance"],
         // teamSize: 4,
         // clientsServed: 18,
-        linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/"
+        linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/",
+        email: 'nidhi.kotecha@jhsassociates.in',
       },
       {
         name: "Alpesh Vaniya",
@@ -317,7 +393,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit & Tax Consulting"],
         // teamSize: 7,
         // clientsServed: 28,
-        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190"
+        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190",
+        email: 'alpesh.vaniya@jhsassociates.in',
       },
       {
         name: 'Parth Shah',
@@ -326,7 +403,8 @@ const PARTNER_DATA = [
         desc: "Expert in Internal Audit, Tax Advisory & Accounting.",
         location: "Ahmedabad",
         sector: ["Financial Strategy Specialist"],
-        linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in'
+        linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in',
+        email: 'parth.shah@jhsassociates.in',
       },
       {
         name: "Virendra Nayyar",
@@ -337,7 +415,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit & Assurance"],
         // teamSize: 10,
         // clientsServed: 40,
-        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227"
+        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227",
+        email: 'virendra.nayyar@jhsassociates.in',
       },
 
       {
@@ -349,7 +428,8 @@ const PARTNER_DATA = [
         sector: ["Income Tax & GST"],
         // teamSize: 9,
         // clientsServed: 38,
-        linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/"
+        linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/",
+        email: 'viranch.modi@jhsassociates.in',
       },
       {
         name: "Milin Parekh",
@@ -360,7 +440,8 @@ const PARTNER_DATA = [
         sector: ["Internal Audit & Consulting"],
         // teamSize: 8,
         // clientsServed: 32,
-        linkedin: "https://www.linkedin.com/in/milin-parekh-63692061"
+        linkedin: "https://www.linkedin.com/in/milin-parekh-63692061",
+        email: 'milin.parekh@jhsassociates.in',
       },
       {
         name: "Mehul Shah",
@@ -371,7 +452,8 @@ const PARTNER_DATA = [
         sector: ["Income Tax & GST"],
         // teamSize: 5,
         // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/mehul-shah-9aaaa130b"
+        linkedin: "https://www.linkedin.com/in/mehul-shah-9aaaa130b",
+        email: 'mehul.shah@jhsassociates.in',
       },
 
       {
@@ -383,7 +465,8 @@ const PARTNER_DATA = [
         sector: ["Tax Litigation & Advisory"],
         // teamSize: 6,
         // clientsServed: 26,
-        linkedin: "https://www.linkedin.com/in/ca-raj-a-shah"
+        linkedin: "https://www.linkedin.com/in/ca-raj-a-shah",
+        email: 'raj.shah@jhsassociates.in',
       },
       {
         name: "Saurabh Shah",
@@ -394,7 +477,8 @@ const PARTNER_DATA = [
         sector: ["Direct & Indirect Tax "],
         // teamSize: 8,
         // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7"
+        linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7",
+        email: 'saurabh.shah@jhsassociates.in',
       },
       {
         name: "Shreena Panara",
@@ -405,7 +489,8 @@ const PARTNER_DATA = [
         sector: ["Indirect Tax"],
         // teamSize: 6,
         // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a"
+        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
+        email: 'shreena.panara@jhsassociates.in',
       },
 
     ]
@@ -458,9 +543,16 @@ interface Member {
   teamSize: number
   clientsServed: number
   linkedin: string
+  email: string
   category: string
   role: string
 }
+
+const IconMail = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+  </svg>
+)
 
 function PartnerCard({ member, showCategory }: { member: Member; showCategory?: boolean }) {
   return (
@@ -511,6 +603,13 @@ function PartnerCard({ member, showCategory }: { member: Member; showCategory?: 
           </div>
         </div> */}
 
+        {member.email && (
+          <a href={`mailto:${member.email}`} className="partner-card__email">
+            <IconMail />
+            <span>{member.email}</span>
+          </a>
+        )}
+
         <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="partner-card__social">
           <IconLinkedIn />
           <span>Connect</span>
@@ -531,7 +630,7 @@ export default function Partners() {
   const allMembers: Member[] = useMemo(
     () =>
       PARTNER_DATA.flatMap((section) =>
-        section.members.map((m) => ({ ...m, category: section.category, role: section.role }))
+        section.members.map((m) => ({ ...m, category: section.category, role: (m as { role?: string }).role ?? section.role }))
       ),
     []
   )
@@ -666,7 +765,7 @@ export default function Partners() {
                     {section.members.map((member, mIdx) => (
                       <PartnerCard
                         key={mIdx}
-                        member={{ ...member, category: section.category, role: section.role }}
+                        member={{ ...member, category: section.category, role: (member as { role?: string }).role ?? section.role }}
                       />
                     ))}
                   </div>

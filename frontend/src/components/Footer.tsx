@@ -27,7 +27,7 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Learning & Development', path: '/services/compliance-learning' }
+  { name: 'Learning & Development', path: '/services/learning-development' }
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */
@@ -86,7 +86,7 @@ export default function Footer() {
             <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="footer__social-icon"><IconFacebook /></a>
             <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-icon"><IconLinkedIn /></a>
             <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-icon"><IconInstagram /></a>
-            <a href="https://www.youtube.com/@JHS-Consulting" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
+            <a href="https://www.youtube.com/@JHS-Excellencia" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
           </div>
         </div>
       </div>
@@ -101,8 +101,8 @@ export default function Footer() {
               <LazyImage src={imageUrl('logo.png')} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
-              Trusted Chartered Accountants and advisory partners for businesses across India.
-              Excellence, integrity, and expertise in every engagement.
+              Trusted Chartered Accountants and Advisory Partners for Businesses across India.
+              Excellence, Integrity, and Expertise in Every Engagement.
             </p>
 
             {/* Services heading + pills */}

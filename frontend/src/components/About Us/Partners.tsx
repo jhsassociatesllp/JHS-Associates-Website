@@ -326,7 +326,7 @@ const PARTNER_DATA = [
       // },
       {
         name: "Tripti Mohta",
-        image: imageUrl('Tripti-mohta.png'),
+        image: imageUrl('Tripti mohta.png'),
         creds: "FCA",
         desc: "Expert in Accounting, Assurance, Governance & Internal Audit.",
         location: "Kolkata",

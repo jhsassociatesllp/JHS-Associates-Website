@@ -15,7 +15,7 @@ const PARTNERS = [
   },
   {
     name: 'Tripti Mohta',
-    image: imageUrl('Tripti-mohta.png'),
+    image: imageUrl('Tripti mohta.png'),
     qualifications: 'FCA',
     designation: 'Taxation & Audit Specialist',
     email: '',

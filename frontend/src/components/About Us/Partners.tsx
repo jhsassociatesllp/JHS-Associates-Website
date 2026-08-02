@@ -34,7 +34,7 @@ const PARTNER_DATA = [
         // teamSize: 12,
         // clientsServed: 45,
         linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/",
-        email: 'huzeifa.unwala@jhsassociates.in',
+
       },
       {
         name: "Kalpesh Parmar",
@@ -46,7 +46,7 @@ const PARTNER_DATA = [
         // teamSize: 15,
         // clientsServed: 55,
         linkedin: "https://www.linkedin.com/in/kalpesh-parmar-016a502b",
-        email: 'kalpesh.parmar@jhsassociates.in',
+
       },
       {
         name: "Sharad Mohata",
@@ -58,7 +58,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082",
-        email: 'sharad.mohata@jhsassociates.in',
+
       },
       {
         name: "Nikhel Kochhar",
@@ -70,7 +70,7 @@ const PARTNER_DATA = [
         // teamSize: 11,
         // clientsServed: 42,
         linkedin: "https://www.linkedin.com/in/nikhelkochhar",
-        email: 'nikhil.kochhar@jhsassociates.in',
+
       },
       {
         name: "Vinod Joshi",
@@ -83,7 +83,7 @@ const PARTNER_DATA = [
         // teamSize: 10,
         // clientsServed: 40,
         linkedin: "https://linkedin.com/in/vinod-joshi-fca",
-        email: 'vinod.joshi@jhsassociates.in',
+
       }
     ]
   },
@@ -102,7 +102,7 @@ const PARTNER_DATA = [
         // teamSize: 10,
         // clientsServed: 38,
         linkedin: "https://www.linkedin.com/in/tasnim-tankiwala",
-        email: 'tasnim.tankiwala@jhsassociates.in',
+
       },
       {
         name: "Disha Shah",
@@ -114,7 +114,7 @@ const PARTNER_DATA = [
         // teamSize: 7,
         // clientsServed: 25,
         linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/",
-        email: 'disha.shah@jhsassociates.in',
+
       },
       {
         name: "Dhanlaxmi Nair",
@@ -127,7 +127,7 @@ const PARTNER_DATA = [
         // teamSize: 5,
         // clientsServed: 22,
         linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206",
-        email: 'dhanlaxmi.nair@jhsassociates.in',
+
       },
       {
         name: "Jamal Ashraf Chatriwala",
@@ -140,7 +140,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 32,
         linkedin: "https://www.linkedin.com/in/chatriwala",
-        email: 'jamal.chatriwala@jhsassociates.in',
+
       },
       {
         name: "Taher Pepermintwala",
@@ -153,7 +153,7 @@ const PARTNER_DATA = [
         // teamSize: 14,
         // clientsServed: 50,
         linkedin: "https://www.linkedin.com/in/taherpepermintwala/",
-        email: 'taher.pepermintwala@jhsassociates.in',
+
       },
       {
         name: "Sahil Shah",
@@ -166,7 +166,7 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 28,
         linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a",
-        email: 'sahil.shah@jhsassociates.in',
+
       },
       {
         name: "Tausif Shaikh",
@@ -179,7 +179,7 @@ const PARTNER_DATA = [
         // teamSize: 9,
         // clientsServed: 35,
         linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh",
-        email: 'tausif.shaikh@jhsassociates.in',
+
       },
       {
         name: "Samad Dhanani",
@@ -191,7 +191,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/",
-        email: 'samad.dhanani@jhsassociates.in',
+
       },
       {
         name: 'Huzefa Kaka',
@@ -202,7 +202,7 @@ const PARTNER_DATA = [
         sector: [],
         role: "Director",
         linkedin: 'https://www.linkedin.com/in/huzefakaka/',
-        email: 'huzefa.kaka@jhsassociates.in',
+
       },
       {
         name: 'Amit More',
@@ -213,7 +213,7 @@ const PARTNER_DATA = [
         sector: [],
         role: "Director",
         linkedin: 'https://www.linkedin.com/in/amitkumarmore/',
-        email: 'amitkumar.more@jhsconsulting.in',
+
       },
       {
         name: 'Dipika Bisawa',
@@ -224,7 +224,7 @@ const PARTNER_DATA = [
         sector: [],
         role: "Director",
         linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/',
-        email: 'dipika.bisawa@jhsconsulting.in',
+
       },
       {
         name: 'Raj Dabburi',
@@ -235,7 +235,7 @@ const PARTNER_DATA = [
         sector: [],
         role: "Director",
         linkedin: 'https://www.linkedin.com/in/rajdabburi/',
-        email: 'raj.d@jhsconsulting.in',
+
       },
       {
         name: 'Huzefa Mala',
@@ -246,7 +246,7 @@ const PARTNER_DATA = [
         sector: [],
         role: "Director",
         linkedin: 'https://www.linkedin.com/in/huzefamala/',
-        email: 'huzefa.mala@jhsconsulting.in',
+
       }
     ]
   },
@@ -275,7 +275,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b",
-        email: 'jagdish.solanki@jhsassociates.in',
+
       },
       {
         name: "Narayana Rao Malla",
@@ -287,7 +287,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/narayana-rao-malla",
-        email: 'narayana.malla@jhsassociates.in',
+
       },
       {
         name: "G Chandrasekaran",
@@ -299,7 +299,7 @@ const PARTNER_DATA = [
         // teamSize: 9,
         // clientsServed: 35,
         linkedin: "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29",
-        email: 'chandrasekaran@jhsassociates.in',
+
       },
       {
         name: "Pranal P",
@@ -311,7 +311,7 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 22,
         linkedin: "https://linkedin.com/",
-        email: 'parnal@jhsassociates.in',
+
       },
       // {
       //   name: "NM Pradeep",
@@ -334,7 +334,7 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 22,
         linkedin: "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/",
-        email: 'tripti.mohta@jhsassociates.in',
+
       }
     ]
   },
@@ -358,7 +358,7 @@ const PARTNER_DATA = [
         // teamSize: 5,
         // clientsServed: 20,
         linkedin: "https://www.linkedin.com/in/jhankhnapatel09",
-        email: 'jhankhna.patel@jhsassociates.in',
+
       },
       {
         name: "Dhaval Thakkar",
@@ -370,7 +370,7 @@ const PARTNER_DATA = [
         // teamSize: 7,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/",
-        email: 'dhaval.thakkar@jhsassociates.in',
+
       },
       {
         name: "Nidhi Kotecha",
@@ -382,7 +382,7 @@ const PARTNER_DATA = [
         // teamSize: 4,
         // clientsServed: 18,
         linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/",
-        email: 'nidhi.kotecha@jhsassociates.in',
+
       },
       {
         name: "Alpesh Vaniya",
@@ -394,7 +394,7 @@ const PARTNER_DATA = [
         // teamSize: 7,
         // clientsServed: 28,
         linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190",
-        email: 'alpesh.vaniya@jhsassociates.in',
+
       },
       {
         name: 'Parth Shah',
@@ -404,7 +404,7 @@ const PARTNER_DATA = [
         location: "Ahmedabad",
         sector: ["Financial Strategy Specialist"],
         linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in',
-        email: 'parth.shah@jhsassociates.in',
+
       },
       {
         name: "Virendra Nayyar",
@@ -416,7 +416,7 @@ const PARTNER_DATA = [
         // teamSize: 10,
         // clientsServed: 40,
         linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227",
-        email: 'virendra.nayyar@jhsassociates.in',
+
       },
 
       {
@@ -429,7 +429,7 @@ const PARTNER_DATA = [
         // teamSize: 9,
         // clientsServed: 38,
         linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/",
-        email: 'viranch.modi@jhsassociates.in',
+
       },
       {
         name: "Milin Parekh",
@@ -441,7 +441,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 32,
         linkedin: "https://www.linkedin.com/in/milin-parekh-63692061",
-        email: 'milin.parekh@jhsassociates.in',
+
       },
       {
         name: "Mehul Shah",
@@ -453,7 +453,7 @@ const PARTNER_DATA = [
         // teamSize: 5,
         // clientsServed: 22,
         linkedin: "https://www.linkedin.com/in/mehul-shah-9aaaa130b",
-        email: 'mehul.shah@jhsassociates.in',
+
       },
 
       {
@@ -466,7 +466,7 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 26,
         linkedin: "https://www.linkedin.com/in/ca-raj-a-shah",
-        email: 'raj.shah@jhsassociates.in',
+
       },
       {
         name: "Saurabh Shah",
@@ -478,7 +478,7 @@ const PARTNER_DATA = [
         // teamSize: 8,
         // clientsServed: 35,
         linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7",
-        email: 'saurabh.shah@jhsassociates.in',
+
       },
       {
         name: "Shreena Panara",
@@ -490,7 +490,7 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 25,
         linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
-        email: 'shreena.panara@jhsassociates.in',
+
       },
 
     ]

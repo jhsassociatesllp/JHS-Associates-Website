@@ -4,6 +4,7 @@ import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
@@ -126,25 +127,21 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'andheri', name: 'Andheri ', tag: 'Head Office',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin',
-    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059'
+    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059'
   },
   {
     id: 'masjid', name: 'Masjid', tag: 'Branch',
-    mapUrl: "https://maps.google.com/maps?q=Nav%20Vyapar%20Bhavan,%20P.D'mello%20Road,%20Mumbai,%20Maharashtra%20400009&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, M, Maharashtra – 400009"
+    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra - 400009"
   },
   {
     id: 'kalyan', name: 'Kalyan', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Regency%20Avenue,%20Syndicate%20Bus%20Stop,%20Kalyan%20West,%20Maharashtra%20421301&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301'
+    address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301'
   },
   {
     id: 'mazgaon', name: 'Mazgaon', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=New%20Sai%20Niketan%20CHS%20Ltd.,%20Dr.%20Mascarenhas%20Road,%20Mazgaon,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010'
+    address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010'
   }
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 /* ─── Inline Icons ───────────────────────────────── */
 const IconMail = () => (
@@ -213,7 +210,7 @@ export default function Mumbai() {
             <span className="mum-hero__card-badge">Head Office — Andheri East</span>
             <div className="mum-hero__card-addr">
               <IconPin />
-              <span>Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059</span>
+              <span>Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059</span>
             </div>
           </div>
           <div className="mum-hero__card-divider" />

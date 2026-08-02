@@ -3,6 +3,7 @@ import './Kolkata.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 
 const PARTNERS = [
   {
@@ -125,8 +126,7 @@ const MAP_LOCATIONS = [
   {
     id: 'kolkata',
     name: 'Kolkata',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
-    address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
+    address: 'Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016'
   },
   // {
   //   id: 'parkstreet',
@@ -140,7 +140,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
   // }
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 // const BRANCHES = [
 //   // {
@@ -222,7 +222,7 @@ export default function Kolkata() {
           <div className="kol-hero__card-body">
             <div className="kol-hero__card-addr">
               <IconPin />
-              <span>Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016</span>
+              <span>Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016</span>
             </div>
           </div>
           <div className="kol-hero__card-info">

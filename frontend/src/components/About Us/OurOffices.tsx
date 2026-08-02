@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './OurOffices.css'
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 
 /* ─── Office Data ─────────────────────────────────────────── */
 const OFFICES = [
@@ -144,12 +145,6 @@ const IconArrow = () => (
     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
   </svg>
 )
-
-/* Builds a Google Maps embed URL from a plain address — lets Google's own
-   geocoder resolve the pin, so it stays accurate without hand-maintained
-   lat/long or place-id lookups per branch. */
-const mapEmbedUrl = (address: string) =>
-  `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`
 
 /* ─── Component ───────────────────────────────────────────── */
 export default function OurOffices() {

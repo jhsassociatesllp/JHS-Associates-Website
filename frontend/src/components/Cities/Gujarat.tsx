@@ -4,6 +4,7 @@ import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
@@ -107,30 +108,25 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'ahmedabad', name: 'Ahmedabad ', tag: '',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.9!2d72.5078!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sSG%20Highway%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1680000000001!5m2!1sen!2sin',
-    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle,Sardar Patel Ring Road,Thaltej, Ahmedabad,Gujarat – 380054'
+    address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054'
   },
   {
     id: 'vadodara', name: 'Vadodara', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Lila%20Chambers,%20Notus%20Pride,%20Vadodara,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
     address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023'
   },
   {
     id: 'vapi', name: 'Vapi', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Saga%20Casa,%20Daulat%20Nagar,%20Chala,%20Vapi,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Office No.101, Saga Casa, Daulat Nagar, Chala, Vapi, Gujarat – 396215'
+    address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215'
   },
   {
     id: 'rajkot', name: 'Rajkot', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Kings%20Heights,%20Vidya%20Kunj%20Society%20Main%20Road,%20Rajkot,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'B-303 Kings Heights, Vidya Kunj Society Main Road, Rajkot, Gujarat – 360001'
+    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001'
   },
   {
     id: 'surat', name: 'Surat', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Shubh%20Square,%20Lal%20Darwaja,%20Surat,%20Gujarat&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: '5th Floor, 504, Shubh Square, Above ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003'
+    address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003'
   },
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 /* ─── Icons ──────────────────────────────────────── */
 const IconMail = () => (
@@ -189,7 +185,7 @@ export default function Gujarat() {
             <span className="ahm-hero__card-badge">Ahmedabad</span>
             <div className="ahm-hero__card-addr">
               <IconPin />
-              <span>1016-1021, Swati Crimson and Clover, Near Shilaj Bridge, Ahmedabad, Gujarat – 380059</span>
+              <span>Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054</span>
             </div>
           </div>
           <div className="ahm-hero__card-divider" />

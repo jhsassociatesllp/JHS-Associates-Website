@@ -4,6 +4,7 @@ import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
@@ -70,8 +71,7 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'delhi', name: 'Delhi ', tag: '',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin',
-    address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048'
+    address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048'
   },
   // {
   //   id: 'connaughtplace', name: 'Connaught Place', tag: 'Branch',
@@ -83,7 +83,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Sector%2016,%20Noida,%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301'
   // },
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 /* ─── Icons ──────────────────────────────────────── */
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
@@ -123,8 +123,8 @@ export default function Delhi() {
         </div>
         <div className="del-hero__card">
           <div className="del-hero__card-left">
-            <span className="del-hero__card-badge"> Greater Kailash-II</span>
-            <div className="del-hero__card-addr"><IconPin /><span>306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048</span></div>
+            <span className="del-hero__card-badge">Delhi</span>
+            <div className="del-hero__card-addr"><IconPin /><span>Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048</span></div>
           </div>
           <div className="del-hero__card-divider" />
           {/* <div className="del-hero__card-right">

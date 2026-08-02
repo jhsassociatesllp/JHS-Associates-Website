@@ -19,7 +19,7 @@ const ALUMNI_PROFILES = [
     name: "Prerna Jain",
     // role: " Tax Advisory",
     desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
-    image: imageUrl('Prerna Jain.jpeg')
+    image: imageUrl('Prerna-Jain.png')
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const ALUMNI_PROFILES = [
   },
   {
     id: 6,
-    name: "Shabbir Shaikh",
+    name: "Sabir Shaikh",
     // role: "Alumnus, Consulting",
     desc: "My experience at JHS helped me build a strong foundation in risk assessment, internal controls, and business process understanding. It shaped my professional approach towards analytical review, compliance, and operational efficiency, which continues to help me in my business and decision-making today.",
     image: imageUrl('Shabbir Shaikh.jpeg')

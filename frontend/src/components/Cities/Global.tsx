@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Global.css'
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 
 
 const SectorIcons: Record<string, JSX.Element> = {
@@ -120,7 +121,7 @@ const SPECIALIZATIONS = [
     "g": "c"
   },
   {
-    "label": "Global Accounts Outsourcing (US, UK, Australia)",
+    "label": "Global Accounts Outsourcing (UAE, Oman & UK)",
     "g": "a"
   }
 ]
@@ -130,19 +131,16 @@ const MAP_LOCATIONS = [
   {
     id: 'uae',
     name: 'Dubai, UAE',
-    mapUrl: 'https://maps.google.com/maps?q=Sheikh%20Rashid%20Tower,%20Dubai%20World%20Trade%20Center,%20Dubai,%20U.A.E&t=&z=15&ie=UTF8&iwloc=&output=embed',
     address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E'
   },
   {
     id: 'oman',
     name: 'Muscat, Oman',
-    mapUrl: 'https://maps.google.com/maps?q=Ruwi,%20Muscat,%20Sultanate%20of%20Oman&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman.'
+    address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman'
   },
   {
     id: 'uk',
     name: 'Amersham, UK',
-    mapUrl: 'https://maps.google.com/maps?q=Merritt%20House,%20Hill%20Avenue,%20Amersham%20HP6%205BQ,%20United%20Kingdom&t=&z=15&ie=UTF8&iwloc=&output=embed',
     address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom'
   },
   // {
@@ -157,7 +155,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=New%20York,%20USA&t=&z=12&ie=UTF8&iwloc=&output=embed',
   //   address: 'United States of America'
   // }
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 const IconPin = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

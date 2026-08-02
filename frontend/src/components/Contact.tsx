@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './Contact.css'
+import { mapEmbedUrl } from '../utils/mapEmbedUrl'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 console.log("API Base URL", API_BASE_URL)
@@ -35,7 +36,7 @@ const OFFICES = [
   {
     city: 'H.O. Andheri',
     region: 'Maharashtra',
-    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059',
+    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059',
   },
   {
     city: 'Kalyan',
@@ -45,7 +46,7 @@ const OFFICES = [
   {
     city: 'Masjid Bunder',
     region: 'Maharashtra',
-    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra – 400009",
+    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009",
   },
   {
     city: 'Mazgaon',
@@ -60,28 +61,28 @@ const OFFICES = [
   {
     city: 'Vadodara',
     region: 'Gujarat',
-    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023',
+    address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023',
   },
   {
     city: 'Rajkot',
     region: 'Gujarat',
-    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat – 360001',
+    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001',
   },
   {
     city: 'Surat',
     region: 'Gujarat',
-    address: '504, 5th floor, Shubh Square, Opp. Aai Mata Chowk, Near ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003',
+    address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003',
   },
   {
     city: 'Vapi',
     region: 'Gujarat',
-    address: '101, Saga Casa, Near Navjeevan Press, Chala, Vapi, Gujarat – 396195',
+    address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215',
   },
 
   {
     city: 'Bengaluru',
     region: 'Karnataka',
-    address: 'No.589, 1st Floor, 60ft Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037',
+    address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037',
   },
   {
     city: 'Delhi',
@@ -407,13 +408,13 @@ export default function Contact() {
               <div className="ct-map-wrap">
                 <iframe
                   title="JHS Associates Mumbai"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
+                  src={mapEmbedUrl(OFFICES[0].address)}
                   allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
               <div className="ct-map-footer">
-                <p className="ct-map-addr">Navkar Chambers, B-Wing, 4th Floor,<br />Marol Naka, Andheri East, Mumbai – 400059</p>
-                <a href="https://www.google.com/maps/search/Unit+No.+B-406+t0+410,+4th+floor,+Navkar+chambers,+Marol+Naka+metro+station,+andheri+east,+maharashtra+-400059+/@19.1117672,72.8696096,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="ct-map-dir">
+                <p className="ct-map-addr">{OFFICES[0].address}</p>
+                <a href={`https://maps.google.com/?q=${encodeURIComponent(OFFICES[0].address)}`} target="_blank" rel="noopener noreferrer" className="ct-map-dir">
                   Get Directions
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
                 </a>

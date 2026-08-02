@@ -121,7 +121,7 @@ const SingleWindowAssistance: React.FC = () => {
       <section className="swa-hero" ref={heroRef}>
         <div className="swa-hero__overlay" />
         <div className="swa-hero__inner container">
-          <span className="swa-hero__badge">JHS & Associates</span>
+          {/* <span className="swa-hero__badge">JHS & Associates</span> */}
           <h1 className="swa-hero__title">
             Single Window <em>Assistance</em>
           </h1>
@@ -258,7 +258,7 @@ const SingleWindowAssistance: React.FC = () => {
                 <span className="swa-stat__label">Success Rate</span>
               </div>
               <div className="swa-stat">
-                <span className="swa-stat__number">45</span>
+                <span className="swa-stat__number">45+</span>
                 <span className="swa-stat__label">Years of Excellence</span>
               </div>
             </div>

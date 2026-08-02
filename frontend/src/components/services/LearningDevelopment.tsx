@@ -75,7 +75,7 @@ export default function LearningDevelopment() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="ld-hero">
-        <div className="ld-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.png')}')` }} />
+        <div className="ld-hero__bg" style={{ backgroundImage: `url('${imageUrl('Learning-Development.webp')}')` }} />
         <div className="ld-hero__overlay" />
         <div className="ld-container">
           <div className="ld-hero__content">

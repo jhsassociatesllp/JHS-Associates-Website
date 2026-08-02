@@ -13,6 +13,9 @@ import Services from './sections/Services'
 import Cities from './sections/Cities'
 import VisionMission from './sections/VisionMission'
 import Insights from './sections/Insights'
+import PrivacyPolicy from './components/legal/PrivacyPolicy'
+import TermsAndConditions from './components/legal/TermsAndConditions'
+import TermsOfBusiness from './components/legal/TermsOfBusiness'
 // Services pages
 import Outsourcing from './components/services/Outsourcing'
 import Consulting from './components/services/Consulting'
@@ -258,6 +261,11 @@ export default function App() {
 
         {/* Feedback */}
         <Route path="/feedback" element={<Feedback />} />
+
+        {/* Legal */}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/terms-of-business" element={<TermsOfBusiness />} />
 
         {/* Request for Proposal */}
         <Route path="/approval-for-proposal" element={<RequestForProposal />} />

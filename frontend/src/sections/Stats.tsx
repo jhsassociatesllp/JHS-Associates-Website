@@ -14,7 +14,7 @@ const insights: InsightItem[] = [
     eyebrow: "FINANCIAL INTEGRITY ",
     heading: "The JHS Insights Index",
     description:
-      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS Associates brings decades of expertise transforming complexity into clarity.",
+      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS brings decades of expertise transforming complexity into clarity.",
   },
   {
     eyebrow: "RISK AND GOVERNANCE ",

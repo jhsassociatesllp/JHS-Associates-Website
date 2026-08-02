@@ -340,9 +340,9 @@ export default function Hero() {
         {/* Badge & Content - Visible on center, prev, and next cards */}
         {showContent && (
           <>
-            <div className={`hero__carousel-card-badge ${isHovered && isCenter ? "hero__carousel-card-badge--hidden" : ""}`}>
+            {/* <div className={`hero__carousel-card-badge ${isHovered && isCenter ? "hero__carousel-card-badge--hidden" : ""}`}>
               {card.category}
-            </div>
+            </div> */}
             <div className={`hero__carousel-card-content ${isSide ? "hero__carousel-card-content--side" : ""} ${isHovered && isCenter ? "hero__carousel-card-content--hidden" : ""}`}>
               <p className="hero__carousel-card-meta">{card.meta}</p>
               <h3 className="hero__carousel-card-title">{card.title}</h3>

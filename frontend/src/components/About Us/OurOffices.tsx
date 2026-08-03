@@ -26,8 +26,8 @@ const OFFICES = [
     badge: 'Regional Hub',
     state: 'Gujarat',
     route: '/city/gujarat',
-    phone: '',
-    email: '',
+    phone: '+91 9374639574',
+    email: 'kalpesh.parmar@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054' },
@@ -40,7 +40,7 @@ const OFFICES = [
   {
     city: 'Delhi',
     badge: 'National Capital Office',
-    state: 'NCR',
+    state: 'Delhi',
     route: '/city/delhi',
     phone: '+91 9810333433',
     email: 'nikhel.kochhar@jhsassociates.in',
@@ -108,7 +108,7 @@ const OFFICES = [
     badge: 'International Offices',
     state: 'Worldwide',
     route: '/city/global',
-    phone: '',
+    phone: '+971 4348 0046',
     email: 'vinod.joshi@jhsassociates.in',
     isPrimary: false,
     branches: [

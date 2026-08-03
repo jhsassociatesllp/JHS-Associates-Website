@@ -127,11 +127,11 @@ export default function Delhi() {
             <div className="del-hero__card-addr"><IconPin /><span>Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048</span></div>
           </div>
           <div className="del-hero__card-divider" />
-          {/* <div className="del-hero__card-right">
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 11 1234 5678</span></div>
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">delhi@jhsassociates.in</span></div>
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
-          </div> */}
+          <div className="del-hero__card-right">
+            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 9810333433</span></div>
+            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">nikhel.kochhar@jhsassociates.in</span></div>
+            {/* <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
+          </div>
         </div>
       </section>
 

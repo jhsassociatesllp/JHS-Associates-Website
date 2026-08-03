@@ -106,11 +106,11 @@ export default function Bengaluru() {
             <div className="blr-hero__card-addr"><IconPin /><span>3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037</span></div>
           </div>
           <div className="blr-hero__card-divider" />
-          {/* <div className="blr-hero__card-right">
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 80 1234 5678</span></div>
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">bengaluru@jhsassociates.in</span></div>
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
-          </div> */}
+          <div className="blr-hero__card-right">
+            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 9663397755</span></div>
+            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">narayana.malla@jhsassociates.in</span></div>
+            {/* <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
+          </div>
         </div>
       </section>
 

@@ -226,18 +226,18 @@ export default function Kolkata() {
             </div>
           </div>
           <div className="kol-hero__card-info">
-            {/* <div className="kol-hero__card-info-item">
+            <div className="kol-hero__card-info-item">
               <div>
                 <span className="kol-hero__card-info-label">Phone</span>
-                <span className="kol-hero__card-info-val">+91 33 1234 5678</span>
+                <span className="kol-hero__card-info-val">+91 9831150209</span>
               </div>
-          </div>
-          <div className="kol-hero__card-info-item">
-            <div>
-              <span className="kol-hero__card-info-label">Email</span>
-              <span className="kol-hero__card-info-val">kolkata@jhsassociates.in</span>
             </div>
-          </div> */}
+            <div className="kol-hero__card-info-item">
+              <div>
+                <span className="kol-hero__card-info-label">Email</span>
+                <span className="kol-hero__card-info-val">sharad.mohata@jhsassociates.in</span>
+              </div>
+            </div>
             <div className="kol-hero__card-info-item">
               <div>
                 {/* <span className="kol-hero__card-info-label">Business Hours</span> */}

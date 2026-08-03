@@ -188,7 +188,7 @@ export default function RequestForProposal() {
           <div className="rfp-card__accent" />
 
           <header className="rfp-formhead">
-            <span className="rfp-formhead__tag">Our approach</span>
+            {/* <span className="rfp-formhead__tag">Our approach</span> */}
             <h2 className="rfp-formhead__title">Tell us about your requirements</h2>
             <p className="rfp-formhead__sub">
               Fill in the details below and we'll get back to you within one business day.

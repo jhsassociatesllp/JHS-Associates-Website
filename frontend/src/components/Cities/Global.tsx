@@ -196,27 +196,24 @@ export default function Global() {
           </div>
           <div className="glb-hero__card-info">
             <div className="glb-hero__card-info-item">
-              <div>
-                <span className="glb-hero__card-info-label">Phone</span>
-                <span className="glb-hero__card-info-val">+971 4348 0046</span>
-              </div>
+
               <div>
                 <span className="glb-hero__card-info-label">Email</span>
                 <span className="glb-hero__card-info-val">vinod.joshi@jhsassociates.in</span>
               </div>
             </div>
             <div className="glb-hero__card-info-item">
-              {/* <div>
-                <span className="glb-hero__card-info-label">Business Hours</span>
-                <span className="glb-hero__card-info-val">Mon–Fri, 9:00 AM – 6:00 PM</span>
-              </div> */}
+              <div>
+                <span className="glb-hero__card-info-label">Phone</span>
+                <span className="glb-hero__card-info-val">+971 4348 0046</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </div >
+      </section >
 
       {/* ════════════ SECTORS SERVED ════════════ */}
-      <section className="glb-section glb-sectors-section">
+      < section className="glb-section glb-sectors-section" >
         <div className="glb-container">
           <div className="glb-section-hdr">
             <span className="glb-section-hdr__tag">Industries</span>
@@ -233,10 +230,10 @@ export default function Global() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ════════════ WE SPECIALISE IN ════════════ */}
-      <section className="glb-section glb-specials-section">
+      < section className="glb-section glb-specials-section" >
         <div className="glb-container">
           <div className="glb-specials-inner">
             <div className="glb-specials-left">
@@ -258,10 +255,10 @@ export default function Global() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ════════════ MAP SECTION ════════════ */}
-      <section className="glb-map-section">
+      < section className="glb-map-section" >
         <div className="glb-container">
           <div className="glb-section-hdr">
             <span className="glb-section-hdr__tag">Locations</span>
@@ -300,7 +297,7 @@ export default function Global() {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   )
 }

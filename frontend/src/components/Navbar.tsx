@@ -170,7 +170,7 @@ const NAV_ITEMS: NavItem[] = [
       // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
       // { label: "Global Presence", description: "Our international footprint", href: '/about/global-presence' },
-      { label: "Leadership Team", description: "Board & senior partners", href: '/about/leadership' },
+      { label: "Leadership Team", description: "Council, Partners & Advisory Board Members", href: '/about/leadership' },
       { label: "Careers", description: "Join our growing team", href: '/about/careers' },
       // { label: "CSR", description: "Our social responsibility", href: '/about/csr' },
     ],

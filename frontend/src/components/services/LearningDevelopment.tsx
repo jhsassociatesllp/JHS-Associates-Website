@@ -79,7 +79,7 @@ export default function LearningDevelopment() {
         <div className="ld-hero__overlay" />
         <div className="ld-container">
           <div className="ld-hero__content">
-            <span className="ld-eyebrow">Training &amp; Capability Building</span>
+            {/* <span className="ld-eyebrow">Training &amp; Capability Building</span> */}
             <h1 className="ld-title">Learning &amp; Development</h1>
             <p className="ld-subtitle">
               Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.

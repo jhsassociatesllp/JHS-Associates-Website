@@ -6,18 +6,18 @@ import LazyImage from '../common/LazyImage'
 
 // Images
 
-const SECTOR_CATEGORIES = [
-  'Statutory Audit & Assurance',
-  'Tax & Regulatory',
-  'Risk & Governance',
-  'Banking, NBFC & Insurance',
-  'IT & Technology',
-  'M&A & Corporate Restructuring',
-  'Venture Capital & Private Equity',
-  'Family Business & HNI',
-  'Real Estate & Infrastructure',
-  'Financial Advisory & CFO Services',
-]
+// Sector filter options are derived from the free-text `sector` values on
+// each partner (e.g. "Risk Advisory, Internal Audit & IFC" splits into
+// "Risk Advisory", "Internal Audit", "IFC") rather than a fixed category
+// list, since partner bios use varied phrasing. Matching is substring-based
+// (see filteredMembers below), so picking "Risk" — or a tag containing it,
+// like "Risk Advisory" — surfaces every partner whose sector text mentions
+// risk, regardless of how that partner's phrase is worded.
+const splitSectorTags = (raw: string): string[] =>
+  raw
+    .split(/[,&]/)
+    .map((part) => part.trim().replace(/\.$/, ''))
+    .filter((part) => part.length > 2)
 
 const PARTNER_DATA = [
   {
@@ -195,7 +195,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Huzefa Kaka',
-        image: '',
+        image: imageUrl('Huzefa-kaka.jpeg'),
         creds: '',
         desc: '',
         location: "Mumbai",
@@ -366,7 +366,7 @@ const PARTNER_DATA = [
         creds: "ACA",
         desc: "Expert in Startup Advisory, Corporate Governance & ERP Strategy. ",
         location: "Ahmedabad",
-        sector: ["Internal Audit Risk Advisory & Insurance."],
+        sector: ["Internal Audit, Risk Advisory & Insurance."],
         // teamSize: 7,
         // clientsServed: 30,
         linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/",
@@ -641,15 +641,31 @@ export default function Partners() {
   )
   const roles = useMemo(() => Array.from(new Set(allMembers.map((m) => m.role))), [allMembers])
 
+  // Dedupe sector tags case-insensitively while keeping the first-seen casing
+  // for display (e.g. "Risk Advisory" wins over a later "risk advisory").
+  const sectors = useMemo(() => {
+    const seen = new Map<string, string>()
+    allMembers.forEach((m) => {
+      m.sector.forEach((raw) => {
+        splitSectorTags(raw).forEach((tag) => {
+          const key = tag.toLowerCase()
+          if (!seen.has(key)) seen.set(key, tag)
+        })
+      })
+    })
+    return Array.from(seen.values()).sort((a, b) => a.localeCompare(b))
+  }, [allMembers])
+
   const isFiltering = search.trim() !== '' || location !== 'All' || role !== 'All' || sector !== 'All'
 
   const filteredMembers = useMemo(() => {
     const q = search.trim().toLowerCase()
+    const sectorQuery = sector.toLowerCase()
     return allMembers.filter((m) => {
       if (q && !m.name.toLowerCase().includes(q)) return false
       if (location !== 'All' && m.location !== location) return false
       if (role !== 'All' && m.role !== role) return false
-      if (sector !== 'All' && !m.sector.includes(sector)) return false
+      if (sector !== 'All' && !m.sector.some((s) => s.toLowerCase().includes(sectorQuery))) return false
       return true
     })
   }, [allMembers, search, location, role, sector])
@@ -720,7 +736,7 @@ export default function Partners() {
 
               <select value={sector} onChange={(e) => setSector(e.target.value)} aria-label="Filter by sector">
                 <option value="All">All Sectors</option>
-                {SECTOR_CATEGORIES.map((s) => (
+                {sectors.map((s) => (
                   <option key={s} value={s}>{s}</option>
                 ))}
               </select>

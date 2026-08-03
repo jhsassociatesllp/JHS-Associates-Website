@@ -79,7 +79,7 @@ export default function Assurance() {
         <div className="aa-hero__overlay" />
         <div className="aa-container">
           <div className="aa-hero__content">
-            <span className="aa-eyebrow">Audit &amp; Assurance</span>
+            {/* <span className="aa-eyebrow">Audit &amp; Assurance</span> */}
             <h1 className="aa-title">Assurance Services</h1>
             <p className="aa-subtitle">
               Independent, rigorous audit and assurance services that strengthen financial credibility and stakeholder confidence.

@@ -79,7 +79,7 @@ export default function Consulting() {
         <div className="c-hero__overlay" />
         <div className="c-container">
           <div className="c-hero__content">
-            <span className="c-eyebrow">Expert Advisory</span>
+            {/* <span className="c-eyebrow">Expert Advisory</span> */}
             <h1 className="c-title">Consulting Services</h1>
             <p className="c-subtitle">
               Strategic guidance to drive growth, efficiency, and transformation.

@@ -439,13 +439,13 @@ export default function Careers() {
                 </div>
               </div>
               {/* Community card */}
-              <div style={ss.communityCard}>
+              {/* <div style={ss.communityCard}>
                 <p style={ss.communityTitle}>Can't find a role?</p>
                 <p style={ss.communitySub}>Join our talent community and we'll notify you when a match opens up.</p>
                 <button style={ss.communityBtn} type="button" onClick={() => { window.location.href = 'mailto:hr@jhsassociates.in' }}>
                   Join Community
                 </button>
-              </div>
+              </div> */}
             </div>
 
             {/* ── JOB ROWS ── */}

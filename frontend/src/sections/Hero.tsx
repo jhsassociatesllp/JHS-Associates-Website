@@ -48,9 +48,6 @@ const EXCELLENCIA_CARD_ID = 3;
 const REGULATORY_CARD_ID = 2;
 const WHITEPAPER_CARD_ID = 7;
 
-
-
-
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
   id: EXCELLENCIA_CARD_ID,
   image: entry.image_id ? `${API_BASE}/excellencia/image/${entry.image_id}` : imageUrl('Card3.jpeg'),
@@ -89,7 +86,7 @@ const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
 const DEFAULT_CARDS: Card[] = [
   {
     id: 1,
-    image: imageUrl('Card2.jpeg'),
+    image: imageUrl('Strategic Leadership.png'),
     category: "STRATEGIC LEADERSHIP BRIEFING",
     meta: "STRATEGIC LEADERSHIP BRIEFING · DATA GOVERNANCE · 2026",
     title: "The Rule 6 Maze: A Perspective for CEOs and Chairpersons",

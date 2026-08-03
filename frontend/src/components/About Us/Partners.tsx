@@ -200,7 +200,7 @@ const PARTNER_DATA = [
         desc: '',
         location: "Mumbai",
         sector: [],
-        role: "Director",
+        role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/huzefakaka/',
 
       },
@@ -211,7 +211,7 @@ const PARTNER_DATA = [
         desc: '',
         location: "Mumbai",
         sector: [],
-        role: "Director",
+        role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/amitkumarmore/',
 
       },
@@ -222,7 +222,7 @@ const PARTNER_DATA = [
         desc: '',
         location: "Mumbai",
         sector: [],
-        role: "Director",
+        role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/',
 
       },
@@ -233,7 +233,7 @@ const PARTNER_DATA = [
         desc: '',
         location: "Mumbai",
         sector: [],
-        role: "Director",
+        role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/rajdabburi/',
 
       },
@@ -244,7 +244,7 @@ const PARTNER_DATA = [
         desc: '',
         location: "Mumbai",
         sector: [],
-        role: "Director",
+        role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/huzefamala/',
 
       }

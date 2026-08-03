@@ -69,6 +69,7 @@ const RESPONSIVE_CSS = `
   .careers-apply-card    { max-width: 760px !important; margin: 0 auto !important; }
   .careers-form-grid     { grid-template-columns: 1fr 1fr !important; }
 
+
   /* TABLET  601–900 */
   @media (max-width: 900px) {
     .careers-life-section { padding: 3.5rem 2.5rem !important; }

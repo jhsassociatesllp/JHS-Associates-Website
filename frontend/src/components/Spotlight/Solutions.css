@@ -68,7 +68,7 @@
   position: absolute;
   inset: 0;
   /* background: linear-gradient(135deg, rgba(30, 58, 95, 0.92) 0%, rgba(42, 74, 111, 0.88) 100%); */
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .sol-hero__content {

@@ -27,7 +27,9 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Learning & Development', path: '/services/learning-development' }
+  { name: 'Complaince', path: '/services/complaince-learning' },
+  { name: 'Learning & Development', path: '/services/learning-development' },
+
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */

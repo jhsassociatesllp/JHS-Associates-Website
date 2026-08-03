@@ -51,7 +51,7 @@ const PARTNERS = {
     email: 'taher.pepermintwala@jhsassociates.in',
   },
   'Sahil Shah': {
-    image: imageUrl('Sahil-Shah-removebg-preview.png'),
+    image: imageUrl('Sahil-Shah-removebg-preview.jpeg'),
     creds: 'ACA, IPO Certified',
     location: 'Mumbai',
     linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a',
@@ -86,7 +86,7 @@ const PARTNERS = {
     email: 'huzefa.mala@jhsassociates.in',
   },
   'Tripti Mohta': {
-    image: imageUrl('Tripti-mohta.png'),
+    image: imageUrl('Tripti mohta.png'),
     creds: 'FCA',
     location: 'Kolkata',
     linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
@@ -100,7 +100,7 @@ const PARTNERS = {
     email: 'parnal@jhsassociates.in',
   },
   'G Chandrasekaran': {
-    image: imageUrl('Chandra Shekaran.png'),
+    image: imageUrl('Chandra-Shekaran.png'),
     creds: 'DSM, FCA, DISA',
     location: 'Chennai',
     linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29',

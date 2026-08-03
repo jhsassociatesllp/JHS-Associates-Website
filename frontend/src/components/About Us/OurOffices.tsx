@@ -42,34 +42,34 @@ const OFFICES = [
     badge: 'National Capital Office',
     state: 'NCR',
     route: '/city/delhi',
-    phone: '',
-    email: '',
+    phone: '+91 9810333433',
+    email: 'nikhel.kochhar@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
-  {
-    city: 'Hyderabad',
-    badge: 'South India Tech Hub',
-    state: 'Telangana',
-    route: '/city/hyderabad',
-    phone: '',
-    email: '',
-    isPrimary: false,
-    branches: [
-      {
-        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
-      },
-    ],
-  },
+  // {
+  //   city: 'Hyderabad',
+  //   badge: 'South India Tech Hub',
+  //   state: 'Telangana',
+  //   route: '/city/hyderabad',
+  //   phone: '',
+  //   email: '',
+  //   isPrimary: false,
+  //   branches: [
+  //     {
+  //       name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
+  //     },
+  //   ],
+  // },
   {
     city: 'Bengaluru',
     badge: 'Silicon Valley Office',
     state: 'Karnataka',
     route: '/city/bengaluru',
-    phone: '',
-    email: '',
+    phone: '+91 9663397755',
+    email: 'narayana.malla@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Bengaluru ', address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037' },
@@ -80,8 +80,8 @@ const OFFICES = [
     badge: 'Eastern India Gateway',
     state: 'West Bengal',
     route: '/city/kolkata',
-    phone: '',
-    email: '',
+    phone: '+91 9831150209',
+    email: 'sharad.mohata@jhsassociates.in',
     isPrimary: false,
     branches: [
       {
@@ -94,8 +94,8 @@ const OFFICES = [
     badge: 'South India Financial Hub',
     state: 'Tamil Nadu',
     route: '/city/chennai',
-    phone: '',
-    email: '',
+    phone: '+91 9840131965',
+    email: 'chandrasekaran@jhsassociates.in',
     isPrimary: false,
     branches: [
       {
@@ -109,7 +109,7 @@ const OFFICES = [
     state: 'Worldwide',
     route: '/city/global',
     phone: '',
-    email: '',
+    email: 'vinod.joshi@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },

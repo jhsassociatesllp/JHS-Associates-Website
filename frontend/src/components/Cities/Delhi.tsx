@@ -138,7 +138,7 @@ export default function Delhi() {
       {/* ══ STATS RIBBON ══ */}
       <div className="del-ribbon">
         <div className="del-ribbon__inner">
-          {([['2', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="del-ribbon__item"><span className="del-ribbon__num">{num}</span><span className="del-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>

@@ -196,10 +196,14 @@ export default function Global() {
           </div>
           <div className="glb-hero__card-info">
             <div className="glb-hero__card-info-item">
-              {/* <div>
+              <div>
+                <span className="glb-hero__card-info-label">Phone</span>
+                <span className="glb-hero__card-info-val">+971 4348 0046</span>
+              </div>
+              <div>
                 <span className="glb-hero__card-info-label">Email</span>
-                <span className="glb-hero__card-info-val">global@jhsassociates.in</span>
-              </div> */}
+                <span className="glb-hero__card-info-val">vinod.joshi@jhsassociates.in</span>
+              </div>
             </div>
             <div className="glb-hero__card-info-item">
               {/* <div>

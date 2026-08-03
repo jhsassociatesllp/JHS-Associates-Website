@@ -193,17 +193,7 @@ const PARTNER_DATA = [
         linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/",
 
       },
-      {
-        name: 'Huzefa Kaka',
-        image: imageUrl('Huzefa-kaka.jpeg'),
-        creds: '',
-        desc: 'Expert in Banking, Auditing, Accounitng.',
-        location: "Mumbai",
-        sector: [],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/huzefakaka/',
 
-      },
       {
         name: 'Amit More',
         image: imageUrl('Amit-more.jpeg'),
@@ -247,7 +237,18 @@ const PARTNER_DATA = [
         role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/huzefamala/',
 
-      }
+      },
+      {
+        name: 'Huzefa Kaka',
+        image: imageUrl('Huzefa-kaka.jpeg'),
+        creds: '',
+        desc: 'Expert in Risk Management, Compliance, Internal Audit & Concurrent Audit.',
+        location: "Mumbai",
+        sector: ['Risk & Governance'],
+        role: "Advisory Board Member",
+        linkedin: 'https://www.linkedin.com/in/huzefakaka/',
+
+      },
     ]
   },
   {

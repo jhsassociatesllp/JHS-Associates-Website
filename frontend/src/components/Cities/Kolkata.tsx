@@ -248,6 +248,15 @@ export default function Kolkata() {
         </div>
       </section>
 
+      {/* ══ STATS RIBBON ══ */}
+      <div className="kol-ribbon">
+        <div className="kol-ribbon__inner">
+          {([[`${PARTNERS.length}`, 'Expert Partners'], [`${SECTORS.length}`, 'Sectors Served'], [`${SPECIALIZATIONS.length}`, 'Specialisations'], [`${MAP_LOCATIONS.length}`, 'Kolkata Offices']] as [string, string][]).map(([num, lbl]) => (
+            <div key={lbl} className="kol-ribbon__item"><span className="kol-ribbon__num">{num}</span><span className="kol-ribbon__lbl">{lbl}</span></div>
+          ))}
+        </div>
+      </div>
+
       <section className="kol-section kol-section--light">
         <div className="kol-container">
           <div className="kol-section-hdr">

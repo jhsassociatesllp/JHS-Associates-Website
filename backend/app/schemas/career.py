@@ -56,7 +56,6 @@ class ApplicationCreate(BaseModel):
     highest_qualification_other: Optional[str] = Field(None, max_length=120)
     profile: str = Field(..., max_length=80)
     profile_other: Optional[str] = Field(None, max_length=120)
-    reference: Optional[str] = Field(None, max_length=120)
     how_heard: str = Field(..., max_length=40)
     how_heard_detail: Optional[str] = Field(None, max_length=200)
 

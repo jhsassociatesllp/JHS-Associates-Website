@@ -272,7 +272,6 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         + _row("Experience", data.get("experience_years") or "—")
         + _row("Highest Qualification", _with_other(data.get("highest_qualification"), data.get("highest_qualification_other")))
         + _row("Profile", _with_other(data.get("profile"), data.get("profile_other")))
-        + _row("Reference", data.get("reference") or "—")
         + _row("How They Heard About Us", how_heard)
         + _row("Remark", data.get("cover_letter") or "—")
         + _row("Resume", "Attached in the admin panel")

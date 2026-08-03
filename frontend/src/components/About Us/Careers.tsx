@@ -12,11 +12,12 @@ type ApplicationForm = {
   highest_qualification_other: string
   profile: string
   profile_other: string
-  reference: string
   how_heard: string
   how_heard_detail: string
   remark: string
 }
+
+type FormErrors = Partial<Record<keyof ApplicationForm | 'resume', string>>
 
 const emptyForm: ApplicationForm = {
   full_name: '',
@@ -27,7 +28,6 @@ const emptyForm: ApplicationForm = {
   highest_qualification_other: '',
   profile: '',
   profile_other: '',
-  reference: '',
   how_heard: '',
   how_heard_detail: '',
   remark: '',
@@ -64,6 +64,8 @@ const RESPONSIVE_CSS = `
   .careers-life-grid    { grid-template-columns: 1fr 1.7fr !important; gap: 4rem !important; }
   .careers-culture-img  { height: 380px !important; }
 
+
+  
   /* ── Apply section ── */
   .careers-apply-section { padding: 4rem 4rem 5rem !important; }
   .careers-apply-card    { max-width: 760px !important; margin: 0 auto !important; }
@@ -103,6 +105,7 @@ export default function Careers() {
   const [message, setMessage] = useState('')
   const [formData, setFormData] = useState<ApplicationForm>(emptyForm)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
+  const [errors, setErrors] = useState<FormErrors>({})
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -120,16 +123,45 @@ export default function Careers() {
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
 
-  const updateField = (f: keyof ApplicationForm, v: string) =>
+  const updateField = (f: keyof ApplicationForm, v: string) => {
     setFormData(c => ({ ...c, [f]: v }))
+    if (errors[f]) setErrors(prev => ({ ...prev, [f]: undefined }))
+  }
 
   const showQualOther = formData.highest_qualification === 'Others'
   const showProfileOther = formData.profile === 'Other'
   const howHeardDetailLabel = HOW_HEARD_DETAIL_LABEL[formData.how_heard]
 
+  const validate = (): boolean => {
+    const e: FormErrors = {}
+
+    if (!formData.full_name.trim()) e.full_name = 'Full name is required'
+    else if (formData.full_name.trim().length < 2) e.full_name = 'Full name must be at least 2 characters'
+
+    if (!formData.email.trim()) e.email = 'Email is required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) e.email = 'Your email format is incorrect'
+
+    if (!formData.phone.trim()) e.phone = 'Contact number is required'
+    else if (!/^[+\d\s\-()]{7,16}$/.test(formData.phone.trim())) e.phone = 'Your phone number is incorrect'
+
+    if (!formData.highest_qualification) e.highest_qualification = 'Please select your highest qualification'
+    else if (showQualOther && !formData.highest_qualification_other.trim()) e.highest_qualification_other = 'Please specify your qualification'
+
+    if (!formData.profile) e.profile = 'Please select your profile'
+    else if (showProfileOther && !formData.profile_other.trim()) e.profile_other = 'Please specify your profile'
+
+    if (!formData.how_heard) e.how_heard = 'Please select an option'
+    else if (howHeardDetailLabel && !formData.how_heard_detail.trim()) e.how_heard_detail = `Please provide the ${howHeardDetailLabel.toLowerCase()}`
+
+    if (!resumeFile) e.resume = 'Resume (PDF) is required'
+
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
   const submitApplication = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!resumeFile) return
+    if (!validate()) return
     setSubmitting(true); setMessage('')
     try {
       const payload = new FormData()
@@ -141,20 +173,22 @@ export default function Careers() {
       payload.append('highest_qualification_other', showQualOther ? formData.highest_qualification_other : '')
       payload.append('profile', formData.profile)
       payload.append('profile_other', showProfileOther ? formData.profile_other : '')
-      payload.append('reference', formData.reference)
       payload.append('how_heard', formData.how_heard)
       payload.append('how_heard_detail', howHeardDetailLabel ? formData.how_heard_detail : '')
       payload.append('cover_letter', formData.remark)
-      payload.append('resume', resumeFile)
+      payload.append('resume', resumeFile as File)
 
       const res = await fetch(`${API_BASE_URL}/careers/applications/upload`, { method: 'POST', body: payload })
       if (!res.ok) throw new Error()
-      setFormData(emptyForm); setResumeFile(null)
+      setFormData(emptyForm); setResumeFile(null); setErrors({})
       setMessage('Application submitted successfully. Our HR team will review it soon.')
     } catch {
       setMessage('Could not submit your application right now. Please try again.')
     } finally { setSubmitting(false) }
   }
+
+  const inputStyle = (name: keyof FormErrors) =>
+    errors[name] ? { ...ss.formInput, ...ss.formInputError } : ss.formInput
 
   /* ─── render ──────────────────────────────────────────── */
   return (
@@ -217,7 +251,7 @@ export default function Careers() {
             <p style={ss.boardSub}>Tell us a bit about yourself — our HR team reviews every submission.</p>
           </div>
 
-          <form onSubmit={submitApplication} style={{ padding: '1.4rem 1.5rem 2rem' }}>
+          <form onSubmit={submitApplication} noValidate style={{ padding: '1.4rem 1.5rem 2rem' }}>
             <div className="careers-form-grid" style={ss.formGrid}>
               {[
                 { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Enter your full name', type: 'text', required: true, autoComplete: 'name' },
@@ -229,7 +263,7 @@ export default function Careers() {
                   <label style={ss.formLabel} htmlFor={`career-${field}`}>{label}</label>
                   <input
                     id={`career-${field}`}
-                    style={ss.formInput}
+                    style={inputStyle(field)}
                     type={type}
                     value={formData[field]}
                     onChange={e => updateField(field, e.target.value)}
@@ -237,6 +271,7 @@ export default function Careers() {
                     required={required}
                     autoComplete={autoComplete}
                   />
+                  {errors[field] && <span style={ss.formErr}>{errors[field]}</span>}
                 </div>
               ))}
 
@@ -245,7 +280,7 @@ export default function Careers() {
                 <label style={ss.formLabel} htmlFor="career-qualification">Highest Qualification *</label>
                 <select
                   id="career-qualification"
-                  style={ss.formInput}
+                  style={inputStyle('highest_qualification')}
                   value={formData.highest_qualification}
                   onChange={e => updateField('highest_qualification', e.target.value)}
                   required
@@ -253,19 +288,21 @@ export default function Careers() {
                   <option value="" disabled>Select an option…</option>
                   {QUALIFICATIONS.map(q => <option key={q} value={q}>{q}</option>)}
                 </select>
+                {errors.highest_qualification && <span style={ss.formErr}>{errors.highest_qualification}</span>}
               </div>
               {showQualOther && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                   <label style={ss.formLabel} htmlFor="career-qualification-other">Please specify *</label>
                   <input
                     id="career-qualification-other"
-                    style={ss.formInput}
+                    style={inputStyle('highest_qualification_other')}
                     type="text"
                     value={formData.highest_qualification_other}
                     onChange={e => updateField('highest_qualification_other', e.target.value)}
                     placeholder="Your qualification"
                     required
                   />
+                  {errors.highest_qualification_other && <span style={ss.formErr}>{errors.highest_qualification_other}</span>}
                 </div>
               )}
 
@@ -274,7 +311,7 @@ export default function Careers() {
                 <label style={ss.formLabel} htmlFor="career-profile">Profile *</label>
                 <select
                   id="career-profile"
-                  style={ss.formInput}
+                  style={inputStyle('profile')}
                   value={formData.profile}
                   onChange={e => updateField('profile', e.target.value)}
                   required
@@ -282,41 +319,30 @@ export default function Careers() {
                   <option value="" disabled>Select an option…</option>
                   {PROFILES.map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
+                {errors.profile && <span style={ss.formErr}>{errors.profile}</span>}
               </div>
               {showProfileOther && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                   <label style={ss.formLabel} htmlFor="career-profile-other">Please specify *</label>
                   <input
                     id="career-profile-other"
-                    style={ss.formInput}
+                    style={inputStyle('profile_other')}
                     type="text"
                     value={formData.profile_other}
                     onChange={e => updateField('profile_other', e.target.value)}
                     placeholder="Your profile"
                     required
                   />
+                  {errors.profile_other && <span style={ss.formErr}>{errors.profile_other}</span>}
                 </div>
               )}
-
-              {/* Reference */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                <label style={ss.formLabel} htmlFor="career-reference">Reference</label>
-                <input
-                  id="career-reference"
-                  style={ss.formInput}
-                  type="text"
-                  value={formData.reference}
-                  onChange={e => updateField('reference', e.target.value)}
-                  placeholder="Who referred you? (optional)"
-                />
-              </div>
 
               {/* How did you hear about us */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 <label style={ss.formLabel} htmlFor="career-how-heard">How did you hear about us? *</label>
                 <select
                   id="career-how-heard"
-                  style={ss.formInput}
+                  style={inputStyle('how_heard')}
                   value={formData.how_heard}
                   onChange={e => updateField('how_heard', e.target.value)}
                   required
@@ -324,28 +350,41 @@ export default function Careers() {
                   <option value="" disabled>Select an option…</option>
                   {HOW_HEARD.map(h => <option key={h} value={h}>{h}</option>)}
                 </select>
+                {errors.how_heard && <span style={ss.formErr}>{errors.how_heard}</span>}
               </div>
               {howHeardDetailLabel && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                   <label style={ss.formLabel} htmlFor="career-how-heard-detail">{howHeardDetailLabel} *</label>
                   <input
                     id="career-how-heard-detail"
-                    style={ss.formInput}
+                    style={inputStyle('how_heard_detail')}
                     type="text"
                     value={formData.how_heard_detail}
                     onChange={e => updateField('how_heard_detail', e.target.value)}
                     placeholder={howHeardDetailLabel}
                     required
                   />
+                  {errors.how_heard_detail && <span style={ss.formErr}>{errors.how_heard_detail}</span>}
                 </div>
               )}
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 <label style={ss.formLabel} htmlFor="career-resume">Resume (PDF) *</label>
-                <label style={ss.uploadLabel}>
+                <label style={errors.resume ? { ...ss.uploadLabel, ...ss.uploadLabelError } : ss.uploadLabel}>
                   {resumeFile ? `✓ ${resumeFile.name}` : '📎 Upload PDF'}
-                  <input id="career-resume" type="file" accept="application/pdf,.pdf" required style={{ display: 'none' }} onChange={e => setResumeFile(e.target.files?.[0] ?? null)} />
+                  <input
+                    id="career-resume"
+                    type="file"
+                    accept="application/pdf,.pdf"
+                    required
+                    style={{ display: 'none' }}
+                    onChange={e => {
+                      setResumeFile(e.target.files?.[0] ?? null)
+                      if (errors.resume) setErrors(prev => ({ ...prev, resume: undefined }))
+                    }}
+                  />
                 </label>
+                {errors.resume && <span style={ss.formErr}>{errors.resume}</span>}
               </div>
             </div>
 
@@ -416,6 +455,9 @@ const ss = {
   formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem', marginBottom: '0.85rem' },
   formLabel: { fontSize: '0.7rem', fontWeight: 700, color: '#777', letterSpacing: '0.04em', textTransform: 'uppercase' as const },
   formInput: { padding: '0.6rem 0.8rem', border: '1.5px solid #e0ddd6', borderRadius: '8px', fontSize: '0.875rem', color: '#222', background: '#fff', fontFamily: FONT, outline: 'none', width: '100%' },
+  formInputError: { borderColor: '#dc2626', background: '#fdf2f2' },
+  formErr: { fontSize: '0.75rem', fontWeight: 500, color: '#dc2626' },
   uploadLabel: { display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 0.8rem', border: '1.5px dashed #d0ccc3', borderRadius: '8px', cursor: 'pointer', fontSize: '0.82rem', color: '#666', background: '#faf8f5' },
+  uploadLabelError: { borderColor: '#dc2626', background: '#fdf2f2' },
   formTextarea: { padding: '0.6rem 0.8rem', border: '1.5px solid #e0ddd6', borderRadius: '8px', fontSize: '0.875rem', color: '#222', background: '#fff', fontFamily: FONT, resize: 'vertical' as const, outline: 'none', width: '100%', boxSizing: 'border-box' as const },
 }

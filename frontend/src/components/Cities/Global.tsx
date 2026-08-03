@@ -1,8 +1,18 @@
-import { useEffect, useState, type ReactElement } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Global.css'
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 
+const PARTNERS = [
+  {
+    name: 'Vinod Joshi',
+    image: imageUrl('vinod joshi.png'),
+    qualifications: 'FCA, MBA (Finance)',
+    designation: 'Financial Advisory & CFO Services',
+    email: 'vinod.joshi@jhsassociates.in',
+    linkedin: 'https://linkedin.com/in/vinod-joshi-fca',
+  },
+]
 
 const SectorIcons: Record<string, ReactElement> = {
   BFSI: (
@@ -121,6 +131,10 @@ const SPECIALIZATIONS = [
     "g": "c"
   },
   {
+    "label": "Learning & Development",
+    "g": "c"
+  },
+  {
     "label": "Global Accounts Outsourcing (UAE, Oman & UK)",
     "g": "a"
   }
@@ -164,6 +178,31 @@ const IconPin = () => (
   </svg>
 )
 
+function PartnerAvatar({ image, name }: { image: string; name: string }) {
+  const [imgError, setImgError] = useState(false)
+  return (
+    <div className="glb-pc-avatar">
+      {!imgError ? (
+        <img src={image} alt={name} className="glb-pc-avatar__img" loading="lazy" onError={() => setImgError(true)} />
+      ) : (
+        <div className="glb-pc-avatar__placeholder">{name.charAt(0)}</div>
+      )}
+    </div>
+  )
+}
+
+const IconMail = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </svg>
+)
+const IconLinkedIn = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+)
+
 const IconCheck = () => (
   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
@@ -172,8 +211,20 @@ const IconCheck = () => (
 
 export default function Global() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <div className="glb-page">
@@ -211,6 +262,89 @@ export default function Global() {
           </div>
         </div >
       </section >
+
+      {/* ══ STATS RIBBON ══ */}
+      <div className="glb-ribbon">
+        <div className="glb-ribbon__inner">
+          {([[`${PARTNERS.length}`, 'Expert Partners'], [`${SECTORS.length}`, 'Sectors Served'], [`${SPECIALIZATIONS.length}`, 'Specialisations'], [`${MAP_LOCATIONS.length}`, 'Global Offices']] as [string, string][]).map(([num, lbl]) => (
+            <div key={lbl} className="glb-ribbon__item"><span className="glb-ribbon__num">{num}</span><span className="glb-ribbon__lbl">{lbl}</span></div>
+          ))}
+        </div>
+      </div>
+
+      {/* ════════════ PARTNERS ════════════ */}
+      <section className="glb-section glb-partners-section">
+        <div className="glb-container">
+          <div className="glb-section-hdr">
+            <span className="glb-section-hdr__tag">Our Team</span>
+            <h2 className="glb-section-hdr__title">Global Partners</h2>
+            <p className="glb-section-hdr__sub">Meet the leader driving excellence across our international offices.</p>
+          </div>
+          <div className="glb-partners-grid">
+            {PARTNERS.map(p => (
+              <div key={p.name} className="glb-pc-card">
+                <PartnerAvatar image={p.image} name={p.name} />
+                <div className="glb-pc-info">
+                  <h3 className="glb-pc-name">{p.name}</h3>
+                  <p className="glb-pc-quals">{p.qualifications}</p>
+                  <p className="glb-pc-desig">{p.designation}</p>
+                </div>
+                <div className="glb-pc-social">
+                  <div className="glb-pc-mail-wrap" ref={openMailFor === p.name ? mailRef : null}>
+                    <button
+                      type="button"
+                      className={`glb-pc-btn glb-pc-btn--mail ${openMailFor === p.name ? 'is-open' : ''}`}
+                      onClick={() => setOpenMailFor(openMailFor === p.name ? null : p.name)}
+                    >
+                      <IconMail /><span>Email</span>
+                    </button>
+                    {openMailFor === p.name && (
+                      <div className="glb-pc-mail-dropdown">
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="glb-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Gmail
+                        </a>
+                        <a
+                          href={`https://outlook.office.com/mail/deeplink/compose?to=${p.email}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="glb-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Open in Outlook Web
+                        </a>
+                        <a
+                          href={`mailto:${p.email}`}
+                          className="glb-pc-mail-option"
+                          onClick={() => setOpenMailFor(null)}
+                        >
+                          Default Mail App
+                        </a>
+                        <button
+                          type="button"
+                          className="glb-pc-mail-option"
+                          onClick={() => {
+                            navigator.clipboard.writeText(p.email)
+                            setOpenMailFor(null)
+                          }}
+                        >
+                          Copy Email Address
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="glb-pc-btn glb-pc-btn--li"><IconLinkedIn /><span>LinkedIn</span></a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ════════════ SECTORS SERVED ════════════ */}
       < section className="glb-section glb-sectors-section" >

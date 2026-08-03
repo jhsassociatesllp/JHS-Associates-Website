@@ -58,7 +58,6 @@ type Application = {
   highest_qualification_other?: string;
   profile?: string;
   profile_other?: string;
-  reference?: string;
   how_heard?: string;
   how_heard_detail?: string;
   status: ApplicationStatus;
@@ -494,10 +493,6 @@ const AdminCareers: React.FC = () => {
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Profile</Typography>
                 <Typography sx={{ textAlign: 'right' }}>{withOther(viewApplication.profile, viewApplication.profile_other)}</Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between">
-                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Reference</Typography>
-                <Typography sx={{ textAlign: 'right' }}>{viewApplication.reference || '—'}</Typography>
               </Stack>
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: '#6b7280', fontSize: 13 }}>How They Heard About Us</Typography>

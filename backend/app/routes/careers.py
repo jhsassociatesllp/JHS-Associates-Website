@@ -71,7 +71,6 @@ async def submit_application_with_resume(
     highest_qualification_other: Optional[str] = Form(None),
     profile: str = Form(...),
     profile_other: Optional[str] = Form(None),
-    reference: Optional[str] = Form(None),
     how_heard: str = Form(...),
     how_heard_detail: Optional[str] = Form(None),
     resume: UploadFile = File(...),
@@ -96,7 +95,6 @@ async def submit_application_with_resume(
         highest_qualification_other=highest_qualification_other,
         profile=profile,
         profile_other=profile_other,
-        reference=reference,
         how_heard=how_heard,
         how_heard_detail=how_heard_detail,
     )

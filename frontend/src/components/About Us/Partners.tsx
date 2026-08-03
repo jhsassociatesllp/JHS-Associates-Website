@@ -88,7 +88,7 @@ const PARTNER_DATA = [
     ]
   },
   {
-    category: "Mumbai Partners",
+    category: "Mumbai Partners & Advisory Board Members",
     role: "Partner",
     members: [
       {
@@ -206,11 +206,11 @@ const PARTNER_DATA = [
       },
       {
         name: 'Amit More',
-        image: '',
-        creds: '',
-        desc: '',
+        image: imageUrl('Amit-more.jpeg'),
+        creds: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified',
+        desc: 'Expert in Cyber Security, GRC, Strategy and Digital Trust.',
         location: "Mumbai",
-        sector: [],
+        sector: ['Cyber Security & GRC'],
         role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/amitkumarmore/',
 
@@ -218,10 +218,10 @@ const PARTNER_DATA = [
       {
         name: 'Dipika Bisawa',
         image: imageUrl('Dipika-Bisawa.jpeg'),
-        creds: '',
-        desc: '',
+        creds: 'ACS',
+        desc: 'Expert in Corporate Governance, Compliance & Risk Management.',
         location: "Mumbai",
-        sector: [],
+        sector: ['Compliance & Risk Management'],
         role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/',
 
@@ -229,10 +229,10 @@ const PARTNER_DATA = [
       {
         name: 'Raj Dabburi',
         image: imageUrl('Raj-daburi.jpeg'),
-        creds: '',
-        desc: '',
+        creds: 'CA, MBA',
+        desc: 'Expert in Corporate Finance, Fund Raising, PPP Advisory & Financial Strategy',
         location: "Mumbai",
-        sector: [],
+        sector: ['Board & Institutional Advisory'],
         role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/rajdabburi/',
 
@@ -240,10 +240,10 @@ const PARTNER_DATA = [
       {
         name: 'Huzefa Mala',
         image: imageUrl('Huzefa-mala.jpeg'),
-        creds: '',
-        desc: '',
+        creds: 'FCA, UGC-NET Qualified',
+        desc: 'Expert in Tax Compliance, Tax Litigation, Appeals, Domestic & Overseas Outsourcing.',
         location: "Mumbai",
-        sector: [],
+        sector: ['Income Tax Advisory & Audits'],
         role: "Advisory Board Member",
         linkedin: 'https://www.linkedin.com/in/huzefamala/',
 

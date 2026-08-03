@@ -97,10 +97,10 @@ const PARTNERS = [
   { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: ' Risk Advisory, Internal Audit & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
   { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'M.Com, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
   { name: 'Huzefa Kaka', image: imageUrl('Huzefa-kaka.jpeg'), qualifications: '', designation: '', email: 'huzefa.kaka@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/huzefakaka/' },
-  { name: 'Amit More', image: imageUrl(''), qualifications: '', designation: '', email: 'amitkumar.more@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/amitkumarmore/' },
-  { name: 'Dipika Bisawa', image: imageUrl('Dipika-Bisawa.jpeg'), qualifications: '', designation: '', email: 'dipika.bisawa@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/' },
-  { name: 'Raj Dabburi', image: imageUrl('Raj-daburi.jpeg'), qualifications: '', designation: '', email: 'raj.d@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/rajdabburi/' },
-  { name: 'Huzefa Mala', image: imageUrl('Huzefa-mala.jpeg'), qualifications: '', designation: '', email: 'huzefa.mala@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/huzefamala/' },
+  { name: 'Amit More', image: imageUrl(''), qualifications: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified ', designation: 'Cyber Security & GRC', email: 'amitkumar.more@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/amitkumarmore/' },
+  { name: 'Dipika Bisawa', image: imageUrl('Dipika-Bisawa.jpeg'), qualifications: 'ACS', designation: 'Compliance & Risk Management', email: 'dipika.bisawa@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/' },
+  { name: 'Raj Dabburi', image: imageUrl('Raj-daburi.jpeg'), qualifications: 'CA, MBA', designation: 'Board & Institutional Advisory', email: 'raj.d@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/rajdabburi/' },
+  { name: 'Huzefa Mala', image: imageUrl('Huzefa-mala.jpeg'), qualifications: 'FCA, UGC-NET Qualified', designation: 'Income Tax Advisory & Audits', email: 'huzefa.mala@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/huzefamala/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */

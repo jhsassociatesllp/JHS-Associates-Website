@@ -96,7 +96,7 @@ const PARTNERS = [
   { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'M.Com, ACA, CS', designation: 'Statutory Audit & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
   { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: ' Risk Advisory, Internal Audit & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
   { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'M.Com, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
-  { name: 'Huzefa Kaka', image: imageUrl(''), qualifications: '', designation: '', email: 'huzefa.kaka@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/huzefakaka/' },
+  { name: 'Huzefa Kaka', image: imageUrl('Huzefa-kaka.jpeg'), qualifications: '', designation: '', email: 'huzefa.kaka@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/huzefakaka/' },
   { name: 'Amit More', image: imageUrl(''), qualifications: '', designation: '', email: 'amitkumar.more@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/amitkumarmore/' },
   { name: 'Dipika Bisawa', image: imageUrl(''), qualifications: '', designation: '', email: 'dipika.bisawa@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/' },
   { name: 'Raj Dabburi', image: imageUrl(''), qualifications: '', designation: '', email: 'raj.d@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/rajdabburi/' },

@@ -59,13 +59,21 @@ async def submit_application(data: ApplicationCreate):
     status_code=status.HTTP_201_CREATED,
 )
 async def submit_application_with_resume(
-    job_id: str = Form(...),
+    job_id: Optional[str] = Form(None),
     full_name: str = Form(...),
     email: str = Form(...),
     phone: str = Form(...),
     current_location: Optional[str] = Form(None),
     experience_years: Optional[str] = Form(None),
     cover_letter: Optional[str] = Form(None),
+    place_of_residence: Optional[str] = Form(None),
+    highest_qualification: str = Form(...),
+    highest_qualification_other: Optional[str] = Form(None),
+    profile: str = Form(...),
+    profile_other: Optional[str] = Form(None),
+    reference: Optional[str] = Form(None),
+    how_heard: str = Form(...),
+    how_heard_detail: Optional[str] = Form(None),
     resume: UploadFile = File(...),
 ):
     if resume.content_type != "application/pdf":
@@ -76,13 +84,21 @@ async def submit_application_with_resume(
         raise HTTPException(status_code=400, detail="Resume PDF must be 8 MB or smaller")
 
     data = ApplicationCreate(
-        job_id=job_id,
+        job_id=job_id or None,
         full_name=full_name,
         email=email,
         phone=phone,
         current_location=current_location,
         experience_years=experience_years,
         cover_letter=cover_letter,
+        place_of_residence=place_of_residence,
+        highest_qualification=highest_qualification,
+        highest_qualification_other=highest_qualification_other,
+        profile=profile,
+        profile_other=profile_other,
+        reference=reference,
+        how_heard=how_heard,
+        how_heard_detail=how_heard_detail,
     )
 
     try:

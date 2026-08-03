@@ -3,6 +3,7 @@ import "./Disclaimer.css";
 
 export default function Disclaimer() {
   const [visible, setVisible] = useState(() => !sessionStorage.getItem("jhs_disclaimer_accepted"));
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -24,7 +25,7 @@ export default function Disclaimer() {
   };
 
   const handleDecline = () => {
-    window.location.href = "about:blank";
+    window.location.href = "https://www.google.com";
   };
 
   if (!visible) return null;
@@ -104,11 +105,25 @@ export default function Disclaimer() {
             understood, and accepted this disclaimer and agree to the terms of use of
             this website.
           </p>
+          <label className="disclaimer-checkbox-row">
+            <input
+              type="checkbox"
+              className="disclaimer-checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+            />
+            <span>I have read and understood the above disclaimer.</span>
+          </label>
           <div className="disclaimer-actions">
             <button className="disclaimer-btn disclaimer-btn--decline" onClick={handleDecline}>
               Decline &amp; Exit
             </button>
-            <button className="disclaimer-btn disclaimer-btn--accept" onClick={handleAccept}>
+            <button
+              className="disclaimer-btn disclaimer-btn--accept"
+              onClick={handleAccept}
+              disabled={!agreed}
+              aria-disabled={!agreed}
+            >
               I Agree &amp; Continue
             </button>
           </div>

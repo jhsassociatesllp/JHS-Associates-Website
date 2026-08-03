@@ -79,7 +79,7 @@ export default function Outsourcing() {
         <div className="o-hero__overlay" />
         <div className="o-container">
           <div className="o-hero__content">
-            <span className="o-eyebrow">Operational Excellence</span>
+            {/* <span className="o-eyebrow">Operational Excellence</span> */}
             <h1 className="o-title">Outsourcing Solutions</h1>
             <p className="o-subtitle">
               Reliable back-office support

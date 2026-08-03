@@ -563,11 +563,11 @@ export default function Careers() {
             <form style={{ padding: '1.4rem 1.5rem 2rem' }} onSubmit={submitApplication}>
               <div className="careers-form-grid" style={ss.formGrid}>
                 {[
-                  { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Your full name', type: 'text', required: true },
-                  { label: 'Email *', field: 'email' as const, placeholder: 'your@email.com', type: 'email', required: true },
-                  { label: 'Phone *', field: 'phone' as const, placeholder: '+91 98765 43210', type: 'text', required: true },
+                  { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Enter Your full name', type: 'text', required: true },
+                  { label: 'Email *', field: 'email' as const, placeholder: 'Enter Your Email', type: 'email', required: true },
+                  { label: 'Phone *', field: 'phone' as const, placeholder: 'Enter Your Number', type: 'text', required: true },
                   { label: 'Current Location', field: 'current_location' as const, placeholder: 'City, State', type: 'text', required: false },
-                  { label: 'Years of Experience', field: 'experience_years' as const, placeholder: 'e.g. 3 years', type: 'text', required: false },
+                  { label: 'Years of Experience', field: 'experience_years' as const, placeholder: 'Enter Your Experience', type: 'text', required: false },
                 ].map(({ label, field, placeholder, type, required }) => (
                   <div key={field} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                     <label style={ss.formLabel}>{label}</label>

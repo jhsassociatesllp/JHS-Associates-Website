@@ -79,7 +79,7 @@ export default function Taxation() {
         <div className="tx-hero__overlay" />
         <div className="tx-container">
           <div className="tx-hero__content">
-            <span className="tx-eyebrow">Tax & Compliance</span>
+            {/* <span className="tx-eyebrow">Tax & Compliance</span> */}
             <h1 className="tx-title">Taxation Solutions</h1>
             <p className="tx-subtitle">
               Expert tax planning and compliance for smarter financial outcomes.

@@ -48,6 +48,9 @@ const EXCELLENCIA_CARD_ID = 3;
 const REGULATORY_CARD_ID = 2;
 const WHITEPAPER_CARD_ID = 7;
 
+
+
+
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
   id: EXCELLENCIA_CARD_ID,
   image: entry.image_id ? `${API_BASE}/excellencia/image/${entry.image_id}` : imageUrl('Card3.jpeg'),

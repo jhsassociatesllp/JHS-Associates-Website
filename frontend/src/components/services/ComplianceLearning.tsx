@@ -53,7 +53,7 @@ export default function ComplianceLearning() {
         <div className="cl-hero__overlay" />
         <div className="cl-container">
           <div className="cl-hero__content">
-            <span className="cl-eyebrow">Risk & Governance</span>
+            {/* <span className="cl-eyebrow">Risk & Governance</span> */}
             <h1 className="cl-title">Compliance, Learning & Innovation</h1>
             <p className="cl-subtitle">
               Strengthening governance and managing risk for sustainable growth.

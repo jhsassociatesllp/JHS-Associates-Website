@@ -75,7 +75,7 @@ export default function CorporateFinance() {
         <div className="cf-hero__overlay" />
         <div className="cf-container">
           <div className="cf-hero__content">
-            <span className="cf-eyebrow">Strategic Finance</span>
+            {/* <span className="cf-eyebrow">Strategic Finance</span> */}
             <h1 className="cf-title">Corporate Finance Solutions</h1>
             <p className="cf-subtitle">
               Smart capital strategies for growth and risk management.

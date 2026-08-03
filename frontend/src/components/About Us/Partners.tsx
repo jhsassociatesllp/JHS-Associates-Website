@@ -217,7 +217,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Dipika Bisawa',
-        image: '',
+        image: imageUrl('Dipika-Bisawa.jpeg'),
         creds: '',
         desc: '',
         location: "Mumbai",
@@ -228,7 +228,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Raj Dabburi',
-        image: '',
+        image: imageUrl('Raj-daburi.jpeg'),
         creds: '',
         desc: '',
         location: "Mumbai",
@@ -239,7 +239,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Huzefa Mala',
-        image: '',
+        image: imageUrl('Huzefa-mala.jpeg'),
         creds: '',
         desc: '',
         location: "Mumbai",

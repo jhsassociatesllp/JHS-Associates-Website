@@ -11,11 +11,11 @@
 /* ════ HERO SECTION ════ */
 .sp-hero {
   position: relative;
-  min-height: 60vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #0f172a;
+  /* background: #6692f8; */
 }
 
 .sp-hero__bg {
@@ -23,7 +23,7 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0.3;
+  opacity: 1;
 }
 
 .sp-hero__overlay {

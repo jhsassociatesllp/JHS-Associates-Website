@@ -4,7 +4,6 @@ import './Alumni.css';
 import { imageUrl } from '../../utils/imageUrl'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 const ALUMNI_PROFILES = [
   {
@@ -89,6 +88,7 @@ export default function Alumni() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,6 +98,7 @@ export default function Alumni() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSubmitError(false);
     try {
       const apiUrl = `${API_BASE_URL}/alumni/`;
       const response = await fetch(apiUrl, {
@@ -119,7 +120,8 @@ export default function Alumni() {
       setTimeout(() => setSubmitted(false), 7000);
     } catch (error) {
       console.error('Failed to submit form:', error);
-      alert('Failed to send registration. Please try again later.');
+      setSubmitError(true);
+      setTimeout(() => setSubmitError(false), 7000);
     } finally {
       setLoading(false);
     }
@@ -190,7 +192,6 @@ export default function Alumni() {
                   </div>
                 </div>
 
-                <div className="alumni-card__role">{profile.role}</div>
                 <p className="alumni-card__desc">"{profile.desc}"</p>
 
                 {/*<a href="#" className="alumni-card__link">
@@ -233,6 +234,12 @@ export default function Alumni() {
             {submitted && (
               <div style={{ backgroundColor: '#e6ffe6', color: '#006600', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
                 Registration submitted successfully! Thank you for staying connected.
+              </div>
+            )}
+
+            {submitError && (
+              <div role="alert" style={{ backgroundColor: '#fdecea', color: '#a63222', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
+                Failed to send registration. Please try again later.
               </div>
             )}
 

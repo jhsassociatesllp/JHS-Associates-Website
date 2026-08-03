@@ -41,12 +41,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '25+', label: 'Media Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'OTT', label: 'Platform Expertise' },
-]
-
 const WHY = [
   'Deep sectoral knowledge across broadcast, OTT, print and digital media',
   'Specialist GST and revenue recognition advisory for complex media arrangements',

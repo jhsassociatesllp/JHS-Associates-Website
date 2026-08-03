@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import './SimpleInsight.css'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'

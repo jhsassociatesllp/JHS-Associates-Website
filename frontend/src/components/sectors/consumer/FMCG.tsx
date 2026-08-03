@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'FMCG Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: '360°', label: 'Advisory Coverage' },
-]
-
 const WHY = [
   'Deep understanding of FMCG distribution, trade terms and margin structures',
   'Specialist GST and indirect tax team for high-volume transaction environments',

@@ -35,7 +35,7 @@ export default function Stats() {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +83,7 @@ export default function Stats() {
             <span className="stats__cta-arrow" aria-hidden="true">→</span>
           </Link>
           <div className="stats__tabs" role="tablist">
-            {insights.map((item, idx) => (
+            {insights.map((_, idx) => (
               <button
                 key={idx}
                 role="tab"

@@ -282,7 +282,7 @@ export default function Hero() {
 
     return (
       <article
-        key={card.id}
+        key={`${position}-${card.id}`}
         className={`hero__carousel-card hero__carousel-card--${position} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
           }`}
         onClick={() => {
@@ -364,13 +364,13 @@ export default function Hero() {
           className="hero__action-btn hero__action-btn--outline"
           onClick={() => navigate("/approval-for-proposal")}
         >
-          Request for Proposal
+          Business Opportunities
         </button>
         <button
           className="hero__action-btn hero__action-btn--solid"
           onClick={() => navigate("/about/careers")}
         >
-          Apply Now
+          Join Our Team
         </button>
         <LanguageSwitcher />
       </div>

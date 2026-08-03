@@ -65,8 +65,8 @@ const NAV_ITEMS: NavItem[] = [
         children: [
           { label: "Assurance", description: "Statutory, internal & special purpose audits", href: '/services/assurance' },
           { label: "Consulting", description: "Holistic advisory across functions", href: '/services/consulting' },
-          { label: "IT Assurance", description: "risk & compliance", href: '/services/it-assurance' },
-          { label: "Taxation ", description: "Direct & indirect tax advisory", href: '/services/taxation' },
+          { label: "IT Assurance", description: "Risk & Compliance", href: '/services/it-assurance' },
+          { label: "Taxation ", description: "Direct & Indirect Tax Advisory", href: '/services/taxation' },
           { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
           { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
           { label: "Learning & Development", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/learning-development' },
@@ -102,7 +102,7 @@ const NAV_ITEMS: NavItem[] = [
         children: [
           { label: "Media", description: "", href: '/sectors/media-technology/media' },
           { label: "IT System Audit", description: "", href: '/sectors/media-technology/it-system-audit' },
-          { label: "IT /ITeS", description: "", href: 'sectors/media-technology/it-tes' },
+          { label: "IT /ITeS", description: "", href: '/sectors/media-technology/it-tes' },
         ],
       },
       {
@@ -196,10 +196,6 @@ const Navbar = () => {
 
   const lastScrollY = useRef(0);
 
-  // For inlineExpand items (Services & Sectors):
-  // which sub-item is selected → drives the right panel
-  const [activeSubLabel, setActiveSubLabel] = useState<string | null>(null);
-
   // Hover close timer — small delay so moving between burger and mega doesn't flicker close
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -211,6 +207,7 @@ const Navbar = () => {
   }>({ view: 'root' });
 
   const searchRef = useRef<HTMLInputElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -264,7 +261,6 @@ const Navbar = () => {
       closeTimer.current = null;
     }
     setActiveId('insights');
-    setActiveSubLabel(null);
     setMobileState({ view: 'root' });
     setMenuOpen(true);
   };
@@ -274,9 +270,21 @@ const Navbar = () => {
       closeTimer.current = null;
     }
     setMenuOpen(false);
-    setActiveSubLabel(null);
     setTimeout(() => setMobileState({ view: 'root' }), 400);
   };
+
+  // Close the mega menu on Escape and return focus to the trigger button
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        burgerRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
 
   // ── HOVER OPEN/CLOSE HANDLERS (desktop) ──────────────────────
   const handleHoverOpen = () => {
@@ -297,7 +305,6 @@ const Navbar = () => {
   // When L1 nav changes, reset sub selection
   const handleNavHover = (id: string) => {
     setActiveId(id);
-    setActiveSubLabel(null);
   };
 
   const activeNavItem = NAV_ITEMS.find((n) => n.id === activeId) ?? NAV_ITEMS[0];
@@ -331,6 +338,7 @@ const Navbar = () => {
       >
         <div className="nb__left">
           <button
+            ref={burgerRef}
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
             onClick={menuOpen ? closeMenu : openMenu}
             aria-label="Toggle navigation"
@@ -344,7 +352,7 @@ const Navbar = () => {
           <a href="/" className="nb__brand" onClick={closeMenu}>
             <img
               src={imageUrl('logo.jpeg')}
-              alt="JHS "
+              alt="JHS"
               className="nb__logo"
             />
           </a>
@@ -586,10 +594,10 @@ const Navbar = () => {
                           </svg>
                         </button>
                       ) : (
-                        <a className="mega__mobile-link" href={sub.href || '#'} onClick={closeMenu}>
+                        <Link className="mega__mobile-link" to={sub.href || '#'} onClick={closeMenu}>
                           <span className="name">{sub.label}</span>
                           {sub.description && <span className="desc">{sub.description}</span>}
-                        </a>
+                        </Link>
                       )}
                     </li>
                   ))}
@@ -610,10 +618,10 @@ const Navbar = () => {
                 <ul className="mega__mobile-sublist">
                   {mobileL2Items.map((child) => (
                     <li key={child.label}>
-                      <a className="mega__mobile-link" href={child.href || '#'} onClick={closeMenu}>
+                      <Link className="mega__mobile-link" to={child.href || '#'} onClick={closeMenu}>
                         <span className="name">{child.label}</span>
                         {child.description && <span className="desc">{child.description}</span>}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

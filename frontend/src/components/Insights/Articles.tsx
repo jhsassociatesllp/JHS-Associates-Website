@@ -26,7 +26,6 @@ interface Article {
   publish_date?: string  // Optional for backward compatibility
   created_at: string
 }
-console.log(API_BASE)
 /* ── Helpers ─────────────────────────────────────────────────── */
 const articleImageUrl = (image_id: string) =>
   `${API_BASE}/articles/image/${image_id}`
@@ -75,12 +74,11 @@ export default function Articles() {
       })
       if (!res.ok) throw new Error(`Server returned ${res.status}`)
       const data = await res.json()
-      console.log('Fetched articles:', data) // Debug log
       // data may be an array directly or wrapped
       setArticles(Array.isArray(data) ? data : [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Articles] fetch error:', err)
-      setError(err?.message ?? 'Failed to load articles. Is the backend running?')
+      setError(err instanceof Error ? err.message : 'Failed to load articles. Is the backend running?')
     } finally {
       setLoading(false)
     }
@@ -330,9 +328,6 @@ export default function Articles() {
                   src={articleImageUrl(article.image_id)}
                   alt={article.title}
                   className="art-card__bg-img"
-                  onError={() => {
-                    console.log('Image failed to load:', articleImageUrl(article.image_id))
-                  }}
                 />
 
                 {/* Default state: white box at bottom */}

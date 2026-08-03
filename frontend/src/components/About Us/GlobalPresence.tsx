@@ -48,7 +48,6 @@ export default function GlobalPresence() {
             </div>
           </div>
 
-          {/* Map placeholder */}
           <div className="ap-map-container">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14690326.699742662!2d71.07767351663085!3d23.080512822452243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1713437505342!5m2!1sen!2sin" 

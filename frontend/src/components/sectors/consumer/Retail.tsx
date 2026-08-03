@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'Retail Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Omni', label: 'Channel Coverage' },
-]
-
 const WHY = [
   'Deep experience with large-format retail, specialty stores and D2C brands',
   'Specialist GST team for high-volume, multi-location retail environments',

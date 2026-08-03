@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '15+', label: 'VC/AIF Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEBI AIF', label: 'Registered Experts' },
-]
-
 const WHY = [
   'Specialist SEBI AIF compliance expertise across Category I, II and III structures',
   'Pass-through tax advisory for fund managers and limited partners',

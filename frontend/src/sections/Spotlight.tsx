@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Spotlight.css";
 
@@ -6,7 +7,7 @@ interface SpotlightItem {
   label: string;
   description: string;
   path: string;
-  icon: JSX.Element;
+  icon: ReactElement;
 }
 
 const spotlightItems: SpotlightItem[] = [

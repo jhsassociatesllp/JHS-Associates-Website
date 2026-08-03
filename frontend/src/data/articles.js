@@ -65,7 +65,7 @@ export const ARTICLES = [
     description: "MCA vide order dated 17.12.2020 has changed the applicability date of Companies (Auditor's Report) Order, 2020 to the financial years commencing on or after the 1st April 2021. Therefore, Companies (Auditor's Report) Order, 2020 (CARO 2020) will be applicable from FY 2021-22. CARO 2016 continues to be applicable for Financial Year 2020-21.",
     image: imageUrl('Postponement-of-Caro-2020.png'),
     pdf: "/src/pdfs/rera-compliance-guide.pdf",
-    author: "CA HUzeifa Unwala"
+    author: "CA Huzeifa Unwala"
   },
   {
     id: 8,

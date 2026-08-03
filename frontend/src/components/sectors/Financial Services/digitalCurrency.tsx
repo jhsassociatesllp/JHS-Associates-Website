@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Crypto Clients' },
-  { num: 'VDA', label: 'Tax Specialists' },
-  { num: 'Web3', label: 'Ready Advisory' },
-]
-
 const WHY = [
   'First-mover expertise in India\'s evolving VDA tax and regulatory framework',
   'Deep knowledge of Section 115BBH, 194S and PMLA obligations for VDA businesses',

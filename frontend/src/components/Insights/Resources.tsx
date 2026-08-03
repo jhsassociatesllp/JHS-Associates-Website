@@ -72,12 +72,11 @@ export default function Resources() {
       })
       if (!res.ok) throw new Error(`Server returned ${res.status}`)
       const data = await res.json()
-      console.log('Fetched knowledge resources:', data) // Debug log
       // data may be an array directly or wrapped
       setResources(Array.isArray(data) ? data : [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Resources] fetch error:', err)
-      setError(err?.message ?? 'Failed to load resources. Is the backend running?')
+      setError(err instanceof Error ? err.message : 'Failed to load resources. Is the backend running?')
     } finally {
       setLoading(false)
     }
@@ -313,9 +312,6 @@ export default function Resources() {
                   src={knowledgeImageUrl(resource.image_id)}
                   alt={resource.title}
                   className="res-card__bg-img"
-                  onError={() => {
-                    console.log('Image failed to load:', knowledgeImageUrl(resource.image_id))
-                  }}
                 />
 
                 {/* Default state: white box at bottom */}
@@ -417,7 +413,6 @@ export default function Resources() {
                 src={knowledgeImageUrl(selectedResource.image_id)}
                 alt={selectedResource.title}
                 className="res-modal__img"
-                onError={() => console.log('Modal image failed to load')}
               />
               <div className="res-modal__img-overlay" />
               <button

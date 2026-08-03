@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import "./Disclaimer.css";
 
 export default function Disclaimer() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const accepted = sessionStorage.getItem("jhs_disclaimer_accepted");
-    if (!accepted) setVisible(true);
-  }, []);
+  const [visible, setVisible] = useState(() => !sessionStorage.getItem("jhs_disclaimer_accepted"));
 
   useEffect(() => {
     if (visible) {

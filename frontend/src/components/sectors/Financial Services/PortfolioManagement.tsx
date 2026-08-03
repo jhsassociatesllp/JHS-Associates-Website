@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '20+', label: 'PMS Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEBI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Specialist knowledge of SEBI Portfolio Managers Regulations 2020',
   'Deep expertise in PMS tax structures, pass-through taxation and XIRR reporting',

@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Construction Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Ind AS 115', label: 'Contract Experts' },
-]
-
 const WHY = [
   'Deep expertise in Ind AS 115 revenue recognition for long-duration contracts',
   'Specialist GST team handling works contracts and sub-contracting complexities',

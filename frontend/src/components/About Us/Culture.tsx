@@ -31,7 +31,7 @@ export default function Culture() {
             </div>
             <div className="ap-grid-right">
               <p>
-                At JHS, culture isn't just a poster on the wall – it's the lived experience of our 200+ professionals every single day. We intentionally cultivate a workspace that balances intense, high-stakes client delivery with profound respect for individual growth and wellbeing.
+                At JHS, culture isn't just a poster on the wall – it's the lived experience of our 700+ professionals every single day. We intentionally cultivate a workspace that balances intense, high-stakes client delivery with profound respect for individual growth and wellbeing.
               </p>
               <p>
                 We operate as a flat matrix. We believe that a great idea can come from a first-year articled assistant just as easily as it can from a senior partner. This open-door policy ensures rapid learning cycles and an agile firm that can instantly pivot to meet our clients' most complex needs.

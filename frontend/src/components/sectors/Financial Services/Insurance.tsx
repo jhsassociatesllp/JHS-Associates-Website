@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '20+', label: 'Insurance Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'IRDAI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Specialist knowledge of IRDAI regulations for life, general and health insurers',
   'Deep expertise in insurance-specific accounting under Ind AS 104 and IFRS 17',

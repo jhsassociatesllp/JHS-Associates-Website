@@ -260,7 +260,12 @@ export default function Careers() {
     setLocationFilter('All Locations'); setExpFilters([]); setTypeFilters([])
   }
   const toggleBookmark = (id: string) =>
-    setBookmarked(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
+    setBookmarked(p => {
+      const n = new Set(p)
+      if (n.has(id)) n.delete(id)
+      else n.add(id)
+      return n
+    })
 
   const updateField = (f: keyof ApplicationForm, v: string) =>
     setFormData(c => ({ ...c, [f]: v }))
@@ -563,36 +568,39 @@ export default function Careers() {
             <form style={{ padding: '1.4rem 1.5rem 2rem' }} onSubmit={submitApplication}>
               <div className="careers-form-grid" style={ss.formGrid}>
                 {[
-                  { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Enter Your full name', type: 'text', required: true },
-                  { label: 'Email *', field: 'email' as const, placeholder: 'Enter Your Email', type: 'email', required: true },
-                  { label: 'Phone *', field: 'phone' as const, placeholder: 'Enter Your Number', type: 'text', required: true },
-                  { label: 'Current Location', field: 'current_location' as const, placeholder: 'City, State', type: 'text', required: false },
-                  { label: 'Years of Experience', field: 'experience_years' as const, placeholder: 'Enter Your Experience', type: 'text', required: false },
-                ].map(({ label, field, placeholder, type, required }) => (
+                  { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Enter Your full name', type: 'text', required: true, autoComplete: 'name' },
+                  { label: 'Email *', field: 'email' as const, placeholder: 'Enter Your Email', type: 'email', required: true, autoComplete: 'email' },
+                  { label: 'Phone *', field: 'phone' as const, placeholder: 'Enter Your Number', type: 'tel', required: true, autoComplete: 'tel' },
+                  { label: 'Current Location', field: 'current_location' as const, placeholder: 'City, State', type: 'text', required: false, autoComplete: 'address-level2' },
+                  { label: 'Years of Experience', field: 'experience_years' as const, placeholder: 'Enter Your Experience', type: 'text', required: false, autoComplete: 'off' },
+                ].map(({ label, field, placeholder, type, required, autoComplete }) => (
                   <div key={field} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                    <label style={ss.formLabel}>{label}</label>
+                    <label style={ss.formLabel} htmlFor={`career-${field}`}>{label}</label>
                     <input
+                      id={`career-${field}`}
                       style={ss.formInput}
                       type={type}
                       value={formData[field]}
                       onChange={e => updateField(field, e.target.value)}
                       placeholder={placeholder}
                       required={required}
+                      autoComplete={autoComplete}
                     />
                   </div>
                 ))}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                  <label style={ss.formLabel}>Resume (PDF) *</label>
+                  <label style={ss.formLabel} htmlFor="career-resume">Resume (PDF) *</label>
                   <label style={ss.uploadLabel}>
                     {resumeFile ? `✓ ${resumeFile.name}` : '📎 Upload PDF'}
-                    <input type="file" accept="application/pdf,.pdf" required style={{ display: 'none' }} onChange={e => setResumeFile(e.target.files?.[0] ?? null)} />
+                    <input id="career-resume" type="file" accept="application/pdf,.pdf" required style={{ display: 'none' }} onChange={e => setResumeFile(e.target.files?.[0] ?? null)} />
                   </label>
                 </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: '0.5rem' }}>
-                <label style={ss.formLabel}>Cover Note</label>
+                <label style={ss.formLabel} htmlFor="career-cover-letter">Cover Note</label>
                 <textarea
+                  id="career-cover-letter"
                   style={ss.formTextarea}
                   value={formData.cover_letter}
                   onChange={e => updateField('cover_letter', e.target.value)}

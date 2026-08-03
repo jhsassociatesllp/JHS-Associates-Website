@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, ArrowUpRight, Bell, Download, Calendar, ArrowRight } from 'lucide-react'
+import { FileText, ArrowUpRight, Bell, Download, ArrowRight } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
 import './Regulatory.css'
 

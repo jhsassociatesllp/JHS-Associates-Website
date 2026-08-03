@@ -42,12 +42,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '20+', label: 'Years of Experience' },
-  { num: '200+', label: 'Commodity Clients' },
-  { num: '100%', label: 'Compliance Record' },
-]
-
 const WHY = [
   'Deep domain expertise in metals, agri and energy sectors',
   'Dedicated commodity desk with real-time regulatory updates',

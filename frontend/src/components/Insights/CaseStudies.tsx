@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CASE_STUDIES, CASE_STUDY_CATEGORIES, getCaseStudiesByCategory } from '../../data/CaseStudies'
+import { CASE_STUDY_CATEGORIES, getCaseStudiesByCategory } from '../../data/CaseStudies'
 import './CaseStudies.css'
 import { imageUrl } from '../../utils/imageUrl'
 // import img1 from '../../image/Fainance3.jpg';

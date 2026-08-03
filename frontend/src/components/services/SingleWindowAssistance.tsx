@@ -6,12 +6,7 @@ import {
   FileCheck,
   Building2,
   Clock,
-  Shield,
-  ArrowRight,
-  Download,
-  PhoneCall,
-  Mail,
-  MapPin
+  Shield
 } from 'lucide-react'
 import './SingleWindowAssistance.css'
 

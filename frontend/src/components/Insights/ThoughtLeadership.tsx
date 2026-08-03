@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowUpRight, Lightbulb, CalendarDays, Users, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { imageUrl } from '../../utils/imageUrl'
 import './ThoughtLeadership.css'
 
@@ -31,33 +30,6 @@ const PIECES = [
     preview:
       "SEBI's BRSR Core mandate and global sustainability reporting standards are converging. CAs who build ESG assurance capabilities now will lead the next decade of professional services.",
     highlight: '"Sustainability data is becoming as auditable as financial data."',
-  },
-]
-
-const EVENTS = [
-  {
-    date: 'Apr 10, 2026',
-    month: 'APR',
-    day: '10',
-    title: 'Budget Impact Webinar: Key Tax Changes for FY 2026–27',
-    type: 'Webinar',
-    seats: 'Open',
-  },
-  {
-    date: 'Apr 24, 2026',
-    month: 'APR',
-    day: '24',
-    title: 'Family Business Governance Roundtable – Mumbai',
-    type: 'Roundtable',
-    seats: 'Limited',
-  },
-  {
-    date: 'May 8, 2026',
-    month: 'MAY',
-    day: '08',
-    title: 'Transfer Pricing Masterclass for CFOs',
-    type: 'Workshop',
-    seats: 'Open',
   },
 ]
 

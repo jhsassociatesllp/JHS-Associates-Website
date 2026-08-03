@@ -40,7 +40,7 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
+const STATS: { num: string; label: string }[] = [
   // { num: '25+', label: 'O&G Clients' },
   // { num: '20+', label: 'Years Experience' },
   // { num: 'PSC & HELP', label: 'Contract Expertise' },

@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '40+', label: 'IT/ITeS Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEZ & STPI', label: 'Export Experts' },
-]
-
 const WHY = [
   'Deep transfer pricing expertise for IT captives and cross-border service companies',
   'Specialist SEZ, STPI, and Section 10AA export incentive advisory',

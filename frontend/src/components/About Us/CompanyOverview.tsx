@@ -15,17 +15,17 @@ export default function CompanyOverview() {
           <p className="ap-hero__eyebrow">About JHS &amp; Associates</p>
           <h1 className="ap-hero__title">Company Overview</h1>
           <p className="ap-hero__sub">
-            A dynamic, client-centric Chartered Accountancy firm delivering bespoke financial, tax, and advisory solutions since 1992.
+            A dynamic, client-centric Chartered Accountancy firm delivering bespoke financial, tax, and advisory solutions since 1981.
           </p>
         </div>
-        
+
         {/* Stats bar */}
         <div className="ap-hero__stats">
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">30+</span><span className="ap-hero__stat-label">Years Legacy</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">45+</span><span className="ap-hero__stat-label">Years Legacy</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">15+</span><span className="ap-hero__stat-label">Partners</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">30+</span><span className="ap-hero__stat-label">Partners</span></div>
           <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">200+</span><span className="ap-hero__stat-label">Professionals</span></div>
+          <div className="ap-hero__stat"><span className="ap-hero__stat-num">700+</span><span className="ap-hero__stat-label">Professionals</span></div>
           <div className="ap-hero__stat-div" />
           <div className="ap-hero__stat"><span className="ap-hero__stat-num">1000+</span><span className="ap-hero__stat-label">Clients Served</span></div>
         </div>

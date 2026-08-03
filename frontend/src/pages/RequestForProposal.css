@@ -495,6 +495,23 @@
   line-height: 1.5;
 }
 
+.rfp-success--error {
+  background: #fdf2f4;
+  border-color: rgba(214, 32, 73, 0.3);
+}
+
+.rfp-success--error .rfp-success__icon {
+  color: var(--rfp-crimson);
+}
+
+.rfp-success--error .rfp-success__title {
+  color: var(--rfp-crimson);
+}
+
+.rfp-success--error .rfp-success__sub {
+  color: #7a1f2b;
+}
+
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════ */

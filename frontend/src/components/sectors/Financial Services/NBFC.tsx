@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '35+', label: 'NBFC Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'RBI SBR', label: 'Framework Experts' },
-]
-
 const WHY = [
   'Deep expertise in RBI\'s Scale-Based Regulation framework for NBFCs',
   'Specialist Ind AS 109 ECL modelling and provisioning advisory',

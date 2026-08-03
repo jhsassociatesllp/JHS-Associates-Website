@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '60+', label: 'Family Business Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: '3rd Gen', label: 'Clients Served' },
-]
-
 const WHY = [
   'Deep expertise in HUF structures, family trusts and succession frameworks',
   'Sensitive and confidential advisory for complex family dynamics',

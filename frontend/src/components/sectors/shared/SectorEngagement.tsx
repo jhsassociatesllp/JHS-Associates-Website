@@ -41,7 +41,7 @@ const IconPin = () => (
 
 export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngagementProps) {
   const experts = SECTOR_EXPERTS[sectorKey as keyof typeof SECTOR_EXPERTS] ?? []
-  const matchedSectors = SECTOR_CASE_STUDY_MAP[sectorKey as keyof typeof SECTOR_CASE_STUDY_MAP] ?? []
+  const matchedSectors: string[] = SECTOR_CASE_STUDY_MAP[sectorKey as keyof typeof SECTOR_CASE_STUDY_MAP] ?? []
   const caseStudies = (CASE_STUDIES as CaseStudy[]).filter((cs) => matchedSectors.includes(cs.sector)).slice(0, 2)
 
   return (

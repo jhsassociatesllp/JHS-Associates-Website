@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'NGO Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'FCRA', label: 'Compliance Experts' },
-]
-
 const WHY = [
   'Deep expertise in FCRA compliance, MHA reporting and foreign fund management',
   'Specialist knowledge of Section 12AB, 80G and CSR regulatory frameworks',

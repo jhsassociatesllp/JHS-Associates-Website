@@ -63,7 +63,7 @@ export const RESOURCES = [
     description: "Understanding RERA compliance requirements for real estate developers and promoters.",
     image: "src/image/Auditposter.jpg",
     pdf: "/src/pdfs/rera-compliance-guide.pdf",
-    author: "CA HUzeifa Unwala"
+    author: "CA Huzeifa Unwala"
   },
   {
     id: 8,

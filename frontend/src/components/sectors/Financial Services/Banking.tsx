@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Banking Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'RBI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Deep knowledge of RBI master directions, circulars and prudential frameworks',
   'Specialist Ind AS 109 and ECL provisioning expertise for banking entities',

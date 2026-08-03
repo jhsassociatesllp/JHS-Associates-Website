@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '40+', label: 'Housing Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Pan India', label: 'RERA Coverage' },
-]
-
 const WHY = [
   'Deep expertise in RERA accounting, reporting and audit obligations',
   'Specialist GST team handling JDA, under-construction and redevelopment transactions',

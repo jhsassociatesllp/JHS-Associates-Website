@@ -135,11 +135,6 @@ const IconMail = () => (
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
   </svg>
 )
-const IconClock = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-  </svg>
-)
 const IconArrow = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
@@ -172,7 +167,7 @@ export default function OurOffices() {
           {/* <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p> */}
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
-            10 cities · 13+ locations · Pan-India &amp; Global
+            10 cities · 13+ locations · Pan-India &amp; Global
           </p>
         </div>
         {/* Stats bar */}

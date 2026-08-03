@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  Shield, Search, Activity, Database, CheckCircle2, Target, TrendingUp,
+  Shield, Search, Activity, Database, CheckCircle2, TrendingUp,
   Server, Lock, RefreshCw, Monitor, Users, GitBranch, Settings,
   AlertTriangle, Cloud, Cpu, Eye, HardDrive, Wifi, FileText, Layers
 } from 'lucide-react'
@@ -146,21 +146,21 @@ export default function ITAssurance() {
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
 
-      gsap.utils.toArray('.a-section-header').forEach((header: any) => {
+      gsap.utils.toArray<Element>('.a-section-header').forEach((header) => {
         gsap.fromTo(header,
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: header, start: 'top 85%' } }
         )
       })
 
-      gsap.utils.toArray('.a-service-card').forEach((card: any, i) => {
+      gsap.utils.toArray<Element>('.a-service-card').forEach((card, i) => {
         gsap.fromTo(card,
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.5, delay: i * 0.04, scrollTrigger: { trigger: '.a-services-grid', start: 'top 80%' } }
         )
       })
 
-      gsap.utils.toArray('.a-domain-card, .a-vapt-step, .a-approach-card, .a-benchmark-card').forEach((el: any) => {
+      gsap.utils.toArray<Element>('.a-domain-card, .a-vapt-step, .a-approach-card, .a-benchmark-card').forEach((el) => {
         gsap.fromTo(el,
           { opacity: 0, y: 40 },
           { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: el, start: 'top 88%' } }

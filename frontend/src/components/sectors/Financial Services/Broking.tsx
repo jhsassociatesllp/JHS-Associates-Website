@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '25+', label: 'Broking Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEBI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Deep expertise in SEBI regulations for stock brokers and depository participants',
   'Specialist team for SEBI-mandated concurrent and internal audit assignments',

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowUpRight, ShieldCheck, FileText, Globe2, BarChart2, Scale, Gem } from 'lucide-react'
+import { ArrowUpRight, ShieldCheck, FileText, Globe2, BarChart2, Scale } from 'lucide-react'
 import './GemsAndJewellery.css'
 import SectorEngagement from '../shared/SectorEngagement'
 
@@ -38,12 +38,6 @@ const HIGHLIGHTS = [
     title: 'Business Structuring',
     desc: 'Succession planning, family settlement and restructuring advisory for multi-generational jewellery businesses across India.',
   },
-]
-
-const STATS = [
-  { num: '30+', label: 'Jewellery Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'End-to-End', label: 'Advisory Coverage' },
 ]
 
 const WHY = [

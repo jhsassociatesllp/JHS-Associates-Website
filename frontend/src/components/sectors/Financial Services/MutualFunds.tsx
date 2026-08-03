@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '20+', label: 'AMC Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEBI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Specialist knowledge of SEBI Mutual Funds Regulations and AMFI guidelines',
   'Deep experience in scheme audits across equity, debt, hybrid and ETF categories',

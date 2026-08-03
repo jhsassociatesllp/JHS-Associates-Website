@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '100+', label: 'IT Audits Completed' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'CISA', label: 'Certified Team' },
-]
-
 const WHY = [
   'CISA-certified professionals with deep ERP and enterprise IT audit experience',
   'Specialist CAAT capability for large volume data analysis and fraud detection',

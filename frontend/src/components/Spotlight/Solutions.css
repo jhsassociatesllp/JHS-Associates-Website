@@ -46,13 +46,13 @@
 
 .sol-hero {
   position: relative;
-  min-height: 320px;
+  min-height: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   padding: 100px 24px 60px;
-  background: linear-gradient(135deg, #1e3a5f 0%, #2a4a6f 100%);
+  /* background: linear-gradient(135deg, #1e3a5f 0%, #2a4a6f 100%); */
 }
 
 .sol-hero__bg {

@@ -4,7 +4,7 @@
 
 .sp-page {
   background: #ffffff;
-  min-height: 100vh;
+  min-height: 90vh;
   padding-bottom: 80px;
 }
 
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  /* background: #6692f8; */
+  background: #6692f8;
 }
 
 .sp-hero__bg {
@@ -41,8 +41,12 @@
 }
 
 .sp-hero__content {
-  max-width: 800px;
-  padding-top: 80px;
+  max-width: 1000px;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   /* Offset for fixed navbar */
 }
 
@@ -68,10 +72,14 @@
 }
 
 .sp-subtitle {
+  width: 65%;
   font-family: "DM Sans", sans-serif;
   font-size: 1.25rem;
   line-height: 1.6;
   color: #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ════ CONTENT SECTION ════ */

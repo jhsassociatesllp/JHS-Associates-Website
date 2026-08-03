@@ -86,7 +86,7 @@ const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
 const DEFAULT_CARDS: Card[] = [
   {
     id: 1,
-    image: imageUrl('Strategic Leadership.png'),
+    image: imageUrl('Strategic Leadership.jpg'),
     category: "STRATEGIC LEADERSHIP BRIEFING",
     meta: "STRATEGIC LEADERSHIP BRIEFING · DATA GOVERNANCE · 2026",
     title: "The Rule 6 Maze: A Perspective for CEOs and Chairpersons",

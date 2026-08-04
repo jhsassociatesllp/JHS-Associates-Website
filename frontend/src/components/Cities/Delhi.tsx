@@ -5,6 +5,7 @@ import './CityShared.css'
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
@@ -201,7 +202,7 @@ export default function Delhi() {
                           type="button"
                           className="del-pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

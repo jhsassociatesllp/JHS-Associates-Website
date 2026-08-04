@@ -5,6 +5,7 @@ import LazyImage from '../../common/LazyImage'
 import { SECTOR_EXPERTS } from '../../../data/SectorExperts'
 import { SECTOR_CASE_STUDY_MAP } from '../../../data/SectorCaseStudyMap'
 import { CASE_STUDIES } from '../../../data/CaseStudies'
+import { copyToClipboard } from '../../../utils/copyToClipboard'
 import './SectorEngagement.css'
 
 interface SectorEngagementProps {
@@ -131,7 +132,7 @@ export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngag
                             type="button"
                             className="se-expert-card__mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(person.email)
+                              copyToClipboard(person.email)
                               setOpenMailFor(null)
                             }}
                           >

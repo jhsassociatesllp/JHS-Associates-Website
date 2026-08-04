@@ -4,6 +4,7 @@ import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
@@ -178,7 +179,7 @@ export default function Chennai() {
                             type="button"
                             className="chn-pc-mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(p.email)
+                              copyToClipboard(p.email)
                               setOpenMailFor(null)
                             }}
                           >

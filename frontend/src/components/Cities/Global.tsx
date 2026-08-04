@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Global.css'
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 
 const PARTNERS = [
   {
@@ -329,7 +330,7 @@ export default function Global() {
                           type="button"
                           className="glb-pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

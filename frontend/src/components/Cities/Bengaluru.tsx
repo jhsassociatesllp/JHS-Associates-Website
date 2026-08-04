@@ -4,6 +4,7 @@ import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
@@ -186,7 +187,7 @@ export default function Bengaluru() {
                             type="button"
                             className="blr-pc-mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(p.email)
+                              copyToClipboard(p.email)
                               setOpenMailFor(null)
                             }}
                           >

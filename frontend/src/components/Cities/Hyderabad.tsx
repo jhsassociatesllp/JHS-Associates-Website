@@ -4,6 +4,7 @@ import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
@@ -178,7 +179,7 @@ export default function Hyderabad() {
                             type="button"
                             className="hyd-pc-mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(p.email)
+                              copyToClipboard(p.email)
                               setOpenMailFor(null)
                             }}
                           >

@@ -4,6 +4,7 @@ import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 
 const PARTNERS = [
   {
@@ -319,7 +320,7 @@ export default function Kolkata() {
                           type="button"
                           className="kol-pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

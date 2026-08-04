@@ -136,6 +136,13 @@
   transform: scaleX(1);
 }
 
+/* Lift the card above later grid siblings while its email dropdown is
+   open — otherwise the dropdown (an escaping absolutely-positioned child)
+   gets visually covered by the next row of cards, which paint later. */
+.se-expert-card:has(.se-expert-card__mail-dropdown) {
+  z-index: 10;
+}
+
 .se-expert-card__img-wrap {
   width: 132px;
   height: 132px;

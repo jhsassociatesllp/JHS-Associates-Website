@@ -192,9 +192,9 @@ export default function Retail() {
               Speak with a JHS retail specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="rt-btn rt-btn--cta">
+          {/* <a href="/contact" className="rt-btn rt-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

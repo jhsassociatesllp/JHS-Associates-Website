@@ -72,14 +72,14 @@ const PARTNERS = {
     email: 'samad.dhanani@jhsassociates.in',
   },
   'Huzefa Kaka': {
-    image: '',
+    image: imageUrl('Huzefa-kaka.jpeg'),
     creds: '',
     location: 'Mumbai',
     linkedin: 'https://www.linkedin.com/in/huzefakaka/',
     email: 'huzefa.kaka@jhsassociates.in',
   },
   'Huzefa Mala': {
-    image: '',
+    image: imageUrl('Huzefa-mala.jpeg'),
     creds: '',
     location: 'Mumbai',
     linkedin: 'https://www.linkedin.com/in/huzefamala/',

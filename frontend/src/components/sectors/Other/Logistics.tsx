@@ -215,7 +215,7 @@ export default function Logistics() {
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}
-      {/* <section className="log-cta container">
+      <section className="log-cta container">
         <div className="log-cta__inner">
           <div className="log-cta__content">
             <p className="log-cta__eyebrow">Get Started</p>
@@ -224,11 +224,11 @@ export default function Logistics() {
               Speak with a JHS logistics specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="log-btn log-btn--cta">
+          {/* <a href="/contact" className="log-btn log-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
-      </section> */}
+      </section>
 
     </div>
   )

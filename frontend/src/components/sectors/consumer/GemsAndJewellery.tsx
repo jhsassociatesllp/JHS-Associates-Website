@@ -189,9 +189,9 @@ export default function GemsAndJewellery() {
               Speak with a JHS gems &amp; jewellery specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="gj-btn gj-btn--cta">
+          {/* <a href="/contact" className="gj-btn gj-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

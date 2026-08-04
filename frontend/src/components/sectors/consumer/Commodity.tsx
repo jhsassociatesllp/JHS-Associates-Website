@@ -203,7 +203,7 @@ export default function Commodity() {
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}
-      {/* <section className="com-cta container">
+      <section className="com-cta container">
         <div className="com-cta__inner">
           <div className="com-cta__content">
             <p className="com-cta__eyebrow">Get Started</p>
@@ -212,11 +212,11 @@ export default function Commodity() {
               Speak with a JHS commodity specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="com-btn com-btn--cta">
+          {/* <a href="/contact" className="com-btn com-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
-      </section> */}
+      </section>
 
     </div>
   )

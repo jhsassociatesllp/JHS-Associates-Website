@@ -190,9 +190,9 @@ export default function Banking() {
               Speak with a JHS banking specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="bk-btn bk-btn--cta">
+          {/* <a href="/contact" className="bk-btn bk-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

@@ -109,7 +109,7 @@ const OFFICES = [
     state: 'Worldwide',
     route: '/city/global',
     phone: '+971 4348 0046',
-    email: 'vinod.joshi@jhsassociates.in',
+    email: 'vinod.joshi@jhsuae.com',
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },

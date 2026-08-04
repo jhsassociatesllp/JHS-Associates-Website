@@ -10,7 +10,7 @@ const PARTNERS = [
     image: imageUrl('vinod joshi.png'),
     qualifications: 'FCA, MBA (Finance)',
     designation: 'Financial Advisory & CFO Services',
-    email: 'vinod.joshi@jhsassociates.in',
+    email: 'vinod.joshi@jhsuae.com',
     linkedin: 'https://linkedin.com/in/vinod-joshi-fca',
   },
 ]
@@ -251,7 +251,7 @@ export default function Global() {
 
               <div>
                 <span className="glb-hero__card-info-label">Email</span>
-                <span className="glb-hero__card-info-val">vinod.joshi@jhsassociates.in</span>
+                <span className="glb-hero__card-info-val">vinod.joshi@jhsuae.com</span>
               </div>
             </div>
             <div className="glb-hero__card-info-item">

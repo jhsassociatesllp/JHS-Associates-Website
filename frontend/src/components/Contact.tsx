@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './Contact.css'
-import { mapEmbedUrl } from '../utils/mapEmbedUrl'
+import { mapEmbedUrlFor } from '../utils/mapEmbedUrl'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -36,6 +36,8 @@ const OFFICES = [
     city: 'H.O. Andheri',
     region: 'Maharashtra',
     address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059',
+    lat: 19.1073677,
+    lng: 72.8804167,
   },
   {
     city: 'Kalyan',
@@ -424,7 +426,7 @@ export default function Contact() {
               <div className="ct-map-wrap">
                 <iframe
                   title="JHS Associates Mumbai"
-                  src={mapEmbedUrl(OFFICES[0].address)}
+                  src={mapEmbedUrlFor(OFFICES[0])}
                   allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>

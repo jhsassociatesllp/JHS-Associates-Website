@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from app.schemas.article import ArticleCreate, ArticleUpdate, ArticleResponse
 from app.controllers import article as article_ctrl
 from app.auth.deps import require_admin_or_above
+from app.utils.http import content_disposition
 from app.schemas.admin import AdminInDB
 from io import BytesIO
 from datetime import datetime
@@ -67,7 +68,7 @@ async def get_image(image_id: str):
         return StreamingResponse(
             BytesIO(content),
             media_type=content_type,
-            headers={"Content-Disposition": f"inline; filename={filename}",
+            headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
     except Exception:
@@ -82,7 +83,7 @@ async def get_pdf(pdf_id: str):
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
-            headers={"Content-Disposition": f"inline; filename={filename}",
+            headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
     except Exception:

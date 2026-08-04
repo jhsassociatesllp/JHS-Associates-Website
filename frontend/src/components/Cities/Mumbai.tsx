@@ -4,7 +4,7 @@ import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
-import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
@@ -128,7 +128,8 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'andheri', name: 'Andheri ', tag: 'Head Office',
-    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059'
+    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059',
+    lat: 19.1073677, lng: 72.8804167,
   },
   {
     id: 'masjid', name: 'Masjid', tag: 'Branch',
@@ -142,7 +143,7 @@ const MAP_LOCATIONS = [
     id: 'mazgaon', name: 'Mazgaon', tag: 'Branch',
     address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010'
   }
-].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrlFor(loc) }))
 
 /* ─── Inline Icons ───────────────────────────────── */
 const IconMail = () => (

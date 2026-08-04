@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
 from app.schemas.excellencia import ExcellenciaCreate, ExcellenciaUpdate, ExcellenciaResponse
 from app.controllers import excellencia as excellencia_ctrl
+from app.utils.http import content_disposition
 from io import BytesIO
 from typing import Optional
 
@@ -50,7 +51,7 @@ async def get_image(image_id: str):
         return StreamingResponse(
             BytesIO(content),
             media_type=content_type,
-            headers={"Content-Disposition": f"inline; filename={filename}",
+            headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
     except Exception:

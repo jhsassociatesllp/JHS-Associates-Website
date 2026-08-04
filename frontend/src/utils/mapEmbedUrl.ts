@@ -13,3 +13,25 @@
 export function mapEmbedUrl(address: string): string {
   return `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=17&ie=UTF8&iwloc=near&output=embed`
 }
+
+/**
+ * mapEmbedUrlByCoords — same embed, but pinned to an exact lat/lng instead of
+ * a text search. Use this for branches whose Google-verified coordinates are
+ * known (e.g. pulled from a "share location" link) — it guarantees the pin
+ * sits on the real building instead of wherever Maps' text geocoder guesses.
+ */
+export function mapEmbedUrlByCoords(lat: number, lng: number): string {
+  return `https://maps.google.com/maps?q=${lat},${lng}&t=&z=17&ie=UTF8&iwloc=near&output=embed`
+}
+
+/**
+ * mapEmbedUrlFor — picks coords when a location has them, falling back to
+ * the address-text search otherwise. Lets a single branch/location object
+ * (address, plus optional lat/lng) drive the embed without call sites having
+ * to branch themselves.
+ */
+export function mapEmbedUrlFor(loc: { address: string; lat?: number; lng?: number }): string {
+  return loc.lat != null && loc.lng != null
+    ? mapEmbedUrlByCoords(loc.lat, loc.lng)
+    : mapEmbedUrl(loc.address)
+}

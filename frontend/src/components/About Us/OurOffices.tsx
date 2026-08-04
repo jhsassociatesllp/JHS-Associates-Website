@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './OurOffices.css'
 import { imageUrl } from '../../utils/imageUrl'
-import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
 
 /* ─── Office Data ─────────────────────────────────────────── */
 const OFFICES = [
@@ -15,7 +15,7 @@ const OFFICES = [
     email: 'connect@jhsassociates.in',
     isPrimary: true,
     branches: [
-      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059' },
+      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059', lat: 19.1073677, lng: 72.8804167 },
       { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
       { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009" },
       { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301' },
@@ -280,7 +280,7 @@ export default function OurOffices() {
             <div className="oo-map__frame">
               <iframe
                 title={`JHS ${activeOffice.city} — ${activeBranch.name}`}
-                src={mapEmbedUrl(activeBranch.address)}
+                src={mapEmbedUrlFor(activeBranch)}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen

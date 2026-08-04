@@ -571,6 +571,14 @@
   padding-top: 80px
 }
 
+/* Single partner: center it instead of leaving it stuck in the first column */
+.chn-pc-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px;
+}
+
 .chn-pc-card {
   background: var(--chn-white);
   border: 1.5px solid var(--chn-border);

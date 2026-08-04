@@ -703,12 +703,14 @@
   }
 }
 
-/* Action buttons — mobile: drop below header, centered */
+/* Action buttons — mobile: drop below header, centered.
+   margin-top clears the fixed floating navbar pill (top:16 + height:60 = 76px)
+   so the buttons don't render partially hidden behind it. */
 @media (max-width: 600px) {
   .hero__actions {
     position: static;
     justify-content: center;
-    margin: 12px 0 24px;
+    margin: 32px 0 24px;
     right: auto;
     top: auto;
     flex-wrap: wrap;

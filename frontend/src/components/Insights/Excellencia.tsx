@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Award, ArrowUpRight, Bell, ArrowRight } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
+import { imageUrl as staticImageUrl } from '../../utils/imageUrl'
 import './Excellencia.css'
 
 const TOPICS = [
@@ -67,17 +68,24 @@ export default function Excellencia() {
     <div className="exc-page">
       {/* ════ HERO ════ */}
       <section className="exc-hero">
-        <span className="exc-hero__eyebrow">Built for Excellence</span>
-        <h1 className="exc-hero__title">JHS Excellencia Library</h1>
-        <p className="exc-hero__sub">
-          Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks.
-        </p>
+        <div
+          className="exc-hero__bg"
+          style={{ backgroundImage: `url(${staticImageUrl('Excellencia-bg-img.webp')})` }}
+        />
+        <div className="exc-hero__overlay" />
+        <div className="exc-hero__content">
+          <span className="exc-hero__eyebrow">Built for Excellence</span>
+          <h1 className="exc-hero__title">JHS Excellencia Library</h1>
+          <p className="exc-hero__sub">
+            Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks.
+          </p>
 
-        <ul className="exc-hero__topics">
-          {TOPICS.map((topic) => (
-            <li key={topic} className="exc-hero__topic">{topic}</li>
-          ))}
-        </ul>
+          <ul className="exc-hero__topics">
+            {TOPICS.map((topic) => (
+              <li key={topic} className="exc-hero__topic">{topic}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* ════ CONTENT ════ */}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Search, Filter, X } from 'lucide-react'
+import { Search, Filter, X, Download } from 'lucide-react'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
 import './Resources.css'
@@ -346,7 +346,7 @@ export default function Resources() {
                       disabled={downloading}
                       title="Download PDF"
                     >
-                      ⬇
+                      <Download size={16} />
                     </button>
                   </div>
                 </div>
@@ -467,7 +467,8 @@ export default function Resources() {
                   onClick={() => handleDownload(selectedResource)}
                   disabled={downloading}
                 >
-                  ⬇ {downloading ? 'Downloading…' : 'Download PDF'}
+                  <Download size={16} />
+                  {downloading ? 'Downloading…' : 'Download PDF'}
                 </button>
               </div>
             </div>

@@ -339,6 +339,14 @@
   padding-top: 80px
 }
 
+/* Single partner: center it instead of leaving it stuck in the first column */
+.kol-pc-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 300px;
+}
+
 .kol-pc-card {
   background: var(--kol-white);
   border: 1px solid var(--kol-border);

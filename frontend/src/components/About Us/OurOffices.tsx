@@ -176,7 +176,7 @@ export default function OurOffices() {
           <div className="oo-hero__stat-div" />
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">13</span><span className="oo-hero__stat-label">Locations</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">700</span><span className="oo-hero__stat-label">Professionals</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">700+</span><span className="oo-hero__stat-label">Professionals</span></div>
           <div className="oo-hero__stat-div" />
           {/* <div className="oo-hero__stat"><span className="oo-hero__stat-num">30+</span><span className="oo-hero__stat-label">Years of Trust</span></div> */}
         </div>

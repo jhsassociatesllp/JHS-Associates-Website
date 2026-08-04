@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FileText, ArrowUpRight, Bell, Download, ArrowRight } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
+import { imageUrl as staticImageUrl } from '../../utils/imageUrl'
 import './Regulatory.css'
 
 const TOPICS = [
@@ -65,18 +66,25 @@ export default function RegulatoryPage() {
     <div className="reg-page">
       {/* ════ HERO ════ */}
       <section className="reg-hero">
-        <span className="reg-hero__eyebrow">Knowledge Center</span>
-        <h1 className="reg-hero__title">Regulatory</h1>
-        <p className="reg-hero__sub">
-          In-depth research on regulatory frameworks, financial strategy, taxation and
-          industry intelligence — authored by JHS experts to help you navigate what's next.
-        </p>
+        <div
+          className="reg-hero__bg"
+          style={{ backgroundImage: `url(${staticImageUrl('Regulatory-bg-img.webp')})` }}
+        />
+        <div className="reg-hero__overlay" />
+        <div className="reg-hero__content">
+          <span className="reg-hero__eyebrow">Knowledge Center</span>
+          <h1 className="reg-hero__title">Regulatory</h1>
+          <p className="reg-hero__sub">
+            In-depth research on regulatory frameworks, financial strategy, taxation and
+            industry intelligence — authored by JHS experts to help you navigate what's next.
+          </p>
 
-        <ul className="reg-hero__topics">
-          {TOPICS.map((topic) => (
-            <li key={topic} className="reg-hero__topic">{topic}</li>
-          ))}
-        </ul>
+          <ul className="reg-hero__topics">
+            {TOPICS.map((topic) => (
+              <li key={topic} className="reg-hero__topic">{topic}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* ════ CONTENT ════ */}

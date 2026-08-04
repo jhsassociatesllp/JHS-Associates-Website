@@ -142,7 +142,12 @@ export default function Careers() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) e.email = 'Your email format is incorrect'
 
     if (!formData.phone.trim()) e.phone = 'Contact number is required'
-    else if (!/^[+\d\s\-()]{7,16}$/.test(formData.phone.trim())) e.phone = 'Your phone number is incorrect'
+    else if (!/^\+?[\d\s\-()]{7,20}$/.test(formData.phone.trim())) e.phone = 'Your phone number is incorrect'
+    else {
+      const digits = formData.phone.replace(/\D/g, '')
+      if (digits.length < 10 || digits.length > 15) e.phone = 'Enter a valid contact number (10-15 digits)'
+      else if (digits.length === 10 && !/^[6-9]/.test(digits)) e.phone = 'Enter a valid 10-digit mobile number'
+    }
 
     if (!formData.highest_qualification) e.highest_qualification = 'Please select your highest qualification'
     else if (showQualOther && !formData.highest_qualification_other.trim()) e.highest_qualification_other = 'Please specify your qualification'

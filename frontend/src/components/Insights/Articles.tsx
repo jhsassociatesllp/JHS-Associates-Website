@@ -356,14 +356,16 @@ export default function Articles() {
                       View More <ArrowRight size={16} />
                     </button>
 
-                    <button
-                      className="art-card__download-btn"
-                      onClick={(e) => { e.stopPropagation(); handleDownload(article) }}
-                      disabled={downloading}
-                      title="Download PDF"
-                    >
-                      <Download size={16} />
-                    </button>
+                    {article.pdf_id && (
+                      <button
+                        className="art-card__download-btn"
+                        onClick={(e) => { e.stopPropagation(); handleDownload(article) }}
+                        disabled={downloading}
+                        title="Download PDF"
+                      >
+                        <Download size={16} />
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -476,14 +478,16 @@ export default function Articles() {
                   <ChevronLeft size={16} /> Back to Articles
                 </button>
 
-                <button
-                  className="art-btn art-btn--solid"
-                  onClick={() => handleDownload(selectedArticle)}
-                  disabled={downloading}
-                >
-                  <Download size={16} />
-                  {downloading ? 'Downloading…' : 'Download PDF'}
-                </button>
+                {selectedArticle.pdf_id && (
+                  <button
+                    className="art-btn art-btn--solid"
+                    onClick={() => handleDownload(selectedArticle)}
+                    disabled={downloading}
+                  >
+                    <Download size={16} />
+                    {downloading ? 'Downloading…' : 'Download PDF'}
+                  </button>
+                )}
               </div>
             </div>
           </div>

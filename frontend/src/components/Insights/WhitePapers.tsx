@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FileText, ArrowUpRight, Bell, Download, ArrowRight } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
+import { imageUrl as staticImageUrl } from '../../utils/imageUrl'
 import './WhitePapers.css'
 
 const TOPICS = [
@@ -65,18 +66,25 @@ export default function WhitePapers() {
     <div className="wp-page">
       {/* ════ HERO ════ */}
       <section className="wp-hero">
-        <span className="wp-hero__eyebrow">Knowledge Center</span>
-        <h1 className="wp-hero__title">White Papers</h1>
-        <p className="wp-hero__sub">
-          In-depth research on regulatory frameworks, financial strategy, taxation and
-          industry intelligence — authored by JHS experts to help you navigate what's next.
-        </p>
+        <div
+          className="wp-hero__bg"
+          style={{ backgroundImage: `url(${staticImageUrl('White-paper-bg-img.webp')})` }}
+        />
+        <div className="wp-hero__overlay" />
+        <div className="wp-hero__content">
+          <span className="wp-hero__eyebrow">Knowledge Center</span>
+          <h1 className="wp-hero__title">White Papers</h1>
+          <p className="wp-hero__sub">
+            In-depth research on regulatory frameworks, financial strategy, taxation and
+            industry intelligence — authored by JHS experts to help you navigate what's next.
+          </p>
 
-        <ul className="wp-hero__topics">
-          {TOPICS.map((topic) => (
-            <li key={topic} className="wp-hero__topic">{topic}</li>
-          ))}
-        </ul>
+          <ul className="wp-hero__topics">
+            {TOPICS.map((topic) => (
+              <li key={topic} className="wp-hero__topic">{topic}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* ════ CONTENT ════ */}

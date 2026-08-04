@@ -600,6 +600,14 @@
   padding-top: 80px;
 }
 
+/* Single partner: center it instead of leaving it stuck in the first column */
+.ahm-pc-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px;
+}
+
 .ahm-pc-card {
   background: var(--ahm-white);
   border: 1.5px solid var(--ahm-border);

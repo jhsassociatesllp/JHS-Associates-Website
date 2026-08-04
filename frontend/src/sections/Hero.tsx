@@ -57,7 +57,8 @@ const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
   title: entry.heading,
   hoverTitle: entry.heading,
   hoverDescription: entry.short_description,
-  route: entry.button_url || "/excellencia",
+  // route: entry.button_url || "/excellencia",
+  route: "/excellencia",
 });
 
 const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({

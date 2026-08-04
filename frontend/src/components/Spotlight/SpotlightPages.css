@@ -24,11 +24,14 @@
   background-size: cover;
   background-position: center;
   opacity: 1;
+  z-index: 0;
 }
 
 .sp-hero__overlay {
-
+  position: absolute;
   inset: 0;
+  background: linear-gradient(135deg, rgba(8, 14, 30, 0.82) 0%, rgba(15, 23, 42, 0.68) 55%, rgba(8, 14, 30, 0.82) 100%);
+  z-index: 1;
 }
 
 .sp-container {
@@ -42,11 +45,13 @@
 
 .sp-hero__content {
   max-width: 1000px;
+  margin: 0 auto;
   padding-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   /* Offset for fixed navbar */
 }
 

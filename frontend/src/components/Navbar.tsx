@@ -100,48 +100,48 @@ const NAV_ITEMS: NavItem[] = [
         label: "Media & Technology",
         description: "Navigating digital disruption",
         children: [
-          { label: "Media", description: "", href: '/sectors/media-technology/media' },
-          { label: "IT System Audit", description: "", href: '/sectors/media-technology/it-system-audit' },
-          { label: "IT /ITeS", description: "", href: '/sectors/media-technology/it-tes' },
+          { label: "Media", description: "Broadcasting, Publishing & Entertainment", href: '/sectors/media-technology/media' },
+          { label: "IT System Audit", description: "Risk, Controls & Systems Assurance", href: '/sectors/media-technology/it-system-audit' },
+          { label: "IT /ITeS", description: "Technology & IT-enabled services", href: '/sectors/media-technology/it-tes' },
         ],
       },
       {
         label: "Consumer",
         description: "FMCG to luxury retail",
         children: [
-          { label: "FMCG", description: "", href: '/sectors/consumer/fmcg' },
-          { label: "Retail", description: "", href: '/sectors/consumer/retail' },
-          { label: "Oil & Gas", description: "", href: '/sectors/consumer/oil-gas-industry' },
-          { label: "Housing", description: "", href: '/sectors/consumer/housing' },
-          { label: "Real Estate", description: "", href: '/sectors/consumer/real-estate' },
-          { label: "Commodity", description: "", href: '/sectors/consumer/commodity' },
-          { label: "Gems & Jewellery", description: "", href: '/sectors/consumer/gems-jewellery' },
+          { label: "FMCG", description: "Consumer goods & brand advisory", href: '/sectors/consumer/fmcg' },
+          { label: "Retail", description: "Omnichannel & Retail Operations", href: '/sectors/consumer/retail' },
+          { label: "Oil & Gas", description: "Upstream, Midstream & Downstream Advisory", href: '/sectors/consumer/oil-gas-industry' },
+          { label: "Housing", description: "Affordable & Residential Housing Finance", href: '/sectors/consumer/housing' },
+          { label: "Real Estate", description: "Property, REITs & Development Advisory", href: '/sectors/consumer/real-estate' },
+          { label: "Commodity", description: "Trading, hedging & price risk", href: '/sectors/consumer/commodity' },
+          { label: "Gems & Jewellery", description: "Manufacturing, Trade & Valuation", href: '/sectors/consumer/gems-jewellery' },
         ],
       },
       {
         label: "Financial Services",
         description: "Banking, capital & fintech",
         children: [
-          { label: "Banking", description: "Retail & corporate banking", href: '/sectors/financial-services/banking' },
-          { label: "Insurance", description: "Life, health & general insurance", href: '/sectors/financial-services/insurance' },
-          { label: "Broking", description: "", href: '/sectors/financial-services/broking' },
-          { label: "Mutual Funds", description: "", href: '/sectors/financial-services/mutual-funds' },
-          { label: "Digital Currency", description: "", href: '/sectors/financial-services/digital-currency' },
-          { label: "Family Oriented Businesses", description: "", href: '/sectors/financial-services/family-oriented-businesses' },
-          { label: "Portfolio Management", description: "", href: '/sectors/financial-services/portfolio-management' },
-          { label: "Venture capital", description: "", href: '/sectors/financial-services/venture-capital' },
-          { label: "NBFC", description: "", href: '/sectors/financial-services/nbfc' },
+          { label: "Banking", description: "Retail & Corporate Banking", href: '/sectors/financial-services/banking' },
+          { label: "Insurance", description: "Life, Health & General Insurance", href: '/sectors/financial-services/insurance' },
+          { label: "Broking", description: "Equity, Commodity & Derivatives Broking", href: '/sectors/financial-services/broking' },
+          { label: "Mutual Funds", description: "AMC Compliance & Fund Operations", href: '/sectors/financial-services/mutual-funds' },
+          { label: "Digital Currency", description: "Crypto & Blockchain Advisory", href: '/sectors/financial-services/digital-currency' },
+          { label: "Family Oriented Businesses", description: "Succession & Governance Planning", href: '/sectors/financial-services/family-oriented-businesses' },
+          { label: "Portfolio Management", description: "PMS Structuring & Compliance", href: '/sectors/financial-services/portfolio-management' },
+          { label: "Venture Capital", description: "Fund Structuring & Deal Advisory", href: '/sectors/financial-services/venture-capital' },
+          { label: "NBFC", description: "Lending, Compliance & Risk Advisory", href: '/sectors/financial-services/nbfc' },
         ],
       },
       {
         label: "Others",
         description: "Cross-industry specialist practices",
         children: [
-          { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/other/healthcare' },
-          { label: "Constructions", description: "", href: '/sectors/other/construction' },
-          { label: "Manufacturing", description: "", href: '/sectors/other/manufacturing' },
-          { label: "Logistics", description: "Supply chain & transportation", href: '/sectors/other/logistics' },
-          { label: "NGO", description: "", href: '/sectors/other/ngo' },
+          { label: "Healthcare", description: "Policy, Delivery & Life Sciences", href: '/sectors/other/healthcare' },
+          { label: "Constructions", description: "Infrastructure & Real Estate Projects", href: '/sectors/other/construction' },
+          { label: "Manufacturing", description: "Industrial & Production Advisory", href: '/sectors/other/manufacturing' },
+          { label: "Logistics", description: "Supply Chain & Transportation", href: '/sectors/other/logistics' },
+          { label: "NGO", description: "Governance & Compliance for Non-Profits", href: '/sectors/other/ngo' },
         ],
       },
     ],
@@ -188,6 +188,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
+  const [selectedId, setSelectedId] = useState<string>("insights");
 
   const menuOpenRef = useRef(menuOpen);
   useEffect(() => {
@@ -261,6 +262,7 @@ const Navbar = () => {
       closeTimer.current = null;
     }
     setActiveId('insights');
+    setSelectedId('insights');
     setMobileState({ view: 'root' });
     setMenuOpen(true);
   };
@@ -305,6 +307,12 @@ const Navbar = () => {
   // When L1 nav changes, reset sub selection
   const handleNavHover = (id: string) => {
     setActiveId(id);
+  };
+
+  // Click = commit selection (stays highlighted even after hovering elsewhere)
+  const handleNavClick = (id: string) => {
+    setActiveId(id);
+    setSelectedId(id);
   };
 
   const activeNavItem = NAV_ITEMS.find((n) => n.id === activeId) ?? NAV_ITEMS[0];
@@ -412,8 +420,8 @@ const Navbar = () => {
                       </Link>
                     ) : (
                       <button
-                        className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
-                        onClick={() => handleNavHover(item.id)}
+                        className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""} ${selectedId === item.id ? "mega__nav-btn--selected" : ""}`}
+                        onClick={() => handleNavClick(item.id)}
                         onMouseEnter={() => handleNavHover(item.id)}
                       >
                         <span className="mega__nav-label">{item.label}</span>

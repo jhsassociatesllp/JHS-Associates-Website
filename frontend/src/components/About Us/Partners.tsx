@@ -241,7 +241,7 @@ const PARTNER_DATA = [
       {
         name: 'Huzefa Kaka',
         image: imageUrl('Huzefa-kaka.jpeg'),
-        creds: '',
+        creds: 'NISM certified',
         desc: 'Expert in Risk Management, Compliance, Internal Audit & Concurrent Audit.',
         location: "Mumbai",
         sector: ['Risk & Governance'],
@@ -445,6 +445,18 @@ const PARTNER_DATA = [
 
       },
       {
+        name: "Saurabh Shah",
+        image: imageUrl('Saurabh-Shah-removebg-preview.png'),
+        creds: "FCA, DISA",
+        desc: "Expert in Direct & Indirect Tax Advisory.",
+        location: "Vadodara",
+        sector: ["Direct & Indirect Tax "],
+        // teamSize: 8,
+        // clientsServed: 35,
+        linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7",
+
+      },
+      {
         name: "Mehul Shah",
         image: imageUrl('Mehul-Shah-removebg-preview.png'),
         creds: "FCA",
@@ -469,18 +481,7 @@ const PARTNER_DATA = [
         linkedin: "https://www.linkedin.com/in/ca-raj-a-shah",
 
       },
-      {
-        name: "Saurabh Shah",
-        image: imageUrl('Saurabh-Shah-removebg-preview.png'),
-        creds: "FCA, DISA",
-        desc: "Expert in Direct & Indirect Tax Advisory.",
-        location: "Vadodara",
-        sector: ["Direct & Indirect Tax "],
-        // teamSize: 8,
-        // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7",
 
-      },
       {
         name: "Shreena Panara",
         image: imageUrl('Shreena Parana.png'),

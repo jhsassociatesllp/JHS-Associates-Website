@@ -591,12 +591,34 @@
 }
 
 .mega__nav-btn:hover {
-  background: transparent;
+  background: rgba(30, 58, 95, 0.06);
 }
 
 .mega__nav-btn--active {
   background: #f1f1f1;
-  /* Light gray pill background for active */
+  /* Light gray pill background for hover-preview */
+}
+
+/* Click = committed selection, distinct from the lighter hover-preview state */
+.mega__nav-btn--selected {
+  background: rgba(30, 58, 95, 0.1);
+}
+
+.mega__nav-btn--selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 55%;
+  border-radius: 0 4px 4px 0;
+  background: #1e3a5f;
+}
+
+.mega__nav-btn--selected .mega__nav-label {
+  color: #1e3a5f;
+  font-weight: 600;
 }
 
 .mega__nav-label {

@@ -92,9 +92,9 @@
 
 .se-experts__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 240px));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 310px));
   justify-content: center;
-  gap: 1.75rem;
+  gap: 2rem;
 }
 
 .se-expert-card {
@@ -104,11 +104,11 @@
   align-items: center;
   text-align: center;
   background: #fff;
-  border-radius: 18px;
-  padding: 2.1rem 1.5rem 1.6rem;
+  border-radius: 20px;
+  padding: 2.6rem 1.75rem 2rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
+  overflow: visible;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, border-color 0.3s;
 }
 
@@ -119,6 +119,7 @@
   left: 0;
   right: 0;
   height: 4px;
+  border-radius: 20px 20px 0 0;
   background: linear-gradient(90deg, #c0392b, #e67e22);
   transform: scaleX(0);
   transform-origin: left;
@@ -136,14 +137,14 @@
 }
 
 .se-expert-card__img-wrap {
-  width: 92px;
-  height: 92px;
+  width: 132px;
+  height: 132px;
   border-radius: 50%;
   overflow: hidden;
   background: #eee;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.35rem;
   flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.12);
+  box-shadow: 0 0 0 5px rgba(192, 57, 43, 0.12);
   transition: box-shadow 0.3s ease;
 }
 
@@ -166,7 +167,7 @@
   justify-content: center;
   background: linear-gradient(135deg, #c0392b, #e2673a);
   color: #fff;
-  font-size: 1.7rem;
+  font-size: 2.4rem;
   font-weight: 700;
 }
 
@@ -214,44 +215,136 @@
 
 .se-expert-card__contact {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
   width: 100%;
 }
 
-.se-expert-card__email {
+/* ── Email button + dropdown ── */
+.se-expert-card__mail-wrap {
+  position: relative;
+  flex: 1;
   display: flex;
+}
+
+.se-expert-card__email {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   width: 100%;
+  padding: 9px 10px;
+  border-radius: 100px;
+  font-family: inherit;
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #666;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.se-expert-card__email span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
+  background: transparent;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
 }
 
 .se-expert-card__email svg {
   flex-shrink: 0;
-  color: #999;
-  transition: color 0.2s ease;
 }
 
-.se-expert-card__email:hover {
+.se-expert-card__email:hover,
+.se-expert-card__email.is-open {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+
+.se-expert-card__mail-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  min-width: 196px;
+  background: #fff;
+  border: 1.5px solid rgba(0, 0, 0, 0.10);
+  border-radius: 14px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16), 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: seMailDropIn 0.18s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes seMailDropIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.se-expert-card__mail-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border-left: 1.5px solid rgba(0, 0, 0, 0.10);
+  border-top: 1.5px solid rgba(0, 0, 0, 0.10);
+  border-radius: 2px 0 0 0;
+}
+
+.se-expert-card__mail-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.se-expert-card__mail-option::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.se-expert-card__mail-option:hover {
+  background: rgba(192, 57, 43, 0.08);
   color: #c0392b;
 }
 
-.se-expert-card__email:hover svg {
-  color: #c0392b;
+.se-expert-card__mail-option:hover::before {
+  background: #c0392b;
+}
+
+.se-expert-card__mail-option:nth-child(4) {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 9px 9px;
 }
 
 .se-expert-card__linkedin {
@@ -259,7 +352,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 100%;
+  flex: 1;
   padding: 9px 14px;
   border-radius: 100px;
   background: rgba(10, 102, 194, 0.08);
@@ -359,17 +452,22 @@
 
 @media (max-width: 760px) {
   .se-experts__grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
-    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 250px));
+    gap: 1.5rem;
   }
 
   .se-expert-card {
-    padding: 1.6rem 1.1rem 1.25rem;
+    padding: 2rem 1.4rem 1.5rem;
   }
 
   .se-expert-card__img-wrap {
-    width: 76px;
-    height: 76px;
+    width: 104px;
+    height: 104px;
+    margin-bottom: 1.1rem;
+  }
+
+  .se-expert-card__placeholder {
+    font-size: 1.9rem;
   }
 
   .se-cases__grid {
@@ -379,6 +477,14 @@
 
 @media (max-width: 480px) {
   .se-experts__grid {
-    grid-template-columns: minmax(0, 280px);
+    grid-template-columns: minmax(0, 300px);
+  }
+
+  .se-expert-card__contact {
+    flex-direction: column;
+  }
+
+  .se-expert-card__mail-wrap {
+    width: 100%;
   }
 }

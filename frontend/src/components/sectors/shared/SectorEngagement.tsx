@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import LazyImage from '../../common/LazyImage'
@@ -44,6 +45,19 @@ export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngag
   const matchedSectors: string[] = SECTOR_CASE_STUDY_MAP[sectorKey as keyof typeof SECTOR_CASE_STUDY_MAP] ?? []
   const caseStudies = (CASE_STUDIES as CaseStudy[]).filter((cs) => matchedSectors.includes(cs.sector)).slice(0, 2)
 
+  const [openMailFor, setOpenMailFor] = useState<string | null>(null)
+  const mailRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) {
+        setOpenMailFor(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   return (
     <>
       {/* ── SECTOR EXPERTS ── */}
@@ -78,10 +92,54 @@ export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngag
 
                 <div className="se-expert-card__contact">
                   {person.email && (
-                    <a href={`mailto:${person.email}`} className="se-expert-card__email" title={person.email}>
-                      <IconMail />
-                      <span>{person.email}</span>
-                    </a>
+                    <div className="se-expert-card__mail-wrap" ref={openMailFor === person.name ? mailRef : null}>
+                      <button
+                        type="button"
+                        className={`se-expert-card__email ${openMailFor === person.name ? 'is-open' : ''}`}
+                        onClick={() => setOpenMailFor(openMailFor === person.name ? null : person.name)}
+                      >
+                        <IconMail /><span>Email</span>
+                      </button>
+                      {openMailFor === person.name && (
+                        <div className="se-expert-card__mail-dropdown">
+                          <a
+                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${person.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="se-expert-card__mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Gmail
+                          </a>
+                          <a
+                            href={`https://outlook.office.com/mail/deeplink/compose?to=${person.email}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="se-expert-card__mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Open in Outlook Web
+                          </a>
+                          <a
+                            href={`mailto:${person.email}`}
+                            className="se-expert-card__mail-option"
+                            onClick={() => setOpenMailFor(null)}
+                          >
+                            Default Mail App
+                          </a>
+                          <button
+                            type="button"
+                            className="se-expert-card__mail-option"
+                            onClick={() => {
+                              navigator.clipboard.writeText(person.email)
+                              setOpenMailFor(null)
+                            }}
+                          >
+                            Copy Email Address
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )}
                   <a
                     href={person.linkedin}

@@ -8,8 +8,8 @@ import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Pradeep', image: imageUrl('NM Pradeep.png'), qualifications: 'CA, CMA ', designation: 'Indirect Tax & Advisory ', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
-  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.png'), qualifications: 'ACA', designation: ', Taxation & Audit Specialist', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
+  { name: 'Pradeep', image: imageUrl('NM Pradeep.webp'), qualifications: 'CA, CMA ', designation: 'Indirect Tax & Advisory ', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
+  { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.webp'), qualifications: 'ACA', designation: ', Taxation & Audit Specialist', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
 ]
 
 const SectorIcons: Record<string, ReactElement> = {
@@ -94,7 +94,7 @@ export default function Hyderabad() {
   return (
     <div className="hyd-page">
       <section className="hyd-hero">
-        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.png')})` }} />
+        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.webp')})` }} />
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
           {/* <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span> */}

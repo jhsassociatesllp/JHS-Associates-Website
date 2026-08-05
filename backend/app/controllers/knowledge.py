@@ -3,6 +3,7 @@ from datetime import datetime
 from app.database.connection import get_database
 from app.schemas.knowledge import KnowledgeCreate, KnowledgeUpdate
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
+from app.utils.image import convert_to_webp, webp_filename
 from io import BytesIO
 
 COLLECTION = "Knowledge"
@@ -112,9 +113,12 @@ async def delete_knowledge(knowledge_id: str) -> bool:
 
 
 async def upload_image_to_gridfs(file_content: bytes, filename: str, content_type: str) -> str:
-    """Upload image to GridFS and return the file ID"""
+    """Upload image to GridFS as WebP and return the file ID"""
     db = get_database()
     fs = AsyncIOMotorGridFSBucket(db)
+    webp_bytes = convert_to_webp(file_content)
+    if webp_bytes is not None:
+        file_content, filename, content_type = webp_bytes, webp_filename(filename), "image/webp"
     file_id = await fs.upload_from_stream(
         filename,
         BytesIO(file_content),

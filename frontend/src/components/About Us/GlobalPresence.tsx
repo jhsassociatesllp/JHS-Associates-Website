@@ -9,7 +9,7 @@ export default function GlobalPresence() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Fainance3.jpg')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Fainance3.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Reach</p>

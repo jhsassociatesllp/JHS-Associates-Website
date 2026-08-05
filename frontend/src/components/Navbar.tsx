@@ -359,7 +359,7 @@ const Navbar = () => {
 
           <a href="/" className="nb__brand" onClick={closeMenu}>
             <img
-              src={imageUrl('logo.jpeg')}
+              src={imageUrl('logo.webp')}
               alt="JHS"
               className="nb__logo"
             />

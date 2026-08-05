@@ -88,15 +88,15 @@ const SectorIcons: Record<string, ReactElement> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor,NISM(DP), NISM(Social Auditor)', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO Certified', designation: 'Internal Audit, Risk Advisory & Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Assurance, Tech & SOC Audit', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
-  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.jpeg'), qualifications: 'ACA, IPO Certified', designation: 'Risk Advisory, Internal Audit & IFC', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
-  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'ACA, AICA-L1', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
-  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'M.Com, ACA, CS', designation: 'Statutory Audit & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
-  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: ' Risk Advisory, Internal Audit & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'M.Com, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.webp'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor,NISM(DP), NISM(Social Auditor)', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.webp'), qualifications: 'FCA, IP (IBBI), DIRM, DISA', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.webp'), qualifications: 'ACA, IPO Certified', designation: 'Internal Audit, Risk Advisory & Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.webp'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Assurance, Tech & SOC Audit', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
+  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.webp'), qualifications: 'ACA, IPO Certified', designation: 'Risk Advisory, Internal Audit & IFC', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.webp'), qualifications: 'ACA, AICA-L1', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
+  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.webp'), qualifications: 'M.Com, ACA, CS', designation: 'Statutory Audit & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
+  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.webp'), qualifications: 'FCA ', designation: ' Risk Advisory, Internal Audit & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
+  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.webp'), qualifications: 'M.Com, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
   { name: 'Amit More', image: imageUrl('Amit-more.jpeg'), qualifications: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified ', designation: 'Cyber Security & GRC', email: 'amitkumar.more@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/amitkumarmore/' },
   { name: 'Dipika Bisawa', image: imageUrl('Dipika-Bisawa.jpeg'), qualifications: 'ACS', designation: 'Compliance & Risk Management', email: 'dipika.bisawa@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/' },
   { name: 'Raj Dabburi', image: imageUrl('Raj-daburi.jpeg'), qualifications: 'CA, MBA', designation: 'Board & Institutional Advisory', email: 'raj.d@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/rajdabburi/' },
@@ -189,7 +189,7 @@ export default function Mumbai() {
 
       {/* ══ HERO ══ */}
       <section className="mum-hero">
-        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.jpg')}")` }} />
+        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.webp')}")` }} />
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">
           {/* <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span> */}

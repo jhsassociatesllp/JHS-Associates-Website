@@ -201,7 +201,7 @@ export default function Careers() {
 
       {/* ══ HERO ══ */}
       <section style={ss.hero}>
-        <div style={{ ...ss.heroBg, backgroundImage: `url(${imageUrl('WebPoster4.jpeg')})` }} />
+        <div style={{ ...ss.heroBg, backgroundImage: `url(${imageUrl('WebPoster4.webp')})` }} />
         <div style={ss.heroOverlay} />
         <div className="careers-hero-content" style={ss.heroContent}>
           <p style={ss.heroEyebrow}>Join JHS</p>
@@ -244,7 +244,7 @@ export default function Careers() {
             </ul>
           </div>
         </div>
-        <img src={imageUrl('growthposter.jpg')} alt="JHS Office Culture" className="careers-culture-img" style={ss.cultureImg} loading="lazy" />
+        <img src={imageUrl('growthposter.webp')} alt="JHS Office Culture" className="careers-culture-img" style={ss.cultureImg} loading="lazy" />
       </section>
 
       {/* ══ APPLY TO JOIN US ══ */}

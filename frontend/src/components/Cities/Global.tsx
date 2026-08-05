@@ -7,7 +7,7 @@ import { copyToClipboard } from '../../utils/copyToClipboard'
 const PARTNERS = [
   {
     name: 'Vinod Joshi',
-    image: imageUrl('vinod joshi.png'),
+    image: imageUrl('vinod joshi.webp'),
     qualifications: 'FCA, MBA (Finance)',
     designation: 'Financial Advisory & CFO Services',
     email: 'vinod.joshi@jhsuae.com',
@@ -230,7 +230,7 @@ export default function Global() {
   return (
     <div className="glb-page">
       <section className="glb-hero">
-        <div className="glb-hero__photo" style={{ backgroundImage: `url(${imageUrl('Global.jpeg')})` }} />
+        <div className="glb-hero__photo" style={{ backgroundImage: `url(${imageUrl('Global.webp')})` }} />
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">
           {/* <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p> */}

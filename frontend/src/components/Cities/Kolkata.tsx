@@ -9,7 +9,7 @@ import { copyToClipboard } from '../../utils/copyToClipboard'
 const PARTNERS = [
   {
     name: 'Sharad Mohata',
-    image: imageUrl('Sharad-Mohata-removebg-preview.png'),
+    image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
     qualifications: 'B.Com (Hons), FCA, ICWAI',
     designation: 'Tax & Corporate Advisory',
     email: 'sharad.mohata@jhsassociates.in',
@@ -210,7 +210,7 @@ export default function Kolkata() {
   return (
     <div className="kol-page">
       <section className="kol-hero">
-        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.png')})` }} />
+        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.webp')})` }} />
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
           {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}

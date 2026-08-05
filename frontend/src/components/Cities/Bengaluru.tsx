@@ -8,8 +8,8 @@ import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Malla', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: ' Internal Audit & Risk Advisory', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
-  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki-92324b1b/' },
+  { name: 'Narayan Rao Malla', image: imageUrl('Narayana-Rao-Malla-removebg-preview.webp'), qualifications: 'FCA', designation: ' Internal Audit & Risk Advisory', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki-92324b1b/' },
 ]
 
 const SectorIcons: Record<string, ReactElement> = {
@@ -94,7 +94,7 @@ export default function Bengaluru() {
   return (
     <div className="blr-page">
       <section className="blr-hero">
-        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.jpg')})` }} />
+        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.webp')})` }} />
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
           {/* <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span> */}

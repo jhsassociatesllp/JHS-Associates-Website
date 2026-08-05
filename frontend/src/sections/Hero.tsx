@@ -51,7 +51,7 @@ const WHITEPAPER_CARD_ID = 7;
 
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
   id: EXCELLENCIA_CARD_ID,
-  image: entry.image_id ? `${API_BASE}/excellencia/image/${entry.image_id}` : imageUrl('Card3.jpeg'),
+  image: entry.image_id ? `${API_BASE}/excellencia/image/${entry.image_id}` : imageUrl('Card3.webp'),
   category: "EXCELLENCIA",
   meta: `JHS EXCELLENCIA · KNOWLEDGE LIBRARY · ${yearOf(entry.created_at)}`,
   title: entry.heading,
@@ -63,7 +63,7 @@ const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
 
 const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
   id: REGULATORY_CARD_ID,
-  image: entry.image_id ? `${API_BASE}/regulatory/image/${entry.image_id}` : imageUrl('Card1.jpeg'),
+  image: entry.image_id ? `${API_BASE}/regulatory/image/${entry.image_id}` : imageUrl('Card1.webp'),
   category: "REGULATORY",
   meta: `JHS REGULATORY · COMPLIANCE UPDATE · ${yearOf(entry.created_at)}`,
   title: entry.title,
@@ -74,7 +74,7 @@ const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
 
 const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
   id: WHITEPAPER_CARD_ID,
-  image: entry.image_id ? `${API_BASE}/whitepapers/image/${entry.image_id}` : imageUrl('Fainance-report.png'),
+  image: entry.image_id ? `${API_BASE}/whitepapers/image/${entry.image_id}` : imageUrl('Fainance-report.webp'),
   category: "WHITE PAPER",
   meta: `JHS WHITE PAPERS · THOUGHT LEADERSHIP · ${yearOf(entry.created_at)}`,
   title: entry.title,
@@ -88,7 +88,7 @@ const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
 const DEFAULT_CARDS: Card[] = [
   {
     id: 1,
-    image: imageUrl('Card2.jpeg'),
+    image: imageUrl('Card2.webp'),
     category: "STRATEGIC LEADERSHIP BRIEFING",
     meta: "STRATEGIC LEADERSHIP BRIEFING · DATA GOVERNANCE · 2026",
     title: "The Rule 6 Maze: A Perspective for CEOs and Chairpersons",
@@ -99,7 +99,7 @@ const DEFAULT_CARDS: Card[] = [
   },
   {
     id: REGULATORY_CARD_ID,
-    image: imageUrl('Card1.jpeg'),
+    image: imageUrl('Card1.webp'),
     category: "REGULATORY",
     meta: "Maharashtra Introduces Digital Partnership Firm Registration",
     title: "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
@@ -111,7 +111,7 @@ const DEFAULT_CARDS: Card[] = [
 
   {
     id: EXCELLENCIA_CARD_ID,
-    image: imageUrl('Card3.jpeg'),
+    image: imageUrl('Card3.webp'),
     category: "EXCELLENCIA",
     meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
     title: "JHS Excellencia Library Premium Research, Benchmarks & Strategic Frameworks",
@@ -122,7 +122,7 @@ const DEFAULT_CARDS: Card[] = [
   },
   {
     id: WHITEPAPER_CARD_ID,
-    image: imageUrl('Fainance-report.png'),
+    image: imageUrl('Fainance-report.webp'),
     category: "WHITE PAPER",
     meta: "JHS WHITE PAPERS · THOUGHT LEADERSHIP · 2026",
     title: "EU Upholds Google's €4.1 Billion Android Fine",
@@ -257,25 +257,25 @@ export default function Hero() {
     resumeAutoSlide();
   };
 
-  const getVisibleCards = () => {
-    const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-    const nextIndex = (currentIndex + 1) % totalCards;
-    const prev2Index = (currentIndex - 2 + totalCards) % totalCards;
-    const next2Index = (currentIndex + 2) % totalCards;
-
-    return {
-      prev2: cards[prev2Index],
-      prev: cards[prevIndex],
-      current: cards[currentIndex],
-      next: cards[nextIndex],
-      next2: cards[next2Index],
-    };
+  // Signed distance from currentIndex, wrapped the short way around the
+  // loop (e.g. with 4 cards, index 3 is "-1" from index 0, not "+3").
+  const getOffset = (index: number) => {
+    let diff = index - currentIndex;
+    const half = totalCards / 2;
+    if (diff > half) diff -= totalCards;
+    if (diff < -half) diff += totalCards;
+    return diff;
   };
 
-  const visible = getVisibleCards();
+  const POSITION_BY_OFFSET = ["prev2", "prev", "current", "next", "next2"];
 
-  const renderCard = (card: Card, position: string) => {
-    if (!card) return null;
+  const renderCard = (card: Card, index: number) => {
+    const offset = getOffset(index);
+    // Anything beyond the 5 visible slots collapses onto the nearest edge
+    // slot — that slot is opacity:0 already, so it just stays invisible.
+    const clamped = Math.max(-2, Math.min(2, offset));
+    const position = POSITION_BY_OFFSET[clamped + 2];
+
     const isHovered = hoveredCard === card.id;
     const isCenter = position === "current";
     const isSide = position === "prev" || position === "next";
@@ -283,7 +283,7 @@ export default function Hero() {
 
     return (
       <article
-        key={`${position}-${card.id}`}
+        key={card.id}
         className={`hero__carousel-card hero__carousel-card--${position} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
           }`}
         onClick={() => {
@@ -398,11 +398,7 @@ export default function Hero() {
           onTouchEnd={handleTouchEnd}
         >
           <div className="hero__carousel-track">
-            {renderCard(visible.prev2, "prev2")}
-            {renderCard(visible.prev, "prev")}
-            {renderCard(visible.current, "current")}
-            {renderCard(visible.next, "next")}
-            {renderCard(visible.next2, "next2")}
+            {cards.map((card, index) => renderCard(card, index))}
           </div>
         </div>
 

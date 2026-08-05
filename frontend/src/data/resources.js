@@ -7,7 +7,7 @@ export const RESOURCES = [
     title: "Tax Planning Guide for FY 2024-25",
     tag: "Guide",
     description: "A comprehensive guide on tax planning strategies for individuals and businesses in the current financial year.",
-    image: "src/image/Taxposter.jpg",
+    image: "src/image/Taxposter.webp",
     pdf: "/src/pdfs/tax-planning-guide-2024.pdf",
     author: "CA Huzeifa Unwala"
   },
@@ -52,7 +52,7 @@ export const RESOURCES = [
     title: "Transfer Pricing Documentation",
     tag: "Guide",
     description: "Complete guide to transfer pricing documentation requirements for multinational companies.",
-    image: "src/image/Fainance4.jpg",
+    image: "src/image/Fainance4.webp",
     pdf: "/src/pdfs/transfer-pricing-documentation.pdf",
     author: "CA Huzeifa Unwala"
   },
@@ -61,7 +61,7 @@ export const RESOURCES = [
     title: "RERA Compliance Guide",
     tag: "Guide",
     description: "Understanding RERA compliance requirements for real estate developers and promoters.",
-    image: "src/image/Auditposter.jpg",
+    image: "src/image/Auditposter.webp",
     pdf: "/src/pdfs/rera-compliance-guide.pdf",
     author: "CA Huzeifa Unwala"
   },

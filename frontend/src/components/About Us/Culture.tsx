@@ -9,7 +9,7 @@ export default function Culture() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Blogs.avif')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Blogs.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Inner Workings</p>

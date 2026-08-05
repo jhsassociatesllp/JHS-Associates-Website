@@ -1,6 +1,6 @@
 export const SITE_NAME = 'JHS & Associates LLP'
 export const SITE_URL = 'https://www.jhsassociates.in'
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/Uploads/logo.jpeg`
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/Uploads/logo.webp`
 
 export interface RouteMeta {
   title: string

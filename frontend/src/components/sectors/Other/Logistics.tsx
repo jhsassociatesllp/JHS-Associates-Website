@@ -55,7 +55,7 @@ export default function Logistics() {
   const whyRef = useRef<HTMLDivElement>(null)
 
   // Lazy load hero background image - using the Logistics1 image from uploads
-  const { ref: heroBgRef, style: heroBgStyle, loaded: heroBgLoaded, className: heroBgClassName } = useLazyBackground(imageUrl('Logistics1.png'))
+  const { ref: heroBgRef, style: heroBgStyle, loaded: heroBgLoaded, className: heroBgClassName } = useLazyBackground(imageUrl('Logistics1.webp'))
 
   useEffect(() => {
     window.scrollTo(0, 0)

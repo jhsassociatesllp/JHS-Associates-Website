@@ -75,7 +75,7 @@ export default function Assurance() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="aa-hero">
-        <div className="aa-hero__bg" style={{ backgroundImage: `url('${imageUrl('Auditposter.jpg')}')` }} />
+        <div className="aa-hero__bg" style={{ backgroundImage: `url('${imageUrl('Auditposter.webp')}')` }} />
         <div className="aa-hero__overlay" />
         <div className="aa-container">
           <div className="aa-hero__content">

@@ -26,7 +26,7 @@ const PARTNER_DATA = [
     members: [
       {
         name: "Huzeifa Unwala",
-        image: imageUrl('Huzefa-Unwala-removebg-preview.png'),
+        image: imageUrl('Huzefa-Unwala-removebg-preview.webp'),
         creds: "FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)",
         desc: "Expert in IFC, Governance, Risk & Cyber Security Frameworks across BFSI sectors.",
         location: "Mumbai",
@@ -38,7 +38,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Kalpesh Parmar",
-        image: imageUrl('Kalpesh-Parmar-removebg-preview.png'),
+        image: imageUrl('Kalpesh-Parmar-removebg-preview.webp'),
         creds: "B.Com (Hons), FCA",
         desc: "Expert in Statutory Audit, Ind AS implementation and complex consolidation for listed entities.",
         location: "Vadodara",
@@ -50,7 +50,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Sharad Mohata",
-        image: imageUrl('Sharad-Mohata-removebg-preview.png'),
+        image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
         creds: "B.Com (Hons), FCA, ICWAI",
         desc: "Expert in Regulatory, Direct Taxation, Corporate Restructuring and International Tax Advisory.",
         location: "Kolkata",
@@ -62,7 +62,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Nikhel Kochhar",
-        image: imageUrl('Nikhel-Kochhar-removebg-preview.png'),
+        image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'),
         creds: "FCA, CIA",
         desc: "Expert in Accounting, Auditing, Assurance & Strategic Management Consulting.",
         location: "Delhi",
@@ -74,7 +74,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Vinod Joshi",
-        image: imageUrl('vinod joshi.png'),
+        image: imageUrl('vinod joshi.webp'),
         creds: "FCA, MBA (Finance)",
         desc: "Expert in Financial Modeling, M&A Restructuring & Cross-border Strategic Alliances.",
         location: "UAE",
@@ -93,7 +93,7 @@ const PARTNER_DATA = [
     members: [
       {
         name: "Tasnim Tankiwala",
-        image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'),
+        image: imageUrl('Tasnim-Tankiwala-removebg-preview.webp'),
         creds: "FCA, IP (IBBI), DIRM, DISA",
         desc: "Expert in Auditing, Tax, Accounting & IFC.",
         location: "Mumbai",
@@ -106,7 +106,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Disha Shah",
-        image: imageUrl('Disha Shah-removebg-preview.png'),
+        image: imageUrl('Disha Shah-removebg-preview.webp'),
         creds: "FCA",
         desc: "Expert in Accounting, Tax, Governance, Internal Control & Women Entrepreneur Initiatives.",
         location: "Mumbai",
@@ -118,7 +118,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Dhanlaxmi Nair",
-        image: imageUrl('Dhanlaxmi.png'),
+        image: imageUrl('Dhanlaxmi.webp'),
         creds: "M.Com, FCA, CMA, SET",
         desc: "Expert in BFSI, Regulatory Compliance, Internal & Concurrent Audit,",
         location: "Mumbai",
@@ -131,7 +131,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Jamal Ashraf Chatriwala",
-        image: imageUrl('Jamal-Chatriwala-removebg-preview.png'),
+        image: imageUrl('Jamal-Chatriwala-removebg-preview.webp'),
         creds: "ACA, IPO Certified",
         desc: "Expert in BFSI, NBFC, Asset Management, Insurance Advisory & Concurrent Audit.",
         location: "Mumbai",
@@ -144,7 +144,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Taher Pepermintwala",
-        image: imageUrl('Taher-Pepermintwala-removebg-preview.png'),
+        image: imageUrl('Taher-Pepermintwala-removebg-preview.webp'),
         creds: "FCA, CISA, ACCA, Dip IFRS",
         desc: "Expert in Cyber Security, IT Audit, AIF & Mutual Fund, Forensic Audit, Statutory & Internal Audit.",
         location: "Mumbai",
@@ -157,7 +157,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Sahil Shah",
-        image: imageUrl('Sahil-Shah-removebg-preview.jpeg'),
+        image: imageUrl('Sahil-Shah-removebg-preview.webp'),
         creds: "ACA, IPO Certified ",
         desc: "Expert in Accounting, Internal Control & VC Funding Advisory.",
         location: "Mumbai",
@@ -170,7 +170,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Tausif Shaikh",
-        image: imageUrl('Tausif-Shaikh-removebg-preview.png'),
+        image: imageUrl('Tausif-Shaikh-removebg-preview.webp'),
         creds: "ACA, AICA-L1",
         desc: "Expert in Assurance, Tax Advisory and AI-driven Audit Methodologies.",
         location: "Mumbai",
@@ -183,7 +183,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Samad Dhanani",
-        image: imageUrl('Samad-Dhanani-removebg-preview.png'),
+        image: imageUrl('Samad-Dhanani-removebg-preview.webp'),
         creds: "M.Com, ACA, CS",
         desc: "Expert in Internal Audit, Tax Audit, Assurance & Accounting.",
         location: "Mumbai",
@@ -257,7 +257,7 @@ const PARTNER_DATA = [
     members: [
       // {
       //   name: "Geethika Ghanta",
-      //   image: imageUrl('Geethika Ghanta.png'),
+      //   image: imageUrl('Geethika Ghanta.webp'),
       //   creds: "FCA",
       //   desc: "Partner based in Hyderabad specializing in risk advisory & compliance.",
       //   location: "Hyderabad",
@@ -268,7 +268,7 @@ const PARTNER_DATA = [
       // },
       {
         name: "Jagdish Solanki",
-        image: imageUrl('Jagdish-Solanki-removebg-preview.png'),
+        image: imageUrl('Jagdish-Solanki-removebg-preview.webp'),
         creds: "B.Com (Hons), FCA",
         desc: "Expert in Audit and Internal Control.",
         location: "Bengaluru",
@@ -280,7 +280,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Narayana Rao Malla",
-        image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'),
+        image: imageUrl('Narayana-Rao-Malla-removebg-preview.webp'),
         creds: "FCA",
         desc: "Expert in Audit, Accounting & Internal Control.",
         location: "Bengaluru",
@@ -304,7 +304,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Pranal P",
-        image: imageUrl('Pranal p.png'),
+        image: imageUrl('Pranal p.webp'),
         creds: "FCA",
         desc: "Expert in Statutory Audit, Internal Audit, Management Consultancy & Systems Study.",
         location: "Chennai",
@@ -316,7 +316,7 @@ const PARTNER_DATA = [
       },
       // {
       //   name: "NM Pradeep",
-      //   image: imageUrl('NM Pradeep.png'),
+      //   image: imageUrl('NM Pradeep.webp'),
       //   creds: "FCA",
       //   desc: "Hyderabad partner leading statutory audit & tax advisory services.",
       //   location: "Hyderabad",
@@ -350,8 +350,20 @@ const PARTNER_DATA = [
     role: "Partner",
     members: [
       {
+        name: "Shreena Panara",
+        image: imageUrl('Shreena Parana.webp'),
+        creds: "ACA",
+        desc: "Expert in Accounting, Audit, Tax & Finance.",
+        location: "Rajkot",
+        sector: ["Indirect Tax"],
+        // teamSize: 6,
+        // clientsServed: 25,
+        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
+
+      },
+      {
         name: "Jhankhna Patel",
-        image: imageUrl('Jhankana Patel.jpeg'),
+        image: imageUrl('Jhankana Patel.webp'),
         creds: "ACA, CBAP, DISA, CPA Australia",
         desc: "Expert in Accounting, Tax, GST, Statutory & Internal Audit.",
         location: "Ahmedabad",
@@ -363,7 +375,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Dhaval Thakkar",
-        image: imageUrl('Dhaval-Thakkar-removebg-preview.png'),
+        image: imageUrl('Dhaval-Thakkar-removebg-preview.webp'),
         creds: "ACA",
         desc: "Expert in Startup Advisory, Corporate Governance & ERP Strategy. ",
         location: "Ahmedabad",
@@ -387,7 +399,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Alpesh Vaniya",
-        image: imageUrl('Alpesh-Vaniya-removebg-preview.png'),
+        image: imageUrl('Alpesh-Vaniya-removebg-preview.webp'),
         creds: "FCA",
         desc: "Expert in Internal Audit, Tax, Accounting & IT Audit.",
         location: "Ahmedabad",
@@ -399,7 +411,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Parth Shah',
-        image: imageUrl('Parth_shah.jpeg'),
+        image: imageUrl('Parth_shah.webp'),
         creds: 'FCA',
         desc: "Expert in Internal Audit, Tax Advisory & Accounting.",
         location: "Ahmedabad",
@@ -409,7 +421,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Virendra Nayyar",
-        image: imageUrl('Virendra-Nayyar-removebg-preview.png'),
+        image: imageUrl('Virendra-Nayyar-removebg-preview.webp'),
         creds: "B.Com (Hons), FCA ",
         desc: "Expert in Internal Audit & Assurance Engagements.",
         location: "Vadodara",
@@ -422,7 +434,7 @@ const PARTNER_DATA = [
 
       {
         name: "Viranch Modi",
-        image: imageUrl('Viranch-Modi-removebg-preview.png'),
+        image: imageUrl('Viranch-Modi-removebg-preview.webp'),
         creds: "FCA",
         desc: "Expert in Direct Tax, Indirect Tax & Auditing.",
         location: "Vadodara",
@@ -434,7 +446,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Milin Parekh",
-        image: imageUrl('Milin-Parekh-removebg-preview.png'),
+        image: imageUrl('Milin-Parekh-removebg-preview.webp'),
         creds: "M.Com, FCA",
         desc: "Expert in Accouting, Internal Audit & Consulting.",
         location: "Vadodara",
@@ -446,7 +458,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Saurabh Shah",
-        image: imageUrl('Saurabh-Shah-removebg-preview.png'),
+        image: imageUrl('Saurabh-Shah-removebg-preview.webp'),
         creds: "FCA, DISA",
         desc: "Expert in Direct & Indirect Tax Advisory.",
         location: "Vadodara",
@@ -458,7 +470,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Mehul Shah",
-        image: imageUrl('Mehul-Shah-removebg-preview.png'),
+        image: imageUrl('Mehul-Shah-removebg-preview.webp'),
         creds: "FCA",
         desc: "Expert in Tax, Audit, Assurance & Statutory Compliance.",
         location: "Surat",
@@ -471,7 +483,7 @@ const PARTNER_DATA = [
 
       {
         name: "Raj Shah",
-        image: imageUrl('Raj-Shah-removebg-preview.png'),
+        image: imageUrl('Raj-Shah-removebg-preview.webp'),
         creds: "ACA ",
         desc: "Expert in Audit, Accounting, Tax Litigation & Advisory.",
         location: "Surat",
@@ -479,19 +491,6 @@ const PARTNER_DATA = [
         // teamSize: 6,
         // clientsServed: 26,
         linkedin: "https://www.linkedin.com/in/ca-raj-a-shah",
-
-      },
-
-      {
-        name: "Shreena Panara",
-        image: imageUrl('Shreena Parana.png'),
-        creds: "ACA",
-        desc: "Expert in Accounting, Audit, Tax & Finance.",
-        location: "Rajkot",
-        sector: ["Indirect Tax"],
-        // teamSize: 6,
-        // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
 
       },
 

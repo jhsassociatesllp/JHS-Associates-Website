@@ -12,9 +12,9 @@ import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhel Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA, CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
-  // { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
-  // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
+  { name: 'Nikhel Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'), qualifications: 'FCA, CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
+  // { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
+  // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.webp'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
@@ -115,7 +115,7 @@ export default function Delhi() {
 
       {/* ══ HERO ══ */}
       <section className="del-hero">
-        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.png')})` }} />
+        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.webp')})` }} />
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
           {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}

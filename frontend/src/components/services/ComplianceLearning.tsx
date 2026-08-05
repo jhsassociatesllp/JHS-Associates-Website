@@ -49,7 +49,7 @@ export default function ComplianceLearning() {
   return (
     <div className="cl-page" ref={containerRef}>
       <section className="cl-hero">
-        <div className="cl-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.png')}')` }} />
+        <div className="cl-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.webp')}')` }} />
         <div className="cl-hero__overlay" />
         <div className="cl-container">
           <div className="cl-hero__content">

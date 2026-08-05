@@ -75,7 +75,7 @@ export default function Outsourcing() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="o-hero">
-        <div className="o-hero__bg" style={{ backgroundImage: `url('${imageUrl('Outsourcing.png')}')` }} />
+        <div className="o-hero__bg" style={{ backgroundImage: `url('${imageUrl('outsourcing.webp')}')` }} />
         <div className="o-hero__overlay" />
         <div className="o-container">
           <div className="o-hero__content">

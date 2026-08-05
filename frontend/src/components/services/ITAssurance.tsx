@@ -176,7 +176,7 @@ export default function ITAssurance() {
 
       {/* ════ HERO ════ */}
       <section className="a-hero">
-        <div className="a-hero__bg" style={{ backgroundImage: `url('${imageUrl('Assurance.png')}')` }} />
+        <div className="a-hero__bg" style={{ backgroundImage: `url('${imageUrl('Assurance.webp')}')` }} />
         <div className="a-hero__overlay" />
         <div className="a-container">
           <div className="a-hero__content">

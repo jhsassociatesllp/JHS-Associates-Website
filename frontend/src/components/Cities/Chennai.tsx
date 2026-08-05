@@ -9,7 +9,7 @@ import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
   { name: 'G Chandrasekaran', image: imageUrl('Chandra-Shekaran.png'), qualifications: 'DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandrasekaran@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
-  { name: 'Pranal P', image: imageUrl('Pranal p.png'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
+  { name: 'Pranal P', image: imageUrl('Pranal p.webp'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 
 const SectorIcons: Record<string, ReactElement> = {
@@ -94,7 +94,7 @@ export default function Chennai() {
   return (
     <div className="chn-page">
       <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
+        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.webp')})` }} />
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
           {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}

@@ -9,7 +9,7 @@ export default function Partnerships() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Untitled design.png')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Untitled design.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Strategic Alliances</p>

@@ -10,50 +10,50 @@ const citiesList = [
     name: "Maharashtra",
     slug: "mumbai",
     address: "Mumbai, Headquarters, Andheri",
-    image: imageUrl('Mumbai.png'),
+    image: imageUrl('Mumbai.webp'),
   },
   {
     name: "Delhi",
     slug: "delhi",
     address: "Delhi",
-    image: imageUrl('Dehli.png'),
+    image: imageUrl('Dehli.webp'),
   },
   {
     name: "Gujarat",
     slug: "gujarat",
     address: "Vadodara",
-    image: imageUrl('Ahmedabad.png'),
+    image: imageUrl('Ahmedabad.webp'),
   },
   {
     name: "Global",
     slug: "global",
     address: "International",
-    image: imageUrl('Global.jpeg'),
+    image: imageUrl('Global.webp'),
   },
   {
     name: "Karnataka",
     slug: "bengaluru",
     address: "Bengaluru",
-    image: imageUrl('Bangaluru.jpg'),
+    image: imageUrl('Bangaluru.webp'),
   },
 
   // {
   //   name: "Telangana",
   //   slug: "hyderabad",
   //   address: "Hyderabad",
-  //   image: imageUrl('Hyderabad.png'),
+  //   image: imageUrl('Hyderabad.webp'),
   // },
   {
     name: "Tamil Nadu",
     slug: "chennai",
     address: "Chennai",
-    image: imageUrl('Chennai.png'),
+    image: imageUrl('Chennai.webp'),
   },
   {
     name: "West Bengal",
     slug: "kolkata",
     address: "Kolkata",
-    image: imageUrl('Kolkata.png'),
+    image: imageUrl('Kolkata.webp'),
   }
 ];
 

@@ -83,7 +83,7 @@ export default function Footer() {
             <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="footer__social-icon"><IconFacebook /></a>
             <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-icon"><IconLinkedIn /></a>
             <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-icon"><IconInstagram /></a>
-            <a href="https://www.youtube.com/@JHS-Excellencia" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
+            <a href="https://www.youtube.com/@JHS_India" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <LazyImage src={imageUrl('logo.png')} alt="JHS & Associates LLP" />
+              <LazyImage src={imageUrl('logo-footer.webp')} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
               Trusted Chartered Accountants and Advisory Partners for Businesses across India.

@@ -36,7 +36,7 @@ const industries: ServiceItem[] = [
   { label: "Retail", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.webp') },
   { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.webp') },
   { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.webp') },
-  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.png') },
+  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.webp') },
   { label: "Logistics", href: "/sectors/other/logistics", description: "Delivering specialized audit, tax, compliance, and advisory services for logistics, transportation, warehousing, and supply chain businesses in a rapidly evolving market.", image: imageUrl('Logistics1.webp') },
 ];
 

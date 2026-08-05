@@ -14,7 +14,7 @@ export default function AIAutomation() {
       <section className="sp-hero">
         <div
           className="sp-hero__bg"
-          style={{ backgroundImage: `url(${imageUrl('Automation.jpg')})` }}
+          style={{ backgroundImage: `url(${imageUrl('Automation.webp')})` }}
         />
         <div className="sp-hero__overlay" />
         <div className="sp-container">

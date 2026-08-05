@@ -192,7 +192,7 @@ export default function Resources() {
         style={{
           backgroundImage: `
             linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-            url('${imageUrl('Resources.png') }')
+            url('${imageUrl('Resources.webp') }')
           `,
           backgroundColor: '#1e3a5f' // Fallback color if image fails to load
         }}

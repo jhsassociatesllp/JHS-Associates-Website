@@ -196,7 +196,7 @@ const PARTNER_DATA = [
 
       {
         name: 'Amit More',
-        image: imageUrl('Amit-more.jpeg'),
+        image: imageUrl('Amit-more.webp'),
         creds: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified',
         desc: 'Expert in Cyber Security, GRC, Strategy and Digital Trust.',
         location: "Mumbai",
@@ -207,7 +207,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Dipika Bisawa',
-        image: imageUrl('Dipika-Bisawa.jpeg'),
+        image: imageUrl('Dipika-Bisawa.webp'),
         creds: 'ACS',
         desc: 'Expert in Corporate Governance, Compliance & Risk Management.',
         location: "Mumbai",
@@ -218,7 +218,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Raj Dabburi',
-        image: imageUrl('Raj-daburi.jpeg'),
+        image: imageUrl('Raj-daburi.webp'),
         creds: 'CA, MBA',
         desc: 'Expert in Corporate Finance, Fund Raising, PPP Advisory & Financial Strategy',
         location: "Mumbai",
@@ -229,7 +229,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Huzefa Mala',
-        image: imageUrl('Huzefa-mala.jpeg'),
+        image: imageUrl('Huzefa-mala.webp'),
         creds: 'FCA, UGC-NET Qualified',
         desc: 'Expert in Tax Compliance, Tax Litigation, Appeals, Domestic & Overseas Outsourcing.',
         location: "Mumbai",
@@ -240,7 +240,7 @@ const PARTNER_DATA = [
       },
       {
         name: 'Huzefa Kaka',
-        image: imageUrl('Huzefa-kaka.jpeg'),
+        image: imageUrl('Huzefa-kaka.webp'),
         creds: 'NISM certified',
         desc: 'Expert in Risk Management, Compliance, Internal Audit & Concurrent Audit.',
         location: "Mumbai",
@@ -292,7 +292,7 @@ const PARTNER_DATA = [
       },
       {
         name: "G Chandrasekaran",
-        image: imageUrl('Chandra-Shekaran.png'),
+        image: imageUrl('Chandra-Shekaran.webp'),
         creds: "DSM, FCA, DISA",
         desc: "Expert in Accounting, Internal Audit & Tax.",
         location: "Chennai",
@@ -327,7 +327,7 @@ const PARTNER_DATA = [
       // },
       {
         name: "Tripti Mohta",
-        image: imageUrl('Tripti mohta.png'),
+        image: imageUrl('Tripti mohta.webp'),
         creds: "FCA",
         desc: "Expert in Accounting, Assurance, Governance & Internal Audit.",
         location: "Kolkata",
@@ -387,7 +387,7 @@ const PARTNER_DATA = [
       },
       {
         name: "Nidhi Kotecha",
-        image: imageUrl('Nidhi-kotecha.png'),
+        image: imageUrl('Nidhi-kotecha.webp'),
         creds: "ACA",
         desc: "Expert in Outsourced Finance Services, CFO Advisory & SEC Compliance.",
         location: "Ahmedabad",
@@ -670,7 +670,7 @@ export default function Partners() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Leadership.png')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Leadership.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Experts</p>

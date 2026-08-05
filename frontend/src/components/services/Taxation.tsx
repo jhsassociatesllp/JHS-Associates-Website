@@ -75,7 +75,7 @@ export default function Taxation() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="tx-hero">
-        <div className="tx-hero__bg" style={{ backgroundImage: `url('${imageUrl('Taxation2.png')}')` }} />
+        <div className="tx-hero__bg" style={{ backgroundImage: `url('${imageUrl('Taxation2.webp')}')` }} />
         <div className="tx-hero__overlay" />
         <div className="tx-container">
           <div className="tx-hero__content">

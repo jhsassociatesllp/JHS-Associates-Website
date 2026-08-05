@@ -203,7 +203,7 @@ export default function Solutions() {
       <section className="sol-hero">
         <div
           className="sol-hero__bg"
-          style={{ backgroundImage: `url(${imageUrl('business-and-professional-services.jpg')})` }}
+          style={{ backgroundImage: `url(${imageUrl('business-and-professional-services.webp')})` }}
         />
         <div className="sol-hero__overlay" />
         <div className="sol-container">

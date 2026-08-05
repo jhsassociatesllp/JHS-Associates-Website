@@ -18,7 +18,7 @@ const ALUMNI_PROFILES = [
     name: "Prerna Jain",
     // role: " Tax Advisory",
     desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
-    image: imageUrl('Prerna-Jain.png')
+    image: imageUrl('Prerna-Jain.webp')
   },
   {
     id: 3,

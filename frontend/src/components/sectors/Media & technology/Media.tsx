@@ -87,7 +87,7 @@ export default function Media() {
       {/* ── HERO ── */}
       <section className="md-hero" ref={heroRef}>
         <img
-          src={imageUrl('Media.png')}
+          src={imageUrl('Media.webp')}
           alt="Media Services Background"
           className={`md-hero__bg-image ${heroImageLoaded ? 'md-hero__bg-image--loaded' : ''}`}
           onLoad={() => setHeroImageLoaded(true)}

@@ -57,7 +57,7 @@ export default function Insights() {
   // Lazy load blog background image
   useEffect(() => {
     const img = new Image();
-    img.src = imageUrl('Taxation2.png');
+    img.src = imageUrl('Taxation2.webp');
     img.onload = () => setBlogImageLoaded(true);
   }, []);
 
@@ -70,7 +70,7 @@ export default function Insights() {
           <div
             className={`insights__card-bg-blogs ${blogImageLoaded ? 'insights__card-bg-blogs--loaded' : ''}`}
             style={{
-              backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxation2.png')})` : 'none'
+              backgroundImage: blogImageLoaded ? `url(${imageUrl('Taxation2.webp')})` : 'none'
             }}
           ></div>
           <div className="insights__card-overlay-blogs"></div>

@@ -72,21 +72,21 @@ const PARTNERS = {
     email: 'samad.dhanani@jhsassociates.in',
   },
   'Huzefa Kaka': {
-    image: imageUrl('Huzefa-kaka.jpeg'),
+    image: imageUrl('Huzefa-kaka.webp'),
     creds: '',
     location: 'Mumbai',
     linkedin: 'https://www.linkedin.com/in/huzefakaka/',
     email: 'huzefa.kaka@jhsassociates.in',
   },
   'Huzefa Mala': {
-    image: imageUrl('Huzefa-mala.jpeg'),
+    image: imageUrl('Huzefa-mala.webp'),
     creds: '',
     location: 'Mumbai',
     linkedin: 'https://www.linkedin.com/in/huzefamala/',
     email: 'huzefa.mala@jhsassociates.in',
   },
   'Tripti Mohta': {
-    image: imageUrl('Tripti mohta.png'),
+    image: imageUrl('Tripti mohta.webp'),
     creds: 'FCA',
     location: 'Kolkata',
     linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
@@ -100,7 +100,7 @@ const PARTNERS = {
     email: 'parnal@jhsassociates.in',
   },
   'G Chandrasekaran': {
-    image: imageUrl('Chandra-Shekaran.png'),
+    image: imageUrl('Chandra-Shekaran.webp'),
     creds: 'DSM, FCA, DISA',
     location: 'Chennai',
     linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29',

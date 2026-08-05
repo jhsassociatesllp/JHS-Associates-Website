@@ -88,7 +88,7 @@ export default function ThoughtLeadership() {
       ══════════════════════════════════════ */}
       <section className="tl-hero" ref={heroRef}>
         <img 
-          src={imageUrl('Thought.png')}
+          src={imageUrl('Thought.webp')}
           alt="Thought Leadership Background"
           className={`tl-hero__bg-image ${heroImageLoaded ? 'tl-hero__bg-image--loaded' : ''}`}
           onLoad={() => setHeroImageLoaded(true)}

@@ -19,8 +19,8 @@ const IMAGES = {
   NBFC: imageUrl('NBFC.webp'),
   Logistics: imageUrl('Logistics1.webp'),
   fainance_report: imageUrl('Fainance-report.webp'),
-  payment: imageUrl('Payment.jpeg'),
-  media: imageUrl('Media.png')
+  payment: imageUrl('Payment.webp'),
+  media: imageUrl('Media.webp')
 };
 
 export const CASE_STUDIES = [

@@ -26,7 +26,7 @@ const IMAGE_BASE =
 
 /**
  * Returns the full URL path for the given image filename.
- * @param filename  Bare filename, e.g. "hero.png" or "Virendra-Nayyar-removebg-preview.webp"
+ * @param filename  Bare filename, e.g. "hero.webp" or "Virendra-Nayyar-removebg-preview.webp"
  */
 export function imageUrl(filename: string): string {
   // Strip any accidental leading slash from filename

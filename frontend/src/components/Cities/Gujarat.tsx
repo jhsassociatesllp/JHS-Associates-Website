@@ -88,7 +88,7 @@ const PARTNERS = [
   { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.webp'), qualifications: 'ACA ', designation: 'Tax Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
   { name: 'Parth Shah', image: imageUrl('Parth_shah.webp'), qualifications: 'FCA', designation: 'Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in' },
   { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.webp'), qualifications: 'ACA, CBAP, DISA, CPA Australia', designation: 'ESG Specialist', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
-  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.png'), qualifications: 'ACA', designation: 'US Tax & Compliance', email: '', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
+  { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.webp'), qualifications: 'ACA', designation: 'US Tax & Compliance', email: '', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */

@@ -61,7 +61,7 @@ export default function VisionMission() {
             <div className="vision-mission__image-wrapper">
               {/* Replace with actual team image from src/image when available */}
               <img
-                src={imageUrl('visionmission1.jpg')}
+                src={imageUrl('visionmission1.webp')}
                 alt="Our Team"
                 className="vision-mission__image"
               />

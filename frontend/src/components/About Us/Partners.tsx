@@ -676,7 +676,7 @@ export default function Partners() {
           <p className="ap-hero__eyebrow">Our Experts</p>
           <h1 className="ap-hero__title">Leadership Team</h1>
           <p className="ap-hero__sub">
-            Meet the Visionary Board and Senior Partners steering JHS to new heights.
+            Meet the Governance Council, Senior Partners & Advisory Board Members steering JHS to new heights.
           </p>
         </div>
       </section>

@@ -40,14 +40,14 @@ const NAV_ITEMS: NavItem[] = [
     subLabel: "Insights",
     subDesc: "Access our latest thinking, research & perspectives.",
     subItems: [
-      { label: "Resources", description: "Reports, tools & frameworks", href: '/resources' },
-      { label: "White Papers", description: "In-depth research & analysis", href: '/white-papers' },
-      { label: "Regulatory", description: "Compliance updates & regulatory filings", href: '/regulatory' },
+      { label: "Resources", description: "Reports, Tools & Frameworks", href: '/resources' },
+      { label: "White Papers", description: "In-depth Research & Analysis", href: '/white-papers' },
+      { label: "Regulatory", description: "Compliance Updates & Regulatory Filings", href: '/regulatory' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
-      { label: "Thought Leadership", description: "Leadership perspectives", href: '/thought-leadership' },
+      { label: "Thought Leadership", description: "Leadership Perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
       { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
-      { label: "Podcasts", description: "Audio insights on the go", href: '/podcasts' },
+      { label: "Podcasts", description: "Audio Insights on the go", href: '/podcasts' },
     ],
   },
 
@@ -57,18 +57,20 @@ const NAV_ITEMS: NavItem[] = [
     label: "Services",
     inlineExpand: true,
     subLabel: "Our Services",
-    subDesc: "Explore our comprehensive service offerings across India and global markets.",
+    subDesc: "Explore our comprehensive service offerings across India and Global markets.",
     subItems: [
       {
         label: "India",
         description: "Tailored solutions for the Indian market",
         children: [
-          { label: "Consulting", description: "Holistic advisory across functions", href: '/services/consulting' },
-          { label: "IT Assurance", description: "risk & compliance", href: '/services/assurance' },
-          { label: "Taxation ", description: "Direct & indirect tax advisory", href: '/services/taxation' },
-          { label: "Outsourcing ", description: "Finance & accounting outsourcing", href: '/services/outsourcing' },
-          { label: "Corporate Finance", description: "End to end corporate finance advisory covering capital markets, M&A, valuations, treasury and infrastructure advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
-          { label: "Compliance & Learning", description: "Training programs on GST, Income Tax, Accounting Standards, and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/compliance-learning' },
+          { label: "Assurance", description: "Statutory, Internal & Special purpose audits", href: '/services/assurance' },
+          { label: "Consulting", description: "Holistic Advisory across functions", href: '/services/consulting' },
+          { label: "IT Assurance", description: "Risk & Compliance", href: '/services/it-assurance' },
+          { label: "Taxation ", description: "Direct & Indirect Tax Advisory", href: '/services/taxation' },
+          { label: "Outsourcing ", description: "Finance & Accounting Outsourcing", href: '/services/outsourcing' },
+          { label: "Corporate Finance", description: "End to end Corporate Finance Advisory covering Capital Markets, M&A, Valuations, Treasury and Infrastructure Advisory for businesses at every stage of growth.", href: '/services/corporate-finance' },
+          { label: "Learning & Development", description: "Training programs on GST, Income Tax, Accounting Standards and Corporate Compliance to equip your teams with essential knowledge and skills.", href: '/services/learning-development' },
+          { label: "Compliance & Governance", description: "Risk, Compliance and Corporate Governance Advisory.", href: '/services/compliance-learning' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
         ],
@@ -98,48 +100,48 @@ const NAV_ITEMS: NavItem[] = [
         label: "Media & Technology",
         description: "Navigating digital disruption",
         children: [
-          { label: "Media", description: "", href: '/sectors/media-technology/media' },
-          { label: "IT System Audit", description: "", href: '/sectors/media-technology/it-system-audit' },
-          { label: "IT /ITeS", description: "", href: 'sectors/media-technology/it-tes' },
+          { label: "Media", description: "Broadcasting, Publishing & Entertainment", href: '/sectors/media-technology/media' },
+          { label: "IT System Audit", description: "Risk, Controls & Systems Assurance", href: '/sectors/media-technology/it-system-audit' },
+          { label: "IT /ITeS", description: "Technology & IT-enabled services", href: '/sectors/media-technology/it-tes' },
         ],
       },
       {
         label: "Consumer",
         description: "FMCG to luxury retail",
         children: [
-          { label: "FMCG", description: "", href: '/sectors/consumer/fmcg' },
-          { label: "Retail", description: "", href: '/sectors/consumer/retail' },
-          { label: "Oil & Gas", description: "", href: '/sectors/consumer/oil-gas-industry' },
-          { label: "Housing", description: "", href: '/sectors/consumer/housing' },
-          { label: "Real Estate", description: "", href: '/sectors/consumer/real-estate' },
-          { label: "Commodity", description: "", href: '/sectors/consumer/commodity' },
-          { label: "Gems & Jewellery", description: "", href: '/sectors/consumer/gems-jewellery' },
+          { label: "FMCG", description: "Consumer goods & brand advisory", href: '/sectors/consumer/fmcg' },
+          { label: "Retail", description: "Omnichannel & Retail Operations", href: '/sectors/consumer/retail' },
+          { label: "Oil & Gas", description: "Upstream, Midstream & Downstream Advisory", href: '/sectors/consumer/oil-gas-industry' },
+          { label: "Housing", description: "Affordable & Residential Housing Finance", href: '/sectors/consumer/housing' },
+          { label: "Real Estate", description: "Property, REITs & Development Advisory", href: '/sectors/consumer/real-estate' },
+          { label: "Commodity", description: "Trading, hedging & price risk", href: '/sectors/consumer/commodity' },
+          { label: "Gems & Jewellery", description: "Manufacturing, Trade & Valuation", href: '/sectors/consumer/gems-jewellery' },
         ],
       },
       {
         label: "Financial Services",
         description: "Banking, capital & fintech",
         children: [
-          { label: "Banking", description: "Retail & corporate banking", href: '/sectors/financial-services/banking' },
-          { label: "Insurance", description: "Life, health & general insurance", href: '/sectors/financial-services/insurance' },
-          { label: "Broking", description: "", href: '/sectors/financial-services/broking' },
-          { label: "Mutual Funds", description: "", href: '/sectors/financial-services/mutual-funds' },
-          { label: "Digital Currency", description: "", href: '/sectors/financial-services/digital-currency' },
-          { label: "Family Oriented Businesses", description: "", href: '/sectors/financial-services/family-oriented-businesses' },
-          { label: "Portfolio Management", description: "", href: '/sectors/financial-services/portfolio-management' },
-          { label: "Venture capital", description: "", href: '/sectors/financial-services/venture-capital' },
-          { label: "NBFC", description: "", href: '/sectors/financial-services/nbfc' },
+          { label: "Banking", description: "Retail & Corporate Banking", href: '/sectors/financial-services/banking' },
+          { label: "Insurance", description: "Life, Health & General Insurance", href: '/sectors/financial-services/insurance' },
+          { label: "Broking", description: "Equity, Commodity & Derivatives Broking", href: '/sectors/financial-services/broking' },
+          { label: "Mutual Funds", description: "AMC Compliance & Fund Operations", href: '/sectors/financial-services/mutual-funds' },
+          { label: "Digital Currency", description: "Crypto & Blockchain Advisory", href: '/sectors/financial-services/digital-currency' },
+          { label: "Family Oriented Businesses", description: "Succession & Governance Planning", href: '/sectors/financial-services/family-oriented-businesses' },
+          { label: "Portfolio Management", description: "PMS Structuring & Compliance", href: '/sectors/financial-services/portfolio-management' },
+          { label: "Venture Capital", description: "Fund Structuring & Deal Advisory", href: '/sectors/financial-services/venture-capital' },
+          { label: "NBFC", description: "Lending, Compliance & Risk Advisory", href: '/sectors/financial-services/nbfc' },
         ],
       },
       {
         label: "Others",
         description: "Cross-industry specialist practices",
         children: [
-          { label: "Healthcare", description: "Policy, delivery & life sciences", href: '/sectors/other/healthcare' },
-          { label: "Constructions", description: "", href: '/sectors/other/construction' },
-          { label: "Manufacturing", description: "", href: '/sectors/other/manufacturing' },
-          { label: "Logistics", description: "Supply chain & transportation", href: '/sectors/other/logistics' },
-          { label: "NGO", description: "", href: '/sectors/other/ngo' },
+          { label: "Healthcare", description: "Policy, Delivery & Life Sciences", href: '/sectors/other/healthcare' },
+          { label: "Constructions", description: "Infrastructure & Real Estate Projects", href: '/sectors/other/construction' },
+          { label: "Manufacturing", description: "Industrial & Production Advisory", href: '/sectors/other/manufacturing' },
+          { label: "Logistics", description: "Supply Chain & Transportation", href: '/sectors/other/logistics' },
+          { label: "NGO", description: "Governance & Compliance for Non-Profits", href: '/sectors/other/ngo' },
         ],
       },
     ],
@@ -151,7 +153,7 @@ const NAV_ITEMS: NavItem[] = [
     subLabel: "Know Us",
     subDesc: "Discover who we are what we stand for and how we work.",
     subItems: [
-      { label: "Our Story", description: "History & founding vision", href: "/know-us/our-story" },
+      { label: "Our Story", description: "History & Founding Vision", href: "/know-us/our-story" },
       { label: "Mission & Vision", description: "What drives us", href: "/know-us/mission-vision" },
       // { label: "Leadership", description: "Meet the partners", href: "/know-us/leadership" },
       // { label: "Culture", description: "Our values & ways of working", href: "/know-us/culture" },
@@ -168,7 +170,7 @@ const NAV_ITEMS: NavItem[] = [
       // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
       // { label: "Global Presence", description: "Our international footprint", href: '/about/global-presence' },
-      { label: "Leadership Team", description: "Board & senior partners", href: '/about/leadership' },
+      { label: "Leadership Team", description: "Governance Council, Partners & Advisory Board Members", href: '/about/leadership' },
       { label: "Careers", description: "Join our growing team", href: '/about/careers' },
       // { label: "CSR", description: "Our social responsibility", href: '/about/csr' },
     ],
@@ -186,6 +188,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
+  const [selectedId, setSelectedId] = useState<string>("insights");
 
   const menuOpenRef = useRef(menuOpen);
   useEffect(() => {
@@ -193,10 +196,6 @@ const Navbar = () => {
   }, [menuOpen]);
 
   const lastScrollY = useRef(0);
-
-  // For inlineExpand items (Services & Sectors):
-  // which sub-item is selected → drives the right panel
-  const [activeSubLabel, setActiveSubLabel] = useState<string | null>(null);
 
   // Hover close timer — small delay so moving between burger and mega doesn't flicker close
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -209,6 +208,7 @@ const Navbar = () => {
   }>({ view: 'root' });
 
   const searchRef = useRef<HTMLInputElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -262,7 +262,7 @@ const Navbar = () => {
       closeTimer.current = null;
     }
     setActiveId('insights');
-    setActiveSubLabel(null);
+    setSelectedId('insights');
     setMobileState({ view: 'root' });
     setMenuOpen(true);
   };
@@ -272,9 +272,21 @@ const Navbar = () => {
       closeTimer.current = null;
     }
     setMenuOpen(false);
-    setActiveSubLabel(null);
     setTimeout(() => setMobileState({ view: 'root' }), 400);
   };
+
+  // Close the mega menu on Escape and return focus to the trigger button
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        burgerRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
 
   // ── HOVER OPEN/CLOSE HANDLERS (desktop) ──────────────────────
   const handleHoverOpen = () => {
@@ -295,7 +307,12 @@ const Navbar = () => {
   // When L1 nav changes, reset sub selection
   const handleNavHover = (id: string) => {
     setActiveId(id);
-    setActiveSubLabel(null);
+  };
+
+  // Click = commit selection (stays highlighted even after hovering elsewhere)
+  const handleNavClick = (id: string) => {
+    setActiveId(id);
+    setSelectedId(id);
   };
 
   const activeNavItem = NAV_ITEMS.find((n) => n.id === activeId) ?? NAV_ITEMS[0];
@@ -329,10 +346,9 @@ const Navbar = () => {
       >
         <div className="nb__left">
           <button
+            ref={burgerRef}
             className={`nb__burger ${menuOpen ? "nb__burger--open" : ""}`}
             onClick={menuOpen ? closeMenu : openMenu}
-            onMouseEnter={handleHoverOpen}
-            onMouseLeave={handleHoverClose}
             aria-label="Toggle navigation"
             aria-expanded={menuOpen}
           >
@@ -343,8 +359,8 @@ const Navbar = () => {
 
           <a href="/" className="nb__brand" onClick={closeMenu}>
             <img
-              src={imageUrl('logo.jpeg')}
-              alt="JHS "
+              src={imageUrl('logo.webp')}
+              alt="JHS"
               className="nb__logo"
             />
           </a>
@@ -404,8 +420,8 @@ const Navbar = () => {
                       </Link>
                     ) : (
                       <button
-                        className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""}`}
-                        onClick={() => handleNavHover(item.id)}
+                        className={`mega__nav-btn ${activeId === item.id ? "mega__nav-btn--active" : ""} ${selectedId === item.id ? "mega__nav-btn--selected" : ""}`}
+                        onClick={() => handleNavClick(item.id)}
                         onMouseEnter={() => handleNavHover(item.id)}
                       >
                         <span className="mega__nav-label">{item.label}</span>
@@ -432,7 +448,7 @@ const Navbar = () => {
             </nav>
 
             {/* ════ RIGHT PANEL ════ */}
-            <div className="mega__right">
+            <div className="mega__right" data-lenis-prevent>
 
               {/* Services/Sectors — show ALL items directly, grouped by subcategory */}
               {isInline && (
@@ -586,10 +602,10 @@ const Navbar = () => {
                           </svg>
                         </button>
                       ) : (
-                        <a className="mega__mobile-link" href={sub.href || '#'} onClick={closeMenu}>
+                        <Link className="mega__mobile-link" to={sub.href || '#'} onClick={closeMenu}>
                           <span className="name">{sub.label}</span>
                           {sub.description && <span className="desc">{sub.description}</span>}
-                        </a>
+                        </Link>
                       )}
                     </li>
                   ))}
@@ -610,10 +626,10 @@ const Navbar = () => {
                 <ul className="mega__mobile-sublist">
                   {mobileL2Items.map((child) => (
                     <li key={child.label}>
-                      <a className="mega__mobile-link" href={child.href || '#'} onClick={closeMenu}>
+                      <Link className="mega__mobile-link" to={child.href || '#'} onClick={closeMenu}>
                         <span className="name">{child.label}</span>
                         {child.description && <span className="desc">{child.description}</span>}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

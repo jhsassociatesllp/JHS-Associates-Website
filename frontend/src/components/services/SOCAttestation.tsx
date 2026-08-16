@@ -6,10 +6,6 @@ import {
   FileCheck,
   TrendingUp,
   Lock,
-  ArrowRight,
-  Download,
-  PhoneCall,
-  Mail,
   CheckCircle,
   Clock,
   Users,
@@ -232,7 +228,7 @@ const SOCAttestation: React.FC = () => {
       <section className="soc-benefits" ref={benefitsRef}>
         <div className="container">
           <div className="soc-section-header">
-            <span className="soc-section-tag">Why Get SOC Attestation</span>
+            {/* <span className="soc-section-tag">Why Get SOC Attestation</span> */}
             <h2 className="soc-section-title">
               Key <span className="soc-accent">Benefits</span>
             </h2>

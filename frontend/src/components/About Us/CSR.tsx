@@ -11,7 +11,7 @@ export default function CSR() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Auditposter.jpg')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Auditposter.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Giving Back</p>

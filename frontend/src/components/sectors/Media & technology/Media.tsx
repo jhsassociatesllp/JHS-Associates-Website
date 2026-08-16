@@ -8,7 +8,7 @@ import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const HIGHLIGHTS = [  
+const HIGHLIGHTS = [
   {
     icon: <Radio size={20} strokeWidth={1.5} />,
     title: 'Statutory & Internal Audit',
@@ -41,12 +41,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '25+', label: 'Media Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'OTT', label: 'Platform Expertise' },
-]
-
 const WHY = [
   'Deep sectoral knowledge across broadcast, OTT, print and digital media',
   'Specialist GST and revenue recognition advisory for complex media arrangements',
@@ -57,8 +51,8 @@ const WHY = [
 
 export default function Media() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
   const [heroImageLoaded, setHeroImageLoaded] = useState(false)
 
   useEffect(() => {
@@ -71,13 +65,17 @@ export default function Media() {
       )
       gsap.fromTo('.md-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.md-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -88,8 +86,8 @@ export default function Media() {
 
       {/* ── HERO ── */}
       <section className="md-hero" ref={heroRef}>
-        <img 
-          src={imageUrl('Media.png')}
+        <img
+          src={imageUrl('Media.webp')}
           alt="Media Services Background"
           className={`md-hero__bg-image ${heroImageLoaded ? 'md-hero__bg-image--loaded' : ''}`}
           onLoad={() => setHeroImageLoaded(true)}
@@ -121,7 +119,7 @@ export default function Media() {
             <span className="md-tag">Our Approach</span>
             <h2 className="md-overview__title">Advisory for India's Fast-Moving Media Landscape</h2>
             <p className="md-overview__body">
-              India's media and entertainment sector is undergoing rapid transformation 
+              India's media and entertainment sector is undergoing rapid transformation
               OTT disruption, evolving TRAI regulations, complex content licensing
               structures and Ind AS 115 revenue recognition challenges demand
               advisors who truly understand the industry. JHS brings specialist
@@ -203,9 +201,9 @@ export default function Media() {
               Speak with a JHS media specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="md-btn md-btn--cta">
+          {/* <a href="/contact" className="md-btn md-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

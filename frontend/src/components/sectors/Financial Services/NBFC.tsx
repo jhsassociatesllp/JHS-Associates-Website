@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '35+', label: 'NBFC Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'RBI SBR', label: 'Framework Experts' },
-]
-
 const WHY = [
   'Deep expertise in RBI\'s Scale-Based Regulation framework for NBFCs',
   'Specialist Ind AS 109 ECL modelling and provisioning advisory',
@@ -56,8 +50,8 @@ const WHY = [
 
 export default function NBFC() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -69,13 +63,17 @@ export default function NBFC() {
       )
       gsap.fromTo('.nb-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.nb-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -192,9 +190,9 @@ export default function NBFC() {
               Speak with a JHS NBFC specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="nb-btn nb-btn--cta">
+          {/* <a href="/contact" className="nb-btn nb-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

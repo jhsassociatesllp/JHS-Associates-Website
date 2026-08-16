@@ -6,21 +6,21 @@ import { imageUrl } from '../utils/imageUrl';
 
 // Case study images - using local assets from public/Uploads folder
 const IMAGES = {
-  compliance: imageUrl('Risk.png'),
-  audit: imageUrl('Auditposter.jpg'),
-  risk: imageUrl('Risk.png'),
-  finance: imageUrl('MutualFund.avif'),
-  operations: imageUrl('outsourcing.png'),
-  banking: imageUrl('Banking.avif'),
-  insurance: imageUrl('Insurance.avif'),
-  realestate: imageUrl('Real-State.avif'),
-  manufacturing: imageUrl('manufacturing.png'),
-  it: imageUrl('IT-Technology.avif'),
-  NBFC: imageUrl('NBFC.avif'),
-  Logistics: imageUrl('Logistics1.png'),
-  fainance_report: imageUrl('Fainance-report.png'),
-  payment: imageUrl('Payment.jpeg'),
-  media: imageUrl('Media.png')
+  compliance: imageUrl('Risk.webp'),
+  audit: imageUrl('Auditposter.webp'),
+  risk: imageUrl('Risk.webp'),
+  finance: imageUrl('MutualFund.webp'),
+  operations: imageUrl('outsourcing.webp'),
+  banking: imageUrl('Banking.webp'),
+  insurance: imageUrl('Insurance.webp'),
+  realestate: imageUrl('Real-State.webp'),
+  manufacturing: imageUrl('manufacturing.webp'),
+  it: imageUrl('IT-Technology.webp'),
+  NBFC: imageUrl('NBFC.webp'),
+  Logistics: imageUrl('Logistics1.webp'),
+  fainance_report: imageUrl('Fainance-report.webp'),
+  payment: imageUrl('Payment.webp'),
+  media: imageUrl('Media.webp')
 };
 
 export const CASE_STUDIES = [

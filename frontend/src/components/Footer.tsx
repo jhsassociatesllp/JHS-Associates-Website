@@ -14,7 +14,7 @@ const INSIGHTS = [
 
 const USEFUL_LINKS = [
   { name: 'Locations', path: '/about/our-offices' },
-  { name: 'Contact', path: '/contact' }, 
+  { name: 'Contact', path: '/contact' },
   { name: 'Feedback', path: '/feedback' },
   // { name: 'RFP', path: '/rfp' },
   { name: 'Know JHS', path: '/about/leadership' },
@@ -27,18 +27,15 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Compliance', path: '/services/compliance-learning' }
+  { name: 'Compliance', path: '/services/compliance-learning' },
+  { name: 'Learning & Development', path: '/services/learning-development' },
+
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */
 const IconFacebook = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-)
-const IconX = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 )
 const IconLinkedIn = () => (
@@ -86,7 +83,7 @@ export default function Footer() {
             <a href="https://www.facebook.com/JHSAssociatesLLP" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="footer__social-icon"><IconFacebook /></a>
             <a href="https://www.linkedin.com/in/jhsllp" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="footer__social-icon"><IconLinkedIn /></a>
             <a href="https://www.instagram.com/jhsassociates_llp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-icon"><IconInstagram /></a>
-            <a href="https://www.youtube.com/@JHS-Consulting" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
+            <a href="https://www.youtube.com/@JHS_India" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="footer__social-icon"><IconYouTube /></a>
           </div>
         </div>
       </div>
@@ -98,11 +95,11 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <LazyImage src={imageUrl('logo.png')} alt="JHS & Associates LLP" />
+              <LazyImage src={imageUrl('logo-footer.webp')} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
-              Trusted Chartered Accountants and advisory partners for businesses across India.
-              Excellence, integrity, and expertise in every engagement.
+              Trusted Chartered Accountants and Advisory Partners for Businesses across India.
+              Excellence, Integrity, and Expertise in Every Engagement.
             </p>
 
             {/* Services heading + pills */}
@@ -163,7 +160,12 @@ export default function Footer() {
       {/* ══ Bottom Bar ══ */}
       <div className="footer__bottom">
         <div className="footer__bottom-inner">
-          <p className="footer__copy">Copyright © {year} JHS Associates</p>
+          <p className="footer__copy">Copyright © {year} JHS & Associates LLP All rights reserved. </p>
+          <div className="footer__legal">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
+            <Link to="/terms-of-business">Terms of Business</Link>
+          </div>
         </div>
       </div>
 

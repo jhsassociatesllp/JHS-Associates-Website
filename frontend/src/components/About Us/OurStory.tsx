@@ -1,6 +1,45 @@
 import { useEffect } from 'react'
 import './SharedAbout.css'
+import './OurStory.css'
 import { imageUrl } from '../../utils/imageUrl'
+
+const MILESTONES = [
+  {
+    year: '1981',
+    title: 'The Beginning',
+    desc: 'Establishment of JHS, laying the foundation for a practice built on professional integrity, client trust and technical excellence.',
+  },
+  {
+    year: '1990s – 2000s',
+    title: 'Expanding Capabilities',
+    desc: 'Expansion beyond core taxation into assurance and accounting services, and corporate advisory supporting clients across growth stages.',
+  },
+  {
+    year: '2010s',
+    title: 'Pan-India Integration',
+    desc: 'Progressed through a series of mergers and integration of professional practices to combine capabilities and offer a single window approach to clients. Development of a pan-India presence through multiple offices, enabling proximity-based delivery and deeper engagement with clients across sectors and geographies.',
+  },
+  {
+    year: '2020s',
+    title: 'Technology Transformation Era',
+    desc: 'Adoption of data analytics, audit automation, dashboards, forensic tools, AI-enabled assurance methodologies and technology-led service delivery models to create scalable and insight-driven solutions. Launch of full-fledged Cyber Security Solutions, Data Privacy Assurance and receiving the coveted CERT-In empanelment.',
+  },
+  {
+    year: '2020s',
+    title: 'Global Connectivity',
+    desc: 'Strengthening international capabilities through membership of the PrimeGlobal network, providing clients access to global perspectives and cross-border advisory support.',
+  },
+]
+
+const BODY_PARAGRAPHS = [
+  "JHS & Associates LLP (JHS) is a professionally managed assurance, advisory and consulting firm that has been serving clients since 28 February 1981. Over more than four decades, JHS has evolved from a traditional chartered accountancy practice into a multi-disciplinary professional services organization that combines deep technical expertise with technology-enabled delivery and strategic business insights.",
+  "Today, JHS serves 1,000+ clients through a network of 13 offices across India, supported by 700+ people and 30 partners and advisory board members, providing a rare combination of local proximity and national reach. The firm's growth has been built on a simple philosophy: building trust, delivering excellence, and shaping better futures.",
+  'What differentiates JHS is its ability to provide an integrated platform of services under one roof. From Assurance, Risk Advisory, Taxation and Compliance to Corporate Finance, Outsourcing, Technology Assurance, Governance, Internal Audit, Forensics, ESG and Business Transformation, clients benefit from a partner-led model focused on practical outcomes rather than theoretical advice.',
+  'JHS has consistently positioned itself as a business enabler rather than a service provider. The firm partners with organizations across their growth journey, from incorporation and capital raising to expansion, governance enhancement, operational excellence and global growth. Its solutions are designed to reduce risk, improve efficiency, strengthen controls, simplify compliance and drive sustainable value creation.',
+  'The firm combines the stability of a legacy institution with the agility of a modern advisory practice. Through investments in analytics, automation, dashboards, AI-enabled assurance and digital transformation capabilities, JHS helps organizations respond to rapidly changing regulatory, technological and business environments.',
+  'A strong culture of integrity, objectivity, quality, mutual respect and result orientation forms the foundation of the organization. Diversity, inclusion and people development remain central to its philosophy, reflected in a workforce that actively promotes equal opportunity and professional growth. About 40% of the workforce at JHS comprises of women.',
+  "As India's businesses become more ambitious and globally connected, JHS continues to expand its capabilities and network. Backed by decades of trust, a multidisciplinary talent pool, and global affiliations, JHS aspires to be a globally respected professional services firm that helps clients navigate complexity, unlock growth opportunities and build resilient enterprises for the future.",
+]
 
 export default function OurStory() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -8,69 +47,76 @@ export default function OurStory() {
   return (
     <div className="ap-page">
       {/* ════ HERO ════ */}
-      <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Ourstory.png')})` }} />
+      <section className="ap-hero story-hero">
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Ourstory.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
-          <p className="ap-hero__eyebrow">Heritage &amp; History</p>
-          <h1 className="ap-hero__title">Our Story</h1>
-          <p className="ap-hero__sub">
-            From humble beginnings to becoming a leading Pan India advisory network.
-          </p>
+          <span className="story-eyebrow">Who We Are</span>
+          <h2 className="story-title">The JHS Story</h2>
+          <p className="story-lead">Building Trust. Delivering Excellence. Shaping Better Futures.</p>
         </div>
 
         {/* Stats bar */}
         <div className="ap-hero__stats">
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">1981</span><span className="ap-hero__stat-label">Year Founded</span></div>
-          <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">45+</span><span className="ap-hero__stat-label">Years of Trust</span></div>
-          <div className="ap-hero__stat-div" />
-          <div className="ap-hero__stat"><span className="ap-hero__stat-num">13</span><span className="ap-hero__stat-label">Cities Presence</span></div>
+          <div className="story-stat">
+            <span className="story-stat__num">45+</span>
+            <span className="story-stat__label">Years of Trust</span>
+          </div>
+          <div className="story-stat">
+            <span className="story-stat__num">13</span>
+            <span className="story-stat__label">Offices</span>
+          </div>
+          <div className="story-stat">
+            <span className="story-stat__num">700+</span>
+            <span className="story-stat__label">People</span>
+          </div>
+          <div className="story-stat">
+            <span className="story-stat__num">1,000+</span>
+            <span className="story-stat__label">Clients</span>
+          </div>
+          <div className="story-stat story-stat--wide">
+            <span className="story-stat__num">One</span>
+            <span className="story-stat__label">Integrated Platform for Growth, Governance &amp; Transformation</span>
+          </div>
+        </div>
+
+      </section>
+
+      {/* ════ INTRO + STATS ════ */}
+
+      <section className="ap-content story-section">
+        <div className="ap-container">
+          <div className="story-body">
+            {BODY_PARAGRAPHS.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ════ CONTENT ════ */}
-      <section className="ap-content">
+      {/* ════ MILESTONES TIMELINE ════ */}
+      <section className="ap-content story-milestones">
         <div className="ap-container">
-
-          <div className="ap-grid">
-            <div className="ap-grid-left">
-              <h2>A Legacy of Trust</h2>
-              <p>Three decades of continuous evolution.</p>
-            </div>
-            <div className="ap-grid-right">
-              <p>
-                The journey of JHS &amp; Associates LLP began in 1981 with a simple but profound mission: to provide unparalleled strategic and financial advice to growing businesses. What started as a modest boutique firm in Mumbai quickly gained recognition for its relentless dedication to client success and rigorous ethical standards.
-              </p>
-              <p>
-                As the Indian economy opened up and digitized over the decades, JHS evolved alongside it. We expanded our capabilities far beyond statutory audits, rapidly scaling our consulting, risk advisory, and international taxation practices to meet complex global demands. Today, we stand as a unified network across major Indian economic hubs, trusted by start-ups and multinationals alike.
-              </p>
-            </div>
+          <div className="story-milestones__hdr">
+            <span className="story-eyebrow">Our Journey</span>
+            <h3>Key Milestones in the JHS Journey</h3>
+            <p>The moments that shaped our four-decade journey.</p>
           </div>
 
-          <div className="ap-card">
-            <h3>Milestones</h3>
-            <p style={{ marginBottom: '2rem' }}>Key moments that defined our trajectory.</p>
-            <div className="ap-features">
-              <div className="ap-feature">
-                <h4>1992: The Foundation</h4>
-                <p>JHS was established in Mumbai focusing initially on statutory audits and direct taxation.</p>
+          <div className="story-timeline">
+            {MILESTONES.map((m, i) => (
+              <div className="story-timeline__item" key={i}>
+                <div className="story-timeline__marker">
+                  <span className="story-timeline__dot" />
+                </div>
+                <div className="story-timeline__card">
+                  <span className="story-timeline__year">{m.year}</span>
+                  <h4>{m.title}</h4>
+                  <p>{m.desc}</p>
+                </div>
               </div>
-              <div className="ap-feature">
-                <h4>2008: Expanding Horizons</h4>
-                <p>Launched dedicated consulting and technology advisory verticals to handle emerging IT demands.</p>
-              </div>
-              <div className="ap-feature">
-                <h4>2015: Pan-India Network</h4>
-                <p>Expanded physical footprint to Delhi, Bangalore, and Ahmedabad.</p>
-              </div>
-              <div className="ap-feature">
-                <h4>Present: Global Affiliations</h4>
-                <p>Transitioned to an LLP and joined leading international accounting networks.</p>
-              </div>
-            </div>
+            ))}
           </div>
-
         </div>
       </section>
     </div>

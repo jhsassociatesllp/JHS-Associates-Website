@@ -1,22 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Delhi.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Nikhil Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.png'), qualifications: 'FCA , CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
-  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.png'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
-  // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.png'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
+  { name: 'Nikhel Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'), qualifications: 'FCA, CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
+  // { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
+  // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.webp'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
 ]
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
-const SectorIcons: Record<string, JSX.Element> = {
+const SectorIcons: Record<string, ReactElement> = {
   'Real Estate': (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 20 L20 7 L35 20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -70,8 +72,7 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'delhi', name: 'Delhi ', tag: '',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2195!3d28.6315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1680000000002!5m2!1sen!2sin',
-    address: '306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048'
+    address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048'
   },
   // {
   //   id: 'connaughtplace', name: 'Connaught Place', tag: 'Branch',
@@ -83,7 +84,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Sector%2016,%20Noida,%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: 'A-12, Sector 16, Noida, Uttar Pradesh – 201301'
   // },
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 /* ─── Icons ──────────────────────────────────────── */
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
@@ -114,7 +115,7 @@ export default function Delhi() {
 
       {/* ══ HERO ══ */}
       <section className="del-hero">
-        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.png')})` }} />
+        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.webp')})` }} />
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
           {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -123,22 +124,22 @@ export default function Delhi() {
         </div>
         <div className="del-hero__card">
           <div className="del-hero__card-left">
-            <span className="del-hero__card-badge"> Greater Kailash-II</span>
-            <div className="del-hero__card-addr"><IconPin /><span>306 DIF Center, Savitri Cinema Complex, Greater Kailash-II, Delhi – 110048</span></div>
+            <span className="del-hero__card-badge">Delhi</span>
+            <div className="del-hero__card-addr"><IconPin /><span>Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048</span></div>
           </div>
           <div className="del-hero__card-divider" />
-          {/* <div className="del-hero__card-right">
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 11 1234 5678</span></div>
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">delhi@jhsassociates.in</span></div>
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
-          </div> */}
+          <div className="del-hero__card-right">
+            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 9810333433</span></div>
+            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">nikhel.kochhar@jhsassociates.in</span></div>
+            {/* <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
+          </div>
         </div>
       </section>
 
       {/* ══ STATS RIBBON ══ */}
       <div className="del-ribbon">
         <div className="del-ribbon__inner">
-          {([['2', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi-NCR Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['5', 'Sectors Served'], ['3', 'Specialisations'], ['1', 'Delhi Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="del-ribbon__item"><span className="del-ribbon__num">{num}</span><span className="del-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -201,7 +202,7 @@ export default function Delhi() {
                           type="button"
                           className="del-pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

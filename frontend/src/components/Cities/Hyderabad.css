@@ -552,6 +552,14 @@
   padding-top: 80px
 }
 
+/* Single partner: center it instead of leaving it stuck in the first column */
+.hyd-pc-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px;
+}
+
 .hyd-pc-card {
   background: var(--hyd-white);
   border: 1.5px solid var(--hyd-border);
@@ -585,6 +593,10 @@
   box-shadow: var(--hyd-shadow-lg);
   transform: translateY(-6px);
   z-index: 2
+}
+
+.hyd-pc-card:has(.hyd-pc-mail-dropdown) {
+  z-index: 10
 }
 
 .hyd-pc-card:hover::after {

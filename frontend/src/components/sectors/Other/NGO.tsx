@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'NGO Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'FCRA', label: 'Compliance Experts' },
-]
-
 const WHY = [
   'Deep expertise in FCRA compliance, MHA reporting and foreign fund management',
   'Specialist knowledge of Section 12AB, 80G and CSR regulatory frameworks',
@@ -56,8 +50,8 @@ const WHY = [
 
 export default function NGO() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -69,13 +63,17 @@ export default function NGO() {
       )
       gsap.fromTo('.ngo-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.ngo-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -193,9 +191,9 @@ export default function NGO() {
               Speak with a JHS NGO specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="ngo-btn ngo-btn--cta">
+          {/* <a href="/contact" className="ngo-btn ngo-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

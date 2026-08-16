@@ -253,14 +253,27 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
     name = data.get("full_name", "")
     email = data.get("email", "")
 
+    def _with_other(value: str | None, other: str | None) -> str:
+        if not value:
+            return "—"
+        if other:
+            return f"{value} ({other})"
+        return value
+
+    how_heard = _with_other(data.get("how_heard"), data.get("how_heard_detail"))
+
     rows = (
         _row("Candidate Name", name)
         + _row("Email", email)
         + _row("Phone", data.get("phone", ""))
         + _row("Applied For", job_title)
+        + _row("Place of Residence", data.get("place_of_residence") or "—")
         + _row("Location", data.get("current_location") or "—")
         + _row("Experience", data.get("experience_years") or "—")
-        + _row("Cover Note", data.get("cover_letter") or "—")
+        + _row("Highest Qualification", _with_other(data.get("highest_qualification"), data.get("highest_qualification_other")))
+        + _row("Profile", _with_other(data.get("profile"), data.get("profile_other")))
+        + _row("How They Heard About Us", how_heard)
+        + _row("Remark", data.get("cover_letter") or "—")
         + _row("Resume", "Attached in the admin panel")
     )
     hr_html = _wrap_html("New Job Application Received", rows)

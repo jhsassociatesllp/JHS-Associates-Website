@@ -568,6 +568,14 @@
   padding-top: 80px
 }
 
+/* Single partner: center it instead of leaving it stuck in the first column */
+.del-pc-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 340px;
+}
+
 .del-pc-card {
   background: var(--del-white);
   border: 1.5px solid var(--del-border);
@@ -601,6 +609,10 @@
   box-shadow: var(--del-shadow-lg);
   transform: translateY(-6px);
   z-index: 2
+}
+
+.del-pc-card:has(.del-pc-mail-dropdown) {
+  z-index: 10
 }
 
 .del-pc-card:hover::after {

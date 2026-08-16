@@ -1,0 +1,329 @@
+/* ============================================================
+   OurStory.css — page-specific styling for the "Our Story" page
+   ============================================================ */
+
+.story-section {
+  padding-top: 1.5rem;
+}
+
+/* ── Eyebrow pill (reused in hero + milestones header) ── */
+.story-eyebrow {
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d62049;
+  background: rgba(214, 32, 73, 0.08);
+  border: 1px solid rgba(214, 32, 73, 0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 1.25rem;
+}
+
+.story-title {
+  font-size: clamp(2rem, 3.6vw, 2.75rem);
+  font-weight: 800;
+  color: #0f2340;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.9rem;
+}
+
+.story-lead {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: 600;
+  color: #344256;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   HERO — title/lead/stats live inside the dark hero background,
+   so they need their own light-on-dark treatment here.
+   ============================================================ */
+.story-hero .ap-hero__content {
+  gap: 16px;
+}
+
+.story-hero .story-eyebrow {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.story-hero .story-title {
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  margin-bottom: 0;
+}
+
+.story-hero .story-lead {
+  max-width: 640px;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Stats bar sitting on the hero/content seam */
+.story-hero .ap-hero__stats {
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.story-hero .story-stat {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+  padding: 22px 16px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.story-hero .story-stat:last-child {
+  border-right: none;
+}
+
+.story-hero .story-stat__num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f2340;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.story-hero .story-stat__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+}
+
+.story-hero .story-stat--wide {
+  flex: 1.7 1 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 22px 20px;
+  background: #0f2340;
+  border-right: none;
+}
+
+.story-hero .story-stat--wide .story-stat__num {
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.story-hero .story-stat--wide .story-stat__label {
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* ── Body copy ── */
+.story-body {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.story-body p {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: #444c5c;
+  margin-bottom: 1.6rem;
+}
+
+.story-body p:last-child {
+  margin-bottom: 0;
+}
+
+.story-body p:first-child {
+  font-size: 1.15rem;
+  color: #1a1a2e;
+}
+
+.story-body p:first-child::first-letter {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #d62049;
+  float: left;
+  line-height: 0.85;
+  padding-right: 10px;
+  padding-top: 4px;
+}
+
+/* ── Milestones ── */
+.story-milestones {
+  background: #f4f6f9;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.story-milestones__hdr {
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+  text-align: center;
+}
+
+.story-milestones__hdr h3 {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #0f2340;
+  letter-spacing: -0.02em;
+  margin: 0.75rem 0 0.6rem;
+}
+
+.story-milestones__hdr p {
+  color: #586174;
+  font-size: 1.05rem;
+}
+
+/* ── Timeline ── */
+.story-timeline {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.story-timeline::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: linear-gradient(180deg, #d62049 0%, rgba(15, 35, 64, 0.15) 100%);
+}
+
+.story-timeline__item {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 2.75rem;
+}
+
+.story-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.story-timeline__marker {
+  position: relative;
+  flex: 0 0 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.story-timeline__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 3px solid #d62049;
+  box-shadow: 0 0 0 4px #f4f6f9;
+  z-index: 1;
+}
+
+.story-timeline__card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid rgba(15, 35, 64, 0.08);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 8px 30px rgba(15, 35, 64, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.story-timeline__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(15, 35, 64, 0.1);
+}
+
+.story-timeline__year {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d62049;
+  background: rgba(214, 32, 73, 0.08);
+  border-radius: 100px;
+  padding: 4px 12px;
+  margin-bottom: 0.75rem;
+}
+
+.story-timeline__card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f2340;
+  margin-bottom: 0.6rem;
+}
+
+.story-timeline__card p {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #586174;
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 760px) {
+  .story-hero .ap-hero__stats {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .story-hero .story-stat {
+    flex: 0 0 50%;
+    padding: 16px 8px;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .story-hero .story-stat:nth-child(2n) {
+    border-right: none;
+  }
+
+  .story-hero .story-stat--wide {
+    flex: 0 0 100%;
+    flex-direction: column;
+    text-align: center;
+    border-bottom: none;
+  }
+
+  .story-hero .story-stat--wide .story-stat__label {
+    text-align: center;
+  }
+
+  .story-timeline__item {
+    gap: 1.25rem;
+  }
+
+  .story-timeline__card {
+    padding: 1.4rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-section {
+    padding-top: 2.5rem;
+  }
+
+  .story-body p:first-child::first-letter {
+    font-size: 2.4rem;
+  }
+}

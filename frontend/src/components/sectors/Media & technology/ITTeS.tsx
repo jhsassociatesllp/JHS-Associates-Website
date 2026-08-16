@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, Code2, FileText, ShieldCheck, BarChart2, Scale, Globe2 } from 'lucide-react'
-import './ITTeS.css'  
+import './ITTeS.css'
 import SectorEngagement from '../shared/SectorEngagement'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -38,12 +38,6 @@ const HIGHLIGHTS = [
     title: 'M&A & Due Diligence',
     desc: 'Tax and financial due diligence, deal structuring and post-acquisition integration advisory for IT/ITeS mergers, acquisitions and PE investments.',
   },
-]
-
-const STATS = [
-  { num: '40+', label: 'IT/ITeS Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'SEZ & STPI', label: 'Export Experts' },
 ]
 
 const WHY = [
@@ -198,9 +192,9 @@ export default function ITTeS() {
               Speak with a JHS IT/ITeS specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="ites-btn ites-btn--cta">
+          {/* <a href="/contact" className="ites-btn ites-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

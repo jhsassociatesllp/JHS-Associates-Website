@@ -44,13 +44,20 @@ class JobResponse(JobBase):
 
 
 class ApplicationCreate(BaseModel):
-    job_id: str
+    job_id: Optional[str] = None
     full_name: str = Field(..., min_length=2, max_length=120)
     email: EmailStr
     phone: str = Field(..., min_length=7, max_length=30)
     current_location: Optional[str] = Field(None, max_length=120)
     experience_years: Optional[str] = Field(None, max_length=40)
     cover_letter: Optional[str] = Field(None, max_length=2000)
+    place_of_residence: Optional[str] = Field(None, max_length=120)
+    highest_qualification: str = Field(..., max_length=80)
+    highest_qualification_other: Optional[str] = Field(None, max_length=120)
+    profile: str = Field(..., max_length=80)
+    profile_other: Optional[str] = Field(None, max_length=120)
+    how_heard: str = Field(..., max_length=40)
+    how_heard_detail: Optional[str] = Field(None, max_length=200)
 
 
 class ApplicationStatusUpdate(BaseModel):
@@ -59,7 +66,7 @@ class ApplicationStatusUpdate(BaseModel):
 
 class ApplicationResponse(ApplicationCreate):
     id: str
-    job_title: str
+    job_title: Optional[str] = None
     resume_file_id: Optional[str] = None
     resume_filename: Optional[str] = None
     resume_content_type: Optional[str] = None

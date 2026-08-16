@@ -42,12 +42,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '15+', label: 'Years of Experience' },
-  { num: '150+', label: 'Logistics Clients' },
-  { num: '100%', label: 'Compliance Record' },
-]
-
 const WHY = [
   'We understand logistics inside and out from warehouse operations to last-mile delivery',
   'Our team stays current with transportation laws and GST changes that affect your business',
@@ -57,12 +51,11 @@ const WHY = [
 ]
 
 export default function Logistics() {
-  const heroRef = useRef<HTMLDivElement>(null)
   const hlRef = useRef<HTMLDivElement>(null)
   const whyRef = useRef<HTMLDivElement>(null)
 
   // Lazy load hero background image - using the Logistics1 image from uploads
-  const heroBackground = useLazyBackground(imageUrl('Logistics1.png'))
+  const { ref: heroBgRef, style: heroBgStyle, loaded: heroBgLoaded, className: heroBgClassName } = useLazyBackground(imageUrl('Logistics1.webp'))
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -105,18 +98,13 @@ export default function Logistics() {
       {/* ══════════════════════════════════════
           HERO
       ══════════════════════════════════════ */}
-      <section 
-        className={`log-hero ${heroBackground.className}`} 
-        ref={(el) => {
-          if (el) {
-            heroRef.current = el
-            heroBackground.ref.current = el
-          }
-        }}
+      <section
+        className={`log-hero ${heroBgClassName}`}
+        ref={heroBgRef}
         style={{
-          ...heroBackground.style,
-          backgroundImage: heroBackground.loaded 
-            ? `linear-gradient(135deg, rgba(22, 41, 70, 0.75) 0%, rgba(34, 53, 82, 0.75) 100%), ${heroBackground.style.backgroundImage}`
+          ...heroBgStyle,
+          backgroundImage: heroBgLoaded
+            ? `linear-gradient(135deg, rgba(22, 41, 70, 0.75) 0%, rgba(34, 53, 82, 0.75) 100%), ${heroBgStyle.backgroundImage}`
             : 'linear-gradient(135deg, rgba(22, 41, 70, 0.75) 0%, rgba(34, 53, 82, 0.75) 100%), linear-gradient(45deg, #1e3a5f 0%, #2c5282 100%)',
           backgroundColor: '#1e3a5f' // Enhanced fallback
         }}
@@ -227,7 +215,7 @@ export default function Logistics() {
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}
-      {/* <section className="log-cta container">
+      <section className="log-cta container">
         <div className="log-cta__inner">
           <div className="log-cta__content">
             <p className="log-cta__eyebrow">Get Started</p>
@@ -236,11 +224,11 @@ export default function Logistics() {
               Speak with a JHS logistics specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="log-btn log-btn--cta">
+          {/* <a href="/contact" className="log-btn log-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
-      </section> */}
+      </section>
 
     </div>
   )

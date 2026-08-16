@@ -26,7 +26,6 @@ interface Article {
   publish_date?: string  // Optional for backward compatibility
   created_at: string
 }
-console.log(API_BASE)
 /* ── Helpers ─────────────────────────────────────────────────── */
 const articleImageUrl = (image_id: string) =>
   `${API_BASE}/articles/image/${image_id}`
@@ -75,12 +74,11 @@ export default function Articles() {
       })
       if (!res.ok) throw new Error(`Server returned ${res.status}`)
       const data = await res.json()
-      console.log('Fetched articles:', data) // Debug log
       // data may be an array directly or wrapped
       setArticles(Array.isArray(data) ? data : [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Articles] fetch error:', err)
-      setError(err?.message ?? 'Failed to load articles. Is the backend running?')
+      setError(err instanceof Error ? err.message : 'Failed to load articles. Is the backend running?')
     } finally {
       setLoading(false)
     }
@@ -330,9 +328,6 @@ export default function Articles() {
                   src={articleImageUrl(article.image_id)}
                   alt={article.title}
                   className="art-card__bg-img"
-                  onError={() => {
-                    console.log('Image failed to load:', articleImageUrl(article.image_id))
-                  }}
                 />
 
                 {/* Default state: white box at bottom */}
@@ -361,14 +356,16 @@ export default function Articles() {
                       View More <ArrowRight size={16} />
                     </button>
 
-                    <button
-                      className="art-card__download-btn"
-                      onClick={(e) => { e.stopPropagation(); handleDownload(article) }}
-                      disabled={downloading}
-                      title="Download PDF"
-                    >
-                      <Download size={16} />
-                    </button>
+                    {article.pdf_id && (
+                      <button
+                        className="art-card__download-btn"
+                        onClick={(e) => { e.stopPropagation(); handleDownload(article) }}
+                        disabled={downloading}
+                        title="Download PDF"
+                      >
+                        <Download size={16} />
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -481,14 +478,16 @@ export default function Articles() {
                   <ChevronLeft size={16} /> Back to Articles
                 </button>
 
-                <button
-                  className="art-btn art-btn--solid"
-                  onClick={() => handleDownload(selectedArticle)}
-                  disabled={downloading}
-                >
-                  <Download size={16} />
-                  {downloading ? 'Downloading…' : 'Download PDF'}
-                </button>
+                {selectedArticle.pdf_id && (
+                  <button
+                    className="art-btn art-btn--solid"
+                    onClick={() => handleDownload(selectedArticle)}
+                    disabled={downloading}
+                  >
+                    <Download size={16} />
+                    {downloading ? 'Downloading…' : 'Download PDF'}
+                  </button>
+                )}
               </div>
             </div>
           </div>

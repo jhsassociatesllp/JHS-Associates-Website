@@ -1,15 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Mumbai.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
 /* ─── Sector SVG Icons ───────────────────────────────── */
-const SectorIcons: Record<string, JSX.Element> = {
+const SectorIcons: Record<string, ReactElement> = {
   Construction: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="6" y="22" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.8" />
@@ -86,15 +88,20 @@ const SectorIcons: Record<string, JSX.Element> = {
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.png'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor,NISM(DP), NISM(Social Auditor)', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
-  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.png'), qualifications: 'FCA, IP (IBBI), DIRM, DISA, IFRS', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
-  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.png'), qualifications: 'ACA, IPO CERTIFICATION', designation: 'IA & Risk Advisory, Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
-  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.png'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Cybersecurity & IT Audit | SOC', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
-  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.png'), qualifications: 'ACA ,IFC & IPO CERTIFICATION', designation: 'Risk Advisory, IA, IFC', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
-  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.png'), qualifications: 'CA, AICA-L1', designation: 'Assurance, Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
-  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.png'), qualifications: 'CS, ACA, AIII', designation: 'Outsourcing & Accounts', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
-  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.png'), qualifications: 'FCA ', designation: ' Risk Advisory, IA & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
-  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.png'), qualifications: 'M.COM, FCA, SET & CMA', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Huzeifa Unwala', image: imageUrl('Huzefa-Unwala-removebg-preview.webp'), qualifications: 'FCA, CISA, ISO 27001 Lead Auditor,NISM(DP), NISM(Social Auditor)', designation: 'IFC, Governance & Risk', email: 'huzeifa.unwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-huzeifa-unwala/' },
+  { name: 'Tasnim Tankiwala', image: imageUrl('Tasnim-Tankiwala-removebg-preview.webp'), qualifications: 'FCA, IP (IBBI), DIRM, DISA', designation: 'Statutory Audit', email: 'tasnim.tankiwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/tasnim-tankiwala' },
+  { name: 'Jamal Ashraf Chatriwala', image: imageUrl('Jamal-Chatriwala-removebg-preview.webp'), qualifications: 'ACA, IPO Certified', designation: 'Internal Audit, Risk Advisory & Insurance', email: 'jamal.chatriwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/chatriwala' },
+  { name: 'Taher Pepermintwala', image: imageUrl('Taher-Pepermintwala-removebg-preview.webp'), qualifications: 'FCA, CISA, ACCA, Dip IFRS', designation: 'Assurance, Tech & SOC Audit', email: 'taher.pepermintwala@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/taherpepermintwala/' },
+  { name: 'Sahil Shah', image: imageUrl('Sahil-Shah-removebg-preview.webp'), qualifications: 'ACA, IPO Certified', designation: 'Risk Advisory, Internal Audit & IFC', email: 'sahil.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/sahil-shah-664a5312a' },
+  { name: 'Tausif Shaikh', image: imageUrl('Tausif-Shaikh-removebg-preview.webp'), qualifications: 'ACA, AICA-L1', designation: 'Assurance & Tax', email: 'tausif.shaikh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-tausif-shaikh' },
+  { name: 'Samad Dhanani', image: imageUrl('Samad-Dhanani-removebg-preview.webp'), qualifications: 'M.Com, ACA, CS', designation: 'Statutory Audit & Accounts Outsourcing', email: 'samad.dhanani@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/samad-dhanani-9b342562' },
+  { name: 'Disha Shah', image: imageUrl('Disha Shah-removebg-preview.webp'), qualifications: 'FCA ', designation: ' Risk Advisory, Internal Audit & IFC', email: 'disha.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/disha-shah-4826b097' },
+  { name: 'Dhanlaxmi Nair', image: imageUrl('Dhanlaxmi.webp'), qualifications: 'M.Com, FCA, CMA, SET', designation: 'Risk Advisory & Consulting', email: 'dhanlaxmi.nair@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhanlaxmi-nair-311053206' },
+  { name: 'Amit More', image: imageUrl('Amit-more.webp'), qualifications: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified ', designation: 'Cyber Security & GRC', email: 'amitkumar.more@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/amitkumarmore/' },
+  { name: 'Dipika Bisawa', image: imageUrl('Dipika-Bisawa.webp'), qualifications: 'ACS', designation: 'Compliance & Risk Management', email: 'dipika.bisawa@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/' },
+  { name: 'Raj Dabburi', image: imageUrl('Raj-daburi.webp'), qualifications: 'CA, MBA', designation: 'Board & Institutional Advisory', email: 'raj.d@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/rajdabburi/' },
+  { name: 'Huzefa Mala', image: imageUrl('Huzefa-mala.webp'), qualifications: 'FCA, UGC-NET Qualified', designation: 'Income Tax Advisory & Audits', email: 'huzefa.mala@jhsconsulting.in', linkedin: 'https://www.linkedin.com/in/huzefamala/' },
+  { name: 'Huzefa Kaka', image: imageUrl('Huzefa-kaka.webp'), qualifications: ' NISM certification', designation: 'Risk & Governance', email: 'huzefa.kaka@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/huzefakaka/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
@@ -121,25 +128,22 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'andheri', name: 'Andheri ', tag: 'Head Office',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin',
-    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059'
+    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059',
+    lat: 19.1073677, lng: 72.8804167,
   },
   {
     id: 'masjid', name: 'Masjid', tag: 'Branch',
-    mapUrl: "https://maps.google.com/maps?q=Nav%20Vyapar%20Bhavan,%20P.D'mello%20Road,%20Mumbai,%20Maharashtra%20400009&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, M, Maharashtra – 400009"
+    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra - 400009"
   },
   {
     id: 'kalyan', name: 'Kalyan', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=Regency%20Avenue,%20Syndicate%20Bus%20Stop,%20Kalyan%20West,%20Maharashtra%20421301&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Shop No 11-12, Regency Avenue, Below Gastrocare Hospital, Syndicate Bus Stop, Kalyan West, Maharashtra – 421301'
+    address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301'
   },
   {
     id: 'mazgaon', name: 'Mazgaon', tag: 'Branch',
-    mapUrl: 'https://maps.google.com/maps?q=New%20Sai%20Niketan%20CHS%20Ltd.,%20Dr.%20Mascarenhas%20Road,%20Mazgaon,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed',
-    address: 'Ground Floor, Shop No. 11A, 345, New Sai Niketan CHS Ltd., Dr. Mascarenhas Road, Mazgaon, Mumbai – 400010'
+    address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010'
   }
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrlFor(loc) }))
 
 /* ─── Inline Icons ───────────────────────────────── */
 const IconMail = () => (
@@ -162,17 +166,6 @@ const IconCheck = () => (
     <polyline points="20 6 9 17 4 12" />
   </svg>
 )
-const IconTeam = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-)
-const IconClients = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-  </svg>
-)
-
 /* ─── Page ───────────────────────────────────────── */
 export default function Mumbai() {
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
@@ -196,7 +189,7 @@ export default function Mumbai() {
 
       {/* ══ HERO ══ */}
       <section className="mum-hero">
-        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.jpg')}")` }} />
+        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.webp')}")` }} />
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">
           {/* <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -208,7 +201,7 @@ export default function Mumbai() {
             <span className="mum-hero__card-badge">Head Office — Andheri East</span>
             <div className="mum-hero__card-addr">
               <IconPin />
-              <span>Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059</span>
+              <span>Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059</span>
             </div>
           </div>
           <div className="mum-hero__card-divider" />
@@ -301,7 +294,7 @@ export default function Mumbai() {
                           type="button"
                           className="pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

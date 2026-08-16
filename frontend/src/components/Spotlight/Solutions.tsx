@@ -6,7 +6,7 @@ import { imageUrl } from '../../utils/imageUrl'
 const SOLUTIONS_DATA = {
   assurance: {
     title: 'ASSURANCE SOLUTIONS',
-    subtitle: 'Strengthening trust, governance & compliance',
+    subtitle: 'Strengthening Trust, Governance & Compliance',
     sectors: {
       BFSI: [
         'Statutory & Internal Audits',
@@ -45,7 +45,7 @@ const SOLUTIONS_DATA = {
   },
   consulting: {
     title: 'CONSULTING SOLUTIONS',
-    subtitle: 'Advisory that drives clarity, control & growth',
+    subtitle: 'Advisory that Drives Clarity, Control & Growth',
     sectors: {
       BFSI: [
         'Risk Management Frameworks',
@@ -79,7 +79,7 @@ const SOLUTIONS_DATA = {
   },
   outsourcing: {
     title: 'OUTSOURCING SOLUTIONS',
-    subtitle: 'Reliable finance, compliance & operational support',
+    subtitle: 'Reliable Finance, Compliance & Operational Support',
     sectors: {
       BFSI: [
         'MIS & Domestic Bookkeeping',
@@ -121,7 +121,7 @@ const SOLUTIONS_DATA = {
   },
   taxation: {
     title: 'TAXATION SOLUTIONS',
-    subtitle: 'Strategic, compliant & litigation-ready solutions',
+    subtitle: 'Strategic, Compliant & Litigation-Ready Solutions',
     sectors: {
       BFSI: [
         'GST Return Filing',
@@ -167,14 +167,14 @@ export default function Solutions() {
 
   const renderSolutionSection = (solutionKey: 'assurance' | 'consulting' | 'outsourcing' | 'taxation', colorClass: string) => {
     const solution = SOLUTIONS_DATA[solutionKey];
-    
+
     return (
       <div className={`sol-section ${colorClass}`}>
         <div className="sol-section__header">
           <h2 className="sol-section__title">{solution.title}</h2>
           <p className="sol-section__subtitle">{solution.subtitle}</p>
         </div>
-        
+
         <div className="sol-sectors-grid">
           {Object.entries(solution.sectors).map(([sector, services]) => (
             <div key={sector} className="sol-sector-card">
@@ -203,7 +203,7 @@ export default function Solutions() {
       <section className="sol-hero">
         <div
           className="sol-hero__bg"
-          style={{ backgroundImage: `url(${imageUrl('WebPoster4.jpeg')})` }}
+          style={{ backgroundImage: `url(${imageUrl('business-and-professional-services.webp')})` }}
         />
         <div className="sol-hero__overlay" />
         <div className="sol-container">

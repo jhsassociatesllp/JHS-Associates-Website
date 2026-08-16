@@ -88,13 +88,13 @@ async def delete_job(job_id: str) -> bool:
 
 async def create_application(data: ApplicationCreate) -> Optional[dict]:
     db = get_database()
-    job = await get_job(data.job_id, include_all=False)
-    if not job:
+    job = await get_job(data.job_id, include_all=False) if data.job_id else None
+    if data.job_id and not job:
         return None
 
     now = datetime.now(timezone.utc)
     payload = data.model_dump()
-    payload["job_title"] = job["title"]
+    payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
     payload["updated_at"] = now
@@ -102,7 +102,7 @@ async def create_application(data: ApplicationCreate) -> Optional[dict]:
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
 
     # Send email notifications (fire-and-forget)
-    await notify_hr_new_application(payload, job["title"])
+    await notify_hr_new_application(payload, job["title"] if job else "General Application")
 
     created = await db[APPLICATIONS_COLLECTION].find_one({"_id": result.inserted_id})
     return _serialize(created)
@@ -115,13 +115,13 @@ async def create_application_with_resume(
     resume_bytes: bytes,
 ) -> Optional[dict]:
     db = get_database()
-    job = await get_job(data.job_id, include_all=False)
-    if not job:
+    job = await get_job(data.job_id, include_all=False) if data.job_id else None
+    if data.job_id and not job:
         return None
 
     now = datetime.now(timezone.utc)
     payload = data.model_dump()
-    payload["job_title"] = job["title"]
+    payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
     payload["updated_at"] = now
@@ -132,7 +132,7 @@ async def create_application_with_resume(
         resume_bytes,
         metadata={
             "job_id": data.job_id,
-            "job_title": job["title"],
+            "job_title": job["title"] if job else None,
             "candidate_email": data.email,
             "content_type": resume_content_type,
             "uploaded_at": now,
@@ -147,7 +147,7 @@ async def create_application_with_resume(
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
 
     # Send email notifications (fire-and-forget)
-    await notify_hr_new_application(payload, job["title"])
+    await notify_hr_new_application(payload, job["title"] if job else "General Application")
 
     created = await db[APPLICATIONS_COLLECTION].find_one({"_id": result.inserted_id})
     return _serialize(created)

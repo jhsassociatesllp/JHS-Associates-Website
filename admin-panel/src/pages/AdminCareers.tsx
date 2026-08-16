@@ -41,8 +41,8 @@ type Job = {
 
 type Application = {
   id: string;
-  job_id: string;
-  job_title: string;
+  job_id?: string;
+  job_title?: string;
   full_name: string;
   email: string;
   phone: string;
@@ -53,6 +53,13 @@ type Application = {
   resume_content_type?: string;
   resume_size?: number;
   cover_letter?: string;
+  place_of_residence?: string;
+  highest_qualification?: string;
+  highest_qualification_other?: string;
+  profile?: string;
+  profile_other?: string;
+  how_heard?: string;
+  how_heard_detail?: string;
   status: ApplicationStatus;
   created_at: string;
 };
@@ -108,6 +115,7 @@ const AdminCareers: React.FC = () => {
   const [formData, setFormData] = useState<JobForm>(initialJobForm);
   const [message, setMessage] = useState('');
   const [selectedJobFilter, setSelectedJobFilter] = useState('all');
+  const [viewApplication, setViewApplication] = useState<Application | null>(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -257,8 +265,14 @@ const AdminCareers: React.FC = () => {
 
   const filteredApplications = useMemo(() => {
     if (selectedJobFilter === 'all') return applications;
+    if (selectedJobFilter === 'general') return applications.filter((application) => !application.job_id);
     return applications.filter((application) => application.job_id === selectedJobFilter);
   }, [applications, selectedJobFilter]);
+
+  const withOther = (value?: string, other?: string) => {
+    if (!value) return '—';
+    return other ? `${value} (${other})` : value;
+  };
 
   const openJobs = jobs.filter((job) => job.status === 'open').length;
 
@@ -348,6 +362,7 @@ const AdminCareers: React.FC = () => {
                 <InputLabel>Filter by vacancy</InputLabel>
                 <Select value={selectedJobFilter} label="Filter by vacancy" onChange={(e) => setSelectedJobFilter(e.target.value)}>
                   <MenuItem value="all">All vacancies</MenuItem>
+                  <MenuItem value="general">General Applications</MenuItem>
                   {jobs.map((job) => <MenuItem key={job.id} value={job.id}>{job.title}</MenuItem>)}
                 </Select>
               </FormControl>
@@ -358,10 +373,11 @@ const AdminCareers: React.FC = () => {
                   <tr>
                     <th>Candidate</th>
                     <th>Vacancy</th>
-                    <th>Experience</th>
+                    <th>Qualification / Profile</th>
                     <th>Resume</th>
                     <th>Status</th>
                     <th>Applied</th>
+                    <th>Details</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -372,8 +388,11 @@ const AdminCareers: React.FC = () => {
                         <span>{application.email} | {application.phone}</span>
                         {application.current_location && <small>{application.current_location}</small>}
                       </td>
-                      <td>{application.job_title}</td>
-                      <td>{application.experience_years || '-'}</td>
+                      <td>{application.job_title || 'General Application'}</td>
+                      <td>
+                        <span>{withOther(application.highest_qualification, application.highest_qualification_other)}</span>
+                        <small>{withOther(application.profile, application.profile_other)}</small>
+                      </td>
                       <td>
                         {application.resume_file_id ? (
                           <Button size="small" variant="outlined" onClick={() => openResume(application)}>
@@ -393,9 +412,12 @@ const AdminCareers: React.FC = () => {
                         </FormControl>
                       </td>
                       <td>{new Date(application.created_at).toLocaleDateString()}</td>
+                      <td>
+                        <Button size="small" onClick={() => setViewApplication(application)}>View</Button>
+                      </td>
                     </tr>
                   ))}
-                  {!loading && filteredApplications.length === 0 && <tr><td colSpan={6}>No applications found.</td></tr>}
+                  {!loading && filteredApplications.length === 0 && <tr><td colSpan={7}>No applications found.</td></tr>}
                 </tbody>
               </table>
             </Box>
@@ -437,6 +459,70 @@ const AdminCareers: React.FC = () => {
             <Button type="submit" variant="contained">{editingId ? 'Update Vacancy' : 'Post Vacancy'}</Button>
           </DialogActions>
         </form>
+      </Dialog>
+
+      <Dialog open={!!viewApplication} onClose={() => setViewApplication(null)} maxWidth="sm" fullWidth>
+        <DialogTitle>Application Details</DialogTitle>
+        {viewApplication && (
+          <DialogContent>
+            <Stack spacing={1.5} sx={{ pt: 1 }}>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Full Name</Typography>
+                <Typography sx={{ fontWeight: 600, textAlign: 'right' }}>{viewApplication.full_name}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Email</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{viewApplication.email}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Contact Number</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{viewApplication.phone}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Vacancy</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{viewApplication.job_title || 'General Application'}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Place of Residence</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{viewApplication.place_of_residence || '—'}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Highest Qualification</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{withOther(viewApplication.highest_qualification, viewApplication.highest_qualification_other)}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Profile</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{withOther(viewApplication.profile, viewApplication.profile_other)}</Typography>
+              </Stack>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>How They Heard About Us</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{withOther(viewApplication.how_heard, viewApplication.how_heard_detail)}</Typography>
+              </Stack>
+              {viewApplication.experience_years && (
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Experience</Typography>
+                  <Typography sx={{ textAlign: 'right' }}>{viewApplication.experience_years}</Typography>
+                </Stack>
+              )}
+              <Stack direction="row" justifyContent="space-between">
+                <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Applied</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{new Date(viewApplication.created_at).toLocaleString()}</Typography>
+              </Stack>
+              <Stack>
+                <Typography sx={{ color: '#6b7280', fontSize: 13, mb: 0.5 }}>Remark</Typography>
+                <Typography sx={{ whiteSpace: 'pre-wrap' }}>{viewApplication.cover_letter || '—'}</Typography>
+              </Stack>
+              {viewApplication.resume_file_id && (
+                <Button variant="outlined" onClick={() => openResume(viewApplication)} sx={{ alignSelf: 'flex-start' }}>
+                  {viewApplication.resume_filename || 'Open Resume'}
+                </Button>
+              )}
+            </Stack>
+          </DialogContent>
+        )}
+        <DialogActions sx={{ px: 3, pb: 3 }}>
+          <Button onClick={() => setViewApplication(null)}>Close</Button>
+        </DialogActions>
       </Dialog>
 
       <style>{`

@@ -31,7 +31,7 @@ export default function RBICoolingOffPeriod() {
                 <article style={styles.content}>
                     <div style={styles.imageWrapper}>
                         <LazyImage
-                            src={imageUrl('reserve-bank-of-india-rbi-.jpg')}
+                            src={imageUrl('reserve-bank-of-india-rbi-.webp')}
                             alt="RBI Cooling-Off Period for Co-operative Bank Directors"
                             className="rbi-hero-image"
                             threshold={0.1}

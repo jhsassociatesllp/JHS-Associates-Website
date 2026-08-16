@@ -17,8 +17,8 @@
  * ── Usage ────────────────────────────────────────────────────────────
  *  import { imageUrl } from '../utils/imageUrl'
  *
- *  <img src={imageUrl('Virendra-Nayyar-removebg-preview.png')} alt="..." />
- *  style={{ backgroundImage: `url(${imageUrl('Ahmedabad.png')})` }}
+ *  <img src={imageUrl('Virendra-Nayyar-removebg-preview.webp')} alt="..." />
+ *  style={{ backgroundImage: `url(${imageUrl('Ahmedabad.webp')})` }}
  */
 
 const IMAGE_BASE =
@@ -26,7 +26,7 @@ const IMAGE_BASE =
 
 /**
  * Returns the full URL path for the given image filename.
- * @param filename  Bare filename, e.g. "hero.png" or "Virendra-Nayyar-removebg-preview.png"
+ * @param filename  Bare filename, e.g. "hero.webp" or "Virendra-Nayyar-removebg-preview.webp"
  */
 export function imageUrl(filename: string): string {
   // Strip any accidental leading slash from filename

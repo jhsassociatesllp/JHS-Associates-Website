@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { CASE_STUDIES, CASE_STUDY_CATEGORIES, getCaseStudiesByCategory } from '../../data/CaseStudies'
+import { CASE_STUDY_CATEGORIES, getCaseStudiesByCategory } from '../../data/CaseStudies'
 import './CaseStudies.css'
 import { imageUrl } from '../../utils/imageUrl'
-// import img1 from '../../image/Fainance3.jpg';
-// import img2 from '../../image/WebPoster2.jpeg';
-// import img3 from '../../image/StatsImage.png';
-// import img4 from '../../image/Fainance4.jpg';
+// import img1 from '../../image/Fainance3.webp';
+// import img2 from '../../image/WebPoster2.webp';
+// import img3 from '../../image/StatsImage.webp';
+// import img4 from '../../image/Fainance4.webp';
 
 export default function CaseStudies() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -23,7 +23,7 @@ export default function CaseStudies() {
   return (
     <div className="cs-page">
       {/* Hero Section */}
-      <section className="cs-hero" style={{ backgroundImage: `url('${imageUrl('Case_studies.png')}')` }}>
+      <section className="cs-hero" style={{ backgroundImage: `url('${imageUrl('Case_studies.webp')}')` }}>
         <div className="cs-hero__overlay" />
         <div className="cs-hero__content">
           <h1 className="cs-title">Our Client Stories</h1>

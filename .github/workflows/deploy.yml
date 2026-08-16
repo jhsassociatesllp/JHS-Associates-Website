@@ -146,8 +146,8 @@ jobs:
             if [ "$BRANCH" = "main" ]; then
               PROJECT_DIR="/www/wwwroot/JHS-Associates-Website-main"
               UPLOADS_DIR="/www/wwwroot/jhs-website-content-main/uploads"
-              GATEWAY_PORT=9035
-              ADMIN_PORT=9040
+              GATEWAY_PORT=9015
+              ADMIN_PORT=9020
               MONGODB_URL="${{ secrets.MONGODB_URL_MAIN }}"
               DATABASE_NAME="${{ secrets.DATABASE_NAME_MAIN }}"
               COMPOSE_PROJECT_NAME="jhs-main"

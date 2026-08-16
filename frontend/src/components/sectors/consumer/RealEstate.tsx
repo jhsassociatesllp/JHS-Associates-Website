@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'Real Estate Clients' },
-  { num: '₹5000Cr+', label: 'Assets Under Advisory' },
-  { num: 'Pan India', label: 'Coverage' },
-]
-
 const WHY = [
   'Deep expertise in commercial real estate transactions and structuring',
   'Specialist REIT and InvIT advisory team with regulatory experience',

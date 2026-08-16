@@ -341,7 +341,7 @@
 .cs-cta {
   position: relative;
   z-index: 1;
-  background-color: #000000;
+  background-color: #1e3a5f;
   padding: 80px 20px;
   text-align: center;
   color: #ffffff;
@@ -371,7 +371,7 @@
 
 .cs-cta__button {
   display: inline-block;
-  background-color: var(--ink);
+  background-color: var(--red);
   color: #ffffff;
   padding: 14px 32px;
   border-radius: 4px;

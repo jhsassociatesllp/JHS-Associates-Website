@@ -1,29 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Kolkata.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 
 const PARTNERS = [
   {
     name: 'Sharad Mohata',
-    image: imageUrl('Sharad-Mohata-removebg-preview.png'),
+    image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
     qualifications: 'B.Com (Hons), FCA, ICWAI',
     designation: 'Tax & Corporate Advisory',
     email: 'sharad.mohata@jhsassociates.in',
     linkedin: 'https://www.linkedin.com/in/sharad-mohata-18318082',
   },
   {
-    name: 'Tripti Mohata',
-    image: imageUrl('Tripti-mohta.png'),
+    name: 'Tripti Mohta',
+    image: imageUrl('Tripti mohta.webp'),
     qualifications: 'FCA',
     designation: 'Taxation & Audit Specialist',
-    email: 'sharad.mohata@jhsassociates.in',
+    email: '',
     linkedin: 'https://www.linkedin.com/in/ca-tripti-mohta-598a2544/',
   }
 ]
 
-const SectorIcons: Record<string, JSX.Element> = {
+const SectorIcons: Record<string, ReactElement> = {
   BFSI: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -125,8 +127,7 @@ const MAP_LOCATIONS = [
   {
     id: 'kolkata',
     name: 'Kolkata',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.4!2d88.3529!3d22.5448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0277c0a7a00001%3A0x5b9f2a8e3f3e8b1a!2sPark%20Street%2C%20Kolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1680000000006',
-    address: 'Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016'
+    address: 'Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016'
   },
   // {
   //   id: 'parkstreet',
@@ -140,7 +141,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Block%20EP,%20Salt%20Lake%20Sector%20V,%20Bidhannagar,%20Kolkata&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: 'Block EP, Salt Lake Sector V, Bidhannagar, Kolkata, West Bengal – 700091'
   // }
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 // const BRANCHES = [
 //   // {
@@ -209,7 +210,7 @@ export default function Kolkata() {
   return (
     <div className="kol-page">
       <section className="kol-hero">
-        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.png')})` }} />
+        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.webp')})` }} />
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
           {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}
@@ -222,22 +223,22 @@ export default function Kolkata() {
           <div className="kol-hero__card-body">
             <div className="kol-hero__card-addr">
               <IconPin />
-              <span>Unit No. 402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata, West Bengal – 700016</span>
+              <span>Unit No.402, 4th floor, Vardhan Complex, 25A Camac Street, Kolkata. West Bengal - 700016</span>
             </div>
           </div>
           <div className="kol-hero__card-info">
-            {/* <div className="kol-hero__card-info-item">
+            <div className="kol-hero__card-info-item">
               <div>
                 <span className="kol-hero__card-info-label">Phone</span>
-                <span className="kol-hero__card-info-val">+91 33 1234 5678</span>
+                <span className="kol-hero__card-info-val">+91 9831150209</span>
               </div>
-          </div>
-          <div className="kol-hero__card-info-item">
-            <div>
-              <span className="kol-hero__card-info-label">Email</span>
-              <span className="kol-hero__card-info-val">kolkata@jhsassociates.in</span>
             </div>
-          </div> */}
+            <div className="kol-hero__card-info-item">
+              <div>
+                <span className="kol-hero__card-info-label">Email</span>
+                <span className="kol-hero__card-info-val">sharad.mohata@jhsassociates.in</span>
+              </div>
+            </div>
             <div className="kol-hero__card-info-item">
               <div>
                 {/* <span className="kol-hero__card-info-label">Business Hours</span> */}
@@ -247,6 +248,15 @@ export default function Kolkata() {
           </div>
         </div>
       </section>
+
+      {/* ══ STATS RIBBON ══ */}
+      <div className="kol-ribbon">
+        <div className="kol-ribbon__inner">
+          {([[`${PARTNERS.length}`, 'Expert Partners'], [`${SECTORS.length}`, 'Sectors Served'], [`${SPECIALIZATIONS.length}`, 'Specialisations'], [`${MAP_LOCATIONS.length}`, 'Kolkata Offices']] as [string, string][]).map(([num, lbl]) => (
+            <div key={lbl} className="kol-ribbon__item"><span className="kol-ribbon__num">{num}</span><span className="kol-ribbon__lbl">{lbl}</span></div>
+          ))}
+        </div>
+      </div>
 
       <section className="kol-section kol-section--light">
         <div className="kol-container">
@@ -310,7 +320,7 @@ export default function Kolkata() {
                           type="button"
                           className="kol-pc-mail-option"
                           onClick={() => {
-                            navigator.clipboard.writeText(p.email)
+                            copyToClipboard(p.email)
                             setOpenMailFor(null)
                           }}
                         >

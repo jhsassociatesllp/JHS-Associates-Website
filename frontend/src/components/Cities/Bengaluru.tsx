@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Bengaluru.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'Narayan Rao Mala', image: imageUrl('Narayana-Rao-Malla-removebg-preview.png'), qualifications: 'FCA', designation: ' IA & Risk Advisory, FMCG & Retail ', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Narayan Rao Malla', image: imageUrl('Narayana-Rao-Malla-removebg-preview.webp'), qualifications: 'FCA', designation: ' Internal Audit & Risk Advisory', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
+  { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki-92324b1b/' },
 ]
 
-const SectorIcons: Record<string, JSX.Element> = {
+const SectorIcons: Record<string, ReactElement> = {
   BFSI: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -52,8 +55,7 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'bengaluru', name: 'Bengaluru ', tag: '',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.6!2d77.6263!3d12.9352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1680000000005',
-    address: '3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037'
+    address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037'
   },
   // {
   //   id: 'koramangala', name: 'Koramangala', tag: 'Branch',
@@ -65,7 +67,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Salarpuria%20Softzone,%20Whitefield,%20Bengaluru,%20Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: '502, 5th Floor, Salarpuria Softzone, Whitefield, Bengaluru, Karnataka – 560066'
   // },
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
 const IconLinkedIn = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>)
@@ -92,7 +94,7 @@ export default function Bengaluru() {
   return (
     <div className="blr-page">
       <section className="blr-hero">
-        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.jpg')})` }} />
+        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.webp')})` }} />
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
           {/* <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -102,20 +104,20 @@ export default function Bengaluru() {
         <div className="blr-hero__card">
           <div className="blr-hero__card-left">
             <span className="blr-hero__card-badge">Bengaluru</span>
-            <div className="blr-hero__card-addr"><IconPin /><span>3rd Floor, Building No 589, 60 Ft Main Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037</span></div>
+            <div className="blr-hero__card-addr"><IconPin /><span>3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037</span></div>
           </div>
           <div className="blr-hero__card-divider" />
-          {/* <div className="blr-hero__card-right">
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 80 1234 5678</span></div>
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">bengaluru@jhsassociates.in</span></div>
-            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
-          </div> */}
+          <div className="blr-hero__card-right">
+            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Phone</span><span className="blr-hero__card-stat-val">+91 9663397755</span></div>
+            <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Email</span><span className="blr-hero__card-stat-val">narayana.malla@jhsassociates.in</span></div>
+            {/* <div className="blr-hero__card-stat"><span className="blr-hero__card-stat-label">Hours</span><span className="blr-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
+          </div>
         </div>
       </section>
 
       <div className="blr-ribbon">
         <div className="blr-ribbon__inner">
-          {([['1', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['1', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7+', 'Specialisations'], ['1', 'Bengaluru Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="blr-ribbon__item"><span className="blr-ribbon__num">{num}</span><span className="blr-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -185,7 +187,7 @@ export default function Bengaluru() {
                             type="button"
                             className="blr-pc-mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(p.email)
+                              copyToClipboard(p.email)
                               setOpenMailFor(null)
                             }}
                           >

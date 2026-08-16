@@ -40,7 +40,7 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
+const STATS: { num: string; label: string }[] = [
   // { num: '25+', label: 'O&G Clients' },
   // { num: '20+', label: 'Years Experience' },
   // { num: 'PSC & HELP', label: 'Contract Expertise' },
@@ -195,9 +195,9 @@ export default function OilAndGasIndustry() {
               Speak with a JHS oil &amp; gas specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="og-btn og-btn--cta">
+          {/* <a href="/contact" className="og-btn og-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

@@ -495,6 +495,7 @@
 
 .alumni-form-input:focus {
   border-bottom-color: var(--red);
+  box-shadow: 0 3px 0 -2px var(--red);
 }
 
 .alumni-form-input::placeholder {

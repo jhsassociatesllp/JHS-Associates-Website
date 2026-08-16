@@ -42,12 +42,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '20+', label: 'Years of Experience' },
-  { num: '200+', label: 'Commodity Clients' },
-  { num: '100%', label: 'Compliance Record' },
-]
-
 const WHY = [
   'Deep domain expertise in metals, agri and energy sectors',
   'Dedicated commodity desk with real-time regulatory updates',
@@ -209,7 +203,7 @@ export default function Commodity() {
       {/* ══════════════════════════════════════
           CTA BANNER
       ══════════════════════════════════════ */}
-      {/* <section className="com-cta container">
+      <section className="com-cta container">
         <div className="com-cta__inner">
           <div className="com-cta__content">
             <p className="com-cta__eyebrow">Get Started</p>
@@ -218,11 +212,11 @@ export default function Commodity() {
               Speak with a JHS commodity specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="com-btn com-btn--cta">
+          {/* <a href="/contact" className="com-btn com-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
-      </section> */}
+      </section>
 
     </div>
   )

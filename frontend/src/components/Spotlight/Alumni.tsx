@@ -4,7 +4,6 @@ import './Alumni.css';
 import { imageUrl } from '../../utils/imageUrl'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 const ALUMNI_PROFILES = [
   {
@@ -12,42 +11,42 @@ const ALUMNI_PROFILES = [
     name: "Riddhi Kishnadwala",
     // role: "Articleship",
     desc: "JHS was my first job post CA qualification. It was a great learning experience and guidance was provided whenever needed. Executional excellence and quality deliverables were the key corners of all the projects I worked on. A good place to learn and grow.",
-    image: imageUrl('Riddhi Kishnadwala.jpeg')
+    image: imageUrl('Riddhi Kishnadwala.webp')
   },
   {
     id: 2,
     name: "Prerna Jain",
     // role: " Tax Advisory",
     desc: "JHS has an empowering vision for its employees. It provides a friendly work space to employees.",
-    image: imageUrl('Prerna Jain.jpeg')
+    image: imageUrl('Prerna-Jain.webp')
   },
   {
     id: 3,
     name: "Ankit Mehta",
     // role: "Alumnus, Consulting",
     desc: "At JHS, I was entrusted with responsibilities in Internal Audit despite starting from scratch, which accelerated my learning. The freedom to work independently, along with consistent support, helped me build confidence and leadership abilities.",
-    image: imageUrl('Ankit Mehta.jpeg')
+    image: imageUrl('Ankit Mehta.webp')
   },
   {
     id: 4,
     name: "Pratik Mantri",
     // role: "Auditor, Risk Advisory",
     desc: "The work culture at JHS encouraged learning, accountability, and collaborative problem-solving. Being part of the Risk Advisory & Internal Audit team provided invaluable exposure to build a strong foundation in risk assessment, controls, and compliance.",
-    image: imageUrl('Pratik mantri.jpeg')
+    image: imageUrl('Pratik mantri.webp')
   },
   {
     id: 5,
     name: "Riya Almeida",
     // role: "Articleship",
     desc: "My stint at JHS & Associates LLP provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
-    image: imageUrl('Riya Almeida.jpeg')
+    image: imageUrl('Riya Almeida.webp')
   },
   {
     id: 6,
-    name: "Shabbir Shaikh",
+    name: "Sabir Shaikh",
     // role: "Alumnus, Consulting",
     desc: "My experience at JHS helped me build a strong foundation in risk assessment, internal controls, and business process understanding. It shaped my professional approach towards analytical review, compliance, and operational efficiency, which continues to help me in my business and decision-making today.",
-    image: imageUrl('Shabbir Shaikh.jpeg')
+    image: imageUrl('Shabbir Shaikh.webp')
   }
 ];
 
@@ -89,6 +88,7 @@ export default function Alumni() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,6 +98,7 @@ export default function Alumni() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSubmitError(false);
     try {
       const apiUrl = `${API_BASE_URL}/alumni/`;
       const response = await fetch(apiUrl, {
@@ -119,7 +120,8 @@ export default function Alumni() {
       setTimeout(() => setSubmitted(false), 7000);
     } catch (error) {
       console.error('Failed to submit form:', error);
-      alert('Failed to send registration. Please try again later.');
+      setSubmitError(true);
+      setTimeout(() => setSubmitError(false), 7000);
     } finally {
       setLoading(false);
     }
@@ -135,14 +137,14 @@ export default function Alumni() {
       {/* Hero Section */}
       <section
         className="alumni-hero"
-        style={{ backgroundImage: `url(${imageUrl('WebPoster3.jpeg')})` }}
+        style={{ backgroundImage: `url(${imageUrl('WebPoster3.webp')})` }}
       >
         <div className="alumni-hero__overlay" />
         <div className="alumni-hero__content">
           {/* <span className="alumni-hero__eyebrow">EST. 1981</span> */}
           <h1 className="alumni-hero__title">Celebrating Our Legacy, Connecting Our Future</h1>
           <p className="alumni-hero__subtitle">
-            A global network of excellence, bringing together generations of leaders, innovators, and visionaries from around the world.
+            A global network of excellence, bringing together generations of leaders, innovators and visionaries from around the world.
           </p>
           {/* <div className="alumni-hero__actions">
             <button
@@ -190,7 +192,6 @@ export default function Alumni() {
                   </div>
                 </div>
 
-                <div className="alumni-card__role">{profile.role}</div>
                 <p className="alumni-card__desc">"{profile.desc}"</p>
 
                 {/*<a href="#" className="alumni-card__link">
@@ -233,6 +234,12 @@ export default function Alumni() {
             {submitted && (
               <div style={{ backgroundColor: '#e6ffe6', color: '#006600', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
                 Registration submitted successfully! Thank you for staying connected.
+              </div>
+            )}
+
+            {submitError && (
+              <div role="alert" style={{ backgroundColor: '#fdecea', color: '#a63222', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
+                Failed to send registration. Please try again later.
               </div>
             )}
 

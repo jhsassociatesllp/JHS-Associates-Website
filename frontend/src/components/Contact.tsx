@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './Contact.css'
+import { mapEmbedUrlFor } from '../utils/mapEmbedUrl'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 /* ─── Types ─────────────────────────────────────────────── */
 interface FormData {
@@ -35,7 +35,9 @@ const OFFICES = [
   {
     city: 'H.O. Andheri',
     region: 'Maharashtra',
-    address: 'Unit No. B-406 to 410, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Maharashtra – 400059',
+    address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059',
+    lat: 19.1073677,
+    lng: 72.8804167,
   },
   {
     city: 'Kalyan',
@@ -45,7 +47,7 @@ const OFFICES = [
   {
     city: 'Masjid Bunder',
     region: 'Maharashtra',
-    address: "Unit No. 402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra – 400009",
+    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009",
   },
   {
     city: 'Mazgaon',
@@ -60,28 +62,28 @@ const OFFICES = [
   {
     city: 'Vadodara',
     region: 'Gujarat',
-    address: '4th floor, Lila Chambers, Notus Pride, Vadodara, Gujarat – 390023',
+    address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023',
   },
   {
     city: 'Rajkot',
     region: 'Gujarat',
-    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat – 360001',
+    address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001',
   },
   {
     city: 'Surat',
     region: 'Gujarat',
-    address: '504, 5th floor, Shubh Square, Opp. Aai Mata Chowk, Near ICICI Bank, Lal Darwaja, Surat, Gujarat – 395003',
+    address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003',
   },
   {
     city: 'Vapi',
     region: 'Gujarat',
-    address: '101, Saga Casa, Near Navjeevan Press, Chala, Vapi, Gujarat – 396195',
+    address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215',
   },
 
   {
     city: 'Bengaluru',
     region: 'Karnataka',
-    address: 'No.589, 1st Floor, 60ft Road, AECS Layout, Kundalahalli, Bengaluru, Karnataka – 560037',
+    address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037',
   },
   {
     city: 'Delhi',
@@ -135,7 +137,7 @@ const SOCIALS = [
   },
   {
     label: 'YouTube',
-    href: 'https://www.youtube.com/@JHS-Consulting',
+    href: 'https://www.youtube.com/@JHS_India',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -152,6 +154,7 @@ export default function Contact() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [focused, setFocused] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [loading, setLoading] = useState(false)
   const pageRef = useRef<HTMLDivElement>(null)
 
@@ -196,6 +199,7 @@ export default function Contact() {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
+    setSubmitError(false)
 
     try {
       const apiUrl = `${API_BASE_URL}/contact/`
@@ -216,7 +220,8 @@ export default function Contact() {
       setTimeout(() => setSubmitted(false), 7000)
     } catch (error) {
       console.error('Failed to submit form:', error)
-      alert('Failed to send message. Please try again later.')
+      setSubmitError(true)
+      setTimeout(() => setSubmitError(false), 7000)
     } finally {
       setLoading(false)
     }
@@ -323,19 +328,31 @@ export default function Contact() {
               </div>
             )}
 
+            {submitError && (
+              <div className="ct-error-banner" role="alert">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+                <div>
+                  <p className="ct-error-banner__title">Message not sent</p>
+                  <p className="ct-error-banner__sub">Something went wrong. Please try again, or email us directly.</p>
+                </div>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} noValidate className="ct-form">
               {/* Row 1 */}
               <div className="ct-row">
                 <div className="ct-field">
-                  <label className="ct-label">Full Name *</label>
-                  <input type="text" name="name" value={formData.name} placeholder="Your full name"
+                  <label className="ct-label" htmlFor="ct-name">Full Name *</label>
+                  <input id="ct-name" type="text" name="name" value={formData.name} placeholder="Your full name"
+                    autoComplete="name"
                     onChange={handleChange} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)}
                     className={fc('name')} />
                   {errors.name && <span className="ct-err">{errors.name}</span>}
                 </div>
                 <div className="ct-field">
-                  <label className="ct-label">Email Address *</label>
-                  <input type="email" name="email" value={formData.email} placeholder="you@company.com"
+                  <label className="ct-label" htmlFor="ct-email">Email Address *</label>
+                  <input id="ct-email" type="email" name="email" value={formData.email} placeholder="you@company.com"
+                    autoComplete="email"
                     onChange={handleChange} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)}
                     className={fc('email')} />
                   {errors.email && <span className="ct-err">{errors.email}</span>}
@@ -345,15 +362,17 @@ export default function Contact() {
               {/* Row 2 */}
               <div className="ct-row">
                 <div className="ct-field">
-                  <label className="ct-label">Phone Number</label>
-                  <input type="tel" name="phone" value={formData.phone} placeholder="+91 98765 43210"
+                  <label className="ct-label" htmlFor="ct-phone">Phone Number</label>
+                  <input id="ct-phone" type="tel" name="phone" value={formData.phone} placeholder="+91 98765 43210"
+                    autoComplete="tel"
                     onChange={handleChange} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)}
                     className={fc('phone')} />
                   {errors.phone && <span className="ct-err">{errors.phone}</span>}
                 </div>
                 <div className="ct-field">
-                  <label className="ct-label">Company Name</label>
-                  <input type="text" name="company" value={formData.company} placeholder="Your company"
+                  <label className="ct-label" htmlFor="ct-company">Company Name</label>
+                  <input id="ct-company" type="text" name="company" value={formData.company} placeholder="Your company"
+                    autoComplete="organization"
                     onChange={handleChange} onFocus={() => setFocused('company')} onBlur={() => setFocused(null)}
                     className={fc('company')} />
                 </div>
@@ -361,8 +380,8 @@ export default function Contact() {
 
               {/* Service */}
               <div className="ct-field">
-                <label className="ct-label">Service Interested In</label>
-                <select name="service" value={formData.service} onChange={handleChange}
+                <label className="ct-label" htmlFor="ct-service">Service Interested In</label>
+                <select id="ct-service" name="service" value={formData.service} onChange={handleChange}
                   onFocus={() => setFocused('service')} onBlur={() => setFocused(null)} className={fc('service')}>
                   <option value="">Select a service…</option>
                   {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -371,8 +390,8 @@ export default function Contact() {
 
               {/* Message */}
               <div className="ct-field">
-                <label className="ct-label">Your Message *</label>
-                <textarea name="message" value={formData.message} rows={5}
+                <label className="ct-label" htmlFor="ct-message">Your Message *</label>
+                <textarea id="ct-message" name="message" value={formData.message} rows={5}
                   placeholder="Describe your requirement or query…"
                   onChange={handleChange} onFocus={() => setFocused('message')} onBlur={() => setFocused(null)}
                   className={fc('message')} />
@@ -407,13 +426,13 @@ export default function Contact() {
               <div className="ct-map-wrap">
                 <iframe
                   title="JHS Associates Mumbai"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.528!2d72.87870!3d19.11540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c83b69d4c3b5%3A0x4a8d5f2f9b4e8e2a!2sNavkar%20Chambers%2C%20Marol%20Naka%2C%20Andheri%20East%2C%20Mumbai%2C%20Maharashtra%20400059!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
+                  src={mapEmbedUrlFor(OFFICES[0])}
                   allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
               <div className="ct-map-footer">
-                <p className="ct-map-addr">Navkar Chambers, B-Wing, 4th Floor,<br />Marol Naka, Andheri East, Mumbai – 400059</p>
-                <a href="https://www.google.com/maps/search/Unit+No.+B-406+t0+410,+4th+floor,+Navkar+chambers,+Marol+Naka+metro+station,+andheri+east,+maharashtra+-400059+/@19.1117672,72.8696096,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="ct-map-dir">
+                <p className="ct-map-addr">{OFFICES[0].address}</p>
+                <a href={`https://maps.google.com/?q=${encodeURIComponent(OFFICES[0].address)}`} target="_blank" rel="noopener noreferrer" className="ct-map-dir">
                   Get Directions
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" /></svg>
                 </a>

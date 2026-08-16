@@ -4,18 +4,18 @@
 
 .sp-page {
   background: #ffffff;
-  min-height: 100vh;
+  min-height: 90vh;
   padding-bottom: 80px;
 }
 
 /* ════ HERO SECTION ════ */
 .sp-hero {
   position: relative;
-  min-height: 60vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #0f172a;
+  background: #6692f8;
 }
 
 .sp-hero__bg {
@@ -23,13 +23,15 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0.3;
+  opacity: 1;
+  z-index: 0;
 }
 
 .sp-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(8, 14, 30, 0.82) 0%, rgba(15, 23, 42, 0.68) 55%, rgba(8, 14, 30, 0.82) 100%);
+  z-index: 1;
 }
 
 .sp-container {
@@ -42,8 +44,15 @@
 }
 
 .sp-hero__content {
-  max-width: 800px;
-  padding-top: 80px; /* Offset for fixed navbar */
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* Offset for fixed navbar */
 }
 
 .sp-eyebrow {
@@ -68,10 +77,14 @@
 }
 
 .sp-subtitle {
+  width: 65%;
   font-family: "DM Sans", sans-serif;
   font-size: 1.25rem;
   line-height: 1.6;
   color: #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ════ CONTENT SECTION ════ */
@@ -146,12 +159,15 @@
   .sp-hero {
     min-height: 50vh;
   }
+
   .sp-title {
     font-size: 2.5rem;
   }
+
   .sp-subtitle {
     font-size: 1.125rem;
   }
+
   .sp-content {
     padding: 60px 0;
   }

@@ -6,10 +6,6 @@ import {
   TrendingUp,
   Package,
   Shield,
-  ArrowRight,
-  Download,
-  PhoneCall,
-  Mail,
   CheckCircle,
   BarChart3,
   Truck,
@@ -359,7 +355,7 @@ const Manufacturing: React.FC = () => {
           <div className="man-cta__inner">
             <h2 className="man-cta__title">Ready to Transform Your Manufacturing Operations?</h2>
             <p className="man-cta__sub">
-              Partner with JHS & Associates for expert guidance and measurable results.
+              Partner with JHS for expert guidance and measurable results.
             </p>
             <div className="man-cta__buttons">
               {/* <button className="man-btn man-btn--light">

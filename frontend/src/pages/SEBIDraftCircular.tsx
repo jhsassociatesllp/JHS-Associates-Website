@@ -29,7 +29,7 @@ export default function SEBIDraftCircular() {
                 <article style={styles.content}>
                     <div style={styles.imageWrapper}>
                         <LazyImage
-                            src={imageUrl('reserve-bank-of-india-rbi-.jpg')}
+                            src={imageUrl('reserve-bank-of-india-rbi-.webp')}
                             alt="SEBI Draft Circular - Mutual Funds Third-Party Payments"
                             className="sebi-hero-image"
                             threshold={0.1}

@@ -4,7 +4,6 @@ import axios from 'axios'
 import './Feedback.css'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 interface ReferenceRow {
   id: string
@@ -17,6 +16,7 @@ interface ReferenceRow {
 export default function Feedback() {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [formData, setFormData] = useState({
     clientName: '',
     natureOfAssignment: '',
@@ -102,6 +102,7 @@ export default function Feedback() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
+    setSubmitError(false)
 
     try {
       // Transform form data to match backend schema
@@ -158,7 +159,7 @@ export default function Feedback() {
       }
     } catch (error) {
       console.error('Error submitting feedback:', error)
-      alert('Failed to submit feedback. Please try again.')
+      setSubmitError(true)
     } finally {
       setSubmitting(false)
     }
@@ -192,8 +193,14 @@ export default function Feedback() {
           </p>
         </div>
 
+        {submitError && (
+          <div role="alert" style={{ backgroundColor: '#fdecea', color: '#a63222', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
+            Failed to submit feedback. Please try again.
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="feedback-form">
-          
+
           {/* Basic Information */}
           <section className="form-section">
             <div className="form-row">
@@ -483,7 +490,7 @@ export default function Feedback() {
           <section className="form-section references-section">
             <h3 className="section-title">If you would like to recommend us, kindly provide your references below:</h3>
             
-            {references.map((ref, index) => (
+            {references.map((ref) => (
               <div key={ref.id} className="reference-row">
                 <div className="form-row">
                   <div className="form-group">

@@ -1,19 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Target, Lightbulb, CheckCircle2, TrendingUp } from 'lucide-react';
+import { Target, Lightbulb, CheckCircle2, TrendingUp } from 'lucide-react';
 import { getCaseStudyById } from '../../data/CaseStudies';
 import './CaseStudyDetail.css';
 
+interface CaseStudy {
+  id: string;
+  title: string;
+  sector: string;
+  category: string;
+  scope: string;
+  image: string;
+  approach: string[];
+  delivery: string[];
+  valueAdded: string[];
+}
+
 export default function CaseStudyDetail() {
   const { id } = useParams();
-  const [caseStudy, setCaseStudy] = useState<any>(null);
+  const caseStudy: CaseStudy | undefined = id ? getCaseStudyById(id) : undefined;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (id) {
-      const data = getCaseStudyById(id);
-      setCaseStudy(data);
-    }
   }, [id]);
 
   if (!caseStudy) {
@@ -57,7 +65,11 @@ export default function CaseStudyDetail() {
                 <Lightbulb className="csd-icon" />
                 <h2>Our Approach</h2>
               </div>
-              <p>{caseStudy.approach}</p>
+              <ul className="csd-list">
+                {caseStudy.approach?.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
 

@@ -16,28 +16,28 @@ type ServiceItem = {
 };
 
 const capabilities: ServiceItem[] = [
-  { label: "IT Assurance", href: "/services/assurance", description: "Enhance trust and transparency with our comprehensive  assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.png') },
-  { label: "Tax & GST Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.jpg') },
-  // { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.png') },
-  { label: "Financial Reporting", href: "/services/corporate-finance", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.png') },
-  // { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions and overall business growth.", image: imageUrl('Blogimg.png') },
-  { label: "Risk & Governance", href: "/services/compliance-learning", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.png') },
-  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('Outsourcing.png') },
-  { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.avif') },
-  // { label: "Learning & Development", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.avif') }
+  { label: "IT Assurance", href: "/services/it-assurance", description: "Enhance trust and transparency with our comprehensive  assurance services, tailored to meet your business needs.", image: imageUrl('Assurance.webp') },
+  { label: "Tax & GST Advisory", href: "/services/taxation", description: "Navigate complex tax regulations efficiently. We provide strategic tax planning and advisory to optimize your tax position.", image: imageUrl('Taxposter.webp') },
+  // { label: "GST Compliance", href: "/services/taxation", description: "Ensure seamless GST compliance with our end-to-end support, from registration to filing and dispute resolution.", image: imageUrl('gst-im.webp') },
+  { label: "Financial Reporting", href: "/services/corporate-finance", description: "Accurate and timely financial reporting services to help you make informed business decisions and comply with standards.", image: imageUrl('Fainance-report.webp') },
+  // { label: "Corporate Advisory", href: "/services/consulting", description: "Strategic guidance for corporate restructuring, mergers, acquisitions and overall business growth.", image: imageUrl('Blogimg.webp') },
+  { label: "Risk & Governance", href: "/services/compliance-learning", description: "Identify and mitigate enterprise risks while establishing robust corporate governance frameworks.", image: imageUrl('Risk.webp') },
+  { label: "Outsourcing", href: "/services/outsourcing", description: "Focus on your core competencies while we handle your accounting, payroll and compliance outsourcing needs.", image: imageUrl('outsourcing.webp') },
+  { label: "Single Window Assistance", href: "/services/single-window-assistance", description: "A comprehensive, unified approach to setting up and managing your business operations in India.", image: imageUrl('single-w-A.webp') },
+  // { label: "Learning & Development", href: "/sectors/media-technology/it-tes", description: "Empowering tech companies with specialized tax structuring, M&A advisory and compliance services.", image: imageUrl('IT-Technology.webp') }
 
 ];
 
 const industries: ServiceItem[] = [
-  { label: "Manufacturing", href: "/sectors/other/manufacturing", description: "Optimizing supply chains, improving operational efficiency, and navigating regulatory landscapes in the manufacturing sector.", image: imageUrl('manufacturing.png') },
-  { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors and property managers in the real estate market.", image: imageUrl('Real-State.avif') },
-  { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency and strategic financial planning.", image: imageUrl('healthcare.avif') },
-  { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk and advisory services tailored for banks, NBFCs and financial institutions.", image: imageUrl('reserve-bank-of-india-rbi-.jpg') },
-  { label: "Retail", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.avif') },
-  { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.avif') },
-  { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.avif') },
-  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.png') },
-  { label: "Logistics", href: "/sectors/other/logistics", description: "Delivering specialized audit, tax, compliance, and advisory services for logistics, transportation, warehousing, and supply chain businesses in a rapidly evolving market.", image: imageUrl('Logistics1.png') },
+  { label: "Manufacturing", href: "/sectors/other/manufacturing", description: "Optimizing supply chains, improving operational efficiency, and navigating regulatory landscapes in the manufacturing sector.", image: imageUrl('manufacturing.webp') },
+  { label: "Real Estate", href: "/sectors/consumer/real-estate", description: "Expert financial and advisory services for developers, investors and property managers in the real estate market.", image: imageUrl('Real-State.webp') },
+  { label: "Healthcare", href: "/sectors/other/healthcare", description: "Supporting healthcare providers with compliance, operational efficiency and strategic financial planning.", image: imageUrl('healthcare.webp') },
+  { label: "Banking & Finance", href: "/sectors/financial-services/banking", description: "Comprehensive audit, risk and advisory services tailored for banks, NBFCs and financial institutions.", image: imageUrl('reserve-bank-of-india-rbi-.webp') },
+  { label: "Retail", href: "/sectors/consumer/retail", description: "Helping retail and fast-moving consumer goods businesses navigate complex market dynamics and consumer trends.", image: imageUrl('Retail.webp') },
+  { label: "Construction", href: "/sectors/other/construction", description: "Strategic financial management and project advisory for large-scale infrastructure and construction companies.", image: imageUrl('construction.webp') },
+  { label: "NGO", href: "/sectors/other/ngo", description: "Specialized audit and compliance support for non-governmental organizations and charitable trusts.", image: imageUrl('NGO.webp') },
+  { label: "Media", href: "/sectors/media-technology/media", description: "Navigating intellectual property rights, international taxation and compliance in the fast-paced media industry.", image: imageUrl('Media.webp') },
+  { label: "Logistics", href: "/sectors/other/logistics", description: "Delivering specialized audit, tax, compliance, and advisory services for logistics, transportation, warehousing, and supply chain businesses in a rapidly evolving market.", image: imageUrl('Logistics1.webp') },
 ];
 
 export default function Services() {

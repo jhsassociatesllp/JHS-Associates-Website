@@ -32,14 +32,14 @@ export default function ComplianceLearning() {
     window.scrollTo(0, 0)
     const ctx = gsap.context(() => {
       gsap.fromTo('.cl-hero__content > *', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' })
-      gsap.utils.toArray('.cl-section-header').forEach((h: any) => {
+      gsap.utils.toArray<Element>('.cl-section-header').forEach((h) => {
         gsap.fromTo(h, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: h, start: 'top 85%' } })
       })
       gsap.fromTo('.cl-spoke-hub', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.cl-spoke-diagram', start: 'top 75%' } })
-      gsap.utils.toArray('.cl-spoke-row--left').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.cl-spoke-row--left').forEach((row, i) => {
         gsap.fromTo(row, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.cl-spoke-diagram', start: 'top 75%' } })
       })
-      gsap.utils.toArray('.cl-spoke-row--right').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.cl-spoke-row--right').forEach((row, i) => {
         gsap.fromTo(row, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.cl-spoke-diagram', start: 'top 75%' } })
       })
     })
@@ -49,11 +49,11 @@ export default function ComplianceLearning() {
   return (
     <div className="cl-page" ref={containerRef}>
       <section className="cl-hero">
-        <div className="cl-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.png')}')` }} />
+        <div className="cl-hero__bg" style={{ backgroundImage: `url('${imageUrl('Risk.webp')}')` }} />
         <div className="cl-hero__overlay" />
         <div className="cl-container">
           <div className="cl-hero__content">
-            <span className="cl-eyebrow">Risk & Governance</span>
+            {/* <span className="cl-eyebrow">Risk & Governance</span> */}
             <h1 className="cl-title">Compliance, Learning & Innovation</h1>
             <p className="cl-subtitle">
               Strengthening governance and managing risk for sustainable growth.

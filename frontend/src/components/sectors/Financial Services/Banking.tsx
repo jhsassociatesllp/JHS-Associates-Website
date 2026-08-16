@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Banking Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'RBI', label: 'Regulatory Expertise' },
-]
-
 const WHY = [
   'Deep knowledge of RBI master directions, circulars and prudential frameworks',
   'Specialist Ind AS 109 and ECL provisioning expertise for banking entities',
@@ -196,9 +190,9 @@ export default function Banking() {
               Speak with a JHS banking specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="bk-btn bk-btn--cta">
+          {/* <a href="/contact" className="bk-btn bk-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

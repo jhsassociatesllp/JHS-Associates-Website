@@ -24,7 +24,7 @@ export default function GreenTransition() {
                 <article style={styles.content}>
                     <div style={styles.imageWrapper}>
                         <LazyImage
-                            src={imageUrl('Card4.jpeg')}
+                            src={imageUrl('Card4.webp')}
                             alt="Green Transition and Sustainability"
                             className="green-transition-image"
                             threshold={0.1}

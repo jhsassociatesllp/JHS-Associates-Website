@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '50+', label: 'Retail Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Omni', label: 'Channel Coverage' },
-]
-
 const WHY = [
   'Deep experience with large-format retail, specialty stores and D2C brands',
   'Specialist GST team for high-volume, multi-location retail environments',
@@ -198,9 +192,9 @@ export default function Retail() {
               Speak with a JHS retail specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="rt-btn rt-btn--cta">
+          {/* <a href="/contact" className="rt-btn rt-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

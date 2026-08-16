@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
 from app.schemas.knowledge import KnowledgeCreate, KnowledgeUpdate, KnowledgeResponse
 from app.controllers import knowledge as knowledge_ctrl
+from app.utils.http import content_disposition
 from io import BytesIO
 from datetime import datetime
 from typing import Optional
@@ -55,7 +56,7 @@ async def get_image(image_id: str):
         return StreamingResponse(
             BytesIO(content),
             media_type=content_type,
-            headers={"Content-Disposition": f"inline; filename={filename}",
+            headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
     except Exception:
@@ -70,7 +71,7 @@ async def get_pdf(pdf_id: str):
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
-            headers={"Content-Disposition": f"inline; filename={filename}",
+            headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
     except Exception:

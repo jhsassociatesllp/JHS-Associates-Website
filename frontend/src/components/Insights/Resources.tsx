@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Search, Filter, X } from 'lucide-react'
+import { Search, Filter, X, Download } from 'lucide-react'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
 import './Resources.css'
@@ -72,12 +72,11 @@ export default function Resources() {
       })
       if (!res.ok) throw new Error(`Server returned ${res.status}`)
       const data = await res.json()
-      console.log('Fetched knowledge resources:', data) // Debug log
       // data may be an array directly or wrapped
       setResources(Array.isArray(data) ? data : [])
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Resources] fetch error:', err)
-      setError(err?.message ?? 'Failed to load resources. Is the backend running?')
+      setError(err instanceof Error ? err.message : 'Failed to load resources. Is the backend running?')
     } finally {
       setLoading(false)
     }
@@ -193,7 +192,7 @@ export default function Resources() {
         style={{
           backgroundImage: `
             linear-gradient(135deg, rgba(22, 41, 70, 0.60) 0%, rgba(34, 53, 82, 0.60) 100%),
-            url('${imageUrl('Resources.png') }')
+            url('${imageUrl('Resources.webp') }')
           `,
           backgroundColor: '#1e3a5f' // Fallback color if image fails to load
         }}
@@ -313,9 +312,6 @@ export default function Resources() {
                   src={knowledgeImageUrl(resource.image_id)}
                   alt={resource.title}
                   className="res-card__bg-img"
-                  onError={() => {
-                    console.log('Image failed to load:', knowledgeImageUrl(resource.image_id))
-                  }}
                 />
 
                 {/* Default state: white box at bottom */}
@@ -350,7 +346,7 @@ export default function Resources() {
                       disabled={downloading}
                       title="Download PDF"
                     >
-                      ⬇
+                      <Download size={16} />
                     </button>
                   </div>
                 </div>
@@ -417,7 +413,6 @@ export default function Resources() {
                 src={knowledgeImageUrl(selectedResource.image_id)}
                 alt={selectedResource.title}
                 className="res-modal__img"
-                onError={() => console.log('Modal image failed to load')}
               />
               <div className="res-modal__img-overlay" />
               <button
@@ -472,7 +467,8 @@ export default function Resources() {
                   onClick={() => handleDownload(selectedResource)}
                   disabled={downloading}
                 >
-                  ⬇ {downloading ? 'Downloading…' : 'Download PDF'}
+                  <Download size={16} />
+                  {downloading ? 'Downloading…' : 'Download PDF'}
                 </button>
               </div>
             </div>

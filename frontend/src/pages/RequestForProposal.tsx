@@ -63,6 +63,7 @@ export default function RequestForProposal() {
 
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [loading, setLoading] = useState(false)
   const pageRef = useRef<HTMLDivElement>(null)
 
@@ -82,7 +83,7 @@ export default function RequestForProposal() {
     if (!formData.email.trim()) e.email = 'Email address is required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Enter a valid email'
 
-    if (formData.phone && !/^[+\d\s\-()\.]{7,16}$/.test(formData.phone))
+    if (formData.phone && !/^[+\d\s\-()]{7,16}$/.test(formData.phone))
       e.phone = 'Enter a valid phone number'
 
     if (!formData.inquiry_reason) e.inquiry_reason = 'Please select an inquiry reason'
@@ -107,6 +108,7 @@ export default function RequestForProposal() {
     e.preventDefault()
     if (!validate()) return
     setLoading(true)
+    setSubmitError(false)
 
     try {
       const response = await fetch(`${API_BASE_URL}/proposal/`, {
@@ -130,7 +132,8 @@ export default function RequestForProposal() {
       setTimeout(() => setSubmitted(false), 8000)
     } catch (error) {
       console.error('Failed to submit proposal:', error)
-      alert('Failed to submit your request. Please try again later.')
+      setSubmitError(true)
+      setTimeout(() => setSubmitError(false), 8000)
     } finally {
       setLoading(false)
     }
@@ -146,7 +149,7 @@ export default function RequestForProposal() {
       {/* ══════════════ HERO ══════════════ */}
       <section
         className="rfp-hero"
-        style={{ backgroundImage: `url(${imageUrl('proposalBG.jpg')})` }}
+        style={{ backgroundImage: `url(${imageUrl('proposalBG.webp')})` }}
       >
         <div className="rfp-hero__overlay" />
         <div className="rfp-hero__content">
@@ -185,7 +188,7 @@ export default function RequestForProposal() {
           <div className="rfp-card__accent" />
 
           <header className="rfp-formhead">
-            <span className="rfp-formhead__tag">Our approach</span>
+            {/* <span className="rfp-formhead__tag">Our approach</span> */}
             <h2 className="rfp-formhead__title">Tell us about your requirements</h2>
             <p className="rfp-formhead__sub">
               Fill in the details below and we'll get back to you within one business day.
@@ -212,19 +215,37 @@ export default function RequestForProposal() {
             </div>
           )}
 
+          {submitError && (
+            <div className="rfp-success rfp-success--error" role="alert">
+              <span className="rfp-success__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+              </span>
+              <div>
+                <p className="rfp-success__title">Request not submitted</p>
+                <p className="rfp-success__sub">
+                  Something went wrong. Please try again, or reach us directly.
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Form */}
           <form onSubmit={handleSubmit} noValidate className="rfp-form">
             {/* Row 1: First Name + Last Name */}
             <div className="rfp-row">
               <div className="rfp-field">
-                <label className="rfp-label">
+                <label className="rfp-label" htmlFor="rfp-first-name">
                   First name <span className="rfp-req">*</span>
                 </label>
                 <input
+                  id="rfp-first-name"
                   type="text"
                   name="first_name"
                   value={formData.first_name}
                   placeholder="Jane"
+                  autoComplete="given-name"
                   onChange={handleChange}
                   className={inputClass('first_name', 'rfp-input')}
                 />
@@ -237,14 +258,16 @@ export default function RequestForProposal() {
               </div>
 
               <div className="rfp-field">
-                <label className="rfp-label">
+                <label className="rfp-label" htmlFor="rfp-last-name">
                   Last name <span className="rfp-req">*</span>
                 </label>
                 <input
+                  id="rfp-last-name"
                   type="text"
                   name="last_name"
                   value={formData.last_name}
                   placeholder="Doe"
+                  autoComplete="family-name"
                   onChange={handleChange}
                   className={inputClass('last_name', 'rfp-input')}
                 />
@@ -260,14 +283,16 @@ export default function RequestForProposal() {
             {/* Row 2: Email + Phone */}
             <div className="rfp-row">
               <div className="rfp-field">
-                <label className="rfp-label">
+                <label className="rfp-label" htmlFor="rfp-email">
                   Email address <span className="rfp-req">*</span>
                 </label>
                 <input
+                  id="rfp-email"
                   type="email"
                   name="email"
                   value={formData.email}
                   placeholder="jane@company.com"
+                  autoComplete="email"
                   onChange={handleChange}
                   className={inputClass('email', 'rfp-input')}
                 />
@@ -280,12 +305,14 @@ export default function RequestForProposal() {
               </div>
 
               <div className="rfp-field">
-                <label className="rfp-label">Phone number</label>
+                <label className="rfp-label" htmlFor="rfp-phone">Phone number</label>
                 <input
+                  id="rfp-phone"
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   placeholder="+91 00000 00000"
+                  autoComplete="tel"
                   onChange={handleChange}
                   className={inputClass('phone', 'rfp-input')}
                 />
@@ -301,10 +328,11 @@ export default function RequestForProposal() {
             {/* Row 3: Inquiry Reason + Subject */}
             <div className="rfp-row">
               <div className="rfp-field">
-                <label className="rfp-label">
+                <label className="rfp-label" htmlFor="rfp-inquiry-reason">
                   Inquiry reason <span className="rfp-req">*</span>
                 </label>
                 <select
+                  id="rfp-inquiry-reason"
                   name="inquiry_reason"
                   value={formData.inquiry_reason}
                   onChange={handleChange}
@@ -326,10 +354,11 @@ export default function RequestForProposal() {
               </div>
 
               <div className="rfp-field">
-                <label className="rfp-label">
+                <label className="rfp-label" htmlFor="rfp-subject">
                   Subject <span className="rfp-req">*</span>
                 </label>
                 <input
+                  id="rfp-subject"
                   type="text"
                   name="subject"
                   value={formData.subject}
@@ -348,8 +377,9 @@ export default function RequestForProposal() {
 
             {/* Message / Additional Details */}
             <div className="rfp-field rfp-field--single">
-              <label className="rfp-label">Additional details</label>
+              <label className="rfp-label" htmlFor="rfp-message">Additional details</label>
               <textarea
+                id="rfp-message"
                 name="message"
                 value={formData.message}
                 rows={5}

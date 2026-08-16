@@ -14,7 +14,7 @@ export default function AIAutomation() {
       <section className="sp-hero">
         <div
           className="sp-hero__bg"
-          style={{ backgroundImage: `url(${imageUrl('WebPoster2.jpeg')})` }}
+          style={{ backgroundImage: `url(${imageUrl('Automation.webp')})` }}
         />
         <div className="sp-hero__overlay" />
         <div className="sp-container">
@@ -146,7 +146,7 @@ export default function AIAutomation() {
             }}>
               Interested in early access or a custom solution?
             </p>
-            <a
+            {/* <a
               href="/contact"
               style={{
                 display: 'inline-block',
@@ -168,7 +168,7 @@ export default function AIAutomation() {
               }}
             >
               Get in Touch
-            </a>
+            </a> */}
           </div>
         </div>
       </section>

@@ -36,7 +36,7 @@ export default function CorporateFinance() {
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
 
-      gsap.utils.toArray('.cf-section-header').forEach((header: any) => {
+      gsap.utils.toArray<Element>('.cf-section-header').forEach((header) => {
         gsap.fromTo(header,
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: header, start: 'top 85%' } }
@@ -48,14 +48,14 @@ export default function CorporateFinance() {
         { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.cf-spoke-diagram', start: 'top 75%' } }
       )
 
-      gsap.utils.toArray('.cf-spoke-row--left').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.cf-spoke-row--left').forEach((row, i) => {
         gsap.fromTo(row,
           { opacity: 0, x: -50 },
           { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.cf-spoke-diagram', start: 'top 75%' } }
         )
       })
 
-      gsap.utils.toArray('.cf-spoke-row--right').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.cf-spoke-row--right').forEach((row, i) => {
         gsap.fromTo(row,
           { opacity: 0, x: 50 },
           { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.cf-spoke-diagram', start: 'top 75%' } }
@@ -71,11 +71,11 @@ export default function CorporateFinance() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="cf-hero">
-        <div className="cf-hero__bg" style={{ backgroundImage: `url('${imageUrl('Corporate_fainance.png')}')` }} />
+        <div className="cf-hero__bg" style={{ backgroundImage: `url('${imageUrl('Corporate_fainance.webp')}')` }} />
         <div className="cf-hero__overlay" />
         <div className="cf-container">
           <div className="cf-hero__content">
-            <span className="cf-eyebrow">Strategic Finance</span>
+            {/* <span className="cf-eyebrow">Strategic Finance</span> */}
             <h1 className="cf-title">Corporate Finance Solutions</h1>
             <p className="cf-subtitle">
               Smart capital strategies for growth and risk management.

@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Construction Clients' },
-  { num: '20+', label: 'Years Experience' },
-  { num: 'Ind AS 115', label: 'Contract Experts' },
-]
-
 const WHY = [
   'Deep expertise in Ind AS 115 revenue recognition for long-duration contracts',
   'Specialist GST team handling works contracts and sub-contracting complexities',
@@ -198,9 +192,9 @@ export default function Construction() {
               Speak with a JHS construction specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="cn-btn cn-btn--cta">
+          {/* <a href="/contact" className="cn-btn cn-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

@@ -15,10 +15,80 @@ interface Card {
   route: string;
 }
 
-const cards: Card[] = [
+/* ─── API base — same convention used by the Excellencia/Regulatory/
+   White Papers listing pages ────────────────────────────────────── */
+const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api'
+
+interface ExcellenciaEntry {
+  heading: string;
+  short_description: string;
+  image_id?: string;
+  button_url?: string;
+  created_at?: string;
+}
+interface RegulatoryEntry {
+  title: string;
+  short_description: string;
+  image_id?: string;
+  created_at?: string;
+}
+interface WhitePaperEntry {
+  title: string;
+  short_description: string;
+  image_id?: string;
+  created_at?: string;
+}
+
+const yearOf = (iso?: string) => (iso ? new Date(iso).getFullYear() : new Date().getFullYear());
+
+// These three IDs are the ones swapped out for the latest admin-uploaded
+// content; the "STRATEGIC LEADERSHIP BRIEFING" card (id 1) has no matching
+// admin-managed category, so it stays static.
+const EXCELLENCIA_CARD_ID = 3;
+const REGULATORY_CARD_ID = 2;
+const WHITEPAPER_CARD_ID = 7;
+
+
+const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
+  id: EXCELLENCIA_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/excellencia/image/${entry.image_id}` : imageUrl('Card3.webp'),
+  category: "EXCELLENCIA",
+  meta: `JHS EXCELLENCIA · KNOWLEDGE LIBRARY · ${yearOf(entry.created_at)}`,
+  title: entry.heading,
+  hoverTitle: entry.heading,
+  hoverDescription: entry.short_description,
+  // route: entry.button_url || "/excellencia",
+  route: "/excellencia",
+});
+
+const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
+  id: REGULATORY_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/regulatory/image/${entry.image_id}` : imageUrl('Card1.webp'),
+  category: "REGULATORY",
+  meta: `JHS REGULATORY · COMPLIANCE UPDATE · ${yearOf(entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.short_description,
+  route: "/regulatory",
+});
+
+const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
+  id: WHITEPAPER_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/whitepapers/image/${entry.image_id}` : imageUrl('Fainance-report.webp'),
+  category: "WHITE PAPER",
+  meta: `JHS WHITE PAPERS · THOUGHT LEADERSHIP · ${yearOf(entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.short_description,
+  route: "/white-papers",
+});
+
+// Fallback content shown until the latest entries load (or if the API is
+// unreachable) so the carousel never renders empty.
+const DEFAULT_CARDS: Card[] = [
   {
     id: 1,
-    image: imageUrl('Card2.jpeg'),
+    image: imageUrl('Card2.webp'),
     category: "STRATEGIC LEADERSHIP BRIEFING",
     meta: "STRATEGIC LEADERSHIP BRIEFING · DATA GOVERNANCE · 2026",
     title: "The Rule 6 Maze: A Perspective for CEOs and Chairpersons",
@@ -28,8 +98,8 @@ const cards: Card[] = [
     route: "/resources/data-governance-rule-6",
   },
   {
-    id: 2,
-    image: imageUrl('Card1.jpeg'),
+    id: REGULATORY_CARD_ID,
+    image: imageUrl('Card1.webp'),
     category: "REGULATORY",
     meta: "Maharashtra Introduces Digital Partnership Firm Registration",
     title: "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
@@ -40,8 +110,8 @@ const cards: Card[] = [
   },
 
   {
-    id: 3,
-    image: imageUrl('Card3.jpeg'),
+    id: EXCELLENCIA_CARD_ID,
+    image: imageUrl('Card3.webp'),
     category: "EXCELLENCIA",
     meta: "JHS EXCELLENCIA · KNOWLEDGE LIBRARY · 2026",
     title: "JHS Excellencia Library Premium Research, Benchmarks & Strategic Frameworks",
@@ -51,8 +121,8 @@ const cards: Card[] = [
     route: "/excellencia",
   },
   {
-    id: 7,
-    image: imageUrl('Fainance-report.png'),
+    id: WHITEPAPER_CARD_ID,
+    image: imageUrl('Fainance-report.webp'),
     category: "WHITE PAPER",
     meta: "JHS WHITE PAPERS · THOUGHT LEADERSHIP · 2026",
     title: "EU Upholds Google's €4.1 Billion Android Fine",
@@ -68,6 +138,7 @@ const TRANSITION_MS = 700;
 const AUTO_SLIDE_MS = 3500;
 
 export default function Hero() {
+  const [cards, setCards] = useState<Card[]>(DEFAULT_CARDS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -80,6 +151,43 @@ export default function Hero() {
   const touchEndX = useRef<number | null>(null);
 
   const totalCards = cards.length;
+
+  // Pull the latest Excellencia / Regulatory / White Paper entries from the
+  // admin-managed database and swap them into the matching carousel cards.
+  // Each endpoint already returns newest-first, so entry [0] is "latest".
+  // On any failure the DEFAULT_CARDS fallback set just stays in place.
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const [excellencia, regulatory, whitepapers] = await Promise.all([
+        fetch(`${API_BASE}/excellencia/`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+        fetch(`${API_BASE}/regulatory/`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+        fetch(`${API_BASE}/whitepapers/`).then((r) => (r.ok ? r.json() : [])).catch(() => []),
+      ]);
+
+      if (cancelled) return;
+
+      setCards((prev) =>
+        prev.map((card) => {
+          if (card.id === EXCELLENCIA_CARD_ID && Array.isArray(excellencia) && excellencia.length > 0) {
+            return mapExcellenciaEntry(excellencia[0]);
+          }
+          if (card.id === REGULATORY_CARD_ID && Array.isArray(regulatory) && regulatory.length > 0) {
+            return mapRegulatoryEntry(regulatory[0]);
+          }
+          if (card.id === WHITEPAPER_CARD_ID && Array.isArray(whitepapers) && whitepapers.length > 0) {
+            return mapWhitePaperEntry(whitepapers[0]);
+          }
+          return card;
+        })
+      );
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const nextSlide = useCallback(() => {
     if (isAnimating) return;
@@ -149,25 +257,25 @@ export default function Hero() {
     resumeAutoSlide();
   };
 
-  const getVisibleCards = () => {
-    const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-    const nextIndex = (currentIndex + 1) % totalCards;
-    const prev2Index = (currentIndex - 2 + totalCards) % totalCards;
-    const next2Index = (currentIndex + 2) % totalCards;
-
-    return {
-      prev2: cards[prev2Index],
-      prev: cards[prevIndex],
-      current: cards[currentIndex],
-      next: cards[nextIndex],
-      next2: cards[next2Index],
-    };
+  // Signed distance from currentIndex, wrapped the short way around the
+  // loop (e.g. with 4 cards, index 3 is "-1" from index 0, not "+3").
+  const getOffset = (index: number) => {
+    let diff = index - currentIndex;
+    const half = totalCards / 2;
+    if (diff > half) diff -= totalCards;
+    if (diff < -half) diff += totalCards;
+    return diff;
   };
 
-  const visible = getVisibleCards();
+  const POSITION_BY_OFFSET = ["prev2", "prev", "current", "next", "next2"];
 
-  const renderCard = (card: Card, position: string) => {
-    if (!card) return null;
+  const renderCard = (card: Card, index: number) => {
+    const offset = getOffset(index);
+    // Anything beyond the 5 visible slots collapses onto the nearest edge
+    // slot — that slot is opacity:0 already, so it just stays invisible.
+    const clamped = Math.max(-2, Math.min(2, offset));
+    const position = POSITION_BY_OFFSET[clamped + 2];
+
     const isHovered = hoveredCard === card.id;
     const isCenter = position === "current";
     const isSide = position === "prev" || position === "next";
@@ -234,9 +342,9 @@ export default function Hero() {
         {/* Badge & Content - Visible on center, prev, and next cards */}
         {showContent && (
           <>
-            <div className={`hero__carousel-card-badge ${isHovered && isCenter ? "hero__carousel-card-badge--hidden" : ""}`}>
+            {/* <div className={`hero__carousel-card-badge ${isHovered && isCenter ? "hero__carousel-card-badge--hidden" : ""}`}>
               {card.category}
-            </div>
+            </div> */}
             <div className={`hero__carousel-card-content ${isSide ? "hero__carousel-card-content--side" : ""} ${isHovered && isCenter ? "hero__carousel-card-content--hidden" : ""}`}>
               <p className="hero__carousel-card-meta">{card.meta}</p>
               <h3 className="hero__carousel-card-title">{card.title}</h3>
@@ -257,13 +365,13 @@ export default function Hero() {
           className="hero__action-btn hero__action-btn--outline"
           onClick={() => navigate("/approval-for-proposal")}
         >
-          Request for Proposal
+          Business Opportunities
         </button>
         <button
           className="hero__action-btn hero__action-btn--solid"
           onClick={() => navigate("/about/careers")}
         >
-          Apply Now
+          Join Our Team
         </button>
         <LanguageSwitcher />
       </div>
@@ -290,11 +398,7 @@ export default function Hero() {
           onTouchEnd={handleTouchEnd}
         >
           <div className="hero__carousel-track">
-            {renderCard(visible.prev2, "prev2")}
-            {renderCard(visible.prev, "prev")}
-            {renderCard(visible.current, "current")}
-            {renderCard(visible.next, "next")}
-            {renderCard(visible.next2, "next2")}
+            {cards.map((card, index) => renderCard(card, index))}
           </div>
         </div>
 

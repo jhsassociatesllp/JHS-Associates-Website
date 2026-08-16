@@ -8,7 +8,7 @@ export default function VisionMission() {
   const sectionRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
-   
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -61,7 +61,7 @@ export default function VisionMission() {
             <div className="vision-mission__image-wrapper">
               {/* Replace with actual team image from src/image when available */}
               <img
-                src={imageUrl('visionmission1.jpg')}
+                src={imageUrl('visionmission1.webp')}
                 alt="Our Team"
                 className="vision-mission__image"
               />
@@ -142,19 +142,19 @@ export default function VisionMission() {
       {/* JHS GOLD STANDARD SECTION */}
       <div className="gold-standard">
         <div className="gold-standard__container">
-          
+
           {/* Header */}
           <div className="gold-standard__header">
             <h2 className="gold-standard__title">
               <span className="gold-standard__title-jhs">JHS</span>{" "}
               <span className="gold-standard__title-gold">GOLD</span>{" "}
-              <span className="gold-standard__title-standard">STANDARD</span>
+              <span className="gold-standard__title-standard">STANDARDS</span>
             </h2>
           </div>
-  
+
           {/* Circular Badges */}
           <div className="gold-standard__badges">
-            
+
             {/* Quality */}
             <div className="gold-standard__badge">
               <div className="gold-standard__circle">
@@ -230,4 +230,3 @@ export default function VisionMission() {
   );
 }
 
- 

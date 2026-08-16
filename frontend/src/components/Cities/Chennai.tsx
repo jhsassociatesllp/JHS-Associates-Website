@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Chennai.css'
 import './CityShared.css'
 
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
+import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
 
 const PARTNERS = [
-  { name: 'G Chandra sekaran', image: imageUrl('Chandra Shekaran.png'), qualifications: 'BA, DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandra@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
-  { name: 'Pranal P', image: imageUrl('Pranal p.png'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal.p@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
+  { name: 'G Chandrasekaran', image: imageUrl('Chandra-Shekaran.webp'), qualifications: 'DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandrasekaran@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
+  { name: 'Pranal P', image: imageUrl('Pranal p.webp'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
 
-const SectorIcons: Record<string, JSX.Element> = {
+const SectorIcons: Record<string, ReactElement> = {
   BFSI: (
     <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 16 L20 7 L35 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -53,8 +55,7 @@ const SPECIALIZATIONS = [
 const MAP_LOCATIONS = [
   {
     id: 'chennai', name: 'Chennai', tag: '',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9!2d80.2337!3d13.0416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c07a1e3b3d%3A0x4c9b5e9a8b9a8b9a!2sT.%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1680000000007',
-    address: 'No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017'
+    address: 'No: 43/65, South West Boag Road,T-Nagar, Chennai – 600017'
   },
   // {
   //   id: 'tnagar', name: 'T. Nagar', tag: 'Branch',
@@ -66,7 +67,7 @@ const MAP_LOCATIONS = [
   //   mapUrl: 'https://maps.google.com/maps?q=Anna%20Nagar%20Eastern%20Extn,%20Chennai,%20Tamil%20Nadu&t=&z=15&ie=UTF8&iwloc=&output=embed',
   //   address: '201, 2nd Floor, Tower C, Anna Nagar Eastern Extn, Chennai, Tamil Nadu – 600102'
   // },
-]
+].map(loc => ({ ...loc, mapUrl: mapEmbedUrl(loc.address) }))
 
 const IconMail = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>)
 const IconLinkedIn = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>)
@@ -93,7 +94,7 @@ export default function Chennai() {
   return (
     <div className="chn-page">
       <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.png')})` }} />
+        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.webp')})` }} />
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
           {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -103,14 +104,14 @@ export default function Chennai() {
         <div className="chn-hero__card">
           <div className="chn-hero__card-left">
             <span className="chn-hero__card-badge">T. Nagar</span>
-            <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road, T-Nagar, Chennai – 600017</span></div>
+            <div className="chn-hero__card-addr"><IconPin /><span>No: 43/65, South West Boag Road,T-Nagar, Chennai – 600017</span></div>
           </div>
           <div className="chn-hero__card-divider" />
-          {/* <div className="chn-hero__card-right">
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 44 1234 5678</span></div>
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chennai@jhsassociates.in</span></div>
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
-          </div> */}
+          <div className="chn-hero__card-right">
+            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 9840131965</span></div>
+            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chandrasekaran@jhsassociates.in</span></div>
+            {/* <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
+          </div>
         </div>
       </section>
 
@@ -178,7 +179,7 @@ export default function Chennai() {
                             type="button"
                             className="chn-pc-mail-option"
                             onClick={() => {
-                              navigator.clipboard.writeText(p.email)
+                              copyToClipboard(p.email)
                               setOpenMailFor(null)
                             }}
                           >

@@ -14,7 +14,7 @@ const insights: InsightItem[] = [
     eyebrow: "FINANCIAL INTEGRITY ",
     heading: "The JHS Insights Index",
     description:
-      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS Associates brings decades of expertise transforming complexity into clarity.",
+      "In a world of evolving regulations and economic uncertainty, the firms that thrive are those built on unshakeable financial discipline. JHS brings decades of expertise transforming complexity into clarity.",
   },
   {
     eyebrow: "RISK AND GOVERNANCE ",
@@ -35,7 +35,7 @@ export default function Stats() {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -83,7 +83,7 @@ export default function Stats() {
             <span className="stats__cta-arrow" aria-hidden="true">→</span>
           </Link>
           <div className="stats__tabs" role="tablist">
-            {insights.map((item, idx) => (
+            {insights.map((_, idx) => (
               <button
                 key={idx}
                 role="tab"
@@ -160,7 +160,7 @@ export default function Stats() {
       {/* Right panel — image */}
       <div className="stats__right" aria-hidden="true">
         <img
-          src={imageUrl('Insights2.png')}
+          src={imageUrl('Insights2.webp')}
           alt="JHS Insights"
           className={`stats__image ${imageLoaded ? 'stats__image--loaded' : ''}`}
           onLoad={() => setImageLoaded(true)}

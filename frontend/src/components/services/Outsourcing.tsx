@@ -40,7 +40,7 @@ export default function Outsourcing() {
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
       )
 
-      gsap.utils.toArray('.o-section-header').forEach((header: any) => {
+      gsap.utils.toArray<Element>('.o-section-header').forEach((header) => {
         gsap.fromTo(header,
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.6, scrollTrigger: { trigger: header, start: 'top 85%' } }
@@ -52,14 +52,14 @@ export default function Outsourcing() {
         { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.o-spoke-diagram', start: 'top 75%' } }
       )
 
-      gsap.utils.toArray('.o-spoke-row--left').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.o-spoke-row--left').forEach((row, i) => {
         gsap.fromTo(row,
           { opacity: 0, x: -50 },
           { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.o-spoke-diagram', start: 'top 75%' } }
         )
       })
 
-      gsap.utils.toArray('.o-spoke-row--right').forEach((row: any, i) => {
+      gsap.utils.toArray<Element>('.o-spoke-row--right').forEach((row, i) => {
         gsap.fromTo(row,
           { opacity: 0, x: 50 },
           { opacity: 1, x: 0, duration: 0.6, delay: i * 0.08, scrollTrigger: { trigger: '.o-spoke-diagram', start: 'top 75%' } }
@@ -75,11 +75,11 @@ export default function Outsourcing() {
 
       {/* ════ HERO SECTION ════ */}
       <section className="o-hero">
-        <div className="o-hero__bg" style={{ backgroundImage: `url('${imageUrl('Outsourcing.png')}')` }} />
+        <div className="o-hero__bg" style={{ backgroundImage: `url('${imageUrl('outsourcing.webp')}')` }} />
         <div className="o-hero__overlay" />
         <div className="o-container">
           <div className="o-hero__content">
-            <span className="o-eyebrow">Operational Excellence</span>
+            {/* <span className="o-eyebrow">Operational Excellence</span> */}
             <h1 className="o-title">Outsourcing Solutions</h1>
             <p className="o-subtitle">
               Reliable back-office support

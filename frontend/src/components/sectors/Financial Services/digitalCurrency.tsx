@@ -40,12 +40,6 @@ const HIGHLIGHTS = [
   },
 ]
 
-const STATS = [
-  { num: '30+', label: 'Crypto Clients' },
-  { num: 'VDA', label: 'Tax Specialists' },
-  { num: 'Web3', label: 'Ready Advisory' },
-]
-
 const WHY = [
   'First-mover expertise in India\'s evolving VDA tax and regulatory framework',
   'Deep knowledge of Section 115BBH, 194S and PMLA obligations for VDA businesses',
@@ -56,8 +50,8 @@ const WHY = [
 
 export default function DigitalCurrency() {
   const heroRef = useRef<HTMLDivElement>(null)
-  const hlRef   = useRef<HTMLDivElement>(null)
-  const whyRef  = useRef<HTMLDivElement>(null)
+  const hlRef = useRef<HTMLDivElement>(null)
+  const whyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -69,13 +63,17 @@ export default function DigitalCurrency() {
       )
       gsap.fromTo('.dc-card',
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' } }
+        {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: hlRef.current, start: 'top 82%' }
+        }
       )
       gsap.fromTo('.dc-why__item',
         { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' } }
+        {
+          opacity: 1, x: 0, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+          scrollTrigger: { trigger: whyRef.current, start: 'top 84%' }
+        }
       )
     })
     return () => ctx.revert()
@@ -192,9 +190,9 @@ export default function DigitalCurrency() {
               Speak with a JHS digital currency specialist and get a tailored advisory proposal.
             </p>
           </div>
-          <a href="/contact" className="dc-btn dc-btn--cta">
+          {/* <a href="/contact" className="dc-btn dc-btn--cta">
             Contact Us <ArrowUpRight size={16} />
-          </a>
+          </a> */}
         </div>
       </section>
 

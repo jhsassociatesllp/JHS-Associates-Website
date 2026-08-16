@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './OurOffices.css'
 import { imageUrl } from '../../utils/imageUrl'
+import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
 
 /* ─── Office Data ─────────────────────────────────────────── */
 const OFFICES = [
@@ -14,9 +15,9 @@ const OFFICES = [
     email: 'connect@jhsassociates.in',
     isPrimary: true,
     branches: [
-      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059' },
+      { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059', lat: 19.1073677, lng: 72.8804167 },
       { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
-      { name: 'Masjid', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MBMaharashtra - 400009" },
+      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009" },
       { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301' },
     ],
   },
@@ -24,9 +25,9 @@ const OFFICES = [
     city: 'Gujarat',
     badge: 'Regional Hub',
     state: 'Gujarat',
-    route: '/city/ahmedabad',
-    phone: '',
-    email: '',
+    route: '/city/gujarat',
+    phone: '+91 9374639574',
+    email: 'kalpesh.parmar@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054' },
@@ -39,36 +40,36 @@ const OFFICES = [
   {
     city: 'Delhi',
     badge: 'National Capital Office',
-    state: 'NCR',
+    state: 'Delhi',
     route: '/city/delhi',
-    phone: '',
-    email: '',
+    phone: '+91 9810333433',
+    email: 'nikhel.kochhar@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
-  {
-    city: 'Hyderabad',
-    badge: 'South India Tech Hub',
-    state: 'Telangana',
-    route: '/city/hyderabad',
-    phone: '',
-    email: '',
-    isPrimary: false,
-    branches: [
-      {
-        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
-      },
-    ],
-  },
+  // {
+  //   city: 'Hyderabad',
+  //   badge: 'South India Tech Hub',
+  //   state: 'Telangana',
+  //   route: '/city/hyderabad',
+  //   phone: '',
+  //   email: '',
+  //   isPrimary: false,
+  //   branches: [
+  //     {
+  //       name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
+  //     },
+  //   ],
+  // },
   {
     city: 'Bengaluru',
     badge: 'Silicon Valley Office',
     state: 'Karnataka',
     route: '/city/bengaluru',
-    phone: '',
-    email: '',
+    phone: '+91 9663397755',
+    email: 'narayana.malla@jhsassociates.in',
     isPrimary: false,
     branches: [
       { name: 'Bengaluru ', address: '3rd Floor, Aria, No. 541 AECS Layout Main Road, Above Costa Coffee, Bangalore – 560 037' },
@@ -79,8 +80,8 @@ const OFFICES = [
     badge: 'Eastern India Gateway',
     state: 'West Bengal',
     route: '/city/kolkata',
-    phone: '',
-    email: '',
+    phone: '+91 9831150209',
+    email: 'sharad.mohata@jhsassociates.in',
     isPrimary: false,
     branches: [
       {
@@ -93,8 +94,8 @@ const OFFICES = [
     badge: 'South India Financial Hub',
     state: 'Tamil Nadu',
     route: '/city/chennai',
-    phone: '',
-    email: '',
+    phone: '+91 9840131965',
+    email: 'chandrasekaran@jhsassociates.in',
     isPrimary: false,
     branches: [
       {
@@ -107,8 +108,8 @@ const OFFICES = [
     badge: 'International Offices',
     state: 'Worldwide',
     route: '/city/global',
-    phone: '',
-    email: '',
+    phone: '+971 4348 0046',
+    email: 'vinod.joshi@jhsuae.com',
     isPrimary: false,
     branches: [
       { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },
@@ -134,11 +135,6 @@ const IconMail = () => (
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
   </svg>
 )
-const IconClock = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-  </svg>
-)
 const IconArrow = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
@@ -148,23 +144,30 @@ const IconArrow = () => (
 /* ─── Component ───────────────────────────────────────────── */
 export default function OurOffices() {
   const [activeCity, setActiveCity] = useState('Mumbai')
+  const [activeBranchIdx, setActiveBranchIdx] = useState(0)
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
 
   const activeOffice = OFFICES.find(o => o.city === activeCity) ?? OFFICES[0]
+  const activeBranch = activeOffice.branches[activeBranchIdx] ?? activeOffice.branches[0]
+
+  const handleCityChange = (city: string) => {
+    setActiveCity(city)
+    setActiveBranchIdx(0)
+  }
 
   return (
     <div className="oo-page">
 
       {/* ════ HERO ════ */}
       <section className="oo-hero">
-        <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('OfficesBG.png')})` }} />
+        <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('OfficesBG.webp')})` }} />
         <div className="oo-hero__overlay" />
         <div className="oo-hero__content">
           {/* <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p> */}
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
-            10 cities · 13+ locations · Pan-India &amp; Global
+            10 cities · 13+ locations · Pan-India &amp; Global
           </p>
         </div>
         {/* Stats bar */}
@@ -173,7 +176,7 @@ export default function OurOffices() {
           <div className="oo-hero__stat-div" />
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">13</span><span className="oo-hero__stat-label">Locations</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">700</span><span className="oo-hero__stat-label">Professionals</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">700+</span><span className="oo-hero__stat-label">Professionals</span></div>
           <div className="oo-hero__stat-div" />
           {/* <div className="oo-hero__stat"><span className="oo-hero__stat-num">30+</span><span className="oo-hero__stat-label">Years of Trust</span></div> */}
         </div>
@@ -189,7 +192,7 @@ export default function OurOffices() {
               <button
                 key={o.city}
                 className={`oo-tab ${activeCity === o.city ? 'oo-tab--active' : ''}`}
-                onClick={() => setActiveCity(o.city)}
+                onClick={() => handleCityChange(o.city)}
               >
                 {o.city}
                 {o.isPrimary && <span className="oo-tab__hq">HQ</span>}
@@ -243,15 +246,45 @@ export default function OurOffices() {
               </h3>
               <div className="oo-detail__branches">
                 {activeOffice.branches.map((b, i) => (
-                  <div key={b.name} className="oo-detail__branch">
+                  <button
+                    key={b.name}
+                    type="button"
+                    className={`oo-detail__branch ${i === activeBranchIdx ? 'oo-detail__branch--active' : ''}`}
+                    onClick={() => setActiveBranchIdx(i)}
+                  >
                     <div className="oo-detail__branch-num">0{i + 1}</div>
                     <div className="oo-detail__branch-info">
                       <span className="oo-detail__branch-name">{b.name}</span>
                       <span className="oo-detail__branch-addr">{b.address}</span>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* ── MAP ── */}
+          <div className="oo-map" key={`${activeOffice.city}-${activeBranchIdx}`}>
+            <div className="oo-map__info">
+              <span className="oo-map__label">{activeBranch.name}</span>
+              <p className="oo-map__addr"><IconPin /> {activeBranch.address}</p>
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(activeBranch.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="oo-map__directions"
+              >
+                Get Directions <IconArrow />
+              </a>
+            </div>
+            <div className="oo-map__frame">
+              <iframe
+                title={`JHS ${activeOffice.city} — ${activeBranch.name}`}
+                src={mapEmbedUrlFor(activeBranch)}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

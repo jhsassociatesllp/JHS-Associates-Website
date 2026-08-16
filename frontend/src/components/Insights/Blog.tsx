@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import './SimpleInsight.css'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
@@ -21,7 +20,7 @@ export default function Blog() {
       {/* ════ CONTENT ════ */}
       <section className="simple-insight-content">
         <article className="blog-article">
-          <LazyImage src={imageUrl('Blogs.avif')} alt="Tax Compliance" className="blog-article__img" />
+          <LazyImage src={imageUrl('Blogs.webp')} alt="Tax Compliance" className="blog-article__img" />
           
           <div className="blog-article__body">
             <p>

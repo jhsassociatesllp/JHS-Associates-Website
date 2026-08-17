@@ -133,11 +133,13 @@ const MAP_LOCATIONS = [
   },
   {
     id: 'masjid', name: 'Masjid', tag: 'Branch',
-    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra - 400009"
+    address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D'mello Road, MB, Maharashtra - 400009",
+    lat: 18.9510385, lng: 72.8408999,
   },
   {
     id: 'kalyan', name: 'Kalyan', tag: 'Branch',
-    address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301'
+    address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301',
+    lat: 19.2412544, lng: 73.1454276,
   },
   {
     id: 'mazgaon', name: 'Mazgaon', tag: 'Branch',

@@ -66,6 +66,9 @@ class ApplicationStatusUpdate(BaseModel):
 
 class ApplicationResponse(ApplicationCreate):
     id: str
+    highest_qualification: Optional[str] = None
+    profile: Optional[str] = None
+    how_heard: Optional[str] = None
     job_title: Optional[str] = None
     resume_file_id: Optional[str] = None
     resume_filename: Optional[str] = None

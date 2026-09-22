@@ -115,7 +115,9 @@ export default function Delhi() {
 
       {/* ══ HERO ══ */}
       <section className="del-hero">
-        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.webp')})` }} />
+        <video className="del-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('dehli_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
           {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -225,7 +227,7 @@ export default function Delhi() {
           <div className="del-specials-inner">
             <div className="del-specials-left">
               <span className="del-section-hdr__tag del-section-hdr__tag--white">Expertise</span>
-              <h2 className="del-specials-title">We Specialised In</h2>
+              <h2 className="del-specials-title">We Specialise In</h2>
               <p className="del-specials-body">From risk-based audit frameworks to dispute resolution, our Delhi team delivers targeted advisory across North India's real estate and infrastructure sectors.</p>
               <div className="del-specials-accent-line" />
               <p className="del-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

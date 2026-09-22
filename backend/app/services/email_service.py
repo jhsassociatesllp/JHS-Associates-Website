@@ -1,30 +1,55 @@
 """
-Brevo (Sendinblue) SMTP Email Service
-======================================
-Sends transactional emails via the Brevo v3 SMTP API.
+Outlook / Microsoft 365 SMTP Email Service
+============================================
+Sends transactional emails via SMTP through an Outlook/Microsoft 365
+mailbox (smtp.office365.com, STARTTLS on port 587).
 Every public helper fires TWO emails:
   1.  HR notification   →  HR_NOTIFICATION_EMAIL
   2.  Thank‑you email   →  the submitting user
 Errors are logged but never crash the caller (fire‑and‑forget).
+
+Note: Microsoft has been disabling basic SMTP AUTH by default on newer
+tenants. If sending fails with an authentication error, enable "SMTP AUTH"
+for the sending mailbox in the Microsoft 365 admin center (Exchange admin
+center → mailboxes → that mailbox → manage email apps), and use an App
+Password for smtp_password if MFA is enabled on the account.
 """
 
 import asyncio
 import logging
-import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-import httpx
+import aiosmtplib
 
 from app.config.settings import settings
 
 logger = logging.getLogger("email_service")
 
+# asyncio only holds a WEAK reference to tasks created via create_task(), so
+# a task with no other reference can be garbage-collected before it ever
+# runs — silently dropping the email with no error. Keeping a strong
+# reference here (and discarding it once the task finishes) is the fix
+# recommended by the asyncio docs for exactly this fire-and-forget pattern.
+_background_email_tasks: set[asyncio.Task] = set()
+
+
+def _fire_and_forget(coro) -> asyncio.Task:
+    task = asyncio.create_task(coro)
+    _background_email_tasks.add(task)
+    task.add_done_callback(_background_email_tasks.discard)
+    return task
+
+
 # ── Config from settings ─────────────────────────────────────
-BREVO_API_KEY = settings.brevo_api_key
 HR_EMAIL = settings.hr_notification_email
 SENDER_EMAIL = settings.sender_email
 SENDER_NAME = settings.sender_name
 
-BREVO_URL = "https://api.brevo.com/v3/smtp/email"
+SMTP_HOST = settings.smtp_host
+SMTP_PORT = settings.smtp_port
+SMTP_USERNAME = settings.smtp_username
+SMTP_PASSWORD = settings.smtp_password
 
 
 # ── Low‑level sender ────────────────────────────────────────
@@ -34,39 +59,31 @@ async def _send_email(
     subject: str,
     html_body: str,
 ) -> bool:
-    """Send a single email via Brevo. Returns True on success."""
-    if not BREVO_API_KEY:
-        logger.warning("BREVO_API_KEY not configured – skipping email to %s", to_email)
+    """Send a single email via Outlook/Office 365 SMTP. Returns True on success."""
+    if not SMTP_USERNAME or not SMTP_PASSWORD:
+        logger.warning("SMTP credentials not configured – skipping email to %s", to_email)
         return False
 
-    payload = {
-        "sender": {"name": SENDER_NAME, "email": SENDER_EMAIL},
-        "to": [{"email": to_email, "name": to_name}],
-        "subject": subject,
-        "htmlContent": html_body,
-    }
+    message = MIMEMultipart("alternative")
+    message["From"] = f"{SENDER_NAME} <{SENDER_EMAIL}>"
+    message["To"] = f"{to_name} <{to_email}>" if to_name else to_email
+    message["Subject"] = subject
+    message.attach(MIMEText(html_body, "html"))
 
     try:
-        async with httpx.AsyncClient(timeout=15) as client:
-            resp = await client.post(
-                BREVO_URL,
-                json=payload,
-                headers={
-                    "api-key": BREVO_API_KEY,
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-            )
-            if resp.status_code in (200, 201):
-                logger.info("Email sent → %s  subject=%s", to_email, subject)
-                return True
-            else:
-                logger.error(
-                    "Brevo %s  to=%s  body=%s", resp.status_code, to_email, resp.text
-                )
-                return False
+        await aiosmtplib.send(
+            message,
+            hostname=SMTP_HOST,
+            port=SMTP_PORT,
+            username=SMTP_USERNAME,
+            password=SMTP_PASSWORD,
+            start_tls=True,
+            timeout=15,
+        )
+        logger.info("Email sent -> %s  subject=%s", to_email, subject)
+        return True
     except Exception as exc:
-        logger.error("Email send error → %s: %s", to_email, exc)
+        logger.error("Email send error -> %s: %s", to_email, exc)
         return False
 
 
@@ -144,7 +161,7 @@ async def notify_hr_new_contact(data: dict) -> None:
         + _row("Message", data.get("message", ""))
     )
     hr_html = _wrap_html("New Contact Form Submission", rows)
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(HR_EMAIL, "JHS HR Team", f"New Contact Submission from {name}", hr_html)
     )
 
@@ -162,7 +179,7 @@ async def notify_hr_new_contact(data: dict) -> None:
         </td></tr>
         """,
     )
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(email, name, "Thank you for contacting JHS Associates", user_body)
     )
 
@@ -189,7 +206,7 @@ async def notify_hr_new_alumni(data: dict) -> None:
         + _row("Message", data.get("message") or "—")
     )
     hr_html = _wrap_html("New Alumni Registration", rows)
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(HR_EMAIL, "JHS HR Team", f"New Alumni Registration: {full_name}", hr_html)
     )
 
@@ -206,7 +223,7 @@ async def notify_hr_new_alumni(data: dict) -> None:
         </td></tr>
         """,
     )
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(email, full_name, "Welcome back to JHS Associates Alumni Network", user_body)
     )
 
@@ -235,7 +252,7 @@ async def notify_hr_new_feedback(data: dict) -> None:
         + _row("Testimonial", data.get("testimonial") or "—")
     )
     hr_html = _wrap_html("New Client Feedback Received", rows)
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(
             HR_EMAIL, "JHS HR Team",
             f"New Client Feedback from {client}",
@@ -272,12 +289,14 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         + _row("Experience", data.get("experience_years") or "—")
         + _row("Highest Qualification", _with_other(data.get("highest_qualification"), data.get("highest_qualification_other")))
         + _row("Profile", _with_other(data.get("profile"), data.get("profile_other")))
+        + _row("Current CTC", data.get("current_ctc") or "—")
+        + _row("Expected CTC", data.get("expected_ctc") or "—")
         + _row("How They Heard About Us", how_heard)
         + _row("Remark", data.get("cover_letter") or "—")
         + _row("Resume", "Attached in the admin panel")
     )
     hr_html = _wrap_html("New Job Application Received", rows)
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(
             HR_EMAIL, "JHS HR Team",
             f"New Job Application: {name} for {job_title}",
@@ -300,10 +319,179 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         </td></tr>
         """,
     )
-    asyncio.create_task(
+    _fire_and_forget(
         _send_email(
             email, name,
             f"Application Received – {job_title} at JHS Associates",
             user_body,
         )
+    )
+
+
+# ══════════════════════════════════════════════════════════════
+#  5.  APPOINTMENT BOOKING
+# ══════════════════════════════════════════════════════════════
+
+async def notify_hr_new_appointment(data: dict) -> None:
+    """Fire‑and‑forget: HR + user emails for a Book Appointment submission."""
+    name = data.get("full_name", "")
+    email = data.get("email", "")
+    mobile = data.get("mobile", "")
+    speciality = data.get("speciality", "")
+    partner = data.get("partner") or "Any available partner"
+    date = data.get("date", "")
+    time = data.get("time", "")
+
+    rows = (
+        _row("Name", name)
+        + _row("Mobile", f"+91 {mobile}")
+        + _row("Email", email)
+        + _row("City", data.get("city") or "—")
+        + _row("Speciality", speciality)
+        + _row("Preferred Partner", partner)
+        + _row("Preferred Date", date)
+        + _row("Preferred Time", time)
+        + _row("Notes", data.get("message") or "—")
+    )
+    hr_html = _wrap_html("New Appointment Request", rows)
+    _fire_and_forget(
+        _send_email(HR_EMAIL, "JHS HR Team", f"New Appointment Request: {name}", hr_html)
+    )
+
+    user_body = _wrap_html(
+        "Appointment Request Received",
+        f"""
+        <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
+          Dear <strong>{name}</strong>,<br><br>
+          Thank you for booking an appointment with <strong>JHS &amp; Associates LLP</strong>
+          for <strong>{speciality}</strong>.<br><br>
+          Our team will call you on <strong>+91 {mobile}</strong> shortly to confirm your
+          preferred slot of <strong>{date} at {time}</strong>.<br><br>
+          Warm regards,<br>
+          <strong>JHS &amp; Associates LLP</strong>
+        </td></tr>
+        """,
+    )
+    _fire_and_forget(
+        _send_email(email, name, "Your appointment request — JHS Associates", user_body)
+    )
+
+
+# ══════════════════════════════════════════════════════════════
+#  6.  CONSULTATION REQUEST (Consulting page — partner booking)
+# ══════════════════════════════════════════════════════════════
+
+async def notify_hr_new_consultation_request(data: dict) -> None:
+    """Fire‑and‑forget: HR + user emails for a partner consultation request."""
+    name = data.get("user_name", "")
+    email = data.get("user_email", "")
+    partner_name = data.get("partner_name", "")
+    partner_role = data.get("partner_role") or "—"
+    appointment_type = data.get("appointment_type", "")
+
+    rows = (
+        _row("Requested By", name)
+        + _row("Email", email)
+        + _row("Partner", partner_name)
+        + _row("Partner Role", partner_role)
+        + _row("Location", data.get("partner_location") or "—")
+        + _row("Appointment Type", appointment_type)
+        + _row("Notes", data.get("message") or "—")
+    )
+    hr_html = _wrap_html("New Consultation Request", rows)
+    _fire_and_forget(
+        _send_email(
+            HR_EMAIL, "JHS HR Team",
+            f"New Consultation Request: {name} → {partner_name}",
+            hr_html,
+        )
+    )
+
+    user_body = _wrap_html(
+        "Consultation Request Received",
+        f"""
+        <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
+          Dear <strong>{name}</strong>,<br><br>
+          Thank you for requesting a <strong>{appointment_type}</strong> with
+          <strong>{partner_name}</strong> at <strong>JHS &amp; Associates LLP</strong>.<br><br>
+          Our team will reach out to you on <strong>{email}</strong> shortly to confirm the schedule.<br><br>
+          Warm regards,<br>
+          <strong>JHS &amp; Associates LLP</strong>
+        </td></tr>
+        """,
+    )
+    _fire_and_forget(
+        _send_email(email, name, "Your consultation request — JHS Associates", user_body)
+    )
+
+
+# ══════════════════════════════════════════════════════════════
+#  7.  REQUEST FOR PROPOSAL
+# ══════════════════════════════════════════════════════════════
+
+async def notify_hr_new_proposal(data: dict) -> None:
+    """Fire‑and‑forget: HR + user emails for a Request for Proposal submission."""
+    full_name = f"{data.get('first_name', '')} {data.get('last_name', '')}".strip()
+    email = data.get("email", "")
+    subject_line = data.get("subject", "")
+
+    rows = (
+        _row("Name", full_name)
+        + _row("Email", email)
+        + _row("Phone", data.get("phone") or "—")
+        + _row("Reason for Inquiry", data.get("inquiry_reason", ""))
+        + _row("Subject", subject_line)
+        + _row("Message", data.get("message") or "—")
+    )
+    hr_html = _wrap_html("New Request for Proposal", rows)
+    _fire_and_forget(
+        _send_email(HR_EMAIL, "JHS HR Team", f"New Proposal Request: {full_name}", hr_html)
+    )
+
+    user_body = _wrap_html(
+        "Request Received",
+        f"""
+        <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
+          Dear <strong>{full_name}</strong>,<br><br>
+          Thank you for reaching out to <strong>JHS &amp; Associates LLP</strong> regarding
+          <strong>{subject_line}</strong>.<br><br>
+          Our team has received your request and will get back to you within one business day.<br><br>
+          Warm regards,<br>
+          <strong>JHS &amp; Associates LLP</strong>
+        </td></tr>
+        """,
+    )
+    _fire_and_forget(
+        _send_email(email, full_name, "Your request has been received — JHS Associates", user_body)
+    )
+
+
+# ══════════════════════════════════════════════════════════════
+#  8.  SITE ACCOUNT WELCOME
+# ══════════════════════════════════════════════════════════════
+
+async def send_user_welcome_email(user: dict) -> None:
+    """Fire-and-forget welcome email for a new unified site account.
+    Best-effort only — a missing/broken mailbox must never block signup,
+    which is why every caller uses _fire_and_forget rather than awaiting
+    this directly."""
+    name = user.get("name") or user.get("first_name") or "there"
+    email = user.get("email", "")
+
+    body = _wrap_html(
+        "Welcome to JHS & Associates",
+        f"""
+        <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
+          Dear <strong>{name}</strong>,<br><br>
+          Your account has been created successfully. You can now download our
+          white papers, newsletters, articles and regulatory updates, apply for
+          open roles, request a proposal and book appointments — all using this
+          one sign-in.<br><br>
+          Warm regards,<br>
+          <strong>JHS &amp; Associates LLP</strong>
+        </td></tr>
+        """,
+    )
+    _fire_and_forget(
+        _send_email(email, name, "Welcome to JHS & Associates", body)
     )

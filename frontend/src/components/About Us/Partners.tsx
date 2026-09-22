@@ -3,6 +3,7 @@ import './SharedAbout.css'
 import './Partners.css'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
+import BookConsultationModal, { type ConsultationPartner } from '../common/BookConsultationModal'
 
 // Images
 
@@ -19,7 +20,7 @@ const splitSectorTags = (raw: string): string[] =>
     .map((part) => part.trim().replace(/\.$/, ''))
     .filter((part) => part.length > 2)
 
-const PARTNER_DATA = [
+export const PARTNER_DATA = [
   {
     category: "Governance Council",
     role: "Governance Council",
@@ -252,20 +253,21 @@ const PARTNER_DATA = [
     ]
   },
   {
-    category: "Bengaluru, Chennai & Kolkata Partners",
+    category: "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
     role: "Partner",
     members: [
-      // {
-      //   name: "Geethika Ghanta",
-      //   image: imageUrl('Geethika Ghanta.webp'),
-      //   creds: "FCA",
-      //   desc: "Partner based in Hyderabad specializing in risk advisory & compliance.",
-      //   location: "Hyderabad",
-      //   sector: ["Risk & Governance"],
-      //   teamSize: 7,
-      //   clientsServed: 25,
-      //   linkedin: "https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/"
-      // },
+      {
+        name: "Geethika Ghanta",
+        image: imageUrl('Geethika Ghanta.webp'),
+        creds: "ACA",
+        desc: "Expert in Taxation & Audit for Hyderabad-based clients.",
+        location: "Hyderabad",
+        sector: ["Taxation & Audit Specialist"],
+        role: "Associate",
+        email: "geethika.ghanta@jhsassociates.in",
+        linkedin: "https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/",
+
+      },
       {
         name: "Jagdish Solanki",
         image: imageUrl('Jagdish-Solanki-removebg-preview.webp'),
@@ -314,17 +316,18 @@ const PARTNER_DATA = [
         linkedin: "https://linkedin.com/",
 
       },
-      // {
-      //   name: "NM Pradeep",
-      //   image: imageUrl('NM Pradeep.webp'),
-      //   creds: "FCA",
-      //   desc: "Hyderabad partner leading statutory audit & tax advisory services.",
-      //   location: "Hyderabad",
-      //   sector: ["Statutory Audit & Assurance", "Tax & Regulatory"],
-      //   teamSize: 10,
-      //   clientsServed: 38,
-      //   linkedin: "https://linkedin.com/"
-      // },
+      {
+        name: "NM Pradeep",
+        image: imageUrl('NM Pradeep.webp'),
+        creds: "CA, CMA",
+        desc: "Expert in Indirect Tax & Advisory for Hyderabad-based clients.",
+        location: "Hyderabad",
+        sector: ["Indirect Tax & Advisory"],
+        role: "Associate",
+        email: "pradeep@jhsassociates.in",
+        linkedin: "https://www.linkedin.com/in/pradeep-jhs",
+
+      },
       {
         name: "Tripti Mohta",
         image: imageUrl('Tripti mohta.webp'),
@@ -364,7 +367,7 @@ const PARTNER_DATA = [
       {
         name: "Jhankhna Patel",
         image: imageUrl('Jhankana Patel.webp'),
-        creds: "ACA, CBAP, DISA, CPA Australia",
+        creds: "FCA, DISA, CPA Australia",
         desc: "Expert in Accounting, Tax, GST, Statutory & Internal Audit.",
         location: "Ahmedabad",
         sector: ["ESG Specialist"],
@@ -423,7 +426,7 @@ const PARTNER_DATA = [
         name: "Virendra Nayyar",
         image: imageUrl('Virendra-Nayyar-removebg-preview.webp'),
         creds: "B.Com (Hons), FCA ",
-        desc: "Expert in Internal Audit & Assurance Engagements.",
+        desc: "Expert in Statutory Assurance, GST & Taxation.",
         location: "Vadodara",
         sector: ["Internal Audit & Assurance"],
         // teamSize: 10,
@@ -448,9 +451,9 @@ const PARTNER_DATA = [
         name: "Milin Parekh",
         image: imageUrl('Milin-Parekh-removebg-preview.webp'),
         creds: "M.Com, FCA",
-        desc: "Expert in Accouting, Internal Audit & Consulting.",
+        desc: "Expert in Accouting, Internal Audit & Assurance.",
         location: "Vadodara",
-        sector: ["Internal Audit & Consulting"],
+        sector: ["Internal Audit & Assurance"],
         // teamSize: 8,
         // clientsServed: 32,
         linkedin: "https://www.linkedin.com/in/milin-parekh-63692061",
@@ -516,6 +519,27 @@ const IconSearch = () => (
   </svg>
 )
 
+// Results-count label: when a specific role is selected, the count should
+// name that role (singular/plural), not a hardcoded "partner(s)" - a filter
+// showing only Associates should say "Associates found", not "Partners
+// found". Falls back to the role-neutral "member(s)" when the results are
+// unfiltered by role (mixed roles, so no single role name applies).
+const ROLE_PLURALS: Record<string, string> = {
+  'Partner': 'Partners',
+  'Associate': 'Associates',
+  'Advisory Board Member': 'Advisory Board Members',
+  'Governance Council': 'Governance Council Members',
+}
+const ROLE_SINGULARS: Record<string, string> = {
+  'Governance Council': 'Governance Council Member',
+}
+const pluralRoleLabel = (role: string): string => ROLE_PLURALS[role] ?? `${role}s`
+const resultsLabel = (role: string, count: number): string => {
+  if (role === 'All') return count === 1 ? 'member' : 'members'
+  if (count === 1) return ROLE_SINGULARS[role] ?? role
+  return pluralRoleLabel(role)
+}
+
 const IconClose = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M18 6 6 18" /><path d="m6 6 12 12" />
@@ -543,9 +567,31 @@ const IconMail = () => (
   </svg>
 )
 
-function PartnerCard({ member, showCategory }: { member: Member; showCategory?: boolean }) {
+const IconCalendar = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+)
+
+const IconChevronDown = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+)
+
+function PartnerCard({
+  member,
+  showCategory,
+  onBook,
+}: {
+  member: Member
+  showCategory?: boolean
+  onBook: (partner: ConsultationPartner) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+
   return (
-    <div className="partner-card">
+    <div className={`partner-card ${expanded ? 'partner-card--expanded' : ''}`}>
       <div className="partner-card__img-wrapper">
         {member.image ? (
           <LazyImage src={member.image} alt={member.name} className="partner-card__img" />
@@ -569,40 +615,53 @@ function PartnerCard({ member, showCategory }: { member: Member; showCategory?: 
           <span className="partner-card__role">{member.role}</span>
         </div>
 
-        <p className="partner-card__desc">{member.desc}</p>
+        <div className="partner-card__actions">
+          <button
+            type="button"
+            className="partner-card__book-btn"
+            onClick={() => onBook({ name: member.name, role: member.role, location: member.location })}
+          >
+            <IconCalendar />
+            <span>Book Appointment</span>
+          </button>
+          <button
+            type="button"
+            className="partner-card__view-btn"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            <span>{expanded ? 'Hide Profile' : 'View Profile'}</span>
+            <span className={`partner-card__view-chevron ${expanded ? 'partner-card__view-chevron--open' : ''}`}>
+              <IconChevronDown />
+            </span>
+          </button>
+        </div>
 
-        {member.sector.length > 0 && (
-          <div className="partner-card__sectors">
-            {member.sector.map((s) => (
-              <span key={s} className="partner-card__sector-tag">{s}</span>
-            ))}
+        <div className={`partner-card__expand ${expanded ? 'partner-card__expand--open' : ''}`}>
+          <div className="partner-card__expand-inner">
+            <p className="partner-card__desc">{member.desc}</p>
+
+            {member.sector.length > 0 && (
+              <div className="partner-card__sectors">
+                {member.sector.map((s) => (
+                  <span key={s} className="partner-card__sector-tag">{s}</span>
+                ))}
+              </div>
+            )}
+
+            {member.email && (
+              <a href={`mailto:${member.email}`} className="partner-card__email">
+                <IconMail />
+                <span>{member.email}</span>
+              </a>
+            )}
+
+            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="partner-card__social">
+              <IconLinkedIn />
+              <span>Connect</span>
+            </a>
           </div>
-        )}
-
-        {/* <div className="partner-card__stats">
-          <div className="partner-card__stat">
-            <IconTeam />
-            <span className="partner-card__stat-val">{member.teamSize}</span>
-            <span className="partner-card__stat-lbl">Team Size</span>
-          </div>
-          <div className="partner-card__stat">
-            <IconClients />
-            <span className="partner-card__stat-val">{member.clientsServed}+</span>
-            <span className="partner-card__stat-lbl">Clients Served</span>
-          </div>
-        </div> */}
-
-        {member.email && (
-          <a href={`mailto:${member.email}`} className="partner-card__email">
-            <IconMail />
-            <span>{member.email}</span>
-          </a>
-        )}
-
-        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="partner-card__social">
-          <IconLinkedIn />
-          <span>Connect</span>
-        </a>
+        </div>
       </div>
     </div>
   )
@@ -615,6 +674,7 @@ export default function Partners() {
   const [location, setLocation] = useState('All')
   const [role, setRole] = useState('All')
   const [sector, setSector] = useState('All')
+  const [activePartner, setActivePartner] = useState<ConsultationPartner | null>(null)
 
   const allMembers: Member[] = useMemo(
     () =>
@@ -742,18 +802,18 @@ export default function Partners() {
           {isFiltering ? (
             <div className="partners-results">
               <p className="partners-results__count">
-                {filteredMembers.length} {filteredMembers.length === 1 ? 'partner' : 'partners'} found
+                {filteredMembers.length} {resultsLabel(role, filteredMembers.length)} found
               </p>
 
               {filteredMembers.length > 0 ? (
                 <div className="partner-grid">
                   {filteredMembers.map((member) => (
-                    <PartnerCard key={member.name} member={member} showCategory />
+                    <PartnerCard key={member.name} member={member} showCategory onBook={setActivePartner} />
                   ))}
                 </div>
               ) : (
                 <div className="partners-empty">
-                  <p>No partners match your filters.</p>
+                  <p>No {role === 'All' ? 'members' : pluralRoleLabel(role)} match your filters.</p>
                   <button className="pf-clear pf-clear--solid" onClick={clearFilters}>
                     Clear Filters
                   </button>
@@ -771,6 +831,7 @@ export default function Partners() {
                       <PartnerCard
                         key={mIdx}
                         member={{ ...member, category: section.category, role: (member as { role?: string }).role ?? section.role }}
+                        onBook={setActivePartner}
                       />
                     ))}
                   </div>
@@ -781,6 +842,10 @@ export default function Partners() {
 
         </div>
       </section>
+
+      {activePartner && (
+        <BookConsultationModal partner={activePartner} onClose={() => setActivePartner(null)} />
+      )}
     </div>
   )
 }

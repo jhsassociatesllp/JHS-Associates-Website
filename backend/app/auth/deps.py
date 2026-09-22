@@ -73,6 +73,9 @@ from app.database.connection import get_database
 from typing import List
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/admin/login-form")
+applicant_oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/careers/auth/google")
+consulting_oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/consulting/auth/google")
+site_user_oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 async def find_admin_by_email(email: str):
@@ -169,3 +172,113 @@ def require_admin_or_above(
         )
 
     return current_admin
+
+
+async def get_current_applicant(token: str = Depends(applicant_oauth2_scheme)) -> dict:
+    from app.controllers.applicant import get_applicant_by_id
+
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Please sign in with Google to apply",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except InvalidTokenError:
+        raise credentials_exception
+
+    if payload.get("type") != "applicant":
+        raise credentials_exception
+
+    applicant_id = payload.get("uid")
+    if not applicant_id:
+        raise credentials_exception
+
+    applicant = await get_applicant_by_id(applicant_id)
+    if applicant is None:
+        raise credentials_exception
+
+    # Missing status (older records) is treated as active for backward
+    # compatibility — only an explicit non-"active" status (e.g. an
+    # HR-suspended account) blocks the token.
+    if applicant.get("status") not in (None, "active"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This account has been disabled. Please contact HR.",
+        )
+
+    return applicant
+
+
+async def get_current_consulting_user(token: str = Depends(consulting_oauth2_scheme)) -> dict:
+    from app.controllers.consultation import get_consulting_user_by_id
+
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Please sign in with Google to request a consultation",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except InvalidTokenError:
+        raise credentials_exception
+
+    if payload.get("type") != "consulting_user":
+        raise credentials_exception
+
+    user_id = payload.get("uid")
+    if not user_id:
+        raise credentials_exception
+
+    user = await get_consulting_user_by_id(user_id)
+    if user is None:
+        raise credentials_exception
+
+    # Missing status (older records) is treated as active for backward
+    # compatibility — only an explicit non-"active" status (e.g. an
+    # HR-suspended account) blocks the token.
+    if user.get("status") not in (None, "active"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This account has been disabled. Please contact HR.",
+        )
+
+    return user
+
+
+async def get_current_user(token: str = Depends(site_user_oauth2_scheme)) -> dict:
+    """Unified site-account dependency — gates downloads, job applications,
+    proposal requests and appointment bookings behind one login."""
+    from app.controllers.user import get_user_by_id
+
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Please sign in to continue",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except InvalidTokenError:
+        raise credentials_exception
+
+    if payload.get("type") != "site_user":
+        raise credentials_exception
+
+    user_id = payload.get("uid")
+    if not user_id:
+        raise credentials_exception
+
+    user = await get_user_by_id(user_id)
+    if user is None:
+        raise credentials_exception
+
+    if user.get("status") not in (None, "active"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This account has been disabled. Please contact us.",
+        )
+
+    return user

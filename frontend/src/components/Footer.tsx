@@ -27,9 +27,7 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Compliance', path: '/services/compliance-learning' },
-  { name: 'Learning & Development', path: '/services/learning-development' },
-
+  { name: 'Compliance, Learning & Development', path: '/services/compliance-learning' },
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */
@@ -98,8 +96,8 @@ export default function Footer() {
               <LazyImage src={imageUrl('logo-footer.webp')} alt="JHS & Associates LLP" />
             </div>
             <p className="footer__brand-desc">
-              Trusted Chartered Accountants and Advisory Partners for Businesses across India.
-              Excellence, Integrity, and Expertise in Every Engagement.
+              Trusted Chartered Accountants and Advisory Partners for Businesses across India. <br />
+              EXCELLENCE, INTEGRITY AND EXPERTISE in Every Engagement.
             </p>
 
             {/* Services heading + pills */}

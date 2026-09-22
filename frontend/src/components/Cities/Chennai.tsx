@@ -94,7 +94,9 @@ export default function Chennai() {
   return (
     <div className="chn-page">
       <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.webp')})` }} />
+        <video className="chn-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('chennai_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
           {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}

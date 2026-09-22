@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form, De
 from fastapi.responses import StreamingResponse
 from app.schemas.article import ArticleCreate, ArticleUpdate, ArticleResponse
 from app.controllers import article as article_ctrl
-from app.auth.deps import require_admin_or_above
+from app.controllers import activity as activity_ctrl
+from app.auth.deps import require_admin_or_above, get_current_user
 from app.utils.http import content_disposition
 from app.schemas.admin import AdminInDB
 from io import BytesIO
@@ -76,16 +77,20 @@ async def get_image(image_id: str):
 
 
 @router.get("/pdf/{pdf_id}")
-async def get_pdf(pdf_id: str):
-    """Stream PDF from GridFS."""
+async def get_pdf(pdf_id: str, user: dict = Depends(get_current_user)):
+    """Stream PDF from GridFS. Requires sign-in; logs a download activity row."""
     try:
         content, filename, _ = await article_ctrl.get_file_from_gridfs(pdf_id)
+        title = await article_ctrl.get_title_by_pdf_id(pdf_id)
+        await activity_ctrl.log_download(user, "article", pdf_id, title or filename)
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
             headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=404, detail="PDF not found")
 

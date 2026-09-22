@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Search, Filter, X, Download } from 'lucide-react'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
+import { useGatedDownload } from '../../hooks/useGatedDownload'
 import './Resources.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -51,6 +52,7 @@ export default function Resources() {
   const [error,            setError]            = useState<string | null>(null)
   const [selectedResource, setSelectedResource] = useState<KnowledgeResource | null>(null)
   const [downloading,      setDownloading]      = useState(false)
+  const { openFile } = useGatedDownload()
   
   // Filter states
   const [searchTerm,       setSearchTerm]       = useState('')
@@ -163,19 +165,13 @@ export default function Resources() {
   const handleDownload = async (resource: KnowledgeResource) => {
     setDownloading(true)
     try {
-      const res = await fetch(knowledgePdfUrl(resource.pdf_id))
-      if (!res.ok) throw new Error('Download failed')
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = document.createElement('a')
-      a.href     = url
-      a.download = `${resource.title.replace(/\s+/g, '-').toLowerCase()}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    } catch {
-      alert('Could not download the PDF. Please try again.')
+      await openFile(
+        knowledgePdfUrl(resource.pdf_id),
+        `${resource.title.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+        'download',
+      )
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Could not download the PDF. Please try again.')
     } finally {
       setDownloading(false)
     }

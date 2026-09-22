@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './RequestForProposal.css'
 import { imageUrl } from '../utils/imageUrl'
+import { useSiteAuth } from '../context/SiteAuthContext'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -51,6 +52,8 @@ const ASSURANCES = [
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function RequestForProposal() {
+  const { user, token, openAuthModal } = useSiteAuth()
+
   const [formData, setFormData] = useState<FormData>({
     first_name: '',
     last_name: '',
@@ -70,6 +73,18 @@ export default function RequestForProposal() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  /* Prefill from the signed-in account, same as the Careers apply form does
+     from its applicant session. */
+  useEffect(() => {
+    if (!user) return
+    setFormData((prev) => ({
+      ...prev,
+      first_name: prev.first_name || user.first_name || user.name.split(' ')[0] || '',
+      last_name: prev.last_name || user.last_name || user.name.split(' ').slice(1).join(' ') || '',
+      email: user.email,
+    }))
+  }, [user])
 
   /* ── Validation ──────────────────────────────────────── */
   const validate = (): boolean => {
@@ -106,6 +121,7 @@ export default function RequestForProposal() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!token) { openAuthModal('request a proposal'); return }
     if (!validate()) return
     setLoading(true)
     setSubmitError(false)
@@ -113,10 +129,14 @@ export default function RequestForProposal() {
     try {
       const response = await fetch(`${API_BASE_URL}/proposal/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(formData),
       })
 
+      if (response.status === 401 || response.status === 403) {
+        openAuthModal('request a proposal')
+        throw new Error('Your session has expired. Please sign in again.')
+      }
       if (!response.ok) throw new Error('Network response was not ok')
 
       setSubmitted(true)
@@ -231,7 +251,22 @@ export default function RequestForProposal() {
             </div>
           )}
 
+          {/* Sign-in gate — same idea as the Careers apply form: submitting a
+              request requires the unified site account, so it's captured
+              before the form fields render rather than only at submit. */}
+          {!user && (
+            <div className="rfp-authgate">
+              <p className="rfp-authgate__text">
+                Sign in to request a proposal. We'll use your account to follow up and let you track this request.
+              </p>
+              <button type="button" className="rfp-authgate__btn" onClick={() => openAuthModal('request a proposal')}>
+                Sign In / Sign Up
+              </button>
+            </div>
+          )}
+
           {/* Form */}
+          {user && (
           <form onSubmit={handleSubmit} noValidate className="rfp-form">
             {/* Row 1: First Name + Last Name */}
             <div className="rfp-row">
@@ -244,7 +279,7 @@ export default function RequestForProposal() {
                   type="text"
                   name="first_name"
                   value={formData.first_name}
-                  placeholder="Jane"
+                  placeholder="Enter Your Frist Name"
                   autoComplete="given-name"
                   onChange={handleChange}
                   className={inputClass('first_name', 'rfp-input')}
@@ -266,7 +301,7 @@ export default function RequestForProposal() {
                   type="text"
                   name="last_name"
                   value={formData.last_name}
-                  placeholder="Doe"
+                  placeholder="Enter Your Last"
                   autoComplete="family-name"
                   onChange={handleChange}
                   className={inputClass('last_name', 'rfp-input')}
@@ -291,7 +326,7 @@ export default function RequestForProposal() {
                   type="email"
                   name="email"
                   value={formData.email}
-                  placeholder="jane@company.com"
+                  placeholder="Enter Your Name "
                   autoComplete="email"
                   onChange={handleChange}
                   className={inputClass('email', 'rfp-input')}
@@ -311,7 +346,7 @@ export default function RequestForProposal() {
                   type="tel"
                   name="phone"
                   value={formData.phone}
-                  placeholder="+91 00000 00000"
+                  placeholder="Enter Phone Number"
                   autoComplete="tel"
                   onChange={handleChange}
                   className={inputClass('phone', 'rfp-input')}
@@ -422,6 +457,7 @@ export default function RequestForProposal() {
               </p>
             </div>
           </form>
+          )}
         </div>
       </div>
     </div>

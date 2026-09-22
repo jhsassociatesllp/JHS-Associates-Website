@@ -33,7 +33,10 @@ from passlib.context import CryptContext
 
 SECRET_KEY = "supersecretkey_jhs_admin_panel_do_not_use_in_prod_like_this"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
+# Admin panel session length. Used only by the two /admin/login* routes —
+# every other token type (site users, careers, consulting) sets its own
+# expires_delta and ignores this constant.
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 2
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

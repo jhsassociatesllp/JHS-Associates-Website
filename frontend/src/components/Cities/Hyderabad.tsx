@@ -94,7 +94,9 @@ export default function Hyderabad() {
   return (
     <div className="hyd-page">
       <section className="hyd-hero">
-        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.webp')})` }} />
+        <video className="hyd-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('hydrabad_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
           {/* <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -117,7 +119,7 @@ export default function Hyderabad() {
 
       <div className="hyd-ribbon">
         <div className="hyd-ribbon__inner">
-          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Associates'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="hyd-ribbon__item"><span className="hyd-ribbon__num">{num}</span><span className="hyd-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -127,7 +129,7 @@ export default function Hyderabad() {
           <div className="hyd-container">
             <div className="hyd-section-hdr">
               <span className="hyd-section-hdr__tag">Our Team</span>
-              <h2 className="hyd-section-hdr__title">Hyderabad Partners</h2>
+              <h2 className="hyd-section-hdr__title">Hyderabad Associates</h2>
               <p className="hyd-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Hyderabad.</p>
             </div>
             <div className="hyd-partners-grid">
@@ -202,7 +204,7 @@ export default function Hyderabad() {
             <div className="hyd-specials-inner">
               <div className="hyd-specials-left">
                 <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
-                <h2 className="hyd-specials-title">We Specialised In</h2>
+                <h2 className="hyd-specials-title">We Specialise In</h2>
                 <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
                 <div className="hyd-specials-accent-line" />
                 <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

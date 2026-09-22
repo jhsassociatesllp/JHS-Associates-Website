@@ -17,6 +17,8 @@ import AdminContacts from './pages/AdminContacts';   // ✅ NEW
 import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
 import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
 import AdminCareers from './pages/AdminCareers';
+import AdminAppointments from './pages/AdminAppointments';
+import AdminUsers from './pages/AdminUsers';         // ✅ SITE ACCOUNT
 
 const theme = createTheme({
   palette: {
@@ -52,6 +54,8 @@ export default function App() {
               <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
               <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}
               <Route path="/careers" element={<AdminCareers />} />
+              <Route path="/appointments" element={<AdminAppointments />} />
+              <Route path="/users" element={<AdminUsers />} /> {/* ✅ SITE ACCOUNT */}
             </Route>
           </Route>
 

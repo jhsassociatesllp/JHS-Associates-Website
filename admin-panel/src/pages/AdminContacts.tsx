@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AdminContacts.css';
+
+// All admin-facing timestamps are shown in Indian Standard Time regardless
+// of the viewer's own machine/browser timezone, since the team reviewing
+// these submissions is based in India.
+const IST_TIME_ZONE = 'Asia/Kolkata';
+const istDateKey = (d: Date) => d.toLocaleDateString('en-CA', { timeZone: IST_TIME_ZONE });
 
 interface Contact {
   id: string;
@@ -22,13 +29,12 @@ const AdminContacts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-  console.log("API Base URL", API_BASE_URL)
 
   // Fetch contacts
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/admin/contacts/`, {
+      const response = await fetch(`${API_BASE_URL}/admin/contacts`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -65,6 +71,17 @@ const AdminContacts: React.FC = () => {
     return `${diffInMonths} months ago`;
   };
 
+  const stats = useMemo(() => {
+    const now = new Date();
+    const todayKey = istDateKey(now);
+    const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
+    return {
+      total: contacts.length,
+      today: contacts.filter((c) => istDateKey(new Date(c.created_at)) === todayKey).length,
+      thisWeek: contacts.filter((c) => new Date(c.created_at).getTime() >= weekAgo).length,
+    };
+  }, [contacts]);
+
   // Filter contacts based on search
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -91,6 +108,22 @@ const AdminContacts: React.FC = () => {
         </p>
       </div>
 
+      {/* Stats */}
+      <div className="contacts-stats-row">
+        <div className="contacts-stat-card">
+          <p className="contacts-stat-label">Total</p>
+          <p className="contacts-stat-value">{stats.total}</p>
+        </div>
+        <div className="contacts-stat-card">
+          <p className="contacts-stat-label">Today</p>
+          <p className="contacts-stat-value">{stats.today}</p>
+        </div>
+        <div className="contacts-stat-card">
+          <p className="contacts-stat-label">This Week</p>
+          <p className="contacts-stat-value">{stats.thisWeek}</p>
+        </div>
+      </div>
+
       {/* Action Bar */}
       <div className="contacts-action-bar">
         <div className="contacts-search">
@@ -103,11 +136,12 @@ const AdminContacts: React.FC = () => {
         </div>
         
         <div className="contacts-actions">
-          <button 
+          <button
             className="contacts-btn contacts-btn-icon icon-refresh"
             onClick={fetchContacts}
             title="Refresh"
           >
+            <RefreshCw size={16} />
           </button>
           
           <div className="contacts-stats">
@@ -185,12 +219,13 @@ const AdminContacts: React.FC = () => {
                   <div className="contact-card-footer">
                     <div className="contact-date">
                       Submitted on {new Date(contact.created_at).toLocaleDateString('en-US', {
+                        timeZone: IST_TIME_ZONE,
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
-                      })}
+                      })} IST
                     </div>
                     <div className="contact-actions">
                       <button 

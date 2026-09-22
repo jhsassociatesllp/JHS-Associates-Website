@@ -73,26 +73,54 @@ const SectorIcons: Record<string, ReactElement> = {
       <path d="M27 9 L29 11 L33 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
+  Textiles: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="20" cy="8" rx="9" ry="3" stroke="currentColor" strokeWidth="1.8" />
+      <ellipse cx="20" cy="32" rx="9" ry="3" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M11 8 L11 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M29 8 L29 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M13 15 Q20 18 27 15" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M13 25 Q20 28 27 25" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  ),
+  Engineering: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 31 L34 31" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M8 31 L8 22 L20 10 L32 22 L32 31" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 22 L32 22" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M14 22 L14 31 M20 22 L20 31 M26 22 L26 31" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  ),
+  Infotech: (
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="9" width="28" height="19" rx="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M14 15.5 L10 18.5 L14 21.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 15.5 L26 18.5 L22 21.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 28 L20 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M15 32 L25 32" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
 }
 
 /* ─── Partner Data ─────────────────────────────────── */
 const PARTNERS = [
-  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA', designation: 'Internal Audit & Assurance ', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
+  { name: 'Kalpesh Parmar', image: imageUrl('Kalpesh-Parmar-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA', designation: 'Statutory Audit & Assurance', email: 'kalpesh.parmar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/kalpesh-parmar-016a502b' },
+  { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA', designation: 'Internal Audit, Assurance & GST ', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
   { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.webp'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah-b822791a7/' },
   { name: 'Dhaval Thakkar', image: imageUrl('Dhaval-Thakkar-removebg-preview.webp'), qualifications: 'ACA', designation: 'Internal Audit Risk Advisory & Insurance.', email: 'dhaval.thakkar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/' },
   { name: 'Viranch Modi', image: imageUrl('Viranch-Modi-removebg-preview.webp'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'viranch.modi@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/viranch-modi-aa4106227/' },
   { name: 'Shreena Panara', image: imageUrl('Shreena Parana.webp'), qualifications: 'ACA', designation: 'Indirect Tax', email: 'shreena.panara@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-shreena-panara-61b27820a' },
-  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.webp'), qualifications: 'M.Com, FCA', designation: 'Internal Audit & Consulting', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
+  { name: 'Milin Parekh', image: imageUrl('Milin-Parekh-removebg-preview.webp'), qualifications: 'M.Com, FCA', designation: 'Internal Audit & Assurance', email: 'milin.parekh@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/milin-parekh-63692061' },
   { name: 'Mehul Shah', image: imageUrl('Mehul-Shah-removebg-preview.webp'), qualifications: 'FCA', designation: 'Income Tax & GST', email: 'mehul.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/mehul-shah-9aaaa130b' },
   { name: 'Alpesh Vaniya', image: imageUrl('Alpesh-Vaniya-removebg-preview.webp'), qualifications: 'ACA', designation: 'Internal Audit & Tax Consulting', email: 'alpesh.vaniya@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/alpesh-vaniya-62544b190' },
   { name: 'Raj Shah', image: imageUrl('Raj-Shah-removebg-preview.webp'), qualifications: 'ACA ', designation: 'Tax Litigation & Risk Advisory', email: 'raj.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-raj-a-shah' },
   { name: 'Parth Shah', image: imageUrl('Parth_shah.webp'), qualifications: 'FCA', designation: 'Financial Strategy Specialist', email: 'parth.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in' },
-  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.webp'), qualifications: 'ACA, CBAP, DISA, CPA Australia', designation: 'ESG Specialist', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
+  { name: 'Jhankhna Patel', image: imageUrl('Jhankana Patel.webp'), qualifications: 'FCA, DISA, CPA Australia', designation: 'ESG Specialist', email: 'jhankhna.patel@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jhankhnapatel09' },
   { name: 'Nidhi Kotecha', image: imageUrl('Nidhi-kotecha.webp'), qualifications: 'ACA', designation: 'US Tax & Compliance', email: '', linkedin: 'https://www.linkedin.com/in/nidhi-kotecha-9758a6193/' },
 ]
 
 /* ─── Sectors ─────────────────────────────────────── */
-const SECTORS = ["NPO", "NGO's", "Manufacturing", "Retail", "Corporates & Trusts", "Individual Investors"]
+const SECTORS = ["NPO", "NGO's", "Manufacturing", "Retail", "Corporates & Trusts", "Individual Investors", "Textiles", "Engineering", "Infotech"]
 
 /* ─── Specialisations ─────────────────────────────── */
 const SPECIALIZATIONS = [
@@ -174,7 +202,9 @@ export default function Gujarat() {
 
       {/* ══ HERO ══ */}
       <section className="ahm-hero">
-        <div className="ahm-hero__photo" style={{ backgroundImage: `url(${imageUrl('Ahmedabad.webp')})` }} />
+        <video className="ahm-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('ahmedabad_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="ahm-hero__overlay" />
         <div className="ahm-hero__content">
           {/* <span className="ahm-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -201,7 +231,7 @@ export default function Gujarat() {
       {/* ══ STATS RIBBON ══ */}
       <div className="ahm-ribbon">
         <div className="ahm-ribbon__inner">
-          {([['12', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['13', 'Expert Partners'], ['6', 'Sectors Served'], ['7', 'Specialisations'], ['5', 'Gujarat Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="ahm-ribbon__item">
               <span className="ahm-ribbon__num">{num}</span>
               <span className="ahm-ribbon__lbl">{lbl}</span>
@@ -302,7 +332,7 @@ export default function Gujarat() {
           <div className="ahm-specials-inner">
             <div className="ahm-specials-left">
               <span className="ahm-section-hdr__tag ahm-section-hdr__tag--white">Expertise</span>
-              <h2 className="ahm-specials-title">We Specialised In</h2>
+              <h2 className="ahm-specials-title">We Specialise In</h2>
               <p className="ahm-specials-body">From individual tax planning to global accounts outsourcing, our Ahmedabad team brings specialised capabilities across tax, compliance, and advisory services.</p>
               <div className="ahm-specials-accent-line" />
               <p className="ahm-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

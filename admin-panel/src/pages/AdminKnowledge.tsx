@@ -29,6 +29,7 @@ const AdminKnowledge: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -170,10 +171,17 @@ const AdminKnowledge: React.FC = () => {
   };
 
   // Filter resources based on search
-  const filteredResources = knowledgeResources.filter(resource =>
-    resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    resource.short_description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredResources = knowledgeResources.filter(resource => {
+    const matchesSearch =
+      resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      resource.short_description.toLowerCase().includes(searchTerm.toLowerCase());
+    const isUpdated = !!resource.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedResources = filteredResources.slice(
@@ -183,14 +191,62 @@ const AdminKnowledge: React.FC = () => {
 
   const totalPages = Math.ceil(filteredResources.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = knowledgeResources.filter(r => !r.last_edited_at).length;
+  const updatedCount = knowledgeResources.filter(r => r.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = knowledgeResources.filter(r => {
+    const d = new Date(r.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="knowledge-container">
       {/* Header */}
       <div className="knowledge-header">
-        <h1 className="knowledge-title">Knowledge Resources</h1>
-        <p className="knowledge-subtitle">
-          Create and manage knowledge resources for your website
-        </p>
+        <div>
+          <p className="knowledge-eyebrow">Content Library</p>
+          <h1 className="knowledge-title">Knowledge Resources</h1>
+          <p className="knowledge-subtitle">
+            Create, review and manage your website's knowledge resources.
+          </p>
+        </div>
+        <button
+          className="knowledge-btn knowledge-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Resource
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="knowledge-stats-row">
+        <div className="knowledge-stat-card blue">
+          <p className="knowledge-stat-label">Total Resources</p>
+          <p className="knowledge-stat-value">{knowledgeResources.length}</p>
+          <p className="knowledge-stat-sub">All knowledge content</p>
+        </div>
+        <div className="knowledge-stat-card green">
+          <p className="knowledge-stat-label">Published</p>
+          <p className="knowledge-stat-value">{publishedCount}</p>
+          <p className="knowledge-stat-sub">
+            {knowledgeResources.length > 0 ? Math.round((publishedCount / knowledgeResources.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="knowledge-stat-card orange">
+          <p className="knowledge-stat-label">Updated</p>
+          <p className="knowledge-stat-value">{updatedCount}</p>
+          <p className="knowledge-stat-sub">Edited after publish</p>
+        </div>
+        <div className="knowledge-stat-card dark">
+          <p className="knowledge-stat-label">Added This Month</p>
+          <p className="knowledge-stat-value">{addedThisMonthCount}</p>
+          <p className="knowledge-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -198,31 +254,24 @@ const AdminKnowledge: React.FC = () => {
         <div className="knowledge-search">
           <input
             type="text"
-            placeholder="Search resources..."
+            placeholder="Search resources by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
-        <div className="knowledge-actions">
-          <button 
-            className="knowledge-btn knowledge-btn-icon icon-refresh"
-            onClick={fetchKnowledgeResources}
-            title="Refresh"
-          >
-          </button>
-          
-          <button
-            className="knowledge-btn knowledge-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Resource
-          </button>
+
+        <div className="knowledge-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="knowledge-btn knowledge-btn-icon icon-refresh"
+          onClick={fetchKnowledgeResources}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Resources Table */}
@@ -232,8 +281,8 @@ const AdminKnowledge: React.FC = () => {
             <div className="knowledge-header-avatar">
             </div>
             <div className="knowledge-header-text">
-              <h3>Knowledge Resources</h3>
-              <p>{filteredResources.length} total resources</p>
+              <h3>Resource directory</h3>
+              <p>{paginatedResources.length} records shown · {filteredResources.length} total resources</p>
             </div>
           </div>
         </div>

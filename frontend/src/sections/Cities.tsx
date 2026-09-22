@@ -37,12 +37,12 @@ const citiesList = [
     image: imageUrl('Bangaluru.webp'),
   },
 
-  // {
-  //   name: "Telangana",
-  //   slug: "hyderabad",
-  //   address: "Hyderabad",
-  //   image: imageUrl('Hyderabad.webp'),
-  // },
+  {
+    name: "Telangana",
+    slug: "hyderabad",
+    address: "Hyderabad",
+    image: imageUrl('Hyderabad.webp'),
+  },
   {
     name: "Tamil Nadu",
     slug: "chennai",

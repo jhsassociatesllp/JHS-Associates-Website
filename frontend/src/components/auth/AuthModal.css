@@ -1,0 +1,218 @@
+.am-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: am-fade 0.18s var(--transition);
+}
+
+@keyframes am-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.am-panel {
+  position: relative;
+  width: min(440px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: var(--color-bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  padding: 36px 32px 28px;
+  font-family: var(--font-sans);
+  animation: am-pop 0.22s var(--transition);
+}
+
+@keyframes am-pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.am-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  transition: background 0.2s var(--transition), color 0.2s var(--transition);
+}
+
+.am-close:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.am-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-secondary-dk);
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.am-intent {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0 0 20px;
+}
+
+.am-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.am-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.am-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.am-field input {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--color-text);
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  background: var(--color-bg-white);
+  transition: border-color 0.15s var(--transition);
+}
+
+.am-field input:focus {
+  border-color: var(--color-primary);
+}
+
+.am-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.am-terms input {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+
+.am-terms a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.am-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin: 0;
+}
+
+.am-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.8rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s var(--transition);
+}
+
+.am-submit:hover:not(:disabled) {
+  background: var(--color-primary-dk);
+}
+
+.am-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.am-spin {
+  animation: am-spin 0.8s linear infinite;
+}
+
+@keyframes am-spin {
+  to { transform: rotate(360deg); }
+}
+
+.am-switch {
+  background: none;
+  border: none;
+  color: var(--color-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  padding: 2px;
+}
+
+.am-switch:hover {
+  text-decoration: underline;
+}
+
+.am-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-text-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 4px 0;
+}
+
+.am-divider::before,
+.am-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.am-google-btn {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .am-panel { padding: 28px 20px 22px; }
+  .am-row { grid-template-columns: 1fr; }
+}

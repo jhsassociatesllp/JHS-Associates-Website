@@ -179,12 +179,13 @@ export default function Login() {
               sx={{
                 mb: 2.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, 
+                  borderRadius: 2,
                   fontSize: '0.875rem',
                   backgroundColor: '#fafbfc',
                   transition: 'all 0.2s',
                   '& fieldset': { borderColor: '#e2e8f0' },
-                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&:hover': { backgroundColor: '#fff' },
+                  '&:hover fieldset': { borderColor: '#696cff' },
                   '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
                   '&.Mui-focused': { backgroundColor: '#fff' },
                 },
@@ -227,12 +228,13 @@ export default function Login() {
               sx={{
                 mb: 1.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, 
+                  borderRadius: 2,
                   fontSize: '0.875rem',
                   backgroundColor: '#fafbfc',
                   transition: 'all 0.2s',
                   '& fieldset': { borderColor: '#e2e8f0' },
-                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&:hover': { backgroundColor: '#fff' },
+                  '&:hover fieldset': { borderColor: '#696cff' },
                   '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
                   '&.Mui-focused': { backgroundColor: '#fff' },
                 },

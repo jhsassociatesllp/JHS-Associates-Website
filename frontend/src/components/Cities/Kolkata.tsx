@@ -210,7 +210,9 @@ export default function Kolkata() {
   return (
     <div className="kol-page">
       <section className="kol-hero">
-        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.webp')})` }} />
+        <video className="kol-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('kolkata_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
           {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}
@@ -343,7 +345,7 @@ export default function Kolkata() {
           <div className="kol-specials-inner">
             <div className="kol-specials-left">
               <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
-              <h2 className="kol-specials-title">We Specialised In</h2>
+              <h2 className="kol-specials-title">We Specialise In</h2>
               <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
               <div className="kol-specials-accent-line" />
               <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

@@ -1,10 +1,14 @@
+from datetime import timedelta
 from typing import Optional
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Response, UploadFile, status
 
-from app.auth.deps import require_roles
+from app.auth.deps import get_current_applicant, get_current_user, require_roles
+from app.auth.security import create_access_token
+from app.controllers import applicant as applicant_ctrl
 from app.controllers import career as career_ctrl
 from app.schemas.admin import AdminInDB, AdminRole
+from app.schemas.applicant import ApplicantResponse, GoogleAuthRequest, GoogleAuthResponse
 from app.schemas.career import (
     ApplicationCreate,
     ApplicationResponse,
@@ -18,6 +22,27 @@ router = APIRouter(prefix="/careers", tags=["Careers"])
 
 hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 MAX_RESUME_SIZE = 8 * 1024 * 1024
+APPLICANT_TOKEN_EXPIRES = timedelta(days=30)
+
+
+@router.post("/auth/google", response_model=GoogleAuthResponse)
+async def careers_google_signin(data: GoogleAuthRequest):
+    google_payload = applicant_ctrl.verify_google_credential(data.credential)
+    applicant = await applicant_ctrl.upsert_applicant_from_google(google_payload)
+
+    token = create_access_token(
+        {"sub": applicant["email"], "uid": applicant["id"], "type": "applicant"},
+        expires_delta=APPLICANT_TOKEN_EXPIRES,
+    )
+    return {"token": token, "applicant": applicant}
+
+
+@router.get("/me", response_model=ApplicantResponse)
+async def careers_current_applicant(applicant: dict = Depends(get_current_applicant)):
+    """Lets the frontend proactively check whether a stored session token is
+    still valid (and the account still active) — e.g. on page load — rather
+    than only discovering an expired/revoked session when a submit fails."""
+    return applicant
 
 
 @router.get("/jobs", response_model=list[JobResponse])
@@ -42,9 +67,12 @@ async def public_job_detail(job_id: str):
     response_model=ApplicationResponse,
     status_code=status.HTTP_201_CREATED,
 )
-async def submit_application(data: ApplicationCreate):
+async def submit_application(
+    data: ApplicationCreate,
+    applicant: dict = Depends(get_current_user),
+):
     try:
-        application = await career_ctrl.create_application(data)
+        application = await career_ctrl.create_application(data, applicant=applicant)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid job id")
 
@@ -71,9 +99,12 @@ async def submit_application_with_resume(
     highest_qualification_other: Optional[str] = Form(None),
     profile: str = Form(...),
     profile_other: Optional[str] = Form(None),
+    current_ctc: Optional[str] = Form(None),
+    expected_ctc: Optional[str] = Form(None),
     how_heard: str = Form(...),
     how_heard_detail: Optional[str] = Form(None),
     resume: UploadFile = File(...),
+    applicant: dict = Depends(get_current_user),
 ):
     if resume.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="Resume must be a PDF file")
@@ -95,6 +126,8 @@ async def submit_application_with_resume(
         highest_qualification_other=highest_qualification_other,
         profile=profile,
         profile_other=profile_other,
+        current_ctc=current_ctc,
+        expected_ctc=expected_ctc,
         how_heard=how_heard,
         how_heard_detail=how_heard_detail,
     )
@@ -105,6 +138,7 @@ async def submit_application_with_resume(
             resume_filename=resume.filename or "resume.pdf",
             resume_content_type=resume.content_type,
             resume_bytes=resume_bytes,
+            applicant=applicant,
         )
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid job id")

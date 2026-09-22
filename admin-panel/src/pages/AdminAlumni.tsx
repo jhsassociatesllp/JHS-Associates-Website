@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AdminAlumni.css';
+
+// All admin-facing timestamps are shown in Indian Standard Time regardless
+// of the viewer's own machine/browser timezone, since the team reviewing
+// these registrations is based in India.
+const IST_TIME_ZONE = 'Asia/Kolkata';
+const istDateKey = (d: Date) => d.toLocaleDateString('en-CA', { timeZone: IST_TIME_ZONE });
 
 interface Alumni {
   id: string;
@@ -24,15 +31,13 @@ const AdminAlumni: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // const API_BASE = 'http://localhost:8000';
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-  console.log("API Base URL", API_BASE_URL)
 
   // Fetch alumni
   const fetchAlumni = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/admin/alumni/`, {
+      const response = await fetch(`${API_BASE_URL}/admin/alumni`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -69,6 +74,17 @@ const AdminAlumni: React.FC = () => {
     return `${diffInMonths} months ago`;
   };
 
+  const stats = useMemo(() => {
+    const now = new Date();
+    const todayKey = istDateKey(now);
+    const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
+    return {
+      total: alumni.length,
+      today: alumni.filter((a) => istDateKey(new Date(a.created_at)) === todayKey).length,
+      thisWeek: alumni.filter((a) => new Date(a.created_at).getTime() >= weekAgo).length,
+    };
+  }, [alumni]);
+
   // Filter alumni based on search
   const filteredAlumni = alumni.filter(person =>
     person.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -96,6 +112,22 @@ const AdminAlumni: React.FC = () => {
         </p>
       </div>
 
+      {/* Stats */}
+      <div className="alumni-stats-row">
+        <div className="alumni-stat-card">
+          <p className="alumni-stat-label">Total</p>
+          <p className="alumni-stat-value">{stats.total}</p>
+        </div>
+        <div className="alumni-stat-card">
+          <p className="alumni-stat-label">Today</p>
+          <p className="alumni-stat-value">{stats.today}</p>
+        </div>
+        <div className="alumni-stat-card">
+          <p className="alumni-stat-label">This Week</p>
+          <p className="alumni-stat-value">{stats.thisWeek}</p>
+        </div>
+      </div>
+
       {/* Action Bar */}
       <div className="alumni-action-bar">
         <div className="alumni-search">
@@ -106,13 +138,14 @@ const AdminAlumni: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
+
         <div className="alumni-actions">
-          <button 
+          <button
             className="alumni-btn alumni-btn-icon icon-refresh"
             onClick={fetchAlumni}
             title="Refresh"
           >
+            <RefreshCw size={16} />
           </button>
           
           <div className="alumni-stats">
@@ -197,12 +230,13 @@ const AdminAlumni: React.FC = () => {
                   <div className="alumni-card-footer">
                     <div className="alumni-date">
                       Registered on {new Date(person.created_at).toLocaleDateString('en-US', {
+                        timeZone: IST_TIME_ZONE,
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
-                      })}
+                      })} IST
                     </div>
                     <div className="alumni-actions">
                       <button 

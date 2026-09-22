@@ -86,7 +86,7 @@ async def delete_job(job_id: str) -> bool:
     return result.deleted_count == 1
 
 
-async def create_application(data: ApplicationCreate) -> Optional[dict]:
+async def create_application(data: ApplicationCreate, applicant: Optional[dict] = None) -> Optional[dict]:
     db = get_database()
     job = await get_job(data.job_id, include_all=False) if data.job_id else None
     if data.job_id and not job:
@@ -98,6 +98,9 @@ async def create_application(data: ApplicationCreate) -> Optional[dict]:
     payload["status"] = "new"
     payload["created_at"] = now
     payload["updated_at"] = now
+    if applicant:
+        payload["applicant_id"] = applicant["id"]
+        payload["email"] = applicant["email"]
 
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
 
@@ -113,6 +116,7 @@ async def create_application_with_resume(
     resume_filename: str,
     resume_content_type: str,
     resume_bytes: bytes,
+    applicant: Optional[dict] = None,
 ) -> Optional[dict]:
     db = get_database()
     job = await get_job(data.job_id, include_all=False) if data.job_id else None
@@ -125,6 +129,9 @@ async def create_application_with_resume(
     payload["status"] = "new"
     payload["created_at"] = now
     payload["updated_at"] = now
+    if applicant:
+        payload["applicant_id"] = applicant["id"]
+        payload["email"] = applicant["email"]
 
     bucket = AsyncIOMotorGridFSBucket(db, bucket_name=RESUME_BUCKET)
     file_id = await bucket.upload_from_stream(

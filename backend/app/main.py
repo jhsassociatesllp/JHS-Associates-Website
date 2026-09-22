@@ -1,7 +1,26 @@
+import logging
+import sys
+
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.database.connection import connect_to_mongo, close_mongo_connection
+
+# Without this, app loggers (e.g. email_service) have no handler and fall
+# back to Python's WARNING-only "last resort" handler — so INFO-level
+# success/failure logs (like "Email sent" / "Email send error") are
+# invisible on a bare `uvicorn` run. errors="replace" on the stream also
+# stops a stray non-ASCII character in a log message from raising
+# UnicodeEncodeError and silently discarding the whole log record, which is
+# exactly what happens on a Windows console using a legacy (non-UTF-8)
+# codepage.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    stream=sys.stdout,
+)
 from app.routes import contact, alumni, admin, careers
 from app.routes.articles import router as articles_router   # ✅ NEW
 from app.routes.blogs import router as blogs_router         # ✅ NEW
@@ -12,6 +31,11 @@ from app.routes.proposal import router as proposal_router   # ✅ PROPOSAL
 from app.routes.excellencia import router as excellencia_router # ✅ NEW
 from app.routes.newsletter import router as newsletter_router # ✅ NEW
 from app.routes.regulatory import router as regulatory_router # ✅ NEW
+from app.routes.appointments import router as appointments_router # ✅ NEW
+from app.routes.consultation import router as consultation_router # ✅ NEW
+from app.routes.auth import router as auth_router             # ✅ SITE ACCOUNT
+from app.routes.user import router as user_admin_router       # ✅ SITE ACCOUNT
+from app.routes.activity import router as activity_router     # ✅ SITE ACCOUNT
 
 
 @asynccontextmanager
@@ -64,6 +88,11 @@ api_router.include_router(proposal_router)   # ✅ PROPOSAL
 api_router.include_router(excellencia_router) # ✅ NEW
 api_router.include_router(newsletter_router) # ✅ NEW
 api_router.include_router(regulatory_router) # ✅ NEW
+api_router.include_router(appointments_router) # ✅ NEW
+api_router.include_router(consultation_router) # ✅ NEW
+api_router.include_router(auth_router)         # ✅ SITE ACCOUNT
+api_router.include_router(user_admin_router)   # ✅ SITE ACCOUNT
+api_router.include_router(activity_router)     # ✅ SITE ACCOUNT
 
 app.include_router(api_router)
 

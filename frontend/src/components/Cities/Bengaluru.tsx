@@ -94,7 +94,9 @@ export default function Bengaluru() {
   return (
     <div className="blr-page">
       <section className="blr-hero">
-        <div className="blr-hero__photo" style={{ backgroundImage: `url(${imageUrl('Bangaluru.webp')})` }} />
+        <video className="blr-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('bengaluru_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
           {/* <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -210,7 +212,7 @@ export default function Bengaluru() {
             <div className="blr-specials-inner">
               <div className="blr-specials-left">
                 <span className="blr-section-hdr__tag blr-section-hdr__tag--white">Expertise</span>
-                <h2 className="blr-specials-title">We Specialised In</h2>
+                <h2 className="blr-specials-title">We Specialise In</h2>
                 <p className="blr-specials-body">From bank audits to indirect tax advisory, our Bengaluru team brings specialised depth in financial services and emerging tech sectors.</p>
                 <div className="blr-specials-accent-line" />
                 <p className="blr-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

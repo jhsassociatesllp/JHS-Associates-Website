@@ -5,7 +5,31 @@ import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
 
 /* ─── Office Data ─────────────────────────────────────────── */
-const OFFICES = [
+interface OfficeBranch {
+  name: string
+  address: string
+  lat?: number
+  lng?: number
+  // Optional per-branch contact info — when present, this overrides the
+  // office/city-level phone & email in the contact card once that specific
+  // branch is selected. Falls back to the city's own phone/email when a
+  // branch doesn't have its own (see activeBranch usage below).
+  phone?: string
+  email?: string
+}
+
+interface OfficeCity {
+  city: string
+  badge: string
+  state: string
+  route: string
+  phone: string
+  email: string
+  isPrimary: boolean
+  branches: OfficeBranch[]
+}
+
+const OFFICES: OfficeCity[] = [
   {
     city: 'Mumbai',
     badge: 'Principal Headquarters',
@@ -16,9 +40,9 @@ const OFFICES = [
     isPrimary: true,
     branches: [
       { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059', lat: 19.1073677, lng: 72.8804167 },
-      { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010' },
-      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009" },
-      { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301' },
+      { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010', phone: '+91 98765 00001', email: 'mazgaon@jhsassociates.in' },
+      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009", phone: '+91 98765 00002', email: 'masjidbunder@jhsassociates.in' },
+      { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301', phone: '+91 98765 00003', email: 'kalyan@jhsassociates.in' },
     ],
   },
   {
@@ -30,11 +54,11 @@ const OFFICES = [
     email: 'kalpesh.parmar@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054' },
-      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023' },
-      { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001' },
-      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003' },
-      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215' },
+      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054', phone: '+91 98765 00004', email: 'ahmedabad@jhsassociates.in' },
+      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023', phone: '+91 98765 00005', email: 'vadodara@jhsassociates.in' },
+      { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001', phone: '+91 98765 00006', email: 'rajkot@jhsassociates.in' },
+      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003', phone: '+91 98765 00007', email: 'surat@jhsassociates.in' },
+      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215', phone: '+91 98765 00008', email: 'vapi@jhsassociates.in' },
     ],
   },
   {
@@ -49,20 +73,20 @@ const OFFICES = [
       { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
-  // {
-  //   city: 'Hyderabad',
-  //   badge: 'South India Tech Hub',
-  //   state: 'Telangana',
-  //   route: '/city/hyderabad',
-  //   phone: '',
-  //   email: '',
-  //   isPrimary: false,
-  //   branches: [
-  //     {
-  //       name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
-  //     },
-  //   ],
-  // },
+  {
+    city: 'Hyderabad',
+    badge: 'South India Tech Hub',
+    state: 'Telangana',
+    route: '/city/hyderabad',
+    phone: '',
+    email: 'hyderabad@jhsassociates.in',
+    isPrimary: false,
+    branches: [
+      {
+        name: 'Hyderabad ', address: '6-3-788/36 & 37/A, "Badhe House", First Floor, Ameerpet, Durganagar, Hyderabad, Telangana - 500016'
+      },
+    ],
+  },
   {
     city: 'Bengaluru',
     badge: 'Silicon Valley Office',
@@ -112,9 +136,9 @@ const OFFICES = [
     email: 'vinod.joshi@jhsuae.com',
     isPrimary: false,
     branches: [
-      { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E' },
-      { name: 'Muscat, Oman', address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman' },
-      { name: 'Amersham, UK', address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom' },
+      { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E', phone: '+971 50 000 0009', email: 'dubai@jhsuae.com' },
+      { name: 'Muscat, Oman', address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman', phone: '+968 90 000 010', email: 'muscat@jhsuae.com' },
+      { name: 'Amersham, UK', address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom', phone: '+44 7900 000011', email: 'amersham@jhsuae.com' },
     ],
   }
 ]
@@ -209,20 +233,24 @@ export default function OurOffices() {
               </div>
               <h2 className="oo-detail__city">{activeOffice.city}</h2>
 
-              {/* Contact grid */}
+              {/* Contact grid — shows the selected branch's own phone/email
+                  when it has one, otherwise falls back to the city's
+                  general contact info. */}
               <div className="oo-detail__contact">
-                <div className="oo-detail__contact-item">
-                  <span className="oo-detail__contact-icon"><IconPhone /></span>
-                  <div>
-                    <span className="oo-detail__contact-label">Phone</span>
-                    <a href={`tel:${activeOffice.phone}`} className="oo-detail__contact-val">{activeOffice.phone}</a>
+                {(activeBranch.phone ?? activeOffice.phone) && (
+                  <div className="oo-detail__contact-item">
+                    <span className="oo-detail__contact-icon"><IconPhone /></span>
+                    <div>
+                      <span className="oo-detail__contact-label">Phone</span>
+                      <a href={`tel:${activeBranch.phone ?? activeOffice.phone}`} className="oo-detail__contact-val">{activeBranch.phone ?? activeOffice.phone}</a>
+                    </div>
                   </div>
-                </div>
+                )}
                 <div className="oo-detail__contact-item">
                   <span className="oo-detail__contact-icon"><IconMail /></span>
                   <div>
                     <span className="oo-detail__contact-label">Email</span>
-                    <a href={`mailto:${activeOffice.email}`} className="oo-detail__contact-val">{activeOffice.email}</a>
+                    <a href={`mailto:${activeBranch.email ?? activeOffice.email}`} className="oo-detail__contact-val">{activeBranch.email ?? activeOffice.email}</a>
                   </div>
                 </div>
                 {/* <div className="oo-detail__contact-item">
@@ -309,10 +337,12 @@ export default function OurOffices() {
                 <h3 className="oo-card__city">{o.city}</h3>
                 <p className="oo-card__state">{o.state}</p>
                 <div className="oo-card__divider" />
-                <div className="oo-card__info-row">
-                  <IconPhone />
-                  <span>{o.phone}</span>
-                </div>
+                {o.phone && (
+                  <div className="oo-card__info-row">
+                    <IconPhone />
+                    <span>{o.phone}</span>
+                  </div>
+                )}
                 <div className="oo-card__info-row">
                   <IconMail />
                   <span>{o.email}</span>

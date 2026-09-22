@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { User, LogOut } from "lucide-react";
 import "./Navbar.css";
 import { imageUrl } from '../utils/imageUrl'
+import { useSiteAuth } from '../context/SiteAuthContext'
 
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
@@ -180,6 +182,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "Contact",
     href: '/contact',
   },
+  {
+    id: "book-appointment",
+    label: "Book Appointment",
+    href: '/book-appointment',
+  },
 ];
 
 // ─── Component ─────────────────────────────────────────────────
@@ -189,6 +196,8 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
   const [selectedId, setSelectedId] = useState<string>("insights");
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { user, openAuthModal, logout } = useSiteAuth();
 
   const menuOpenRef = useRef(menuOpen);
   useEffect(() => {
@@ -366,9 +375,34 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* <div className="nb__right">
-          <a href="/login" className="nb__login">LOG IN</a>
-        </div> */}
+        <div className="nb__right">
+          {user ? (
+            <div className="nb__account">
+              <button
+                type="button"
+                className="nb__account-btn"
+                onClick={() => setAccountMenuOpen((v) => !v)}
+              >
+                <span className="nb__account-avatar"><User size={14} /></span>
+                {user.first_name || user.name.split(' ')[0]}
+              </button>
+              {accountMenuOpen && (
+                <div className="nb__account-menu" onMouseLeave={() => setAccountMenuOpen(false)}>
+                  <span className="nb__account-email">{user.email}</span>
+                  <button
+                    type="button"
+                    className="nb__account-logout"
+                    onClick={() => { logout(); setAccountMenuOpen(false); }}
+                  >
+                    <LogOut size={14} /> Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button type="button" className="nb__login" onClick={() => openAuthModal()}>LOG IN</button>
+          )}
+        </div>
       </header>
 
       {/* ══════════════ FULL-WIDTH MEGA MODAL ══════════════ */}
@@ -550,6 +584,20 @@ const Navbar = () => {
 
               {/* P0: ROOT (L1 categories) */}
               <div className="mega__mobile-panel">
+                <div className="mega__mobile-account">
+                  {user ? (
+                    <>
+                      <span className="mega__mobile-account-email">{user.email}</span>
+                      <button type="button" className="mega__mobile-account-btn" onClick={() => { logout(); closeMenu(); }}>
+                        <LogOut size={14} /> Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" className="mega__mobile-account-btn" onClick={() => { openAuthModal(); closeMenu(); }}>
+                      <User size={14} /> Log In / Sign Up
+                    </button>
+                  )}
+                </div>
                 <ul className="mega__mobile-list">
                   {NAV_ITEMS.map((item) => (
                     <li key={item.id}>

@@ -27,6 +27,37 @@
   line-height: 1.5;
 }
 
+/* Stats */
+.contacts-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contacts-stat-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.contacts-stat-label {
+  font-size: 0.8rem;
+  color: #8a8d93;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.contacts-stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2d3748;
+  line-height: 1;
+  margin: 0;
+}
+
 /* Action Bar */
 .contacts-action-bar {
   display: flex;
@@ -429,6 +460,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .contacts-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .contacts-cards-grid {
     grid-template-columns: 1fr;
     padding: 16px;

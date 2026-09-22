@@ -32,6 +32,7 @@ import {
   School as AlumniIcon,
   Feedback as FeedbackIcon,
   Work as WorkIcon,
+  Event as AppointmentIcon,
   Search as SearchIcon,
   Notifications as NotificationsIcon,
   Settings as SettingsIcon,
@@ -40,8 +41,10 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 const DRAWER_WIDTH = 260;
-const SIDEBAR_BG = '#ffffff';
-const SIDEBAR_TEXT = '#6c757d';
+const SIDEBAR_BG = '#181b2e';
+const SIDEBAR_BG_2 = '#20233a';
+const SIDEBAR_TEXT = 'rgba(255,255,255,0.55)';
+const SIDEBAR_TEXT_DIM = 'rgba(255,255,255,0.35)';
 const SIDEBAR_ACTIVE = '#696cff';
 
 const menuGroups = [
@@ -70,6 +73,8 @@ const menuGroups = [
       { text: 'Alumni', icon: AlumniIcon, path: '/alumni', requiredFeature: 'alumni' },
       { text: 'Client Feedback', icon: FeedbackIcon, path: '/feedback', requiredFeature: 'feedback' },
       { text: 'Careers', icon: WorkIcon, path: '/careers', requiredFeature: 'careers' },
+      { text: 'Appointments', icon: AppointmentIcon, path: '/appointments', requiredFeature: 'appointments' },
+      { text: 'Users', icon: PeopleIcon, path: '/users', requiredFeature: 'users' },
     ],
   },
 ];
@@ -95,40 +100,40 @@ function SidebarContent({ onNavigate }: { onNavigate: (path: string) => void }) 
   };
 
   return (
-    <Box sx={{ bgcolor: SIDEBAR_BG, height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: '1px solid rgba(0,0,0,0.08)' }}>
+    <Box sx={{ bgcolor: SIDEBAR_BG, height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       {/* ── Logo ─────────────────────────────────────────────── */}
-      <Box sx={{ p: '20px 20px 16px', display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+      <Box sx={{ p: '20px 20px 16px', display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0 }}>
         <Box sx={{
           width: 36, height: 36, borderRadius: 1.5,
           background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 2px 8px rgba(105,108,255,0.25)',
+          boxShadow: '0 2px 8px rgba(105,108,255,0.35)',
         }}>
           <DashboardIcon sx={{ color: '#fff', fontSize: 20 }} />
         </Box>
-        <Typography sx={{ color: '#2d3748', fontWeight: 700, fontSize: '1.05rem', letterSpacing: 0.3, fontFamily: 'Inter, sans-serif' }}>
+        <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.05rem', letterSpacing: 0.3, fontFamily: 'Inter, sans-serif' }}>
           JHS Admin
         </Typography>
       </Box>
 
       {/* ── Nav Groups ───────────────────────────────────────── */}
       <Box sx={{
-        flex: 1, overflowY: 'auto', px: 1.5, pb: 2,
+        flex: 1, overflowY: 'auto', px: 1.5, pb: 2, pt: 0.5,
         '&::-webkit-scrollbar': { width: 4 },
         '&::-webkit-scrollbar-track': { background: 'transparent' },
-        '&::-webkit-scrollbar-thumb': { background: 'rgba(0,0,0,0.1)', borderRadius: 2 },
+        '&::-webkit-scrollbar-thumb': { background: 'rgba(255,255,255,0.12)', borderRadius: 2 },
       }}>
         {menuGroups.map((group) => {
           // Filter items based on user permissions
           const visibleItems = group.items.filter(item => canAccess(item.requiredFeature));
-          
+
           // Only show the group if it has visible items
           if (visibleItems.length === 0) return null;
-          
+
           return (
             <Box key={group.label}>
               <Typography sx={{
-                color: '#9ca3af', fontSize: '0.65rem', fontWeight: 700,
+                color: SIDEBAR_TEXT_DIM, fontSize: '0.65rem', fontWeight: 700,
                 letterSpacing: 1.5, px: 1.5, pt: 2, pb: 0.75,
                 userSelect: 'none', textTransform: 'uppercase',
               }}>
@@ -144,18 +149,18 @@ function SidebarContent({ onNavigate }: { onNavigate: (path: string) => void }) 
                     onClick={() => onNavigate(item.path)}
                     sx={{
                       display: 'flex', alignItems: 'center', gap: 1.5,
-                      px: 1.5, py: '9px', borderRadius: 1.5, mb: 0.25,
+                      px: 1.5, py: '9px', borderRadius: 1.75, mb: 0.25,
                       cursor: 'pointer',
-                      bgcolor: active ? 'rgba(105,108,255,0.08)' : 'transparent',
-                      borderLeft: active ? `3px solid ${SIDEBAR_ACTIVE}` : '3px solid transparent',
-                      '&:hover': { bgcolor: active ? 'rgba(105,108,255,0.08)' : 'rgba(0,0,0,0.03)' },
+                      bgcolor: active ? SIDEBAR_ACTIVE : 'transparent',
+                      boxShadow: active ? '0 4px 14px rgba(105,108,255,0.35)' : 'none',
+                      '&:hover': { bgcolor: active ? SIDEBAR_ACTIVE : 'rgba(255,255,255,0.06)' },
                       transition: 'all 0.18s',
                     }}
                   >
-                    <Icon sx={{ fontSize: 18, color: active ? SIDEBAR_ACTIVE : SIDEBAR_TEXT, flexShrink: 0 }} />
+                    <Icon sx={{ fontSize: 18, color: active ? '#fff' : SIDEBAR_TEXT, flexShrink: 0 }} />
                     <Typography sx={{
                       fontSize: '0.875rem', fontWeight: active ? 600 : 500,
-                      color: active ? SIDEBAR_ACTIVE : SIDEBAR_TEXT, flex: 1,
+                      color: active ? '#fff' : SIDEBAR_TEXT, flex: 1,
                       fontFamily: 'Inter, sans-serif',
                     }}>
                       {item.text}
@@ -170,32 +175,32 @@ function SidebarContent({ onNavigate }: { onNavigate: (path: string) => void }) 
 
       {/* ── User Footer ──────────────────────────────────────── */}
       <Box sx={{
-        p: 2, borderTop: '1px solid rgba(0,0,0,0.06)',
+        p: 2, borderTop: '1px solid rgba(255,255,255,0.07)',
         display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0,
-        bgcolor: '#fafbfc',
+        bgcolor: SIDEBAR_BG_2,
       }}>
-        <Avatar sx={{ 
-          width: 34, 
-          height: 34, 
-          bgcolor: user?.role === 'super_admin' ? '#ef4444' : user?.role === 'hr_admin' ? '#f59e0b' : '#696cff', 
-          fontSize: '0.8rem', 
-          fontWeight: 700 
+        <Avatar sx={{
+          width: 34,
+          height: 34,
+          bgcolor: user?.role === 'super_admin' ? '#ef4444' : user?.role === 'hr_admin' ? '#f59e0b' : '#696cff',
+          fontSize: '0.8rem',
+          fontWeight: 700
         }}>
           {user?.name?.charAt(0) || 'A'}
         </Avatar>
         <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography sx={{ color: '#2d3748', fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.4 }}>
+          <Typography sx={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.4 }}>
             {user?.name || 'Admin User'}
           </Typography>
           <Typography sx={{ color: SIDEBAR_TEXT, fontSize: '0.7rem', lineHeight: 1.4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {user?.role === 'super_admin' ? '🔴 Super Admin' : 
-             user?.role === 'hr_admin' ? '🟡 HR Admin' : 
+            {user?.role === 'super_admin' ? '🔴 Super Admin' :
+             user?.role === 'hr_admin' ? '🟡 HR Admin' :
              '🟢 Content Admin'} • {user?.email}
           </Typography>
         </Box>
         <Tooltip title="Logout">
           <IconButton size="small" onClick={handleLogoutClick}
-            sx={{ color: SIDEBAR_TEXT, '&:hover': { color: '#ef4444', bgcolor: 'rgba(239,68,68,0.08)' } }}>
+            sx={{ color: SIDEBAR_TEXT, '&:hover': { color: '#ef4444', bgcolor: 'rgba(239,68,68,0.12)' } }}>
             <LogoutIcon fontSize="small" />
           </IconButton>
         </Tooltip>
@@ -339,18 +344,32 @@ export default function DashboardLayout() {
           </IconButton>
 
           {/* Search */}
-          <TextField size="small" placeholder="Search (Ctrl+/)"
+          <TextField size="small" placeholder="Search records"
             sx={{
-              maxWidth: 260,
+              width: { xs: '100%', sm: 320 },
+              maxWidth: 320,
               '& .MuiOutlinedInput-root': {
                 bgcolor: '#f4f5fa', borderRadius: 2, fontSize: '0.85rem',
-                '& fieldset': { border: 'none' },
+                '& fieldset': { borderColor: 'transparent' },
+                '&:hover fieldset': { borderColor: '#e2e8f0' },
+                '&.Mui-focused fieldset': { borderColor: '#696cff' },
               },
             }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon sx={{ color: '#8a8d93', fontSize: 18 }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Box sx={{
+                    display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 0.3,
+                    px: 0.8, py: 0.15, borderRadius: 1, bgcolor: '#fff',
+                    border: '1px solid #e2e8f0', color: '#a0a3a8', fontSize: '0.7rem', fontWeight: 600,
+                  }}>
+                    ⌘ /
+                  </Box>
                 </InputAdornment>
               ),
             }}

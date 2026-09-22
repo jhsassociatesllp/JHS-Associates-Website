@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FileText, ArrowUpRight, Bell, Download, ArrowRight } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
 import { imageUrl as staticImageUrl } from '../../utils/imageUrl'
+import { useGatedDownload } from '../../hooks/useGatedDownload'
 import './Regulatory.css'
 
 const TOPICS = [
@@ -40,6 +41,17 @@ export default function RegulatoryPage() {
   const [papers, setPapers] = useState<Regulatory[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [downloadError, setDownloadError] = useState<string | null>(null)
+  const { openFile } = useGatedDownload()
+
+  const handleOpen = async (paper: Regulatory, mode: 'view' | 'download') => {
+    setDownloadError(null)
+    try {
+      await openFile(pdfUrl(paper.pdf_id), `${paper.title}.pdf`, mode)
+    } catch (err) {
+      setDownloadError(err instanceof Error ? err.message : 'Could not open this document.')
+    }
+  }
 
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
 
@@ -89,6 +101,12 @@ export default function RegulatoryPage() {
 
       {/* ════ CONTENT ════ */}
       <section className="reg-content">
+
+        {downloadError && (
+          <div className="reg-status" role="alert">
+            <p>{downloadError}</p>
+          </div>
+        )}
 
         {/* Loading */}
         {loading && (
@@ -141,24 +159,22 @@ export default function RegulatoryPage() {
                   </div>
 
                   <div className="reg-card__hover-actions">
-                    <a
-                      href={pdfUrl(paper.pdf_id)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
                       className="reg-card__view-btn"
+                      onClick={() => handleOpen(paper, 'view')}
                     >
                       View PDF <ArrowRight size={16} />
-                    </a>
+                    </button>
 
-                    <a
-                      href={pdfUrl(paper.pdf_id)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
                       className="reg-card__download-btn"
                       title="Download PDF"
+                      onClick={() => handleOpen(paper, 'download')}
                     >
                       <Download size={16} />
-                    </a>
+                    </button>
                   </div>
                 </div>
 

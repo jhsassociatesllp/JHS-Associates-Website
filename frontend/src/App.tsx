@@ -7,6 +7,10 @@ import { patchDomForGoogleTranslate, initPersistedLanguage } from './i18n/google
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SEOHead from './components/common/SEOHead'
+import ChatBot from './components/common/ChatBot'
+import QuickActionsFab from './components/common/QuickActionsFab'
+import AuthModal from './components/auth/AuthModal'
+import { SiteAuthProvider } from './context/SiteAuthContext'
 import Hero from './sections/Hero'
 import Spotlight from './sections/Spotlight'
 import Stats from './sections/Stats'
@@ -118,6 +122,9 @@ const Feedback = lazy(() => import('./pages/Feedback'))
 // Request for Proposal page
 const RequestForProposal = lazy(() => import('./pages/RequestForProposal'))
 
+// Book Appointment page
+const BookAppointment = lazy(() => import('./pages/BookAppointment'))
+
 // Hero Card Detail Pages
 const BoardroomsInTransition = lazy(() => import('./pages/BoardroomsInTransition'))
 const DataGovernanceRule6 = lazy(() => import('./pages/DataGovernanceRule6'))
@@ -163,9 +170,10 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <SiteAuthProvider>
       <SEOHead />
       <Disclaimer />
+      <AuthModal />
       <Navbar />
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
@@ -276,6 +284,9 @@ export default function App() {
           {/* Request for Proposal */}
           <Route path="/approval-for-proposal" element={<RequestForProposal />} />
 
+          {/* Book Appointment */}
+          <Route path="/book-appointment" element={<BookAppointment />} />
+
           {/* Hero Card Detail Pages */}
           <Route path="/articles/boardrooms-in-transition" element={<BoardroomsInTransition />} />
           <Route path="/resources/data-governance-rule-6" element={<DataGovernanceRule6 />} />
@@ -287,6 +298,8 @@ export default function App() {
         </Routes>
       </Suspense>
       <Footer />
-    </>
+      <QuickActionsFab />
+      <ChatBot />
+    </SiteAuthProvider>
   )
 }

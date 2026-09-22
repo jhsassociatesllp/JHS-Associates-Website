@@ -83,6 +83,12 @@ async def get_regulatory_by_id(regulatory_id: str) -> dict | None:
     return _serialize(doc) if doc else None
 
 
+async def get_title_by_pdf_id(pdf_id: str) -> str | None:
+    db = get_database()
+    doc = await db[COLLECTION].find_one({"pdf_id": pdf_id}, {"title": 1})
+    return doc.get("title") if doc else None
+
+
 async def delete_regulatory(regulatory_id: str) -> bool:
     db = get_database()
     collection = db[COLLECTION]

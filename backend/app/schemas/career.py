@@ -14,9 +14,7 @@ class JobBase(BaseModel):
     location: str = Field(..., min_length=2, max_length=120)
     employment_type: str = Field(..., min_length=2, max_length=80)
     experience: str = Field(..., min_length=1, max_length=80)
-    summary: str = Field(..., min_length=2, max_length=600)
     description: str = Field(..., min_length=2, max_length=4000)
-    requirements: str = Field(..., min_length=2, max_length=4000)
     status: JobStatus = "open"
 
 
@@ -30,9 +28,7 @@ class JobUpdate(BaseModel):
     location: Optional[str] = Field(None, min_length=2, max_length=120)
     employment_type: Optional[str] = Field(None, min_length=2, max_length=80)
     experience: Optional[str] = Field(None, min_length=1, max_length=80)
-    summary: Optional[str] = Field(None, min_length=2, max_length=600)
     description: Optional[str] = Field(None, min_length=2, max_length=4000)
-    requirements: Optional[str] = Field(None, min_length=2, max_length=4000)
     status: Optional[JobStatus] = None
 
 
@@ -56,6 +52,8 @@ class ApplicationCreate(BaseModel):
     highest_qualification_other: Optional[str] = Field(None, max_length=120)
     profile: str = Field(..., max_length=80)
     profile_other: Optional[str] = Field(None, max_length=120)
+    current_ctc: Optional[str] = Field(None, max_length=40)
+    expected_ctc: Optional[str] = Field(None, max_length=40)
     how_heard: str = Field(..., max_length=40)
     how_heard_detail: Optional[str] = Field(None, max_length=200)
 

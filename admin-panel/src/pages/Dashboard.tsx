@@ -13,7 +13,6 @@ import {
 import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
-  PieChart, Pie,
 } from 'recharts';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -286,37 +285,33 @@ export default function Dashboard() {
       label: 'Total Articles',
       value: stats.totalArticles,
       icon: ArticleIcon,
-      iconColor: C.accent,
+      topColor: '#3b82f6',
       change: '+12%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     },
     {
       label: 'Total Blogs',
       value: stats.totalBlogs,
       icon: BlogIcon,
-      iconColor: C.success,
+      topColor: '#ef4444',
       change: '+8%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
     },
     {
       label: 'Knowledge Resources',
       value: stats.totalKnowledge,
       icon: KnowledgeIcon,
-      iconColor: C.info,
+      topColor: '#f59e0b',
       change: '+15%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
     },
     {
       label: 'Total Contacts',
       value: stats.totalContacts,
       icon: EmailIcon,
-      iconColor: C.warning,
+      topColor: '#111827',
       change: '+23%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
     },
   ];
 
@@ -325,31 +320,42 @@ export default function Dashboard() {
 
       {/* ── Page Header ─────────────────────────────────────── */}
       <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
           <Box>
-            <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
-              Dashboard
+            <Typography sx={{
+              fontSize: '0.7rem', fontWeight: 700, color: C.accent, letterSpacing: 1.2,
+              textTransform: 'uppercase', mb: 0.5, fontFamily: 'Inter,sans-serif',
+            }}>
+              Content Command Center
+            </Typography>
+            <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
+              Dashboard overview
             </Typography>
             <Typography sx={{ fontSize: '0.875rem', color: C.textMuted, mt: 0.5 }}>
               Welcome back, Admin. Here's what's happening with your content.
             </Typography>
           </Box>
           <Chip
-            label="Last updated: Just now"
+            label="Updated just now"
             size="small"
+            icon={<Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: C.success, ml: '10px !important' }} />}
             sx={{
-              bgcolor: `${C.success}15`,
-              color: C.success,
-              fontWeight: 600,
-              fontSize: '0.75rem',
-              px: 1,
+              bgcolor: '#fff',
+              border: `1px solid ${C.border}`,
+              color: C.textMain,
+              fontWeight: 700,
+              fontSize: '0.72rem',
+              letterSpacing: 0.4,
+              textTransform: 'uppercase',
+              px: 0.5,
+              boxShadow: C.shadow,
             }}
           />
         </Box>
       </Box>
 
       {/* ── Row 1: Stat Cards ───────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: '20px', mb: 3 }}>
         {STAT_CARDS.map((card) => {
           const Icon = card.icon;
           return (
@@ -359,6 +365,7 @@ export default function Dashboard() {
               sx={{
                 bgcolor: C.cardBg,
                 border: `1px solid ${C.border}`,
+                borderTop: `3px solid ${card.topColor}`,
                 borderRadius: 2,
                 overflow: 'hidden',
                 position: 'relative',
@@ -369,34 +376,21 @@ export default function Dashboard() {
                 },
               }}
             >
-                {/* Gradient background strip */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 4,
-                    background: card.bgGradient,
-                  }}
-                />
-
                 <CardContent sx={{ p: '20px !important' }}>
                   {/* Top Row: Icon + Label */}
                   <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
                     <Box
                       sx={{
-                        width: 48,
-                        height: 48,
+                        width: 44,
+                        height: 44,
                         borderRadius: 2,
-                        background: card.bgGradient,
+                        bgcolor: `${card.topColor}14`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                       }}
                     >
-                      <Icon sx={{ fontSize: 24, color: '#fff' }} />
+                      <Icon sx={{ fontSize: 22, color: card.topColor }} />
                     </Box>
                     <Chip
                       label={card.change}
@@ -447,7 +441,7 @@ export default function Dashboard() {
               </Card>
           );
         })}
-      </div>
+      </Box>
 
       {/* ── Row 2: Charts ────────────────────────────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '24px' }}>
@@ -540,28 +534,42 @@ export default function Dashboard() {
               Current content breakdown
             </Typography>
 
-            <Box sx={{ height: 240, position: 'relative' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={contentDistribution}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    paddingAngle={3}
-                    dataKey="value"
-                    startAngle={90}
-                    endAngle={-270}
-                  >
-                    {contentDistribution.map((entry, i) => (
-                      <g key={i}>
-                        <path fill={entry.color} />
-                      </g>
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+            <Box sx={{ height: 240, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {/* Hand-drawn SVG donut (stroke-dasharray per segment) rather than
+                  Recharts' <Pie> — recharts 3.8.1 computes a zero-width angle
+                  for every segment here regardless of props, an upstream bug,
+                  not something tunable from this component. This renders the
+                  same contentDistribution data/colors with no library dependency. */}
+              {(() => {
+                const total = contentDistribution.reduce((sum, d) => sum + d.value, 0) || 1;
+                const radius = 80;
+                const circumference = 2 * Math.PI * radius;
+                const gap = 3;
+                let acc = 0;
+                return (
+                  <svg width={200} height={200} viewBox="0 0 200 200">
+                    {contentDistribution.filter((d) => d.value > 0).map((entry) => {
+                      const dash = (entry.value / total) * circumference;
+                      const rotation = (acc / total) * 360 - 90;
+                      acc += entry.value;
+                      return (
+                        <circle
+                          key={entry.name}
+                          cx={100}
+                          cy={100}
+                          r={radius}
+                          fill="none"
+                          stroke={entry.color}
+                          strokeWidth={28}
+                          strokeDasharray={`${Math.max(dash - gap, 0)} ${circumference - Math.max(dash - gap, 0)}`}
+                          strokeLinecap="round"
+                          transform={`rotate(${rotation} 100 100)`}
+                        />
+                      );
+                    })}
+                  </svg>
+                );
+              })()}
 
               {/* Center label */}
               <Box

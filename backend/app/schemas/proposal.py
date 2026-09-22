@@ -20,6 +20,7 @@ class ProposalResponse(BaseModel):
     inquiry_reason: str
     subject: str
     message: Optional[str] = None
+    user_id: Optional[str] = None
     created_at: datetime
 
     class Config:

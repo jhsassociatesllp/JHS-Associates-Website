@@ -87,7 +87,7 @@ const OFFICES = [
   },
   {
     city: 'Delhi',
-    region: 'Delhi',
+    region: 'New Delhi',
     address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048',
   },
   {
@@ -343,7 +343,7 @@ export default function Contact() {
               <div className="ct-row">
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-name">Full Name *</label>
-                  <input id="ct-name" type="text" name="name" value={formData.name} placeholder="Your full name"
+                  <input id="ct-name" type="text" name="name" value={formData.name} placeholder="Your Full Name"
                     autoComplete="name"
                     onChange={handleChange} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)}
                     className={fc('name')} />
@@ -351,7 +351,7 @@ export default function Contact() {
                 </div>
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-email">Email Address *</label>
-                  <input id="ct-email" type="email" name="email" value={formData.email} placeholder="you@company.com"
+                  <input id="ct-email" type="email" name="email" value={formData.email} placeholder="Enter Your Mail"
                     autoComplete="email"
                     onChange={handleChange} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)}
                     className={fc('email')} />
@@ -363,7 +363,7 @@ export default function Contact() {
               <div className="ct-row">
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-phone">Phone Number</label>
-                  <input id="ct-phone" type="tel" name="phone" value={formData.phone} placeholder="+91 98765 43210"
+                  <input id="ct-phone" type="tel" name="phone" value={formData.phone} placeholder="Enter Your Number"
                     autoComplete="tel"
                     onChange={handleChange} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)}
                     className={fc('phone')} />

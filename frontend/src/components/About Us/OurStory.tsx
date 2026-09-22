@@ -10,22 +10,22 @@ const MILESTONES = [
     desc: 'Establishment of JHS, laying the foundation for a practice built on professional integrity, client trust and technical excellence.',
   },
   {
-    year: '1990s – 2000s',
+    year: '1990 – 2000',
     title: 'Expanding Capabilities',
     desc: 'Expansion beyond core taxation into assurance and accounting services, and corporate advisory supporting clients across growth stages.',
   },
   {
-    year: '2010s',
+    year: '2010',
     title: 'Pan-India Integration',
     desc: 'Progressed through a series of mergers and integration of professional practices to combine capabilities and offer a single window approach to clients. Development of a pan-India presence through multiple offices, enabling proximity-based delivery and deeper engagement with clients across sectors and geographies.',
   },
   {
-    year: '2020s',
+    year: '2020',
     title: 'Technology Transformation Era',
     desc: 'Adoption of data analytics, audit automation, dashboards, forensic tools, AI-enabled assurance methodologies and technology-led service delivery models to create scalable and insight-driven solutions. Launch of full-fledged Cyber Security Solutions, Data Privacy Assurance and receiving the coveted CERT-In empanelment.',
   },
   {
-    year: '2020s',
+    year: '2020',
     title: 'Global Connectivity',
     desc: 'Strengthening international capabilities through membership of the PrimeGlobal network, providing clients access to global perspectives and cross-border advisory support.',
   },

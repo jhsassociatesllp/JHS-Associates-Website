@@ -191,7 +191,9 @@ export default function Mumbai() {
 
       {/* ══ HERO ══ */}
       <section className="mum-hero">
-        <div className="mum-hero__photo" style={{ backgroundImage: `url("${imageUrl('Mumbai 2.webp')}")` }} />
+        <video className="mum-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={imageUrl('mumbai_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">
           {/* <span className="mum-hero__eyebrow">JHS &amp; Associates LLP</span> */}
@@ -319,7 +321,7 @@ export default function Mumbai() {
           <div className="mum-specials-inner">
             <div className="mum-specials-left">
               <span className="mum-section-hdr__tag mum-section-hdr__tag--white">Expertise</span>
-              <h2 className="mum-specials-title">We Specialised In</h2>
+              <h2 className="mum-specials-title">We Specialise In</h2>
               <p className="mum-specials-body">From cutting-edge cyber assurance to niche social-sector audits, our Mumbai team brings a breadth of specialised capabilities unmatched in the region.</p>
               <div className="mum-specials-accent-line" />
               <p className="mum-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

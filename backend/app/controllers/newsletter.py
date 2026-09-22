@@ -83,6 +83,12 @@ async def get_newsletter_by_id(newsletter_id: str) -> dict | None:
     return _serialize(doc) if doc else None
 
 
+async def get_title_by_pdf_id(pdf_id: str) -> str | None:
+    db = get_database()
+    doc = await db[COLLECTION].find_one({"pdf_id": pdf_id}, {"heading": 1})
+    return doc.get("heading") if doc else None
+
+
 async def delete_newsletter(newsletter_id: str) -> bool:
     db = get_database()
     collection = db[COLLECTION]

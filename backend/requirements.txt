@@ -6,7 +6,13 @@ pydantic-settings
 python-dotenv
 PyJWT
 passlib[bcrypt]
-bcrypt
+# Pinned: passlib 1.7.4's bcrypt backend self-test crashes on bcrypt>=4.1
+# (ValueError: password cannot be longer than 72 bytes) — a known, never-fixed
+# passlib/bcrypt incompatibility. Keep below 4.1 until passlib is replaced.
+bcrypt<4.1
 python-multipart
 httpx
+google-auth
+requests
 Pillow
+aiosmtplib

@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Download, X, Calendar, User, ChevronLeft, RefreshCw, Search, Filter } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
+import { useGatedDownload } from '../../hooks/useGatedDownload'
 import './Articles.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -52,6 +53,7 @@ export default function Articles() {
   const [error,           setError]           = useState<string | null>(null)
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
   const [downloading,     setDownloading]     = useState(false)
+  const { openFile } = useGatedDownload()
   
   // Filter states
   const [searchTerm,      setSearchTerm]      = useState('')
@@ -174,19 +176,13 @@ export default function Articles() {
   const handleDownload = async (article: Article) => {
     setDownloading(true)
     try {
-      const res = await fetch(articlePdfUrl(article.pdf_id))
-      if (!res.ok) throw new Error('Download failed')
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = document.createElement('a')
-      a.href     = url
-      a.download = `${article.title.replace(/\s+/g, '-').toLowerCase()}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    } catch {
-      alert('Could not download the PDF. Please try again.')
+      await openFile(
+        articlePdfUrl(article.pdf_id),
+        `${article.title.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+        'download',
+      )
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Could not download the PDF. Please try again.')
     } finally {
       setDownloading(false)
     }

@@ -29,6 +29,7 @@ const AdminExcellencia: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     heading: '',
@@ -156,10 +157,17 @@ const AdminExcellencia: React.FC = () => {
   };
 
   // Filter entries based on search
-  const filteredEntries = entries.filter(entry =>
-    entry.heading.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    entry.short_description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredEntries = entries.filter(entry => {
+    const matchesSearch =
+      entry.heading.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      entry.short_description.toLowerCase().includes(searchTerm.toLowerCase());
+    const isUpdated = !!entry.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedEntries = filteredEntries.slice(
@@ -169,14 +177,62 @@ const AdminExcellencia: React.FC = () => {
 
   const totalPages = Math.ceil(filteredEntries.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = entries.filter(e => !e.last_edited_at).length;
+  const updatedCount = entries.filter(e => e.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = entries.filter(e => {
+    const d = new Date(e.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="excellencia-container">
       {/* Header */}
       <div className="excellencia-header">
-        <h1 className="excellencia-title">Excellencia</h1>
-        <p className="excellencia-subtitle">
-          Create and manage Excellencia entries for your website
-        </p>
+        <div>
+          <p className="excellencia-eyebrow">Content Library</p>
+          <h1 className="excellencia-title">Excellencia</h1>
+          <p className="excellencia-subtitle">
+            Create, review and manage your website's Excellencia entries.
+          </p>
+        </div>
+        <button
+          className="excellencia-btn excellencia-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Excellencia
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="excellencia-stats-row">
+        <div className="excellencia-stat-card blue">
+          <p className="excellencia-stat-label">Total Entries</p>
+          <p className="excellencia-stat-value">{entries.length}</p>
+          <p className="excellencia-stat-sub">All Excellencia content</p>
+        </div>
+        <div className="excellencia-stat-card green">
+          <p className="excellencia-stat-label">Published</p>
+          <p className="excellencia-stat-value">{publishedCount}</p>
+          <p className="excellencia-stat-sub">
+            {entries.length > 0 ? Math.round((publishedCount / entries.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="excellencia-stat-card orange">
+          <p className="excellencia-stat-label">Updated</p>
+          <p className="excellencia-stat-value">{updatedCount}</p>
+          <p className="excellencia-stat-sub">Edited after publish</p>
+        </div>
+        <div className="excellencia-stat-card dark">
+          <p className="excellencia-stat-label">Added This Month</p>
+          <p className="excellencia-stat-value">{addedThisMonthCount}</p>
+          <p className="excellencia-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -184,31 +240,24 @@ const AdminExcellencia: React.FC = () => {
         <div className="excellencia-search">
           <input
             type="text"
-            placeholder="Search Excellencia entries..."
+            placeholder="Search Excellencia entries by heading..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="excellencia-actions">
-          <button
-            className="excellencia-btn excellencia-btn-icon icon-refresh"
-            onClick={fetchEntries}
-            title="Refresh"
-          >
-          </button>
-
-          <button
-            className="excellencia-btn excellencia-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Excellencia
-          </button>
+        <div className="excellencia-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="excellencia-btn excellencia-btn-icon icon-refresh"
+          onClick={fetchEntries}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Excellencia Table */}
@@ -218,8 +267,8 @@ const AdminExcellencia: React.FC = () => {
             <div className="excellencia-header-avatar">
             </div>
             <div className="excellencia-header-text">
-              <h3>Excellencia</h3>
-              <p>{filteredEntries.length} total entries</p>
+              <h3>Excellencia directory</h3>
+              <p>{paginatedEntries.length} records shown · {filteredEntries.length} total entries</p>
             </div>
           </div>
         </div>

@@ -27,6 +27,7 @@ const AdminRegulatory: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -165,10 +166,17 @@ const AdminRegulatory: React.FC = () => {
   };
 
   // Filter regulatory documents based on search
-  const filteredRegulatory = regulatoryItems.filter(paper =>
-    paper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    paper.short_description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredRegulatory = regulatoryItems.filter(paper => {
+    const matchesSearch =
+      paper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      paper.short_description.toLowerCase().includes(searchTerm.toLowerCase());
+    const isUpdated = !!paper.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedRegulatory = filteredRegulatory.slice(
@@ -178,14 +186,62 @@ const AdminRegulatory: React.FC = () => {
 
   const totalPages = Math.ceil(filteredRegulatory.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = regulatoryItems.filter(p => !p.last_edited_at).length;
+  const updatedCount = regulatoryItems.filter(p => p.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = regulatoryItems.filter(p => {
+    const d = new Date(p.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="regulatory-container">
       {/* Header */}
       <div className="regulatory-header">
-        <h1 className="regulatory-title">Regulatory</h1>
-        <p className="regulatory-subtitle">
-          Create and manage regulatory documents for your website
-        </p>
+        <div>
+          <p className="regulatory-eyebrow">Content Library</p>
+          <h1 className="regulatory-title">Regulatory</h1>
+          <p className="regulatory-subtitle">
+            Create, review and manage your website's regulatory documents.
+          </p>
+        </div>
+        <button
+          className="regulatory-btn regulatory-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Regulatory Document
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="regulatory-stats-row">
+        <div className="regulatory-stat-card blue">
+          <p className="regulatory-stat-label">Total Documents</p>
+          <p className="regulatory-stat-value">{regulatoryItems.length}</p>
+          <p className="regulatory-stat-sub">All regulatory content</p>
+        </div>
+        <div className="regulatory-stat-card green">
+          <p className="regulatory-stat-label">Published</p>
+          <p className="regulatory-stat-value">{publishedCount}</p>
+          <p className="regulatory-stat-sub">
+            {regulatoryItems.length > 0 ? Math.round((publishedCount / regulatoryItems.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="regulatory-stat-card orange">
+          <p className="regulatory-stat-label">Updated</p>
+          <p className="regulatory-stat-value">{updatedCount}</p>
+          <p className="regulatory-stat-sub">Edited after publish</p>
+        </div>
+        <div className="regulatory-stat-card dark">
+          <p className="regulatory-stat-label">Added This Month</p>
+          <p className="regulatory-stat-value">{addedThisMonthCount}</p>
+          <p className="regulatory-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -193,31 +249,24 @@ const AdminRegulatory: React.FC = () => {
         <div className="regulatory-search">
           <input
             type="text"
-            placeholder="Search regulatory documents..."
+            placeholder="Search regulatory documents by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="regulatory-actions">
-          <button
-            className="regulatory-btn regulatory-btn-icon icon-refresh"
-            onClick={fetchRegulatory}
-            title="Refresh"
-          >
-          </button>
-
-          <button
-            className="regulatory-btn regulatory-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Regulatory Document
-          </button>
+        <div className="regulatory-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="regulatory-btn regulatory-btn-icon icon-refresh"
+          onClick={fetchRegulatory}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Regulatory Table */}
@@ -227,8 +276,8 @@ const AdminRegulatory: React.FC = () => {
             <div className="regulatory-header-avatar">
             </div>
             <div className="regulatory-header-text">
-              <h3>Regulatory Documents</h3>
-              <p>{filteredRegulatory.length} total regulatory documents</p>
+              <h3>Regulatory directory</h3>
+              <p>{paginatedRegulatory.length} records shown · {filteredRegulatory.length} total documents</p>
             </div>
           </div>
         </div>

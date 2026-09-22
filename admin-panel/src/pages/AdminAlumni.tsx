@@ -30,6 +30,12 @@ const AdminAlumni: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'read'>('all');
+  const [selectedAlumni, setSelectedAlumni] = useState<Alumni | null>(null);
+  // "Read" is a view-only affordance (which registrations this admin has
+  // opened this session) — Alumni has no persisted read field, so this
+  // never touches the backend and resets on refresh.
+  const [readIds, setReadIds] = useState<Set<string>>(new Set());
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -85,14 +91,32 @@ const AdminAlumni: React.FC = () => {
     };
   }, [alumni]);
 
+  const newCount = alumni.filter((a) => !readIds.has(a.id)).length;
+
+  const markAsRead = (id: string) => {
+    setReadIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
+  };
+
+  const openAlumni = (person: Alumni) => {
+    setSelectedAlumni(person);
+    markAsRead(person.id);
+  };
+
   // Filter alumni based on search
-  const filteredAlumni = alumni.filter(person =>
-    person.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    person.designation.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredAlumni = alumni.filter(person => {
+    const matchesSearch =
+      person.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      person.designation.toLowerCase().includes(searchTerm.toLowerCase());
+    const isRead = readIds.has(person.id);
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'new' && !isRead) ||
+      (statusFilter === 'read' && isRead);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedAlumni = filteredAlumni.slice(
@@ -102,29 +126,47 @@ const AdminAlumni: React.FC = () => {
 
   const totalPages = Math.ceil(filteredAlumni.length / rowsPerPage);
 
+  const activeAlumni = selectedAlumni && alumni.some(a => a.id === selectedAlumni.id)
+    ? (alumni.find(a => a.id === selectedAlumni.id) as Alumni)
+    : null;
+
   return (
     <div className="alumni-container">
       {/* Header */}
       <div className="alumni-header">
-        <h1 className="alumni-title">Alumni Network</h1>
-        <p className="alumni-subtitle">
-          View and manage alumni registrations from your website
-        </p>
+        <div>
+          <p className="alumni-eyebrow">Communications</p>
+          <h1 className="alumni-title">Alumni network</h1>
+          <p className="alumni-subtitle">
+            Review registrations and stay in touch with former colleagues.
+          </p>
+        </div>
+        <span className="alumni-inbox-pill">
+          <span className="alumni-inbox-dot" /> Inbox active
+        </span>
       </div>
 
       {/* Stats */}
       <div className="alumni-stats-row">
         <div className="alumni-stat-card">
-          <p className="alumni-stat-label">Total</p>
+          <p className="alumni-stat-label">Total Registrations</p>
           <p className="alumni-stat-value">{stats.total}</p>
+          <p className="alumni-stat-sub">All alumni sign-ups</p>
+        </div>
+        <div className="alumni-stat-card">
+          <p className="alumni-stat-label">New</p>
+          <p className="alumni-stat-value">{newCount}</p>
+          <p className="alumni-stat-sub">Not yet reviewed</p>
         </div>
         <div className="alumni-stat-card">
           <p className="alumni-stat-label">Today</p>
           <p className="alumni-stat-value">{stats.today}</p>
+          <p className="alumni-stat-sub">{stats.today === 0 ? 'No new registrations' : 'Registered today'}</p>
         </div>
         <div className="alumni-stat-card">
           <p className="alumni-stat-label">This Week</p>
           <p className="alumni-stat-value">{stats.thisWeek}</p>
+          <p className="alumni-stat-sub">Last 7 days</p>
         </div>
       </div>
 
@@ -133,177 +175,186 @@ const AdminAlumni: React.FC = () => {
         <div className="alumni-search">
           <input
             type="text"
-            placeholder="Search alumni..."
+            placeholder="Search name, email or company"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="alumni-actions">
-          <button
-            className="alumni-btn alumni-btn-icon icon-refresh"
-            onClick={fetchAlumni}
-            title="Refresh"
-          >
-            <RefreshCw size={16} />
-          </button>
-          
-          <div className="alumni-stats">
-            <span className="alumni-count">{filteredAlumni.length} alumni</span>
-          </div>
-        </div>
-      </div>
-      {/* Main Content */}
-      <div className="alumni-main-card">
-        <div className="alumni-gradient-header">
-          <div className="alumni-header-content">
-            <div className="alumni-header-avatar">
-            </div>
-            <div className="alumni-header-text">
-              <h3>Alumni Network</h3>
-              <p>{filteredAlumni.length} total registrations</p>
-            </div>
-          </div>
+        <div className="alumni-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'new' ? 'active' : ''} onClick={() => setStatusFilter('new')}>New</button>
+          <button className={statusFilter === 'read' ? 'active' : ''} onClick={() => setStatusFilter('read')}>Read</button>
         </div>
 
+        <button
+          className="alumni-btn alumni-btn-icon icon-refresh"
+          onClick={fetchAlumni}
+          title="Refresh"
+        >
+          <RefreshCw size={16} />
+        </button>
+      </div>
+
+      {/* Main Content */}
+      <div className="alumni-main-card">
         {loading ? (
           <div className="alumni-loading">
             <div className="alumni-spinner"></div>
           </div>
+        ) : filteredAlumni.length === 0 ? (
+          <div className="alumni-empty">
+            <div className="empty-icon">🎓</div>
+            <h3>No alumni registrations found</h3>
+            <p>Alumni registrations will appear here when users submit the alumni form on your website.</p>
+          </div>
         ) : (
-          <>
-            {/* Cards Grid */}
-            <div className="alumni-cards-grid">
-              {paginatedAlumni.map((person) => (
-                <div key={person.id} className="alumni-card">
-                  <div className="alumni-card-header">
-                    <div className="alumni-avatar">
-                      {person.first_name.charAt(0).toUpperCase()}{person.last_name.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="alumni-info">
-                      <h4 className="alumni-name">{person.first_name} {person.last_name}</h4>
-                      <p className="alumni-email">{person.email}</p>
-                    </div>
-                    <div className="alumni-time">
-                      <span className="time-badge">
-                        {formatTimeAgo(person.created_at)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="alumni-card-body">
-                    <div className="alumni-detail">
-                      <span className="detail-label">Company:</span>
-                      <span className="detail-value">{person.company}</span>
-                    </div>
-                    
-                    <div className="alumni-detail">
-                      <span className="detail-label">Position:</span>
-                      <span className="detail-value">{person.designation}</span>
-                    </div>
-                    
-                    <div className="alumni-detail">
-                      <span className="detail-label">Tenure:</span>
-                      <span className="detail-value">{person.tenure}</span>
-                    </div>
-
-                    <div className="alumni-detail">
-                      <span className="detail-label">Last Role:</span>
-                      <span className="detail-value">{person.last_role}</span>
-                    </div>
-                    
-                    {person.phone && (
-                      <div className="alumni-detail">
-                        <span className="detail-label">Phone:</span>
-                        <span className="detail-value">{person.phone}</span>
-                      </div>
-                    )}
-
-                    {person.message && (
-                      <div className="alumni-message">
-                        <span className="detail-label">Message:</span>
-                        <p className="message-text">{person.message}</p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="alumni-card-footer">
-                    <div className="alumni-date">
-                      Registered on {new Date(person.created_at).toLocaleDateString('en-US', {
-                        timeZone: IST_TIME_ZONE,
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })} IST
-                    </div>
-                    <div className="alumni-actions">
-                      <button 
-                        className="alumni-action-btn reply"
-                        onClick={() => window.open(`mailto:${person.email}`, '_blank')}
-                        title="Send Email"
-                      >
-                        ✉
-                      </button>
-                      {person.phone && (
-                        <button 
-                          className="alumni-action-btn call"
-                          onClick={() => window.open(`tel:${person.phone}`, '_blank')}
-                          title="Call"
-                        >
-                          📞
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Empty State */}
-            {filteredAlumni.length === 0 && !loading && (
-              <div className="alumni-empty">
-                <div className="empty-icon">🎓</div>
-                <h3>No alumni registrations found</h3>
-                <p>Alumni registrations will appear here when users submit the alumni form on your website.</p>
-              </div>
-            )}
-
-            {/* Pagination */}
-            {filteredAlumni.length > 0 && (
-              <div className="alumni-pagination">
-                <div>
-                  Showing {page * rowsPerPage + 1} to {Math.min((page + 1) * rowsPerPage, filteredAlumni.length)} of {filteredAlumni.length} alumni
-                </div>
-                <div>
-                  <select 
-                    value={rowsPerPage} 
-                    onChange={(e) => {
-                      setRowsPerPage(parseInt(e.target.value));
-                      setPage(0);
-                    }}
+          <div className="alumni-inbox-layout">
+            {/* Left: registrations list */}
+            <div className="alumni-inbox-list">
+              <div className="alumni-inbox-list-header">
+                <span>Inbox</span>
+                <span className="alumni-inbox-list-controls">
+                  <span className="alumni-inbox-list-count">{filteredAlumni.length} registrations</span>
+                  <select
+                    value={rowsPerPage}
+                    onChange={(e) => { setRowsPerPage(parseInt(e.target.value)); setPage(0); }}
+                    title="Rows per page"
                   >
-                    <option value={6}>6 per page</option>
-                    <option value={12}>12 per page</option>
-                    <option value={24}>24 per page</option>
+                    <option value={6}>6 / page</option>
+                    <option value={12}>12 / page</option>
+                    <option value={24}>24 / page</option>
                   </select>
-                  <button 
-                    onClick={() => setPage(Math.max(0, page - 1))}
-                    disabled={page === 0}
-                  >
-                    ← Previous
-                  </button>
-                  <span>Page {page + 1} of {totalPages}</span>
-                  <button 
-                    onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-                    disabled={page >= totalPages - 1}
-                  >
-                    Next →
-                  </button>
-                </div>
+                </span>
               </div>
-            )}
-          </>
+              <div className="alumni-inbox-list-scroll">
+                {paginatedAlumni.map((person) => {
+                  const isRead = readIds.has(person.id);
+                  const isActive = activeAlumni?.id === person.id;
+                  return (
+                    <button
+                      key={person.id}
+                      className={`alumni-inbox-item ${isActive ? 'active' : ''}`}
+                      onClick={() => openAlumni(person)}
+                    >
+                      <span className="alumni-avatar">
+                        {person.first_name.charAt(0).toUpperCase()}{person.last_name.charAt(0).toUpperCase()}
+                      </span>
+                      <span className="alumni-inbox-item-body">
+                        <span className="alumni-inbox-item-top">
+                          <span className="alumni-inbox-item-name">{person.first_name} {person.last_name}</span>
+                          <span className="alumni-inbox-item-time">{formatTimeAgo(person.created_at)}</span>
+                        </span>
+                        <span className="alumni-inbox-item-preview">{person.designation} · {person.company}</span>
+                        <span className="alumni-inbox-item-email">{person.email}</span>
+                      </span>
+                      {!isRead && <span className="alumni-inbox-item-dot" />}
+                    </button>
+                  );
+                })}
+              </div>
+              {totalPages > 1 && (
+                <div className="alumni-pagination">
+                  <button onClick={() => setPage(Math.max(0, page - 1))} disabled={page === 0}>← Prev</button>
+                  <span>Page {page + 1} of {totalPages}</span>
+                  <button onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1}>Next →</button>
+                </div>
+              )}
+            </div>
+
+            {/* Right: detail pane */}
+            <div className="alumni-inbox-detail">
+              {activeAlumni ? (
+                <>
+                  <div className="alumni-detail-head">
+                    <span className="alumni-avatar large">
+                      {activeAlumni.first_name.charAt(0).toUpperCase()}{activeAlumni.last_name.charAt(0).toUpperCase()}
+                    </span>
+                    <div className="alumni-detail-head-text">
+                      <h3>
+                        {activeAlumni.first_name} {activeAlumni.last_name}
+                        {!readIds.has(activeAlumni.id) && <span className="alumni-new-badge">NEW</span>}
+                      </h3>
+                      <a href={`mailto:${activeAlumni.email}`} className="alumni-detail-email">{activeAlumni.email}</a>
+                    </div>
+                  </div>
+
+                  <div className="alumni-detail-infogrid">
+                    <div className="alumni-info-box">
+                      <span className="alumni-info-label">Company</span>
+                      <span className="alumni-info-value">{activeAlumni.company}</span>
+                    </div>
+                    <div className="alumni-info-box">
+                      <span className="alumni-info-label">Position</span>
+                      <span className="alumni-info-value">{activeAlumni.designation}</span>
+                    </div>
+                    <div className="alumni-info-box">
+                      <span className="alumni-info-label">Tenure</span>
+                      <span className="alumni-info-value">{activeAlumni.tenure}</span>
+                    </div>
+                    <div className="alumni-info-box">
+                      <span className="alumni-info-label">Last Role</span>
+                      <span className="alumni-info-value">{activeAlumni.last_role}</span>
+                    </div>
+                    {activeAlumni.phone && (
+                      <div className="alumni-info-box">
+                        <span className="alumni-info-label">Phone</span>
+                        <span className="alumni-info-value">{activeAlumni.phone}</span>
+                      </div>
+                    )}
+                    <div className="alumni-info-box">
+                      <span className="alumni-info-label">Registered</span>
+                      <span className="alumni-info-value">{formatTimeAgo(activeAlumni.created_at)}</span>
+                    </div>
+                  </div>
+
+                  {activeAlumni.message && (
+                    <div className="alumni-detail-message">
+                      <span className="alumni-info-label">Message</span>
+                      <p>{activeAlumni.message}</p>
+                    </div>
+                  )}
+
+                  <div className="alumni-detail-actions">
+                    <button
+                      className="alumni-btn alumni-btn-primary"
+                      onClick={() => window.open(`mailto:${activeAlumni.email}`, '_blank')}
+                    >
+                      ✉ Send email
+                    </button>
+                    {activeAlumni.phone && (
+                      <button
+                        className="alumni-btn alumni-btn-outline"
+                        onClick={() => window.open(`tel:${activeAlumni.phone}`, '_blank')}
+                      >
+                        📞 Call
+                      </button>
+                    )}
+                    {!readIds.has(activeAlumni.id) && (
+                      <button
+                        className="alumni-btn alumni-btn-outline"
+                        onClick={() => markAsRead(activeAlumni.id)}
+                      >
+                        ✓ Mark as read
+                      </button>
+                    )}
+                  </div>
+
+                  <p className="alumni-detail-footnote">
+                    Registered on {new Date(activeAlumni.created_at).toLocaleDateString('en-US', {
+                      timeZone: IST_TIME_ZONE,
+                      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
+                    })} IST
+                  </p>
+                </>
+              ) : (
+                <div className="alumni-detail-placeholder">
+                  <div className="empty-icon">🎓</div>
+                  <p>Select a registration from the inbox to view its details.</p>
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>

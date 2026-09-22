@@ -27,6 +27,7 @@ const AdminWhitePapers: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -165,10 +166,17 @@ const AdminWhitePapers: React.FC = () => {
   };
 
   // Filter white papers based on search
-  const filteredWhitePapers = whitePapers.filter(paper =>
-    paper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    paper.short_description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredWhitePapers = whitePapers.filter(paper => {
+    const matchesSearch =
+      paper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      paper.short_description.toLowerCase().includes(searchTerm.toLowerCase());
+    const isUpdated = !!paper.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedWhitePapers = filteredWhitePapers.slice(
@@ -178,14 +186,62 @@ const AdminWhitePapers: React.FC = () => {
 
   const totalPages = Math.ceil(filteredWhitePapers.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = whitePapers.filter(p => !p.last_edited_at).length;
+  const updatedCount = whitePapers.filter(p => p.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = whitePapers.filter(p => {
+    const d = new Date(p.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="whitepaper-container">
       {/* Header */}
       <div className="whitepaper-header">
-        <h1 className="whitepaper-title">White Papers</h1>
-        <p className="whitepaper-subtitle">
-          Create and manage white papers for your website
-        </p>
+        <div>
+          <p className="whitepaper-eyebrow">Content Library</p>
+          <h1 className="whitepaper-title">White Papers</h1>
+          <p className="whitepaper-subtitle">
+            Create, review and manage your website's white papers.
+          </p>
+        </div>
+        <button
+          className="whitepaper-btn whitepaper-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add White Paper
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="whitepaper-stats-row">
+        <div className="whitepaper-stat-card blue">
+          <p className="whitepaper-stat-label">Total White Papers</p>
+          <p className="whitepaper-stat-value">{whitePapers.length}</p>
+          <p className="whitepaper-stat-sub">All published research</p>
+        </div>
+        <div className="whitepaper-stat-card green">
+          <p className="whitepaper-stat-label">Published</p>
+          <p className="whitepaper-stat-value">{publishedCount}</p>
+          <p className="whitepaper-stat-sub">
+            {whitePapers.length > 0 ? Math.round((publishedCount / whitePapers.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="whitepaper-stat-card orange">
+          <p className="whitepaper-stat-label">Updated</p>
+          <p className="whitepaper-stat-value">{updatedCount}</p>
+          <p className="whitepaper-stat-sub">Edited after publish</p>
+        </div>
+        <div className="whitepaper-stat-card dark">
+          <p className="whitepaper-stat-label">Added This Month</p>
+          <p className="whitepaper-stat-value">{addedThisMonthCount}</p>
+          <p className="whitepaper-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -193,31 +249,24 @@ const AdminWhitePapers: React.FC = () => {
         <div className="whitepaper-search">
           <input
             type="text"
-            placeholder="Search white papers..."
+            placeholder="Search white papers by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="whitepaper-actions">
-          <button
-            className="whitepaper-btn whitepaper-btn-icon icon-refresh"
-            onClick={fetchWhitePapers}
-            title="Refresh"
-          >
-          </button>
-
-          <button
-            className="whitepaper-btn whitepaper-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add White Paper
-          </button>
+        <div className="whitepaper-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="whitepaper-btn whitepaper-btn-icon icon-refresh"
+          onClick={fetchWhitePapers}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* White Papers Table */}
@@ -227,8 +276,8 @@ const AdminWhitePapers: React.FC = () => {
             <div className="whitepaper-header-avatar">
             </div>
             <div className="whitepaper-header-text">
-              <h3>White Papers</h3>
-              <p>{filteredWhitePapers.length} total white papers</p>
+              <h3>White paper directory</h3>
+              <p>{paginatedWhitePapers.length} records shown · {filteredWhitePapers.length} total white papers</p>
             </div>
           </div>
         </div>

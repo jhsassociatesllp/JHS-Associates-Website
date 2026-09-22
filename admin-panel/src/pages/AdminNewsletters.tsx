@@ -27,6 +27,7 @@ const AdminNewsletters: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     heading: '',
@@ -165,10 +166,17 @@ const AdminNewsletters: React.FC = () => {
   };
 
   // Filter newsletters based on search
-  const filteredNewsletters = newsletters.filter(newsletter =>
-    newsletter.heading.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    newsletter.short_description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredNewsletters = newsletters.filter(newsletter => {
+    const matchesSearch =
+      newsletter.heading.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      newsletter.short_description.toLowerCase().includes(searchTerm.toLowerCase());
+    const isUpdated = !!newsletter.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedNewsletters = filteredNewsletters.slice(
@@ -178,14 +186,62 @@ const AdminNewsletters: React.FC = () => {
 
   const totalPages = Math.ceil(filteredNewsletters.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = newsletters.filter(n => !n.last_edited_at).length;
+  const updatedCount = newsletters.filter(n => n.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = newsletters.filter(n => {
+    const d = new Date(n.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="newsletter-container">
       {/* Header */}
       <div className="newsletter-header">
-        <h1 className="newsletter-title">Newsletters</h1>
-        <p className="newsletter-subtitle">
-          Create and manage newsletters for your website
-        </p>
+        <div>
+          <p className="newsletter-eyebrow">Content Library</p>
+          <h1 className="newsletter-title">Newsletters</h1>
+          <p className="newsletter-subtitle">
+            Create, review and manage your website's newsletters.
+          </p>
+        </div>
+        <button
+          className="newsletter-btn newsletter-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Newsletter
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="newsletter-stats-row">
+        <div className="newsletter-stat-card blue">
+          <p className="newsletter-stat-label">Total Newsletters</p>
+          <p className="newsletter-stat-value">{newsletters.length}</p>
+          <p className="newsletter-stat-sub">All published issues</p>
+        </div>
+        <div className="newsletter-stat-card green">
+          <p className="newsletter-stat-label">Published</p>
+          <p className="newsletter-stat-value">{publishedCount}</p>
+          <p className="newsletter-stat-sub">
+            {newsletters.length > 0 ? Math.round((publishedCount / newsletters.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="newsletter-stat-card orange">
+          <p className="newsletter-stat-label">Updated</p>
+          <p className="newsletter-stat-value">{updatedCount}</p>
+          <p className="newsletter-stat-sub">Edited after publish</p>
+        </div>
+        <div className="newsletter-stat-card dark">
+          <p className="newsletter-stat-label">Added This Month</p>
+          <p className="newsletter-stat-value">{addedThisMonthCount}</p>
+          <p className="newsletter-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -193,31 +249,24 @@ const AdminNewsletters: React.FC = () => {
         <div className="newsletter-search">
           <input
             type="text"
-            placeholder="Search newsletters..."
+            placeholder="Search newsletters by heading..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="newsletter-actions">
-          <button
-            className="newsletter-btn newsletter-btn-icon icon-refresh"
-            onClick={fetchNewsletters}
-            title="Refresh"
-          >
-          </button>
-
-          <button
-            className="newsletter-btn newsletter-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Newsletter
-          </button>
+        <div className="newsletter-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="newsletter-btn newsletter-btn-icon icon-refresh"
+          onClick={fetchNewsletters}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Newsletters Table */}
@@ -227,8 +276,8 @@ const AdminNewsletters: React.FC = () => {
             <div className="newsletter-header-avatar">
             </div>
             <div className="newsletter-header-text">
-              <h3>Newsletters</h3>
-              <p>{filteredNewsletters.length} total newsletters</p>
+              <h3>Newsletter directory</h3>
+              <p>{paginatedNewsletters.length} records shown · {filteredNewsletters.length} total newsletters</p>
             </div>
           </div>
         </div>

@@ -38,16 +38,12 @@ if (process.env.MONGO_URI) {
     })
     .catch((err) => console.warn("MongoDB connection failed — content counts will use the last crawled snapshot instead:", err.message));
 }
+const path = require("path");
 const app = express();
-// A browser Origin header never has a trailing slash (just scheme+host+port),
-// but ALLOWED_ORIGIN in .env is written as a full URL like
-// "https://jhsassociates.in/" — normalized once here so the CORS check (and
-// the API-key middleware below, which reuses this same value) actually
-// matches real requests instead of silently never matching.
 const ALLOWED_ORIGIN = (process.env.ALLOWED_ORIGIN || "").replace(/\/$/, "") || "*";
 app.use(express.json());
 app.use(cors({ origin: ALLOWED_ORIGIN }));
-app.use(express.static("public")); // serves /widget.js and /demo.html
+app.use(express.static(path.join(__dirname, "public"))); // serves /widget.js and /demo.html
 
 // This endpoint is a plain HTTP JSON API — CORS above only stops OTHER
 // websites' browser JavaScript from calling it, it does nothing to stop a

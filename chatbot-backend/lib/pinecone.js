@@ -39,12 +39,22 @@ async function upsertVectors(vectors) {
   if (!index) return false;
   if (!vectors || vectors.length === 0) return true;
 
-  const BATCH_SIZE = 100;
-  for (let i = 0; i < vectors.length; i += BATCH_SIZE) {
-    const batch = vectors.slice(i, i + BATCH_SIZE);
-    await index.upsert(batch);
+  try {
+    const BATCH_SIZE = 100;
+    for (let i = 0; i < vectors.length; i += BATCH_SIZE) {
+      const batch = vectors.slice(i, i + BATCH_SIZE);
+      await index.upsert(batch);
+    }
+    return true;
+  } catch (err) {
+    if (err.message && err.message.includes("404")) {
+      const indexName = process.env.PINECONE_INDEX || "jhs-website-chatbot";
+      console.warn(`[Pinecone Notice] Index "${indexName}" was not found (404). Please create index "${indexName}" with 1536 dimensions and Cosine metric at https://app.pinecone.io/ to enable cloud vector search.`);
+    } else {
+      console.warn("Pinecone upsert warning:", err.message);
+    }
+    return false;
   }
-  return true;
 }
 
 /**

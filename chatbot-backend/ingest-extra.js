@@ -5,7 +5,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { OpenAI } = require("openai");
 const pinecone = require("./lib/pinecone");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev", fetch: globalThis.fetch });
 const INDEX_FILE = "./index.json";
 
 const PUBLIC_COLLECTIONS = [
@@ -72,9 +72,17 @@ function chunkText(text, maxLen = 800) {
   return chunks;
 }
 
-async function embed(text) {
-  const res = await openai.embeddings.create({ model: "text-embedding-3-small", input: text });
-  return res.data[0].embedding;
+async function embed(text, retries = 3) {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const res = await openai.embeddings.create({ model: "text-embedding-3-small", input: text });
+      return res.data[0].embedding;
+    } catch (err) {
+      if (attempt === retries - 1) throw err;
+      console.warn(`Embedding API retry ${attempt + 1}/${retries}: ${err.message}`);
+      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
 }
 
 function makeVectorId(collection, docId, chunkIndex) {

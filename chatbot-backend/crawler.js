@@ -41,8 +41,31 @@ function makeVectorId(prefix, key) {
 // ---- helpers ---------------------------------------------------------
 
 async function getSitemapUrls(sitemapUrl) {
-  const res = await fetch(sitemapUrl);
-  const xml = await res.text();
+  let xml = "";
+  try {
+    const res = await fetch(sitemapUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/xml,text/xml,*/*",
+        "Accept-Encoding": "identity",
+      },
+    });
+    xml = await res.text();
+  } catch (err) {
+    console.warn(`node-fetch failed for ${sitemapUrl} (${err.message}), fetching via Puppeteer...`);
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-dev-shm-usage"],
+    });
+    try {
+      const page = await browser.newPage();
+      await page.goto(sitemapUrl, { waitUntil: "networkidle0" });
+      xml = await page.content();
+    } finally {
+      await browser.close();
+    }
+  }
+
   const parsed = await xml2js.parseStringPromise(xml);
 
   if (parsed.sitemapindex) {

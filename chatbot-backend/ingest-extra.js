@@ -5,7 +5,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { OpenAI } = require("openai");
 const pinecone = require("./lib/pinecone");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
 const INDEX_FILE = "./index.json";
 
 const PUBLIC_COLLECTIONS = [

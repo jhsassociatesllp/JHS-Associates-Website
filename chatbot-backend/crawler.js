@@ -22,7 +22,7 @@ const puppeteer = require("puppeteer");
 const { OpenAI } = require("openai");
 const pinecone = require("./lib/pinecone");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
 const SITEMAP_URL = process.env.SITE_SITEMAP_URL;
 const OUTPUT_FILE = "./index.json";
 

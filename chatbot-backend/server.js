@@ -17,7 +17,7 @@ const pinecone = require("./lib/pinecone");
 const crawler = require("./crawler");
 const ingestExtra = require("./ingest-extra");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
 
 // A "how many articles/whitepapers/..." question is cheap to answer with a
 // live count straight from MongoDB — no embeddings needed, just "how many

@@ -10,6 +10,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@pinecone-database/pinecone": "^3.0.3",
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

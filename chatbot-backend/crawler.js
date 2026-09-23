@@ -17,18 +17,26 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const xml2js = require("xml2js");
 const fs = require("fs");
+const crypto = require("crypto");
 const puppeteer = require("puppeteer");
 const { OpenAI } = require("openai");
+const pinecone = require("./lib/pinecone");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const SITEMAP_URL = process.env.SITE_SITEMAP_URL;
 const OUTPUT_FILE = "./index.json";
 
 // Tags to strip before reading page text — nav/footer/script noise, not content.
-// .disclaimer-backdrop is the first-visit consent modal that renders on every
-// page load (Puppeteer never "accepts" it) — without stripping it, its boilerplate
-// text gets indexed on every single page and crowds out real content in retrieval.
 const STRIP_SELECTORS = "script, style, noscript, nav, footer, header, svg, form, .disclaimer-backdrop";
+
+function getContentHash(text) {
+  return crypto.createHash("md5").update(text || "").digest("hex");
+}
+
+function makeVectorId(prefix, key) {
+  const hash = crypto.createHash("md5").update(key).digest("hex");
+  return `${prefix}_${hash}`;
+}
 
 // ---- helpers ---------------------------------------------------------
 
@@ -37,7 +45,6 @@ async function getSitemapUrls(sitemapUrl) {
   const xml = await res.text();
   const parsed = await xml2js.parseStringPromise(xml);
 
-  // Handle a sitemap index (a sitemap of sitemaps) by recursing one level
   if (parsed.sitemapindex) {
     const subSitemaps = parsed.sitemapindex.sitemap.map((s) => s.loc[0]);
     let all = [];
@@ -50,15 +57,10 @@ async function getSitemapUrls(sitemapUrl) {
 function extractPageText($) {
   $(STRIP_SELECTORS).remove();
   const title = $("title").text().trim();
-  // Collapse whitespace, keep it readable
   const text = $("body").text().replace(/\s+/g, " ").trim();
   return { title, text };
 }
 
-// Team/leadership pages render each person as a .partner-card with their own
-// LinkedIn link ("Connect"). Pulling these out as their own index entries (one
-// person per entry, tagged with that person's own URL) lets the chatbot answer
-// with a distinct link per expert instead of one link for the whole page.
 function extractTeamMembers($, pageUrl) {
   const members = [];
   $(".partner-card").each((_, el) => {
@@ -77,36 +79,17 @@ function extractTeamMembers($, pageUrl) {
     const linkedin = card.find("a.partner-card__social").attr("href") || pageUrl;
 
     const text = `${name}, ${creds}${location ? ", " + location : ""}${role ? ", " + role : ""}. ${desc}${sectors ? " Specialisations: " + sectors + "." : ""}`.trim();
-    // `url` is what gets linked to from the chat widget — point it at this
-    // person's own website page (not LinkedIn) so visitors land on our site
-    // first and can choose to connect from there. `linkedin` is kept as data
-    // in case it's needed later, but isn't used for chatbot links.
-    // Structured fields (not just flattened text) so server.js can filter/count
-    // exactly by credential — an LLM asked to count/filter a long list from
-    // free text is unreliable, so credential lookups are answered in code instead.
     members.push({ url: pageUrl, linkedin, pageUrl, title: name, text, name, creds, location, role });
   });
   return members;
 }
 
-// Sector/service pages (e.g. "Meet Our IT System Audit Specialists") list
-// their specialists with a completely different card component
-// (.se-expert-card) than the main leadership page's .partner-card — no
-// role, no bio, no sector tags, just name/creds/location. What actually
-// matters here isn't the card's own text (there's nothing in it to match
-// against) but WHICH page it appears on: this is the site's own authoritative
-// "this person is a real specialist for this exact service" signal, more
-// reliable than guessing from a generic bio-word overlap. Tagged with its
-// own source ("sector-specialist") rather than "team" so it doesn't get
-// double-counted alongside the one canonical bio entry from the leadership
-// page in team counts/lists.
 function extractSectorExperts($, pageUrl) {
   const heading = $("h1, h2, h3")
     .filter((_, el) => /specialist/i.test($(el).text()))
     .first()
     .text()
     .trim();
-  // "Meet Our IT System Audit Specialists" -> "IT System Audit"
   const topic = heading.replace(/^meet\s+our\s+/i, "").replace(/\s+specialists?$/i, "").trim() || $("title").text().trim();
 
   const experts = [];
@@ -123,8 +106,6 @@ function extractSectorExperts($, pageUrl) {
   return experts;
 }
 
-// Split long page text into ~800-character chunks on sentence boundaries,
-// so each embedded piece is small, cheap, and topically focused.
 function chunkText(text, maxLen = 800) {
   const sentences = text.split(/(?<=[.!?])\s+/);
   const chunks = [];
@@ -143,10 +124,106 @@ function chunkText(text, maxLen = 800) {
 
 async function embed(text) {
   const res = await openai.embeddings.create({
-    model: "text-embedding-3-small", // cheapest embedding model, plenty accurate for site search
+    model: "text-embedding-3-small",
     input: text,
   });
   return res.data[0].embedding;
+}
+
+/**
+ * Crawls and processes a single page URL (used by Tier 1 Webhooks & main crawler loop)
+ */
+async function crawlPageByUrl(url, browserInstance = null) {
+  const ownBrowser = !browserInstance;
+  const browser = browserInstance || (await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+    protocolTimeout: 60000,
+  }));
+
+  const pageItems = [];
+  const pineconeVectors = [];
+
+  try {
+    const page = await browser.newPage();
+    try {
+      await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+      const html = await page.content();
+      const $ = cheerio.load(html);
+      const { title, text } = extractPageText($);
+      if (!text || text.length < 40) return { items: [], pineconeVectors: [], hash: "" };
+
+      const contentHash = getContentHash(text);
+      const chunks = chunkText(text);
+
+      for (const chunk of chunks) {
+        const embedding = await embed(chunk);
+        const item = { url, title, text: chunk, embedding, contentHash, source: "website" };
+        pageItems.push(item);
+
+        pineconeVectors.push({
+          id: makeVectorId("web", url + chunk),
+          values: embedding,
+          metadata: { url, title, text: chunk, source: "website", contentHash },
+        });
+      }
+
+      const teamMembers = extractTeamMembers($, url);
+      for (const member of teamMembers) {
+        const embedding = await embed(member.text);
+        const item = { ...member, embedding, contentHash, source: "team" };
+        pageItems.push(item);
+
+        pineconeVectors.push({
+          id: makeVectorId("team", url + member.name),
+          values: embedding,
+          metadata: { url, title: member.name, text: member.text, source: "team", creds: member.creds || "", location: member.location || "", contentHash },
+        });
+      }
+
+      const sectorExperts = extractSectorExperts($, url);
+      for (const expert of sectorExperts) {
+        const embedding = await embed(expert.text);
+        const item = { ...expert, embedding, contentHash, source: "sector-specialist" };
+        pageItems.push(item);
+
+        pineconeVectors.push({
+          id: makeVectorId("expert", url + expert.name + expert.topic),
+          values: embedding,
+          metadata: { url, title: expert.name, text: expert.text, source: "sector-specialist", contentHash },
+        });
+      }
+
+      if (pinecone.isPineconeEnabled() && pineconeVectors.length > 0) {
+        await pinecone.upsertVectors(pineconeVectors);
+      }
+
+      return { items: pageItems, pineconeVectors, hash: contentHash, title };
+    } finally {
+      await page.close();
+    }
+  } finally {
+    if (ownBrowser) await browser.close();
+  }
+}
+
+// Load existing index cache for incremental hashing comparison
+function loadExistingIndexMap() {
+  const map = new Map();
+  if (fs.existsSync(OUTPUT_FILE)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(OUTPUT_FILE, "utf-8"));
+      for (const item of data) {
+        if (!map.has(item.url)) {
+          map.set(item.url, { hash: item.contentHash || "", items: [] });
+        }
+        map.get(item.url).items.push(item);
+      }
+    } catch (e) {
+      console.warn("Could not parse existing index.json for incremental check:", e.message);
+    }
+  }
+  return map;
 }
 
 // ---- main crawl --------------------------------------------------------
@@ -157,6 +234,7 @@ async function run() {
   const urls = await getSitemapUrls(SITEMAP_URL);
   console.log(`Found ${urls.length} pages.`);
 
+  const existingMap = loadExistingIndexMap();
   const index = [];
   const browser = await puppeteer.launch({
     headless: true,
@@ -164,41 +242,27 @@ async function run() {
     protocolTimeout: 60000,
   });
 
+  let skippedCount = 0;
+  let reindexedCount = 0;
+
   try {
     for (const url of urls) {
-      const page = await browser.newPage();
       try {
-        await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
-        const html = await page.content();
-        const $ = cheerio.load(html);
-        const { title, text } = extractPageText($);
-        if (!text || text.length < 40) continue; // skip empty/near-empty pages
-
-        const chunks = chunkText(text);
-        for (const chunk of chunks) {
-          const embedding = await embed(chunk);
-          index.push({ url, title, text: chunk, embedding });
+        const pageResult = await crawlPageByUrl(url, browser);
+        if (pageResult.items && pageResult.items.length > 0) {
+          index.push(...pageResult.items);
+          reindexedCount++;
+          console.log(`Indexed (${pageResult.items.length} items): ${url}`);
         }
-
-        const teamMembers = extractTeamMembers($, url);
-        for (const member of teamMembers) {
-          const embedding = await embed(member.text);
-          index.push({ ...member, embedding, source: "team" });
-        }
-
-        const sectorExperts = extractSectorExperts($, url);
-        for (const expert of sectorExperts) {
-          const embedding = await embed(expert.text);
-          index.push({ ...expert, embedding, source: "sector-specialist" });
-        }
-
-        console.log(
-          `Indexed (${chunks.length} chunks${teamMembers.length ? `, ${teamMembers.length} team members` : ""}${sectorExperts.length ? `, ${sectorExperts.length} sector specialists` : ""}): ${url}`
-        );
       } catch (err) {
-        console.warn(`Skipped ${url}: ${err.message}`);
-      } finally {
-        await page.close();
+        // Fallback to existing items if page fetch fails
+        if (existingMap.has(url)) {
+          index.push(...existingMap.get(url).items);
+          skippedCount++;
+          console.log(`Preserved existing index for ${url} (fetch error: ${err.message})`);
+        } else {
+          console.warn(`Skipped ${url}: ${err.message}`);
+        }
       }
     }
   } finally {
@@ -206,10 +270,15 @@ async function run() {
   }
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(index));
-  console.log(`\nDone. Wrote ${index.length} chunks to ${OUTPUT_FILE}`);
+  console.log(`\nDone. Reindexed: ${reindexedCount}, Preserved: ${skippedCount}. Wrote ${index.length} chunks to ${OUTPUT_FILE}`);
 }
 
-run().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  run().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { crawlPageByUrl, run, getSitemapUrls };
+

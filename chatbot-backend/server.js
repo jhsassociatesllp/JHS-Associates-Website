@@ -13,6 +13,9 @@ const rateLimit = require("express-rate-limit");
 const fs = require("fs");
 const { OpenAI } = require("openai");
 const { MongoClient } = require("mongodb");
+const pinecone = require("./lib/pinecone");
+const crawler = require("./crawler");
+const ingestExtra = require("./ingest-extra");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -259,6 +262,31 @@ async function retrieveRelevantChunks(question, topK = 8) {
   });
   const qVec = embedRes.data[0].embedding;
 
+  if (pinecone.isPineconeEnabled()) {
+    try {
+      const pMatches = await pinecone.queryVectors(qVec, topK + 4);
+      if (pMatches && pMatches.length > 0) {
+        const pChunks = pMatches.map((m) => ({
+          url: m.metadata.url,
+          title: m.metadata.title,
+          text: m.metadata.text,
+          source: m.metadata.source || "website",
+          isHubLink: Boolean(m.metadata.isHubLink),
+          score: m.score,
+        }));
+        const generalP = pChunks.filter((c) => c.source !== "team").slice(0, topK);
+        if (PEOPLE_QUERY_RE.test(question) || COUNT_OR_LIST_INTENT_RE.test(question)) {
+          const allTeam = INDEX.filter((c) => c.source === "team");
+          return [...generalP, ...allTeam];
+        }
+        const topTeam = INDEX.filter((c) => c.source === "team" && c.score > 0.3).slice(0, 4);
+        return [...generalP, ...topTeam];
+      }
+    } catch (err) {
+      console.warn("Pinecone query failed, falling back to local INDEX:", err.message);
+    }
+  }
+
   const scored = INDEX.map((item) => ({
     ...item,
     score: cosineSim(qVec, item.embedding),
@@ -267,24 +295,11 @@ async function retrieveRelevantChunks(question, topK = 8) {
 
   const generalChunks = scored.filter((c) => c.source !== "team").slice(0, topK);
 
-  // Also trigger on "how many"/"list all" phrasing alone (COUNT_OR_LIST_INTENT_RE,
-  // defined further below) even without a people noun like "expert"/"partner" —
-  // e.g. "how many advisory in Mumbai" has no such noun but is still clearly
-  // asking for an exhaustive count, which the LLM can only get right if it can
-  // see every team member instead of just the top-K by embedding similarity.
   if (PEOPLE_QUERY_RE.test(question) || COUNT_OR_LIST_INTENT_RE.test(question)) {
     const allTeamMembers = scored.filter((c) => c.source === "team");
     return [...generalChunks, ...allTeamMembers];
   }
 
-  // A plain topic/service question ("explain IT system audit") has no
-  // people-noun to trigger the branch above, so team members were being
-  // left out of the context entirely — the model could describe the
-  // service but never actually knew which partner handles it, since it
-  // never saw their bio. Surface a couple of the best-matching team members
-  // by embedding similarity (score > 0.3 — a real topical match, not just
-  // noise) so the model CAN name the relevant expert when there is one,
-  // without forcing an irrelevant name into an unrelated answer.
   const topTeamMatches = scored.filter((c) => c.source === "team" && c.score > 0.3).slice(0, 4);
 
   return [...scored.filter((c) => c.source !== "team").slice(0, topK), ...topTeamMatches];
@@ -953,6 +968,36 @@ async function answerCompoundContentAddendum(message) {
 
   return { text: reply, link: links[0] || null };
 }
+
+// ---- Tier 1 Webhook Endpoint for Instant Re-indexing ---------------------
+
+app.post("/api/reindex", requireApiKeyForExternalCallers, async (req, res) => {
+  try {
+    const { type, url, collection, docId } = req.body;
+    if (type === "url" && url) {
+      const result = await crawler.crawlPageByUrl(url);
+      if (result.items && result.items.length > 0) {
+        loadIndex();
+        return res.json({ success: true, message: `Reindexed ${result.items.length} chunks for ${url}`, count: result.items.length });
+      }
+      return res.status(400).json({ error: "Could not extract content from URL" });
+    }
+
+    if (type === "mongodb" && collection && docId) {
+      const success = await ingestExtra.ingestSingleDoc(collection, docId);
+      if (success) {
+        loadIndex();
+        return res.json({ success: true, message: `Reindexed document ${docId} from collection ${collection}` });
+      }
+      return res.status(400).json({ error: "Document not found or collection invalid" });
+    }
+
+    return res.status(400).json({ error: "Invalid payload. Provide { type: 'url', url } or { type: 'mongodb', collection, docId }" });
+  } catch (err) {
+    console.error("Reindex error:", err);
+    return res.status(500).json({ error: err.message });
+  }
+});
 
 // ---- the chat endpoint ----------------------------------------------------
 

@@ -1,41 +1,13 @@
-/**
- * ingest-extra.js
- * ----------------
- * Reads records from YOUR MongoDB database and adds them into the same
- * index.json that crawler.js builds from your website — so the chatbot
- * answers from BOTH the website AND your database, together.
- *
- * Only pulls from a fixed whitelist of PUBLIC content collections
- * (see PUBLIC_COLLECTIONS below) — never from collections that hold visitor
- * submissions or personal data (contact_us, proposals, alumni, feedback,
- * career_applications, career_resumes.*, admins, etc.), even if they exist
- * in the same database. This is a public-facing chatbot; those collections
- * contain names/emails/phone numbers that must never be answerable to a
- * random site visitor. If you add a new collection you want indexed, add it
- * to PUBLIC_COLLECTIONS deliberately — don't widen this to "everything".
- *
- * WHERE TO PUT YOUR DETAILS: all in your .env file — MONGO_URI,
- * MONGO_DB_NAME. Nothing else to configure for the connection itself.
- *
- * Run: node ingest-extra.js   (or: npm run crawl:extra)
- */
-
 require("dotenv").config();
 const fs = require("fs");
-const { MongoClient } = require("mongodb");
+const crypto = require("crypto");
+const { MongoClient, ObjectId } = require("mongodb");
 const { OpenAI } = require("openai");
+const pinecone = require("./lib/pinecone");
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const INDEX_FILE = "./index.json";
 
-// Each entry: which collection, how to turn one document into { url, title,
-// text }, verified against real documents in this database (field names
-// differ per collection — Articles/Knowledge use "title", Excellencia uses
-// "heading"; Regulatory/WhitePaper have no body text, just a title +
-// summary backing a PDF). None of these documents carry their own detail-page
-// URL, so each links back to that content type's listing page on the site
-// (Excellencia is the exception — its own button_url, e.g. a YouTube video,
-// is more specific and used instead when present).
 const PUBLIC_COLLECTIONS = [
   {
     name: "Articles",
@@ -105,6 +77,67 @@ async function embed(text) {
   return res.data[0].embedding;
 }
 
+function makeVectorId(collection, docId, chunkIndex) {
+  return `mongo_${collection}_${docId}_${chunkIndex}`;
+}
+
+async function ingestSingleDoc(collectionName, docId) {
+  if (!process.env.MONGO_URI) return false;
+  const client = new MongoClient(process.env.MONGO_URI);
+  await client.connect();
+  const db = client.db(process.env.MONGO_DB_NAME);
+
+  const colConfig = PUBLIC_COLLECTIONS.find((c) => c.name.toLowerCase() === collectionName.toLowerCase());
+  if (!colConfig) return false;
+
+  let query = { _id: docId };
+  if (typeof docId === "string" && docId.length === 24) {
+    try { query = { _id: new ObjectId(docId) }; } catch (e) {}
+  }
+
+  const doc = await db.collection(colConfig.name).findOne(query);
+  await client.close();
+  if (!doc) return false;
+
+  const record = colConfig.toRecord(doc);
+  if (!record.text || record.text.length < 10) return false;
+
+  const isHubLink = !record.url;
+  const url = record.url || colConfig.hubUrl;
+  const contentHash = crypto.createHash("md5").update(record.text).digest("hex");
+  const chunks = chunkText(record.text);
+
+  const newItems = [];
+  const pineconeVectors = [];
+
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
+    const embedding = await embed(chunk);
+    const item = { url, isHubLink, title: record.title, text: chunk, embedding, source: "mongodb", collection: colConfig.name, docId: String(doc._id), contentHash };
+    newItems.push(item);
+
+    pineconeVectors.push({
+      id: makeVectorId(colConfig.name, String(doc._id), i),
+      values: embedding,
+      metadata: { url, title: record.title, text: chunk, source: "mongodb", collection: colConfig.name, isHubLink, contentHash },
+    });
+  }
+
+  if (pinecone.isPineconeEnabled() && pineconeVectors.length > 0) {
+    await pinecone.upsertVectors(pineconeVectors);
+  }
+
+  // Update index.json in memory/disk
+  if (fs.existsSync(INDEX_FILE)) {
+    let index = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+    index = index.filter((item) => !(item.source === "mongodb" && item.collection === colConfig.name && item.docId === String(doc._id)));
+    index.push(...newItems);
+    fs.writeFileSync(INDEX_FILE, JSON.stringify(index));
+  }
+
+  return true;
+}
+
 async function run() {
   if (!process.env.MONGO_URI) {
     console.log("MONGO_URI not set in .env — skipping MongoDB ingest.");
@@ -116,13 +149,11 @@ async function run() {
   await client.connect();
   const db = client.db(process.env.MONGO_DB_NAME);
 
-  // Load existing index (built by crawler.js) so we ADD to it, not overwrite it
   let index = [];
   if (fs.existsSync(INDEX_FILE)) index = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
-
-  // Remove previous MongoDB entries so re-running this script updates them
-  // instead of duplicating them endlessly
   index = index.filter((item) => item.source !== "mongodb");
+
+  const pineconeVectors = [];
 
   for (const { name, hubUrl, toRecord } of PUBLIC_COLLECTIONS) {
     const docs = await db.collection(name).find({}).toArray();
@@ -131,31 +162,42 @@ async function run() {
     for (const doc of docs) {
       const record = toRecord(doc);
       if (!record.text || record.text.length < 10) continue;
-      // Most of these documents have no page of their own on the site (no
-      // per-article route exists there yet) — record.url is only set for
-      // the few that DO have a genuinely specific link (e.g. Excellencia's
-      // own button_url). Everything else falls back to the shared listing
-      // page, which is NOT a page for this one item — isHubLink flags that
-      // distinction for server.js so it never offers that shared URL as if
-      // it were a link to this specific item.
       const isHubLink = !record.url;
       const url = record.url || hubUrl;
+      const contentHash = crypto.createHash("md5").update(record.text).digest("hex");
 
       const chunks = chunkText(record.text);
-      for (const chunk of chunks) {
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
         const embedding = await embed(chunk);
-        index.push({ url, isHubLink, title: record.title, text: chunk, embedding, source: "mongodb", collection: name });
+        index.push({ url, isHubLink, title: record.title, text: chunk, embedding, source: "mongodb", collection: name, docId: String(doc._id), contentHash });
+
+        pineconeVectors.push({
+          id: makeVectorId(name, String(doc._id), i),
+          values: embedding,
+          metadata: { url, title: record.title, text: chunk, source: "mongodb", collection: name, isHubLink, contentHash },
+        });
       }
     }
   }
 
   await client.close();
 
+  if (pinecone.isPineconeEnabled() && pineconeVectors.length > 0) {
+    await pinecone.upsertVectors(pineconeVectors);
+    console.log(`Upserted ${pineconeVectors.length} MongoDB vectors to Pinecone.`);
+  }
+
   fs.writeFileSync(INDEX_FILE, JSON.stringify(index));
   console.log(`Done. MongoDB records added. Total chunks in index now: ${index.length}`);
 }
 
-run().catch((err) => {
-  console.error("MongoDB ingest failed:", err.message);
-  process.exit(1);
-});
+if (require.main === module) {
+  run().catch((err) => {
+    console.error("MongoDB ingest failed:", err.message);
+    process.exit(1);
+  });
+}
+
+module.exports = { ingestSingleDoc, run, PUBLIC_COLLECTIONS };
+

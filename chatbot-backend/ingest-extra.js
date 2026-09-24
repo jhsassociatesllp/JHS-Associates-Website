@@ -5,7 +5,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const { OpenAI } = require("openai");
 const pinecone = require("./lib/pinecone");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev", fetch: globalThis.fetch });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
 const INDEX_FILE = "./index.json";
 
 const PUBLIC_COLLECTIONS = [
@@ -90,8 +90,9 @@ function makeVectorId(collection, docId, chunkIndex) {
 }
 
 async function ingestSingleDoc(collectionName, docId) {
-  if (!process.env.MONGO_URI) return false;
-  const client = new MongoClient(process.env.MONGO_URI);
+  const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URL;
+  if (!mongoUri) return false;
+  const client = new MongoClient(mongoUri);
   await client.connect();
   const db = client.db(process.env.MONGO_DB_NAME);
 
@@ -147,13 +148,14 @@ async function ingestSingleDoc(collectionName, docId) {
 }
 
 async function run() {
-  if (!process.env.MONGO_URI) {
-    console.log("MONGO_URI not set in .env — skipping MongoDB ingest.");
+  const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URL;
+  if (!mongoUri) {
+    console.log("MONGO_URI (or MONGODB_URL) not set in .env — skipping MongoDB ingest.");
     return;
   }
 
   console.log("Connecting to MongoDB...");
-  const client = new MongoClient(process.env.MONGO_URI);
+  const client = new MongoClient(mongoUri);
   await client.connect();
   const db = client.db(process.env.MONGO_DB_NAME);
 

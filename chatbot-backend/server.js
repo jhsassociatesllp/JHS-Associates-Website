@@ -17,7 +17,7 @@ const pinecone = require("./lib/pinecone");
 const crawler = require("./crawler");
 const ingestExtra = require("./ingest-extra");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev", fetch: globalThis.fetch });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for_dev" });
 
 // A "how many articles/whitepapers/..." question is cheap to answer with a
 // live count straight from MongoDB — no embeddings needed, just "how many
@@ -29,8 +29,9 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for
 // last-crawled index.json snapshot if this is unset or the DB is briefly
 // unreachable, so a live-count hiccup never breaks the feature entirely.
 let mongoDb = null;
-if (process.env.MONGO_URI) {
-  new MongoClient(process.env.MONGO_URI)
+const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URL;
+if (mongoUri) {
+  new MongoClient(mongoUri)
     .connect()
     .then((client) => {
       mongoDb = client.db(process.env.MONGO_DB_NAME);
@@ -40,6 +41,7 @@ if (process.env.MONGO_URI) {
 }
 const path = require("path");
 const app = express();
+app.set("trust proxy", 1);
 const ALLOWED_ORIGIN = (process.env.ALLOWED_ORIGIN || "").replace(/\/$/, "") || "*";
 app.use(express.json());
 app.use(cors({ origin: ALLOWED_ORIGIN }));

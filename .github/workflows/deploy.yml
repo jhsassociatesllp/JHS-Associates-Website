@@ -219,10 +219,13 @@ jobs:
             # Backend ENV
             export MONGODB_URL=$MONGODB_URL
             export DATABASE_NAME=$DATABASE_NAME
-            export OPENAI_API_KEY=$OPENAI_API_KEY
-            export PINECONE_API_KEY=$PINECONE_API_KEY
-            export PINECONE_INDEX=$PINECONE_INDEX
-            export SITE_SITEMAP_URL=$SITE_SITEMAP_URL
+            # GitHub secrets are NOT available as shell variables on the
+            # remote server — they must be expanded by Actions before the
+            # script is sent (same as MONGODB_URL above).
+            export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+            export PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}"
+            export PINECONE_INDEX="${{ secrets.PINECONE_INDEX }}"
+            export SITE_SITEMAP_URL="${{ secrets.SITE_SITEMAP_URL }}"
 
             docker compose -p $COMPOSE_PROJECT_NAME down --remove-orphans
             docker compose -p $COMPOSE_PROJECT_NAME up -d --build

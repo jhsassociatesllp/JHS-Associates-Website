@@ -46,12 +46,22 @@ services:
 
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
+      PINECONE_API_KEY: ${PINECONE_API_KEY:-}
+      PINECONE_INDEX: ${PINECONE_INDEX:-jhs-website-chatbot}
       SITE_SITEMAP_URL: ${SITE_SITEMAP_URL:-https://jhsassociates.in/sitemap.xml}
       MONGO_URI: ${MONGODB_URL}
       MONGO_DB_NAME: ${DATABASE_NAME:-JHS_website}
       MONGO_COLLECTION: ${MONGO_COLLECTION:-knowledge_base}
       PORT: 3001
       ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-*}
+      # index.json is gitignored, so a fresh container has none — build it
+      # on startup (then re-crawl every 24h).
+      AUTO_REFRESH_HOURS: 24
+      AUTO_REFRESH_ON_START: 1
+
+    # MONGODB_URL points at host.docker.internal (same as the backend service)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
     expose:
       - "3001"

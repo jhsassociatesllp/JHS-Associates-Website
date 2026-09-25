@@ -46,6 +46,36 @@ const PUBLIC_COLLECTIONS = [
     }),
   },
   {
+    name: "Newsletter",
+    hubUrl: "https://www.jhsassociates.in/newsletters",
+    toRecord: (doc) => ({
+      url: doc.pageUrl || null,
+      title: doc.heading,
+      text: [doc.heading, doc.short_description].filter(Boolean).join(". "),
+    }),
+  },
+  {
+    // Public job openings only (the careers page) — never the applications
+    // (career_applications / resumes), which are personal data.
+    name: "career_jobs",
+    hubUrl: "https://www.jhsassociates.in/about/careers",
+    filter: { status: "open" },
+    toRecord: (doc) => ({
+      url: doc.pageUrl || null,
+      title: doc.title,
+      text: [
+        `Job opening: ${doc.title}`,
+        doc.department && `Department: ${doc.department}`,
+        doc.location && `Location: ${doc.location}`,
+        doc.employment_type && `Type: ${doc.employment_type}`,
+        doc.experience && `Experience: ${doc.experience}`,
+        doc.summary,
+        doc.description,
+        doc.requirements,
+      ].filter(Boolean).join(". "),
+    }),
+  },
+  {
     name: "Excellencia",
     hubUrl: "https://www.jhsassociates.in/excellencia",
     toRecord: (doc) => ({
@@ -85,6 +115,33 @@ async function embed(text, retries = 3) {
   }
 }
 
+// text -> embedding, seeded from the existing index.json so unchanged text is
+// never re-sent to OpenAI, and sent in batches (many chunks per request).
+const embeddingCache = new Map();
+async function embedBatch(texts) {
+  const results = new Array(texts.length);
+  const missing = [];
+  texts.forEach((t, i) => (embeddingCache.has(t) ? (results[i] = embeddingCache.get(t)) : missing.push(i)));
+  for (let start = 0; start < missing.length; start += 64) {
+    const idxs = missing.slice(start, start + 64);
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await openai.embeddings.create({ model: "text-embedding-3-small", input: idxs.map((i) => texts[i]) });
+        res.data.forEach((d, j) => {
+          results[idxs[j]] = d.embedding;
+          embeddingCache.set(texts[idxs[j]], d.embedding);
+        });
+        break;
+      } catch (err) {
+        if (attempt === 2) throw err;
+        console.warn(`Embedding API retry ${attempt + 1}/3: ${err.message}`);
+        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+      }
+    }
+  }
+  return results;
+}
+
 function makeVectorId(collection, docId, chunkIndex) {
   return `mongo_${collection}_${docId}_${chunkIndex}`;
 }
@@ -115,13 +172,14 @@ async function ingestSingleDoc(collectionName, docId) {
   const url = record.url || colConfig.hubUrl;
   const contentHash = crypto.createHash("md5").update(record.text).digest("hex");
   const chunks = chunkText(record.text);
+  const embeddings = await embedBatch(chunks);
 
   const newItems = [];
   const pineconeVectors = [];
 
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
-    const embedding = await embed(chunk);
+    const embedding = embeddings[i];
     const item = { url, isHubLink, title: record.title, text: chunk, embedding, source: "mongodb", collection: colConfig.name, docId: String(doc._id), contentHash };
     newItems.push(item);
 
@@ -161,12 +219,13 @@ async function run() {
 
   let index = [];
   if (fs.existsSync(INDEX_FILE)) index = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+  for (const item of index) if (item.text && item.embedding) embeddingCache.set(item.text, item.embedding);
   index = index.filter((item) => item.source !== "mongodb");
 
   const pineconeVectors = [];
 
-  for (const { name, hubUrl, toRecord } of PUBLIC_COLLECTIONS) {
-    const docs = await db.collection(name).find({}).toArray();
+  for (const { name, hubUrl, toRecord, filter } of PUBLIC_COLLECTIONS) {
+    const docs = await db.collection(name).find(filter || {}).toArray();
     console.log(`${name}: ${docs.length} documents`);
 
     for (const doc of docs) {
@@ -177,9 +236,10 @@ async function run() {
       const contentHash = crypto.createHash("md5").update(record.text).digest("hex");
 
       const chunks = chunkText(record.text);
+      const embeddings = await embedBatch(chunks);
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
-        const embedding = await embed(chunk);
+        const embedding = embeddings[i];
         index.push({ url, isHubLink, title: record.title, text: chunk, embedding, source: "mongodb", collection: name, docId: String(doc._id), contentHash });
 
         pineconeVectors.push({

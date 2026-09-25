@@ -30,21 +30,36 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || "dummy_key_for
 // unreachable, so a live-count hiccup never breaks the feature entirely.
 let mongoDb = null;
 const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URL;
-if (mongoUri) {
-  new MongoClient(mongoUri)
+function connectMongo() {
+  new MongoClient(mongoUri, { serverSelectionTimeoutMS: 5000 })
     .connect()
     .then((client) => {
       mongoDb = client.db(process.env.MONGO_DB_NAME);
       console.log("Connected to MongoDB for live content counts.");
+      // If the database goes away later, drop the handle and start retrying.
+      client.on("close", () => {
+        mongoDb = null;
+        setTimeout(connectMongo, 15000);
+      });
     })
-    .catch((err) => console.warn("MongoDB connection failed — content counts will use the last crawled snapshot instead:", err.message));
+    .catch((err) => {
+      console.warn("MongoDB not reachable yet — using the last crawled snapshot for now, retrying in 30s:", err.message);
+      setTimeout(connectMongo, 30000);
+    });
 }
+if (mongoUri) connectMongo();
 const path = require("path");
 const app = express();
 app.set("trust proxy", 1);
-const ALLOWED_ORIGIN = (process.env.ALLOWED_ORIGIN || "").replace(/\/$/, "") || "*";
+// ALLOWED_ORIGIN may be a single origin or a comma-separated list, e.g.
+// "https://jhsassociates.in,https://www.jhsassociates.in,http://localhost:5173"
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim().replace(/\/$/, ""))
+  .filter(Boolean);
+const ALLOWED_ORIGIN = ALLOWED_ORIGINS.length ? ALLOWED_ORIGINS.join(",") : "*";
 app.use(express.json());
-app.use(cors({ origin: ALLOWED_ORIGIN }));
+app.use(cors({ origin: ALLOWED_ORIGINS.length ? ALLOWED_ORIGINS : "*" }));
 app.use(express.static(path.join(__dirname, "public"))); // serves /widget.js and /demo.html
 
 // This endpoint is a plain HTTP JSON API — CORS above only stops OTHER
@@ -59,7 +74,7 @@ app.use(express.static(path.join(__dirname, "public"))); // serves /widget.js an
 function requireApiKeyForExternalCallers(req, res, next) {
   if (!process.env.API_KEY) return next();
   const origin = (req.headers.origin || "").replace(/\/$/, "");
-  if (origin && ALLOWED_ORIGIN !== "*" && origin === ALLOWED_ORIGIN) return next();
+  if (origin && ALLOWED_ORIGINS.includes(origin)) return next();
   if (req.headers["x-api-key"] === process.env.API_KEY) return next();
   return res.status(401).json({ error: "Missing or invalid API key. Pass it as the 'x-api-key' header." });
 }
@@ -92,6 +107,9 @@ let LOCATION_VOCAB = new Set();
 // tag (tax, audit, risk, governance, ...), rebuilt whenever the index
 // reloads — see findSectorInQuestion().
 let SECTOR_VOCAB = new Set();
+// Everything the site says about each team member, lowercased — used to spot
+// multi-word practice areas ("income tax", "internal audit") in a question.
+let TEAM_TEXT = "";
 // Every domain word the exact-match detectors below key off of (sector
 // words, location names, plus a fixed set of role/people words like
 // "partners", "council", "board") — used by correctTypos() to fix a single
@@ -113,6 +131,11 @@ function buildCredentialVocab() {
   const vocab = new Set();
   for (const item of INDEX) {
     if (item.source !== "team" || !item.creds) continue;
+    // "UGC-NET Qualified", "ISO 27001 Lead Auditor", "NISM(DP)" -> each acronym
+    // inside is a credential people ask about ("who has UGC-NET").
+    for (const word of item.creds.replace(/[()]/g, " ").split(/[,\s]+/)) {
+      if (/^[A-Z][A-Z0-9-]{2,9}$/.test(word) && !/^[0-9]+$/.test(word)) vocab.add(word);
+    }
     for (const tok of item.creds.split(",")) {
       const clean = tok.trim();
       // 3+ letters only — "CA" alone is excluded on purpose: it's the generic
@@ -199,6 +222,7 @@ function loadIndex() {
   CREDENTIAL_VOCAB = buildCredentialVocab();
   LOCATION_VOCAB = buildLocationVocab();
   SECTOR_VOCAB = buildSectorVocab();
+  TEAM_TEXT = INDEX.filter((i) => i.source === "team").map((i) => i.text.toLowerCase()).join(" | ");
   TYPO_VOCAB = buildTypoVocab();
   SECTOR_SPECIALISTS_BY_URL = new Map();
   for (const item of INDEX) {
@@ -209,6 +233,10 @@ function loadIndex() {
   console.log(`Loaded ${INDEX.length} indexed chunks.`);
 }
 loadIndex();
+
+// Uniform contact cards (email, View Profile, Connect), fuzzy name lookup and
+// sector-expert lookup — see lib/people.js.
+const people = require("./lib/people").createPeople({ getIndex: () => INDEX, findLocationInQuestion: findLocationsInQuestion });
 // Re-load automatically if the crawler updates the file while the server runs
 fs.watchFile("./index.json", { interval: 60000 }, loadIndex);
 // Keeps index.json itself fresh — periodically re-runs the website crawl and
@@ -316,8 +344,9 @@ Rules you must always follow:
   Do NOT do this for a question about an Article/Knowledge piece/Regulatory update/WhitePaper/Excellencia item (i.e. CONTENT, not a service) — even if that content happens to be authored by or mention a team member. The useful next step there is reading the piece itself, not "talk to a person" — just point to the relevant page (Articles/Resources/Regulatory/White Papers/Excellencia) as usual, with no person recommended.
 - Whenever you explain, summarize, or answer a question about a specific Article/Knowledge piece/Regulatory update/WhitePaper/Excellencia item using the CONTEXT, always end with a [[LINK: <exact url from context> | <label>]] to that source so the visitor has a way to open the actual page — never leave that kind of answer without a link.
 - If asked "how many" of something (e.g. how many FCA experts), state the exact count based on everyone present in the CONTEXT, then list them.
-- When listing 3 or fewer people, give a short description for each, then end that person's own mention with [[LINK: <exact url from context> | View Profile]] on its own line before moving to the next person — so each person's description is immediately followed by their own link, not grouped separately at the end.
-- When listing MORE than 3 people, keep each one to a single short line (Name — location, one-line specialisation) — no paragraphs, no per-person links — and put exactly ONE [[LINK: ...]] at the very end pointing to the team/leadership page. Never invent a URL that isn't in the CONTEXT — every url must come from the CONTEXT exactly as written (never add a "#" fragment or anything else to it).
+- Whenever you mention a specific team member, write their FULL name in **bold** exactly as it appears in the CONTEXT, followed by a short description (location, role, what they specialise in). Do NOT write [[LINK: ...]] markers, email addresses or phone numbers for people — the chat window automatically shows a contact card (email, View Profile and Connect buttons) under your answer for every team member you name, so you never need to. Never invent or guess an email address.
+- When listing more than 3 people, keep each to one short line (Name — location, role, specialisation).
+- Visitors often type quickly and imperfectly (typos, missing words, abbreviations, mixed languages). Work out what they most likely mean and answer that, instead of asking them to rephrase — only ask a short clarifying question if there are genuinely two very different possible meanings. Reply in the same language the visitor wrote in.
 - Keep answers concise and conversational — short (2-4 sentences) for a single-topic question; for a requested list, one brief line per item.
 - For a longer answer that covers multiple distinct points (e.g. explaining a service/article/whitepaper with several parts), structure it with markdown: "## " for a section heading, "#### " for a smaller sub-heading, and "- " for bullet points — each on its own line. Don't do this for a short, single-point answer; plain sentences are better there.
 - Use light markdown even in a short, plain paragraph-style answer, not only in longer structured ones: always wrap a specific person's name in **Name**, and also bold a small number of other genuinely key terms — a service/product name, a regulation, a specific figure or date — with **term**, so a paragraph isn't just an unbroken wall of text. Don't overdo it: bolding most of the sentence defeats the purpose: a couple of bolded terms is far more readable than every noun.
@@ -335,6 +364,51 @@ function findCredentialInQuestion(message) {
     if (new RegExp(`\\b${cred}\\b`).test(upper)) return cred;
   }
   return null;
+}
+
+// "Who holds the DSA degree" — a qualification we may not have anyone for.
+// Only profiles that actually MENTION it are ever returned; if none do, say so
+// (and suggest a close spelling like DISA) instead of falling back to listing
+// people who merely look related.
+const CRED_HOLDER_RE = /\bwho\s+(?:all\s+)?(?:has|have|holds?|hold|got|possess(?:es)?|is\s+(?:qualified|certified)\s+in|are\s+(?:qualified|certified)\s+in)\s+(?:the\s+|a\s+|an\s+|any\s+)?([A-Za-z][A-Za-z0-9.-]{1,14})\b/i;
+const CRED_NOUN_RE = /\b([A-Za-z][A-Za-z0-9.-]{1,14})\s+(?:degree|qualification|certification|certificate|diploma|credential|designation)\b/i;
+const CRED_WORD_HINT_RE = /\b(degree|qualification|certification|certificate|diploma|credential|designation|certified|qualified)\b/i;
+const NOT_A_CREDENTIAL = new Set([
+  "the", "a", "an", "any", "degree", "qualification", "certification", "certificate", "diploma", "which", "what", "that",
+  "this", "experience", "expertise", "knowledge", "skill", "skills", "background", "ca", "him", "her", "them", "it", "all", "some", "more",
+]);
+
+function answerCredentialHolderQuery(message) {
+  const m = message.match(CRED_HOLDER_RE) || message.match(CRED_NOUN_RE);
+  if (!m) return null;
+  const token = m[1].replace(/[.]+$/, "");
+  const lower = token.toLowerCase();
+  const upper = token.toUpperCase();
+  if (NOT_A_CREDENTIAL.has(lower) || token.length > 10) return null;
+  // Looks like a credential only if it was typed like an acronym (DSA, CISA)
+  // or the question uses a qualification word ("... degree", "certified").
+  if (!(token === upper || CRED_WORD_HINT_RE.test(message))) return null;
+  if (CREDENTIAL_VOCAB.has(upper)) return null; // a known credential: the normal team-list path answers it
+  if (SECTOR_VOCAB.has(lower) || LOCATION_VOCAB.has(token) || (STATE_TO_CITIES[upper] || null)) return null;
+
+  const wordRe = new RegExp("(?<![A-Za-z0-9])" + token.replace(/[.*+?^${}()|[\]\\-]/g, "\\$&") + "(?![A-Za-z0-9])", "i");
+  const mentioned = INDEX.filter((i) => i.source === "team" && wordRe.test(i.text));
+  if (mentioned.length) {
+    return {
+      intro:
+        mentioned.length === 1
+          ? `Only this profile mentions **${token.toUpperCase()}**:`
+          : `These ${mentioned.length} profiles mention **${token.toUpperCase()}**:`,
+      items: mentioned.map((t, i) => people.personItem(t, i + 1)),
+      links: [],
+    };
+  }
+
+  const close = [...CREDENTIAL_VOCAB].filter((c) => levenshtein(c, upper) <= 1 || (c.length >= 4 && c.includes(upper)));
+  const hint = close.length
+    ? ` Did you mean ${close.slice(0, 3).map((c) => `**${c}**`).join(" or ")}? Ask "who holds ${close[0]}" and I'll list those profiles.`
+    : "";
+  return { intro: `No one in our team lists **${token.toUpperCase()}** in their profile.${hint}`, items: [], links: [] };
 }
 
 // Visitors also ask by state/region rather than city ("partners of
@@ -443,8 +517,19 @@ function findLocationInQuestion(message) {
   const words = upper.match(/[A-Z]+/g) || [];
   for (const word of words) {
     if (word.length < 5) continue; // too short for a 1-edit match to be meaningful
+    // Long names tolerate two typos ("Banglore"/"Bengalore" for Bangalore/
+    // Bengaluru), short ones one. Also checks the older/alternate spellings
+    // people actually type (Bangalore, Bombay, Calcutta, Madras, Baroda), not
+    // only the name the site uses — Bangalore and Bengaluru are the same city.
+    const maxTypos = (target) => (target.length >= 8 ? 2 : 1);
     for (const loc of LOCATION_VOCAB) {
-      if (levenshtein(word, loc.toUpperCase()) === 1) return { label: loc, cities: [loc] };
+      const d = levenshtein(word, loc.toUpperCase());
+      if (d >= 1 && d <= maxTypos(loc)) return { label: loc, cities: [loc] };
+    }
+    for (const [alias, city] of Object.entries(CITY_ALIASES)) {
+      if (alias.length < 5 || !LOCATION_VOCAB.has(city)) continue;
+      const d = levenshtein(word, alias);
+      if (d >= 1 && d <= maxTypos(alias)) return { label: city, cities: [city] };
     }
     for (const [state, cities] of Object.entries(STATE_TO_CITIES)) {
       if (state.includes(" ")) continue; // multi-word states need exact phrasing
@@ -455,6 +540,27 @@ function findLocationInQuestion(message) {
     }
   }
   return null;
+}
+
+// "partners in Mumbai and Chennai" — every place named, not just the first.
+// Runs the single-place matcher (exact names, states, nicknames like Bangalore,
+// and misspellings) on the whole message and then on each word, and combines
+// the results.
+function findLocationsInQuestion(message) {
+  const cities = new Set();
+  const labels = [];
+  const add = (r) => {
+    if (!r) return;
+    const fresh = r.cities.filter((c) => !cities.has(c));
+    if (!fresh.length) return;
+    fresh.forEach((c) => cities.add(c));
+    labels.push(r.label);
+  };
+  add(findLocationInQuestion(message));
+  for (const word of message.match(/[A-Za-z]{3,}/g) || []) add(findLocationInQuestion(word));
+  if (!cities.size) return null;
+  const list = labels.length > 1 ? labels.slice(0, -1).join(", ") + " and " + labels[labels.length - 1] : labels[0];
+  return { label: list, cities: [...cities] };
 }
 
 // A place-sounding question ("... in Hyderabad", "which office is ...
@@ -497,6 +603,8 @@ function unresolvedLocationCandidate(message) {
   // been correctly resolved as the sector filter — checked dynamically
   // since SECTOR_VOCAB/FIXED_TYPO_WORDS are rebuilt from the live data.
   if (SECTOR_VOCAB.has(word) || FIXED_TYPO_WORDS.includes(word)) return null;
+  // Same for a credential ("experts in FCA") — that's a qualification, not a place.
+  if (CREDENTIAL_VOCAB.has(word.toUpperCase())) return null;
   return word;
 }
 
@@ -563,9 +671,25 @@ const ROLE_SECTOR_AMBIGUITY = {
 // from the team's own Specialisations tags. `excludeRe` strips out a
 // matched role phrase first so e.g. "governance council" doesn't also fire
 // the "governance" sector word.
+const PHRASE_STOPWORDS = new Set([
+  "the", "and", "for", "are", "who", "what", "which", "have", "has", "you", "your", "our", "any", "all", "how", "many",
+  "with", "about", "tell", "give", "show", "list", "experts", "expert", "specialist", "specialists", "specialise",
+  "specialising", "partner", "partners", "team", "members", "member", "people", "person", "in", "of", "on", "to", "is", "a", "an",
+]);
 function findSectorInQuestion(message, excludeRe) {
   const text = excludeRe ? message.replace(excludeRe, "") : message;
   const words = text.toLowerCase().match(/[a-z]+/g) || [];
+  // A multi-word practice area named in the question ("income tax",
+  // "internal audit") is matched as a whole phrase, longest first — matching
+  // just one of its words ("income") would list everyone whose bio has it.
+  for (const size of [3, 2]) {
+    for (let i = 0; i + size <= words.length; i++) {
+      const win = words.slice(i, i + size);
+      if (win.some((w) => w.length < 3 || PHRASE_STOPWORDS.has(w))) continue;
+      const phrase = win.join(" ");
+      if (TEAM_TEXT.includes(phrase)) return phrase;
+    }
+  }
   for (const w of words) {
     if (SECTOR_VOCAB.has(w)) return w;
   }
@@ -594,7 +718,7 @@ const SECTOR_INTENT_RE = /\bspecialis|\bsector\b|\bpractice\b|\bfocus(?:ed)? on\
 // Only take over for "how many" / "list all" style phrasing — a question about
 // one specific person that happens to mention a credential (e.g. "does Disha
 // Shah have FCA?") should still go to the normal single-answer LLM path below.
-const COUNT_OR_LIST_INTENT_RE = /\b(how many|count|list all|list every|all our|all the|everyone|every expert|every partner|full list|who are)\b/i;
+const COUNT_OR_LIST_INTENT_RE = /\b(how many|count|list all|list every|all our|all the|everyone|every expert|every partner|full list|who are|who (?:has|have|holds?|is qualified))\b/i;
 
 // The bit after the role sentence in a team member's flattened `text` (see
 // crawler.js) — a short one-line specialisation without re-crawling for it.
@@ -618,8 +742,19 @@ const NEGATION_RE = /\b(not|non-?[a-z]*|except|excluding|other than|besides|isn'
 // experts" style questions — built entirely in code so every item reliably
 // gets its own link right below it, instead of depending on the LLM to place
 // [[LINK]] markers correctly (which it doesn't do consistently for long lists).
+// "partners in Bangalore", "FCA experts Mumbai" — a list request with no
+// "who are / how many" in it. Only treated as one when a place/credential/
+// specialisation is also named (checked below), and never for questions about
+// the firm itself ("how do I become a partner", "partner fees").
+const IMPLICIT_LIST_RE = /\b(partners?|experts?|members?|team|council|board|specialists?|professionals?|people|staff)\b/i;
+const NOT_A_LIST_RE = /\b(how (do|to|can|much)|can i|could i|career|careers|job|jobs|hire|hiring|apply|become|join|fees?|cost|price|pricing)\b/i;
+
+const NOT_TEAM_SUBJECT_RE = /\b(alumni|alumnus|clients?|customers?|competitors?|investors?|students?|interns?)\b/i;
+
 function answerTeamListQuery(rawMessage) {
-  if (!COUNT_OR_LIST_INTENT_RE.test(rawMessage)) return null;
+  if (NOT_TEAM_SUBJECT_RE.test(rawMessage)) return null; // "who are your alumni" is not "list our team"
+  const explicitIntent = COUNT_OR_LIST_INTENT_RE.test(rawMessage);
+  if (!explicitIntent && !(IMPLICIT_LIST_RE.test(rawMessage) && !NOT_A_LIST_RE.test(rawMessage))) return null;
 
   // Strip a trailing "and also .../aur ..." clause that isn't actually about
   // the team before running any filter detection below — otherwise an
@@ -634,10 +769,21 @@ function answerTeamListQuery(rawMessage) {
   const negated = NEGATION_RE.test(message);
   const cred = findCredentialInQuestion(message);
   const isCASynonym = !cred && CA_SYNONYM_RE.test(message);
-  const location = findLocationInQuestion(message);
+  const location = findLocationsInQuestion(message);
   const role = findRoleInQuestion(message);
   const roleRe = role && ROLE_SYNONYMS.find((s) => s.role === role).re;
-  const sector = findSectorInQuestion(message, roleRe);
+  // "experts in Assurance, Tech & SOC Audit" names several practice areas —
+  // every one of them counts (people matching ANY of them), not just the first.
+  const sectorTerms = [];
+  for (const piece of message.split(/[,&/]|\band\b|\bor\b/i)) {
+    const t = findSectorInQuestion(piece, roleRe);
+    if (t && !sectorTerms.includes(t)) sectorTerms.push(t);
+  }
+  if (!sectorTerms.length) {
+    const t = findSectorInQuestion(message, roleRe);
+    if (t) sectorTerms.push(t);
+  }
+  const sector = sectorTerms[0] || null;
 
   // A generic people noun (expert/partner/team/...) is the usual signal this
   // is a people question, but plenty of real phrasings skip it entirely
@@ -646,6 +792,7 @@ function answerTeamListQuery(rawMessage) {
   // proof enough this is a people question; only bail out to the LLM when we
   // found neither a people noun nor any concrete filter to work with.
   if (!PEOPLE_QUERY_RE.test(message) && !cred && !isCASynonym && !role && !sector && !location) return null;
+  if (!explicitIntent && !location && !cred && !isCASynonym && !sector) return null;
 
   let matches = INDEX.filter((item) => item.source === "team");
   const descriptors = [];
@@ -674,8 +821,8 @@ function answerTeamListQuery(rawMessage) {
   }
 
   if (sector) {
-    matches = matches.filter((item) => bioMentions(item, sector));
-    descriptors.push(sector);
+    matches = matches.filter((item) => sectorTerms.some((term) => bioMentions(item, term)));
+    descriptors.push(sectorTerms.join(" / "));
   }
 
   // Negation on location only applies when it wasn't already spent on the
@@ -717,10 +864,7 @@ function answerTeamListQuery(rawMessage) {
   const teamPageUrl = matches[0].pageUrl;
   // Only the person's own name is bolded (**Name**) — widget.js renders that
   // marker as <strong>, nothing else in the line.
-  const items = matches.map((m, i) => ({
-    text: `${i + 1}. **${m.name}** — ${m.location}, ${m.role}. ${shortDesc(m)}`,
-    link: { url: m.url, label: "Connect" },
-  }));
+  const items = matches.map((m, i) => people.personItem(m, i + 1));
   let intro = `We have ${matches.length} ${label}:`;
 
   const ambiguity = ROLE_SECTOR_AMBIGUITY[role];
@@ -753,10 +897,7 @@ function answerTeamListQuery(rawMessage) {
           ? `**Everyone else**${locSuffix} (not on ${ambiguity.teamShort}) — ${specMatches.length} member${specMatches.length === 1 ? "" : "s"}:`
           : `**${ambiguity.label}**${locSuffix} (a specialisation area, not on ${ambiguity.teamShort}) — ${specMatches.length} member${specMatches.length === 1 ? "" : "s"}:`,
       };
-      const specItems = specMatches.map((m, i) => ({
-        text: `${i + 1}. **${m.name}** — ${m.location}, ${m.role}. ${shortDesc(m)}`,
-        link: { url: m.url, label: "Connect" },
-      }));
+      const specItems = specMatches.map((m, i) => people.personItem(m, i + 1));
       const closing = {
         text: ambiguity.matchAll
           ? `Which did you mean — the **${role}** team specifically, or our team more broadly (everyone else)?`
@@ -785,7 +926,10 @@ const CONTENT_TYPE_SYNONYMS = [
   { re: /\bknowledge\b/i, collection: "Knowledge", titleField: "title", noun: "knowledge piece", hubUrl: "https://www.jhsassociates.in/resources", hubLabel: "View Resources" },
   { re: /\bregulatory\b/i, collection: "Regulatory", titleField: "title", noun: "regulatory update", hubUrl: "https://www.jhsassociates.in/regulatory", hubLabel: "View Regulatory" },
   { re: /\bwhite\s*papers?\b/i, collection: "WhitePaper", titleField: "title", noun: "white paper", hubUrl: "https://www.jhsassociates.in/white-papers", hubLabel: "View White Papers" },
-  { re: /\bexcellencia\b/i, collection: "Excellencia", titleField: "heading", noun: "Excellencia item", hubUrl: "https://www.jhsassociates.in/excellencia", hubLabel: "View Excellencia" },
+  { re: /\bexcellencia\b/i, collection: "Excellencia", titleField: "heading", linkField: "button_url", noun: "Excellencia session", hubUrl: "https://www.jhsassociates.in/excellencia", hubLabel: "View Excellencia" },
+  { re: /\bnewsletters?\b/i, collection: "Newsletter", titleField: "heading", noun: "newsletter", hubUrl: "https://www.jhsassociates.in/newsletters", hubLabel: "View Newsletters" },
+  // Public job openings only (the careers page) — never applications.
+  { re: /\b(?:job openings?|vacanc(?:y|ies)|open positions?|openings?|jobs?)\b/i, collection: "career_jobs", titleField: "title", noun: "open position", hubUrl: "https://www.jhsassociates.in/about/careers", hubLabel: "View Careers", filter: { status: "open" } },
 ];
 
 // Label for a guaranteed link on a content chunk (see the isContentQuestion
@@ -817,10 +961,12 @@ async function answerContentCountQuery(message) {
     try {
       const docs = await mongoDb
         .collection(type.collection)
-        .find({}, { projection: { [type.titleField]: 1 } })
+        .find(type.filter || {}, { projection: { [type.titleField]: 1, ...(type.linkField ? { [type.linkField]: 1 } : {}) } })
         .limit(limit)
         .toArray();
-      return docs.map((d) => d[type.titleField]).filter(Boolean);
+      return docs
+        .map((d) => ({ title: String(d[type.titleField] || "").replace(/\s+/g, " ").trim().replace(/^Avatar image\s*/i, ""), url: type.linkField ? d[type.linkField] : null }))
+        .filter((d) => d.title);
     } catch (err) {
       console.warn(`Sample titles for ${type.collection} failed:`, err.message);
       return [];
@@ -828,10 +974,18 @@ async function answerContentCountQuery(message) {
   }
 
   async function buildAnswer(count) {
-    const titles = wantsNames ? await sampleTitles() : [];
-    const items = titles.map((t, i) => ({ text: `${i + 1}. ${t}` }));
+    // Short collections are listed in full even when only a count was asked
+    // for — "how many Excellencia sessions" is better answered with the sessions.
+    const listAll = count <= 15;
+    const titles = wantsNames || listAll ? await sampleTitles(15) : [];
+    const items = titles.map((t, i) => ({
+      text: `${i + 1}. ${t.title}`,
+      ...(t.url ? { link: { url: t.url, label: "Watch" } } : {}),
+    }));
     const intro =
-      wantsNames && items.length
+      listAll && items.length
+        ? `We have ${count} ${type.noun}${count === 1 ? "" : "s"}:`
+        : wantsNames && items.length
         ? `We have ${count} ${type.noun}${count === 1 ? "" : "s"}. Here are ${items.length} of them — see the rest on our ${type.collection === "WhitePaper" ? "White Papers" : type.collection} page:`
         : `We have ${count} ${type.noun}${count === 1 ? "" : "s"}.`;
     return { intro, items, links: [{ url: type.hubUrl, label: type.hubLabel }] };
@@ -846,7 +1000,7 @@ async function answerContentCountQuery(message) {
   // documents directly).
   if (mongoDb) {
     try {
-      const count = await mongoDb.collection(type.collection).countDocuments({});
+      const count = await mongoDb.collection(type.collection).countDocuments(type.filter || {});
       if (count > 0) return await buildAnswer(count);
     } catch (err) {
       console.warn(`Live count for ${type.collection} failed, falling back to the last crawled snapshot:`, err.message);
@@ -924,6 +1078,90 @@ function splitOffAddendum(message) {
   return { core: message.slice(0, m.index).trim(), leftover };
 }
 
+// Restates a sloppy question (typos, broken grammar, SMS-style abbreviations,
+// Hinglish) as one clear English question, without answering it or changing
+// what's being asked. Falls back to the original text on any problem/timeout,
+// so it can only ever help.
+// ---- follow-up questions -------------------------------------------------
+
+// The chat windows send the last few messages with every question. A follow-up
+// like "please mention few names", "what about her email" or "the second one"
+// only makes sense with them — so it is restated as a complete, standalone
+// question ("Please name a few experts in IT System Audit") BEFORE anything
+// else runs, and everything downstream (exact answers, search, AI) sees that.
+const FOLLOW_UP_RE =
+  /\b(it|its|that|this|those|these|them|they|their|he|she|her|his|him|more|same|also|again|another|other|others|few|some|previous|above|earlier|first|second|third|last|one|ones|yes|yeah|ok|okay|sure)\b/i;
+
+function cleanHistory(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((h) => h && (h.role === "user" || h.role === "bot") && typeof h.text === "string" && h.text.trim())
+    .slice(-8)
+    .map((h) => ({ role: h.role, text: h.text.replace(/\s+/g, " ").trim().slice(0, 500) }));
+}
+
+async function contextualizeQuestion(message, history) {
+  if (!history.length || !process.env.OPENAI_API_KEY) return message;
+  const wordCount = message.trim().split(/\s+/).length;
+  // A clear, self-contained question that the exact matchers already understand
+  // (e.g. "who is disha shah") doesn't need the history — skip the extra call.
+  // Only a message that visibly leans on what came before: a pronoun/"more"/
+  // "the first one"-style word, or a bare 1-3 word reply ("Governance Council").
+  // A complete question about the firm ("what services do you offer") stays as typed.
+  const looksFollowUp = FOLLOW_UP_RE.test(message) || (wordCount <= 3 && !answerPeopleNow(message));
+  if (!looksFollowUp) return message;
+  try {
+    const transcript = history.map((h) => `${h.role === "user" ? "Visitor" : "Assistant"}: ${h.text}`).join("\n");
+    const call = openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      max_tokens: 120,
+      temperature: 0,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You help a website chatbot understand follow-up messages. Given the recent conversation and the visitor's LATEST message, rewrite the latest message as ONE complete, standalone English question or request that includes everything it refers to from the conversation (names, topics, places, 'those', 'her', 'the second one', 'a few', 'more', 'yes' meaning the offered option, etc.). Fix spelling. Do NOT answer it. Only use the conversation when the latest message clearly depends on it. A complete question about the company itself (its services, offices, contact details, fees, etc.) must be returned unchanged, even if the conversation was about a person or topic. Output only the rewritten text.",
+        },
+        { role: "user", content: `Conversation so far:\n${transcript}\n\nLATEST message: ${message}` },
+      ],
+    });
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(null), 4500));
+    const res = await Promise.race([call, timeout]);
+    const out = res?.choices?.[0]?.message?.content?.trim().replace(/^["']|["']$/g, "");
+    return out && out.length <= 300 ? out : message;
+  } catch (err) {
+    console.warn("contextualizeQuestion failed, using the message as typed:", err.message);
+    return message;
+  }
+}
+
+async function rewriteQuestion(message) {
+  const text = message.trim();
+  if (!process.env.OPENAI_API_KEY || text.length > 250) return message;
+  try {
+    const call = openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      max_tokens: 80,
+      temperature: 0,
+      messages: [
+        {
+          role: "system",
+          content:
+            "You clean up a visitor's message to a professional-services firm's website chatbot. Rewrite it as ONE clear, complete English question or request that keeps EXACTLY the same meaning: fix spelling mistakes, expand abbreviations and SMS-style shorthand, repair broken grammar, and translate if it is not in English. Keep names of people, cities and services as written (correct obvious misspellings of them). Do NOT answer it, add details, or make it longer than needed. If it is already clear, return it unchanged. Output only the rewritten text.",
+        },
+        { role: "user", content: text },
+      ],
+    });
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(null), 4000));
+    const res = await Promise.race([call, timeout]);
+    const out = res?.choices?.[0]?.message?.content?.trim().replace(/^["']|["']$/g, "");
+    return out && out.length <= 300 ? out : message;
+  } catch (err) {
+    console.warn("rewriteQuestion failed, using original:", err.message);
+    return message;
+  }
+}
+
 async function answerCompoundContentAddendum(message) {
   const { leftover } = splitOffAddendum(message);
   if (!leftover) return null;
@@ -999,200 +1237,388 @@ app.post("/api/reindex", requireApiKeyForExternalCallers, async (req, res) => {
 
 // ---- the chat endpoint ----------------------------------------------------
 
+// ---- answering one question ---------------------------------------------
+
+// The exact, instant answers (no AI call): people / sector experts / team
+// lists, then content counts ("how many articles").
+async function answerDeterministic(text) {
+  // People questions, tried in order of how specific they are, every person
+  // with their own contact card:
+  //   1. a named person         ("who is disha", "email of tasnim", "dhisa shah")
+  //   2. a sector's specialists ("experts in media", "IT/ITES", "ngo")
+  //   3. team lists/counts      ("how many FCA partners in Mumbai")
+  const teamResult = answerPeopleNow(text);
+  if (teamResult) {
+    // If the question also asked about something else besides the team
+    // ("... and also tell me about financial literacy"), answer that part
+    // too instead of silently dropping it — appended as one more item.
+    const addendum = await answerCompoundContentAddendum(text);
+    const items = addendum ? [...teamResult.items, { text: addendum.text, link: addendum.link }] : teamResult.items;
+    return { reply: teamResult.intro, items, links: teamResult.links, link: teamResult.links[0] || null };
+  }
+  const contentResult = await answerContentCountQuery(text);
+  if (contentResult) {
+    return { reply: contentResult.intro, items: contentResult.items, links: contentResult.links, link: contentResult.links[0] || null };
+  }
+  return null;
+}
+
+// The AI answer, grounded in the website content. With `onDelta` the answer
+// streams word by word (single questions); without it, it's fetched whole
+// (one of several questions in a message). Returns { reply, links, people }.
+async function generateAnswer(question, typedAs, onDelta, { suggestExperts = true } = {}) {
+  const topChunks = await retrieveRelevantChunks(question);
+  const context = topChunks
+    .map((c, i) => {
+      // isHubLink (set by ingest-extra.js) means this URL is a shared
+      // listing page, not a page for this specific item — flagged here so
+      // the model never offers it as if clicking through leads to this
+      // particular article/whitepaper/etc. (see SYSTEM_PROMPT rule below).
+      const sourceLine = c.isHubLink
+        ? `Source: ${c.url} (GENERAL LISTING PAGE — not a page for this specific item, titled "${c.title}")`
+        : `Source: ${c.url}`;
+      return `[${i + 1}] ${sourceLine}\n${c.text}`;
+    })
+    .join("\n\n");
+
+  const params = {
+    model: "gpt-4o-mini", // cheap + fast, plenty capable for this
+    max_tokens: 600,
+    temperature: 0.3,
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      {
+        role: "user",
+        content:
+          `CONTEXT:\n${context}\n\nQUESTION: ${question}` +
+          (typedAs && typedAs !== question ? `\n(The visitor typed it as: "${typedAs}")` : ""),
+      },
+    ],
+  };
+
+  let rawAccumulated = "";
+  if (onDelta) {
+    // Streamed instead of awaiting the whole completion at once — this is the
+    // only slow step in the whole request (the deterministic paths return
+    // instantly). Streaming lets the widget show words as they arrive, the
+    // same way ChatGPT's own UI does.
+    const stream = await openai.chat.completions.create({ ...params, stream: true });
+    for await (const chunk of stream) {
+      const delta = chunk.choices?.[0]?.delta?.content || "";
+      if (delta) {
+        rawAccumulated += delta;
+        onDelta(delta);
+      }
+    }
+  } else {
+    const completion = await openai.chat.completions.create(params);
+    rawAccumulated = completion.choices?.[0]?.message?.content || "";
+  }
+
+  let { reply, links } = parseReplyAndLinks(rawAccumulated);
+
+  // SYSTEM_PROMPT asks the model to name and link a genuinely-matching
+  // expert for a topic/service question, but that's a request, not a
+  // guarantee — it sometimes falls back to a vague, unlinked "talk to our
+  // experts" instead of actually naming and linking the one who's in
+  // CONTEXT (topTeamMatches in retrieveRelevantChunks already limited this
+  // to real topical matches, score > 0.3). If the model didn't already
+  // link that same person itself, append it here so the visitor always
+  // gets an actual clickable way to reach them, not just a generic phrase.
+  //
+  // BUT embedding similarity alone isn't reliable enough to gate this on —
+  // it has been caught recommending a specialist for questions that have
+  // nothing to do with any practice area at all (e.g. "how many years did
+  // JHS complete", a plain company-history question, coincidentally
+  // scored one person's bio above the threshold). Requiring the visitor's
+  // OWN question to mention a real practice-area word ruled that case out,
+  // but wasn't enough on its own — the highest embedding-scored team
+  // member isn't necessarily the one whose bio actually relates to THAT
+  // word (e.g. an article about auditing surfaced someone whose bio is
+  // "Cyber Security, GRC, Strategy" — no mention of audit at all). So:
+  // find the specific practice-area word in the question, then only
+  // recommend a team member from the candidates whose OWN bio contains
+  // that same word — not just whoever scored highest overall.
+  //
+  // Also skip this entirely when the question is really about a piece of
+  // CONTENT (an Article/Knowledge/Regulatory/WhitePaper/Excellencia item —
+  // source "mongodb") rather than a service — the useful next step there
+  // is reading the piece, not "talk to a person", even if it happens to
+  // be authored by or mention someone on the team.
+  const topGeneralChunk = topChunks.find((c) => c.source !== "team");
+  const isContentQuestion = topGeneralChunk && topGeneralChunk.source === "mongodb";
+
+  // Same idea as the specialist-connect guarantee below, but for content:
+  // SYSTEM_PROMPT tells the model to always link back to the source page
+  // when explaining an Article/Knowledge/Regulatory/WhitePaper/Excellencia
+  // item, but that's a request, not a guarantee — it has been caught
+  // explaining a topic (e.g. "financial literacy") straight from CONTEXT
+  // with no link at all, leaving the visitor no way to actually view the
+  // page it came from. If the model didn't already link this source
+  // itself, append it here.
+  if (isContentQuestion && !links.some((l) => l.url === topGeneralChunk.url)) {
+    links.push({ url: topGeneralChunk.url, label: chunkLinkLabel(topGeneralChunk) });
+  }
+
+  const sectorWordInQuestion = [...SECTOR_VOCAB].find((word) => question.toLowerCase().includes(word)) || null;
+
+  // If the model's own reply already named specific real team members
+  // (e.g. "you can contact Taher Pepermintwala"), those are the people to
+  // link — searching independently by sector word below can land on
+  // someone completely different who just happens to share the same
+  // generic word in their bio. Caught doing exactly that once: the reply
+  // correctly named "Taher Pepermintwala" (the actual specialist shown on
+  // the real IT System Audit page) but the sector-word search below then
+  // appended a "connect with Jagdish Solanki" line for an unrelated
+  // person, since his bio also contained whatever generic word got
+  // matched first. Trust names the model already committed to in prose
+  // over an independent re-derivation that can disagree with them.
+  const namedTeamMatches = !isContentQuestion
+    ? topChunks.filter(
+        (c) => c.source === "team" && new RegExp(`\\b${c.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(reply)
+      )
+    : [];
+  const namedNames = new Set(namedTeamMatches.map((m) => m.name));
+
+  // Authoritative signal first: real specialists the SITE ITSELF lists on
+  // the exact page this answer is about (a "Meet Our X Specialists"
+  // section — see extractSectorExperts in crawler.js). Stronger than
+  // guessing from bio-word overlap below, which can both miss a real
+  // specialist whose personal bio tag doesn't literally contain the word
+  // (caught missing "Saurabh Shah" on the IT System Audit page — his own
+  // bio tag is "Direct & Indirect Tax", nothing to do with IT, yet the
+  // site itself lists him as a specialist there) and wrongly include an
+  // unrelated person whose bio happens to contain that word.
+  const topGeneralUrl = topGeneralChunk && topGeneralChunk.url;
+  const pageSpecialists = !isContentQuestion && topGeneralUrl ? SECTOR_SPECIALISTS_BY_URL.get(topGeneralUrl) || [] : [];
+  const unnamedPageSpecialists = pageSpecialists
+    .filter((p) => !namedNames.has(p.name))
+    .map((p) => ({ name: p.name, url: teamUrlForName(p.name) || p.url }));
+
+  // Fallback for pages with no "Meet Our X Specialists" section of their
+  // own — anyone else whose bio genuinely mentions the same practice-area
+  // word but wasn't already named. Some pages genuinely list two
+  // specialists for the same service, and the model doesn't reliably name
+  // both even though SYSTEM_PROMPT asks it to.
+  const unnamedSectorMatches =
+    unnamedPageSpecialists.length === 0 && sectorWordInQuestion && !isContentQuestion
+      ? topChunks.filter((c) => c.source === "team" && bioMentions(c, sectorWordInQuestion) && !namedNames.has(c.name))
+      : [];
+
+  const unnamedMatches = [...unnamedPageSpecialists, ...unnamedSectorMatches];
+
+  if (suggestExperts && unnamedMatches.length) {
+    // Only the first few are named (each gets a contact card below) — a
+    // sector like Banking has 13 specialists and naming them all under a
+    // general "what services do you offer" answer buries the actual answer.
+    const MAX_SUGGESTED = 3;
+    const shown = unnamedMatches.slice(0, MAX_SUGGESTED);
+    const hidden = unnamedMatches.length - shown.length;
+    const names = shown.map((m) => `**${m.name}**`);
+    let namesText = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
+    if (hidden > 0) namesText += ` (and ${hidden} more — just ask for the experts in this sector to see everyone)`;
+    const verb = unnamedMatches.length > 1 ? "are" : "is";
+    reply += namedTeamMatches.length
+      ? `\n\n${namesText} ${verb} also a specialist in this area — feel free to connect with them too.`
+      : `\n\nHave more questions? You can connect directly with ${namesText}, our specialist${unnamedMatches.length > 1 ? "s" : ""} in this area.`;
+  }
+
+  // Every team member named in the answer gets their own contact card (role,
+  // location, email, View Profile / Connect) shown right under the text, in
+  // the order they were mentioned — instead of loose "View Profile" buttons
+  // collected at the bottom that no longer line up with whoever they belong
+  // to. Those loose team/profile links are dropped since the cards carry them.
+  const cards = people.peopleNamedIn(reply).slice(0, 6).map((m) => people.personCard(m));
+  if (cards.length) {
+    links = links.filter((l) => !/\/about\/leadership\b|linkedin\.com/i.test(l.url));
+  }
+
+  return { reply, links, people: cards };
+}
+
+// ---- several questions in one message ------------------------------------
+
+const QUESTION_WORD = "(?:who|whom|what|whats|where|when|how|which|why|tell|give|show|list|email|contact|can|could|do|does|is|are)";
+// "who is disha and where is your mumbai office? also list banking experts"
+// -> 3 questions. Deliberately conservative: a plain "and" only splits when a
+// new question starts right after it, so "media and healthcare experts" stays whole.
+function splitQuestions(message) {
+  const parts = message
+    .split(new RegExp(`\\?+|;|\\n+|\\s+(?:and\\s+also|and\\s+then|as\\s+well\\s+as|plus)\\s+|,?\\s+and\\s+(?=${QUESTION_WORD}\\b)|,\\s*(?=${QUESTION_WORD}\\b)`, "i"))
+    .map((p) => (p || "").trim())
+    .filter((p) => /[a-z0-9]{2}/i.test(p));
+  return parts.length ? parts.slice(0, 4) : [message.trim()];
+}
+
+const CLAUSE_HAS_OWN_FILTER_RE = /\b(fca|aca|cisa|cma|partners?|council|board|advisory|members?|leadership|how many|all)\b/i;
+const EXPERT_WORD_RE = /\b(expert|experts|specialist|specialists|who handles|who handle|contact|connect)\b/i;
+const PRONOUN_RE =/\b(her|his|him|their|them|she|he)\b/i;
+const PERSON_FOLLOWUP_RE = /\b(e-?mail|mail|contact|reach|profile|linkedin|number|phone|connect|details?|info|more|about|where|based|located)\b/i;
+
+// Turns a message into a list of questions, each either already answered
+// exactly (det) or needing the AI (det: null). Anything the exact matchers
+// can't read is first restated as a clear question by a fast model.
+// The instant, no-AI people answers — used both to answer and to test whether
+// a piece of text is a complete question on its own.
+const answerPeopleNow = (text) =>
+  answerCredentialHolderQuery(text) ||
+  people.answerPersonQuery(text) ||
+  people.answerSectorExpertsQuery(text) ||
+  answerTeamListQuery(text);
+
+// "tell me about taher and the media experts": a plain "and" is a split point
+// only when BOTH sides are complete questions we can answer on their own.
+// "media and healthcare experts" or "partners in mumbai and chennai" are not
+// (a side alone means nothing) so they stay whole.
+function splitAtAnd(clause) {
+  const re = /\s+(?:and|&)\s+/gi;
+  let m;
+  while ((m = re.exec(clause))) {
+    const left = clause.slice(0, m.index).trim();
+    const right = clause.slice(m.index + m[0].length).trim();
+    if (left && right && answerPeopleNow(left) && answerPeopleNow(right)) return [left, right];
+  }
+  return null;
+}
+
+async function resolveQuestions(message) {
+  const units = [];
+  const queue = splitQuestions(message);
+  while (queue.length) {
+    const clause = queue.shift();
+    const halves = splitAtAnd(clause);
+    if (halves) {
+      queue.unshift(...halves);
+      continue;
+    }
+    // "who is disha and give me her email" — the second part refers back to
+    // the person just answered; fold it into that card instead of asking the AI.
+    const prev = units[units.length - 1];
+    const prevPerson = prev && prev.det && prev.det.items.length === 1 && prev.det.items[0].person;
+    if (prevPerson && PRONOUN_RE.test(clause)) {
+      if (PERSON_FOLLOWUP_RE.test(clause)) continue; // the card above already has email, profile and location
+      units.push({ question: `${clause} (about ${prevPerson.name})`, typedAs: clause, det: null, label: clause });
+      continue;
+    }
+
+    // "tell me about IT audit system and who are ITS experts" — the experts
+    // clause names no topic, place or role of its own; it means the topic just
+    // asked about. Answer with the specialists of THAT topic only (checked before
+    // the generic "list every expert" answer, which would otherwise claim it).
+    if (prev && EXPERT_WORD_RE.test(clause) && !CLAUSE_HAS_OWN_FILTER_RE.test(clause) && !findLocationsInQuestion(clause) &&
+        !people.answerSectorExpertsQuery(clause) && !people.answerPersonQuery(clause)) {
+      const carried = people.answerSectorExpertsQuery(`${clause} ${prev.question}`);
+      // "who are the experts and how to contact them" — the second part would just
+      // repeat the same specialists that were listed a moment ago.
+      if (carried && prev.det && prev.det.reply === carried.intro) continue;
+      if (carried) {
+        units.push({
+          question: clause,
+          typedAs: clause,
+          det: { reply: carried.intro, items: carried.items, links: carried.links, link: carried.links[0] || null },
+          label: clause,
+        });
+        continue;
+      }
+    }
+
+    const det = await answerDeterministic(clause);
+    if (det) {
+      units.push({ question: clause, typedAs: clause, det, label: clause });
+      continue;
+    }
+
+    const restated = await rewriteQuestion(clause);
+    const parts = restated.split("\n").map((p) => p.trim()).filter(Boolean).slice(0, 4);
+    for (const part of parts.length ? parts : [clause]) {
+      units.push({ question: part, typedAs: clause, det: part === clause ? null : await answerDeterministic(part), label: part });
+    }
+  }
+  return units.length ? units : [{ question: message, typedAs: message, det: null, label: message }];
+}
+
+// The database also holds personal/private records (job applications and
+// resumes, admin logins, contact-form messages, proposals, feedback forms,
+// alumni contact details). None of that is ever indexed or answered — only the
+// public website content is. Questions aimed at it get a clear, polite refusal.
+const PRIVATE_DATA_RE =
+  /\b(passwords?|credentials|admins?|applicants?|who (?:has |have )?applied|how many (?:people |candidates |persons )?(?:have )?applied|applications? (?:received|submitted|count)|resumes?|cvs? (?:received|submitted)|contact (?:form )?(?:submissions?|requests?|messages?)|proposals? (?:received|submitted)|feedback (?:forms?|submissions?|responses?)|alumni (?:emails?|phones?|contacts?|list|details))\b/i;
+
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message } = req.body;
-    if (!message || typeof message !== "string") {
+    const { message: typedMessage } = req.body;
+    if (!typedMessage || typeof typedMessage !== "string") {
       return res.status(400).json({ error: "Missing 'message'." });
+    }
+    const history = cleanHistory(req.body.history);
+    // "please mention few names" -> "Please name a few experts in IT System Audit"
+    const message = await contextualizeQuestion(typedMessage, history);
+    if (PRIVATE_DATA_RE.test(typedMessage) || PRIVATE_DATA_RE.test(message)) {
+      return res.json({
+        reply:
+          "I can't share private information such as job applications, applicant details, login credentials, or messages submitted through our forms. If this is about your own application or enquiry, please contact our team and they'll help you directly.",
+        items: [],
+        links: [{ url: "https://www.jhsassociates.in/contact", label: "Contact Us" }],
+        link: { url: "https://www.jhsassociates.in/contact", label: "Contact Us" },
+      });
     }
 
     const cacheKey = message.trim().toLowerCase();
     const cached = cacheGet(cacheKey);
     if (cached) return res.json({ ...cached, cached: true });
 
-    const teamResult = answerTeamListQuery(message);
-    if (teamResult) {
-      // If the question also asked about something else besides the team
-      // ("... and also tell me about financial literacy"), answer that part
-      // too instead of silently dropping it — appended as one more item.
-      const addendum = await answerCompoundContentAddendum(message);
-      const items = addendum ? [...teamResult.items, { text: addendum.text, link: addendum.link }] : teamResult.items;
-      const payload = { reply: teamResult.intro, items, links: teamResult.links, link: teamResult.links[0] || null };
-      cacheSet(cacheKey, payload);
-      return res.json(payload);
+    const units = await resolveQuestions(message);
+
+    // One question, answered exactly.
+    if (units.length === 1 && units[0].det) {
+      cacheSet(cacheKey, units[0].det);
+      return res.json(units[0].det);
     }
 
-    const contentResult = await answerContentCountQuery(message);
-    if (contentResult) {
-      const payload = {
-        reply: contentResult.intro,
-        items: contentResult.items,
-        links: contentResult.links,
-        link: contentResult.links[0] || null,
-      };
+    // One question that needs the AI — streamed live. widget/ChatBot read this
+    // as Server-Sent Events and fall back to plain JSON for everything else.
+    if (units.length === 1) {
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      res.setHeader("Connection", "keep-alive");
+      if (res.flushHeaders) res.flushHeaders();
+
+      const { reply, links, people: cards } = await generateAnswer(units[0].question, units[0].typedAs, (delta) =>
+        res.write(`data: ${JSON.stringify({ delta })}\n\n`)
+      );
+      // `link` (singular) kept for backward compatibility with older widget versions
+      const payload = { reply, links, link: links[0] || null, people: cards };
       cacheSet(cacheKey, payload);
-      return res.json(payload);
+      res.write(`data: ${JSON.stringify({ done: true, ...payload })}\n\n`);
+      return res.end();
     }
 
-    const topChunks = await retrieveRelevantChunks(message);
-    const context = topChunks
-      .map((c, i) => {
-        // isHubLink (set by ingest-extra.js) means this URL is a shared
-        // listing page, not a page for this specific item — flagged here so
-        // the model never offers it as if clicking through leads to this
-        // particular article/whitepaper/etc. (see SYSTEM_PROMPT rule below).
-        const sourceLine = c.isHubLink
-          ? `Source: ${c.url} (GENERAL LISTING PAGE — not a page for this specific item, titled "${c.title}")`
-          : `Source: ${c.url}`;
-        return `[${i + 1}] ${sourceLine}\n${c.text}`;
-      })
-      .join("\n\n");
+    // Several questions — answer each, in order, as ONE continuous reply: the
+    // first answer, then the next one right after it (each answer already opens
+    // with its own lead-in like "For IT System Audit, we have 2 specialists:"),
+    // with no "found N questions" banner and no restated question headings.
+    // The AI parts skip their own "connect with our specialists" suggestion —
+    // when the message asked for experts, that is answered exactly by its own part.
+    const answers = await Promise.all(
+      units.map((u) => (u.det ? u.det : generateAnswer(u.question, u.typedAs, null, { suggestExperts: false })))
+    );
+    const shownPeople = new Set();
+    answers.forEach((a) => (a.items || []).forEach((it) => it.person && shownPeople.add(it.person.name)));
 
-    // Streamed instead of awaiting the whole completion at once — this is
-    // the only slow step in the whole request (the two deterministic paths
-    // above return instantly, no OpenAI call at all). Waiting for a full
-    // multi-paragraph answer to finish generating before showing anything
-    // feels sluggish; streaming lets the widget show words as they arrive,
-    // the same way ChatGPT's own UI does, even though the total generation
-    // time is unchanged. widget.js reads this as Server-Sent Events and
-    // falls back to plain JSON handling for the two paths above, which
-    // never reach this branch.
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
-    if (res.flushHeaders) res.flushHeaders();
-
-    const stream = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // cheap + fast, plenty capable for this
-      max_tokens: 600,
-      temperature: 0.3,
-      stream: true,
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: `CONTEXT:\n${context}\n\nQUESTION: ${message}` },
-      ],
+    const items = [];
+    answers.forEach((a, i) => {
+      if (i > 0) items.push({ text: a.reply, links: a.links || [] });
+      if (a.items) items.push(...a.items);
+      // Contact cards for people an AI answer named — unless already shown above.
+      (a.people || []).filter((p) => !shownPeople.has(p.name)).forEach((person) => {
+        shownPeople.add(person.name);
+        items.push({ person });
+      });
     });
-
-    let rawAccumulated = "";
-    for await (const chunk of stream) {
-      const delta = chunk.choices?.[0]?.delta?.content || "";
-      if (delta) {
-        rawAccumulated += delta;
-        res.write(`data: ${JSON.stringify({ delta })}\n\n`);
-      }
-    }
-
-    let { reply, links } = parseReplyAndLinks(rawAccumulated);
-
-    // SYSTEM_PROMPT asks the model to name and link a genuinely-matching
-    // expert for a topic/service question, but that's a request, not a
-    // guarantee — it sometimes falls back to a vague, unlinked "talk to our
-    // experts" instead of actually naming and linking the one who's in
-    // CONTEXT (topTeamMatches in retrieveRelevantChunks already limited this
-    // to real topical matches, score > 0.3). If the model didn't already
-    // link that same person itself, append it here so the visitor always
-    // gets an actual clickable way to reach them, not just a generic phrase.
-    //
-    // BUT embedding similarity alone isn't reliable enough to gate this on —
-    // it has been caught recommending a specialist for questions that have
-    // nothing to do with any practice area at all (e.g. "how many years did
-    // JHS complete", a plain company-history question, coincidentally
-    // scored one person's bio above the threshold). Requiring the visitor's
-    // OWN question to mention a real practice-area word ruled that case out,
-    // but wasn't enough on its own — the highest embedding-scored team
-    // member isn't necessarily the one whose bio actually relates to THAT
-    // word (e.g. an article about auditing surfaced someone whose bio is
-    // "Cyber Security, GRC, Strategy" — no mention of audit at all). So:
-    // find the specific practice-area word in the question, then only
-    // recommend a team member from the candidates whose OWN bio contains
-    // that same word — not just whoever scored highest overall.
-    //
-    // Also skip this entirely when the question is really about a piece of
-    // CONTENT (an Article/Knowledge/Regulatory/WhitePaper/Excellencia item —
-    // source "mongodb") rather than a service — the useful next step there
-    // is reading the piece, not "talk to a person", even if it happens to
-    // be authored by or mention someone on the team.
-    const topGeneralChunk = topChunks.find((c) => c.source !== "team");
-    const isContentQuestion = topGeneralChunk && topGeneralChunk.source === "mongodb";
-
-    // Same idea as the specialist-connect guarantee below, but for content:
-    // SYSTEM_PROMPT tells the model to always link back to the source page
-    // when explaining an Article/Knowledge/Regulatory/WhitePaper/Excellencia
-    // item, but that's a request, not a guarantee — it has been caught
-    // explaining a topic (e.g. "financial literacy") straight from CONTEXT
-    // with no link at all, leaving the visitor no way to actually view the
-    // page it came from. If the model didn't already link this source
-    // itself, append it here.
-    if (isContentQuestion && !links.some((l) => l.url === topGeneralChunk.url)) {
-      links.push({ url: topGeneralChunk.url, label: chunkLinkLabel(topGeneralChunk) });
-    }
-
-    const sectorWordInQuestion = [...SECTOR_VOCAB].find((word) => message.toLowerCase().includes(word)) || null;
-
-    // If the model's own reply already named specific real team members
-    // (e.g. "you can contact Taher Pepermintwala"), those are the people to
-    // link — searching independently by sector word below can land on
-    // someone completely different who just happens to share the same
-    // generic word in their bio. Caught doing exactly that once: the reply
-    // correctly named "Taher Pepermintwala" (the actual specialist shown on
-    // the real IT System Audit page) but the sector-word search below then
-    // appended a "connect with Jagdish Solanki" line for an unrelated
-    // person, since his bio also contained whatever generic word got
-    // matched first. Trust names the model already committed to in prose
-    // over an independent re-derivation that can disagree with them.
-    const namedTeamMatches = !isContentQuestion
-      ? topChunks.filter(
-          (c) => c.source === "team" && new RegExp(`\\b${c.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(reply)
-        )
-      : [];
-    const namedNames = new Set(namedTeamMatches.map((m) => m.name));
-
-    // Authoritative signal first: real specialists the SITE ITSELF lists on
-    // the exact page this answer is about (a "Meet Our X Specialists"
-    // section — see extractSectorExperts in crawler.js). Stronger than
-    // guessing from bio-word overlap below, which can both miss a real
-    // specialist whose personal bio tag doesn't literally contain the word
-    // (caught missing "Saurabh Shah" on the IT System Audit page — his own
-    // bio tag is "Direct & Indirect Tax", nothing to do with IT, yet the
-    // site itself lists him as a specialist there) and wrongly include an
-    // unrelated person whose bio happens to contain that word.
-    const topGeneralUrl = topGeneralChunk && topGeneralChunk.url;
-    const pageSpecialists = !isContentQuestion && topGeneralUrl ? SECTOR_SPECIALISTS_BY_URL.get(topGeneralUrl) || [] : [];
-    const unnamedPageSpecialists = pageSpecialists
-      .filter((p) => !namedNames.has(p.name))
-      .map((p) => ({ name: p.name, url: teamUrlForName(p.name) || p.url }));
-
-    // Fallback for pages with no "Meet Our X Specialists" section of their
-    // own — anyone else whose bio genuinely mentions the same practice-area
-    // word but wasn't already named. Some pages genuinely list two
-    // specialists for the same service, and the model doesn't reliably name
-    // both even though SYSTEM_PROMPT asks it to.
-    const unnamedSectorMatches =
-      unnamedPageSpecialists.length === 0 && sectorWordInQuestion && !isContentQuestion
-        ? topChunks.filter((c) => c.source === "team" && bioMentions(c, sectorWordInQuestion) && !namedNames.has(c.name))
-        : [];
-
-    const unnamedMatches = [...unnamedPageSpecialists, ...unnamedSectorMatches];
-
-    if (unnamedMatches.length) {
-      const names = unnamedMatches.map((m) => `**${m.name}**`);
-      const namesText = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
-      const verb = unnamedMatches.length > 1 ? "are" : "is";
-      reply += namedTeamMatches.length
-        ? `\n\n${namesText} ${verb} also a specialist in this area — feel free to connect with them too.`
-        : `\n\nHave more questions? You can connect directly with ${namesText}, our specialist${unnamedMatches.length > 1 ? "s" : ""} in this area.`;
-    }
-
-    const bestTeamMatches = [...namedTeamMatches, ...unnamedMatches];
-    if (bestTeamMatches.length && !links.some((l) => l.url === bestTeamMatches[0].url)) {
-      links.push({ url: bestTeamMatches[0].url, label: "Connect" });
-    }
-
-    // `link` (singular) kept for backward compatibility with older widget versions
-    const payload = { reply, links, link: links[0] || null };
+    const first = answers[0];
+    const payload = { reply: first.reply, items, links: first.links || [], link: (first.links || [])[0] || null };
     cacheSet(cacheKey, payload);
-    res.write(`data: ${JSON.stringify({ done: true, ...payload })}\n\n`);
-    res.end();
+    return res.json(payload);
   } catch (err) {
     console.error(err);
     // Streaming may have already started (headers sent) by the time an

@@ -457,3 +457,62 @@
     right: -8px;
   }
 }
+
+/* ---- Team member contact card (name, role, email, View Profile / Connect) ---- */
+.chatbot__person {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 220px;
+}
+.chatbot__person-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary, #1e3a8a);
+}
+.chatbot__person-meta {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.chatbot__person-meta svg {
+  flex: none;
+  margin-left: 2px;
+}
+.chatbot__person-creds {
+  margin: 0;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+.chatbot__person-desc {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.chatbot__person-email {
+  margin: 6px 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.84rem;
+  word-break: break-all;
+}
+.chatbot__person-email svg {
+  flex: none;
+}
+.chatbot__person-email a {
+  color: var(--color-secondary, #2563eb);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.chatbot__person-general {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  word-break: normal;
+}

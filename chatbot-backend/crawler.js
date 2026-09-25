@@ -145,20 +145,38 @@ function chunkText(text, maxLen = 800) {
   return chunks;
 }
 
-async function embed(text, retries = 3) {
-  for (let attempt = 0; attempt < retries; attempt++) {
-    try {
-      const res = await openai.embeddings.create({
-        model: "text-embedding-3-small",
-        input: text,
-      });
-      return res.data[0].embedding;
-    } catch (err) {
-      if (attempt === retries - 1) throw err;
-      console.warn(`Embedding API retry ${attempt + 1}/${retries}: ${err.message}`);
-      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+// text -> embedding, seeded from the existing index.json so unchanged chunks
+// are never re-sent to OpenAI (makes re-runs much faster and cheaper).
+const embeddingCache = new Map();
+
+async function embedBatch(texts, retries = 3) {
+  const results = new Array(texts.length);
+  const missing = [];
+  texts.forEach((t, i) => {
+    if (embeddingCache.has(t)) results[i] = embeddingCache.get(t);
+    else missing.push(i);
+  });
+
+  const BATCH = 64;
+  for (let start = 0; start < missing.length; start += BATCH) {
+    const idxs = missing.slice(start, start + BATCH);
+    const input = idxs.map((i) => texts[i]);
+    for (let attempt = 0; attempt < retries; attempt++) {
+      try {
+        const res = await openai.embeddings.create({ model: "text-embedding-3-small", input });
+        res.data.forEach((d, j) => {
+          results[idxs[j]] = d.embedding;
+          embeddingCache.set(texts[idxs[j]], d.embedding);
+        });
+        break;
+      } catch (err) {
+        if (attempt === retries - 1) throw err;
+        console.warn(`Embedding API retry ${attempt + 1}/${retries}: ${err.message}`);
+        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+      }
     }
   }
+  return results;
 }
 
 /**
@@ -187,8 +205,17 @@ async function crawlPageByUrl(url, browserInstance = null) {
       const contentHash = getContentHash(text);
       const chunks = chunkText(text);
 
+      const teamMembers = extractTeamMembers($, url);
+      const sectorExperts = extractSectorExperts($, url);
+      const embeddings = await embedBatch([
+        ...chunks,
+        ...teamMembers.map((m) => m.text),
+        ...sectorExperts.map((e) => e.text),
+      ]);
+      let ei = 0;
+
       for (const chunk of chunks) {
-        const embedding = await embed(chunk);
+        const embedding = embeddings[ei++];
         const item = { url, title, text: chunk, embedding, contentHash, source: "website" };
         pageItems.push(item);
 
@@ -199,9 +226,8 @@ async function crawlPageByUrl(url, browserInstance = null) {
         });
       }
 
-      const teamMembers = extractTeamMembers($, url);
       for (const member of teamMembers) {
-        const embedding = await embed(member.text);
+        const embedding = embeddings[ei++];
         const item = { ...member, embedding, contentHash, source: "team" };
         pageItems.push(item);
 
@@ -212,9 +238,8 @@ async function crawlPageByUrl(url, browserInstance = null) {
         });
       }
 
-      const sectorExperts = extractSectorExperts($, url);
       for (const expert of sectorExperts) {
-        const embedding = await embed(expert.text);
+        const embedding = embeddings[ei++];
         const item = { ...expert, embedding, contentHash, source: "sector-specialist" };
         pageItems.push(item);
 
@@ -231,7 +256,7 @@ async function crawlPageByUrl(url, browserInstance = null) {
 
       return { items: pageItems, pineconeVectors, hash: contentHash, title };
     } finally {
-      await page.close();
+      await page.close().catch(() => {});
     }
   } finally {
     if (ownBrowser) await browser.close();
@@ -239,16 +264,26 @@ async function crawlPageByUrl(url, browserInstance = null) {
 }
 
 // Load existing index cache for incremental hashing comparison
+// Database content (Articles, Knowledge, ...) is written into index.json by
+// ingest-extra.js, not by this crawler. The crawler rebuilds the index from
+// scratch, so those entries are held here and written back untouched —
+// otherwise every crawl would silently wipe the chatbot's database knowledge
+// until the next ingest.
+let preservedMongoItems = [];
+
 function loadExistingIndexMap() {
   const map = new Map();
   if (fs.existsSync(OUTPUT_FILE)) {
     try {
       const data = JSON.parse(fs.readFileSync(OUTPUT_FILE, "utf-8"));
+      preservedMongoItems = data.filter((item) => item.source === "mongodb");
       for (const item of data) {
+        if (item.source === "mongodb") continue;
         if (!map.has(item.url)) {
           map.set(item.url, { hash: item.contentHash || "", items: [] });
         }
         map.get(item.url).items.push(item);
+        if (item.text && item.embedding) embeddingCache.set(item.text, item.embedding);
       }
     } catch (e) {
       console.warn("Could not parse existing index.json for incremental check:", e.message);
@@ -267,41 +302,89 @@ async function run() {
 
   const existingMap = loadExistingIndexMap();
   const index = [];
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
-    protocolTimeout: 60000,
-  });
+  const launchBrowser = () =>
+    puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+      protocolTimeout: 60000,
+    });
+  let browser = await launchBrowser();
+
+  // Chrome can die mid-crawl (memory growth on a long run); once it does, every
+  // later page fails with "Connection closed". Restart proactively every N pages
+  // and relaunch + retry whenever a page fails because the browser went away.
+  const RESTART_EVERY = 5;
+  const MAX_ATTEMPTS = 3;
+  const isBrowserError = (err) =>
+    !browser.connected ||
+    /connection closed|target closed|session closed|protocol error|browser has disconnected|not opened/i.test(err.message || "");
+  const restartBrowser = async () => {
+    await browser.close().catch(() => {});
+    browser = await launchBrowser();
+    browser.on("disconnected", () => console.warn("Chrome disconnected."));
+  };
+  browser.on("disconnected", () => console.warn("Chrome disconnected."));
 
   let skippedCount = 0;
   let reindexedCount = 0;
+  let pagesSinceRestart = 0;
 
   try {
     for (const url of urls) {
-      try {
-        const pageResult = await crawlPageByUrl(url, browser);
+      if (pagesSinceRestart >= RESTART_EVERY || !browser.connected) {
+        await restartBrowser();
+        pagesSinceRestart = 0;
+      }
+      pagesSinceRestart++;
+
+      let pageResult = null;
+      let lastErr = null;
+      for (let attempt = 0; attempt < MAX_ATTEMPTS && !pageResult; attempt++) {
+        try {
+          pageResult = await crawlPageByUrl(url, browser);
+        } catch (err) {
+          lastErr = err;
+          if (isBrowserError(err)) {
+            console.warn(`Browser problem at ${url} (attempt ${attempt + 1}/${MAX_ATTEMPTS}): ${err.message}; relaunching`);
+            await restartBrowser();
+            pagesSinceRestart = 1;
+          } else {
+            console.warn(`Error at ${url} (attempt ${attempt + 1}/${MAX_ATTEMPTS}): ${err.message}`);
+          }
+        }
+      }
+
+      if (pageResult) {
         if (pageResult.items && pageResult.items.length > 0) {
           index.push(...pageResult.items);
           reindexedCount++;
           console.log(`Indexed (${pageResult.items.length} items): ${url}`);
         }
-      } catch (err) {
+      } else if (existingMap.has(url)) {
         // Fallback to existing items if page fetch fails
-        if (existingMap.has(url)) {
-          index.push(...existingMap.get(url).items);
-          skippedCount++;
-          console.log(`Preserved existing index for ${url} (fetch error: ${err.message})`);
-        } else {
-          console.warn(`Skipped ${url}: ${err.message}`);
-        }
+        index.push(...existingMap.get(url).items);
+        skippedCount++;
+        console.log(`Preserved existing index for ${url} (fetch error: ${lastErr.message})`);
+      } else {
+        console.warn(`Skipped ${url}: ${lastErr.message}`);
+      }
+
+      // Save progress so a crash/Ctrl+C never loses the pages already done.
+      // Old entries for not-yet-visited pages are kept so a partial save is never worse than the old index.
+      if ((reindexedCount + skippedCount) % 10 === 0) {
+        const done = new Set(index.map((i) => i.url));
+        const carried = [];
+        for (const [u, v] of existingMap) if (!done.has(u)) carried.push(...v.items);
+        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(index.concat(carried, preservedMongoItems)));
       }
     }
   } finally {
-    await browser.close();
+    await browser.close().catch(() => {});
   }
 
+  index.push(...preservedMongoItems);
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(index));
-  console.log(`\nDone. Reindexed: ${reindexedCount}, Preserved: ${skippedCount}. Wrote ${index.length} chunks to ${OUTPUT_FILE}`);
+  console.log(`\nDone. Reindexed: ${reindexedCount}, Preserved: ${skippedCount}, Database chunks kept: ${preservedMongoItems.length}. Wrote ${index.length} chunks to ${OUTPUT_FILE}`);
 }
 
 if (require.main === module) {

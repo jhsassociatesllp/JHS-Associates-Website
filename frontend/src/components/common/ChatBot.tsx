@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { MessageCircle, X, Send, Bot, User, Languages, Check } from 'lucide-react'
+import { MessageCircle, X, Send, Bot, User, Languages, Check, Mail, MapPin } from 'lucide-react'
 import { LANGUAGES } from '../../i18n/googleTranslate'
 import './ChatBot.css'
 
@@ -8,11 +8,27 @@ interface ChatLink {
   label: string
 }
 
+/** A team member's contact card — built entirely by the backend (see
+ * chatbot-backend/lib/people.js) so name, role, location and email are
+ * exactly what the website lists. */
+interface ChatPerson {
+  name: string
+  role: string
+  location: string
+  creds: string
+  expertise: string
+  specialisations: string
+  email: string
+  emailIsGeneral: boolean
+  actions: ChatLink[]
+}
+
 interface ChatMessage {
   id: string
   role: 'bot' | 'user'
   text: string
   links?: ChatLink[]
+  person?: ChatPerson
 }
 
 type LangCode = (typeof LANGUAGES)[number]['code']
@@ -187,12 +203,15 @@ const CHATBOT_API_URL = `${(import.meta.env.VITE_CHATBOT_API_BASE_URL as string)
 interface ChatApiItem {
   text: string
   link?: ChatLink | null
+  links?: ChatLink[]
+  person?: ChatPerson
 }
 
 interface ChatApiResult {
   reply: string
   links: ChatLink[]
   items?: ChatApiItem[]
+  people?: ChatPerson[]
 }
 
 /** A [[LINK: ...]] marker still mid-stream — hide it rather than flash the
@@ -213,11 +232,41 @@ function stripPendingLinkMarkers(text: string): string {
  *    counts) that need no AI call and return everything at once, optionally
  *    with `items` — one line per person/article, each with its own link.
  */
-async function askChatbot(message: string, onDelta: (partial: string) => void): Promise<ChatApiResult> {
+/** Gives up if the server sends nothing for this long (a dropped connection or a
+ * restarted server would otherwise leave the chat spinning and locked forever). */
+const CHATBOT_STALL_MS = 45000
+
+async function askChatbot(
+  message: string,
+  history: { role: 'bot' | 'user'; text: string }[],
+  onDelta: (partial: string) => void
+): Promise<ChatApiResult> {
+  const controller = new AbortController()
+  let stallTimer = setTimeout(() => controller.abort(), CHATBOT_STALL_MS)
+  const keepAlive = () => {
+    clearTimeout(stallTimer)
+    stallTimer = setTimeout(() => controller.abort(), CHATBOT_STALL_MS)
+  }
+  try {
+    return await askChatbotInner(message, history, onDelta, controller.signal, keepAlive)
+  } finally {
+    clearTimeout(stallTimer)
+  }
+}
+
+async function askChatbotInner(
+  message: string,
+  history: { role: 'bot' | 'user'; text: string }[],
+  onDelta: (partial: string) => void,
+  signal: AbortSignal,
+  keepAlive: () => void
+): Promise<ChatApiResult> {
   const res = await fetch(CHATBOT_API_URL, {
     method: 'POST',
+    signal,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message }),
+    // The last few messages let the server understand follow-ups like "please mention few names".
+    body: JSON.stringify({ message, history }),
   })
   if (!res.ok) throw new Error('Chatbot request failed')
 
@@ -228,10 +277,11 @@ async function askChatbot(message: string, onDelta: (partial: string) => void): 
     const decoder = new TextDecoder()
     let raw = ''
     let buffer = ''
-    let final: { reply: string; links: ChatLink[] } | null = null
+    let final: ChatApiResult | null = null
 
     while (true) {
       const { done, value } = await reader.read()
+      keepAlive()
       if (done) break
       buffer += decoder.decode(value, { stream: true })
       const frames = buffer.split('\n\n')
@@ -244,7 +294,7 @@ async function askChatbot(message: string, onDelta: (partial: string) => void): 
           raw += payload.delta
           onDelta(stripPendingLinkMarkers(raw))
         } else if (payload.done) {
-          final = { reply: payload.reply, links: payload.links ?? (payload.link ? [payload.link] : []) }
+          final = { reply: payload.reply, links: payload.links ?? (payload.link ? [payload.link] : []), people: payload.people }
         } else if (payload.error) {
           throw new Error(payload.error)
         }
@@ -260,6 +310,7 @@ async function askChatbot(message: string, onDelta: (partial: string) => void): 
     reply: data.reply,
     links: data.links ?? (data.link ? [data.link] : []),
     items: data.items,
+    people: data.people,
   }
 }
 
@@ -315,6 +366,39 @@ function renderChatText(text: string): ReactNode {
   })
   flushList()
   return nodes
+}
+
+/** One team member: name, role · location, credentials, expertise, email and
+ * the View Profile / Connect buttons — the same layout for every person, so
+ * details never drift away from the buttons that belong to them. */
+function PersonCard({ person }: { person: ChatPerson }) {
+  return (
+    <div className="chatbot__person">
+      <p className="chatbot__person-name">{person.name}</p>
+      <p className="chatbot__person-meta">
+        {person.role}
+        {person.location && (
+          <>
+            {' · '}
+            <MapPin size={12} aria-hidden="true" /> {person.location}
+          </>
+        )}
+      </p>
+      {person.creds && <p className="chatbot__person-creds">{person.creds}</p>}
+      {person.expertise && <p className="chatbot__person-desc">{person.expertise}</p>}
+      {person.specialisations && (
+        <p className="chatbot__person-desc">
+          <strong>Specialisations:</strong> {person.specialisations}
+        </p>
+      )}
+      <p className="chatbot__person-email">
+        <Mail size={13} aria-hidden="true" />
+        <a href={`mailto:${person.email}`}>{person.email}</a>
+        {person.emailIsGeneral && <span className="chatbot__person-general">(firm's general email)</span>}
+      </p>
+      <ChatLinkButtons links={person.actions} />
+    </div>
+  )
 }
 
 function ChatLinkButtons({ links }: { links?: ChatLink[] }) {
@@ -389,6 +473,16 @@ export default function ChatBot() {
     const text = rawText.trim()
     if (!text || isTyping || !chatLanguage) return
 
+    // Recent conversation (before this message), sent along so follow-up questions make sense.
+    const history = messages
+      .filter((m) => m.id !== 'choose-lang')
+      .slice(-8)
+      .map((m) => ({
+        role: m.role,
+        text: m.person ? `${m.person.name} — ${m.person.role}, ${m.person.location}` : m.text,
+      }))
+      .filter((m) => m.text.trim())
+
     const userMessage: ChatMessage = { id: crypto.randomUUID(), role: 'user', text }
     setMessages((prev) => [...prev, userMessage])
     setInput('')
@@ -412,22 +506,33 @@ export default function ChatBot() {
     }
 
     try {
-      const result = await askChatbot(text, onDelta)
+      const result = await askChatbot(text, history, onDelta)
+
+      // Contact cards for anyone named in an AI-written answer.
+      const personMessages: ChatMessage[] = (result.people ?? []).map((person) => ({
+        id: crypto.randomUUID(),
+        role: 'bot',
+        text: '',
+        person,
+      }))
 
       setMessages((prev) => {
         const finalized = botMessageId
           ? prev.map((m) => (m.id === botMessageId ? { ...m, text: result.reply, links: result.links } : m))
           : [...prev, { id: crypto.randomUUID(), role: 'bot' as const, text: result.reply, links: result.links }]
 
-        if (!result.items || result.items.length === 0) return finalized
+        if (!result.items || result.items.length === 0) return [...finalized, ...personMessages]
 
+        // A list item is either a plain line (headers, closing questions) or a
+        // team member, shown as a contact card with their own buttons.
         const itemMessages: ChatMessage[] = result.items.map((item) => ({
           id: crypto.randomUUID(),
           role: 'bot',
-          text: item.text,
-          links: item.link ? [item.link] : undefined,
+          text: item.person ? '' : item.text,
+          links: item.person ? undefined : item.links?.length ? item.links : item.link ? [item.link] : undefined,
+          person: item.person,
         }))
-        return [...finalized, ...itemMessages]
+        return [...finalized, ...itemMessages, ...personMessages]
       })
     } catch {
       const errorText = "Sorry, I couldn't reach the assistant right now. Please try again in a moment."
@@ -486,8 +591,14 @@ export default function ChatBot() {
                   {message.role === 'bot' ? <Bot size={14} /> : <User size={14} />}
                 </span>
                 <div className={`chatbot__bubble chatbot__bubble--${message.role}`}>
-                  {message.role === 'bot' ? renderChatText(message.text) : message.text}
-                  {message.role === 'bot' && <ChatLinkButtons links={message.links} />}
+                  {message.person ? (
+                    <PersonCard person={message.person} />
+                  ) : (
+                    <>
+                      {message.role === 'bot' ? renderChatText(message.text) : message.text}
+                      {message.role === 'bot' && <ChatLinkButtons links={message.links} />}
+                    </>
+                  )}
                 </div>
               </div>
             ))}

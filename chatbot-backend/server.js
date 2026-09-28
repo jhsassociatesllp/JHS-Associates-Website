@@ -212,11 +212,26 @@ function buildTypoVocab() {
   return vocab;
 }
 
+// Simple in-memory cache of computed answers (cost saver for repeated
+// questions). Declared here, above loadIndex, so loadIndex can clear it —
+// see the note inside loadIndex for why that matters.
+const CACHE = new Map();
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
 function loadIndex() {
   if (!fs.existsSync("./index.json")) {
     console.warn("index.json not found — run `npm run crawl` first.");
     return;
   }
+  // A fresh deploy starts with an empty/near-empty index.json (it's
+  // gitignored) and fills in over the next few minutes as the startup crawl
+  // runs. A question asked during that window can get answered by the AI
+  // fallback instead of the exact team/content data, and — worse — that
+  // wrong answer used to sit in CACHE for a full hour even after the index
+  // became complete. Every reload (including each growth step of that
+  // startup crawl, and the 24h scheduled re-crawl) now clears the cache, so
+  // a fuller index is used on the very next matching question.
+  CACHE.clear();
   INDEX = JSON.parse(fs.readFileSync("./index.json", "utf-8"));
   KNOWN_URLS = new Set(INDEX.map((item) => item.url).filter(Boolean));
   CREDENTIAL_VOCAB = buildCredentialVocab();
@@ -245,9 +260,7 @@ fs.watchFile("./index.json", { interval: 60000 }, loadIndex);
 require("./scheduler").start();
 
 // ---- simple in-memory cache (cost saver for repeated questions) --------
-
-const CACHE = new Map();
-const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+// (CACHE/CACHE_TTL_MS themselves are declared above, before loadIndex.)
 
 function cacheGet(key) {
   const hit = CACHE.get(key);

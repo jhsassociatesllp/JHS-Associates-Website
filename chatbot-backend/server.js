@@ -580,7 +580,12 @@ const LOCATION_INTENT_PREP_RE = /\b(?:in|of|from|at)\s+([a-z]+)\b/i;
 // nothing to do with a place — without excluding these, e.g. "number OF
 // COUNT who are not partners" matched as a place reference and wrongly
 // deferred an otherwise-answerable question to the unreliable LLM path.
-const LOCATION_INTENT_STOPWORDS = new Set(["count", "number", "total", "all", "the", "our", "us", "them", "this", "that", "which"]);
+// Includes the firm's own name/short forms — "how many partners in JHS" is a
+// question about the whole company, not an unresolved place called "Jhs".
+const LOCATION_INTENT_STOPWORDS = new Set([
+  "count", "number", "total", "all", "the", "our", "us", "them", "this", "that", "which",
+  "jhs", "jhsassociates", "associates", "company", "firm", "organisation", "organization",
+]);
 
 // The specific word that makes this look like an unresolved place reference
 // (the word right after "in/of/from/at" — filtered against common non-place

@@ -72,6 +72,11 @@ class ApplicationResponse(ApplicationCreate):
     resume_filename: Optional[str] = None
     resume_content_type: Optional[str] = None
     resume_size: Optional[int] = None
+    # 0-100 relevance of the resume against the vacancy's description, or
+    # against an HR search query when one was given — see
+    # app/services/resume_ranking.py. None means there's nothing to score
+    # against yet (a general application with no search query active).
+    match_score: Optional[float] = None
     status: ApplicationStatus
     created_at: datetime
     updated_at: datetime

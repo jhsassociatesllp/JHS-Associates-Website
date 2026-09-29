@@ -134,9 +134,59 @@
   background: white;
 }
 
+.careers-tabs-bar--applications .careers-search {
+  max-width: 260px;
+}
+
+.careers-search--cv {
+  position: relative;
+  max-width: 340px;
+}
+
+.careers-search--cv input {
+  padding-right: 30px;
+}
+
+.careers-search-clear {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: #8a8d93;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.careers-search-clear:hover {
+  background: #eef0f4;
+  color: #4a5568;
+}
+
 .careers-filter {
   min-width: 200px;
 }
+
+/* CV match score badge */
+.match-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.match-score--high { background: #e8f5e8; color: #2e7d32; }
+.match-score--medium { background: #fff4e5; color: #b26a00; }
+.match-score--low { background: #f1f2f6; color: #6b7280; }
+.match-score--none { color: #c1c4cc; font-weight: 500; }
 
 .careers-result-count {
   font-size: 0.82rem;

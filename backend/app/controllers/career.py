@@ -12,6 +12,7 @@ from app.schemas.career import (
     JobCreate,
     JobUpdate,
 )
+from app.services import resume_ranking
 from app.services.email_service import notify_hr_new_application
 
 JOBS_COLLECTION = "career_jobs"
@@ -150,6 +151,10 @@ async def create_application_with_resume(
     payload["resume_filename"] = resume_filename
     payload["resume_content_type"] = resume_content_type
     payload["resume_size"] = len(resume_bytes)
+    # Extracted once here so ranking/search never has to re-open the PDF from
+    # GridFS on every listing — see resume_ranking.py for why this is a plain
+    # keyword match rather than an AI call (free, instant, no external cost).
+    payload["resume_text"] = resume_ranking.extract_text_from_pdf(resume_bytes)
 
     result = await db[APPLICATIONS_COLLECTION].insert_one(payload)
 
@@ -160,12 +165,75 @@ async def create_application_with_resume(
     return _serialize(created)
 
 
-async def list_applications(job_id: Optional[str] = None) -> list[dict]:
+async def _backfill_resume_text(db, doc: dict) -> str:
+    """Older applications (uploaded before ranking existed) have no cached
+    resume_text yet — extract it once here and persist it, so every later
+    listing/search call finds it already cached instead of re-parsing."""
+    if not doc.get("resume_file_id"):
+        return ""
+    try:
+        bucket = AsyncIOMotorGridFSBucket(db, bucket_name=RESUME_BUCKET)
+        grid_out = await bucket.open_download_stream(_object_id(doc["resume_file_id"]))
+        resume_bytes = await grid_out.read()
+    except Exception:
+        return ""
+
+    text = resume_ranking.extract_text_from_pdf(resume_bytes)
+    await db[APPLICATIONS_COLLECTION].update_one({"_id": doc["_id"]}, {"$set": {"resume_text": text}})
+    return text
+
+
+async def list_applications(job_id: Optional[str] = None, q: Optional[str] = None) -> list[dict]:
+    """Every application, each with a `match_score` (0-100, or None when
+    there's nothing to score against): ranked against the search text `q`
+    when HR typed one, otherwise against its own vacancy's description — so
+    the strongest-matching CVs for that role surface first automatically.
+    General applications (no job_id) only get a score once `q` is given —
+    there's no single vacancy to rank them against otherwise. See
+    resume_ranking.py: this is a plain keyword match, not an AI call.
+    """
     db = get_database()
     query = {"job_id": job_id} if job_id else {}
+    docs = [doc async for doc in db[APPLICATIONS_COLLECTION].find(query)]
+
+    # One lookup for every distinct job referenced, instead of one query per
+    # application — used as the ranking reference when `q` isn't given.
+    job_ids = {doc["job_id"] for doc in docs if doc.get("job_id")}
+    jobs_by_id: dict[str, dict] = {}
+    if job_ids and not q:
+        object_ids = []
+        for jid in job_ids:
+            try:
+                object_ids.append(_object_id(jid))
+            except ValueError:
+                continue
+        async for job_doc in db[JOBS_COLLECTION].find({"_id": {"$in": object_ids}}):
+            jobs_by_id[str(job_doc["_id"])] = job_doc
+
+    query_text = q.strip() if q else None
+
     applications = []
-    async for doc in db[APPLICATIONS_COLLECTION].find(query).sort("created_at", -1):
+    for doc in docs:
+        resume_text = doc.get("resume_text")
+        if resume_text is None and doc.get("resume_file_id"):
+            resume_text = await _backfill_resume_text(db, doc)
+
+        if query_text:
+            reference_text = query_text
+        elif doc.get("job_id") and doc["job_id"] in jobs_by_id:
+            reference_text = jobs_by_id[doc["job_id"]].get("description")
+        else:
+            reference_text = None
+
+        doc["match_score"] = resume_ranking.score_match(resume_text, reference_text)
         applications.append(_serialize(doc))
+
+    # Ranked results (a search query, or a single vacancy) put the best
+    # match first; otherwise this is the same newest-first order as before.
+    if query_text or (job_id and jobs_by_id):
+        applications.sort(key=lambda a: (a["match_score"] is None, -(a["match_score"] or 0), -a["created_at"].timestamp()))
+    else:
+        applications.sort(key=lambda a: a["created_at"], reverse=True)
     return applications
 
 

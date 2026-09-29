@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   Button,
@@ -55,6 +55,11 @@ type Application = {
   expected_ctc?: string;
   how_heard?: string;
   how_heard_detail?: string;
+  // 0-100 relevance to the vacancy's own description, or to the CV search
+  // box's text when one is active — computed server-side, see
+  // backend/app/services/resume_ranking.py. Null when there's nothing to
+  // rank against (a general application with no CV search running).
+  match_score?: number | null;
   status: ApplicationStatus;
   created_at: string;
 };
@@ -72,6 +77,12 @@ const initialJobForm: JobForm = {
 };
 
 const APPLICATION_STATUSES: ApplicationStatus[] = ['new', 'reviewing', 'shortlisted', 'rejected', 'hired'];
+
+const matchScoreClass = (score: number): string => {
+  if (score >= 60) return 'match-score--high';
+  if (score >= 30) return 'match-score--medium';
+  return 'match-score--low';
+};
 
 const formatApiError = (payload: unknown) => {
   if (!payload || typeof payload !== 'object') return 'Unable to save vacancy.';
@@ -105,8 +116,33 @@ const AdminCareers: React.FC = () => {
   const [viewApplication, setViewApplication] = useState<Application | null>(null);
   const [vacancySearch, setVacancySearch] = useState('');
   const [applicationSearch, setApplicationSearch] = useState('');
+  // Ranks CVs by how well they match this text (skills, qualifications,
+  // keywords) — sent to the server, which scores every resume's cached
+  // extracted text against it with a plain keyword match (see
+  // resume_ranking.py — no AI call, so this costs nothing to use).
+  const [cvSearchQuery, setCvSearchQuery] = useState('');
+  const [applicationsLoading, setApplicationsLoading] = useState(false);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+
+  const fetchApplications = async (jobId?: string, q?: string) => {
+    try {
+      setApplicationsLoading(true);
+      const params = new URLSearchParams();
+      if (jobId) params.set('job_id', jobId);
+      if (q) params.set('q', q);
+      const qs = params.toString();
+      const response = await fetch(`${API_BASE_URL}/careers/admin/applications${qs ? `?${qs}` : ''}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) setApplications(await response.json());
+    } catch (error) {
+      console.error('Unable to load applications', error);
+      setMessage('Unable to load applications.');
+    } finally {
+      setApplicationsLoading(false);
+    }
+  };
 
   const fetchCareers = async () => {
     try {
@@ -137,6 +173,26 @@ const AdminCareers: React.FC = () => {
     fetchCareers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Re-ranks/re-fetches applications when the vacancy filter or CV search
+  // text changes — skipped on first mount, since fetchCareers() above
+  // already loaded the initial (unranked, newest-first) list once.
+  const didMountApplications = useRef(false);
+  useEffect(() => {
+    if (!didMountApplications.current) {
+      didMountApplications.current = true;
+      return;
+    }
+    const jobIdParam = selectedJobFilter !== 'all' && selectedJobFilter !== 'general' ? selectedJobFilter : undefined;
+    // Debounced so a CV search doesn't fire a request on every keystroke —
+    // this costs no AI/API money either way (plain keyword match), but
+    // there's no reason to hit the server mid-word.
+    const timer = setTimeout(() => {
+      fetchApplications(jobIdParam, cvSearchQuery.trim() || undefined);
+    }, 350);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJobFilter, cvSearchQuery]);
 
   const openCreateDialog = () => {
     setEditingId(null);
@@ -273,10 +329,17 @@ const AdminCareers: React.FC = () => {
   };
 
   const filteredApplications = useMemo(() => {
+    // `applications` already comes back from the server filtered to the
+    // selected vacancy and ranked (best match first) — see
+    // fetchApplications(). "General Application" (no vacancy) is the one
+    // case the server doesn't filter for, since it has no single job_id to
+    // query by.
     let list = applications;
     if (selectedJobFilter === 'general') list = list.filter((application) => !application.job_id);
-    else if (selectedJobFilter !== 'all') list = list.filter((application) => application.job_id === selectedJobFilter);
 
+    // A separate, purely client-side quick filter on the candidate's own
+    // details (not resume content) — instant, and preserves whatever rank
+    // order the server returned.
     const q = applicationSearch.trim().toLowerCase();
     if (q) {
       list = list.filter(
@@ -369,7 +432,7 @@ const AdminCareers: React.FC = () => {
         )}
 
         {tab === 1 && (
-          <div className="careers-tabs-bar">
+          <div className="careers-tabs-bar careers-tabs-bar--applications">
             <div className="careers-search">
               <input
                 type="text"
@@ -378,6 +441,19 @@ const AdminCareers: React.FC = () => {
                 onChange={(e) => setApplicationSearch(e.target.value)}
               />
             </div>
+            <div className="careers-search careers-search--cv">
+              <input
+                type="text"
+                placeholder="Rank CVs by skills/keywords (e.g. statutory audit, GST, FCA)…"
+                value={cvSearchQuery}
+                onChange={(e) => setCvSearchQuery(e.target.value)}
+              />
+              {cvSearchQuery && (
+                <button type="button" className="careers-search-clear" onClick={() => setCvSearchQuery('')} aria-label="Clear CV search">
+                  ×
+                </button>
+              )}
+            </div>
             <div className="careers-filter">
               <select value={selectedJobFilter} onChange={(e) => setSelectedJobFilter(e.target.value)}>
                 <option value="all">All vacancies</option>
@@ -385,6 +461,7 @@ const AdminCareers: React.FC = () => {
                 {jobs.map((job) => <option key={job.id} value={job.id}>{job.title}</option>)}
               </select>
             </div>
+            {applicationsLoading && <span className="careers-result-count">Ranking…</span>}
           </div>
         )}
 
@@ -447,6 +524,7 @@ const AdminCareers: React.FC = () => {
                   <th>Candidate</th>
                   <th>Vacancy</th>
                   <th>Qualification / Profile</th>
+                  <th title="How well the resume matches the vacancy's description, or your CV search text">Match</th>
                   <th>Resume</th>
                   <th>Status</th>
                   <th>Applied</th>
@@ -465,6 +543,15 @@ const AdminCareers: React.FC = () => {
                     <td>
                       <p className="cell-primary" style={{ fontWeight: 500 }}>{withOther(application.highest_qualification, application.highest_qualification_other)}</p>
                       <p className="cell-secondary">{withOther(application.profile, application.profile_other)}</p>
+                    </td>
+                    <td>
+                      {application.match_score == null ? (
+                        <span className="match-score match-score--none">—</span>
+                      ) : (
+                        <span className={`match-score ${matchScoreClass(application.match_score)}`}>
+                          {Math.round(application.match_score)}%
+                        </span>
+                      )}
                     </td>
                     <td>
                       {application.resume_file_id ? (

@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Response, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Response, UploadFile, status
 
 from app.auth.deps import get_current_applicant, get_current_user, require_roles
 from app.auth.security import create_access_token
@@ -112,11 +112,6 @@ async def submit_application_with_resume(
     resume_bytes = await resume.read()
     if len(resume_bytes) > MAX_RESUME_SIZE:
         raise HTTPException(status_code=400, detail="Resume PDF must be 8 MB or smaller")
-    # The content-type header above is client-supplied and not trustworthy on
-    # its own — a malicious upload could label anything "application/pdf".
-    # Check the actual file signature before this ever reaches a PDF parser.
-    if not resume_bytes.startswith(b"%PDF-"):
-        raise HTTPException(status_code=400, detail="Resume must be a valid PDF file")
 
     data = ApplicationCreate(
         job_id=job_id or None,
@@ -204,10 +199,9 @@ async def admin_delete_job(
 @router.get("/admin/applications", response_model=list[ApplicationResponse])
 async def admin_applications(
     job_id: Optional[str] = None,
-    q: Optional[str] = Query(None, max_length=200),
     current_admin: AdminInDB = Depends(hr_access),
 ):
-    return await career_ctrl.list_applications(job_id=job_id, q=q)
+    return await career_ctrl.list_applications(job_id=job_id)
 
 
 @router.patch(

@@ -772,7 +772,13 @@ const NOT_TEAM_SUBJECT_RE = /\b(alumni|alumnus|clients?|customers?|competitors?|
 function answerTeamListQuery(rawMessage) {
   if (NOT_TEAM_SUBJECT_RE.test(rawMessage)) return null; // "who are your alumni" is not "list our team"
   const explicitIntent = COUNT_OR_LIST_INTENT_RE.test(rawMessage);
-  if (!explicitIntent && !(IMPLICIT_LIST_RE.test(rawMessage) && !NOT_A_LIST_RE.test(rawMessage))) return null;
+  // A bare "who is CISA" / "who is FCA" names a real credential with no other
+  // list-y wording at all ("how many", "experts", "team", ...) — without this,
+  // it fell through every deterministic check and went to the AI, which
+  // answered from embedding similarity instead of the actual credential,
+  // missing real holders and wrongly including unrelated people.
+  const mentionsKnownCredential = Boolean(findCredentialInQuestion(rawMessage)) || CA_SYNONYM_RE.test(rawMessage);
+  if (!explicitIntent && !mentionsKnownCredential && !(IMPLICIT_LIST_RE.test(rawMessage) && !NOT_A_LIST_RE.test(rawMessage))) return null;
 
   // Strip a trailing "and also .../aur ..." clause that isn't actually about
   // the team before running any filter detection below — otherwise an
@@ -834,8 +840,13 @@ function answerTeamListQuery(rawMessage) {
   // Previously this ignored `negated` entirely, so "who are NOT partners"
   // silently filtered TO partners and answered the opposite of what was asked.
   const roleNegated = negated && !cred && !isCASynonym;
+  // Per the firm: Governance Council members are considered partners too, so
+  // a "partners" question also includes them — their own profile still shows
+  // "Governance Council" as their title, this only affects who counts toward
+  // a "partner" count/list. Advisory Board is deliberately not included here.
+  const roleMatches = (item) => (role === "Partner" ? item.role === "Partner" || item.role === "Governance Council" : item.role === role);
   if (role) {
-    matches = matches.filter((item) => (roleNegated ? item.role !== role : item.role === role));
+    matches = matches.filter((item) => (roleNegated ? !roleMatches(item) : roleMatches(item)));
   }
 
   if (sector) {

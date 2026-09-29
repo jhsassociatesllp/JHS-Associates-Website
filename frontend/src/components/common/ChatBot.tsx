@@ -517,22 +517,32 @@ export default function ChatBot() {
       }))
 
       setMessages((prev) => {
+        const hasItems = Boolean(result.items && result.items.length > 0)
+        // A general link like "View Full Team" belongs at the very end of the
+        // whole answer, after the itemised breakdown — attaching it to the
+        // intro line instead reads as if the answer already finished there,
+        // right before the actual list of people.
+        const introLinks = hasItems ? undefined : result.links
         const finalized = botMessageId
-          ? prev.map((m) => (m.id === botMessageId ? { ...m, text: result.reply, links: result.links } : m))
-          : [...prev, { id: crypto.randomUUID(), role: 'bot' as const, text: result.reply, links: result.links }]
+          ? prev.map((m) => (m.id === botMessageId ? { ...m, text: result.reply, links: introLinks } : m))
+          : [...prev, { id: crypto.randomUUID(), role: 'bot' as const, text: result.reply, links: introLinks }]
 
-        if (!result.items || result.items.length === 0) return [...finalized, ...personMessages]
+        if (!hasItems) return [...finalized, ...personMessages]
 
         // A list item is either a plain line (headers, closing questions) or a
         // team member, shown as a contact card with their own buttons.
-        const itemMessages: ChatMessage[] = result.items.map((item) => ({
+        const itemMessages: ChatMessage[] = result.items!.map((item) => ({
           id: crypto.randomUUID(),
           role: 'bot',
           text: item.person ? '' : item.text,
           links: item.person ? undefined : item.links?.length ? item.links : item.link ? [item.link] : undefined,
           person: item.person,
         }))
-        return [...finalized, ...itemMessages, ...personMessages]
+        const trailingLinks: ChatMessage[] =
+          result.links && result.links.length > 0
+            ? [{ id: crypto.randomUUID(), role: 'bot' as const, text: '', links: result.links }]
+            : []
+        return [...finalized, ...itemMessages, ...personMessages, ...trailingLinks]
       })
     } catch {
       const errorText = "Sorry, I couldn't reach the assistant right now. Please try again in a moment."
@@ -595,7 +605,7 @@ export default function ChatBot() {
                     <PersonCard person={message.person} />
                   ) : (
                     <>
-                      {message.role === 'bot' ? renderChatText(message.text) : message.text}
+                      {message.role === 'bot' ? (message.text ? renderChatText(message.text) : null) : message.text}
                       {message.role === 'bot' && <ChatLinkButtons links={message.links} />}
                     </>
                   )}

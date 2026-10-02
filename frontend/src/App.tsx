@@ -17,6 +17,13 @@ import Insights from './sections/Insights'
 import FAQ from './sections/FAQ'
 import Disclaimer from './components/Disclaimer'
 
+const SOP_URL = 'https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/'
+
+function SopRedirect() {
+  useEffect(() => { window.location.replace(SOP_URL) }, [])
+  return null
+}
+
 // Legal pages
 const PrivacyPolicy = lazy(() => import('./components/legal/PrivacyPolicy'))
 const TermsAndConditions = lazy(() => import('./components/legal/TermsAndConditions'))
@@ -272,6 +279,9 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/terms-of-business" element={<TermsOfBusiness />} />
+
+          {/* SOP — jhsassociates.in/SOP redirects to the SOP page */}
+          <Route path="/sop" element={<SopRedirect />} />
 
           {/* Request for Proposal */}
           <Route path="/approval-for-proposal" element={<RequestForProposal />} />

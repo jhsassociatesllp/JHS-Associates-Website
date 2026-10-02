@@ -163,6 +163,7 @@ export default function Footer() {
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
             <Link to="/terms-of-business">Terms of Business</Link>
+            <a href="https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/" target="_blank" rel="noopener noreferrer">SOP</a>
           </div>
         </div>
       </div>

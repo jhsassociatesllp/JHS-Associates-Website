@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
@@ -23,9 +23,15 @@ import Disclaimer from './components/Disclaimer'
 
 const SOP_URL = 'https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/'
 
-function SopRedirect() {
-  useEffect(() => { window.location.replace(SOP_URL) }, [])
-  return null
+// Shows the SOP page full-screen while the address bar stays on /SOP
+function SopPage() {
+  return (
+    <iframe
+      src={SOP_URL}
+      title="JHS SOP"
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', border: 0 }}
+    />
+  )
 }
 
 // Legal pages
@@ -176,6 +182,9 @@ export default function App() {
     initPersistedLanguage()
   }, [])
 
+  const { pathname } = useLocation()
+  if (pathname.toLowerCase().replace(/\/+$/, '') === '/sop') return <SopPage />
+
   return (
     <SiteAuthProvider>
       <SEOHead />
@@ -288,8 +297,8 @@ export default function App() {
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/terms-of-business" element={<TermsOfBusiness />} />
 
-          {/* SOP — jhsassociates.in/SOP redirects to the SOP page */}
-          <Route path="/sop" element={<SopRedirect />} />
+          {/* SOP — jhsassociates.in/SOP opens the SOP page, URL unchanged */}
+          <Route path="/sop" element={<SopPage />} />
 
           {/* Request for Proposal */}
           <Route path="/approval-for-proposal" element={<RequestForProposal />} />

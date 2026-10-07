@@ -1,19 +1,7 @@
 import { useState } from "react";
 import "./Disclaimer.css";
-
-const COOKIE_NAME = "jhs_disclaimer_accepted";
-const COOKIE_DAYS = 30;
-
-function getCookie(name: string): string | null {
-  const match = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
-  return match ? decodeURIComponent(match[1]) : null;
-}
-
-function setCookie(name: string, value: string, days: number) {
-  const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-  const secure = location.protocol === "https:" ? "; Secure" : "";
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax${secure}`;
-}
+import { COOKIE_DAYS, DISCLAIMER_COOKIE as COOKIE_NAME, getCookie, setCookie } from "../utils/cookieConsent";
+import { DISCLAIMER_ACCEPTED } from "./common/CookieConsent";
 
 export default function Disclaimer() {
   const [visible, setVisible] = useState(() => !getCookie(COOKIE_NAME));
@@ -21,8 +9,9 @@ export default function Disclaimer() {
   const [expanded, setExpanded] = useState(false);
 
   const handleAccept = () => {
-    setCookie(COOKIE_NAME, "true", COOKIE_DAYS);
+    setCookie(COOKIE_NAME, "true", COOKIE_DAYS); // remembered for 12 months
     setVisible(false);
+    window.dispatchEvent(new Event(DISCLAIMER_ACCEPTED)); // the cookie notice follows
   };
 
   if (!visible) return null;

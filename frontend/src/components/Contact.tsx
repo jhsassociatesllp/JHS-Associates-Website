@@ -425,7 +425,7 @@ export default function Contact() {
               </div>
               <div className="ct-map-wrap">
                 <iframe
-                  title="JHS Associates Mumbai"
+                  title="JHS Mumbai"
                   src={mapEmbedUrlFor(OFFICES[0])}
                   allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 />

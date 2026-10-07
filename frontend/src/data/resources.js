@@ -1,4 +1,4 @@
-// Resources data for JHS & Associates LLP
+// Resources data for JHS
 // Each resource includes id, title, tag, description, image, pdf, and author
 
 export const RESOURCES = [

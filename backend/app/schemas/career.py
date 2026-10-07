@@ -1,11 +1,20 @@
 from datetime import datetime
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 JobStatus = Literal["draft", "open", "closed"]
 ApplicationStatus = Literal["new", "reviewing", "shortlisted", "rejected", "hired"]
+
+
+def _clean_keyword_list(value: list[str]) -> list[str]:
+    cleaned: list[str] = []
+    for kw in value:
+        kw = " ".join(str(kw).split())[:60]
+        if kw and kw.lower() not in [c.lower() for c in cleaned]:
+            cleaned.append(kw)
+    return cleaned
 
 
 class JobBase(BaseModel):
@@ -16,6 +25,14 @@ class JobBase(BaseModel):
     experience: str = Field(..., min_length=1, max_length=80)
     description: str = Field(..., min_length=2, max_length=4000)
     status: JobStatus = "open"
+    # Skills / terms the recruiter wants the ATS to look for (optional; the
+    # description is analysed automatically as well).
+    keywords: list[str] = Field(default_factory=list, max_length=40)
+
+    @field_validator("keywords")
+    @classmethod
+    def _clean_keywords(cls, value: list[str]) -> list[str]:
+        return _clean_keyword_list(value)
 
 
 class JobCreate(JobBase):
@@ -30,6 +47,12 @@ class JobUpdate(BaseModel):
     experience: Optional[str] = Field(None, min_length=1, max_length=80)
     description: Optional[str] = Field(None, min_length=2, max_length=4000)
     status: Optional[JobStatus] = None
+    keywords: Optional[list[str]] = Field(None, max_length=40)
+
+    @field_validator("keywords")
+    @classmethod
+    def _clean_keywords(cls, value):
+        return _clean_keyword_list(value) if value is not None else value
 
 
 class JobResponse(JobBase):
@@ -72,6 +95,12 @@ class ApplicationResponse(ApplicationCreate):
     resume_filename: Optional[str] = None
     resume_content_type: Optional[str] = None
     resume_size: Optional[int] = None
+    # ATS resume-match result (see app/services/ats.py)
+    ats_score: Optional[int] = None
+    ats_status: Optional[str] = None   # matched | below | unreadable | not_applicable
+    ats_match: Optional[bool] = None
+    ats_details: Optional[dict[str, Any]] = None
+    ats_scored_at: Optional[datetime] = None
     status: ApplicationStatus
     created_at: datetime
     updated_at: datetime

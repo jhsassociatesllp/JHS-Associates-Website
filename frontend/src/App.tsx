@@ -12,6 +12,7 @@ import QuickActionsFab from './components/common/QuickActionsFab'
 import AuthModal from './components/auth/AuthModal'
 import { SiteAuthProvider } from './context/SiteAuthContext'
 import Hero from './sections/Hero'
+import UpcomingEvent from './sections/UpcomingEvent'
 import Spotlight from './sections/Spotlight'
 import Stats from './sections/Stats'
 import Services from './sections/Services'
@@ -20,6 +21,7 @@ import VisionMission from './sections/VisionMission'
 import Insights from './sections/Insights'
 import FAQ from './sections/FAQ'
 import Disclaimer from './components/Disclaimer'
+import CookieConsent from './components/common/CookieConsent'
 
 // Legal pages
 const PrivacyPolicy = lazy(() => import('./components/legal/PrivacyPolicy'))
@@ -124,6 +126,8 @@ const RequestForProposal = lazy(() => import('./pages/RequestForProposal'))
 
 // Book Appointment page
 const BookAppointment = lazy(() => import('./pages/BookAppointment'))
+const Events = lazy(() => import('./pages/Events'))
+const EventDetail = lazy(() => import('./pages/EventDetail'))
 
 // Hero Card Detail Pages
 const BoardroomsInTransition = lazy(() => import('./pages/BoardroomsInTransition'))
@@ -140,6 +144,7 @@ function HomePage() {
   return (
     <main>
       <Hero />
+      <UpcomingEvent />
       <Spotlight />
       <Stats />
       <Services />
@@ -173,6 +178,7 @@ export default function App() {
     <SiteAuthProvider>
       <SEOHead />
       <Disclaimer />
+      <CookieConsent />
       <AuthModal />
       <Navbar />
       <Suspense fallback={<RouteLoadingFallback />}>
@@ -286,6 +292,8 @@ export default function App() {
 
           {/* Book Appointment */}
           <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetail />} />
 
           {/* Hero Card Detail Pages */}
           <Route path="/articles/boardrooms-in-transition" element={<BoardroomsInTransition />} />

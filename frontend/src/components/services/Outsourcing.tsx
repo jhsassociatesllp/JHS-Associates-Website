@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './Outsourcing.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–06)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Accounting system selection, design & implementation", desc: "ERP setup & accounting infrastructure" },
   { id: "02", title: "Budgeting & Monitoring Financial Reporting", desc: "Financial planning & MIS reporting" },
   { id: "03", title: "MIS, global & domestic bookkeeping, and full compliance management", desc: "End-to-end bookkeeping & compliance" },
@@ -18,7 +21,7 @@ const leftItems = [
 ]
 
 // Right column items (07–12)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Inventory Verification & Payroll Processing", desc: "Stock audit & salary management" },
   { id: "08", title: "Virtual CXO Services (CEO, CFO, CTO, CPO)", desc: "On-demand executive leadership" },
   { id: "09", title: "Accounting, Reporting & AP/AR Reconciliation", desc: "Receivables & payables management" },
@@ -27,8 +30,12 @@ const rightItems = [
   { id: "12", title: "Risk Assessment & Register Maintenance", desc: "Risk mapping & control registers" },
 ]
 
+
 export default function Outsourcing() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('outsourcing', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -105,10 +112,18 @@ export default function Outsourcing() {
             {/* LEFT COLUMN */}
             <div className="o-spoke-col o-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="o-spoke-row o-spoke-row--left">
+                <div
+                    key={item.id}
+                    className="o-spoke-row o-spoke-row--left"
+                    onClick={() => setActivePoint(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                  >
                   <div className="o-spoke-text o-spoke-text--left">
                     <h3 className="o-spoke-title">{item.title}</h3>
                     <p className="o-spoke-desc">{item.desc}</p>
+                  <span className="o-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="o-spoke-connector o-spoke-connector--left">
                     <div className="o-spoke-line" />
@@ -132,7 +147,14 @@ export default function Outsourcing() {
             {/* RIGHT COLUMN */}
             <div className="o-spoke-col o-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="o-spoke-row o-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="o-spoke-row o-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="o-spoke-connector o-spoke-connector--right">
                     <div className="o-spoke-badge o-spoke-badge--red">{item.id}</div>
                     <div className="o-spoke-line" />
@@ -140,6 +162,7 @@ export default function Outsourcing() {
                   <div className="o-spoke-text o-spoke-text--right">
                     <h3 className="o-spoke-title">{item.title}</h3>
                     <p className="o-spoke-desc">{item.desc}</p>
+                  <span className="o-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -152,13 +175,21 @@ export default function Outsourcing() {
             {[...leftItems, ...rightItems]
               .sort((a, b) => parseInt(a.id) - parseInt(b.id))
               .map((item) => (
-                <div key={item.id} className="o-spoke-mobile-card">
+                <div
+                  key={item.id}
+                  className="o-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className={`o-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'o-spoke-badge--navy' : 'o-spoke-badge--red'}`}>
                     {item.id}
                   </div>
                   <div>
                     <h3 className="o-spoke-title">{item.title}</h3>
                     <p className="o-spoke-desc">{item.desc}</p>
+                  <span className="o-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -166,7 +197,7 @@ export default function Outsourcing() {
 
           <div className="o-certification">
             <Shield className="o-certification__icon" size={28} />
-            <p className="o-certification__text">JHS & Associates LLP · Scalable Outsourcing Partner across Finance, Tax, Compliance & Operations</p>
+            <p className="o-certification__text">JHS · Scalable Outsourcing Partner across Finance, Tax, Compliance & Operations</p>
           </div>
         </div>
       </section>
@@ -181,6 +212,17 @@ export default function Outsourcing() {
           </div>
         </div>
       </section> */}
+
+
+    <ServicePartnersModal
+      isOpen={Boolean(activePoint)}
+      onClose={() => setActivePoint(null)}
+      serviceKey="outsourcing"
+      serviceTitle="Outsourcing Solutions"
+      point={activePoint}
+      partners={activePoint ? getPartnersForSubPoint('outsourcing', activePoint.id) : []}
+    />
+
 
     </div>
   )

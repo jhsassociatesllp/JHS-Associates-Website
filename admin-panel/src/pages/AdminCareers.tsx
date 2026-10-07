@@ -29,7 +29,17 @@ type Job = {
   experience: string;
   description: string;
   status: JobStatus;
+  keywords?: string[];
   created_at: string;
+};
+
+type AtsDetails = {
+  threshold: number;
+  components: Record<string, { score: number; max: number }>;
+  matched_keywords: string[];
+  missing_keywords: string[];
+  experience_years: number | null;
+  flags: string[];
 };
 
 type Application = {
@@ -55,11 +65,15 @@ type Application = {
   expected_ctc?: string;
   how_heard?: string;
   how_heard_detail?: string;
+  ats_score?: number | null;
+  ats_status?: 'matched' | 'below' | 'unreadable' | 'not_applicable' | null;
+  ats_match?: boolean | null;
+  ats_details?: AtsDetails | null;
   status: ApplicationStatus;
   created_at: string;
 };
 
-type JobForm = Omit<Job, 'id' | 'created_at'>;
+type JobForm = Omit<Job, 'id' | 'created_at' | 'keywords'>;
 
 const initialJobForm: JobForm = {
   title: '',
@@ -72,6 +86,33 @@ const initialJobForm: JobForm = {
 };
 
 const APPLICATION_STATUSES: ApplicationStatus[] = ['new', 'reviewing', 'shortlisted', 'rejected', 'hired'];
+
+const ATS_THRESHOLD = 60;
+const COMPONENT_LABELS: Record<string, string> = {
+  keywords: 'Keywords & skills',
+  title: 'Job title match',
+  experience: 'Experience',
+  education: 'Qualifications',
+  format: 'ATS-readable format',
+};
+type AtsGroup = 'matched' | 'below' | 'unreadable' | 'general' | 'unscored';
+const GROUP_LABEL: Record<AtsGroup, string> = {
+  matched: `Top matches — ${ATS_THRESHOLD}% and above`,
+  below: `Below ${ATS_THRESHOLD}%`,
+  unreadable: 'Resume could not be read — review manually',
+  general: 'General applications (no vacancy to match)',
+  unscored: 'Not scored yet',
+};
+const atsGroup = (a: Application): AtsGroup => {
+  if (a.ats_status === 'matched') return 'matched';
+  if (a.ats_status === 'below') return 'below';
+  if (a.ats_status === 'unreadable') return 'unreadable';
+  if (a.ats_status === 'not_applicable') return 'general';
+  return 'unscored';
+};
+
+const parseKeywords = (text: string): string[] =>
+  text.split(/[,\n]/).map((k) => k.trim()).filter(Boolean);
 
 const formatApiError = (payload: unknown) => {
   if (!payload || typeof payload !== 'object') return 'Unable to save vacancy.';
@@ -91,6 +132,83 @@ const formatApiError = (payload: unknown) => {
     .join(' ');
 };
 
+const AtsBadge: React.FC<{ application: Application }> = ({ application }) => {
+  const group = atsGroup(application);
+  if (group === 'matched' || group === 'below') {
+    return (
+      <div className={`ats-badge ats-badge--${group}`} title={`ATS resume match: ${application.ats_score}%`}>
+        <span className="ats-badge__score">{application.ats_score}%</span>
+        <span className="ats-badge__label">{group === 'matched' ? 'Match' : `Below ${ATS_THRESHOLD}%`}</span>
+      </div>
+    );
+  }
+  const text = group === 'unreadable' ? 'Unreadable' : group === 'general' ? 'No vacancy' : 'Not scored';
+  return <span className={`ats-badge ats-badge--${group}`}><span className="ats-badge__label">{text}</span></span>;
+};
+
+const AtsPanel: React.FC<{ application: Application; busy: boolean; onRescore: () => void }> = ({ application, busy, onRescore }) => {
+  const group = atsGroup(application);
+  const d = application.ats_details;
+  const scored = group === 'matched' || group === 'below';
+  return (
+    <div className={`ats-panel ats-panel--${group}`}>
+      <div className="ats-panel__head">
+        <div
+          className="ats-ring"
+          style={scored ? ({ ['--pct' as string]: `${application.ats_score ?? 0}%` } as React.CSSProperties) : undefined}
+        >
+          <span>{scored ? `${application.ats_score}%` : '—'}</span>
+        </div>
+        <div className="ats-panel__title">
+          <strong>ATS Resume Match</strong>
+          <span className="ats-panel__verdict">
+            {group === 'matched' && `Matches the job description (${ATS_THRESHOLD}% or higher)`}
+            {group === 'below' && `Below the ${ATS_THRESHOLD}% match line`}
+            {group === 'unreadable' && 'Resume text could not be read'}
+            {group === 'general' && 'General application — nothing to match against'}
+            {group === 'unscored' && 'Not scored yet'}
+          </span>
+        </div>
+        {application.resume_file_id && (
+          <button className="ats-btn" onClick={onRescore} disabled={busy}>{busy ? 'Scoring…' : 'Re-score'}</button>
+        )}
+      </div>
+
+      {d && scored && (
+        <>
+          <div className="ats-bars">
+            {Object.entries(d.components).map(([key, c]) => (
+              <div key={key} className="ats-bar">
+                <div className="ats-bar__top">
+                  <span>{COMPONENT_LABELS[key] ?? key}</span>
+                  <span>{c.score} / {c.max}</span>
+                </div>
+                <div className="ats-bar__track"><div className="ats-bar__fill" style={{ width: `${c.max ? (c.score / c.max) * 100 : 0}%` }} /></div>
+              </div>
+            ))}
+          </div>
+          {d.matched_keywords.length > 0 && (
+            <div className="ats-chips">
+              <span className="ats-chips__label">Found in resume</span>
+              {d.matched_keywords.map((k) => <span key={k} className="ats-chip ats-chip--ok">{k}</span>)}
+            </div>
+          )}
+          {d.missing_keywords.length > 0 && (
+            <div className="ats-chips">
+              <span className="ats-chips__label">Not found</span>
+              {d.missing_keywords.map((k) => <span key={k} className="ats-chip ats-chip--miss">{k}</span>)}
+            </div>
+          )}
+          {d.experience_years != null && <p className="ats-note">Experience detected in resume: about {d.experience_years} year(s).</p>}
+        </>
+      )}
+      {d && d.flags.length > 0 && (
+        <ul className="ats-flags">{d.flags.map((f) => <li key={f}>{f}</li>)}</ul>
+      )}
+    </div>
+  );
+};
+
 const AdminCareers: React.FC = () => {
   const { token } = useAuth();
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -100,6 +218,9 @@ const AdminCareers: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<JobForm>(initialJobForm);
+  const [keywordsText, setKeywordsText] = useState('');
+  const [topOnly, setTopOnly] = useState(false);
+  const [scoring, setScoring] = useState(false);
   const [message, setMessage] = useState('');
   const [selectedJobFilter, setSelectedJobFilter] = useState('all');
   const [viewApplication, setViewApplication] = useState<Application | null>(null);
@@ -141,6 +262,7 @@ const AdminCareers: React.FC = () => {
   const openCreateDialog = () => {
     setEditingId(null);
     setFormData(initialJobForm);
+    setKeywordsText('');
     setDialogOpen(true);
   };
 
@@ -155,6 +277,7 @@ const AdminCareers: React.FC = () => {
       description: job.description,
       status: job.status,
     });
+    setKeywordsText((job.keywords ?? []).join(', '));
     setDialogOpen(true);
   };
 
@@ -174,7 +297,7 @@ const AdminCareers: React.FC = () => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, keywords: parseKeywords(keywordsText) }),
         },
       );
 
@@ -184,7 +307,16 @@ const AdminCareers: React.FC = () => {
       }
 
       setDialogOpen(false);
-      setMessage(editingId ? 'Vacancy updated successfully.' : 'Vacancy posted successfully.');
+      let note = '';
+      if (editingId) {
+        // the description / keywords may have changed, so refresh this vacancy's ATS scores
+        const rescored = await fetch(`${API_BASE_URL}/careers/admin/jobs/${editingId}/rescore`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+        if (rescored?.rescored) note = ` ${rescored.rescored} application(s) re-scored.`;
+      }
+      setMessage((editingId ? 'Vacancy updated successfully.' : 'Vacancy posted successfully.') + note);
       fetchCareers();
     } catch (error) {
       console.error('Unable to save job', error);
@@ -229,6 +361,43 @@ const AdminCareers: React.FC = () => {
     } catch (error) {
       console.error('Unable to update application', error);
       setMessage('Unable to update application status.');
+    }
+  };
+
+  const rescoreApplication = async (application: Application) => {
+    setScoring(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/careers/admin/applications/${application.id}/rescore`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error('rescore failed');
+      const updated: Application = await response.json();
+      setApplications((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+      setViewApplication((current) => (current && current.id === updated.id ? updated : current));
+      setMessage('Resume re-scored successfully.');
+    } catch {
+      setMessage('Unable to re-score this resume.');
+    } finally {
+      setScoring(false);
+    }
+  };
+
+  const scoreOlderApplications = async () => {
+    setScoring(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/careers/admin/applications/rescore-unscored`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error('rescore failed');
+      const result = await response.json();
+      setMessage(`${result.rescored} older application(s) scored successfully.`);
+      await fetchCareers();
+    } catch {
+      setMessage('Unable to score older applications.');
+    } finally {
+      setScoring(false);
     }
   };
 
@@ -277,6 +446,8 @@ const AdminCareers: React.FC = () => {
     if (selectedJobFilter === 'general') list = list.filter((application) => !application.job_id);
     else if (selectedJobFilter !== 'all') list = list.filter((application) => application.job_id === selectedJobFilter);
 
+    if (topOnly) list = list.filter((application) => application.ats_status === 'matched');
+
     const q = applicationSearch.trim().toLowerCase();
     if (q) {
       list = list.filter(
@@ -287,7 +458,7 @@ const AdminCareers: React.FC = () => {
       );
     }
     return list;
-  }, [applications, selectedJobFilter, applicationSearch]);
+  }, [applications, selectedJobFilter, applicationSearch, topOnly]);
 
   const filteredJobs = useMemo(() => {
     const q = vacancySearch.trim().toLowerCase();
@@ -306,6 +477,8 @@ const AdminCareers: React.FC = () => {
   };
 
   const openJobs = jobs.filter((job) => job.status === 'open').length;
+  const topMatches = applications.filter((a) => a.ats_status === 'matched').length;
+  const unscored = applications.filter((a) => !a.ats_status).length;
 
   return (
     <div className="careers-container">
@@ -338,6 +511,10 @@ const AdminCareers: React.FC = () => {
         <div className="careers-stat-card">
           <p className="careers-stat-label">Applications</p>
           <p className="careers-stat-value">{applications.length}</p>
+        </div>
+        <div className="careers-stat-card ats-stat">
+          <p className="careers-stat-label">Top ATS Matches ({ATS_THRESHOLD}%+)</p>
+          <p className="careers-stat-value">{topMatches}</p>
         </div>
       </div>
 
@@ -385,6 +562,15 @@ const AdminCareers: React.FC = () => {
                 {jobs.map((job) => <option key={job.id} value={job.id}>{job.title}</option>)}
               </select>
             </div>
+            <label className="ats-toggle">
+              <input type="checkbox" checked={topOnly} onChange={(e) => setTopOnly(e.target.checked)} />
+              Top matches only ({ATS_THRESHOLD}%+)
+            </label>
+            {unscored > 0 && (
+              <button className="ats-btn" onClick={scoreOlderApplications} disabled={scoring}>
+                {scoring ? 'Scoring…' : `Score ${unscored} older application${unscored === 1 ? '' : 's'}`}
+              </button>
+            )}
           </div>
         )}
 
@@ -446,6 +632,7 @@ const AdminCareers: React.FC = () => {
                 <tr>
                   <th>Candidate</th>
                   <th>Vacancy</th>
+                  <th>ATS Match</th>
                   <th>Qualification / Profile</th>
                   <th>Resume</th>
                   <th>Status</th>
@@ -454,14 +641,25 @@ const AdminCareers: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredApplications.map((application) => (
-                  <tr key={application.id}>
+                {filteredApplications.map((application, index) => {
+                  const group = atsGroup(application);
+                  const startsGroup = index === 0 || atsGroup(filteredApplications[index - 1]) !== group;
+                  const groupCount = filteredApplications.filter((a) => atsGroup(a) === group).length;
+                  return (
+                  <React.Fragment key={application.id}>
+                    {startsGroup && (
+                      <tr className={`ats-group-row ats-group-row--${group}`}>
+                        <td colSpan={8}>{GROUP_LABEL[group]} <span className="ats-group-row__count">{groupCount}</span></td>
+                      </tr>
+                    )}
+                  <tr>
                     <td>
                       <p className="cell-primary">{application.full_name}</p>
                       <p className="cell-secondary">{application.email}</p>
                       <p className="cell-secondary">{application.phone}</p>
                     </td>
                     <td>{application.job_title || 'General Application'}</td>
+                    <td><AtsBadge application={application} /></td>
                     <td>
                       <p className="cell-primary" style={{ fontWeight: 500 }}>{withOther(application.highest_qualification, application.highest_qualification_other)}</p>
                       <p className="cell-secondary">{withOther(application.profile, application.profile_other)}</p>
@@ -493,7 +691,9 @@ const AdminCareers: React.FC = () => {
                       <button className="link-btn view" onClick={() => setViewApplication(application)}>View</button>
                     </td>
                   </tr>
-                ))}
+                  </React.Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -525,6 +725,16 @@ const AdminCareers: React.FC = () => {
                 </FormControl>
               </Stack>
               <TextField label="Role Description" value={formData.description} onChange={(e) => updateForm('description', e.target.value)} required fullWidth multiline minRows={4} />
+              <TextField
+                label="ATS Keywords (optional)"
+                value={keywordsText}
+                onChange={(e) => setKeywordsText(e.target.value)}
+                fullWidth
+                multiline
+                minRows={2}
+                placeholder="statutory audit, internal audit, Ind AS, GST, MS Excel"
+                helperText={`Skills and terms the resume should contain, separated by commas. These count double when matching candidates (a ${ATS_THRESHOLD}% score or higher is a match); the description is analysed automatically too.`}
+              />
             </Stack>
           </DialogContent>
           <DialogActions sx={{ px: 3, pb: 3 }}>
@@ -539,6 +749,7 @@ const AdminCareers: React.FC = () => {
         {viewApplication && (
           <DialogContent>
             <Stack spacing={1.5} sx={{ pt: 1 }}>
+              <AtsPanel application={viewApplication} busy={scoring} onRescore={() => rescoreApplication(viewApplication)} />
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Full Name</Typography>
                 <Typography sx={{ fontWeight: 600, textAlign: 'right' }}>{viewApplication.full_name}</Typography>

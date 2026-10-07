@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './LearningDevelopment.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–06)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "GST Law, Compliance & Return Filing Workshops", desc: "Practical GST training for finance teams" },
   { id: "02", title: "Income Tax Provisions, TDS & Advance Tax Training", desc: "Direct tax fundamentals & compliance" },
   { id: "03", title: "Accounting Standards (Ind AS) & Financial Reporting Workshops", desc: "Standards-based reporting capability" },
@@ -18,7 +21,7 @@ const leftItems = [
 ]
 
 // Right column items (07–12)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Statutory Audit Methodology & Documentation Training", desc: "Audit quality & documentation standards" },
   { id: "08", title: "Soft Skills, Communication & Client Handling Workshops", desc: "Professional & client-facing capability" },
   { id: "09", title: "ERP & Digital Tools Training (Tally, SAP, NetSuite)", desc: "Hands-on systems & automation training" },
@@ -27,8 +30,12 @@ const rightItems = [
   { id: "12", title: "Customized In-House Training Programs for Corporate Teams", desc: "Tailored curriculum for client teams" },
 ]
 
+
 export default function LearningDevelopment() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('learning-development', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -103,10 +110,18 @@ export default function LearningDevelopment() {
             {/* LEFT COLUMN */}
             <div className="ld-spoke-col ld-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="ld-spoke-row ld-spoke-row--left">
+                <div
+                    key={item.id}
+                    className="ld-spoke-row ld-spoke-row--left"
+                    onClick={() => setActivePoint(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                  >
                   <div className="ld-spoke-text ld-spoke-text--left">
                     <h3 className="ld-spoke-title">{item.title}</h3>
                     <p className="ld-spoke-desc">{item.desc}</p>
+                  <span className="ld-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="ld-spoke-connector ld-spoke-connector--left">
                     <div className="ld-spoke-line" />
@@ -130,7 +145,14 @@ export default function LearningDevelopment() {
             {/* RIGHT COLUMN */}
             <div className="ld-spoke-col ld-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="ld-spoke-row ld-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="ld-spoke-row ld-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="ld-spoke-connector ld-spoke-connector--right">
                     <div className="ld-spoke-badge ld-spoke-badge--red">{item.id}</div>
                     <div className="ld-spoke-line" />
@@ -138,6 +160,7 @@ export default function LearningDevelopment() {
                   <div className="ld-spoke-text ld-spoke-text--right">
                     <h3 className="ld-spoke-title">{item.title}</h3>
                     <p className="ld-spoke-desc">{item.desc}</p>
+                  <span className="ld-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -150,13 +173,21 @@ export default function LearningDevelopment() {
             {[...leftItems, ...rightItems]
               .sort((a, b) => parseInt(a.id) - parseInt(b.id))
               .map((item) => (
-                <div key={item.id} className="ld-spoke-mobile-card">
+                <div
+                  key={item.id}
+                  className="ld-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className={`ld-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'ld-spoke-badge--navy' : 'ld-spoke-badge--red'}`}>
                     {item.id}
                   </div>
                   <div>
                     <h3 className="ld-spoke-title">{item.title}</h3>
                     <p className="ld-spoke-desc">{item.desc}</p>
+                  <span className="ld-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -164,10 +195,21 @@ export default function LearningDevelopment() {
 
           <div className="ld-certification">
             <Shield className="ld-certification__icon" size={28} />
-            <p className="ld-certification__text">JHS &amp; Associates LLP · Structured Training Programs Delivered Across GST, Income Tax, Accounting Standards &amp; Corporate Compliance</p>
+            <p className="ld-certification__text">JHS · Structured Training Programs Delivered Across GST, Income Tax, Accounting Standards &amp; Corporate Compliance</p>
           </div>
         </div>
       </section>
+
+
+    <ServicePartnersModal
+      isOpen={Boolean(activePoint)}
+      onClose={() => setActivePoint(null)}
+      serviceKey="learning-development"
+      serviceTitle="Learning & Development"
+      point={activePoint}
+      partners={activePoint ? getPartnersForSubPoint('learningDevelopment', activePoint.id) : []}
+    />
+
 
     </div>
   )

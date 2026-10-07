@@ -12,7 +12,7 @@ export default function CompanyOverview() {
         <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('WebPoster2.webp')})` }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
-          <p className="ap-hero__eyebrow">About JHS &amp; Associates</p>
+          <p className="ap-hero__eyebrow">About JHS</p>
           <h1 className="ap-hero__title">Company Overview</h1>
           <p className="ap-hero__sub">
             A dynamic, client-centric Chartered Accountancy firm delivering bespoke financial, tax, and advisory solutions since 1981.
@@ -42,7 +42,7 @@ export default function CompanyOverview() {
             </div>
             <div className="ap-grid-right">
               <p>
-                JHS &amp; Associates LLP is a premier, full-service network of Chartered Accountants and advisory professionals in India. Since our inception, we have evolved from a traditional accounting firm into a holistic business advisory &amp; consulting network. 
+                JHS is a premier, full-service network of Chartered Accountants and advisory professionals in India. Since our inception, we have evolved from a traditional accounting firm into a holistic business advisory &amp; consulting network. 
               </p>
               <p>
                 We blend deep technical expertise with a profound understanding of industry nuances to help businesses navigate complex regulatory landscapes, optimize operations, and achieve sustainable growth. 

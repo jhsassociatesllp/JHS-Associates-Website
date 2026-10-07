@@ -6,8 +6,9 @@ import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Pradeep', image: imageUrl('NM Pradeep.webp'), qualifications: 'CA, CMA ', designation: 'Indirect Tax & Advisory ', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
   { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.webp'), qualifications: 'ACA', designation: ', Taxation & Audit Specialist', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
 ]
@@ -75,6 +76,7 @@ const IconPin = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="non
 const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>)
 
 export default function Hyderabad() {
+  const PARTNERS = useCityPartners('Hyderabad', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -99,7 +101,7 @@ export default function Hyderabad() {
         </video>
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
-          {/* <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="hyd-hero__eyebrow">JHS</span> */}
           <h1 className="hyd-hero__title">Hyderabad</h1>
           <p className="hyd-hero__sub">South India Tech Hub &amp; Strategic Regional Office</p>
         </div>

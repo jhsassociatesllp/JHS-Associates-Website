@@ -173,7 +173,7 @@ export default function RequestForProposal() {
       >
         <div className="rfp-hero__overlay" />
         <div className="rfp-hero__content">
-          <span className="rfp-hero__eyebrow">JHS &amp; Associates LLP</span>
+          <span className="rfp-hero__eyebrow">JHS</span>
           <h1 className="rfp-hero__title">
             Request a <span>Proposal</span>
           </h1>

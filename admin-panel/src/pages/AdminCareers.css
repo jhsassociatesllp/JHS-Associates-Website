@@ -321,3 +321,49 @@
   .careers-tabs-bar { flex-direction: column; align-items: stretch; }
   .careers-search { max-width: none; }
 }
+
+
+/* ── ATS resume match ───────────────────────────────────── */
+.ats-stat { border-left-color: #22a06b; }
+.ats-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #475569; white-space: nowrap; cursor: pointer; }
+.ats-toggle input { accent-color: #22a06b; width: 16px; height: 16px; }
+.ats-btn { border: 1px solid #d5d8e3; background: #fff; color: #334155; padding: 7px 14px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.ats-btn:hover:not(:disabled) { background: #f1f2f8; }
+.ats-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.ats-group-row td { padding: 10px 16px !important; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: #f6f7fb; border-top: 2px solid #e6e8f1; color: #475569; }
+.ats-group-row--matched td { background: #e9f8f0; color: #1a7f45; border-top-color: #bfe8d1; }
+.ats-group-row--unreadable td { background: #fff6e5; color: #a96a00; }
+.ats-group-row__count { margin-left: 8px; background: rgba(0, 0, 0, 0.08); border-radius: 999px; padding: 1px 9px; font-size: 0.72rem; }
+
+.ats-badge { display: inline-flex; flex-direction: column; align-items: center; min-width: 74px; padding: 6px 10px; border-radius: 10px; line-height: 1.2; }
+.ats-badge__score { font-size: 1.05rem; font-weight: 800; }
+.ats-badge__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.ats-badge--matched { background: #e6f6ee; color: #1a7f45; }
+.ats-badge--below { background: #fdf0e0; color: #b25e00; }
+.ats-badge--unreadable { background: #fff3d6; color: #a96a00; }
+.ats-badge--general, .ats-badge--unscored { background: #f1f2f6; color: #64748b; }
+
+.ats-panel { border: 1px solid #e6e8f1; border-radius: 12px; padding: 16px 18px; background: #fafbff; margin-bottom: 4px; }
+.ats-panel--matched { border-color: #bfe8d1; background: #f4fbf7; }
+.ats-panel--below { border-color: #f4d9b5; background: #fffaf3; }
+.ats-panel__head { display: flex; align-items: center; gap: 14px; }
+.ats-panel__title { flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 0.95rem; }
+.ats-panel__verdict { font-size: 0.8rem; color: #64748b; }
+.ats-ring { --pct: 0%; width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: conic-gradient(#22a06b var(--pct), #e5e7ef 0); position: relative; }
+.ats-ring::before { content: ''; position: absolute; inset: 6px; background: #fff; border-radius: 50%; }
+.ats-ring span { position: relative; font-weight: 800; font-size: 0.95rem; color: #1e293b; }
+.ats-panel--below .ats-ring { background: conic-gradient(#e89b3c var(--pct), #e5e7ef 0); }
+
+.ats-bars { display: grid; gap: 9px; margin-top: 14px; }
+.ats-bar__top { display: flex; justify-content: space-between; font-size: 0.78rem; color: #475569; margin-bottom: 3px; }
+.ats-bar__track { height: 6px; border-radius: 999px; background: #e5e7ef; overflow: hidden; }
+.ats-bar__fill { height: 100%; background: #696cff; border-radius: 999px; }
+.ats-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; }
+.ats-chips__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; margin-right: 4px; }
+.ats-chip { padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.ats-chip--ok { background: #e1f4ea; color: #1a7f45; }
+.ats-chip--miss { background: #f1f2f6; color: #64748b; text-decoration: line-through; text-decoration-color: rgba(100, 116, 139, 0.45); }
+.ats-note { margin: 10px 0 0; font-size: 0.78rem; color: #64748b; }
+.ats-flags { margin: 12px 0 0; padding: 10px 14px 10px 28px; background: #fff3d6; border-radius: 8px; font-size: 0.8rem; color: #8a5a00; }

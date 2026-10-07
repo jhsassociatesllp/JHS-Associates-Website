@@ -1,4 +1,4 @@
-// Articles data for JHS & Associates LLP
+// Articles data for JHS
 // Each article includes id, title, tag, description, image, pdf, and author
 
 import { imageUrl } from '../utils/imageUrl'

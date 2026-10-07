@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './Assurance.css'
 import { imageUrl } from '../../utils/imageUrl'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–06)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Statutory Audit under the Companies Act, LLP Act & other applicable statutes", desc: "Independent financial statement audits" },
   { id: "02", title: "Tax Audit under Section 44AB of the Income Tax Act", desc: "Compliance-driven tax audit reporting" },
   { id: "03", title: "Internal Audit & Internal Financial Controls (IFC) Reviews", desc: "Process assurance & control effectiveness" },
@@ -18,7 +21,7 @@ const leftItems = [
 ]
 
 // Right column items (07–12)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Bank Audit — Statutory, Concurrent & Revenue Audit", desc: "RBI-aligned banking sector assurance" },
   { id: "08", title: "Special Purpose Audits, Due Diligence & Forensic Reviews", desc: "Transaction & investigative assurance" },
   { id: "09", title: "Ind AS / IFRS Implementation & Financial Statement Assurance", desc: "Accounting standards advisory & assurance" },
@@ -27,8 +30,12 @@ const rightItems = [
   { id: "12", title: "Group Reporting, Consolidation & Multi-location Audit Coordination", desc: "Pan-India audit coordination for large groups" },
 ]
 
+
 export default function Assurance() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('assurance', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -103,10 +110,18 @@ export default function Assurance() {
             {/* LEFT COLUMN */}
             <div className="aa-spoke-col aa-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="aa-spoke-row aa-spoke-row--left">
+                <div
+                  key={item.id}
+                  className="aa-spoke-row aa-spoke-row--left"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="aa-spoke-text aa-spoke-text--left">
                     <h3 className="aa-spoke-title">{item.title}</h3>
                     <p className="aa-spoke-desc">{item.desc}</p>
+                    <span className="aa-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="aa-spoke-connector aa-spoke-connector--left">
                     <div className="aa-spoke-line" />
@@ -130,7 +145,14 @@ export default function Assurance() {
             {/* RIGHT COLUMN */}
             <div className="aa-spoke-col aa-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="aa-spoke-row aa-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="aa-spoke-row aa-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="aa-spoke-connector aa-spoke-connector--right">
                     <div className="aa-spoke-badge aa-spoke-badge--red">{item.id}</div>
                     <div className="aa-spoke-line" />
@@ -138,6 +160,7 @@ export default function Assurance() {
                   <div className="aa-spoke-text aa-spoke-text--right">
                     <h3 className="aa-spoke-title">{item.title}</h3>
                     <p className="aa-spoke-desc">{item.desc}</p>
+                    <span className="aa-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -150,13 +173,21 @@ export default function Assurance() {
             {[...leftItems, ...rightItems]
               .sort((a, b) => parseInt(a.id) - parseInt(b.id))
               .map((item) => (
-                <div key={item.id} className="aa-spoke-mobile-card">
+                <div
+                  key={item.id}
+                  className="aa-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className={`aa-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'aa-spoke-badge--navy' : 'aa-spoke-badge--red'}`}>
                     {item.id}
                   </div>
                   <div>
                     <h3 className="aa-spoke-title">{item.title}</h3>
                     <p className="aa-spoke-desc">{item.desc}</p>
+                    <span className="aa-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -164,10 +195,19 @@ export default function Assurance() {
 
           <div className="aa-certification">
             <Shield className="aa-certification__icon" size={28} />
-            <p className="aa-certification__text">JHS &amp; Associates LLP · Statutory Auditor for 1,000+ Clients across Corporates, Banks, NBFCs &amp; Trusts</p>
+            <p className="aa-certification__text">JHS · Statutory Auditor for 1,000+ Clients across Corporates, Banks, NBFCs &amp; Trusts</p>
           </div>
         </div>
       </section>
+
+      <ServicePartnersModal
+        isOpen={Boolean(activePoint)}
+        onClose={() => setActivePoint(null)}
+        serviceKey="assurance"
+        serviceTitle="Assurance Services"
+        point={activePoint}
+        partners={activePoint ? getPartnersForSubPoint('assurance', activePoint.id) : []}
+      />
 
     </div>
   )

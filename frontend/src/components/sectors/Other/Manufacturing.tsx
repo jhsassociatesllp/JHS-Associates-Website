@@ -196,7 +196,7 @@ const Manufacturing: React.FC = () => {
       <section className="man-hero" ref={heroRef}>
         <div className="man-hero__overlay" />
         <div className="man-hero__inner container">
-          {/* <span className="man-hero__badge">JHS & Associates</span> */}
+          {/* <span className="man-hero__badge">JHS</span> */}
           <h1 className="man-hero__title">
             Manufacturing <br /> <span>Excellence</span>
           </h1>

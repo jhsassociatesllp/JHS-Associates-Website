@@ -20,6 +20,10 @@ import {
   ViewKanban as KanbanIcon,
   Assignment as ProjectsIcon,
   Groups as TeamIcon,
+  Badge as LeadershipIcon,
+  Category as CatalogIcon,
+  PrivacyTip as CookieIcon,
+  EventAvailable as EventsIcon,
   Timeline as ActivityIcon,
   Article as ArticleIcon,
   RssFeed as BlogIcon,
@@ -64,6 +68,9 @@ const menuGroups = [
       { text: 'Regulatory', icon: RegulatoryIcon, path: '/regulatory', requiredFeature: 'regulatory' },
       { text: 'Excellencia', icon: ExcellenciaIcon, path: '/excellencia', requiredFeature: 'excellencia' },
       { text: 'Newsletters', icon: NewsletterIcon, path: '/newsletters', requiredFeature: 'newsletters' },
+      { text: 'Leadership', icon: LeadershipIcon, path: '/leadership', requiredFeature: 'leadership' },
+      { text: 'Services & Sectors', icon: CatalogIcon, path: '/services-sectors', requiredFeature: 'catalog' },
+      { text: 'Events', icon: EventsIcon, path: '/events', requiredFeature: 'events' },
     ],
   },
   {
@@ -75,6 +82,7 @@ const menuGroups = [
       { text: 'Careers', icon: WorkIcon, path: '/careers', requiredFeature: 'careers' },
       { text: 'Appointments', icon: AppointmentIcon, path: '/appointments', requiredFeature: 'appointments' },
       { text: 'Users', icon: PeopleIcon, path: '/users', requiredFeature: 'users' },
+      { text: 'Cookie Consent', icon: CookieIcon, path: '/cookie-consent', requiredFeature: 'cookies' },
     ],
   },
 ];

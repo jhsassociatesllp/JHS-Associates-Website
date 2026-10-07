@@ -43,7 +43,8 @@ def _fire_and_forget(coro) -> asyncio.Task:
 
 # ── Config from settings ─────────────────────────────────────
 HR_EMAIL = settings.hr_notification_email
-SENDER_EMAIL = settings.sender_email
+APPOINTMENT_EMAIL = settings.appointment_notification_email
+SENDER_EMAIL = settings.sender_email or settings.smtp_username
 SENDER_NAME = settings.sender_name
 
 SMTP_HOST = settings.smtp_host
@@ -64,8 +65,9 @@ async def _send_email(
         logger.warning("SMTP credentials not configured – skipping email to %s", to_email)
         return False
 
+    effective_sender = SENDER_EMAIL or SMTP_USERNAME
     message = MIMEMultipart("alternative")
-    message["From"] = f"{SENDER_NAME} <{SENDER_EMAIL}>"
+    message["From"] = f"{SENDER_NAME} <{effective_sender}>"
     message["To"] = f"{to_name} <{to_email}>" if to_name else to_email
     message["Subject"] = subject
     message.attach(MIMEText(html_body, "html"))
@@ -101,7 +103,7 @@ def _wrap_html(title: str, body_rows: str) -> str:
             <!-- Header -->
             <tr>
               <td style="background:linear-gradient(135deg,#1e3a5f 0%,#162d4a 100%);padding:32px 40px;text-align:center;">
-                <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:0.03em;">JHS &amp; Associates LLP</h1>
+                <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:0.03em;">JHS</h1>
                 <p style="margin:6px 0 0;color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;">Chartered Accountants</p>
               </td>
             </tr>
@@ -122,7 +124,7 @@ def _wrap_html(title: str, body_rows: str) -> str:
             <!-- Footer -->
             <tr>
               <td style="background:#f8f8fa;padding:20px 40px;text-align:center;border-top:1px solid #eee;">
-                <p style="margin:0;font-size:12px;color:#999;">© 2025 JHS &amp; Associates LLP &nbsp;|&nbsp; <a href="https://jhsassociates.in" style="color:#B01E2E;text-decoration:none;">jhsassociates.in</a></p>
+                <p style="margin:0;font-size:12px;color:#999;">© 2025 JHS &nbsp;|&nbsp; <a href="https://jhsassociates.in" style="color:#B01E2E;text-decoration:none;">jhsassociates.in</a></p>
               </td>
             </tr>
           </table>
@@ -171,16 +173,16 @@ async def notify_hr_new_contact(data: dict) -> None:
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{name}</strong>,<br><br>
-          Thank you for reaching out to <strong>JHS &amp; Associates LLP</strong>.
+          Thank you for reaching out to <strong>JHS</strong>.
           We have received your message and our team will get back to you shortly.<br><br>
           If your query is urgent, please feel free to call us directly.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, name, "Thank you for contacting JHS Associates", user_body)
+        _send_email(email, name, "Thank you for contacting JHS", user_body)
     )
 
 
@@ -215,16 +217,16 @@ async def notify_hr_new_alumni(data: dict) -> None:
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{full_name}</strong>,<br><br>
-          Thank you for registering with the <strong>JHS &amp; Associates Alumni Network</strong>.
+          Thank you for registering with the <strong>JHS Alumni Network</strong>.
           We're delighted to stay connected with you!<br><br>
           Our team will review your details and reach out if there are any upcoming alumni events or opportunities.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, full_name, "Welcome back to JHS Associates Alumni Network", user_body)
+        _send_email(email, full_name, "Welcome back to JHS Alumni Network", user_body)
     )
 
 
@@ -295,6 +297,11 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         + _row("Remark", data.get("cover_letter") or "—")
         + _row("Resume", "Attached in the admin panel")
     )
+    if data.get("ats_status") in ("matched", "below"):
+        verdict = "Match (60%+)" if data.get("ats_match") else "Below the 60% match line"
+        rows = _row("ATS Resume Match", f"{data.get('ats_score')}% — {verdict}") + rows
+    elif data.get("ats_status") == "unreadable":
+        rows = _row("ATS Resume Match", "Resume text could not be read — review manually") + rows
     hr_html = _wrap_html("New Job Application Received", rows)
     _fire_and_forget(
         _send_email(
@@ -310,19 +317,19 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{name}</strong>,<br><br>
           Thank you for applying for the position of <strong>{job_title}</strong>
-          at <strong>JHS &amp; Associates LLP</strong>.<br><br>
+          at <strong>JHS</strong>.<br><br>
           Our HR team has received your application and will review it carefully.
           If your profile matches our requirements, we will reach out to schedule the next steps.<br><br>
           We appreciate your interest in joining JHS and wish you all the best.<br><br>
           Warm regards,<br>
-          <strong>HR Team<br>JHS &amp; Associates LLP</strong>
+          <strong>HR Team<br>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
         _send_email(
             email, name,
-            f"Application Received – {job_title} at JHS Associates",
+            f"Application Received – {job_title} at JHS",
             user_body,
         )
     )
@@ -333,7 +340,7 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
 # ══════════════════════════════════════════════════════════════
 
 async def notify_hr_new_appointment(data: dict) -> None:
-    """Fire‑and‑forget: HR + user emails for a Book Appointment submission."""
+    """Fire‑and‑forget: team (connect@) + user emails for a Book Appointment submission."""
     name = data.get("full_name", "")
     email = data.get("email", "")
     mobile = data.get("mobile", "")
@@ -354,8 +361,11 @@ async def notify_hr_new_appointment(data: dict) -> None:
         + _row("Notes", data.get("message") or "—")
     )
     hr_html = _wrap_html("New Appointment Request", rows)
+    subject = f"New Appointment Request: {name}"
+    if data.get("partner"):
+        subject += f" → {data['partner']}"
     _fire_and_forget(
-        _send_email(HR_EMAIL, "JHS HR Team", f"New Appointment Request: {name}", hr_html)
+        _send_email(APPOINTMENT_EMAIL, "JHS Appointments", subject, hr_html)
     )
 
     user_body = _wrap_html(
@@ -363,17 +373,17 @@ async def notify_hr_new_appointment(data: dict) -> None:
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{name}</strong>,<br><br>
-          Thank you for booking an appointment with <strong>JHS &amp; Associates LLP</strong>
+          Thank you for booking an appointment with <strong>JHS</strong>
           for <strong>{speciality}</strong>.<br><br>
           Our team will call you on <strong>+91 {mobile}</strong> shortly to confirm your
           preferred slot of <strong>{date} at {time}</strong>.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, name, "Your appointment request — JHS Associates", user_body)
+        _send_email(email, name, "Your appointment request — JHS", user_body)
     )
 
 
@@ -382,7 +392,7 @@ async def notify_hr_new_appointment(data: dict) -> None:
 # ══════════════════════════════════════════════════════════════
 
 async def notify_hr_new_consultation_request(data: dict) -> None:
-    """Fire‑and‑forget: HR + user emails for a partner consultation request."""
+    """Fire‑and‑forget: team (connect@) + user emails for a partner consultation request."""
     name = data.get("user_name", "")
     email = data.get("user_email", "")
     partner_name = data.get("partner_name", "")
@@ -401,7 +411,7 @@ async def notify_hr_new_consultation_request(data: dict) -> None:
     hr_html = _wrap_html("New Consultation Request", rows)
     _fire_and_forget(
         _send_email(
-            HR_EMAIL, "JHS HR Team",
+            APPOINTMENT_EMAIL, "JHS Appointments",
             f"New Consultation Request: {name} → {partner_name}",
             hr_html,
         )
@@ -413,15 +423,15 @@ async def notify_hr_new_consultation_request(data: dict) -> None:
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{name}</strong>,<br><br>
           Thank you for requesting a <strong>{appointment_type}</strong> with
-          <strong>{partner_name}</strong> at <strong>JHS &amp; Associates LLP</strong>.<br><br>
+          <strong>{partner_name}</strong> at <strong>JHS</strong>.<br><br>
           Our team will reach out to you on <strong>{email}</strong> shortly to confirm the schedule.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, name, "Your consultation request — JHS Associates", user_body)
+        _send_email(email, name, "Your consultation request — JHS", user_body)
     )
 
 
@@ -453,16 +463,16 @@ async def notify_hr_new_proposal(data: dict) -> None:
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{full_name}</strong>,<br><br>
-          Thank you for reaching out to <strong>JHS &amp; Associates LLP</strong> regarding
+          Thank you for reaching out to <strong>JHS</strong> regarding
           <strong>{subject_line}</strong>.<br><br>
           Our team has received your request and will get back to you within one business day.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, full_name, "Your request has been received — JHS Associates", user_body)
+        _send_email(email, full_name, "Your request has been received — JHS", user_body)
     )
 
 
@@ -479,7 +489,7 @@ async def send_user_welcome_email(user: dict) -> None:
     email = user.get("email", "")
 
     body = _wrap_html(
-        "Welcome to JHS & Associates",
+        "Welcome to JHS",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
           Dear <strong>{name}</strong>,<br><br>
@@ -488,10 +498,58 @@ async def send_user_welcome_email(user: dict) -> None:
           open roles, request a proposal and book appointments — all using this
           one sign-in.<br><br>
           Warm regards,<br>
-          <strong>JHS &amp; Associates LLP</strong>
+          <strong>JHS</strong>
         </td></tr>
         """,
     )
     _fire_and_forget(
-        _send_email(email, name, "Welcome to JHS & Associates", body)
+        _send_email(email, name, "Welcome to JHS", body)
     )
+
+
+# ══════════════════════════════════════════════════════════════
+#  EVENT REGISTRATION (Excellencia, Knowledge Setu, office events)
+# ══════════════════════════════════════════════════════════════
+
+async def notify_event_registration(event: dict, name: str, email: str, reference: str) -> None:
+    """Fire-and-forget confirmation to the person who registered (values are HTML-escaped)."""
+    from datetime import timezone as _tz, timedelta as _td
+    from html import escape
+
+    ist = _tz(_td(hours=5, minutes=30))
+
+    def when(dt):
+        if dt is None:
+            return ""
+        dt = dt.replace(tzinfo=_tz.utc) if dt.tzinfo is None else dt
+        return dt.astimezone(ist).strftime("%A, %d %B %Y, %I:%M %p IST")
+
+    title = escape(event.get("title", "the event"))
+    rows = (
+        _row("Event", f"<strong>{title}</strong>")
+        + _row("Type", escape(event.get("event_type", "")))
+        + _row("When", escape(when(event.get("start_at"))))
+        + _row("Format", escape(event.get("mode", "Online")))
+    )
+    if event.get("venue"):
+        rows += _row("Venue", escape(event["venue"]))
+    if event.get("join_link"):
+        link = escape(event["join_link"], quote=True)
+        rows += _row("Join link", f'<a href="{link}" style="color:#B01E2E;">{link}</a>')
+    rows += _row("Your reference", escape(reference))
+
+    body = _wrap_html(
+        "You are registered",
+        f"""
+        <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
+          Dear <strong>{escape(name)}</strong>,<br><br>
+          Thank you for registering. Your seat for <strong>{title}</strong> is confirmed.
+        </td></tr>
+        {rows}
+        <tr><td colspan="2" style="padding:16px 0 0;line-height:1.7;color:#333;">
+          Please keep this email — it has everything you need to join.<br><br>
+          Warm regards,<br><strong>JHS</strong>
+        </td></tr>
+        """,
+    )
+    _fire_and_forget(_send_email(email, name, f"You're registered: {event.get('title', 'JHS event')}", body))

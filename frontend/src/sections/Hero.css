@@ -1079,3 +1079,10 @@
     transform: translateX(500px) scale(0.75);
   }
 }
+
+/* Keep the eyebrow clear of the top-right action buttons (Log In made the row wider). */
+@media (min-width: 601px) {
+  .hero__header {
+    margin-top: 40px;
+  }
+}

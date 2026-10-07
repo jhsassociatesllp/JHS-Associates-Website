@@ -7,6 +7,7 @@ import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
@@ -103,7 +104,7 @@ const SectorIcons: Record<string, ReactElement> = {
 }
 
 /* ─── Partner Data ─────────────────────────────────── */
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Kalpesh Parmar', image: imageUrl('Kalpesh-Parmar-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA', designation: 'Statutory Audit & Assurance', email: 'kalpesh.parmar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/kalpesh-parmar-016a502b' },
   { name: 'Virendra Nayyar', image: imageUrl('Virendra-Nayyar-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA', designation: 'Internal Audit, Assurance & GST ', email: 'virendra.nayyar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/virendra-nayyar-3114a9227' },
   { name: 'Saurabh Shah', image: imageUrl('Saurabh-Shah-removebg-preview.webp'), qualifications: 'FCA, DISA', designation: 'Direct & Indirect Tax', email: 'saurabh.shah@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/saurabh-shah-b822791a7/' },
@@ -181,6 +182,7 @@ const IconCheck = () => (
 
 /* ─── Page ───────────────────────────────────────── */
 export default function Gujarat() {
+  const PARTNERS = useCityPartners('Gujarat', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -207,7 +209,7 @@ export default function Gujarat() {
         </video>
         <div className="ahm-hero__overlay" />
         <div className="ahm-hero__content">
-          {/* <span className="ahm-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="ahm-hero__eyebrow">JHS</span> */}
           <h1 className="ahm-hero__title">Gujarat</h1>
           <p className="ahm-hero__sub">Regional Hub &amp; Key Western India Office</p>
         </div>

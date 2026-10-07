@@ -10,7 +10,7 @@ const PIECES = [
   {
     type: 'Opinion',
     title: "The CFO as a Strategic Partner: India's Finance Function Is Evolving",
-    author: 'Managing Partner, JHS & Associates',
+    author: 'Managing Partner, JHS',
     preview:
       "The traditional CFO role focused on compliance and reporting is giving way to something more expansive. As Indian businesses scale and compete globally, the finance function must become a genuine seat at the strategy table.",
     highlight: '"Compliance is the floor, not the ceiling."',

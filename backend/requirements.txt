@@ -16,3 +16,5 @@ google-auth
 requests
 Pillow
 aiosmtplib
+# Resume text extraction for the ATS match score
+pypdf

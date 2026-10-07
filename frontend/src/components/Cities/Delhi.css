@@ -565,7 +565,8 @@
 
 .del-partners-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
   column-gap: 1.5rem;
   row-gap: 100px;
   padding-top: 80px
@@ -1270,5 +1271,11 @@
 
   .del-ribbon__lbl {
     font-size: 9px
+  }
+}
+/* 4 partners per row once a city has four or more (desktop only) */
+@media (min-width: 1101px) {
+  .del-partners-grid:has(> :nth-child(4)) {
+    grid-template-columns: repeat(4, minmax(0, 270px));
   }
 }

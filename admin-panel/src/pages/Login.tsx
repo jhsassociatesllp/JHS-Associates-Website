@@ -90,7 +90,7 @@ export default function Login() {
         </Box>
 
         <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.8rem', textAlign: 'center', lineHeight: 1.3, fontFamily: 'Inter, sans-serif', mb: 2 }}>
-          Welcome to JHS &amp; Associates
+          Welcome to JHS
         </Typography>
         <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', textAlign: 'center', lineHeight: 1.6, mb: 1 }}>
           Admin panel for managing contacts, articles, and blog content.
@@ -137,7 +137,7 @@ export default function Login() {
               Enter your credentials to access the dashboard
             </Typography>
             <Typography sx={{ fontSize: '0.8rem', color: '#a0a3a8' }}>
-              Secure login to JHS Associates Admin Panel
+              Secure login to JHS Admin Panel
             </Typography>
           </Box>
 

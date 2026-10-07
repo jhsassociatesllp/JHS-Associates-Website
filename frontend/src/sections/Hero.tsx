@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 import { imageUrl } from '../utils/imageUrl'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import { useSiteAuth } from '../context/SiteAuthContext'
+import AccountMenu from '../components/common/AccountMenu'
+import { HeroEventPill } from './UpcomingEvent'
 
 interface Card {
   id: number;
@@ -145,6 +148,7 @@ export default function Hero() {
   const autoSlideRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
   const navigate = useNavigate();
+  const { user, openAuthModal } = useSiteAuth();
 
   // Touch Swipe Refs
   const touchStartX = useRef<number | null>(null);
@@ -374,10 +378,21 @@ export default function Hero() {
           Join Our Team
         </button>
         <LanguageSwitcher />
+        {user ? (
+          <AccountMenu className="nb__account--hero" />
+        ) : (
+          <button
+            className="hero__action-btn hero__action-btn--outline"
+            onClick={() => openAuthModal()}
+          >
+            Log In
+          </button>
+        )}
       </div>
 
       {/* Header */}
       <div className="hero__header">
+        <HeroEventPill />
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
           Building Trust

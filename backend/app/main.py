@@ -36,6 +36,10 @@ from app.routes.consultation import router as consultation_router # ✅ NEW
 from app.routes.auth import router as auth_router             # ✅ SITE ACCOUNT
 from app.routes.user import router as user_admin_router       # ✅ SITE ACCOUNT
 from app.routes.activity import router as activity_router     # ✅ SITE ACCOUNT
+from app.routes.leadership import router as leadership_router # ✅ LEADERSHIP
+from app.routes.catalog import router as catalog_router       # ✅ SERVICES & SECTORS
+from app.routes.cookie_consent import router as cookie_consent_router # ✅ COOKIE CONSENT
+from app.routes.events import router as events_router                 # ✅ EVENTS
 
 
 @asynccontextmanager
@@ -47,8 +51,8 @@ async def lifespan(app: FastAPI):
     await close_mongo_connection()
 
 app = FastAPI(
-    title="JHS Associates Backend",
-    description="FastAPI Backend for JHS Associates Website",
+    title="JHS Backend",
+    description="FastAPI Backend for JHS Website",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/api/docs",
@@ -70,7 +74,7 @@ api_router = APIRouter(prefix="/api")
 @api_router.get("/")
 async def api_root():
     return {
-        "message": "JHS Associates API",
+        "message": "JHS API",
         "docs": "/api/docs"
     }
 
@@ -93,9 +97,19 @@ api_router.include_router(consultation_router) # ✅ NEW
 api_router.include_router(auth_router)         # ✅ SITE ACCOUNT
 api_router.include_router(user_admin_router)   # ✅ SITE ACCOUNT
 api_router.include_router(activity_router)     # ✅ SITE ACCOUNT
+api_router.include_router(leadership_router)   # ✅ LEADERSHIP
+api_router.include_router(catalog_router)      # ✅ SERVICES & SECTORS
+api_router.include_router(cookie_consent_router) # ✅ COOKIE CONSENT
+api_router.include_router(events_router)       # ✅ EVENTS
 
 app.include_router(api_router)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to JHS Associates API"}
+    return {"message": "Welcome to JHS API"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8001, reload=True)
+

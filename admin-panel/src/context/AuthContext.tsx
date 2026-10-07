@@ -131,11 +131,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     const permissions = {
       // Super Admin has access to everything
-      super_admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'white_papers', 'regulatory', 'excellencia', 'newsletters', 'contacts', 'alumni', 'feedback', 'careers', 'appointments', 'users'],
+      super_admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'white_papers', 'regulatory', 'excellencia', 'newsletters', 'leadership', 'catalog', 'cookies', 'events', 'contacts', 'alumni', 'feedback', 'careers', 'appointments', 'users'],
       // HR Admin has access to HR features only (NO content management)
       hr_admin: ['dashboard', 'contacts', 'alumni', 'feedback', 'careers', 'appointments', 'users'],
       // Regular Admin only has content access (NO HR features)
-      admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'white_papers', 'regulatory', 'excellencia', 'newsletters']
+      admin: ['dashboard', 'articles', 'blogs', 'knowledge', 'white_papers', 'regulatory', 'excellencia', 'newsletters', 'leadership', 'catalog', 'cookies', 'events']
     };
     
     return permissions[user.role]?.includes(feature) || false;

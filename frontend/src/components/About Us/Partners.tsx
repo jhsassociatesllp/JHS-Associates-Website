@@ -3,9 +3,7 @@ import './SharedAbout.css'
 import './Partners.css'
 import { imageUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
-import BookConsultationModal, { type ConsultationPartner } from '../common/BookConsultationModal'
-
-// Images
+import { useLeadership, ROLE_ORDER, type Member } from '../../data/leadership'
 
 // Sector filter options are derived from the free-text `sector` values on
 // each partner (e.g. "Risk Advisory, Internal Audit & IFC" splits into
@@ -19,487 +17,6 @@ const splitSectorTags = (raw: string): string[] =>
     .split(/[,&]/)
     .map((part) => part.trim().replace(/\.$/, ''))
     .filter((part) => part.length > 2)
-
-export const PARTNER_DATA = [
-  {
-    category: "Governance Council",
-    role: "Governance Council",
-    members: [
-      {
-        name: "Huzeifa Unwala",
-        image: imageUrl('Huzefa-Unwala-removebg-preview.webp'),
-        creds: "FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)",
-        desc: "Expert in IFC, Governance, Risk & Cyber Security Frameworks across BFSI sectors.",
-        location: "Mumbai",
-        sector: ["Risk & Governance"],
-        // teamSize: 12,
-        // clientsServed: 45,
-        linkedin: "https://www.linkedin.com/in/ca-huzeifa-unwala/",
-
-      },
-      {
-        name: "Kalpesh Parmar",
-        image: imageUrl('Kalpesh-Parmar-removebg-preview.webp'),
-        creds: "B.Com (Hons), FCA",
-        desc: "Expert in Statutory Audit, Ind AS implementation and complex consolidation for listed entities.",
-        location: "Vadodara",
-        sector: ["Statutory Audit & Assurance"],
-        // teamSize: 15,
-        // clientsServed: 55,
-        linkedin: "https://www.linkedin.com/in/kalpesh-parmar-016a502b",
-
-      },
-      {
-        name: "Sharad Mohata",
-        image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
-        creds: "B.Com (Hons), FCA, ICWAI",
-        desc: "Expert in Regulatory, Direct Taxation, Corporate Restructuring and International Tax Advisory.",
-        location: "Kolkata",
-        sector: ["Tax & Corporate Advisory"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/sharad-mohata-18318082",
-
-      },
-      {
-        name: "Nikhel Kochhar",
-        image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'),
-        creds: "FCA, CIA",
-        desc: "Expert in Accounting, Auditing, Assurance & Strategic Management Consulting.",
-        location: "Delhi",
-        sector: ["Governance, Risk & Internal Audit"],
-        // teamSize: 11,
-        // clientsServed: 42,
-        linkedin: "https://www.linkedin.com/in/nikhelkochhar",
-
-      },
-      {
-        name: "Vinod Joshi",
-        image: imageUrl('vinod joshi.webp'),
-        creds: "FCA, MBA (Finance)",
-        desc: "Expert in Financial Modeling, M&A Restructuring & Cross-border Strategic Alliances.",
-        location: "UAE",
-        // sector: ["M&A & Corporate Restructuring", "Financial Advisory & CFO Services"],
-        sector: ["Financial Advisory & CFO Services"],
-        // teamSize: 10,
-        // clientsServed: 40,
-        linkedin: "https://linkedin.com/in/vinod-joshi-fca",
-
-      }
-    ]
-  },
-  {
-    category: "Mumbai Partners & Advisory Board Members",
-    role: "Partner",
-    members: [
-      {
-        name: "Tasnim Tankiwala",
-        image: imageUrl('Tasnim-Tankiwala-removebg-preview.webp'),
-        creds: "FCA, IP (IBBI), DIRM, DISA",
-        desc: "Expert in Auditing, Tax, Accounting & IFC.",
-        location: "Mumbai",
-        // sector: ["Statutory Audit & Assurance", "Risk & Governance"],
-        sector: ["Statutory Audit"],
-        // teamSize: 10,
-        // clientsServed: 38,
-        linkedin: "https://www.linkedin.com/in/tasnim-tankiwala",
-
-      },
-      {
-        name: "Disha Shah",
-        image: imageUrl('Disha Shah-removebg-preview.webp'),
-        creds: "FCA",
-        desc: "Expert in Accounting, Tax, Governance, Internal Control & Women Entrepreneur Initiatives.",
-        location: "Mumbai",
-        sector: ["Risk Advisory, Internal Audit & IFC"],
-        // teamSize: 7,
-        // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/disha-shah-4826b097/",
-
-      },
-      {
-        name: "Dhanlaxmi Nair",
-        image: imageUrl('Dhanlaxmi.webp'),
-        creds: "M.Com, FCA, CMA, SET",
-        desc: "Expert in BFSI, Regulatory Compliance, Internal & Concurrent Audit,",
-        location: "Mumbai",
-        // sector: ["Risk & Governance"],
-        sector: ["Risk Advisory & Consulting"],
-        // teamSize: 5,
-        // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/dhanlaxmi-nair-311053206",
-
-      },
-      {
-        name: "Jamal Ashraf Chatriwala",
-        image: imageUrl('Jamal-Chatriwala-removebg-preview.webp'),
-        creds: "ACA, IPO Certified",
-        desc: "Expert in BFSI, NBFC, Asset Management, Insurance Advisory & Concurrent Audit.",
-        location: "Mumbai",
-        // sector: ["Banking, NBFC & Insurance"],
-        sector: ["Internal Audit & Risk Advisory"],
-        // teamSize: 8,
-        // clientsServed: 32,
-        linkedin: "https://www.linkedin.com/in/chatriwala",
-
-      },
-      {
-        name: "Taher Pepermintwala",
-        image: imageUrl('Taher-Pepermintwala-removebg-preview.webp'),
-        creds: "FCA, CISA, ACCA, Dip IFRS",
-        desc: "Expert in Cyber Security, IT Audit, AIF & Mutual Fund, Forensic Audit, Statutory & Internal Audit.",
-        location: "Mumbai",
-        // sector: ["IT & Technology"],
-        sector: ["Assurance, Tech & SOC Audit"],
-        // teamSize: 14,
-        // clientsServed: 50,
-        linkedin: "https://www.linkedin.com/in/taherpepermintwala/",
-
-      },
-      {
-        name: "Sahil Shah",
-        image: imageUrl('Sahil-Shah-removebg-preview.webp'),
-        creds: "ACA, IPO Certified ",
-        desc: "Expert in Accounting, Internal Control & VC Funding Advisory.",
-        location: "Mumbai",
-        // sector: ["Venture Capital & Private Equity", "Risk & Governance"],
-        sector: ["Risk Advisory, Internal Audit & IFC"],
-        // teamSize: 6,
-        // clientsServed: 28,
-        linkedin: "https://www.linkedin.com/in/sahil-shah-664a5312a",
-
-      },
-      {
-        name: "Tausif Shaikh",
-        image: imageUrl('Tausif-Shaikh-removebg-preview.webp'),
-        creds: "ACA, AICA-L1",
-        desc: "Expert in Assurance, Tax Advisory and AI-driven Audit Methodologies.",
-        location: "Mumbai",
-        // sector: ["Statutory Audit & Assurance", "Tax & Regulatory"],
-        sector: ["Assurance & Tax"],
-        // teamSize: 9,
-        // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/ca-tausif-shaikh",
-
-      },
-      {
-        name: "Samad Dhanani",
-        image: imageUrl('Samad-Dhanani-removebg-preview.webp'),
-        creds: "M.Com, ACA, CS",
-        desc: "Expert in Internal Audit, Tax Audit, Assurance & Accounting.",
-        location: "Mumbai",
-        sector: ["Statutory Audit & Accounts Outsourcing"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/samad-dhanani-9b342562/",
-
-      },
-
-      {
-        name: 'Amit More',
-        image: imageUrl('Amit-more.webp'),
-        creds: 'MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified',
-        desc: 'Expert in Cyber Security, GRC, Strategy and Digital Trust.',
-        location: "Mumbai",
-        sector: ['Cyber Security & GRC'],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/amitkumarmore/',
-
-      },
-      {
-        name: 'Dipika Bisawa',
-        image: imageUrl('Dipika-Bisawa.webp'),
-        creds: 'ACS',
-        desc: 'Expert in Corporate Governance, Compliance & Risk Management.',
-        location: "Mumbai",
-        sector: ['Compliance & Risk Management'],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/dipika-bisawa-0a9a211a/',
-
-      },
-      {
-        name: 'Raj Dabburi',
-        image: imageUrl('Raj-daburi.webp'),
-        creds: 'CA, MBA',
-        desc: 'Expert in Corporate Finance, Fund Raising, PPP Advisory & Financial Strategy',
-        location: "Mumbai",
-        sector: ['Board & Institutional Advisory'],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/rajdabburi/',
-
-      },
-      {
-        name: 'Huzefa Mala',
-        image: imageUrl('Huzefa-mala.webp'),
-        creds: 'FCA, UGC-NET Qualified',
-        desc: 'Expert in Tax Compliance, Tax Litigation, Appeals, Domestic & Overseas Outsourcing.',
-        location: "Mumbai",
-        sector: ['Income Tax Advisory & Audits'],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/huzefamala/',
-
-      },
-      {
-        name: 'Huzefa Kaka',
-        image: imageUrl('Huzefa-kaka.webp'),
-        creds: 'NISM certified',
-        desc: 'Expert in Risk Management, Compliance, Internal Audit & Concurrent Audit.',
-        location: "Mumbai",
-        sector: ['Risk & Governance'],
-        role: "Advisory Board Member",
-        linkedin: 'https://www.linkedin.com/in/huzefakaka/',
-
-      },
-    ]
-  },
-  {
-    category: "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
-    role: "Partner",
-    members: [
-      {
-        name: "Geethika Ghanta",
-        image: imageUrl('Geethika Ghanta.webp'),
-        creds: "ACA",
-        desc: "Expert in Taxation & Audit for Hyderabad-based clients.",
-        location: "Hyderabad",
-        sector: ["Taxation & Audit Specialist"],
-        role: "Associate",
-        email: "geethika.ghanta@jhsassociates.in",
-        linkedin: "https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/",
-
-      },
-      {
-        name: "Jagdish Solanki",
-        image: imageUrl('Jagdish-Solanki-removebg-preview.webp'),
-        creds: "B.Com (Hons), FCA",
-        desc: "Expert in Audit and Internal Control.",
-        location: "Bengaluru",
-        sector: ["Direct & Indirect Tax"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/jagdish-solanki-92324b1b",
-
-      },
-      {
-        name: "Narayana Rao Malla",
-        image: imageUrl('Narayana-Rao-Malla-removebg-preview.webp'),
-        creds: "FCA",
-        desc: "Expert in Audit, Accounting & Internal Control.",
-        location: "Bengaluru",
-        sector: ["Internal Audit & Risk Advisory"],
-        // teamSize: 8,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/narayana-rao-malla",
-
-      },
-      {
-        name: "G Chandrasekaran",
-        image: imageUrl('Chandra-Shekaran.webp'),
-        creds: "DSM, FCA, DISA",
-        desc: "Expert in Accounting, Internal Audit & Tax.",
-        location: "Chennai",
-        sector: ["Statutory & Corporate Tax Audits"],
-        // teamSize: 9,
-        // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29",
-
-      },
-      {
-        name: "Pranal P",
-        image: imageUrl('Pranal p.webp'),
-        creds: "FCA",
-        desc: "Expert in Statutory Audit, Internal Audit, Management Consultancy & Systems Study.",
-        location: "Chennai",
-        sector: ["Specialising in GST"],
-        // teamSize: 6,
-        // clientsServed: 22,
-        linkedin: "https://linkedin.com/",
-
-      },
-      {
-        name: "NM Pradeep",
-        image: imageUrl('NM Pradeep.webp'),
-        creds: "CA, CMA",
-        desc: "Expert in Indirect Tax & Advisory for Hyderabad-based clients.",
-        location: "Hyderabad",
-        sector: ["Indirect Tax & Advisory"],
-        role: "Associate",
-        email: "pradeep@jhsassociates.in",
-        linkedin: "https://www.linkedin.com/in/pradeep-jhs",
-
-      },
-      {
-        name: "Tripti Mohta",
-        image: imageUrl('Tripti mohta.webp'),
-        creds: "FCA",
-        desc: "Expert in Accounting, Assurance, Governance & Internal Audit.",
-        location: "Kolkata",
-        sector: ["Taxation & Audit Specialist "],
-        // teamSize: 6,
-        // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/",
-
-      }
-    ]
-  },
-  // {
-  //   category: "Kolkata Partners",
-  //   members: [
-
-  //   ]
-  // },
-  {
-    category: "Gujarat Partners",
-    role: "Partner",
-    members: [
-      {
-        name: "Shreena Panara",
-        image: imageUrl('Shreena Parana.webp'),
-        creds: "ACA",
-        desc: "Expert in Accounting, Audit, Tax & Finance.",
-        location: "Rajkot",
-        sector: ["Indirect Tax"],
-        // teamSize: 6,
-        // clientsServed: 25,
-        linkedin: "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
-
-      },
-      {
-        name: "Jhankhna Patel",
-        image: imageUrl('Jhankana Patel.webp'),
-        creds: "FCA, DISA, CPA Australia",
-        desc: "Expert in Accounting, Tax, GST, Statutory & Internal Audit.",
-        location: "Ahmedabad",
-        sector: ["ESG Specialist"],
-        // teamSize: 5,
-        // clientsServed: 20,
-        linkedin: "https://www.linkedin.com/in/jhankhnapatel09",
-
-      },
-      {
-        name: "Dhaval Thakkar",
-        image: imageUrl('Dhaval-Thakkar-removebg-preview.webp'),
-        creds: "ACA",
-        desc: "Expert in Startup Advisory, Corporate Governance & ERP Strategy. ",
-        location: "Ahmedabad",
-        sector: ["Internal Audit, Risk Advisory & Insurance."],
-        // teamSize: 7,
-        // clientsServed: 30,
-        linkedin: "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/",
-
-      },
-      {
-        name: "Nidhi Kotecha",
-        image: imageUrl('Nidhi-kotecha.webp'),
-        creds: "ACA",
-        desc: "Expert in Outsourced Finance Services, CFO Advisory & SEC Compliance.",
-        location: "Ahmedabad",
-        sector: ["US Taxation & Compliance"],
-        // teamSize: 4,
-        // clientsServed: 18,
-        linkedin: "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/",
-
-      },
-      {
-        name: "Alpesh Vaniya",
-        image: imageUrl('Alpesh-Vaniya-removebg-preview.webp'),
-        creds: "FCA",
-        desc: "Expert in Internal Audit, Tax, Accounting & IT Audit.",
-        location: "Ahmedabad",
-        sector: ["Internal Audit & Tax Consulting"],
-        // teamSize: 7,
-        // clientsServed: 28,
-        linkedin: "https://www.linkedin.com/in/alpesh-vaniya-62544b190",
-
-      },
-      {
-        name: 'Parth Shah',
-        image: imageUrl('Parth_shah.webp'),
-        creds: 'FCA',
-        desc: "Expert in Internal Audit, Tax Advisory & Accounting.",
-        location: "Ahmedabad",
-        sector: ["Financial Strategy Specialist"],
-        linkedin: 'https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in',
-
-      },
-      {
-        name: "Virendra Nayyar",
-        image: imageUrl('Virendra-Nayyar-removebg-preview.webp'),
-        creds: "B.Com (Hons), FCA ",
-        desc: "Expert in Statutory Assurance, GST & Taxation.",
-        location: "Vadodara",
-        sector: ["Internal Audit & Assurance"],
-        // teamSize: 10,
-        // clientsServed: 40,
-        linkedin: "https://www.linkedin.com/in/virendra-nayyar-3114a9227",
-
-      },
-
-      {
-        name: "Viranch Modi",
-        image: imageUrl('Viranch-Modi-removebg-preview.webp'),
-        creds: "FCA",
-        desc: "Expert in Direct Tax, Indirect Tax & Auditing.",
-        location: "Vadodara",
-        sector: ["Income Tax & GST"],
-        // teamSize: 9,
-        // clientsServed: 38,
-        linkedin: "https://www.linkedin.com/in/viranch-modi-aa4106227/",
-
-      },
-      {
-        name: "Milin Parekh",
-        image: imageUrl('Milin-Parekh-removebg-preview.webp'),
-        creds: "M.Com, FCA",
-        desc: "Expert in Accouting, Internal Audit & Assurance.",
-        location: "Vadodara",
-        sector: ["Internal Audit & Assurance"],
-        // teamSize: 8,
-        // clientsServed: 32,
-        linkedin: "https://www.linkedin.com/in/milin-parekh-63692061",
-
-      },
-      {
-        name: "Saurabh Shah",
-        image: imageUrl('Saurabh-Shah-removebg-preview.webp'),
-        creds: "FCA, DISA",
-        desc: "Expert in Direct & Indirect Tax Advisory.",
-        location: "Vadodara",
-        sector: ["Direct & Indirect Tax "],
-        // teamSize: 8,
-        // clientsServed: 35,
-        linkedin: "https://www.linkedin.com/in/saurabh-shah-b822791a7",
-
-      },
-      {
-        name: "Mehul Shah",
-        image: imageUrl('Mehul-Shah-removebg-preview.webp'),
-        creds: "FCA",
-        desc: "Expert in Tax, Audit, Assurance & Statutory Compliance.",
-        location: "Surat",
-        sector: ["Income Tax & GST"],
-        // teamSize: 5,
-        // clientsServed: 22,
-        linkedin: "https://www.linkedin.com/in/mehul-shah-9aaaa130b",
-
-      },
-
-      {
-        name: "Raj Shah",
-        image: imageUrl('Raj-Shah-removebg-preview.webp'),
-        creds: "ACA ",
-        desc: "Expert in Audit, Accounting, Tax Litigation & Advisory.",
-        location: "Surat",
-        sector: ["Tax Litigation & Advisory"],
-        // teamSize: 6,
-        // clientsServed: 26,
-        linkedin: "https://www.linkedin.com/in/ca-raj-a-shah",
-
-      },
-
-    ]
-  }
-];
 
 const IconLinkedIn = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -546,52 +63,9 @@ const IconClose = () => (
   </svg>
 )
 
-interface Member {
-  name: string
-  image: string
-  creds: string
-  desc: string
-  location: string
-  sector: string[]
-  teamSize?: number
-  clientsServed?: number
-  linkedin: string
-  email?: string
-  category: string
-  role: string
-}
-
-const IconMail = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
-  </svg>
-)
-
-const IconCalendar = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-)
-
-const IconChevronDown = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m6 9 6 6 6-6" />
-  </svg>
-)
-
-function PartnerCard({
-  member,
-  showCategory,
-  onBook,
-}: {
-  member: Member
-  showCategory?: boolean
-  onBook: (partner: ConsultationPartner) => void
-}) {
-  const [expanded, setExpanded] = useState(false)
-
+function PartnerCard({ member, showCategory }: { member: Member; showCategory?: boolean }) {
   return (
-    <div className={`partner-card ${expanded ? 'partner-card--expanded' : ''}`}>
+    <div className="partner-card">
       <div className="partner-card__img-wrapper">
         {member.image ? (
           <LazyImage src={member.image} alt={member.name} className="partner-card__img" />
@@ -615,53 +89,20 @@ function PartnerCard({
           <span className="partner-card__role">{member.role}</span>
         </div>
 
-        <div className="partner-card__actions">
-          <button
-            type="button"
-            className="partner-card__book-btn"
-            onClick={() => onBook({ name: member.name, role: member.role, location: member.location })}
-          >
-            <IconCalendar />
-            <span>Book Appointment</span>
-          </button>
-          <button
-            type="button"
-            className="partner-card__view-btn"
-            aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            <span>{expanded ? 'Hide Profile' : 'View Profile'}</span>
-            <span className={`partner-card__view-chevron ${expanded ? 'partner-card__view-chevron--open' : ''}`}>
-              <IconChevronDown />
-            </span>
-          </button>
-        </div>
+        <p className="partner-card__desc">{member.desc}</p>
 
-        <div className={`partner-card__expand ${expanded ? 'partner-card__expand--open' : ''}`}>
-          <div className="partner-card__expand-inner">
-            <p className="partner-card__desc">{member.desc}</p>
-
-            {member.sector.length > 0 && (
-              <div className="partner-card__sectors">
-                {member.sector.map((s) => (
-                  <span key={s} className="partner-card__sector-tag">{s}</span>
-                ))}
-              </div>
-            )}
-
-            {member.email && (
-              <a href={`mailto:${member.email}`} className="partner-card__email">
-                <IconMail />
-                <span>{member.email}</span>
-              </a>
-            )}
-
-            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="partner-card__social">
-              <IconLinkedIn />
-              <span>Connect</span>
-            </a>
+        {member.sector.length > 0 && (
+          <div className="partner-card__sectors">
+            {member.sector.map((s) => (
+              <span key={s} className="partner-card__sector-tag">{s}</span>
+            ))}
           </div>
-        </div>
+        )}
+
+        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="partner-card__social">
+          <IconLinkedIn />
+          <span>Connect</span>
+        </a>
       </div>
     </div>
   )
@@ -674,21 +115,17 @@ export default function Partners() {
   const [location, setLocation] = useState('All')
   const [role, setRole] = useState('All')
   const [sector, setSector] = useState('All')
-  const [activePartner, setActivePartner] = useState<ConsultationPartner | null>(null)
 
-  const allMembers: Member[] = useMemo(
-    () =>
-      PARTNER_DATA.flatMap((section) =>
-        section.members.map((m) => ({ ...m, category: section.category, role: (m as { role?: string }).role ?? section.role }))
-      ),
-    []
-  )
+  const { members: allMembers, sections, loading, error } = useLeadership()
 
   const locations = useMemo(
     () => Array.from(new Set(allMembers.map((m) => m.location))).sort(),
     [allMembers]
   )
-  const roles = useMemo(() => Array.from(new Set(allMembers.map((m) => m.role))), [allMembers])
+  const roles = useMemo(() => {
+    const held = new Set(allMembers.flatMap((m) => m.roles))
+    return ROLE_ORDER.filter((r) => held.has(r))
+  }, [allMembers])
 
   // Dedupe sector tags case-insensitively while keeping the first-seen casing
   // for display (e.g. "Risk Advisory" wins over a later "risk advisory").
@@ -713,7 +150,7 @@ export default function Partners() {
     return allMembers.filter((m) => {
       if (q && !m.name.toLowerCase().includes(q)) return false
       if (location !== 'All' && m.location !== location) return false
-      if (role !== 'All' && m.role !== role) return false
+      if (role !== 'All' && !m.roles.includes(role)) return false
       if (sector !== 'All' && !m.sector.some((s) => s.toLowerCase().includes(sectorQuery))) return false
       return true
     })
@@ -808,7 +245,7 @@ export default function Partners() {
               {filteredMembers.length > 0 ? (
                 <div className="partner-grid">
                   {filteredMembers.map((member) => (
-                    <PartnerCard key={member.name} member={member} showCategory onBook={setActivePartner} />
+                    <PartnerCard key={member.id} member={member} showCategory />
                   ))}
                 </div>
               ) : (
@@ -822,17 +259,18 @@ export default function Partners() {
             </div>
           ) : (
             <div className="partners-list">
-              {PARTNER_DATA.map((section, idx) => (
-                <div key={idx} className="partner-category">
+              {error && (
+                <div className="partners-empty">
+                  <p>We couldn't load our leadership team right now. Please try again shortly.</p>
+                </div>
+              )}
+              {!loading && sections.map((section) => (
+                <div key={section.category} className="partner-category">
                   <h3 className="partner-category__title">{section.category}</h3>
 
-                  <div className={`partner-grid ${idx === 0 ? 'partner-grid--senior' : ''}`}>
-                    {section.members.map((member, mIdx) => (
-                      <PartnerCard
-                        key={mIdx}
-                        member={{ ...member, category: section.category, role: (member as { role?: string }).role ?? section.role }}
-                        onBook={setActivePartner}
-                      />
+                  <div className={`partner-grid ${section.category === 'Governance Council' ? 'partner-grid--senior' : ''}`}>
+                    {section.members.map((member) => (
+                      <PartnerCard key={member.id} member={member} />
                     ))}
                   </div>
                 </div>
@@ -843,9 +281,6 @@ export default function Partners() {
         </div>
       </section>
 
-      {activePartner && (
-        <BookConsultationModal partner={activePartner} onClose={() => setActivePartner(null)} />
-      )}
     </div>
   )
 }

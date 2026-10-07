@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { imageUrl } from '../../utils/imageUrl'
 import { useSiteAuth } from '../../context/SiteAuthContext'
+import ResumeMatchCheck from './ResumeMatchCheck'
 
 /* ─── Types ─────────────────────────────────────────────── */
 type ApplicationForm = {
@@ -335,7 +336,7 @@ export default function Careers() {
           </div>
           <div>
             <p style={ss.lifeBody}>
-              We believe our firm is only as good as the people within it. At JHS &amp; Associates, we foster an inclusive, dynamic, and high-performance culture that rewards innovation and hard work.
+              We believe our firm is only as good as the people within it. At JHS, we foster an inclusive, dynamic, and high-performance culture that rewards innovation and hard work.
             </p>
             <p style={{ ...ss.lifeBody, marginBottom: 0 }}>
               Whether you're an aspiring articled assistant seeking deep foundational training or an experienced professional aiming to lead advisory verticals, JHS gives you the platform to excel.
@@ -627,6 +628,13 @@ export default function Careers() {
                   />
                 </label>
                 {errors.resume && <span style={ss.formErr}>{errors.resume}</span>}
+                <ResumeMatchCheck
+                  key={`${formData.job_id}-${resumeFile?.name}-${resumeFile?.size}-${resumeFile?.lastModified}`}
+                  jobId={formData.job_id}
+                  file={resumeFile}
+                  token={careerToken}
+                  onUnauthorized={signOutApplicant}
+                />
               </div>
             </div>
 

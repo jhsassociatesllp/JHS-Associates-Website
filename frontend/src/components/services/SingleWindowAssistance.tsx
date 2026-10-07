@@ -116,7 +116,7 @@ const SingleWindowAssistance: React.FC = () => {
       <section className="swa-hero" ref={heroRef}>
         <div className="swa-hero__overlay" />
         <div className="swa-hero__inner container">
-          {/* <span className="swa-hero__badge">JHS & Associates</span> */}
+          {/* <span className="swa-hero__badge">JHS</span> */}
           <h1 className="swa-hero__title">
             Single Window <em>Assistance</em>
           </h1>

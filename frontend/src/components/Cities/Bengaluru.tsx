@@ -6,8 +6,9 @@ import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Narayan Rao Malla', image: imageUrl('Narayana-Rao-Malla-removebg-preview.webp'), qualifications: 'FCA', designation: ' Internal Audit & Risk Advisory', email: 'narayana.malla@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/narayana-rao-malla' },
   { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki-92324b1b/' },
 ]
@@ -75,6 +76,7 @@ const IconPin = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="non
 const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>)
 
 export default function Bengaluru() {
+  const PARTNERS = useCityPartners('Bengaluru', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -99,7 +101,7 @@ export default function Bengaluru() {
         </video>
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">
-          {/* <span className="blr-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="blr-hero__eyebrow">JHS</span> */}
           <h1 className="blr-hero__title">Bengaluru</h1>
           <p className="blr-hero__sub">Silicon Valley of India &amp; South India Tech Office</p>
         </div>

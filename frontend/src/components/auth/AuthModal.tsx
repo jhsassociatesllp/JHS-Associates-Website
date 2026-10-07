@@ -145,7 +145,7 @@ export default function AuthModal() {
             <label className="am-terms">
               <input type="checkbox" checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)} />
               <span>
-                I agree to the JHS &amp; Associates{' '}
+                I agree to the JHS{' '}
                 <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>{' '}
                 and{' '}
                 <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.

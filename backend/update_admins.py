@@ -1,4 +1,5 @@
 import asyncio
+import os
 from app.database.connection import connect_to_mongo, close_mongo_connection, get_database
 
 async def update_admins():
@@ -14,7 +15,7 @@ async def update_admins():
         "maaz.quraishi@jhsassociates.in",
         "vasu.gadde@jhsassociates.in"
     ]
-    password = "jhsadmin123"  # You can change this password in the database
+    password = os.environ["ADMIN_BOOTSTRAP_PASSWORD"]  # set in your environment, never commit it
     
     # Insert single admin document with emails array and plain password
     admin_data = {
@@ -22,7 +23,7 @@ async def update_admins():
         "password": password  # Single password for all emails
     }
     await db["admins"].insert_one(admin_data)
-    print(f"Created single admin entry with emails: {emails} and password: {password}")
+    print(f"Created single admin entry with emails: {emails} (password taken from ADMIN_BOOTSTRAP_PASSWORD)")
     
     await close_mongo_connection()
 

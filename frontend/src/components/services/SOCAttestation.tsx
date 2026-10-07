@@ -172,7 +172,7 @@ const SOCAttestation: React.FC = () => {
         />
         <div className="soc-hero__overlay" />
         <div className="soc-hero__inner container">
-          <span className="soc-hero__badge">JHS & Associates</span>
+          <span className="soc-hero__badge">JHS</span>
           <h1 className="soc-hero__title">
             SOC <em>Attestation</em>
           </h1>

@@ -10,11 +10,9 @@ interface OfficeBranch {
   address: string
   lat?: number
   lng?: number
-  // Optional per-branch contact info — when present, this overrides the
-  // office/city-level phone & email in the contact card once that specific
-  // branch is selected. Falls back to the city's own phone/email when a
-  // branch doesn't have its own (see activeBranch usage below).
-  phone?: string
+  // Optional branch email — shown with the selected location. Falls back to
+  // the city's own email when a branch doesn't have one. (Phone numbers are
+  // intentionally not shown anywhere on this page.)
   email?: string
 }
 
@@ -23,7 +21,6 @@ interface OfficeCity {
   badge: string
   state: string
   route: string
-  phone: string
   email: string
   isPrimary: boolean
   branches: OfficeBranch[]
@@ -35,14 +32,13 @@ const OFFICES: OfficeCity[] = [
     badge: 'Principal Headquarters',
     state: 'Maharashtra',
     route: '/city/mumbai',
-    phone: '1800 120 1022',
     email: 'connect@jhsassociates.in',
     isPrimary: true,
     branches: [
       { name: 'Andheri (East) Head Office', address: 'Unit No. B-406 to 410, 4th floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East). Maharashtra – 400059', lat: 19.1073677, lng: 72.8804167 },
-      { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010', phone: '+91 98765 00001', email: 'mazgaon@jhsassociates.in' },
-      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009", phone: '+91 98765 00002', email: 'masjidbunder@jhsassociates.in' },
-      { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301', phone: '+91 98765 00003', email: 'kalyan@jhsassociates.in' },
+      { name: 'Mazgaon', address: 'Shop No. 11A, 345, New Sai Niketan CHS Ltd. Dr Mascarenhas Road, Mazgaon, Mumbai – 400010', email: 'mazgaon@jhsassociates.in' },
+      { name: 'Masjid Bunder', address: "Unit No.402, 4th floor, Nav Vyapar Bhavan, 49 P.D’mello Road, MB, Maharashtra - 400009", email: 'masjidbunder@jhsassociates.in' },
+      { name: 'Kalyan', address: 'Unit No 11-12,Regency Avenue, Murbad Road Kalyan (West). Maharashtra - 421301', email: 'kalyan@jhsassociates.in' },
     ],
   },
   {
@@ -50,15 +46,14 @@ const OFFICES: OfficeCity[] = [
     badge: 'Regional Hub',
     state: 'Gujarat',
     route: '/city/gujarat',
-    phone: '+91 9374639574',
     email: 'kalpesh.parmar@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054', phone: '+91 98765 00004', email: 'ahmedabad@jhsassociates.in' },
-      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023', phone: '+91 98765 00005', email: 'vadodara@jhsassociates.in' },
-      { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001', phone: '+91 98765 00006', email: 'rajkot@jhsassociates.in' },
-      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003', phone: '+91 98765 00007', email: 'surat@jhsassociates.in' },
-      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215', phone: '+91 98765 00008', email: 'vapi@jhsassociates.in' },
+      { name: 'Ahmedabad ', address: 'Level 10, 1016–21, Swati Clover, Shilaj Circle, Sardar Patel Ring Road, Thaltej, Ahmedabad, Gujarat – 380054', email: 'ahmedabad@jhsassociates.in' },
+      { name: 'Vadodara', address: '4th floor, Lila Chambers, Notus Pride,Vadodara. Gujarat-390023', email: 'vadodara@jhsassociates.in' },
+      { name: 'Rajkot', address: 'B 303, Kings Heights, Vidya Kunj Society, Main Road, Near Amin Marg, Rajkot, Gujarat - 360001', email: 'rajkot@jhsassociates.in' },
+      { name: 'Surat', address: '504, 5th Floor, Shubh square. Opp Venus Hospital, Lal Darwaja, Gotalawadi Road,Gujarat  – 395003', email: 'surat@jhsassociates.in' },
+      { name: 'Vapi', address: 'Unit No.101, Saga Casa, Daulat Nagar, Vapi. Gujarat - 396215', email: 'vapi@jhsassociates.in' },
     ],
   },
   {
@@ -66,11 +61,10 @@ const OFFICES: OfficeCity[] = [
     badge: 'National Capital Office',
     state: 'Delhi',
     route: '/city/delhi',
-    phone: '+91 9810333433',
     email: 'nikhel.kochhar@jhsassociates.in',
     isPrimary: false,
     branches: [
-      { name: 'Dehli', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
+      { name: 'Delhi', address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048' },
     ],
   },
   {
@@ -78,7 +72,6 @@ const OFFICES: OfficeCity[] = [
     badge: 'South India Tech Hub',
     state: 'Telangana',
     route: '/city/hyderabad',
-    phone: '',
     email: 'hyderabad@jhsassociates.in',
     isPrimary: false,
     branches: [
@@ -92,7 +85,6 @@ const OFFICES: OfficeCity[] = [
     badge: 'Silicon Valley Office',
     state: 'Karnataka',
     route: '/city/bengaluru',
-    phone: '+91 9663397755',
     email: 'narayana.malla@jhsassociates.in',
     isPrimary: false,
     branches: [
@@ -104,7 +96,6 @@ const OFFICES: OfficeCity[] = [
     badge: 'Eastern India Gateway',
     state: 'West Bengal',
     route: '/city/kolkata',
-    phone: '+91 9831150209',
     email: 'sharad.mohata@jhsassociates.in',
     isPrimary: false,
     branches: [
@@ -118,7 +109,6 @@ const OFFICES: OfficeCity[] = [
     badge: 'South India Financial Hub',
     state: 'Tamil Nadu',
     route: '/city/chennai',
-    phone: '+91 9840131965',
     email: 'chandrasekaran@jhsassociates.in',
     isPrimary: false,
     branches: [
@@ -132,13 +122,12 @@ const OFFICES: OfficeCity[] = [
     badge: 'International Offices',
     state: 'Worldwide',
     route: '/city/global',
-    phone: '+971 4348 0046',
     email: 'vinod.joshi@jhsuae.com',
     isPrimary: false,
     branches: [
-      { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E', phone: '+971 50 000 0009', email: 'dubai@jhsuae.com' },
-      { name: 'Muscat, Oman', address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman', phone: '+968 90 000 010', email: 'muscat@jhsuae.com' },
-      { name: 'Amersham, UK', address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom', phone: '+44 7900 000011', email: 'amersham@jhsuae.com' },
+      { name: 'Dubai, UAE', address: '1703, Sheikh Rashid Tower, Dubai World Trade Center, Sheikh Zayed Road, Dubai, U.A.E', email: 'dubai@jhsuae.com' },
+      { name: 'Muscat, Oman', address: 'P.O. Box : 3840, P. Code : 112, Ruwi, Muscat, Sultanate of Oman', email: 'muscat@jhsuae.com' },
+      { name: 'Amersham, UK', address: '1st Floor Merritt House, Hill Avenue, Amersham HP6 5BQ, United Kingdom', email: 'amersham@jhsuae.com' },
     ],
   }
 ]
@@ -147,11 +136,6 @@ const OFFICES: OfficeCity[] = [
 const IconPin = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-  </svg>
-)
-const IconPhone = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
   </svg>
 )
 const IconMail = () => (
@@ -174,6 +158,9 @@ export default function OurOffices() {
 
   const activeOffice = OFFICES.find(o => o.city === activeCity) ?? OFFICES[0]
   const activeBranch = activeOffice.branches[activeBranchIdx] ?? activeOffice.branches[0]
+  // The first location listed for a city is its main office; the rest are branches.
+  const mainOffice = activeOffice.branches[0]
+  const otherBranches = activeOffice.branches.slice(1)
 
   const handleCityChange = (city: string) => {
     setActiveCity(city)
@@ -188,7 +175,7 @@ export default function OurOffices() {
         <div className="oo-hero__bg" style={{ backgroundImage: `url(${imageUrl('OfficesBG.webp')})` }} />
         <div className="oo-hero__overlay" />
         <div className="oo-hero__content">
-          {/* <p className="oo-hero__eyebrow">JHS &amp; Associates LLP</p> */}
+          {/* <p className="oo-hero__eyebrow">JHS</p> */}
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
             10 cities · 13+ locations · Pan-India &amp; Global
@@ -224,95 +211,106 @@ export default function OurOffices() {
             ))}
           </div>
 
-          {/* Active office detail card */}
-          <div className="oo-detail" key={activeOffice.city}>
-            <div className="oo-detail__left">
-              <div className="oo-detail__badge-row">
-                <span className="oo-detail__badge">{activeOffice.badge}</span>
-                <span className="oo-detail__state">{activeOffice.state}</span>
-              </div>
-              <h2 className="oo-detail__city">{activeOffice.city}</h2>
-
-              {/* Contact grid — shows the selected branch's own phone/email
-                  when it has one, otherwise falls back to the city's
-                  general contact info. */}
-              <div className="oo-detail__contact">
-                {(activeBranch.phone ?? activeOffice.phone) && (
-                  <div className="oo-detail__contact-item">
-                    <span className="oo-detail__contact-icon"><IconPhone /></span>
-                    <div>
-                      <span className="oo-detail__contact-label">Phone</span>
-                      <a href={`tel:${activeBranch.phone ?? activeOffice.phone}`} className="oo-detail__contact-val">{activeBranch.phone ?? activeOffice.phone}</a>
-                    </div>
-                  </div>
-                )}
-                <div className="oo-detail__contact-item">
-                  <span className="oo-detail__contact-icon"><IconMail /></span>
-                  <div>
-                    <span className="oo-detail__contact-label">Email</span>
-                    <a href={`mailto:${activeBranch.email ?? activeOffice.email}`} className="oo-detail__contact-val">{activeBranch.email ?? activeOffice.email}</a>
-                  </div>
+          {/* Active city: header, main office + branches, map */}
+          <div className="oo-office" key={activeOffice.city}>
+            <header className="oo-office__head">
+              <div className="oo-office__title">
+                <div className="oo-office__badges">
+                  <span className="oo-office__badge">{activeOffice.badge}</span>
+                  <span className="oo-office__state">{activeOffice.state}</span>
                 </div>
-                {/* <div className="oo-detail__contact-item">
-                  <span className="oo-detail__contact-icon"><IconClock /></span>
-                  <div>
-                    <span className="oo-detail__contact-label">Business Hours</span>
-                    <span className="oo-detail__contact-val">{activeOffice.hours}</span>
-                  </div>
-                </div> */}
+                <h2 className="oo-office__city">{activeOffice.city}</h2>
+                <p className="oo-office__count">
+                  {mainOffice ? '1 main office' : ''}
+                  {otherBranches.length > 0 && ` · ${otherBranches.length} branch${otherBranches.length > 1 ? 'es' : ''}`}
+                </p>
               </div>
 
-              <Link to={activeOffice.route} className="oo-detail__cta">
-                View {activeOffice.city} Office
-                <IconArrow />
-              </Link>
-            </div>
+              <div className="oo-office__actions">
+                <div className="oo-office__contact">
+                  <a href={`mailto:${activeOffice.email}`} className="oo-office__chip">
+                    <IconMail /> {activeOffice.email}
+                  </a>
+                </div>
+                <Link to={activeOffice.route} className="oo-detail__cta">
+                  View {activeOffice.city} Office
+                  <IconArrow />
+                </Link>
+              </div>
+            </header>
 
-            <div className="oo-detail__right">
-              <h3 className="oo-detail__branches-title">
-                <IconPin /> Locations in {activeOffice.city}
-              </h3>
-              <div className="oo-detail__branches">
-                {activeOffice.branches.map((b, i) => (
-                  <button
-                    key={b.name}
-                    type="button"
-                    className={`oo-detail__branch ${i === activeBranchIdx ? 'oo-detail__branch--active' : ''}`}
-                    onClick={() => setActiveBranchIdx(i)}
-                  >
-                    <div className="oo-detail__branch-num">0{i + 1}</div>
-                    <div className="oo-detail__branch-info">
-                      <span className="oo-detail__branch-name">{b.name}</span>
-                      <span className="oo-detail__branch-addr">{b.address}</span>
+            <div className="oo-office__body">
+              <div className="oo-office__list">
+                <p className="oo-office__label">Main Office</p>
+                <button
+                  type="button"
+                  className={`oo-loc oo-loc--main ${activeBranchIdx === 0 ? 'oo-loc--active' : ''}`}
+                  onClick={() => setActiveBranchIdx(0)}
+                  aria-pressed={activeBranchIdx === 0}
+                >
+                  <span className="oo-loc__icon"><IconPin /></span>
+                  <span className="oo-loc__text">
+                    <span className="oo-loc__name">{mainOffice.name.trim()}</span>
+                    <span className="oo-loc__addr">{mainOffice.address}</span>
+                  </span>
+                </button>
+
+                {otherBranches.length > 0 && (
+                  <>
+                    <p className="oo-office__label oo-office__label--branches">
+                      Branch Offices <span className="oo-office__label-count">{otherBranches.length}</span>
+                    </p>
+                    <div className="oo-office__branches">
+                      {otherBranches.map((b, i) => (
+                        <button
+                          key={b.name}
+                          type="button"
+                          className={`oo-loc ${activeBranchIdx === i + 1 ? 'oo-loc--active' : ''}`}
+                          onClick={() => setActiveBranchIdx(i + 1)}
+                          aria-pressed={activeBranchIdx === i + 1}
+                        >
+                          <span className="oo-loc__icon"><IconPin /></span>
+                          <span className="oo-loc__text">
+                            <span className="oo-loc__name">{b.name.trim()}</span>
+                            <span className="oo-loc__addr">{b.address}</span>
+                          </span>
+                        </button>
+                      ))}
                     </div>
-                  </button>
-                ))}
+                  </>
+                )}
               </div>
-            </div>
-          </div>
 
-          {/* ── MAP ── */}
-          <div className="oo-map" key={`${activeOffice.city}-${activeBranchIdx}`}>
-            <div className="oo-map__info">
-              <span className="oo-map__label">{activeBranch.name}</span>
-              <p className="oo-map__addr"><IconPin /> {activeBranch.address}</p>
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(activeBranch.address)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="oo-map__directions"
-              >
-                Get Directions <IconArrow />
-              </a>
-            </div>
-            <div className="oo-map__frame">
-              <iframe
-                title={`JHS ${activeOffice.city} — ${activeBranch.name}`}
-                src={mapEmbedUrlFor(activeBranch)}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
+              <aside className="oo-office__map" key={`${activeOffice.city}-${activeBranchIdx}`}>
+                <div className="oo-office__frame">
+                  <iframe
+                    title={`JHS ${activeOffice.city} — ${activeBranch.name.trim()}`}
+                    src={mapEmbedUrlFor(activeBranch)}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="oo-office__mapinfo">
+                  <div className="oo-office__mapinfo-text">
+                    <span className="oo-office__mapinfo-name">
+                      {activeBranch.name.trim()}
+                      {activeBranchIdx === 0 && <span className="oo-office__mapinfo-tag">Main Office</span>}
+                    </span>
+                    <a href={`mailto:${activeBranch.email ?? activeOffice.email}`} className="oo-office__mapinfo-mail">
+                      <IconMail /> {activeBranch.email ?? activeOffice.email}
+                    </a>
+                  </div>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(activeBranch.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="oo-map__directions"
+                  >
+                    Get Directions <IconArrow />
+                  </a>
+                </div>
+              </aside>
             </div>
           </div>
         </div>

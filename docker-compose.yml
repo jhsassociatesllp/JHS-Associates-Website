@@ -9,6 +9,13 @@ services:
     environment:
       MONGODB_URL: ${MONGODB_URL}
       DATABASE_NAME: ${DATABASE_NAME}
+      SECRET_KEY: ${SECRET_KEY:-}
+      SMTP_HOST: ${SMTP_HOST:-smtp.office365.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SENDER_EMAIL: ${SENDER_EMAIL:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
 
     extra_hosts:
       - "host.docker.internal:host-gateway"

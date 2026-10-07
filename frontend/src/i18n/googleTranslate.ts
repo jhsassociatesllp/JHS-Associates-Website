@@ -1,3 +1,4 @@
+import { canPersistPreferences } from '../utils/cookieConsent'
 // ─── Google Website Translator integration ─────────────────────────────────
 // Translates the live site into the selected language on the client side.
 // We don't hand-author translation strings (risky for a CA firm's
@@ -119,7 +120,10 @@ function triggerGoogleCombo(code: string): boolean {
 
 /** Switches the live page to the given language code ('en' resets to original). */
 export async function setLanguage(code: string) {
-  localStorage.setItem(STORAGE_KEY, code)
+  // Persistent storage only if the visitor allowed preference cookies; otherwise this visit only.
+  try {
+    ;(canPersistPreferences() ? localStorage : sessionStorage).setItem(STORAGE_KEY, code)
+  } catch { /* storage unavailable */ }
 
   if (code === SOURCE_LANG) {
     clearCookie('googtrans')
@@ -150,7 +154,11 @@ export async function setLanguage(code: string) {
 }
 
 export function getStoredLanguage(): string {
-  return localStorage.getItem(STORAGE_KEY) || SOURCE_LANG
+  try {
+    return localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY) || SOURCE_LANG
+  } catch {
+    return SOURCE_LANG
+  }
 }
 
 /**

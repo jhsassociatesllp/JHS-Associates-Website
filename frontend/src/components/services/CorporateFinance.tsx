@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './CorporateFinance.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–04)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Project Finance, ECB, Debt", desc: "Structured finance & debt advisory" },
   { id: "02", title: "Capital Markets, IPO & PE Advisory", desc: "Equity capital & private equity support" },
   { id: "03", title: "Business Plans & Projections", desc: "Financial modelling & forecasting" },
@@ -16,15 +19,19 @@ const leftItems = [
 ]
 
 // Right column items (05–07, 11)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "05", title: "Valuation, Due Diligence", desc: "Business valuation & risk assessment" },
   { id: "06", title: "Treasury, Controls", desc: "Cash management & treasury oversight" },
   { id: "07", title: "CFO Services", desc: "Virtual CFO & financial leadership" },
   { id: "11", title: "Govt. & Infra. Advisory", desc: "Public sector & infrastructure consulting" },
 ]
 
+
 export default function CorporateFinance() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('corporate-finance', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -99,10 +106,18 @@ export default function CorporateFinance() {
             {/* LEFT COLUMN */}
             <div className="cf-spoke-col cf-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="cf-spoke-row cf-spoke-row--left">
+                <div
+                    key={item.id}
+                    className="cf-spoke-row cf-spoke-row--left"
+                    onClick={() => setActivePoint(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                  >
                   <div className="cf-spoke-text cf-spoke-text--left">
                     <h3 className="cf-spoke-title">{item.title}</h3>
                     <p className="cf-spoke-desc">{item.desc}</p>
+                  <span className="cf-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="cf-spoke-connector cf-spoke-connector--left">
                     <div className="cf-spoke-line" />
@@ -127,7 +142,14 @@ export default function CorporateFinance() {
             {/* RIGHT COLUMN */}
             <div className="cf-spoke-col cf-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="cf-spoke-row cf-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="cf-spoke-row cf-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="cf-spoke-connector cf-spoke-connector--right">
                     <div className="cf-spoke-badge cf-spoke-badge--red">{item.id}</div>
                     <div className="cf-spoke-line" />
@@ -135,6 +157,7 @@ export default function CorporateFinance() {
                   <div className="cf-spoke-text cf-spoke-text--right">
                     <h3 className="cf-spoke-title">{item.title}</h3>
                     <p className="cf-spoke-desc">{item.desc}</p>
+                  <span className="cf-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -145,13 +168,21 @@ export default function CorporateFinance() {
           {/* Mobile fallback grid */}
           <div className="cf-spoke-mobile-grid">
             {[...leftItems, ...rightItems].map((item) => (
-              <div key={item.id} className="cf-spoke-mobile-card">
+              <div
+                  key={item.id}
+                  className="cf-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                 <div className={`cf-spoke-mobile-badge ${parseInt(item.id) <= 4 ? 'cf-spoke-badge--navy' : 'cf-spoke-badge--red'}`}>
                   {item.id}
                 </div>
                 <div>
                   <h3 className="cf-spoke-title">{item.title}</h3>
                   <p className="cf-spoke-desc">{item.desc}</p>
+                <span className="cf-spoke-cta"><Users size={12} /> View Experts</span>
                 </div>
               </div>
             ))}
@@ -159,7 +190,7 @@ export default function CorporateFinance() {
 
           <div className="cf-certification">
             <Shield className="cf-certification__icon" size={28} />
-            <p className="cf-certification__text">JHS & Associates LLP · Trusted Corporate Finance Partner for M&A, Valuations & Capital Advisory</p>
+            <p className="cf-certification__text">JHS · Trusted Corporate Finance Partner for M&A, Valuations & Capital Advisory</p>
           </div>
         </div>
       </section>
@@ -174,6 +205,17 @@ export default function CorporateFinance() {
           </div>
         </div>
       </section> */}
+
+
+    <ServicePartnersModal
+      isOpen={Boolean(activePoint)}
+      onClose={() => setActivePoint(null)}
+      serviceKey="corporate-finance"
+      serviceTitle="Corporate Finance Solutions"
+      point={activePoint}
+      partners={activePoint ? getPartnersForSubPoint('corporateFinance', activePoint.id) : []}
+    />
+
 
     </div>
   )

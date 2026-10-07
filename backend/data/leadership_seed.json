@@ -1,0 +1,1340 @@
+[
+  {
+    "name": "Huzeifa Unwala",
+    "education": "FCA, CISA, ISO 27001, NISM(DP), NISM(Social Auditor)",
+    "description": "Expert in IFC, Governance, Risk & Cyber Security Frameworks across BFSI sectors.",
+    "location": "Mumbai",
+    "email": "huzeifa.unwala@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-huzeifa-unwala/",
+    "services": [
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Risk & Governance"
+    ],
+    "roles": [
+      "Partner",
+      "Governance Council"
+    ],
+    "section": null,
+    "status": "Active",
+    "display_order": 1,
+    "photo_file": "Huzefa-Unwala-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "learning-development:10",
+      "learning-development:06",
+      "compliance-learning:11",
+      "compliance-learning:03",
+      "compliance-learning:04"
+    ]
+  },
+  {
+    "name": "Kalpesh Parmar",
+    "education": "B.Com (Hons), FCA",
+    "description": "Expert in Statutory Audit, Ind AS implementation and complex consolidation for listed entities.",
+    "location": "Vadodara",
+    "email": "kalpesh.parmar@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/kalpesh-parmar-016a502b",
+    "services": [
+      "Consulting",
+      "Taxation"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Statutory Audit & Assurance"
+    ],
+    "roles": [
+      "Partner",
+      "Governance Council"
+    ],
+    "section": null,
+    "status": "Active",
+    "display_order": 2,
+    "photo_file": "Kalpesh-Parmar-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "consulting:06",
+      "taxation:07"
+    ]
+  },
+  {
+    "name": "Sharad Mohata",
+    "education": "B.Com (Hons), FCA, ICWAI",
+    "description": "Expert in Regulatory, Direct Taxation, Corporate Restructuring and International Tax Advisory.",
+    "location": "Kolkata",
+    "email": "sharad.mohata@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/sharad-mohata-18318082",
+    "services": [
+      "Taxation"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Tax & Corporate Advisory"
+    ],
+    "roles": [
+      "Partner",
+      "Governance Council"
+    ],
+    "section": null,
+    "status": "Active",
+    "display_order": 3,
+    "photo_file": "Sharad-Mohata-removebg-preview.webp",
+    "cities": [
+      "Kolkata"
+    ],
+    "service_points": [
+      "taxation:07"
+    ]
+  },
+  {
+    "name": "Nikhel Kochhar",
+    "education": "FCA, CIA",
+    "description": "Expert in Accounting, Auditing, Assurance & Strategic Management Consulting.",
+    "location": "Delhi",
+    "email": "nikhil.kochhar@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/nikhelkochhar",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Outsourcing",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Governance, Risk & Internal Audit"
+    ],
+    "roles": [
+      "Partner",
+      "Governance Council"
+    ],
+    "section": null,
+    "status": "Active",
+    "display_order": 4,
+    "photo_file": "Nikhel-Kochhar-removebg-preview.webp",
+    "cities": [
+      "Delhi"
+    ],
+    "service_points": [
+      "assurance:03",
+      "consulting:03",
+      "outsourcing:12",
+      "learning-development:10",
+      "learning-development:05",
+      "learning-development:06",
+      "compliance-learning:11",
+      "compliance-learning:01",
+      "compliance-learning:03",
+      "compliance-learning:04"
+    ]
+  },
+  {
+    "name": "Vinod Joshi",
+    "education": "FCA, MBA (Finance)",
+    "description": "Expert in Financial Modeling, M&A Restructuring & Cross-border Strategic Alliances.",
+    "location": "UAE",
+    "email": "vinod.joshi@jhsuae.com",
+    "linkedin": "https://linkedin.com/in/vinod-joshi-fca",
+    "services": [],
+    "sectors": [
+      "Mutual Funds"
+    ],
+    "specializations": [
+      "Financial Advisory & CFO Services"
+    ],
+    "roles": [
+      "Partner",
+      "Governance Council"
+    ],
+    "section": null,
+    "status": "Active",
+    "display_order": 5,
+    "photo_file": "vinod joshi.webp",
+    "cities": [
+      "Global"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Tasnim Tankiwala",
+    "education": "FCA, IP (IBBI), DIRM, DISA",
+    "description": "Expert in Auditing, Tax, Accounting & IFC.",
+    "location": "Mumbai",
+    "email": "tasnim.tankiwala@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/tasnim-tankiwala",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Outsourcing",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Statutory Audit"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 6,
+    "photo_file": "Tasnim-Tankiwala-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:10",
+      "assurance:12",
+      "assurance:01",
+      "assurance:03",
+      "assurance:06",
+      "assurance:08",
+      "assurance:09",
+      "consulting:12",
+      "consulting:01",
+      "consulting:02",
+      "outsourcing:04",
+      "learning-development:11",
+      "learning-development:03",
+      "learning-development:07",
+      "compliance-learning:11",
+      "compliance-learning:12",
+      "compliance-learning:01",
+      "compliance-learning:02",
+      "compliance-learning:05"
+    ]
+  },
+  {
+    "name": "Disha Shah",
+    "education": "FCA",
+    "description": "Expert in Accounting, Tax, Governance, Internal Control & Women Entrepreneur Initiatives.",
+    "location": "Mumbai",
+    "email": "disha.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/disha-shah-4826b097/",
+    "services": [
+      "Assurance"
+    ],
+    "sectors": [
+      "Media",
+      "Banking",
+      "Broking",
+      "Healthcare",
+      "Manufacturing",
+      "Logistics"
+    ],
+    "specializations": [
+      "Risk Advisory, Internal Audit & IFC"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 7,
+    "photo_file": "Disha Shah-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:03"
+    ]
+  },
+  {
+    "name": "Dhanlaxmi Nair",
+    "education": "M.Com, FCA, CMA, SET",
+    "description": "Expert in BFSI, Regulatory Compliance, Internal & Concurrent Audit,",
+    "location": "Mumbai",
+    "email": "dhanlaxmi.nair@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/dhanlaxmi-nair-311053206",
+    "services": [
+      "Assurance",
+      "Outsourcing",
+      "Learning & Development"
+    ],
+    "sectors": [
+      "Gems & Jewellery",
+      "Commodity",
+      "Banking",
+      "Broking",
+      "NBFC",
+      "Portfolio Management"
+    ],
+    "specializations": [
+      "Risk Advisory & Consulting"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 8,
+    "photo_file": "Dhanlaxmi.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:01",
+      "assurance:03",
+      "assurance:04",
+      "assurance:05",
+      "assurance:07",
+      "outsourcing:07",
+      "learning-development:11"
+    ]
+  },
+  {
+    "name": "Jamal Ashraf Chatriwala",
+    "education": "ACA, IPO Certified",
+    "description": "Expert in BFSI, NBFC, Asset Management, Insurance Advisory & Concurrent Audit.",
+    "location": "Mumbai",
+    "email": "jamal.chatriwala@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/chatriwala",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Outsourcing",
+      "Corporate Finance",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Media",
+      "Banking",
+      "Insurance",
+      "Healthcare"
+    ],
+    "specializations": [
+      "Internal Audit & Risk Advisory"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 9,
+    "photo_file": "Jamal-Chatriwala-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:01",
+      "assurance:03",
+      "assurance:04",
+      "assurance:07",
+      "consulting:02",
+      "consulting:03",
+      "consulting:05",
+      "consulting:08",
+      "outsourcing:12",
+      "outsourcing:04",
+      "corporate-finance:02",
+      "learning-development:11",
+      "learning-development:12",
+      "learning-development:05",
+      "learning-development:06",
+      "compliance-learning:03",
+      "compliance-learning:04"
+    ]
+  },
+  {
+    "name": "Taher Pepermintwala",
+    "education": "FCA, CISA, ACCA, Dip IFRS",
+    "description": "Expert in Cyber Security, IT Audit, AIF & Mutual Fund, Forensic Audit, Statutory & Internal Audit.",
+    "location": "Mumbai",
+    "email": "taher.pepermintwala@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/taherpepermintwala/",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Taxation",
+      "Corporate Finance",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "IT System Audit",
+      "IT / ITeS",
+      "Banking",
+      "Digital Currency",
+      "NBFC",
+      "Venture Capital",
+      "Healthcare",
+      "Manufacturing",
+      "Logistics"
+    ],
+    "specializations": [
+      "Assurance, Tech & SOC Audit"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 10,
+    "photo_file": "Taher-Pepermintwala-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:11",
+      "assurance:12",
+      "assurance:01",
+      "assurance:02",
+      "assurance:04",
+      "assurance:06",
+      "assurance:07",
+      "assurance:08",
+      "consulting:10",
+      "consulting:11",
+      "consulting:12",
+      "consulting:01",
+      "consulting:02",
+      "consulting:03",
+      "consulting:04",
+      "consulting:05",
+      "consulting:08",
+      "taxation:12",
+      "taxation:01",
+      "taxation:02",
+      "taxation:03",
+      "taxation:04",
+      "taxation:07",
+      "corporate-finance:11",
+      "corporate-finance:01",
+      "corporate-finance:04",
+      "corporate-finance:05",
+      "corporate-finance:08",
+      "learning-development:02",
+      "learning-development:07",
+      "compliance-learning:12"
+    ]
+  },
+  {
+    "name": "Sahil Shah",
+    "education": "ACA, IPO Certified",
+    "description": "Expert in Accounting, Internal Control & VC Funding Advisory.",
+    "location": "Mumbai",
+    "email": "sahil.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/sahil-shah-664a5312a",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Housing",
+      "Banking",
+      "Family Oriented Businesses",
+      "NBFC",
+      "Constructions"
+    ],
+    "specializations": [
+      "Risk Advisory, Internal Audit & IFC"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 11,
+    "photo_file": "Sahil-Shah-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:03",
+      "assurance:04",
+      "assurance:06",
+      "assurance:07",
+      "assurance:08",
+      "consulting:02",
+      "consulting:03",
+      "consulting:06",
+      "learning-development:11",
+      "learning-development:05",
+      "compliance-learning:12",
+      "compliance-learning:05"
+    ]
+  },
+  {
+    "name": "Tausif Shaikh",
+    "education": "ACA, AICA-L1",
+    "description": "Expert in Assurance, Tax Advisory and AI-driven Audit Methodologies.",
+    "location": "Mumbai",
+    "email": "tausif.shaikh@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-tausif-shaikh",
+    "services": [],
+    "sectors": [
+      "Media",
+      "Banking",
+      "Manufacturing",
+      "Logistics"
+    ],
+    "specializations": [
+      "Assurance & Tax"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 12,
+    "photo_file": "Tausif-Shaikh-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Samad Dhanani",
+    "education": "M.Com, ACA, CS",
+    "description": "Expert in Internal Audit, Tax Audit, Assurance & Accounting.",
+    "location": "Mumbai",
+    "email": "samad.dhanani@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/samad-dhanani-9b342562/",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Taxation",
+      "Outsourcing",
+      "Corporate Finance",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Statutory Audit & Accounts Outsourcing"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 13,
+    "photo_file": "Samad-Dhanani-removebg-preview.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:10",
+      "assurance:12",
+      "assurance:01",
+      "assurance:02",
+      "assurance:03",
+      "assurance:06",
+      "assurance:08",
+      "assurance:09",
+      "consulting:02",
+      "taxation:01",
+      "outsourcing:01",
+      "outsourcing:02",
+      "outsourcing:03",
+      "outsourcing:06",
+      "outsourcing:07",
+      "outsourcing:08",
+      "outsourcing:09",
+      "corporate-finance:06",
+      "corporate-finance:07",
+      "learning-development:03",
+      "learning-development:07",
+      "learning-development:09",
+      "compliance-learning:12",
+      "compliance-learning:05"
+    ]
+  },
+  {
+    "name": "Amit More",
+    "education": "MBA–IIM, ISO 27001 Lead Auditor, ISO 42001 Certified",
+    "description": "Expert in Cyber Security, GRC, Strategy and Digital Trust.",
+    "location": "Mumbai",
+    "email": "amitkumar.more@jhsconsulting.in",
+    "linkedin": "https://www.linkedin.com/in/amitkumarmore/",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Cyber Security & GRC"
+    ],
+    "roles": [
+      "Advisory Board Member"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 14,
+    "photo_file": "Amit-more.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Dipika Bisawa",
+    "education": "ACS",
+    "description": "Expert in Corporate Governance, Compliance & Risk Management.",
+    "location": "Mumbai",
+    "email": "dipika.bisawa@jhsconsulting.in",
+    "linkedin": "https://www.linkedin.com/in/dipika-bisawa-0a9a211a/",
+    "services": [
+      "Consulting",
+      "Outsourcing",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Compliance & Risk Management"
+    ],
+    "roles": [
+      "Advisory Board Member"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 15,
+    "photo_file": "Dipika-Bisawa.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "consulting:07",
+      "consulting:09",
+      "outsourcing:11",
+      "outsourcing:04",
+      "learning-development:10",
+      "learning-development:12",
+      "learning-development:04",
+      "learning-development:08",
+      "compliance-learning:10",
+      "compliance-learning:01",
+      "compliance-learning:02",
+      "compliance-learning:06",
+      "compliance-learning:07",
+      "compliance-learning:08",
+      "compliance-learning:09"
+    ]
+  },
+  {
+    "name": "Raj Dabburi",
+    "education": "CA, MBA",
+    "description": "Expert in Corporate Finance, Fund Raising, PPP Advisory & Financial Strategy",
+    "location": "Mumbai",
+    "email": "raj.d@jhsconsulting.in",
+    "linkedin": "https://www.linkedin.com/in/rajdabburi/",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Board & Institutional Advisory"
+    ],
+    "roles": [
+      "Advisory Board Member"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 16,
+    "photo_file": "Raj-daburi.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Huzefa Mala",
+    "education": "FCA, UGC-NET Qualified",
+    "description": "Expert in Tax Compliance, Tax Litigation, Appeals, Domestic & Overseas Outsourcing.",
+    "location": "Mumbai",
+    "email": "huzefa.mala@jhsconsulting.in",
+    "linkedin": "https://www.linkedin.com/in/huzefamala/",
+    "services": [
+      "Assurance",
+      "Taxation",
+      "Outsourcing",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [
+      "Oil & Gas"
+    ],
+    "specializations": [
+      "Income Tax Advisory & Audits"
+    ],
+    "roles": [
+      "Advisory Board Member"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 17,
+    "photo_file": "Huzefa-mala.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": [
+      "assurance:02",
+      "taxation:12",
+      "taxation:01",
+      "taxation:03",
+      "taxation:04",
+      "taxation:05",
+      "taxation:06",
+      "taxation:07",
+      "taxation:08",
+      "taxation:09",
+      "outsourcing:04",
+      "outsourcing:05",
+      "learning-development:12",
+      "learning-development:01",
+      "learning-development:02",
+      "compliance-learning:10",
+      "compliance-learning:02"
+    ]
+  },
+  {
+    "name": "Huzefa Kaka",
+    "education": "NISM certified",
+    "description": "Expert in Risk Management, Compliance, Internal Audit & Concurrent Audit.",
+    "location": "Mumbai",
+    "email": "huzefa.kaka@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/huzefakaka/",
+    "services": [],
+    "sectors": [
+      "Banking",
+      "Broking"
+    ],
+    "specializations": [
+      "Risk & Governance"
+    ],
+    "roles": [
+      "Advisory Board Member"
+    ],
+    "section": "Mumbai Partners & Advisory Board Members",
+    "status": "Active",
+    "display_order": 18,
+    "photo_file": "Huzefa-kaka.webp",
+    "cities": [
+      "Mumbai"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Geethika Ghanta",
+    "education": "ACA",
+    "description": "Expert in Taxation & Audit for Hyderabad-based clients.",
+    "location": "Hyderabad",
+    "email": "geethika.ghanta@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Taxation & Audit Specialist"
+    ],
+    "roles": [
+      "Associate"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 19,
+    "photo_file": "Geethika Ghanta.webp",
+    "cities": [
+      "Hyderabad"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Jagdish Solanki",
+    "education": "B.Com (Hons), FCA",
+    "description": "Expert in Audit and Internal Control.",
+    "location": "Bengaluru",
+    "email": "jagdish.solanki@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/jagdish-solanki-92324b1b",
+    "services": [],
+    "sectors": [
+      "FMCG",
+      "Retail"
+    ],
+    "specializations": [
+      "Direct & Indirect Tax"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 20,
+    "photo_file": "Jagdish-Solanki-removebg-preview.webp",
+    "cities": [
+      "Bengaluru"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Narayana Rao Malla",
+    "education": "FCA",
+    "description": "Expert in Audit, Accounting & Internal Control.",
+    "location": "Bengaluru",
+    "email": "narayana.malla@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/narayana-rao-malla",
+    "services": [],
+    "sectors": [
+      "FMCG",
+      "Retail"
+    ],
+    "specializations": [
+      "Internal Audit & Risk Advisory"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 21,
+    "photo_file": "Narayana-Rao-Malla-removebg-preview.webp",
+    "cities": [
+      "Bengaluru"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "G Chandrasekaran",
+    "education": "DSM, FCA, DISA",
+    "description": "Expert in Accounting, Internal Audit & Tax.",
+    "location": "Chennai",
+    "email": "chandrasekaran@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29",
+    "services": [
+      "Assurance",
+      "Corporate Finance",
+      "Learning & Development"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Statutory & Corporate Tax Audits"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 22,
+    "photo_file": "Chandra-Shekaran.webp",
+    "cities": [
+      "Chennai"
+    ],
+    "service_points": [
+      "assurance:01",
+      "assurance:03",
+      "corporate-finance:11",
+      "corporate-finance:08",
+      "learning-development:07"
+    ]
+  },
+  {
+    "name": "Pranal P",
+    "education": "FCA",
+    "description": "Expert in Statutory Audit, Internal Audit, Management Consultancy & Systems Study.",
+    "location": "Chennai",
+    "email": "parnal@jhsassociates.in",
+    "linkedin": "https://linkedin.com/",
+    "services": [
+      "Assurance",
+      "Learning & Development"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Specialising in GST"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 23,
+    "photo_file": "Pranal p.webp",
+    "cities": [
+      "Chennai"
+    ],
+    "service_points": [
+      "assurance:01",
+      "learning-development:01"
+    ]
+  },
+  {
+    "name": "NM Pradeep",
+    "education": "CA, CMA",
+    "description": "Expert in Indirect Tax & Advisory for Hyderabad-based clients.",
+    "location": "Hyderabad",
+    "email": "pradeep@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/pradeep-jhs",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Indirect Tax & Advisory"
+    ],
+    "roles": [
+      "Associate"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 24,
+    "photo_file": "NM Pradeep.webp",
+    "cities": [
+      "Hyderabad"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Tripti Mohta",
+    "education": "FCA",
+    "description": "Expert in Accounting, Assurance, Governance & Internal Audit.",
+    "location": "Kolkata",
+    "email": "tripti.mohta@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-tripti-mohta-598a2544/",
+    "services": [
+      "Assurance",
+      "Taxation"
+    ],
+    "sectors": [
+      "Banking"
+    ],
+    "specializations": [
+      "Taxation & Audit Specialist"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Bengaluru, Chennai, Kolkata & Hyderabad Partners",
+    "status": "Active",
+    "display_order": 25,
+    "photo_file": "Tripti mohta.webp",
+    "cities": [
+      "Kolkata"
+    ],
+    "service_points": [
+      "assurance:11",
+      "assurance:01",
+      "assurance:02",
+      "taxation:01"
+    ]
+  },
+  {
+    "name": "Shreena Panara",
+    "education": "ACA",
+    "description": "Expert in Accounting, Audit, Tax & Finance.",
+    "location": "Rajkot",
+    "email": "shreena.panara@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-shreena-panara-61b27820a",
+    "services": [
+      "Assurance",
+      "Taxation",
+      "Learning & Development"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Indirect Tax"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 26,
+    "photo_file": "Shreena Parana.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:02",
+      "assurance:04",
+      "assurance:05",
+      "assurance:07",
+      "taxation:01",
+      "taxation:04",
+      "taxation:05",
+      "taxation:08",
+      "taxation:09",
+      "learning-development:02"
+    ]
+  },
+  {
+    "name": "Jhankhna Patel",
+    "education": "FCA, DISA, CPA Australia",
+    "description": "Expert in Accounting, Tax, GST, Statutory & Internal Audit.",
+    "location": "Ahmedabad",
+    "email": "jhankhna.patel@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/jhankhnapatel09",
+    "services": [],
+    "sectors": [
+      "NGO"
+    ],
+    "specializations": [
+      "ESG Specialist"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 27,
+    "photo_file": "Jhankana Patel.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Dhaval Thakkar",
+    "education": "ACA",
+    "description": "Expert in Startup Advisory, Corporate Governance & ERP Strategy.",
+    "location": "Ahmedabad",
+    "email": "dhaval.thakkar@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/dhaval-thakkar-dt-25406144/",
+    "services": [
+      "Consulting",
+      "Taxation",
+      "Outsourcing",
+      "Corporate Finance",
+      "Learning & Development"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Internal Audit, Risk Advisory & Insurance."
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 28,
+    "photo_file": "Dhaval-Thakkar-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "consulting:10",
+      "consulting:11",
+      "consulting:02",
+      "consulting:04",
+      "consulting:05",
+      "taxation:02",
+      "outsourcing:10",
+      "outsourcing:01",
+      "outsourcing:02",
+      "outsourcing:03",
+      "outsourcing:06",
+      "outsourcing:08",
+      "outsourcing:09",
+      "corporate-finance:03",
+      "corporate-finance:04",
+      "corporate-finance:05",
+      "corporate-finance:07",
+      "learning-development:09"
+    ]
+  },
+  {
+    "name": "Nidhi Kotecha",
+    "education": "ACA",
+    "description": "Expert in Outsourced Finance Services, CFO Advisory & SEC Compliance.",
+    "location": "Ahmedabad",
+    "email": null,
+    "linkedin": "https://www.linkedin.com/in/nidhi-kotecha-9758a6193/",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "US Taxation & Compliance"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 29,
+    "photo_file": "Nidhi-kotecha.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Alpesh Vaniya",
+    "education": "FCA",
+    "description": "Expert in Internal Audit, Tax, Accounting & IT Audit.",
+    "location": "Ahmedabad",
+    "email": "alpesh.vaniya@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/alpesh-vaniya-62544b190",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Internal Audit & Tax Consulting"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 30,
+    "photo_file": "Alpesh-Vaniya-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Parth Shah",
+    "education": "FCA",
+    "description": "Expert in Internal Audit, Tax Advisory & Accounting.",
+    "location": "Ahmedabad",
+    "email": "parth.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/parth-shah-0926211a0?originalSubdomain=in",
+    "services": [],
+    "sectors": [],
+    "specializations": [
+      "Financial Strategy Specialist"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 31,
+    "photo_file": "Parth_shah.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": []
+  },
+  {
+    "name": "Virendra Nayyar",
+    "education": "B.Com (Hons), FCA",
+    "description": "Expert in Statutory Assurance, GST & Taxation.",
+    "location": "Vadodara",
+    "email": "virendra.nayyar@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/virendra-nayyar-3114a9227",
+    "services": [
+      "Assurance"
+    ],
+    "sectors": [
+      "Gems & Jewellery",
+      "Commodity"
+    ],
+    "specializations": [
+      "Internal Audit & Assurance"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 32,
+    "photo_file": "Virendra-Nayyar-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:03",
+      "assurance:07"
+    ]
+  },
+  {
+    "name": "Viranch Modi",
+    "education": "FCA",
+    "description": "Expert in Direct Tax, Indirect Tax & Auditing.",
+    "location": "Vadodara",
+    "email": "viranch.modi@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/viranch-modi-aa4106227/",
+    "services": [
+      "Assurance"
+    ],
+    "sectors": [
+      "Real Estate"
+    ],
+    "specializations": [
+      "Income Tax & GST"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 33,
+    "photo_file": "Viranch-Modi-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:11",
+      "assurance:01",
+      "assurance:02"
+    ]
+  },
+  {
+    "name": "Milin Parekh",
+    "education": "M.Com, FCA",
+    "description": "Expert in Accouting, Internal Audit & Assurance.",
+    "location": "Vadodara",
+    "email": "milin.parekh@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/milin-parekh-63692061",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Outsourcing",
+      "Corporate Finance",
+      "Learning & Development"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Internal Audit & Assurance"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 34,
+    "photo_file": "Milin-Parekh-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:01",
+      "assurance:02",
+      "assurance:03",
+      "assurance:08",
+      "consulting:10",
+      "consulting:04",
+      "outsourcing:01",
+      "corporate-finance:05",
+      "learning-development:09"
+    ]
+  },
+  {
+    "name": "Saurabh Shah",
+    "education": "FCA, DISA",
+    "description": "Expert in Direct & Indirect Tax Advisory.",
+    "location": "Vadodara",
+    "email": "saurabh.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/saurabh-shah-b822791a7",
+    "services": [
+      "Assurance",
+      "Consulting"
+    ],
+    "sectors": [
+      "IT System Audit"
+    ],
+    "specializations": [
+      "Direct & Indirect Tax"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 35,
+    "photo_file": "Saurabh-Shah-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:11",
+      "assurance:01",
+      "assurance:02",
+      "consulting:01"
+    ]
+  },
+  {
+    "name": "Mehul Shah",
+    "education": "FCA",
+    "description": "Expert in Tax, Audit, Assurance & Statutory Compliance.",
+    "location": "Surat",
+    "email": "mehul.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/mehul-shah-9aaaa130b",
+    "services": [
+      "Assurance",
+      "Taxation",
+      "Learning & Development"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Income Tax & GST"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 36,
+    "photo_file": "Mehul-Shah-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:01",
+      "assurance:02",
+      "assurance:03",
+      "assurance:04",
+      "assurance:05",
+      "assurance:07",
+      "taxation:12",
+      "taxation:05",
+      "taxation:06",
+      "learning-development:01"
+    ]
+  },
+  {
+    "name": "Raj Shah",
+    "education": "ACA",
+    "description": "Expert in Audit, Accounting, Tax Litigation & Advisory.",
+    "location": "Surat",
+    "email": "raj.shah@jhsassociates.in",
+    "linkedin": "https://www.linkedin.com/in/ca-raj-a-shah",
+    "services": [
+      "Assurance",
+      "Consulting",
+      "Taxation",
+      "Learning & Development",
+      "Compliance & Governance"
+    ],
+    "sectors": [],
+    "specializations": [
+      "Tax Litigation & Advisory"
+    ],
+    "roles": [
+      "Partner"
+    ],
+    "section": "Gujarat Partners",
+    "status": "Active",
+    "display_order": 37,
+    "photo_file": "Raj-Shah-removebg-preview.webp",
+    "cities": [
+      "Gujarat"
+    ],
+    "service_points": [
+      "assurance:10",
+      "consulting:01",
+      "consulting:07",
+      "consulting:09",
+      "taxation:01",
+      "taxation:05",
+      "taxation:06",
+      "taxation:08",
+      "taxation:09",
+      "learning-development:04",
+      "compliance-learning:10",
+      "compliance-learning:06"
+    ]
+  }
+]

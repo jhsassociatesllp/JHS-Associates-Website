@@ -3,8 +3,9 @@ import './Global.css'
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   {
     name: 'Vinod Joshi',
     image: imageUrl('vinod joshi.webp'),
@@ -211,6 +212,7 @@ const IconCheck = () => (
 )
 
 export default function Global() {
+  const PARTNERS = useCityPartners('Global', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -235,7 +237,7 @@ export default function Global() {
         </video>
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">
-          {/* <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p> */}
+          {/* <p className="glb-hero__eyebrow">JHS</p> */}
           <h1 className="glb-hero__title">Global Presence</h1>
           <p className="glb-hero__sub">Delivering Excellence Across International Borders</p>
         </div>

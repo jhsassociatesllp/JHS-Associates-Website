@@ -832,3 +832,372 @@
   line-height: 1.6;
   margin: 0 0 8px;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   REFINED LAYOUT — one panel: navy guide + white form
+   (overrides the earlier hero / container rules above)
+   ═══════════════════════════════════════════════════════════ */
+.bap-page {
+  --bap-radius: 8px;
+  background: #f3f5f9;
+}
+
+/* ── Header band ── */
+.bap-hero {
+  display: block;
+  min-height: 0;
+  text-align: left;
+}
+
+.bap-hero::after {
+  display: none;
+}
+
+.bap-hero__overlay {
+  background: linear-gradient(100deg, rgba(14, 28, 48, 0.96) 0%, rgba(18, 35, 59, 0.93) 55%, rgba(18, 35, 59, 0.86) 100%);
+}
+
+.bap-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 124px 24px 60px;
+}
+
+.bap-hero__eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.bap-hero__eyebrow span {
+  margin: 0 6px;
+  opacity: 0.6;
+}
+
+.bap-page .bap-hero__title {
+  font-family: var(--bap-body);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.bap-hero__sub {
+  max-width: 540px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #c0cddf;
+}
+
+/* ── The panel ── */
+.bap-container {
+  max-width: 1080px;
+  margin: 48px auto 88px;
+  padding: 0 24px;
+}
+
+.bap-layout {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(14, 28, 48, 0.06), 0 24px 48px -24px rgba(14, 28, 48, 0.35);
+}
+
+/* ── Left: guide ── */
+.bap-aside {
+  padding: 40px 34px;
+  background: linear-gradient(180deg, #14284a 0%, #0e1c30 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.bap-aside__title {
+  margin: 0 0 26px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.bap-aside__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.bap-aside__steps::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.bap-aside__steps li {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  padding: 0 0 26px;
+  border: none;
+}
+
+.bap-aside__steps li:last-child {
+  padding-bottom: 0;
+}
+
+.bap-aside__num {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #fff;
+  background: #14284a;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-variant-numeric: tabular-nums;
+}
+
+.bap-aside__steps strong {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 4px 0 3px;
+}
+
+.bap-aside__steps p {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.55;
+  color: #aebbd0;
+}
+
+.bap-aside__help {
+  margin-top: auto;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bap-aside__steps + .bap-aside__help {
+  margin-top: 34px;
+}
+
+.bap-aside__help-label {
+  font-size: 0.82rem;
+  color: #aebbd0;
+}
+
+.bap-aside__phone {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.bap-aside__phone:hover,
+.bap-aside__mail:hover {
+  color: #ff8aa3;
+}
+
+.bap-aside__mail {
+  font-size: 0.88rem;
+  color: #c0cddf;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* ── Right: form ── */
+.bap-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+  padding: 40px 48px 44px;
+  background: #fff;
+}
+
+/* progress */
+.bap-stepper {
+  margin-bottom: 30px;
+}
+
+.bap-stepper__dot {
+  width: 26px;
+  height: 26px;
+  font-size: 0.74rem;
+  background: #fff;
+}
+
+.bap-stepper__dot--active {
+  background: var(--bap-navy-ink);
+  border-color: var(--bap-navy-ink);
+}
+
+.bap-stepper__dot--done {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.bap-stepper__label {
+  font-size: 0.76rem;
+}
+
+.bap-formhead {
+  margin-bottom: 24px;
+}
+
+.bap-formhead__icon,
+.bap-authgate .bap-formhead__icon {
+  display: none;
+}
+
+.bap-page .bap-formhead h2,
+.bap-page .bap-authgate h2 {
+  font-family: var(--bap-body);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
+  color: var(--bap-navy-ink);
+  margin: 0 0 6px;
+}
+
+.bap-formhead p {
+  font-size: 0.92rem;
+}
+
+/* fields */
+.bap-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2c3a4e;
+}
+
+.bap-input,
+.bap-select,
+.bap-textarea,
+.bap-otp-input {
+  padding: 13px 14px;
+  background: #fff;
+  border: 1px solid #ccd5e1;
+  border-radius: 8px;
+}
+
+.bap-input:hover,
+.bap-select:hover,
+.bap-textarea:hover,
+.bap-otp-input:hover {
+  border-color: #aebbd0;
+}
+
+.bap-input:focus,
+.bap-select:focus,
+.bap-textarea:focus,
+.bap-otp-input:focus {
+  border-color: var(--bap-navy-ink);
+  box-shadow: 0 0 0 3px rgba(18, 35, 59, 0.1);
+}
+
+.bap-phone-input {
+  background: #fff;
+  border: 1px solid #ccd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bap-phone-input:focus-within {
+  border-color: var(--bap-navy-ink);
+  box-shadow: 0 0 0 3px rgba(18, 35, 59, 0.1);
+}
+
+.bap-phone-prefix {
+  background: #f1f4f9;
+  color: var(--bap-navy-ink);
+  font-weight: 600;
+}
+
+/* buttons: flat, no glow */
+.bap-btn {
+  border-radius: 8px;
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.bap-btn--primary {
+  background: var(--bap-navy-ink);
+  border-color: var(--bap-navy-ink);
+  box-shadow: none;
+}
+
+.bap-btn--primary:hover:not(:disabled) {
+  background: var(--bap-navy);
+  border-color: var(--bap-navy);
+  box-shadow: none;
+  transform: none;
+}
+
+/* signed-out state */
+.bap-authgate {
+  align-items: flex-start;
+  text-align: left;
+  padding: 4px 0 8px;
+}
+
+.bap-authgate p {
+  max-width: 440px;
+  margin: 0 0 18px;
+}
+
+@media (max-width: 900px) {
+  .bap-container {
+    padding: 0 16px;
+  }
+
+  .bap-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bap-card {
+    order: 1;
+    padding: 30px 24px 32px;
+  }
+
+  .bap-aside {
+    order: 2;
+    padding: 30px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .bap-hero__inner {
+    padding: 108px 18px 52px;
+  }
+
+  .bap-card {
+    padding: 26px 18px 28px;
+  }
+}

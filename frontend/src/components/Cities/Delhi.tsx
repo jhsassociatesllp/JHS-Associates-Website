@@ -7,11 +7,12 @@ import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
 /* ─── Partner Data ─────────────────────────────────── */
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Nikhel Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'), qualifications: 'FCA, CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
   // { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
   // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.webp'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
@@ -94,6 +95,7 @@ const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="n
 
 /* ─── Page ───────────────────────────────────────── */
 export default function Delhi() {
+  const PARTNERS = useCityPartners('Delhi', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -120,7 +122,7 @@ export default function Delhi() {
         </video>
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
-          {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="del-hero__eyebrow">JHS</span> */}
           <h1 className="del-hero__title">Delhi</h1>
           <p className="del-hero__sub">National Capital &amp; Strategic North India Office</p>
         </div>

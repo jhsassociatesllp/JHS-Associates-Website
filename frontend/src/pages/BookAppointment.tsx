@@ -12,7 +12,7 @@ import {
   AlertCircle,
 } from 'lucide-react'
 import { imageUrl } from '../utils/imageUrl'
-import { PARTNER_DATA } from '../components/About Us/Partners'
+import { useLeadership } from '../data/leadership'
 import { useSiteAuth } from '../context/SiteAuthContext'
 import './BookAppointment.css'
 
@@ -87,16 +87,6 @@ interface PartnerOption {
   category: string
   sector: string[]
 }
-
-const PARTNER_OPTIONS: PartnerOption[] = PARTNER_DATA.flatMap((section) =>
-  section.members.map((m) => ({
-    name: m.name,
-    role: (m as { role?: string }).role ?? section.role,
-    location: m.location,
-    category: section.category,
-    sector: m.sector,
-  }))
-)
 
 /**
  * Best-effort mapping from each client-facing speciality to the free-text
@@ -208,17 +198,23 @@ export default function BookAppointment() {
 
   /* Partners matching the chosen speciality (falls back to the full list
      when a speciality has no dedicated specialist on file yet). */
+  const { members } = useLeadership()
+  const partnerOptions: PartnerOption[] = useMemo(
+    () => members.map((m) => ({ name: m.name, role: m.role, location: m.location, category: m.category, sector: m.sector })),
+    [members]
+  )
+
   const { filteredPartnerOptions, hasSpecialityMatch } = useMemo(() => {
-    if (!data.speciality) return { filteredPartnerOptions: PARTNER_OPTIONS, hasSpecialityMatch: true }
+    if (!data.speciality) return { filteredPartnerOptions: partnerOptions, hasSpecialityMatch: true }
 
     const keywords = SPECIALITY_KEYWORDS[data.speciality] ?? []
-    const matches = PARTNER_OPTIONS.filter((p) =>
+    const matches = partnerOptions.filter((p) =>
       p.sector.some((s) => keywords.some((k) => s.toLowerCase().includes(k)))
     )
     return matches.length > 0
       ? { filteredPartnerOptions: matches, hasSpecialityMatch: true }
-      : { filteredPartnerOptions: PARTNER_OPTIONS, hasSpecialityMatch: false }
-  }, [data.speciality])
+      : { filteredPartnerOptions: partnerOptions, hasSpecialityMatch: false }
+  }, [data.speciality, partnerOptions])
 
   const handleSpecialityChange = (speciality: string) => {
     setData((prev) => ({ ...prev, speciality, partner: '' }))
@@ -342,18 +338,49 @@ export default function BookAppointment() {
       {/* ════ HERO ════ */}
       <section className="bap-hero" style={{ backgroundImage: `url(${imageUrl('Consulting.webp')})` }}>
         <div className="bap-hero__overlay" />
-        <div className="bap-hero__content">
-          <span className="bap-hero__eyebrow">JHS &amp; Associates LLP</span>
-          <h1 className="bap-hero__title">
-            Book an <span>Appointment</span>
-          </h1>
+        <div className="bap-hero__inner">
+          <p className="bap-hero__eyebrow">Home <span aria-hidden="true">/</span> Appointments</p>
+          <h1 className="bap-hero__title">Book an appointment</h1>
           <p className="bap-hero__sub">
-            Schedule a consultation with the right partner for your needs — verified by OTP, confirmed in minutes.
+            Tell us what you need and we&rsquo;ll match you with the right partner. Our team will call you to confirm a time that suits you.
           </p>
         </div>
       </section>
 
       <div className="bap-container">
+        <div className="bap-layout">
+        <aside className="bap-aside">
+          <h2 className="bap-aside__title">How it works</h2>
+          <ol className="bap-aside__steps">
+            <li>
+              <span className="bap-aside__num">01</span>
+              <div>
+                <strong>Verify your mobile</strong>
+                <p>A one-time code confirms it&rsquo;s really you.</p>
+              </div>
+            </li>
+            <li>
+              <span className="bap-aside__num">02</span>
+              <div>
+                <strong>Choose speciality &amp; partner</strong>
+                <p>Pick the area you need help with and, if you like, a specific partner.</p>
+              </div>
+            </li>
+            <li>
+              <span className="bap-aside__num">03</span>
+              <div>
+                <strong>We confirm by phone</strong>
+                <p>Our team calls you to fix the final schedule.</p>
+              </div>
+            </li>
+          </ol>
+          <div className="bap-aside__help">
+            <span className="bap-aside__help-label">Prefer to talk to someone?</span>
+            <a className="bap-aside__phone" href="tel:18001201022">1800 120 1022</a>
+            <a className="bap-aside__mail" href="mailto:connect@jhsassociates.in">connect@jhsassociates.in</a>
+          </div>
+        </aside>
+
         <div className="bap-card">
           {!user ? (
             <div className="bap-authgate">
@@ -422,7 +449,7 @@ export default function BookAppointment() {
                   <header className="bap-formhead">
                     <span className="bap-formhead__icon"><Phone size={22} /></span>
                     <h2>Verify your mobile number</h2>
-                    <p>We'll send a one-time passsword to confirm it's really you.</p>
+                    <p>We'll send a one-time password to confirm it's really you.</p>
                   </header>
 
                   <div className="bap-field">
@@ -722,6 +749,7 @@ export default function BookAppointment() {
           )}
           </>
           )}
+        </div>
         </div>
       </div>
     </div>

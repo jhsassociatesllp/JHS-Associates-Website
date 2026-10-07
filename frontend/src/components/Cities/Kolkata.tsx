@@ -5,8 +5,9 @@ import './CityShared.css'
 import { imageUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   {
     name: 'Sharad Mohata',
     image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
@@ -191,6 +192,7 @@ const IconCheck = () => (
 )
 
 export default function Kolkata() {
+  const PARTNERS = useCityPartners('Kolkata', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -215,7 +217,7 @@ export default function Kolkata() {
         </video>
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
-          {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}
+          {/* <p className="kol-hero__eyebrow">JHS</p> */}
           <h1 className="kol-hero__title">Kolkata</h1>
           <p className="kol-hero__sub">City of Joy &amp; Eastern India Business Gateway</p>
         </div>

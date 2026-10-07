@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { User, LogOut } from "lucide-react";
+import AccountMenu from "./common/AccountMenu";
 import "./Navbar.css";
 import { imageUrl } from '../utils/imageUrl'
 import { useSiteAuth } from '../context/SiteAuthContext'
@@ -50,6 +51,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
       { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
       { label: "Podcasts", description: "Audio Insights on the go", href: '/podcasts' },
+      { label: "Events", description: "Excellencia, Knowledge Setu & more — register to join", href: '/events' },
     ],
   },
 
@@ -167,7 +169,7 @@ const NAV_ITEMS: NavItem[] = [
     id: "aboutus",
     label: "About Us",
     subLabel: "About Us",
-    subDesc: "JHS & Associates LLP your trusted partners in finance.",
+    subDesc: "JHS your trusted partners in finance.",
     subItems: [
       // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
@@ -196,8 +198,9 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
   const [selectedId, setSelectedId] = useState<string>("insights");
-  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { user, openAuthModal, logout } = useSiteAuth();
+  // The home page shows the account chip in the hero's action row instead.
+  const isHome = useLocation().pathname === "/";
 
   const menuOpenRef = useRef(menuOpen);
   useEffect(() => {
@@ -375,35 +378,14 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className="nb__right">
-          {user ? (
-            <div className="nb__account">
-              <button
-                type="button"
-                className="nb__account-btn"
-                onClick={() => setAccountMenuOpen((v) => !v)}
-              >
-                <span className="nb__account-avatar"><User size={14} /></span>
-                {user.first_name || user.name.split(' ')[0]}
-              </button>
-              {accountMenuOpen && (
-                <div className="nb__account-menu" onMouseLeave={() => setAccountMenuOpen(false)}>
-                  <span className="nb__account-email">{user.email}</span>
-                  <button
-                    type="button"
-                    className="nb__account-logout"
-                    onClick={() => { logout(); setAccountMenuOpen(false); }}
-                  >
-                    <LogOut size={14} /> Sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <button type="button" className="nb__login" onClick={() => openAuthModal()}>LOG IN</button>
-          )}
-        </div>
       </header>
+
+      {/* Signed-in account chip: fixed top-right on inner pages */}
+      {user && !isHome && !menuOpen && (
+        <div className={`nb-account-fixed ${hidden ? "nb-account-fixed--hidden" : ""}`}>
+          <AccountMenu />
+        </div>
+      )}
 
       {/* ══════════════ FULL-WIDTH MEGA MODAL ══════════════ */}
       <div

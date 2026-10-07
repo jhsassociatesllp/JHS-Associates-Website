@@ -16,16 +16,16 @@ const faqs: FAQCategory[] = [
     label: "About JHS",
     items: [
       {
-        q: "What is JHS & Associates LLP?",
-        a: "JHS & Associates LLP is a multi-disciplinary professional services firm of Chartered Accountants headquartered in India. We provide a comprehensive suite of services including Assurance, Taxation, Consulting, Corporate Finance, Outsourcing, and Regulatory Advisory to clients across industries ranging from financial services and manufacturing to healthcare and NGOs.",
+        q: "What is JHS?",
+        a: "JHS is a multi-disciplinary professional services firm of Chartered Accountants headquartered in India. We provide a comprehensive suite of services including Assurance, Taxation, Consulting, Corporate Finance, Outsourcing, and Regulatory Advisory to clients across industries ranging from financial services and manufacturing to healthcare and NGOs.",
       },
       {
-        q: "How long has JHS & Associates LLP been in practice?",
-        a: "JHS & Associates LLP has built a strong legacy of trust and professional excellence over decades of practice. Our firm combines deep domain expertise with a forward-looking approach, enabling us to serve diverse clients across India's evolving regulatory and business landscape.",
+        q: "How long has JHS been in practice?",
+        a: "JHS has built a strong legacy of trust and professional excellence over decades of practice. Our firm combines deep domain expertise with a forward-looking approach, enabling us to serve diverse clients across India's evolving regulatory and business landscape.",
       },
       {
         q: "How many offices does JHS have across India?",
-        a: "JHS & Associates LLP has a pan-India presence with offices in major cities including Mumbai, Delhi, Bengaluru, Hyderabad, Chennai, Ahmedabad, and Kolkata. This network enables us to serve clients locally while leveraging our collective national and international expertise.",
+        a: "JHS has a pan-India presence with offices in major cities including Mumbai, Delhi, Bengaluru, Hyderabad, Chennai, Ahmedabad, and Kolkata. This network enables us to serve clients locally while leveraging our collective national and international expertise.",
       },
       {
         q: "What industries does JHS serve?",
@@ -37,12 +37,12 @@ const faqs: FAQCategory[] = [
     label: "Our Services",
     items: [
       {
-        q: "What core services does JHS & Associates LLP offer?",
+        q: "What core services does JHS offer?",
         a: "Our core service lines include IT Assurance, Tax & GST Advisory, Financial Reporting, Risk & Governance, Outsourcing (Accounting, Payroll & Compliance), Single Window Assistance, SOC Attestation, Corporate Finance, and Compliance Learning. Each practice is led by experienced professionals with deep subject-matter expertise.",
       },
       {
         q: "Do you provide services to international clients or businesses with cross-border operations?",
-        a: "Yes. JHS & Associates LLP assists multinational corporations and businesses with cross-border operations through international tax structuring, transfer pricing advisory, foreign exchange compliance (FEMA), and assistance with setting up business entities in India. We also collaborate with international networks to deliver seamless service.",
+        a: "Yes. JHS assists multinational corporations and businesses with cross-border operations through international tax structuring, transfer pricing advisory, foreign exchange compliance (FEMA), and assistance with setting up business entities in India. We also collaborate with international networks to deliver seamless service.",
       },
       {
         q: "What is Single Window Assistance?",
@@ -58,7 +58,7 @@ const faqs: FAQCategory[] = [
     label: "Working with JHS",
     items: [
       {
-        q: "How can I engage JHS & Associates LLP for professional services?",
+        q: "How can I engage JHS for professional services?",
         a: "You can reach out to us through the Contact page on our website, or submit a formal Request for Proposal (RFP) using the dedicated RFP form. Our team will review your requirements and connect you with the right practice lead to discuss scope, timelines, and fee arrangements.",
       },
       {
@@ -67,11 +67,11 @@ const faqs: FAQCategory[] = [
       },
       {
         q: "Does JHS offer internship or career opportunities?",
-        a: "Yes. JHS & Associates LLP actively recruits Chartered Accountants, CA Articleship trainees, and professionals across finance, tax, audit, and consulting. Visit the Careers page to explore current openings and submit your application, or click the 'Apply Now' button on the homepage.",
+        a: "Yes. JHS actively recruits Chartered Accountants, CA Articleship trainees, and professionals across finance, tax, audit, and consulting. Visit the Careers page to explore current openings and submit your application, or click the 'Apply Now' button on the homepage.",
       },
       {
         q: "Will my information remain confidential?",
-        a: "Absolutely. Confidentiality is a cornerstone of professional practice. All information shared with JHS & Associates LLP — whether during engagement discussions or in the course of delivering services — is treated with the highest level of discretion and in accordance with the professional standards of the Institute of Chartered Accountants of India (ICAI).",
+        a: "Absolutely. Confidentiality is a cornerstone of professional practice. All information shared with JHS — whether during engagement discussions or in the course of delivering services — is treated with the highest level of discretion and in accordance with the professional standards of the Institute of Chartered Accountants of India (ICAI).",
       },
     ],
   },
@@ -121,7 +121,7 @@ export default function FAQ() {
           <span className="faq__eyebrow">GOT QUESTIONS?</span>
           <h2 className="faq__heading">Frequently Asked Questions</h2>
           <p className="faq__sub">
-            Everything you need to know about JHS &amp; Associates LLP — our
+            Everything you need to know about JHS — our
             services, how we work, and how we can help your business.
           </p>
         </div>

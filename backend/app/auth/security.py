@@ -3,7 +3,6 @@
 # from jose import jwt
 # from passlib.context import CryptContext
 
-# SECRET_KEY = "supersecretkey_jhs_admin_panel_do_not_use_in_prod_like_this"
 # ALGORITHM = "HS256"
 # ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
@@ -31,7 +30,17 @@ from typing import Optional
 import jwt
 from passlib.context import CryptContext
 
-SECRET_KEY = "supersecretkey_jhs_admin_panel_do_not_use_in_prod_like_this"
+import logging
+import secrets
+
+from app.config.settings import settings
+
+SECRET_KEY = settings.secret_key
+if not SECRET_KEY:
+    # Never fall back to a known value. Without SECRET_KEY in the environment every
+    # restart gets a fresh random key (logins/sessions reset) until it is configured.
+    SECRET_KEY = secrets.token_urlsafe(64)
+    logging.getLogger(__name__).warning("SECRET_KEY is not set - using a temporary random key. Set SECRET_KEY in the environment.")
 ALGORITHM = "HS256"
 # Admin panel session length. Used only by the two /admin/login* routes —
 # every other token type (site users, careers, consulting) sets its own

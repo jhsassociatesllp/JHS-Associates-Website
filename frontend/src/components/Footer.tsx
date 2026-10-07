@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MapPin, Mail, Phone } from 'lucide-react'
 import { imageUrl } from '../utils/imageUrl'
 import LazyImage from './common/LazyImage'
+import { OPEN_COOKIE_SETTINGS } from './common/CookieConsent'
 
 /* ─── Column Data ────────────────────────────────────── */
 const INSIGHTS = [
@@ -93,11 +94,11 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <LazyImage src={imageUrl('logo-footer.webp')} alt="JHS & Associates LLP" />
+              <LazyImage src={imageUrl('logo.webp')} alt="JHS" />
             </div>
             <p className="footer__brand-desc">
               Trusted Chartered Accountants and Advisory Partners for Businesses across India. <br />
-              EXCELLENCE, INTEGRITY AND EXPERTISE in Every Engagement.
+              Excellence, Integrity and Expertise in Every Engagement.
             </p>
 
             {/* Services heading + pills */}
@@ -158,11 +159,14 @@ export default function Footer() {
       {/* ══ Bottom Bar ══ */}
       <div className="footer__bottom">
         <div className="footer__bottom-inner">
-          <p className="footer__copy">Copyright © {year} JHS & Associates LLP All rights reserved. </p>
+          {/* <p className="footer__copy">Copyright © {year} JHS All rights reserved. </p> */}
           <div className="footer__legal">
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
             <Link to="/terms-of-business">Terms of Business</Link>
+            <button type="button" className="footer__legal-btn" onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS))}>
+              Cookie Settings
+            </button>
           </div>
         </div>
       </div>

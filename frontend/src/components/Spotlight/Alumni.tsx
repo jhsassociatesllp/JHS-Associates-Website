@@ -38,7 +38,7 @@ const ALUMNI_PROFILES = [
     id: 5,
     name: "Riya Almeida",
     // role: "Articleship",
-    desc: "My stint at JHS & Associates LLP provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
+    desc: "My stint at JHS provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
     image: imageUrl('Riya Almeida.webp')
   },
   {
@@ -223,7 +223,7 @@ export default function Alumni() {
               </div>
               <div className="alumni-contact-item">
                 <IconPin />
-                <span>JHS & Associates LLP, Head Office, Mumbai</span>
+                <span>JHS, Head Office, Mumbai</span>
               </div>
             </div>
           </div>

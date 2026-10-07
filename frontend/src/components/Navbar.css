@@ -992,3 +992,120 @@
     font-size: 18px;
   }
 }
+
+/* ================================================================
+   ACCOUNT CHIP (signed-in) — hero row on home, fixed top-right elsewhere
+   ================================================================ */
+.nb__account-btn {
+  gap: 8px;
+}
+
+.nb__account-name {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nb__account-chevron {
+  transition: transform 0.2s ease;
+}
+
+.nb__account-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.nb__account-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light, #6b6b6b);
+}
+
+.nb__account-menu {
+  gap: 4px;
+}
+
+.nb__account-email {
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+
+.nb-account-fixed {
+  position: fixed;
+  top: 28px;
+  right: 48px;
+  z-index: 1000;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.nb-account-fixed--hidden {
+  transform: translateY(-80px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nb-account-fixed .nb__account-btn {
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(18, 35, 59, 0.14);
+  border-radius: 100px;
+  padding: 4px 12px 4px 5px;
+  min-height: 38px;
+}
+
+/* in the hero's action row: same pill as the sibling buttons */
+.nb__account--hero .nb__account-btn {
+  font-family: var(--font-body, "DM Sans", sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1e3a5f;
+  border: 1.5px solid #1e3a5f;
+  border-radius: 100px;
+  padding: 4px 12px 4px 5px;
+  gap: 7px;
+  min-height: 0;
+  height: 38px;
+  background: transparent;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.nb__account--hero .nb__account-btn:hover {
+  background: #1e3a5f;
+  color: #fff;
+}
+
+.nb__account--hero .nb__account-avatar {
+  width: 26px;
+  height: 26px;
+}
+
+.nb__account--hero .nb__account-avatar svg {
+  width: 13px;
+  height: 13px;
+}
+
+.nb__account--hero .nb__account-chevron {
+  width: 12px;
+  height: 12px;
+}
+
+@media (max-width: 900px) {
+  .nb-account-fixed {
+    top: 22px;
+    right: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nb-account-fixed {
+    top: 24px;
+    right: 14px;
+  }
+
+  .nb__account-name {
+    max-width: 72px;
+  }
+}

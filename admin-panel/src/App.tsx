@@ -19,6 +19,10 @@ import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
 import AdminCareers from './pages/AdminCareers';
 import AdminAppointments from './pages/AdminAppointments';
 import AdminUsers from './pages/AdminUsers';         // ✅ SITE ACCOUNT
+import AdminLeadership from './pages/AdminLeadership'; // ✅ LEADERSHIP
+import AdminCatalog from './pages/AdminCatalog';       // ✅ SERVICES & SECTORS
+import AdminCookies from './pages/AdminCookies';       // ✅ COOKIE CONSENT
+import AdminEvents from './pages/AdminEvents';         // ✅ EVENTS
 
 const theme = createTheme({
   palette: {
@@ -50,6 +54,10 @@ export default function App() {
               <Route path="/regulatory" element={<AdminRegulatory />} /> {/* ✅ NEW */}
               <Route path="/excellencia" element={<AdminExcellencia />} /> {/* ✅ NEW */}
               <Route path="/newsletters" element={<AdminNewsletters />} /> {/* ✅ NEW */}
+              <Route path="/leadership" element={<AdminLeadership />} /> {/* ✅ LEADERSHIP */}
+              <Route path="/services-sectors" element={<AdminCatalog />} /> {/* ✅ SERVICES & SECTORS */}
+              <Route path="/cookie-consent" element={<AdminCookies />} /> {/* ✅ COOKIE CONSENT */}
+              <Route path="/events" element={<AdminEvents />} /> {/* ✅ EVENTS */}
               <Route path="/contacts" element={<AdminContacts />} />   {/* ✅ NEW */}
               <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
               <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}

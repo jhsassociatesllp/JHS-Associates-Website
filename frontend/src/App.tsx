@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
@@ -22,6 +22,19 @@ import Insights from './sections/Insights'
 import FAQ from './sections/FAQ'
 import Disclaimer from './components/Disclaimer'
 import CookieConsent from './components/common/CookieConsent'
+
+const SOP_URL = 'https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/'
+
+// Shows the SOP page full-screen while the address bar stays on /SOP
+function SopPage() {
+  return (
+    <iframe
+      src={SOP_URL}
+      title="JHS SOP"
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', border: 0 }}
+    />
+  )
+}
 
 // Legal pages
 const PrivacyPolicy = lazy(() => import('./components/legal/PrivacyPolicy'))
@@ -174,6 +187,9 @@ export default function App() {
     initPersistedLanguage()
   }, [])
 
+  const { pathname } = useLocation()
+  if (pathname.toLowerCase().replace(/\/+$/, '') === '/sop') return <SopPage />
+
   return (
     <SiteAuthProvider>
       <SEOHead />
@@ -286,6 +302,9 @@ export default function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/terms-of-business" element={<TermsOfBusiness />} />
+
+          {/* SOP — jhsassociates.in/SOP opens the SOP page, URL unchanged */}
+          <Route path="/sop" element={<SopPage />} />
 
           {/* Request for Proposal */}
           <Route path="/approval-for-proposal" element={<RequestForProposal />} />

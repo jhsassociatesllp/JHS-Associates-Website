@@ -212,11 +212,26 @@ function buildTypoVocab() {
   return vocab;
 }
 
+// Simple in-memory cache of computed answers (cost saver for repeated
+// questions). Declared here, above loadIndex, so loadIndex can clear it —
+// see the note inside loadIndex for why that matters.
+const CACHE = new Map();
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
 function loadIndex() {
   if (!fs.existsSync("./index.json")) {
     console.warn("index.json not found — run `npm run crawl` first.");
     return;
   }
+  // A fresh deploy starts with an empty/near-empty index.json (it's
+  // gitignored) and fills in over the next few minutes as the startup crawl
+  // runs. A question asked during that window can get answered by the AI
+  // fallback instead of the exact team/content data, and — worse — that
+  // wrong answer used to sit in CACHE for a full hour even after the index
+  // became complete. Every reload (including each growth step of that
+  // startup crawl, and the 24h scheduled re-crawl) now clears the cache, so
+  // a fuller index is used on the very next matching question.
+  CACHE.clear();
   INDEX = JSON.parse(fs.readFileSync("./index.json", "utf-8"));
   KNOWN_URLS = new Set(INDEX.map((item) => item.url).filter(Boolean));
   CREDENTIAL_VOCAB = buildCredentialVocab();
@@ -245,9 +260,7 @@ fs.watchFile("./index.json", { interval: 60000 }, loadIndex);
 require("./scheduler").start();
 
 // ---- simple in-memory cache (cost saver for repeated questions) --------
-
-const CACHE = new Map();
-const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+// (CACHE/CACHE_TTL_MS themselves are declared above, before loadIndex.)
 
 function cacheGet(key) {
   const hit = CACHE.get(key);
@@ -580,7 +593,12 @@ const LOCATION_INTENT_PREP_RE = /\b(?:in|of|from|at)\s+([a-z]+)\b/i;
 // nothing to do with a place — without excluding these, e.g. "number OF
 // COUNT who are not partners" matched as a place reference and wrongly
 // deferred an otherwise-answerable question to the unreliable LLM path.
-const LOCATION_INTENT_STOPWORDS = new Set(["count", "number", "total", "all", "the", "our", "us", "them", "this", "that", "which"]);
+// Includes the firm's own name/short forms — "how many partners in JHS" is a
+// question about the whole company, not an unresolved place called "Jhs".
+const LOCATION_INTENT_STOPWORDS = new Set([
+  "count", "number", "total", "all", "the", "our", "us", "them", "this", "that", "which",
+  "jhs", "jhsassociates", "associates", "company", "firm", "organisation", "organization",
+]);
 
 // The specific word that makes this look like an unresolved place reference
 // (the word right after "in/of/from/at" — filtered against common non-place
@@ -754,7 +772,13 @@ const NOT_TEAM_SUBJECT_RE = /\b(alumni|alumnus|clients?|customers?|competitors?|
 function answerTeamListQuery(rawMessage) {
   if (NOT_TEAM_SUBJECT_RE.test(rawMessage)) return null; // "who are your alumni" is not "list our team"
   const explicitIntent = COUNT_OR_LIST_INTENT_RE.test(rawMessage);
-  if (!explicitIntent && !(IMPLICIT_LIST_RE.test(rawMessage) && !NOT_A_LIST_RE.test(rawMessage))) return null;
+  // A bare "who is CISA" / "who is FCA" names a real credential with no other
+  // list-y wording at all ("how many", "experts", "team", ...) — without this,
+  // it fell through every deterministic check and went to the AI, which
+  // answered from embedding similarity instead of the actual credential,
+  // missing real holders and wrongly including unrelated people.
+  const mentionsKnownCredential = Boolean(findCredentialInQuestion(rawMessage)) || CA_SYNONYM_RE.test(rawMessage);
+  if (!explicitIntent && !mentionsKnownCredential && !(IMPLICIT_LIST_RE.test(rawMessage) && !NOT_A_LIST_RE.test(rawMessage))) return null;
 
   // Strip a trailing "and also .../aur ..." clause that isn't actually about
   // the team before running any filter detection below — otherwise an
@@ -816,8 +840,13 @@ function answerTeamListQuery(rawMessage) {
   // Previously this ignored `negated` entirely, so "who are NOT partners"
   // silently filtered TO partners and answered the opposite of what was asked.
   const roleNegated = negated && !cred && !isCASynonym;
+  // Per the firm: Governance Council members are considered partners too, so
+  // a "partners" question also includes them — their own profile still shows
+  // "Governance Council" as their title, this only affects who counts toward
+  // a "partner" count/list. Advisory Board is deliberately not included here.
+  const roleMatches = (item) => (role === "Partner" ? item.role === "Partner" || item.role === "Governance Council" : item.role === role);
   if (role) {
-    matches = matches.filter((item) => (roleNegated ? item.role !== role : item.role === role));
+    matches = matches.filter((item) => (roleNegated ? !roleMatches(item) : roleMatches(item)));
   }
 
   if (sector) {

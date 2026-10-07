@@ -204,8 +204,10 @@
     }
     // Contact cards for team members named in an AI-written answer.
     for (const person of data.people || []) html += personHtml(person);
-    // Links from a streamed answer that are not already inline in its text.
-    if (!items.length) {
+    // A general link (e.g. "View Full Team") always goes at the very end of the
+    // whole answer, after the itemised breakdown — not before it, where it would
+    // read as if the answer had already finished. Skipped if already inline in the text.
+    {
       const shown = data.reply || "";
       for (const l of data.links || []) {
         if (l && l.url && !shown.includes(l.url)) {

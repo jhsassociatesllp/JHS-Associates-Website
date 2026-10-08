@@ -122,7 +122,7 @@ export default function ExpertsModal({ pointTitle, pointDesc, rows, onClose }: P
       </div>
 
       {bookingPartner && (
-        <BookConsultationModal partner={bookingPartner} onClose={() => setBookingPartner(null)} />
+        <BookConsultationModal partner={bookingPartner} source="partner_card" onClose={() => setBookingPartner(null)} />
       )}
     </>
   )

@@ -29,6 +29,8 @@ async def create_appointment(data: AppointmentCreate, user: dict) -> dict:
     payload = data.model_dump()
     payload["status"] = "new"
     payload["user_id"] = user["id"]
+    payload["account_email"] = user.get("email")   # the signed-in site account that booked
+    payload["mobile_verified"] = True   # booking is only reachable after a successful OTP check
     payload["created_at"] = now
     payload["updated_at"] = now
 
@@ -39,6 +41,27 @@ async def create_appointment(data: AppointmentCreate, user: dict) -> dict:
 
     created = await db[APPOINTMENTS_COLLECTION].find_one({"_id": result.inserted_id})
     return _serialize(created)
+
+
+async def source_summary() -> dict:
+    """How many bookings came from each place (Book Appointment page vs service / partner cards)."""
+    from datetime import timedelta
+    db = get_database()
+    week_ago = datetime.now(timezone.utc) - timedelta(days=7)
+    out: dict = {"total": 0, "last_7_days": 0, "by_source": {}}
+    sources = ("book_appointment_page", "services_card", "partner_card")
+    for collection, default in ((APPOINTMENTS_COLLECTION, "book_appointment_page"), ("consultation_requests", "services_card")):
+        # plain counts (this database server does not support $group); older rows have no `source` field
+        for src in sources:
+            query = {"source": src}
+            if src == default:
+                query = {"$or": [{"source": src}, {"source": {"$exists": False}}]}
+            n = await db[collection].count_documents(query)
+            if n:
+                out["by_source"][src] = out["by_source"].get(src, 0) + n
+                out["total"] += n
+        out["last_7_days"] += await db[collection].count_documents({"created_at": {"$gte": week_ago}})
+    return out
 
 
 async def list_appointments() -> list[dict]:

@@ -229,6 +229,8 @@ jobs:
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
             export SENDER_EMAIL="${{ secrets.SENDER_EMAIL }}"
             export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+            export MSG91_AUTH_KEY="${{ secrets.MSG91_AUTH_KEY }}"
+            export MSG91_TEMPLATE_ID="${{ secrets.MSG91_TEMPLATE_ID }}"
             export PINECONE_INDEX="${{ secrets.PINECONE_INDEX }}"
             export SITE_SITEMAP_URL="${{ secrets.SITE_SITEMAP_URL }}"
 

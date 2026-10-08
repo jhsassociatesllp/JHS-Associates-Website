@@ -32,6 +32,7 @@ from app.routes.excellencia import router as excellencia_router # ✅ NEW
 from app.routes.newsletter import router as newsletter_router # ✅ NEW
 from app.routes.regulatory import router as regulatory_router # ✅ NEW
 from app.routes.appointments import router as appointments_router # ✅ NEW
+from app.routes.otp import router as otp_router
 from app.routes.consultation import router as consultation_router # ✅ NEW
 from app.routes.auth import router as auth_router             # ✅ SITE ACCOUNT
 from app.routes.user import router as user_admin_router       # ✅ SITE ACCOUNT
@@ -93,6 +94,7 @@ api_router.include_router(excellencia_router) # ✅ NEW
 api_router.include_router(newsletter_router) # ✅ NEW
 api_router.include_router(regulatory_router) # ✅ NEW
 api_router.include_router(appointments_router) # ✅ NEW
+api_router.include_router(otp_router)
 api_router.include_router(consultation_router) # ✅ NEW
 api_router.include_router(auth_router)         # ✅ SITE ACCOUNT
 api_router.include_router(user_admin_router)   # ✅ SITE ACCOUNT

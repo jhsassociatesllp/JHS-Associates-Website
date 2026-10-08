@@ -66,7 +66,7 @@ export default function OurStory() {
             <span className="story-stat__label">Years of Trust</span>
           </div>
           <div className="story-stat">
-            <span className="story-stat__num">13</span>
+            <span className="story-stat__num">14</span>
             <span className="story-stat__label">Offices</span>
           </div>
           <div className="story-stat">

@@ -16,6 +16,8 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SENDER_EMAIL: ${SENDER_EMAIL:-}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      MSG91_AUTH_KEY: ${MSG91_AUTH_KEY:-}
+      MSG91_TEMPLATE_ID: ${MSG91_TEMPLATE_ID:-}
 
     extra_hosts:
       - "host.docker.internal:host-gateway"

@@ -178,14 +178,14 @@ export default function OurOffices() {
           {/* <p className="oo-hero__eyebrow">JHS</p> */}
           <h1 className="oo-hero__title">Our Offices</h1>
           <p className="oo-hero__sub">
-            10 cities · 13+ locations · Pan-India &amp; Global
+            10 cities · 14+ locations · Pan-India &amp; Global
           </p>
         </div>
         {/* Stats bar */}
         <div className="oo-hero__stats">
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">10</span><span className="oo-hero__stat-label">Cities</span></div>
           <div className="oo-hero__stat-div" />
-          <div className="oo-hero__stat"><span className="oo-hero__stat-num">13</span><span className="oo-hero__stat-label">Locations</span></div>
+          <div className="oo-hero__stat"><span className="oo-hero__stat-num">14</span><span className="oo-hero__stat-label">Locations</span></div>
           <div className="oo-hero__stat-div" />
           <div className="oo-hero__stat"><span className="oo-hero__stat-num">700+</span><span className="oo-hero__stat-label">Professionals</span></div>
           <div className="oo-hero__stat-div" />

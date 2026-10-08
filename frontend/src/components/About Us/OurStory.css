@@ -215,14 +215,6 @@
   border-bottom: 1px solid rgba(15, 35, 64, 0.1);
 }
 
-.story-body > p:first-child::first-letter {
-  float: left;
-  font-size: 3.6rem;
-  font-weight: 800;
-  line-height: 0.82;
-  color: #d62049;
-  padding: 6px 12px 0 0;
-}
 
 /* ── Foundation / values ── */
 .story-values {
@@ -522,7 +514,4 @@
     padding-top: 2.5rem;
   }
 
-  .story-body p:first-child::first-letter {
-    font-size: 2.4rem;
-  }
 }

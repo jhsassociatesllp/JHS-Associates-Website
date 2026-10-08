@@ -44,6 +44,7 @@ def _fire_and_forget(coro) -> asyncio.Task:
 # ── Config from settings ─────────────────────────────────────
 HR_EMAIL = settings.hr_notification_email
 APPOINTMENT_EMAIL = settings.appointment_notification_email
+CONNECT_EMAIL = settings.connect_notification_email   # Contact Us + Request for Proposal
 SENDER_EMAIL = settings.sender_email or settings.smtp_username
 SENDER_NAME = settings.sender_name
 
@@ -89,58 +90,127 @@ async def _send_email(
         return False
 
 
-# ── Shared HTML wrapper ──────────────────────────────────────
+# ── Shared HTML wrapper (letterhead layout) ──────────────────
+FIRM_ADDRESS = "B Wing, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Mumbai &ndash; 400059"
+FIRM_PHONE = "1800 120 1022"
+FIRM_WEBSITE = "jhsassociates.in"
+FIRM_EMAIL = "connect@jhsassociates.in"
+
+NAVY = "#0f2340"
+CRIMSON = "#B01E2E"
+
+
+class _Html(str):
+    """Marks a value as already-safe HTML so _row does not escape it again."""
+
+
+def _letter_date() -> str:
+    from datetime import datetime, timedelta, timezone
+
+    ist = timezone(timedelta(hours=5, minutes=30))
+    return datetime.now(ist).strftime("%d %B %Y")
+
+
 def _wrap_html(title: str, body_rows: str) -> str:
-    """Return a styled HTML email body."""
-    return f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
-    <body style="margin:0;padding:0;background:#f4f4f7;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:40px 20px;">
-        <tr><td align="center">
-          <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
-            <!-- Header -->
-            <tr>
-              <td style="background:linear-gradient(135deg,#1e3a5f 0%,#162d4a 100%);padding:32px 40px;text-align:center;">
-                <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:0.03em;">JHS</h1>
-                <p style="margin:6px 0 0;color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;">Chartered Accountants</p>
-              </td>
-            </tr>
-            <!-- Title -->
-            <tr>
-              <td style="padding:32px 40px 0;">
-                <h2 style="margin:0 0 20px;color:#1e3a5f;font-size:18px;font-weight:700;border-bottom:2px solid #B01E2E;padding-bottom:12px;">{title}</h2>
-              </td>
-            </tr>
-            <!-- Body -->
-            <tr>
-              <td style="padding:0 40px 32px;">
-                <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;color:#333333;">
-                  {body_rows}
-                </table>
-              </td>
-            </tr>
-            <!-- Footer -->
-            <tr>
-              <td style="background:#f8f8fa;padding:20px 40px;text-align:center;border-top:1px solid #eee;">
-                <p style="margin:0;font-size:12px;color:#999;">© 2025 JHS &nbsp;|&nbsp; <a href="https://jhsassociates.in" style="color:#B01E2E;text-decoration:none;">jhsassociates.in</a></p>
-              </td>
-            </tr>
-          </table>
-        </td></tr>
+    """Return a styled HTML email in a professional letterhead layout."""
+    from datetime import datetime
+    from html import escape as _esc
+
+    title = _esc(title)
+    year = datetime.now().year
+    automated = "Warm regards" not in body_rows
+    signoff = (
+        f"""<tr><td colspan="2" style="padding:22px 0 0;font-size:12px;color:#8a93a3;line-height:1.6;">
+              This is an automated message from the JHS website.</td></tr>"""
+        if automated else ""
+    )
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>{title}</title></head>
+<body style="margin:0;padding:0;background:#eef0f4;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef0f4;padding:32px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;background:#ffffff;box-shadow:0 6px 28px rgba(15,35,64,0.10);">
+        <tr>
+          <!-- ───────── letter ───────── -->
+          <td valign="top" style="padding:0;">
+            <!-- letterhead -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding:34px 36px 20px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+                    <td style="border-left:5px solid {CRIMSON};padding-left:12px;">
+                      <div style="font-size:34px;line-height:34px;font-weight:800;letter-spacing:0.02em;color:{CRIMSON};">JHS</div>
+                      <div style="font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:{NAVY};padding-top:5px;">Chartered Accountants</div>
+                    </td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:6px 36px 18px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+                    <td valign="top" style="font-size:12px;line-height:1.75;color:#44506a;">
+                      <strong style="color:{CRIMSON};font-size:13px;">JHS</strong><br>
+                      <strong style="color:{CRIMSON};">Website</strong>&nbsp; : &nbsp;<a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a><br>
+                      <strong style="color:{CRIMSON};">Email</strong>&nbsp; : &nbsp;<a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
+                      <strong style="color:{CRIMSON};">Phone</strong>&nbsp; : &nbsp;{FIRM_PHONE}
+                    </td>
+                    <td valign="top" align="right" style="font-size:12px;color:#44506a;white-space:nowrap;">Date, {_letter_date()}</td>
+                  </tr></table>
+                </td>
+              </tr>
+              <tr><td style="padding:0 36px;"><div style="border-top:1px solid #d9dde6;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+              <!-- title + content -->
+              <tr>
+                <td style="padding:24px 36px 6px;">
+                  <h2 style="margin:0;color:{NAVY};font-size:19px;line-height:1.35;font-weight:700;">{title}</h2>
+                  <div style="width:42px;height:3px;background:{CRIMSON};margin-top:10px;font-size:0;line-height:0;">&nbsp;</div>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:14px 36px 30px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;color:#2b3445;">
+                    {body_rows}
+                    {signoff}
+                  </table>
+                </td>
+              </tr>
+              <!-- footer -->
+              <tr><td style="padding:0 36px;"><div style="border-top:2px solid {CRIMSON};opacity:0.85;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+              <tr>
+                <td style="padding:16px 36px 26px;font-size:12px;line-height:1.8;color:#44506a;">
+                  <strong style="color:{NAVY};font-size:13px;">JHS &ndash; Chartered Accountants</strong><br>
+                  {FIRM_ADDRESS}<br>
+                  <span style="color:{CRIMSON};font-weight:700;">Phone</span>&nbsp; {FIRM_PHONE}<br>
+                  <span style="color:{CRIMSON};font-weight:700;">Email</span>&nbsp; <a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
+                  <span style="color:{CRIMSON};font-weight:700;">Website</span>&nbsp; <a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a>
+                  <div style="padding-top:10px;font-size:11px;color:#98a1b1;">&copy; {year} JHS. All rights reserved.</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <!-- ───────── side stripe ───────── -->
+          <td width="26" valign="top" bgcolor="{CRIMSON}" style="width:26px;background-color:{CRIMSON};background-image:linear-gradient(to bottom,{NAVY} 0%,{NAVY} 52%,{CRIMSON} 52%,{CRIMSON} 100%);font-size:0;line-height:0;">&nbsp;</td>
+        </tr>
       </table>
-    </body>
-    </html>
-    """
+    </td></tr>
+  </table>
+</body>
+</html>"""
 
 
 def _row(label: str, value: str) -> str:
-    """Single info row inside the body table."""
+    """One labelled detail line. Plain values are HTML-escaped; wrap trusted markup in _Html()."""
+    from html import escape as _esc
+
+    if isinstance(value, _Html):
+        shown = str(value)
+    else:
+        shown = _esc(str(value if value is not None else "")).replace("\r\n", "\n").replace("\n", "<br>")
     return f"""
     <tr>
-      <td style="padding:8px 0;font-weight:600;color:#555;width:160px;vertical-align:top;">{label}</td>
-      <td style="padding:8px 0;color:#222;">{value}</td>
+      <td width="150" valign="top" style="padding:12px 14px 10px 0;border-bottom:1px solid #edf0f5;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#7b869a;">{_esc(label)}</td>
+      <td valign="top" style="padding:10px 0;border-bottom:1px solid #edf0f5;font-size:14px;line-height:1.55;color:#1f2a3d;word-break:break-word;">{shown}</td>
     </tr>"""
 
 
@@ -164,7 +234,7 @@ async def notify_hr_new_contact(data: dict) -> None:
     )
     hr_html = _wrap_html("New Contact Form Submission", rows)
     _fire_and_forget(
-        _send_email(HR_EMAIL, "JHS HR Team", f"New Contact Submission from {name}", hr_html)
+        _send_email(CONNECT_EMAIL, "JHS Connect", f"New Contact Submission from {name}", hr_html)
     )
 
     # ── User thank‑you ──
@@ -346,8 +416,6 @@ async def notify_hr_new_appointment(data: dict) -> None:
     mobile = data.get("mobile", "")
     speciality = data.get("speciality", "")
     partner = data.get("partner") or "Any available partner"
-    date = data.get("date", "")
-    time = data.get("time", "")
 
     rows = (
         _row("Name", name)
@@ -356,8 +424,6 @@ async def notify_hr_new_appointment(data: dict) -> None:
         + _row("City", data.get("city") or "—")
         + _row("Speciality", speciality)
         + _row("Preferred Partner", partner)
-        + _row("Preferred Date", date)
-        + _row("Preferred Time", time)
         + _row("Notes", data.get("message") or "—")
     )
     hr_html = _wrap_html("New Appointment Request", rows)
@@ -375,8 +441,8 @@ async def notify_hr_new_appointment(data: dict) -> None:
           Dear <strong>{name}</strong>,<br><br>
           Thank you for booking an appointment with <strong>JHS</strong>
           for <strong>{speciality}</strong>.<br><br>
-          Our team will call you on <strong>+91 {mobile}</strong> shortly to confirm your
-          preferred slot of <strong>{date} at {time}</strong>.<br><br>
+          Our team will call you on <strong>+91 {mobile}</strong> shortly to confirm
+          a convenient time for your appointment.<br><br>
           Warm regards,<br>
           <strong>JHS</strong>
         </td></tr>
@@ -455,7 +521,7 @@ async def notify_hr_new_proposal(data: dict) -> None:
     )
     hr_html = _wrap_html("New Request for Proposal", rows)
     _fire_and_forget(
-        _send_email(HR_EMAIL, "JHS HR Team", f"New Proposal Request: {full_name}", hr_html)
+        _send_email(CONNECT_EMAIL, "JHS Connect", f"New Proposal Request: {full_name}", hr_html)
     )
 
     user_body = _wrap_html(
@@ -526,17 +592,17 @@ async def notify_event_registration(event: dict, name: str, email: str, referenc
 
     title = escape(event.get("title", "the event"))
     rows = (
-        _row("Event", f"<strong>{title}</strong>")
-        + _row("Type", escape(event.get("event_type", "")))
-        + _row("When", escape(when(event.get("start_at"))))
-        + _row("Format", escape(event.get("mode", "Online")))
+        _row("Event", _Html(f"<strong>{title}</strong>"))
+        + _row("Type", event.get("event_type", ""))
+        + _row("When", when(event.get("start_at")))
+        + _row("Format", event.get("mode", "Online"))
     )
     if event.get("venue"):
-        rows += _row("Venue", escape(event["venue"]))
+        rows += _row("Venue", event["venue"])
     if event.get("join_link"):
         link = escape(event["join_link"], quote=True)
-        rows += _row("Join link", f'<a href="{link}" style="color:#B01E2E;">{link}</a>')
-    rows += _row("Your reference", escape(reference))
+        rows += _row("Join link", _Html(f'<a href="{link}" style="color:#B01E2E;">{link}</a>'))
+    rows += _row("Your reference", reference)
 
     body = _wrap_html(
         "You are registered",

@@ -1,7 +1,9 @@
 from datetime import datetime
 from typing import Literal, Optional
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
+
+from app.schemas.appointment import BookingSource, clean_source_page
 
 ConsultationStatus = Literal["new", "confirmed", "completed", "cancelled"]
 
@@ -30,6 +32,13 @@ class ConsultationRequestCreate(BaseModel):
     partner_location: Optional[str] = Field(None, max_length=120)
     appointment_type: str = Field(..., min_length=2, max_length=160)
     message: Optional[str] = Field(None, max_length=2000)
+    source: BookingSource = "services_card"
+    source_page: Optional[str] = Field(None, max_length=200)
+
+    @field_validator("source_page")
+    @classmethod
+    def _page(cls, v):
+        return clean_source_page(v)
 
 
 class ConsultationRequestStatusUpdate(BaseModel):

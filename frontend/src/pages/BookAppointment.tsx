@@ -18,25 +18,38 @@ import './BookAppointment.css'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
-/* ─── OTP service (mock) ─────────────────────────────────────────
-   sendOtp / verifyOtp keep this exact signature so wiring in the
-   real OTP provider later is a one-function swap — nothing else in
-   this component needs to change. */
-const DEMO_OTP = '123456'
-
-async function sendOtp(_mobile: string): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 700))
-}
-
-async function verifyOtp(_mobile: string, otp: string): Promise<boolean> {
-  await new Promise((resolve) => setTimeout(resolve, 600))
-  return otp === DEMO_OTP
-}
-
-async function submitAppointment(payload: AppointmentData, token: string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/appointments/`, {
+/* ─── Mobile OTP (MSG91 via our backend) ──────────────────────────
+   The signed-in user asks for a code, then verifies it. A successful
+   check returns a short-lived, single-use token that the booking call
+   must carry — without it the server refuses to book. */
+async function otpRequest(path: 'send' | 'verify', body: object, token: string) {
+  const response = await fetch(`${API_BASE_URL}/otp/${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
+  })
+  const json = await response.json().catch(() => null)
+  if (response.status === 401) throw new Error('session-expired')
+  if (!response.ok) {
+    const detail = typeof json?.detail === 'string' ? json.detail : 'Something went wrong. Please try again.'
+    throw new Error(detail)
+  }
+  return json
+}
+
+async function sendOtp(mobile: string, token: string): Promise<void> {
+  await otpRequest('send', { mobile }, token)
+}
+
+async function verifyOtp(mobile: string, otp: string, token: string): Promise<string> {
+  const json = await otpRequest('verify', { mobile, otp }, token)
+  return json.otp_token as string
+}
+
+async function submitAppointment(payload: AppointmentData, token: string, otpToken: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/appointments/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, 'X-OTP-Token': otpToken },
     body: JSON.stringify({
       mobile: payload.mobile,
       full_name: payload.fullName,
@@ -45,11 +58,12 @@ async function submitAppointment(payload: AppointmentData, token: string): Promi
       message: payload.message || null,
       speciality: payload.speciality,
       partner: payload.partner || null,
-      date: payload.date,
-      time: payload.time,
+      source: 'book_appointment_page',
+      source_page: window.location.pathname,
     }),
   })
-  if (response.status === 401 || response.status === 403) throw new Error('session-expired')
+  if (response.status === 401) throw new Error('session-expired')
+  if (response.status === 403) throw new Error('otp-required')
   if (!response.ok) throw new Error('Failed to submit appointment')
 }
 
@@ -67,16 +81,6 @@ const SPECIALITIES = [
   'SOC Attestation',
 ]
 
-const TIME_SLOTS = [
-  '10:00 AM',
-  '11:00 AM',
-  '12:00 PM',
-  '01:00 PM',
-  '02:00 PM',
-  '03:00 PM',
-  '04:00 PM',
-  '05:00 PM',
-]
 
 const STEP_LABELS = ['Verify Mobile', 'Your Details', 'Appointment', 'Confirm']
 
@@ -88,27 +92,6 @@ interface PartnerOption {
   sector: string[]
 }
 
-/**
- * Best-effort mapping from each client-facing speciality to the free-text
- * sector tags partners are labelled with on the Leadership page (see
- * Partners.tsx). Matching is substring-based against a partner's sector
- * list, same approach as that page's own sector filter. Specialities with
- * no dedicated partner on file (e.g. Learning & Development) simply won't
- * narrow the list — see the fallback in filteredPartnerOptions below.
- */
-const SPECIALITY_KEYWORDS: Record<string, string[]> = {
-  'Assurance': ['statutory audit', 'assurance'],
-  'Consulting': ['consulting', 'risk advisory', 'advisory & cfo', 'board & institutional'],
-  'IT Assurance': ['soc', 'cyber', 'tech'],
-  'Taxation': ['tax', 'gst'],
-  'Outsourcing': ['outsourcing'],
-  'Corporate Finance': ['financial advisory', 'cfo', 'financial strategy', 'corporate finance'],
-  'Learning & Development': ['learning', 'training'],
-  'Compliance & Governance': ['governance', 'compliance', 'risk management', 'grc'],
-  'Single Window Assistance': ['single window'],
-  'SOC Attestation': ['soc'],
-}
-
 interface AppointmentData {
   mobile: string
   fullName: string
@@ -117,8 +100,6 @@ interface AppointmentData {
   message: string
   speciality: string
   partner: string
-  date: string
-  time: string
 }
 
 const INITIAL_DATA: AppointmentData = {
@@ -129,31 +110,18 @@ const INITIAL_DATA: AppointmentData = {
   message: '',
   speciality: '',
   partner: '',
-  date: '',
-  time: '',
 }
 
 const MOBILE_REGEX = /^[6-9]\d{9}$/
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const RESEND_SECONDS = 30
 
-function minSelectableDate(): string {
-  const d = new Date()
-  d.setDate(d.getDate() + 1)
-  return d.toISOString().split('T')[0]
-}
-
-function formatDateDisplay(dateStr: string): string {
-  if (!dateStr) return ''
-  const d = new Date(`${dateStr}T00:00:00`)
-  return d.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-}
-
 export default function BookAppointment() {
   const { user, token, openAuthModal } = useSiteAuth()
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1)
   const [data, setData] = useState<AppointmentData>(INITIAL_DATA)
   const [otp, setOtp] = useState('')
+  const [otpToken, setOtpToken] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const [resendTimer, setResendTimer] = useState(0)
@@ -196,28 +164,15 @@ export default function BookAppointment() {
 
   const clearError = (key: string) => setErrors((prev) => ({ ...prev, [key]: '' }))
 
-  /* Partners matching the chosen speciality (falls back to the full list
-     when a speciality has no dedicated specialist on file yet). */
+  /* Every partner is offered, whatever speciality is chosen. */
   const { members } = useLeadership()
   const partnerOptions: PartnerOption[] = useMemo(
     () => members.map((m) => ({ name: m.name, role: m.role, location: m.location, category: m.category, sector: m.sector })),
     [members]
   )
 
-  const { filteredPartnerOptions, hasSpecialityMatch } = useMemo(() => {
-    if (!data.speciality) return { filteredPartnerOptions: partnerOptions, hasSpecialityMatch: true }
-
-    const keywords = SPECIALITY_KEYWORDS[data.speciality] ?? []
-    const matches = partnerOptions.filter((p) =>
-      p.sector.some((s) => keywords.some((k) => s.toLowerCase().includes(k)))
-    )
-    return matches.length > 0
-      ? { filteredPartnerOptions: matches, hasSpecialityMatch: true }
-      : { filteredPartnerOptions: partnerOptions, hasSpecialityMatch: false }
-  }, [data.speciality, partnerOptions])
-
   const handleSpecialityChange = (speciality: string) => {
-    setData((prev) => ({ ...prev, speciality, partner: '' }))
+    setData((prev) => ({ ...prev, speciality }))
     if (errors.speciality) clearError('speciality')
   }
 
@@ -228,12 +183,19 @@ export default function BookAppointment() {
       setErrors({ mobile: 'Enter a valid 10-digit mobile number' })
       return
     }
+    // The OTP is only sent to a signed-in user (stops anonymous SMS abuse).
+    if (!token) { openAuthModal('verify your mobile number'); return }
     setLoading(true)
     try {
-      await sendOtp(data.mobile)
+      await sendOtp(data.mobile, token)
       setOtp('')
+      setOtpToken('')
+      setErrors({})
       setResendTimer(RESEND_SECONDS)
       setStep(2)
+    } catch (error) {
+      if (error instanceof Error && error.message === 'session-expired') openAuthModal('verify your mobile number')
+      else setErrors({ mobile: error instanceof Error ? error.message : 'Could not send the OTP. Please try again.' })
     } finally {
       setLoading(false)
     }
@@ -246,26 +208,31 @@ export default function BookAppointment() {
       setErrors({ otp: 'Enter the 6-digit code' })
       return
     }
+    if (!token) { openAuthModal('verify your mobile number'); return }
     setLoading(true)
     try {
-      const ok = await verifyOtp(data.mobile, otp)
-      if (ok) {
-        clearError('otp')
-        setStep(3)
-      } else {
-        setErrors({ otp: 'Invalid OTP. Please try again.' })
-      }
+      const verified = await verifyOtp(data.mobile, otp, token)
+      setOtpToken(verified)
+      clearError('otp')
+      setStep(3)
+    } catch (error) {
+      if (error instanceof Error && error.message === 'session-expired') openAuthModal('verify your mobile number')
+      else setErrors({ otp: error instanceof Error ? error.message : 'Invalid OTP. Please try again.' })
     } finally {
       setLoading(false)
     }
   }
 
   const handleResendOtp = async () => {
-    if (resendTimer > 0) return
+    if (resendTimer > 0 || !token) return
     setLoading(true)
     try {
-      await sendOtp(data.mobile)
+      await sendOtp(data.mobile, token)
+      setOtp('')
+      setErrors({})
       setResendTimer(RESEND_SECONDS)
+    } catch (error) {
+      setErrors({ otp: error instanceof Error ? error.message : 'Could not resend the OTP. Please try again.' })
     } finally {
       setLoading(false)
     }
@@ -287,12 +254,6 @@ export default function BookAppointment() {
     e.preventDefault()
     const e2: Record<string, string> = {}
     if (!data.speciality) e2.speciality = 'Please select a speciality'
-    if (!data.date) e2.date = 'Please select a date'
-    else {
-      const day = new Date(`${data.date}T00:00:00`).getDay()
-      if (day === 0) e2.date = "We're closed on Sundays — please pick another date"
-    }
-    if (!data.time) e2.time = 'Please select a time slot'
     setErrors(e2)
     if (Object.keys(e2).length === 0) setStep(5)
   }
@@ -303,12 +264,18 @@ export default function BookAppointment() {
     setLoading(true)
     setSubmitError(false)
     try {
-      await submitAppointment(data, token)
+      await submitAppointment(data, token, otpToken)
       setReferenceId(`JHS-${Date.now().toString().slice(-8)}`)
       setBookingConfirmed(true)
     } catch (error) {
       if (error instanceof Error && error.message === 'session-expired') {
         openAuthModal('book an appointment')
+      } else if (error instanceof Error && error.message === 'otp-required') {
+        // verification missing / expired / already used — verify the mobile again
+        setOtpToken('')
+        setOtp('')
+        setErrors({ mobile: 'Please verify your mobile number again to complete the booking.' })
+        setStep(1)
       } else {
         console.error('Failed to submit appointment:', error)
         setSubmitError(true)
@@ -321,6 +288,7 @@ export default function BookAppointment() {
   const resetAll = () => {
     setData(INITIAL_DATA)
     setOtp('')
+    setOtpToken('')
     setErrors({})
     setBookingConfirmed(false)
     setStep(1)
@@ -508,7 +476,7 @@ export default function BookAppointment() {
                       }}
                     />
                     {errors.otp && <span className="bap-error"><AlertCircle size={13} />{errors.otp}</span>}
-                    <p className="bap-hint">Demo mode — use OTP <strong>123456</strong> until the live SMS service is connected.</p>
+                    <p className="bap-hint">We sent a 6-digit code by SMS to +91 {data.mobile}. It is valid for 5 minutes.</p>
                   </div>
 
                   <div className="bap-resend">
@@ -605,7 +573,7 @@ export default function BookAppointment() {
                   <header className="bap-formhead">
                     <span className="bap-formhead__icon"><CalendarClock size={22} /></span>
                     <h2>Appointment details</h2>
-                    <p>Choose a speciality, an optional preferred partner, and a convenient slot.</p>
+                    <p>Choose a speciality and, if you like, a preferred partner. Our team will call you to fix the schedule.</p>
                   </header>
 
                   <div className="bap-row">
@@ -634,9 +602,9 @@ export default function BookAppointment() {
                         onChange={(e) => setField('partner', e.target.value)}
                       >
                         <option value="">Any available partner</option>
-                        {Array.from(new Set(filteredPartnerOptions.map((p) => p.category))).map((category) => (
+                        {Array.from(new Set(partnerOptions.map((p) => p.category))).map((category) => (
                           <optgroup key={category} label={category}>
-                            {filteredPartnerOptions.filter((p) => p.category === category).map((p) => (
+                            {partnerOptions.filter((p) => p.category === category).map((p) => (
                               <option key={p.name} value={p.name}>
                                 {p.name} — {p.location}
                               </option>
@@ -644,40 +612,7 @@ export default function BookAppointment() {
                           </optgroup>
                         ))}
                       </select>
-                      {data.speciality && !hasSpecialityMatch && (
-                        <p className="bap-hint">No dedicated {data.speciality} specialist on file yet — showing all partners.</p>
-                      )}
                     </div>
-                  </div>
-
-                  <div className="bap-field">
-                    <label className="bap-label" htmlFor="bap-date">Preferred date <span className="bap-req">*</span></label>
-                    <input
-                      id="bap-date"
-                      type="date"
-                      className={`bap-input ${errors.date ? 'bap-input--error' : ''}`}
-                      min={minSelectableDate()}
-                      value={data.date}
-                      onChange={(e) => setField('date', e.target.value)}
-                    />
-                    {errors.date && <span className="bap-error"><AlertCircle size={13} />{errors.date}</span>}
-                  </div>
-
-                  <div className="bap-field">
-                    <label className="bap-label">Preferred time <span className="bap-req">*</span></label>
-                    <div className="bap-slots">
-                      {TIME_SLOTS.map((slot) => (
-                        <button
-                          type="button"
-                          key={slot}
-                          className={`bap-slot ${data.time === slot ? 'bap-slot--active' : ''}`}
-                          onClick={() => setField('time', slot)}
-                        >
-                          {slot}
-                        </button>
-                      ))}
-                    </div>
-                    {errors.time && <span className="bap-error"><AlertCircle size={13} />{errors.time}</span>}
                   </div>
 
                   <div className="bap-btn-row">
@@ -722,8 +657,6 @@ export default function BookAppointment() {
                       <dl>
                         <div><dt>Speciality</dt><dd>{data.speciality}</dd></div>
                         <div><dt>Partner</dt><dd>{data.partner || 'Any available partner'}</dd></div>
-                        <div><dt>Date</dt><dd>{formatDateDisplay(data.date)}</dd></div>
-                        <div><dt>Time</dt><dd>{data.time}</dd></div>
                         {data.message && <div><dt>Notes</dt><dd>{data.message}</dd></div>}
                       </dl>
                     </div>

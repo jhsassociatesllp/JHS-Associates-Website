@@ -14,11 +14,20 @@ type Appointment = {
   message?: string;
   speciality: string;
   partner?: string;
-  date: string;
-  time: string;
+  date?: string | null;
+  time?: string | null;
+  source?: string;
+  source_page?: string | null;
   status: AppointmentStatus;
   created_at: string;
 };
+
+const SOURCE_LABELS: Record<string, string> = {
+  book_appointment_page: 'Book Appointment page',
+  services_card: 'Services page card',
+  partner_card: 'Partner card',
+};
+const sourceLabel = (s?: string) => SOURCE_LABELS[s ?? 'book_appointment_page'] ?? s ?? '';
 
 const APPOINTMENT_STATUSES: AppointmentStatus[] = ['new', 'confirmed', 'completed', 'cancelled'];
 
@@ -29,6 +38,7 @@ const AdminAppointments: React.FC = () => {
   const [message, setMessage] = useState('');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sources, setSources] = useState<Record<string, number>>({});
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -42,6 +52,8 @@ const AdminAppointments: React.FC = () => {
         },
       });
       if (response.ok) setAppointments(await response.json());
+      const summary = await fetch(`${API_BASE_URL}/appointments/admin/summary`, { headers: { Authorization: `Bearer ${token}` } });
+      if (summary.ok) setSources((await summary.json()).by_source ?? {});
     } catch (error) {
       console.error('Unable to load appointments', error);
       setMessage('Unable to load appointments.');
@@ -138,6 +150,15 @@ const AdminAppointments: React.FC = () => {
         </div>
       </div>
 
+      <div className="appointments-stats-row">
+        {Object.keys(SOURCE_LABELS).map((key) => (
+          <div className="appointments-stat-card" key={key}>
+            <p className="appointments-stat-label">Booked via {SOURCE_LABELS[key]}</p>
+            <p className="appointments-stat-value">{sources[key] ?? 0}</p>
+          </div>
+        ))}
+      </div>
+
       <div className="appointments-main-card">
         <div className="appointments-tabs-bar">
           <div className="appointments-search">
@@ -172,7 +193,7 @@ const AdminAppointments: React.FC = () => {
                   <th>Candidate</th>
                   <th>Speciality</th>
                   <th>Partner</th>
-                  <th>Preferred Date &amp; Time</th>
+                  <th>Source</th>
                   <th>Status</th>
                   <th>Requested</th>
                 </tr>
@@ -187,10 +208,15 @@ const AdminAppointments: React.FC = () => {
                       {appointment.city && <p className="appt-cell-secondary">{appointment.city}</p>}
                     </td>
                     <td>{appointment.speciality}</td>
-                    <td>{appointment.partner || 'Any available partner'}</td>
                     <td>
-                      <p className="appt-cell-primary" style={{ fontWeight: 500 }}>{appointment.date}</p>
-                      <p className="appt-cell-secondary">{appointment.time}</p>
+                      {appointment.partner || 'Any available partner'}
+                      {appointment.date && (
+                        <p className="appt-cell-secondary">{appointment.date}{appointment.time ? `, ${appointment.time}` : ''}</p>
+                      )}
+                    </td>
+                    <td>
+                      {sourceLabel(appointment.source)}
+                      {appointment.source_page && <p className="appt-cell-secondary">{appointment.source_page}</p>}
                     </td>
                     <td>
                       <div className="appt-status-select-wrap">

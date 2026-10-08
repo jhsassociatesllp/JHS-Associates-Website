@@ -20,9 +20,11 @@ const APPOINTMENT_TYPES = [
 interface Props {
   partner: ConsultationPartner
   onClose: () => void
+  /** Where the booking started — stored with the request so bookings can be tracked per place. */
+  source?: 'services_card' | 'partner_card'
 }
 
-export default function BookConsultationModal({ partner, onClose }: Props) {
+export default function BookConsultationModal({ partner, onClose, source = 'services_card' }: Props) {
   const { user, token, openAuthModal } = useSiteAuth()
   const [appointmentType, setAppointmentType] = useState(APPOINTMENT_TYPES[0])
   const [step, setStep] = useState<'select' | 'submitting' | 'success' | 'error'>('select')
@@ -43,6 +45,8 @@ export default function BookConsultationModal({ partner, onClose }: Props) {
           partner_role: partner.role || null,
           partner_location: partner.location || null,
           appointment_type: appointmentType,
+          source,
+          source_page: window.location.pathname,
         }),
       })
       if (res.status === 401 || res.status === 403) {

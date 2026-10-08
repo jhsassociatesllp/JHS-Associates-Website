@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     # longer used by email_service.py (see smtp_* below, which is active).
     brevo_api_key: str = ""
     hr_notification_email: str = "hr@jhsassociates.in"
+    # Contact Us and Request for Proposal submissions are routed here.
+    connect_notification_email: str = "connect@jhsassociates.in"
     # Appointment / consultation bookings (Book Appointment page and the partner
     # cards' Book Appointment button) are routed here instead of the HR inbox.
     appointment_notification_email: str = "connect@jhsassociates.in"
@@ -47,6 +49,10 @@ class Settings(BaseSettings):
     # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
     # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").
     secret_key: str = ""
+
+    # MSG91 SMS (mobile OTP for appointment booking). Template id + auth key from MSG91.
+    msg91_auth_key: str = ""
+    msg91_template_id: str = ""
 
     # Google Sign-In (career applicants + consulting appointment requests).
     # Create an OAuth 2.0 Client ID (Web application) in Google Cloud Console

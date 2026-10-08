@@ -318,7 +318,7 @@ export default function ServicePartnersModal({
 
     {bookingPartner && (
       <div style={{ position: 'relative', zIndex: 100000 }}>
-        <BookConsultationModal partner={bookingPartner} onClose={() => setBookingPartner(null)} />
+        <BookConsultationModal partner={bookingPartner} source="services_card" onClose={() => setBookingPartner(null)} />
       </div>
     )}
     </>

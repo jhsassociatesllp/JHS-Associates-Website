@@ -113,11 +113,9 @@ def _letter_date() -> str:
 
 def _wrap_html(title: str, body_rows: str) -> str:
     """Return a styled HTML email in a professional letterhead layout."""
-    from datetime import datetime
     from html import escape as _esc
 
     title = _esc(title)
-    year = datetime.now().year
     automated = "Warm regards" not in body_rows
     signoff = (
         f"""<tr><td colspan="2" style="padding:22px 0 0;font-size:12px;color:#8a93a3;line-height:1.6;">
@@ -184,7 +182,6 @@ def _wrap_html(title: str, body_rows: str) -> str:
                   <span style="color:{CRIMSON};font-weight:700;">Phone</span>&nbsp; {FIRM_PHONE}<br>
                   <span style="color:{CRIMSON};font-weight:700;">Email</span>&nbsp; <a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
                   <span style="color:{CRIMSON};font-weight:700;">Website</span>&nbsp; <a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a>
-                  <div style="padding-top:10px;font-size:11px;color:#98a1b1;">&copy; {year} JHS. All rights reserved.</div>
                 </td>
               </tr>
             </table>

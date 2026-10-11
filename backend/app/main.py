@@ -47,6 +47,8 @@ from app.routes.events import router as events_router                 # ✅ EVEN
 async def lifespan(app: FastAPI):
     # Startup
     await connect_to_mongo()
+    from app.services.seed import seed_defaults
+    await seed_defaults()   # fills an empty database once; never overwrites existing data
     yield
     # Shutdown
     await close_mongo_connection()

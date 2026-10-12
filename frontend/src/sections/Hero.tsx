@@ -35,6 +35,15 @@ interface RegulatoryEntry {
   image_id?: string;
   created_at?: string;
 }
+interface PodcastEntry {
+  title: string;
+  description: string;
+  guest?: string | null;
+  platform: string;
+  image_id?: string | null;
+  published_on?: string;
+  created_at?: string;
+}
 interface RegWatchEntry {
   title: string;
   summary: string;
@@ -59,6 +68,7 @@ const EXCELLENCIA_CARD_ID = 3;
 const REGULATORY_CARD_ID = 2;
 const WHITEPAPER_CARD_ID = 7;
 const REGWATCH_CARD_ID = 8;
+const PODCAST_CARD_ID = 9;
 
 
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
@@ -82,6 +92,17 @@ const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
   hoverTitle: entry.title,
   hoverDescription: entry.short_description,
   route: "/regulatory",
+});
+
+const mapPodcastEntry = (entry: PodcastEntry): Card => ({
+  id: PODCAST_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/podcasts/image/${entry.image_id}` : imageUrl('Card3.webp'),
+  category: "PODCAST",
+  meta: `JHS PODCASTS · ${entry.platform.toUpperCase()} · ${yearOf(entry.published_on || entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.guest ? `With ${entry.guest}. ${entry.description}` : entry.description,
+  route: "/podcasts",
 });
 
 const mapRegWatchEntry = (entry: RegWatchEntry): Card => ({
@@ -153,6 +174,17 @@ const DEFAULT_CARDS: Card[] = [
     hoverDescription:
       "Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks. Access curated whitepapers, regulatory updates, and strategic guides developed by JHS experts to empower informed decision-making.",
     route: "/excellencia",
+  },
+  {
+    id: PODCAST_CARD_ID,
+    image: imageUrl('Card3.webp'),
+    category: "PODCAST",
+    meta: "JHS PODCASTS · EXPERT CONVERSATIONS · 2026",
+    title: "JHS Podcasts: How industry leaders are adapting",
+    hoverTitle: "JHS Podcasts",
+    hoverDescription:
+      "Exclusive audio insights on the go. Hear directly from top executives and our senior partners on tax, regulation and business strategy.",
+    route: "/podcasts",
   },
   {
     id: WHITEPAPER_CARD_ID,
@@ -234,6 +266,25 @@ export default function Hero() {
         .then((list: RegWatchEntry[]) => {
           if (cancelled || !Array.isArray(list) || list.length === 0) return;
           setCards((prev) => prev.map((card) => (card.id === REGWATCH_CARD_ID ? mapRegWatchEntry(list[0]) : card)));
+        })
+        .catch(() => {
+          if (retry && !cancelled) window.setTimeout(() => load(false), 2000);
+        });
+    load(true);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Latest podcast episode — loaded on its own, with one quiet retry, like Reg-Watch.
+  useEffect(() => {
+    let cancelled = false;
+    const load = (retry: boolean) =>
+      fetch(`${API_BASE}/podcasts/?limit=1`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((list: PodcastEntry[]) => {
+          if (cancelled || !Array.isArray(list) || list.length === 0) return;
+          setCards((prev) => prev.map((card) => (card.id === PODCAST_CARD_ID ? mapPodcastEntry(list[0]) : card)));
         })
         .catch(() => {
           if (retry && !cancelled) window.setTimeout(() => load(false), 2000);

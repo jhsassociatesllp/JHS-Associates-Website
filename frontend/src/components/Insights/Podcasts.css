@@ -1,0 +1,63 @@
+/* Podcasts — episode cards (added alongside the existing SimpleInsight page styles) */
+.pod-status {
+  padding: 24px;
+  text-align: center;
+  border-radius: 14px;
+  background: #f6f8fb;
+  border: 1px solid #e2e8f0;
+  color: #5b6b82;
+}
+
+.pod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.pod-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #e6ebf3;
+  border-top: 4px solid #D62049;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -20px rgba(15, 35, 64, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.pod-card:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -22px rgba(15, 35, 64, 0.45); }
+
+.pod-card__cover { height: 180px; background-size: cover; background-position: center; background-color: #e9eef6; }
+.pod-card__cover--plain {
+  display: flex; align-items: center; justify-content: center;
+  color: #D62049;
+  background: linear-gradient(135deg, #fdecef, #f1f5fb);
+}
+
+.pod-card__body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
+.pod-card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pod-tag { padding: 4px 11px; border-radius: 100px; background: #eef2f8; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; color: #44506a; }
+.pod-tag--platform { background: #D62049; color: #fff; }
+
+.pod-card__title { margin: 0 0 6px; font-size: 1.12rem; line-height: 1.35; font-weight: 700; color: #0f2340; }
+.pod-card__guest { margin: 0 0 8px; font-size: 0.84rem; font-weight: 600; color: #D62049; }
+.pod-card__desc { margin: 0 0 16px; font-size: 0.92rem; line-height: 1.65; color: #4a5872; }
+
+.pod-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: 100px;
+  background: #0f2340; color: #fff; text-decoration: none;
+  font-size: 0.86rem; font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.pod-btn:hover { background: #D62049; transform: translateY(-1px); }
+
+@media (max-width: 700px) {
+  .pod-grid { grid-template-columns: minmax(0, 1fr); }
+}

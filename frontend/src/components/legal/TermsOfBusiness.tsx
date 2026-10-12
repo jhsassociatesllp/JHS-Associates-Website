@@ -2,138 +2,105 @@ import LegalPage from './LegalPage'
 import type { LegalBlock } from './LegalPage'
 
 const blocks: LegalBlock[] = [
-  { type: 'h2', text: '1. Introduction' },
-  {
-    type: 'p',
-    text: 'JHS & Associates LLP is referred to in this TOB as "JHS", "us", "we" or "our" which, where appropriate, includes our successor and predecessor entities and our staff. References in the TOB to "the Company" or "you" or "your" are to the persons or entities who are our clients for the Engagement.',
-  },
 
-  { type: 'h2', text: '2. Entire Agreement' },
-  {
-    type: 'p',
-    text: 'Unless otherwise specifically agreed in the Letter, the Letter replaces any previous agreements between us in relation to or in contemplation of the Engagement and shall apply to any future engagements we carry out on your behalf unless varied or replaced. The Letter (which includes the TOB) constitutes the entire agreement between us. In entering into this Letter you acknowledge that you have not relied on, and shall have no right or remedy in respect of, any statement, representation, assurance or warranty (whether made negligently or innocently) other than as expressly set out in the Letter.',
-  },
+  { type: 'h2', text: "1. Introduction" },
+  { type: 'p', text: "JHS & Associates LLP, a limited liability partnership registered in India, is referred to in this Terms of Business (\"TOB\") as \"JHS\", \"us\", \"we\" or \"our\" which, where appropriate, includes our successor and predecessor entities and our staff. References in the TOB to \"the Company\" or \"you\" or \"your\" are to the persons or entities who are our clients for the Engagement." },
+  { type: 'p', text: "In this TOB: \"Letter\" means the engagement letter between JHS and the Company to which this TOB is attached; \"Engagement\" means the assignment described in the Letter; \"Services\" means the services to be provided by JHS under the Letter; \"Deliverables\" means the reports, documents and other work product delivered by JHS in connection with the Services; \"Loss\" means any loss, damage, liability, cost or expense of any kind; \"Parties\" means JHS and the Company; and \"associated JHS entities\" means the offices, affiliates and member entities of JHS in India and overseas (including its representative offices in the UAE and Oman)." },
 
-  { type: 'h2', text: '3. Engagement Team' },
-  {
-    type: 'p',
-    text: 'The Partner/Director in charge will be supported by a team of manager, experienced consultants and staff, as may be decided by JHS from time to time and mutually agreed upon. We will inform you of any significant changes which need to be made to our team rendering the Services prior to making such significant changes.',
-  },
+  { type: 'h2', text: "2. Entire Agreement" },
+  { type: 'p', text: "Unless otherwise specifically agreed in the Letter, the Letter replaces any previous agreements between us in relation to or in contemplation of the Engagement and shall apply to any future engagements we carry out on your behalf unless varied or replaced. The Letter (which includes the TOB) constitutes the entire agreement between us. In entering into this Letter you acknowledge that you have not relied on, and shall have no right or remedy in respect of, any statement, representation, assurance or warranty (whether made negligently or innocently) other than as expressly set out in the Letter." },
 
-  { type: 'h2', text: '4. Deliverables Management' },
-  {
-    type: 'p',
-    text: "During the course of the engagement JHS may share draft deliverables with the Company. This will be done on the basis that they are 'work in progress' and are subject to revision and alteration. The draft deliverables shall be reviewed by the Company for factual inaccuracies as the primary sources of financial information reside within the Company.",
-  },
+  { type: 'h2', text: "3. Engagement Team" },
+  { type: 'p', text: "The Partner/Director in charge will be supported by a team of managers, experienced consultants and staff, as may be decided by JHS from time to time and mutually agreed upon. We will inform you of any significant changes which need to be made to our team rendering the Services prior to making such significant changes." },
+
+  { type: 'h2', text: "4. Deliverables Management" },
+  { type: 'p', text: "During the course of the engagement JHS may share draft deliverables with the Company. This will be done on the basis that they are 'work in progress' and are subject to revision and alteration. The draft deliverables shall be reviewed by the Company for factual inaccuracies as the primary sources of financial information reside within the Company." },
   { type: 'p', text: "JHS hereby assures that the deliverables, subject to the terms and conditions provided herein, shall be as per the Company's requirements." },
 
-  { type: 'h2', text: '5. Circulation of Reports' },
-  {
-    type: 'p',
-    text: "JHS's Deliverables including any drafts thereof are private and confidential and are prepared for the addressees' only. Deliverables and draft Deliverables should not be used, reproduced or circulated for any other purpose and to any third party, whether in whole or in part, without the prior written consent of JHS, which consent may be given only after consideration of the circumstance existing at the time and may include the provision of an indemnity.",
-  },
-  {
-    type: 'p',
-    text: 'Notwithstanding anything contained in paragraph 8.1 of the TOB, you may disclose the Deliverables and draft Deliverables within your organisation, to your professional advisors acting in such capacity or as required by law, court order or any regulatory and professional body.',
-  },
-  {
-    type: 'p',
-    text: "The Services, information, records, data, advice or recommendation contained in any Deliverables, draft Deliverables, material, presentation or other communication, written or otherwise, in draft or final form, provided by JHS are intended solely for the benefit, information and use of the Company's management. Please be aware that copying or summarising our advice, Deliverables, draft Deliverables or information to others, including your other employees or your shareholders, may result in Loss or waiver of privilege in that advice.",
-  },
+  { type: 'h2', text: "5. Circulation of Reports" },
+  { type: 'p', text: "JHS's Deliverables including any drafts thereof are private and confidential and are prepared for the addressees only. Deliverables and draft Deliverables should not be used, reproduced or circulated for any other purpose and to any third party, whether in whole or in part, without the prior written consent of JHS, which consent may be given only after consideration of the circumstance existing at the time and may include the provision of an indemnity." },
+  { type: 'p', text: "Notwithstanding anything contained in the first paragraph of this clause 5, you may disclose the Deliverables and draft Deliverables within your organisation, to your professional advisors acting in such capacity or as required by law, court order or any regulatory and professional body." },
+  { type: 'p', text: "The Services, information, records, data, advice or recommendation contained in any Deliverables, draft Deliverables, material, presentation or other communication, written or otherwise, in draft or final form, provided by JHS are intended solely for the benefit, information and use of the Company's management. Please be aware that copying or summarising our advice, Deliverables, draft Deliverables or information to others, including your other employees or your shareholders, may result in loss or waiver of privilege in that advice." },
 
-  { type: 'h2', text: '6. Mode of Instructions' },
-  {
-    type: 'p',
-    text: 'You authorise us to act from time to time on instructions given in any manner (including but not limited to verbal and electronic instructions) in circumstances where we reasonably believe those instructions have emanated from you or any person with authority to act on your behalf.',
-  },
-  {
-    type: 'p',
-    text: 'You understand and acknowledge that the electronic transmission of information via the internet or otherwise has inherent risks (particularly the risk of access by unauthorised parties). Unless otherwise agreed, despite the inherent risks, you authorise us to communicate electronically with you and relevant third parties on relevant matters related to the Engagement. Accordingly, you agree that we shall have no liability to you for any Loss arising directly from the use of electronic communications, except where caused by our own negligence.',
-  },
+  { type: 'h2', text: "6. Mode of Instructions" },
+  { type: 'p', text: "You authorise us to act from time to time on instructions given in any manner (including but not limited to verbal and electronic instructions) in circumstances where we reasonably believe those instructions have emanated from you or any person with authority to act on your behalf." },
+  { type: 'p', text: "You understand and acknowledge that the electronic transmission of information via the internet or otherwise has inherent risks (particularly the risk of access by unauthorised parties). Unless otherwise agreed, despite the inherent risks, you authorise us to communicate electronically with you and relevant third parties on relevant matters related to the Engagement. Accordingly, you agree that we shall have no liability to you for any Loss arising directly from the use of electronic communications, except where caused by our own negligence." },
 
-  { type: 'h2', text: '7. Limitation of Liability' },
-  {
-    type: 'p',
-    text: 'JHS may use personnel from across its group including associated JHS entities for the performance of the Services or otherwise for performance of its obligations under this. In all circumstances JHS shall be solely responsible for the performance of the Services and the Company shall be entitled to rely on JHS for performance of such Services. The Company shall have no recourse and shall bring no claim against any staff or any of their personal assets directly (whether the claim is based on breach of contract, strict liability, tort, breach of warranty, negligence etc. or otherwise). This exclusion shall not apply to fraud.',
-  },
-  {
-    type: 'p',
-    text: 'In no circumstances shall JHS be responsible for any consequential, special, direct, indirect, punitive or incidental loss, damages or expenses (including loss of profits, data, business, opportunity cost, goodwill or indemnification) in connection with the performance of the services, whether such damages are based on breach of contract, tort, strict liability, breach of warranty, negligence, or otherwise, even if the Company had contemplated and communicated to JHS the likelihood of such damages. Any decision to act upon the deliverables is to be made by the Company and no communication by JHS should be treated as an invitation or inducement to engage the Company to act upon the deliverables.',
-  },
-  {
-    type: 'p',
-    text: 'The aggregate liability in respect of performance of the Service or otherwise under this Letter shall be limited to the actual professional fees paid (excluding out of pocket expenses and taxes if any paid) for the Services rendered by JHS, regardless of whether the liability is based on breach of contract, tort, strict liability, breach of warranty, negligence, or otherwise.',
-  },
-  {
-    type: 'p',
-    text: 'JHS will not be liable if any Loss is due to the provision of false, misleading or incomplete information or documentation, or due to the acts or omissions of any person(s) other than us and the personnel used for the assignment under reference from across associated JHS entities.',
-  },
+  { type: 'h2', text: "7. Limitation of Liability" },
+  { type: 'p', text: "JHS may use personnel from across its group including associated JHS entities for the performance of the Services or otherwise for performance of its obligations under this. In all circumstances JHS shall be solely responsible for the performance of the Services and the Company shall be entitled to rely on JHS for performance of such Services. The Company shall have no recourse and shall bring no claim against any staff or any of their personal assets directly (whether the claim is based on breach of contract, strict liability, tort, breach of warranty, negligence etc. or otherwise). This exclusion shall not apply to fraud." },
+  { type: 'p', text: "In no circumstances shall JHS be responsible for any consequential, special, direct, indirect, punitive or incidental loss, damages or expenses (including loss of profits, data, business, opportunity cost, goodwill or indemnification) in connection with the performance of the services, whether such damages are based on breach of contract, tort, strict liability, breach of warranty, negligence, or otherwise, even if the Company had contemplated and communicated to JHS the likelihood of such damages. Any decision to act upon the deliverables is to be made by the Company and no communication by JHS should be treated as an invitation or inducement to engage the Company to act upon the deliverables." },
+  { type: 'p', text: "The aggregate liability in respect of performance of the Services or otherwise under this Letter shall be limited to the actual professional fees paid (excluding out of pocket expenses and taxes if any paid) for the Services rendered by JHS, regardless of whether the liability is based on breach of contract, tort, strict liability, breach of warranty, negligence, or otherwise." },
+  { type: 'p', text: "JHS will not be liable if any Loss is due to the provision of false, misleading or incomplete information or documentation, or due to the acts or omissions of any person(s) other than us and the personnel used for the assignment under reference from across associated JHS entities." },
+  { type: 'p', text: "JHS & Associates LLP is a firm of chartered accountants governed by the Chartered Accountants Act, 1949 and regulated by the Institute of Chartered Accountants of India. By virtue of this, any complaint regarding the professional or other misconduct of JHS or its partners or personnel, and any disciplinary action in respect of it, may be made to and shall be dealt with by the Institute of Chartered Accountants of India in accordance with the Chartered Accountants Act, 1949. Any claim by the Company for remedy or damages shall be subject to the exclusions and limits in this clause 7 and shall be resolved in accordance with clause 24 (Governing Law and Dispute Resolution). Nothing in this clause 7 excludes or limits any liability that cannot be excluded or limited under applicable law." },
 
-  { type: 'h2', text: '8. Provision of Specialised Services' },
-  {
-    type: 'p',
-    text: 'We may, with your consent, refer you to associated JHS entities for the provision of specialised services. They will send you separate engagement letters if you choose to use their services. We do not accept any liability for work carried out by any associated JHS entities.',
-  },
+  { type: 'h2', text: "8. Provision of Specialised Services" },
+  { type: 'p', text: "We may, with your consent, refer you to associated JHS entities for the provision of specialised services. They will send you separate engagement letters if you choose to use their services. We do not accept any liability for work carried out by any associated JHS entities." },
 
-  { type: 'h2', text: '9. Confidentiality' },
-  {
-    type: 'p',
-    text: 'JHS agrees to keep confidential all information received from the Company during the course of this engagement ("Confidential Information") and not to make unwarranted copies of any Confidential Information, and to use the Confidential Information only for the purpose for which it has been disclosed to us.',
-  },
-  {
-    type: 'p',
-    text: 'Confidential Information means any information given or provided by the Company to JHS in any written form or through e-mails or fax or any other electronic means. Confidential Information shall include, but not be limited to, product specifications, analytical methodology, safety and efficacy data, testing data and financial data, know-how, trade secrets, internal policies whether published or not, ideas and other information of a technical, scientific or economic nature.',
-  },
-  {
-    type: 'p',
-    text: 'Confidential Information shall not include any information or documents previously known to JHS; or independently developed by JHS and/or associated JHS entities in the course of execution of this or any other engagement; or acquired by JHS from a third party without breaching the provisions of this Letter; or which is or becomes publicly available through no breach by JHS of this Letter; or special permission was obtained by JHS in writing from the Company.',
-  },
-  {
-    type: 'p',
-    text: 'In the event JHS receives a validly issued administrative or judicial process requiring disclosure of the Confidential Information, JHS shall, if possible, provide prompt notice to the Company of such receipt and thereafter be entitled to disclose any Confidential Information in order to comply with such administrative or judicial process.',
-  },
+  { type: 'h2', text: "9. Confidentiality and Data Protection" },
+  { type: 'p', text: "JHS agrees to keep confidential all information received from the Company during the course of this engagement (\"Confidential Information\") and not to make unwarranted copies of any Confidential Information, and to use the Confidential Information only for the purpose for which it has been disclosed to us." },
+  { type: 'p', text: "Confidential Information means any information given or provided by the Company to JHS in any written form or through e-mails or fax or any other electronic means. Confidential Information shall include, but not be limited to, financial and tax data, books of account and records, business plans, product specifications, analytical methodology, safety and efficacy data, testing data, know-how, trade secrets, internal policies whether published or not, personal data of the Company's customers and employees, ideas and other information of a technical, scientific, commercial or economic nature." },
+  { type: 'p', text: "Confidential Information shall not include any information or documents previously known to JHS; or independently developed by JHS and/or associated JHS entities in the course of execution of this or any other engagement; or acquired by JHS from a third party without breaching the provisions of this Letter; or which is or becomes publicly available through no breach by JHS of this Letter; or special permission was obtained by JHS in writing from the Company." },
+  { type: 'p', text: "In the event JHS receives a validly issued administrative or judicial process requiring disclosure of the Confidential Information, JHS shall, if possible, provide prompt notice to the Company of such receipt and thereafter be entitled to disclose any Confidential Information in order to comply with such administrative or judicial process." },
+  { type: 'p', text: "Each party shall comply with the data protection laws applicable to it in connection with the Engagement, including the Digital Personal Data Protection Act, 2023 and the rules made under it, as in force from time to time. Where the Company provides personal data to JHS, the Company confirms that it is entitled to do so and has given any notices and obtained any consents required for JHS to process that personal data for the purposes of the Services. JHS shall process such personal data only for those purposes, shall maintain reasonable security safeguards, and may share it with associated JHS entities (including those located outside India) solely to the extent necessary to perform the Services, subject to the confidentiality obligations in this clause 9." },
 
-  { type: 'h2', text: '10. Non-Solicitation' },
-  {
-    type: 'p',
-    text: 'Except as may be otherwise agreed in writing between the Parties, during the term of this Agreement and for twelve (12) months thereafter, neither the client nor any of its affiliates shall offer employment to or employ any person employed (then or within the preceding twelve (12) months) by JHS.',
-  },
+  { type: 'h2', text: "10. Non-Solicitation" },
+  { type: 'p', text: "Except as may be otherwise agreed in writing between the Parties, during the term of the Letter and for twelve (12) months thereafter, neither the Company nor any of its affiliates shall offer employment to or employ any person employed (then or within the preceding twelve (12) months) by JHS." },
 
-  { type: 'h2', text: '11. Additional Terms and Conditions of Engagement' },
-  {
-    type: 'p',
-    text: "JHS will exercise all reasonable and proper skill and attention necessarily required to discharge its duty of care to the Company for rendering the Services. However, JHS's work is not designed to investigate nor interrogate for fraud and/or dishonesty (actual or possible) and accordingly the same shall not be deemed to be a part of JHS's scope of work unless specifically agreed to between the Company and JHS. Additionally, JHS's reviews will not constitute audits in accordance with the 'Auditing Standards' and JHS will not express an opinion on the financial statements which may be reviewed by us during the course of our work.",
-  },
-  {
-    type: 'p',
-    text: "JHS's staff that may be deployed on this assignment from time to time have a specific agreement with JHS which prevents them from employment opportunities with any of our clients without JHS's specific prior consent. In the event that the Company contemplates offering an employment opportunity to any of JHS's existing staff, the same must not be in respect of a staff member with whom you have had dealings in connection with the Engagement during the 12 (twelve) months immediately prior to your approach, without JHS's specific prior written consent.",
-  },
-  {
-    type: 'p',
-    text: 'The Company acknowledges and agrees not to defame or publicly criticize JHS and its Director/Partner, its business, integrity, veracity or personal or professional reputation or any of its officers, partners, employees, affiliates, agents, or franchisees thereof, in either a professional or personal manner, either during the term of this Engagement or thereafter.',
-  },
+  { type: 'h2', text: "11. Additional Terms and Conditions of Engagement" },
+  { type: 'p', text: "JHS will exercise all reasonable and proper skill and attention necessarily required to discharge its duty of care to the Company for rendering the Services. However, JHS's work is not designed to investigate nor interrogate for fraud and/or dishonesty (actual or possible) and accordingly the same shall not be deemed to be a part of JHS's scope of work unless specifically agreed to between the Company and JHS. Additionally, JHS's reviews will not constitute audits in accordance with the Standards on Auditing issued by the Institute of Chartered Accountants of India and JHS will not express an opinion on the financial statements which may be reviewed by us during the course of our work." },
+  { type: 'p', text: "JHS's staff that may be deployed on this assignment from time to time have a specific agreement with JHS which prevents them from employment opportunities with any of our clients without JHS's specific prior consent. In the event that the Company contemplates offering an employment opportunity to any of JHS's existing staff, the same must not be in respect of a staff member with whom you have had dealings in connection with the Engagement during the 12 (twelve) months immediately prior to your approach, without JHS's specific prior written consent." },
+  { type: 'p', text: "The Company acknowledges and agrees not to defame or publicly criticize JHS and its Director/Partner, its business, integrity, veracity or personal or professional reputation or any of its officers, partners, employees, affiliates, agents, or franchisees thereof, in either a professional or personal manner, either during the term of this Engagement or thereafter." },
 
-  { type: 'h2', text: '12. Use of Name' },
-  {
-    type: 'p',
-    text: "Except as expressly permitted by this Letter, neither party shall use publicly the other party's name, trademark, service mark or logo in connection with the Services or any of the reports without the prior written consent of such other party.",
-  },
-  {
-    type: 'p',
-    text: "Notwithstanding anything contained herein to the contrary, JHS may disclose to present or prospective clients, or otherwise in its marketing materials, that it has performed the Services for the Company, and may use the Company's name and trademark solely for that purpose, in accordance with applicable professional obligations. JHS may use the Company's name, trademark, service mark and logo as reasonably necessary to perform the Services and in correspondence, including proposals, from JHS to the Company.",
-  },
+  { type: 'h2', text: "12. Use of Name" },
+  { type: 'p', text: "Except as expressly permitted by this Letter, neither party shall use publicly the other party's name, trademark, service mark or logo in connection with the Services or any of the reports without the prior written consent of such other party." },
+  { type: 'p', text: "Notwithstanding anything contained herein to the contrary, JHS may disclose to present or prospective clients, or otherwise in its marketing materials, that it has performed the Services for the Company, and may use the Company's name and trademark solely for that purpose, in accordance with applicable professional obligations. JHS may use the Company's name, trademark, service mark and logo as reasonably necessary to perform the Services and in correspondence, including proposals, from JHS to the Company." },
 
-  { type: 'h2', text: '13. Force Majeure' },
-  {
-    type: 'p',
-    text: 'We will not be liable for any delays or failures in performance or breach of contract due to events or circumstances beyond our reasonable control, including acts of God, war, acts by governments and regulators, acts of terrorism, accident, fire, flood or storm, or civil disturbance.',
-  },
+  { type: 'h2', text: "13. Force Majeure" },
+  { type: 'p', text: "We will not be liable for any delays or failures in performance or breach of contract due to events or circumstances beyond our reasonable control, including acts of God, war, acts by governments and regulators, acts of terrorism, accident, fire, flood or storm, or civil disturbance." },
 
-  { type: 'h2', text: '14. Jurisdiction' },
-  {
-    type: 'p',
-    text: "In case any dispute arises between the parties during the subsistence or thereafter, in connection with or arising out of this Assignment, the dispute shall be referred to Arbitration under the Arbitration and Conciliation Act, 1996 by a sole Arbitrator appointed mutually by both the Parties. Arbitration shall be held in Mumbai. The proceedings of Arbitration shall be in the English language. The Arbitrator's award shall be final and binding on the parties, and the agreement shall be subject to the exclusive Jurisdiction of the Courts at Mumbai.",
-  },
+  { type: 'h2', text: "14. Fees, Expenses and Taxes" },
+  { type: 'p', text: "The fees for the Services, and the basis on which they are payable, are set out in the Letter. Unless the Letter states otherwise, fees are exclusive of out-of-pocket expenses (including travel, accommodation, courier, filing and statutory charges) and of Goods and Services Tax and any other applicable taxes, all of which the Company shall bear in addition to the fees." },
+  { type: 'p', text: "JHS will raise invoices as set out in the Letter. Unless the Letter states otherwise, invoices are payable within fifteen (15) days of the invoice date. Interest shall accrue on overdue amounts at the rate specified in the Letter and, if none is specified, at a reasonable commercial rate. If an invoice remains unpaid after written notice, JHS may suspend the Services until payment is received, without liability to the Company for any resulting delay." },
+  { type: 'p', text: "If the Company is required by law to deduct tax at source from any payment, it shall deposit the amount deducted with the relevant authority on time and give JHS the applicable tax deduction certificate. The fees are based on the scope, timelines and information assumed in the Letter. If the scope changes, or the Services take materially longer because of delay, incomplete information or other matters outside JHS's control, JHS may revise its fees by agreement with the Company, such agreement not to be unreasonably withheld." },
+
+  { type: 'h2', text: "15. Responsibilities of the Company" },
+  { type: 'p', text: "The Company shall provide JHS, on a timely basis, with complete, accurate and up-to-date information, documents and access to personnel and systems reasonably required for the Services. JHS may rely on such information without independent verification and shall not be responsible for the consequences of any delay in providing it, or of any inaccuracy or incompleteness in it." },
+  { type: 'p', text: "The Company remains responsible for its own management decisions, for implementing any recommendation made by JHS, and for establishing and maintaining its internal controls, books of account and statutory records. The Company shall promptly inform JHS of any material event or change in circumstances that may affect the Services." },
+
+  { type: 'h2', text: "16. Scope of Services and Reliance" },
+  { type: 'p', text: "The scope of the Services is as described in the Letter, and Services not described in the Letter are not part of the Engagement. Any change to the scope must be agreed in writing between the Parties and may result in a change to fees and timelines." },
+  { type: 'p', text: "JHS's advice and Deliverables are based on the facts, information, laws, regulations and professional standards in force on the date of the relevant Deliverable. Unless the Letter expressly provides otherwise, JHS has no obligation to update any Deliverable for later events or changes in law." },
+  { type: 'p', text: "The Deliverables are prepared solely for the Company. JHS owes no duty of care to, and accepts no responsibility towards, any person other than the Company, and no third party may rely on the Deliverables unless JHS has agreed otherwise in writing in accordance with clause 5." },
+
+  { type: 'h2', text: "17. Intellectual Property" },
+  { type: 'p', text: "As between the Parties, the Company retains ownership of all information and materials it provides to JHS. JHS retains ownership of all intellectual property rights in its pre-existing materials, methodologies, software, tools, templates, know-how and working papers, and in any improvements to them, including any such items incorporated in the Deliverables. Subject to payment of the fees due, JHS grants the Company a non-exclusive, non-transferable licence to use the Deliverables for its internal business purposes, subject to clause 5." },
+
+  { type: 'h2', text: "18. Records and Retention" },
+  { type: 'p', text: "JHS may retain copies of the Company's documents and of the Deliverables, and will retain its working papers, for as long as is required by applicable law, regulatory requirements and professional standards, and for the purpose of establishing or defending any claim. Retained material remains subject to the confidentiality obligations in clause 9. JHS's working papers are the property of JHS. Subject to the foregoing, JHS will return the Company's original documents on written request." },
+
+  { type: 'h2', text: "19. Regulatory and Professional Obligations" },
+  { type: 'p', text: "JHS and its personnel are bound by the Code of Ethics and other pronouncements of the Institute of Chartered Accountants of India and by applicable law. JHS may decline or discontinue the Services, or any part of them, where continuing would breach those obligations (including independence requirements), and shall not be liable to the Company for doing so." },
+  { type: 'p', text: "JHS may be required to carry out client identification and due diligence, and to report certain matters, under applicable law, including the Prevention of Money Laundering Act, 2002, and the Company shall provide the information JHS reasonably requests for these purposes. Notwithstanding clause 9, JHS may disclose information to the Institute of Chartered Accountants of India and to other regulators or professional bodies to the extent required by law, or for the purpose of quality review or peer review, in each case to the extent permitted by applicable law and, where possible, subject to obligations of confidentiality." },
+
+  { type: 'h2', text: "20. Conflicts of Interest" },
+  { type: 'p', text: "JHS provides services to a wide range of clients and may act for other clients whose interests compete with or conflict with those of the Company. JHS will manage any actual or potential conflict of interest through appropriate internal safeguards, will not use or disclose the Company's Confidential Information for the benefit of another client, and will notify the Company if it concludes that a conflict cannot be managed and prevents it from continuing the Engagement." },
+
+  { type: 'h2', text: "21. Term and Termination" },
+  { type: 'p', text: "Unless terminated earlier in accordance with this clause, the Engagement continues until the Services are completed. Either party may terminate the Engagement by giving the other not less than thirty (30) days' written notice, or such other notice period as is specified in the Letter." },
+  { type: 'p', text: "Either party may terminate the Engagement immediately by written notice if the other party commits a material breach and (where the breach is capable of remedy) fails to remedy it within fifteen (15) days of written notice, or becomes insolvent or unable to pay its debts. JHS may also terminate or suspend the Services immediately by written notice where required by law or professional standards, or where the Company fails to pay undisputed fees when due." },
+  { type: 'p', text: "On termination, the Company shall pay JHS the fees for Services performed, and the expenses incurred, up to the date of termination. Termination does not affect any rights accrued before it or any provision intended to continue after it, including clauses 5, 7, 9, 10, 11, 12, 14, 17, 18 and 24." },
+
+  { type: 'h2', text: "22. Relationship of the Parties and Assignment" },
+  { type: 'p', text: "JHS is an independent professional firm and is not an employee, agent, partner or joint venturer of the Company. Neither party has authority to bind the other." },
+  { type: 'p', text: "The Company may not assign or transfer any of its rights or obligations under the Letter without JHS's prior written consent. JHS may assign the Letter to an associated JHS entity or to any successor to its business, and may use associated JHS entities to perform part of the Services in accordance with clause 7." },
+
+  { type: 'h2', text: "23. General Provisions" },
+  { type: 'p', text: "Where the Letter expressly varies a provision of this TOB, the Letter prevails to the extent of the variation. Any other amendment to the Letter or this TOB must be in writing and agreed by both Parties." },
+  { type: 'p', text: "Notices under the Letter must be in writing and may be given by hand, courier or email to the address or email address of the recipient stated in the Letter (or later notified in writing). A notice is treated as received on delivery or, in the case of email, on the next business day after sending unless a delivery failure message is received." },
+  { type: 'p', text: "If any provision of the Letter is held to be invalid or unenforceable, the remaining provisions continue in force. A failure or delay in exercising a right is not a waiver of that right. The Letter may be executed in counterparts and by electronic signature, each of which is an original and all of which together constitute one agreement." },
+
+  { type: 'h2', text: "24. Governing Law and Dispute Resolution" },
+  { type: 'p', text: "This Letter (including this TOB) shall be governed by and construed in accordance with the laws of India. In case any dispute arises between the parties during the subsistence or thereafter, in connection with or arising out of this Letter or the Engagement, the dispute shall be referred to Arbitration under the Arbitration and Conciliation Act, 1996 (as amended from time to time) by a sole Arbitrator appointed mutually by both the Parties. If the Parties fail to agree on the Arbitrator within thirty (30) days of a written request to do so, the Arbitrator shall be appointed in accordance with the Arbitration and Conciliation Act, 1996. The seat and venue of Arbitration shall be Mumbai. The proceedings of Arbitration shall be in the English language. The Arbitrator's award shall be final and binding on the parties. Subject to the foregoing, this Letter shall be subject to the exclusive jurisdiction of the Courts at Mumbai. Nothing in this clause 24 prevents the Company from making a complaint to the Institute of Chartered Accountants of India as provided in clause 7, and any such complaint or disciplinary proceeding is independent of, and does not affect, the dispute resolution provisions of this clause 24." },
 ]
 
 export default function TermsOfBusiness() {
@@ -141,7 +108,7 @@ export default function TermsOfBusiness() {
     <LegalPage
       eyebrow="Legal"
       title="Terms of Business"
-      lastUpdated="January 27, 2025"
+      lastUpdated="October 12, 2026"
       intro='The terms of business ("TOB") of the Engagement are set out below.'
       blocks={blocks}
     />

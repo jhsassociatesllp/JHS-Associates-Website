@@ -93,6 +93,7 @@ export const SEO_META: Record<string, RouteMeta> = {
   // Insights
   '/resources': { title: `Knowledge Resources${suffix}`, description: 'Guides, whitepapers and knowledge resources from JHS.' },
   '/white-papers': { title: `White Papers${suffix}`, description: 'In-depth white papers on tax, regulatory and business topics from JHS.' },
+  '/reg-watch': { title: `Reg-Watch${suffix}`, description: 'Regulatory circulars and notifications from SEBI, RBI, MCA, GST and more, tracked and explained by JHS.' },
   '/regulatory': { title: `Regulatory Updates${suffix}`, description: 'The latest regulatory and compliance updates curated by JHS.' },
   '/articles': { title: `Articles${suffix}`, description: 'Articles and insights on taxation, audit and business advisory from JHS.' },
   '/case-studies': { title: `Case Studies${suffix}`, description: 'Client case studies showcasing the impact of JHS advisory work.' },

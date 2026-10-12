@@ -11,6 +11,7 @@ import AdminBlogs from './pages/AdminBlogs';         // ✅ NEW
 import AdminKnowledge from './pages/AdminKnowledge'; // ✅ NEW
 import AdminWhitePapers from './pages/AdminWhitePapers'; // ✅ NEW
 import AdminRegulatory from './pages/AdminRegulatory'; // ✅ NEW
+import AdminRegWatch from './pages/AdminRegWatch';
 import AdminExcellencia from './pages/AdminExcellencia'; // ✅ NEW
 import AdminNewsletters from './pages/AdminNewsletters'; // ✅ NEW
 import AdminContacts from './pages/AdminContacts';   // ✅ NEW
@@ -52,6 +53,7 @@ export default function App() {
               <Route path="/knowledge" element={<AdminKnowledge />} /> {/* ✅ NEW */}
               <Route path="/white-papers" element={<AdminWhitePapers />} /> {/* ✅ NEW */}
               <Route path="/regulatory" element={<AdminRegulatory />} /> {/* ✅ NEW */}
+              <Route path="/reg-watch" element={<AdminRegWatch />} />
               <Route path="/excellencia" element={<AdminExcellencia />} /> {/* ✅ NEW */}
               <Route path="/newsletters" element={<AdminNewsletters />} /> {/* ✅ NEW */}
               <Route path="/leadership" element={<AdminLeadership />} /> {/* ✅ LEADERSHIP */}

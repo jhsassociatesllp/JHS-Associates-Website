@@ -97,6 +97,7 @@ const Podcasts = lazy(() => import('./components/Insights/Podcasts'))
 const Excellencia = lazy(() => import('./components/Insights/Excellencia'))
 const WhitePapers = lazy(() => import('./components/Insights/WhitePapers'))
 const Regulatory = lazy(() => import('./components/Insights/Regulatory'))
+const RegWatch = lazy(() => import('./pages/RegWatch'))
 
 // Spotlight pages
 const AIAutomation = lazy(() => import('./components/Spotlight/AIAutomation'))
@@ -267,6 +268,7 @@ export default function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/white-papers" element={<WhitePapers />} />
           <Route path="/regulatory" element={<Regulatory />} />
+          <Route path="/reg-watch" element={<RegWatch />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:id" element={<CaseStudyDetail />} />

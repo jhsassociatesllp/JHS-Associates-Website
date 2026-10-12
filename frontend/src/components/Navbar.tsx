@@ -46,6 +46,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Resources", description: "Reports, Tools & Frameworks", href: '/resources' },
       { label: "White Papers", description: "In-depth Research & Analysis", href: '/white-papers' },
       { label: "Regulatory", description: "Compliance Updates & Regulatory Filings", href: '/regulatory' },
+      { label: "Reg-Watch", description: "Regulatory changes tracked & explained", href: '/reg-watch' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
       { label: "Thought Leadership", description: "Leadership Perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },

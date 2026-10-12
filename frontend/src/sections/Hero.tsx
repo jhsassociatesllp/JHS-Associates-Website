@@ -35,6 +35,14 @@ interface RegulatoryEntry {
   image_id?: string;
   created_at?: string;
 }
+interface RegWatchEntry {
+  title: string;
+  summary: string;
+  regulator: string;
+  image_id?: string | null;
+  published_on?: string;
+  created_at?: string;
+}
 interface WhitePaperEntry {
   title: string;
   short_description: string;
@@ -50,6 +58,7 @@ const yearOf = (iso?: string) => (iso ? new Date(iso).getFullYear() : new Date()
 const EXCELLENCIA_CARD_ID = 3;
 const REGULATORY_CARD_ID = 2;
 const WHITEPAPER_CARD_ID = 7;
+const REGWATCH_CARD_ID = 8;
 
 
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
@@ -73,6 +82,17 @@ const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
   hoverTitle: entry.title,
   hoverDescription: entry.short_description,
   route: "/regulatory",
+});
+
+const mapRegWatchEntry = (entry: RegWatchEntry): Card => ({
+  id: REGWATCH_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/reg-watch/image/${entry.image_id}` : imageUrl('Regulatory-bg-img.webp'),
+  category: "REG-WATCH",
+  meta: `JHS REG-WATCH · ${entry.regulator.toUpperCase()} · ${yearOf(entry.published_on || entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.summary,
+  route: "/reg-watch",
 });
 
 const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
@@ -110,6 +130,17 @@ const DEFAULT_CARDS: Card[] = [
     hoverDescription:
       "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
     route: "/regulatory",
+  },
+  {
+    id: REGWATCH_CARD_ID,
+    image: imageUrl('Regulatory-bg-img.webp'),
+    category: "REG-WATCH",
+    meta: "JHS REG-WATCH · REGULATORY RADAR · 2026",
+    title: "Reg-Watch: Regulatory changes tracked and explained by JHS",
+    hoverTitle: "JHS Reg-Watch",
+    hoverDescription:
+      "Circulars, notifications and rule changes from SEBI, RBI, MCA, GST, Income Tax and more — tracked by JHS and explained in plain language, so you always know what changed and what to do next.",
+    route: "/reg-watch",
   },
 
   {
@@ -188,6 +219,26 @@ export default function Hero() {
       );
     })();
 
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Reg-Watch loads on its own so a slow request for the other cards never delays it.
+  // One quiet retry covers a momentary network / server hiccup; the default card stays otherwise.
+  useEffect(() => {
+    let cancelled = false;
+    const load = (retry: boolean) =>
+      fetch(`${API_BASE}/reg-watch/?limit=1`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((list: RegWatchEntry[]) => {
+          if (cancelled || !Array.isArray(list) || list.length === 0) return;
+          setCards((prev) => prev.map((card) => (card.id === REGWATCH_CARD_ID ? mapRegWatchEntry(list[0]) : card)));
+        })
+        .catch(() => {
+          if (retry && !cancelled) window.setTimeout(() => load(false), 2000);
+        });
+    load(true);
     return () => {
       cancelled = true;
     };

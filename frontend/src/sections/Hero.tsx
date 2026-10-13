@@ -336,9 +336,15 @@ export default function Hero() {
   }, []);
 
   // --- SWIPE HANDLERS ---
+  // A horizontal swipe moves the carousel; a mostly vertical drag is left alone so the page
+  // still scrolls. (CSS `touch-action: pan-y` on the container tells the browser to keep
+  // horizontal gestures for us instead of cancelling them.)
+  const touchStartY = useRef<number | null>(null);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchEndX.current = null;
     touchStartX.current = e.targetTouches[0].clientX;
+    touchStartY.current = e.targetTouches[0].clientY;
     pauseAutoSlide();
   };
 
@@ -346,20 +352,32 @@ export default function Hero() {
     touchEndX.current = e.targetTouches[0].clientX;
   };
 
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) {
-      resumeAutoSlide();
-      return;
-    }
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 50;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const startX = touchStartX.current;
+    const startY = touchStartY.current;
+    const endX = touchEndX.current ?? e.changedTouches?.[0]?.clientX ?? null;
+    const endY = e.changedTouches?.[0]?.clientY ?? startY;
+    touchStartX.current = null;
+    touchEndX.current = null;
+    touchStartY.current = null;
 
-    if (distance > minSwipeDistance) {
-      nextSlide();
-    } else if (distance < -minSwipeDistance) {
-      prevSlide();
+    if (startX !== null && endX !== null && startY !== null && endY !== null) {
+      const dx = startX - endX;
+      const dy = startY - endY;
+      const minSwipeDistance = 40;
+      if (Math.abs(dx) > minSwipeDistance && Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 0) nextSlide();
+        else prevSlide();
+      }
     }
+    resumeAutoSlide();
+  };
 
+  // The browser took the gesture (e.g. the page started scrolling): forget it and carry on.
+  const handleTouchCancel = () => {
+    touchStartX.current = null;
+    touchEndX.current = null;
+    touchStartY.current = null;
     resumeAutoSlide();
   };
 
@@ -513,6 +531,7 @@ export default function Hero() {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchCancel}
         >
           <div className="hero__carousel-track">
             {cards.map((card, index) => renderCard(card, index))}

@@ -173,6 +173,7 @@
 }
 
 .hero__carousel-container {
+  touch-action: pan-y; /* keep horizontal swipes for the carousel, vertical drags still scroll the page */
   display: flex;
   justify-content: center;
   align-items: center;

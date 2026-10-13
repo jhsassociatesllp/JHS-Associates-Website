@@ -190,6 +190,11 @@ const NAV_ITEMS: NavItem[] = [
     label: "Book Appointment",
     href: '/book-appointment',
   },
+  {
+    id: "sop",
+    label: "SOP",
+    href: '/SOP',
+  },
 ];
 
 // ─── Component ─────────────────────────────────────────────────

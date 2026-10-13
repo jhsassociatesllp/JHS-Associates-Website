@@ -484,7 +484,7 @@ export default function Hero() {
           <AccountMenu className="nb__account--hero" />
         ) : (
           <button
-            className="hero__action-btn hero__action-btn--outline"
+            className="hero__action-btn hero__action-btn--outline hero__action-btn--desktop-only"
             onClick={() => openAuthModal()}
           >
             Log In

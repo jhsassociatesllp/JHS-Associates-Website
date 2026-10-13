@@ -1097,18 +1097,42 @@
   .hero {
     min-height: 100vh;
     min-height: 100svh;
-    padding: 88px 16px 28px;
+    padding: 96px 16px 28px;
   }
 
   /* On phones this row is in normal flow (position: static), and the hero's white
      background layer is a positioned element, which paints OVER static content - so the
      Business Opportunities / Join Our Team / Log In buttons were hidden behind it.
      Giving the row its own stacking level brings them back. */
+  /* On phones the language switch sits at the top-right, level with the logo pill, so
+     it no longer takes a row of its own. */
   .hero__actions {
-    position: relative;
+    position: absolute;
+    top: 30px;
+    right: 16px;
+    left: auto;
     z-index: 20;
-    margin: 0 0 14px;
+    margin: 0;
     gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .hero__actions .lang-switch__btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    gap: 3px;
+  }
+
+  .hero__actions .lang-switch__btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* the list opens under the button and stays on screen */
+  .hero__actions .lang-switch__menu {
+    left: auto;
+    right: 0;
   }
 
   .hero__header {

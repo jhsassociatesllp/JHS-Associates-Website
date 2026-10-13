@@ -1086,3 +1086,70 @@
     margin-top: 40px;
   }
 }
+
+/* =============================================
+   PHONE POLISH (<= 600px)
+   Everything above the carousel is tightened so the whole centre card, its
+   neighbours and the dots are visible on the first screen instead of being
+   pushed below the fold and cut off.
+   ============================================= */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 88px 16px 28px;
+  }
+
+  /* On phones this row is in normal flow (position: static), and the hero's white
+     background layer is a positioned element, which paints OVER static content - so the
+     Business Opportunities / Join Our Team / Log In buttons were hidden behind it.
+     Giving the row its own stacking level brings them back. */
+  .hero__actions {
+    position: relative;
+    z-index: 20;
+    margin: 0 0 14px;
+    gap: 8px;
+  }
+
+  .hero__header {
+    margin: 0 0 6px;
+    gap: 10px;
+  }
+
+  .hero__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 0;
+  }
+
+  .hero__headline {
+    font-size: clamp(23px, 6.6vw, 29px);
+    line-height: 1.22;
+    padding: 0 4px;
+  }
+
+  .hero__carousel {
+    padding: 0;
+  }
+
+  .hero__carousel-container {
+    min-height: 0;
+  }
+
+  .hero__carousel-track {
+    height: 380px;
+  }
+
+  .hero__carousel-card {
+    width: min(264px, 70vw);
+    height: 340px;
+    margin-left: calc(min(264px, 70vw) / -2);
+    margin-top: -170px;
+    border-radius: 20px;
+    box-shadow: 0 22px 40px -18px rgba(15, 35, 64, 0.55);
+  }
+
+  .hero__carousel-dots {
+    margin-top: 6px;
+  }
+}

@@ -214,8 +214,6 @@ export default function Hero() {
   const { user, openAuthModal } = useSiteAuth();
 
   // Touch Swipe Refs
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
 
   const totalCards = cards.length;
 
@@ -316,16 +314,21 @@ export default function Hero() {
   }, [nextSlide]);
 
   // Single stable auto-slide interval — does not restart on index change
-  useEffect(() => {
+  const startAutoSlide = useCallback(() => {
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     autoSlideRef.current = setInterval(() => {
       if (!isPausedRef.current) {
         nextSlideRef.current();
       }
     }, AUTO_SLIDE_MS);
+  }, []);
+
+  useEffect(() => {
+    startAutoSlide();
     return () => {
       if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
-  }, []);
+  }, [startAutoSlide]);
 
   const pauseAutoSlide = useCallback(() => {
     isPausedRef.current = true;
@@ -335,50 +338,55 @@ export default function Hero() {
     isPausedRef.current = false;
   }, []);
 
-  // --- SWIPE HANDLERS ---
-  // A horizontal swipe moves the carousel; a mostly vertical drag is left alone so the page
-  // still scrolls. (CSS `touch-action: pan-y` on the container tells the browser to keep
-  // horizontal gestures for us instead of cancelling them.)
-  const touchStartY = useRef<number | null>(null);
+  // --- SWIPE / DRAG HANDLERS ---
+  // Pointer events cover a finger, a mouse drag and a pen with one code path, and treat a swipe
+  // to the left and a swipe to the right exactly the same way. A mostly vertical drag is left
+  // alone so the page still scrolls (CSS `touch-action: pan-y` hands us the horizontal moves).
+  const dragRef = useRef<{ x: number; y: number; id: number } | null>(null);
+  const draggedRef = useRef(false);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchEndX.current = null;
-    touchStartX.current = e.targetTouches[0].clientX;
-    touchStartY.current = e.targetTouches[0].clientY;
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragRef.current = { x: e.clientX, y: e.clientY, id: e.pointerId };
+    draggedRef.current = false;
     pauseAutoSlide();
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
+  const handlePointerMove = (e: React.PointerEvent) => {
+    const d = dragRef.current;
+    if (d && d.id === e.pointerId && Math.abs(e.clientX - d.x) > 10) draggedRef.current = true;
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const startX = touchStartX.current;
-    const startY = touchStartY.current;
-    const endX = touchEndX.current ?? e.changedTouches?.[0]?.clientX ?? null;
-    const endY = e.changedTouches?.[0]?.clientY ?? startY;
-    touchStartX.current = null;
-    touchEndX.current = null;
-    touchStartY.current = null;
+  // A swipe always responds right away (it is not held back by an automatic slide that has just
+  // happened), and the automatic timer starts again afterwards so it cannot jump straight after.
+  const slideByUser = (direction: 1 | -1) => {
+    setCurrentIndex((prev) => (prev + direction + totalCards) % totalCards);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+    startAutoSlide();
+  };
 
-    if (startX !== null && endX !== null && startY !== null && endY !== null) {
-      const dx = startX - endX;
-      const dy = startY - endY;
-      const minSwipeDistance = 40;
-      if (Math.abs(dx) > minSwipeDistance && Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 0) nextSlide();
-        else prevSlide();
+  const finishDrag = (e: React.PointerEvent, cancelled: boolean) => {
+    const d = dragRef.current;
+    if (!d || d.id !== e.pointerId) return;
+    dragRef.current = null;
+    if (!cancelled) {
+      const dx = d.x - e.clientX;
+      const dy = d.y - e.clientY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        slideByUser(dx > 0 ? 1 : -1);
       }
     }
     resumeAutoSlide();
   };
 
-  // The browser took the gesture (e.g. the page started scrolling): forget it and carry on.
-  const handleTouchCancel = () => {
-    touchStartX.current = null;
-    touchEndX.current = null;
-    touchStartY.current = null;
-    resumeAutoSlide();
+  // After a real drag, the click that follows must not also trigger a card's own click.
+  const handleClickCapture = (e: React.MouseEvent) => {
+    if (draggedRef.current) {
+      e.stopPropagation();
+      e.preventDefault();
+      draggedRef.current = false;
+    }
   };
 
   // Signed distance from currentIndex, wrapped the short way around the
@@ -528,10 +536,12 @@ export default function Hero() {
       <div className="hero__carousel">
         <div
           className="hero__carousel-container"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onTouchCancel={handleTouchCancel}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={(e) => finishDrag(e, false)}
+          onPointerCancel={(e) => finishDrag(e, true)}
+          onPointerLeave={(e) => { if (e.pointerType === "mouse") finishDrag(e, false); }}
+          onClickCapture={handleClickCapture}
         >
           <div className="hero__carousel-track">
             {cards.map((card, index) => renderCard(card, index))}

@@ -150,12 +150,11 @@ def _wrap_html(title: str, body_rows: str) -> str:
                 <td style="padding:6px 36px 18px;">
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
                     <td valign="top" style="font-size:12px;line-height:1.75;color:#44506a;">
-                      <strong style="color:{CRIMSON};font-size:13px;">JHS</strong><br>
                       <strong style="color:{CRIMSON};">Website</strong>&nbsp; : &nbsp;<a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a><br>
                       <strong style="color:{CRIMSON};">Email</strong>&nbsp; : &nbsp;<a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
-                      <strong style="color:{CRIMSON};">Phone</strong>&nbsp; : &nbsp;{FIRM_PHONE}
+                      <strong style="color:{CRIMSON};">Phone</strong>&nbsp; : &nbsp;{FIRM_PHONE}<br>
+                      <strong style="color:{CRIMSON};">Date</strong>&nbsp; : &nbsp;{_letter_date()}
                     </td>
-                    <td valign="top" align="right" style="font-size:12px;color:#44506a;white-space:nowrap;">Date, {_letter_date()}</td>
                   </tr></table>
                 </td>
               </tr>

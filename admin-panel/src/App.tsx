@@ -13,6 +13,7 @@ import AdminWhitePapers from './pages/AdminWhitePapers'; // ✅ NEW
 import AdminRegulatory from './pages/AdminRegulatory'; // ✅ NEW
 import AdminRegWatch from './pages/AdminRegWatch';
 import AdminPodcasts from './pages/AdminPodcasts';
+import AdminNotifications from './pages/AdminNotifications';
 import AdminExcellencia from './pages/AdminExcellencia'; // ✅ NEW
 import AdminNewsletters from './pages/AdminNewsletters'; // ✅ NEW
 import AdminContacts from './pages/AdminContacts';   // ✅ NEW
@@ -56,6 +57,7 @@ export default function App() {
               <Route path="/regulatory" element={<AdminRegulatory />} /> {/* ✅ NEW */}
               <Route path="/reg-watch" element={<AdminRegWatch />} />
               <Route path="/podcasts" element={<AdminPodcasts />} />
+              <Route path="/notifications" element={<AdminNotifications />} />
               <Route path="/excellencia" element={<AdminExcellencia />} /> {/* ✅ NEW */}
               <Route path="/newsletters" element={<AdminNewsletters />} /> {/* ✅ NEW */}
               <Route path="/leadership" element={<AdminLeadership />} /> {/* ✅ LEADERSHIP */}

@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, s
 from fastapi.responses import StreamingResponse
 
 from app.auth.deps import require_roles
+from app.controllers import notify as notify_ctrl
 from app.controllers import podcast as ctrl
 from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.podcast import PodcastAdmin, PodcastPublic
@@ -70,7 +71,10 @@ async def admin_create(
                                    published_on or date.today().isoformat(), status_value)
         if image and image.filename:
             image_id = await ctrl.upload_image(await image.read(), image.filename)
-        return await ctrl.create(fields, image_id, _admin_name(admin))
+        created = await ctrl.create(fields, image_id, _admin_name(admin))
+        if created.get("status") == "published":
+            await notify_ctrl.queue_content("podcast", created["id"], created["title"], created["description"])
+        return created
     except ctrl.PodcastError as exc:
         await ctrl.delete_file(image_id)
         _fail(exc)
@@ -95,7 +99,11 @@ async def admin_update(
         fields = ctrl.clean_fields(title, description, guest, duration, platform, listen_url, published_on, status_value)
         if image and image.filename:
             image_id = await ctrl.upload_image(await image.read(), image.filename)
-        return await ctrl.update(item_id, fields, image_id, _admin_name(admin))
+        was = await ctrl.current_status(item_id)
+        updated = await ctrl.update(item_id, fields, image_id, _admin_name(admin))
+        if was == "draft" and updated.get("status") == "published":
+            await notify_ctrl.queue_content("podcast", updated["id"], updated["title"], updated["description"])
+        return updated
     except ctrl.PodcastError as exc:
         await ctrl.delete_file(image_id)
         _fail(exc)

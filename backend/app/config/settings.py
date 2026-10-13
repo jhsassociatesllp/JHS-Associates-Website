@@ -60,6 +60,11 @@ class Settings(BaseSettings):
         "https://admin.jhsassociates.in,https://staging-admin.jhsassociates.in"
     )
 
+    # Public address of the website (used for the links inside notification emails).
+    site_url: str = "https://jhsassociates.in"
+    # Background sender for "new insight" emails. Turn off on a computer that shares the live database.
+    notify_worker_enabled: bool = True
+
     # MSG91 SMS (mobile OTP for appointment booking). Template id + auth key from MSG91.
     msg91_auth_key: str = ""
     msg91_template_id: str = ""

@@ -1,5 +1,6 @@
 import logging
 from fastapi import Depends, APIRouter, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
 from app.auth.deps import require_roles
 from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
@@ -44,6 +45,7 @@ async def add_excellencia(
             button_url=button_url
         )
         created = await excellencia_ctrl.create_excellencia(excellencia_data)
+        await notify_ctrl.queue_content("excellencia", created.get("id"), created.get("heading"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Excellencia entry created successfully", "excellencia": created}
     except HTTPException:
         raise

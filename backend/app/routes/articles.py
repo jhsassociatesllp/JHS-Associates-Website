@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form, Depends
+from app.controllers import notify as notify_ctrl
 from fastapi.responses import StreamingResponse
 from app.schemas.article import ArticleCreate, ArticleUpdate, ArticleResponse
 from app.controllers import article as article_ctrl
@@ -57,6 +58,7 @@ async def add_article(
             publish_date=parsed_date
         )
         created = await article_ctrl.create_article(article_data)
+        await notify_ctrl.queue_content("article", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Article created successfully", "article": created}
     except HTTPException:
         raise

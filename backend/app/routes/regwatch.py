@@ -7,6 +7,7 @@ from fastapi.responses import StreamingResponse
 
 from app.auth.deps import get_current_user, require_roles
 from app.controllers import activity as activity_ctrl
+from app.controllers import notify as notify_ctrl
 from app.controllers import regwatch as ctrl
 from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.regwatch import RegWatchAdmin, RegWatchPublic
@@ -104,7 +105,10 @@ async def admin_create(
         pdf_id = await ctrl.upload_pdf(await pdf.read(), pdf.filename or "document.pdf")
         if image and image.filename:
             image_id = await ctrl.upload_image(await image.read(), image.filename, image.content_type)
-        return await ctrl.create(fields, pdf_id, image_id, _admin_name(admin))
+        created = await ctrl.create(fields, pdf_id, image_id, _admin_name(admin))
+        if created.get("status") == "published":
+            await notify_ctrl.queue_content("reg_watch", created["id"], created["title"], created["summary"])
+        return created
     except ctrl.RegWatchError as exc:
         await ctrl._delete_file(pdf_id)
         await ctrl._delete_file(image_id)
@@ -131,7 +135,11 @@ async def admin_update(
             pdf_id = await ctrl.upload_pdf(await pdf.read(), pdf.filename)
         if image and image.filename:
             image_id = await ctrl.upload_image(await image.read(), image.filename, image.content_type)
-        return await ctrl.update(item_id, fields, pdf_id, image_id, _admin_name(admin))
+        was = await ctrl.current_status(item_id)
+        updated = await ctrl.update(item_id, fields, pdf_id, image_id, _admin_name(admin))
+        if was == "draft" and updated.get("status") == "published":   # only when a draft goes live, never for ordinary edits
+            await notify_ctrl.queue_content("reg_watch", updated["id"], updated["title"], updated["summary"])
+        return updated
     except ctrl.RegWatchError as exc:
         await ctrl._delete_file(pdf_id)
         await ctrl._delete_file(image_id)

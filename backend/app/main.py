@@ -38,6 +38,7 @@ from app.routes.appointments import router as appointments_router # ✅ NEW
 from app.routes.otp import router as otp_router
 from app.routes.regwatch import router as regwatch_router
 from app.routes.podcasts import router as podcasts_router
+from app.routes.notifications import router as notifications_router
 from app.routes.consultation import router as consultation_router # ✅ NEW
 from app.routes.auth import router as auth_router             # ✅ SITE ACCOUNT
 from app.routes.user import router as user_admin_router       # ✅ SITE ACCOUNT
@@ -55,7 +56,13 @@ async def lifespan(app: FastAPI):
     from app.services.seed import seed_defaults
     # fills an empty database once (never overwrites); runs in the background so a slow database cannot delay start-up
     app.state.seed_task = asyncio.create_task(seed_defaults())
+    worker = None
+    if settings.notify_worker_enabled:
+        from app.controllers.notify import worker_loop
+        worker = asyncio.create_task(worker_loop())   # sends "new insight" emails in the background
     yield
+    if worker:
+        worker.cancel()
     # Shutdown
     await close_mongo_connection()
 
@@ -131,6 +138,7 @@ api_router.include_router(appointments_router) # ✅ NEW
 api_router.include_router(otp_router)
 api_router.include_router(regwatch_router)
 api_router.include_router(podcasts_router)
+api_router.include_router(notifications_router)
 api_router.include_router(consultation_router) # ✅ NEW
 api_router.include_router(auth_router)         # ✅ SITE ACCOUNT
 api_router.include_router(user_admin_router)   # ✅ SITE ACCOUNT

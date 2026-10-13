@@ -137,3 +137,8 @@ async def read_image(file_id: str) -> tuple[bytes, str, str]:
     if not doc:
         raise PodcastError(404, "Not found")
     return bytes(doc["data"]), doc.get("filename", "cover.webp"), doc.get("content_type", "image/webp")
+
+
+async def current_status(item_id: str) -> Optional[str]:
+    doc = await get_database()[COLLECTION].find_one({"_id": _oid(item_id)}, {"status": 1})
+    return doc.get("status") if doc else None

@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
 from app.auth.deps import require_roles
 from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
@@ -50,6 +51,7 @@ async def add_regulatory(
             image_id=image_id
         )
         created = await regulatory_ctrl.create_regulatory(regulatory_data)
+        await notify_ctrl.queue_content("regulatory", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Regulatory created successfully", "regulatory": created}
     except HTTPException:
         raise

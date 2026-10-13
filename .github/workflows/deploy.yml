@@ -225,6 +225,7 @@ jobs:
             export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
             export PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}"
             export APP_ENV=$ENV
+            if [ "$BRANCH" = "main" ]; then export SITE_URL="https://jhsassociates.in"; else export SITE_URL="https://staging.jhsassociates.in"; fi
             export SECRET_KEY="${{ secrets.SECRET_KEY }}"
             export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"

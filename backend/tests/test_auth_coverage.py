@@ -14,6 +14,7 @@ PUBLIC = {
     "/api/contact/", "/api/alumni/", "/api/feedback/", "/api/cookie-consent/",
     "/api/careers/auth/google", "/api/consulting/auth/google",
     "/api/events/{event_id}/register",
+    "/api/notifications/unsubscribe", "/api/notifications/resubscribe", "/api/notifications/unsubscribe-one-click",
 }
 
 

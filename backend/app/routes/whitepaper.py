@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
 from app.auth.deps import require_roles
 from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
@@ -50,6 +51,7 @@ async def add_whitepaper(
             image_id=image_id
         )
         created = await whitepaper_ctrl.create_whitepaper(whitepaper_data)
+        await notify_ctrl.queue_content("white_paper", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "White paper created successfully", "whitepaper": created}
     except HTTPException:
         raise

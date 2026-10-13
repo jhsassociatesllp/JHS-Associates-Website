@@ -160,3 +160,8 @@ async def read_file(file_id: str) -> tuple[bytes, str, str]:
     if not doc:
         raise RegWatchError(404, "Not found")
     return bytes(doc["data"]), doc.get("filename", "file"), doc.get("content_type", "application/octet-stream")
+
+
+async def current_status(item_id: str) -> Optional[str]:
+    doc = await get_database()[COLLECTION].find_one({"_id": _oid(item_id)}, {"status": 1})
+    return doc.get("status") if doc else None

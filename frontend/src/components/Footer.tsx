@@ -147,7 +147,7 @@ export default function Footer() {
               </li>
               <li>
                 <Phone size={16} className="footer__contact-icon" />
-                <a href="tel:18001201022">1800 120 1022</a>
+                <a href="tel:+918097095057">+91 8097095057</a>
               </li>
             </ul>
           </div>

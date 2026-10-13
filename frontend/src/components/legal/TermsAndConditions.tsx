@@ -173,7 +173,7 @@ const blocks: LegalBlock[] = [
     type: 'ul',
     items: [
       "Email: connect@jhsassociates.in",
-      "Phone: 1800 120 1022",
+      "Phone: +91 8097095057",
       "Address: JHS & Associates LLP, B Wing, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Mumbai – 400059, Maharashtra, India",
     ],
   },

@@ -80,8 +80,8 @@ export default function LegalPage({ eyebrow, title, lastUpdated, intro, blocks }
               <a href="mailto:connect@jhsassociates.in" className="legal-contact-card__link">
                 <Mail size={16} /> connect@jhsassociates.in
               </a>
-              <a href="tel:18001201022" className="legal-contact-card__link">
-                <Phone size={16} /> 1800 120 1022
+              <a href="tel:+918097095057" className="legal-contact-card__link">
+                <Phone size={16} /> +91 8097095057
               </a>
             </div>
           </div>

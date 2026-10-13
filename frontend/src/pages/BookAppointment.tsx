@@ -344,7 +344,7 @@ export default function BookAppointment() {
           </ol>
           <div className="bap-aside__help">
             <span className="bap-aside__help-label">Prefer to talk to someone?</span>
-            <a className="bap-aside__phone" href="tel:18001201022">1800 120 1022</a>
+            <a className="bap-aside__phone" href="tel:+918097095057">+91 8097095057</a>
             <a className="bap-aside__mail" href="mailto:connect@jhsassociates.in">connect@jhsassociates.in</a>
           </div>
         </aside>

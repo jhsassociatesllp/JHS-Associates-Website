@@ -270,7 +270,7 @@ export default function Contact() {
           </span>
           <div>
             <span className="ct-strip__label">Phone</span>
-            <span className="ct-strip__val">1800 120 1022</span>
+            <span className="ct-strip__val">+91 8097095057</span>
           </div>
         </div>
         <div className="ct-strip__divider" />

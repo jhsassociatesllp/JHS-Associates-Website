@@ -219,7 +219,7 @@ export default function Alumni() {
               </div>
               <div className="alumni-contact-item">
                 <IconPhone />
-                <span>1800 120 1022</span>
+                <span>+91 8097095057</span>
               </div>
               <div className="alumni-contact-item">
                 <IconPin />

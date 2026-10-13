@@ -3,6 +3,7 @@ import hmac
 from datetime import datetime, timedelta, timezone
 
 from app.auth.security import SECRET_KEY
+from app.config.settings import settings
 from app.database.connection import get_database
 from app.schemas.cookie_consent import POLICY_VERSION, RETENTION_DAYS, ConsentSubmit
 
@@ -14,7 +15,7 @@ _index_ready = False
 
 def hash_ip(ip: str) -> str:
     """Keyed hash: lets us rate-limit / spot abuse without storing the visitor's IP."""
-    return hmac.new(str(SECRET_KEY).encode(), ip.encode(), hashlib.sha256).hexdigest()
+    return hmac.new(str(settings.ip_hash_salt or SECRET_KEY).encode(), ip.encode(), hashlib.sha256).hexdigest()
 
 
 def parse_user_agent(ua: str) -> dict:

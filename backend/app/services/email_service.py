@@ -17,6 +17,7 @@ Password for smtp_password if MFA is enabled on the account.
 
 import asyncio
 import logging
+from html import escape as esc
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -69,8 +70,9 @@ async def _send_email(
     effective_sender = SENDER_EMAIL or SMTP_USERNAME
     message = MIMEMultipart("alternative")
     message["From"] = f"{SENDER_NAME} <{effective_sender}>"
-    message["To"] = f"{to_name} <{to_email}>" if to_name else to_email
-    message["Subject"] = subject
+    safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
+    message["To"] = f"{safe_name} <{to_email}>" if safe_name else to_email
+    message["Subject"] = " ".join(str(subject).split())[:200]   # no line breaks: blocks header injection
     message.attach(MIMEText(html_body, "html"))
 
     try:
@@ -239,7 +241,7 @@ async def notify_hr_new_contact(data: dict) -> None:
         "Thank You for Contacting Us",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{name}</strong>,<br><br>
+          Dear <strong>{esc(name)}</strong>,<br><br>
           Thank you for reaching out to <strong>JHS</strong>.
           We have received your message and our team will get back to you shortly.<br><br>
           If your query is urgent, please feel free to call us directly.<br><br>
@@ -283,7 +285,7 @@ async def notify_hr_new_alumni(data: dict) -> None:
         "Welcome Back to the JHS Alumni Network",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{full_name}</strong>,<br><br>
+          Dear <strong>{esc(full_name)}</strong>,<br><br>
           Thank you for registering with the <strong>JHS Alumni Network</strong>.
           We're delighted to stay connected with you!<br><br>
           Our team will review your details and reach out if there are any upcoming alumni events or opportunities.<br><br>
@@ -382,8 +384,8 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         f"Application Received — {job_title}",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{name}</strong>,<br><br>
-          Thank you for applying for the position of <strong>{job_title}</strong>
+          Dear <strong>{esc(name)}</strong>,<br><br>
+          Thank you for applying for the position of <strong>{esc(job_title)}</strong>
           at <strong>JHS</strong>.<br><br>
           Our HR team has received your application and will review it carefully.
           If your profile matches our requirements, we will reach out to schedule the next steps.<br><br>
@@ -416,7 +418,7 @@ async def notify_hr_new_appointment(data: dict) -> None:
 
     rows = (
         _row("Name", name)
-        + _row("Mobile", f"+91 {mobile}")
+        + _row("Mobile", f"+91 {esc(mobile)}")
         + _row("Email", email)
         + _row("City", data.get("city") or "—")
         + _row("Speciality", speciality)
@@ -435,10 +437,10 @@ async def notify_hr_new_appointment(data: dict) -> None:
         "Appointment Request Received",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{name}</strong>,<br><br>
+          Dear <strong>{esc(name)}</strong>,<br><br>
           Thank you for booking an appointment with <strong>JHS</strong>
-          for <strong>{speciality}</strong>.<br><br>
-          Our team will call you on <strong>+91 {mobile}</strong> shortly to confirm
+          for <strong>{esc(speciality)}</strong>.<br><br>
+          Our team will call you on <strong>+91 {esc(mobile)}</strong> shortly to confirm
           a convenient time for your appointment.<br><br>
           Warm regards,<br>
           <strong>JHS</strong>
@@ -484,10 +486,10 @@ async def notify_hr_new_consultation_request(data: dict) -> None:
         "Consultation Request Received",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{name}</strong>,<br><br>
+          Dear <strong>{esc(name)}</strong>,<br><br>
           Thank you for requesting a <strong>{appointment_type}</strong> with
-          <strong>{partner_name}</strong> at <strong>JHS</strong>.<br><br>
-          Our team will reach out to you on <strong>{email}</strong> shortly to confirm the schedule.<br><br>
+          <strong>{esc(partner_name)}</strong> at <strong>JHS</strong>.<br><br>
+          Our team will reach out to you on <strong>{esc(email)}</strong> shortly to confirm the schedule.<br><br>
           Warm regards,<br>
           <strong>JHS</strong>
         </td></tr>
@@ -525,9 +527,9 @@ async def notify_hr_new_proposal(data: dict) -> None:
         "Request Received",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{full_name}</strong>,<br><br>
+          Dear <strong>{esc(full_name)}</strong>,<br><br>
           Thank you for reaching out to <strong>JHS</strong> regarding
-          <strong>{subject_line}</strong>.<br><br>
+          <strong>{esc(subject_line)}</strong>.<br><br>
           Our team has received your request and will get back to you within one business day.<br><br>
           Warm regards,<br>
           <strong>JHS</strong>
@@ -555,7 +557,7 @@ async def send_user_welcome_email(user: dict) -> None:
         "Welcome to JHS",
         f"""
         <tr><td colspan="2" style="padding:12px 0;line-height:1.7;color:#333;">
-          Dear <strong>{name}</strong>,<br><br>
+          Dear <strong>{esc(name)}</strong>,<br><br>
           Your account has been created successfully. You can now download our
           white papers, newsletters, articles and regulatory updates, apply for
           open roles, request a proposal and book appointments — all using this

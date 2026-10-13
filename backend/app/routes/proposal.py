@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.auth.deps import get_current_user
+from app.auth.deps import get_current_user, require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.proposal import ProposalCreate, ProposalResponse
 from app.controllers.proposal import create_proposal, get_all_proposals
 from typing import List
+
+hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 
 router = APIRouter(prefix="/proposal", tags=["Proposal"])
 
@@ -18,7 +21,7 @@ async def submit_proposal(proposal: ProposalCreate, user: dict = Depends(get_cur
         )
 
 @router.get("/", response_model=List[ProposalResponse])
-async def list_proposals():
+async def list_proposals(current_admin: AdminInDB = Depends(hr_access)):
     try:
         proposals = await get_all_proposals()
         return proposals

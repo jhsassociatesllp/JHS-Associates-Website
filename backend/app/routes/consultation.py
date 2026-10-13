@@ -19,7 +19,7 @@ from app.schemas.consultation import (
 router = APIRouter(prefix="/consulting", tags=["Consulting"])
 
 hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
-CONSULTING_TOKEN_EXPIRES = timedelta(days=30)
+CONSULTING_TOKEN_EXPIRES = timedelta(hours=24)
 
 
 @router.post("/auth/google", response_model=ConsultingGoogleAuthResponse)

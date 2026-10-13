@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminBlogs.css';
 
 interface Blog {
@@ -26,6 +27,7 @@ interface FormData {
 }
 
 const AdminBlogs: React.FC = () => {
+  const { token } = useAuth();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -113,11 +115,13 @@ const AdminBlogs: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/blogs/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/blogs/`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -170,6 +174,7 @@ const AdminBlogs: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

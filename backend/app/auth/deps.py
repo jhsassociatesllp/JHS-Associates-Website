@@ -92,7 +92,7 @@ def normalize_admin_data(admin_data: dict, email: str) -> dict:
     admin_data["id"] = str(admin_data["_id"])
     admin_data.pop("_id", None)
     admin_data["email"] = admin_data.get("email") or email
-    admin_data["role"] = admin_data.get("role") or AdminRole.SUPER_ADMIN
+    admin_data["role"] = admin_data.get("role") or AdminRole.ADMIN   # least privilege when no role is set
     admin_data["name"] = admin_data.get("name") or email.split("@")[0].replace(".", " ").title()
     admin_data["created_at"] = admin_data.get("created_at")
     admin_data["last_login"] = admin_data.get("last_login")
@@ -108,6 +108,11 @@ async def get_current_admin(token: str = Depends(oauth2_scheme)):
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+        # Only tokens issued by the admin login are admin tokens. A site-user,
+        # careers or consulting token must never open the admin API.
+        if payload.get("type") != "admin":
+            raise credentials_exception
 
         email: str = payload.get("sub")
         role: str = payload.get("role")

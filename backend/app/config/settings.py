@@ -49,6 +49,16 @@ class Settings(BaseSettings):
     # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
     # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").
     secret_key: str = ""
+    # Separate secret for hashing visitor IPs (falls back to secret_key when empty).
+    ip_hash_salt: str = ""
+
+    # production | staging | development. API docs are only served in development.
+    app_env: str = "production"
+    # Comma-separated list of browser origins allowed to call the API cross-site.
+    cors_origins: str = (
+        "https://jhsassociates.in,https://www.jhsassociates.in,https://staging.jhsassociates.in,"
+        "https://admin.jhsassociates.in,https://staging-admin.jhsassociates.in"
+    )
 
     # MSG91 SMS (mobile OTP for appointment booking). Template id + auth key from MSG91.
     msg91_auth_key: str = ""

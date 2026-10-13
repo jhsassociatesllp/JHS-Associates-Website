@@ -1,10 +1,15 @@
-from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
+import logging
+from fastapi import Depends, APIRouter, HTTPException, status, UploadFile, File, Form
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
 from app.schemas.excellencia import ExcellenciaCreate, ExcellenciaUpdate, ExcellenciaResponse
 from app.controllers import excellencia as excellencia_ctrl
 from app.utils.http import content_disposition
 from io import BytesIO
 from typing import Optional
+
+content_admin = require_roles([AdminRole.SUPER_ADMIN, AdminRole.ADMIN])
 
 router = APIRouter(prefix="/excellencia", tags=["Excellencia"])
 
@@ -17,7 +22,8 @@ async def add_excellencia(
     short_description: str = Form(...),
     button_text: Optional[str] = Form(None),
     button_url: Optional[str] = Form(None),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
     """Create a new Excellencia entry with an optional image (stored in GridFS)."""
     try:
@@ -39,8 +45,11 @@ async def add_excellencia(
         )
         created = await excellencia_ctrl.create_excellencia(excellencia_data)
         return {"message": "Excellencia entry created successfully", "excellencia": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/image/{image_id}")
@@ -63,8 +72,11 @@ async def list_excellencia():
     """Return all Excellencia entries sorted by newest first."""
     try:
         return await excellencia_ctrl.get_all_excellencia()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -85,8 +97,10 @@ async def update_excellencia(
     button_text: Optional[str] = Form(None),
     button_url: Optional[str] = Form(None),
     edited_by: str = Form(...),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
+    edited_by = current_admin.email   # never trust the client for who edited
     """Update an existing Excellencia entry. Tracks edit history."""
     try:
         update_data = ExcellenciaUpdate(edited_by=edited_by)
@@ -105,12 +119,15 @@ async def update_excellencia(
         return {"message": "Excellencia entry updated successfully", "excellencia": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{excellencia_id}", status_code=status.HTTP_200_OK)
-async def remove_excellencia(excellencia_id: str):
+async def remove_excellencia(excellencia_id: str, current_admin: AdminInDB = Depends(content_admin)):
     deleted = await excellencia_ctrl.delete_excellencia(excellencia_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Excellencia entry not found")

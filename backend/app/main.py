@@ -1,8 +1,11 @@
+import asyncio
 import logging
 import sys
 
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from app.config.settings import settings
 from contextlib import asynccontextmanager
 from app.database.connection import connect_to_mongo, close_mongo_connection
 
@@ -50,7 +53,8 @@ async def lifespan(app: FastAPI):
     # Startup
     await connect_to_mongo()
     from app.services.seed import seed_defaults
-    await seed_defaults()   # fills an empty database once; never overwrites existing data
+    # fills an empty database once (never overwrites); runs in the background so a slow database cannot delay start-up
+    app.state.seed_task = asyncio.create_task(seed_defaults())
     yield
     # Shutdown
     await close_mongo_connection()
@@ -60,19 +64,45 @@ app = FastAPI(
     description="FastAPI Backend for JHS Website",
     version="1.0.0",
     lifespan=lifespan,
-    docs_url="/api/docs",
-    openapi_url="/api/openapi.json",
+    # Interactive API docs are a map of every endpoint: development only.
+    docs_url="/api/docs" if settings.app_env == "development" else None,
+    redoc_url=None,
+    openapi_url="/api/openapi.json" if settings.app_env == "development" else None,
     redirect_slashes=True
 )
 
 # Configure CORS
+_cors = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
+if settings.app_env == "development":
+    _cors += ["http://localhost:5173", "http://localhost:5180", "http://localhost:5181",
+              "http://127.0.0.1:5173", "http://127.0.0.1:5180", "http://127.0.0.1:5181"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,  # Allow credentials for authentication
+    allow_origins=_cors,
+    allow_credentials=False,   # logins use an Authorization header, not cookies
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=["*"],
+    allow_headers=["Authorization", "Content-Type", "Accept", "X-OTP-Token"],
 )
+
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    path = request.url.path
+    if "/image/" in path or "/photo/" in path:
+        # Uploaded pictures can never run script even if one were opened directly.
+        response.headers.setdefault("Content-Security-Policy", "default-src 'none'; sandbox")
+    return response
+
+
+@app.exception_handler(Exception)
+async def unhandled_error(request, exc):
+    # Never show internals to the visitor; the details go to the server log.
+    logging.getLogger("api").exception("Unhandled error on %s %s", request.method, request.url.path)
+    return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
 api_router = APIRouter(prefix="/api")
 

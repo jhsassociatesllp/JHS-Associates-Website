@@ -1,4 +1,7 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
 from app.auth.deps import get_current_user
 from app.controllers import activity as activity_ctrl
@@ -7,6 +10,8 @@ from app.controllers import regulatory as regulatory_ctrl
 from app.utils.http import content_disposition
 from io import BytesIO
 from typing import Optional
+
+content_admin = require_roles([AdminRole.SUPER_ADMIN, AdminRole.ADMIN])
 
 router = APIRouter(prefix="/regulatory", tags=["Regulatory"])
 
@@ -18,7 +23,8 @@ async def add_regulatory(
     title: str = Form(...),
     short_description: str = Form(...),
     pdf: UploadFile = File(...),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
     """Upload a new regulatory document with a PDF and optional cover image (stored in GridFS)."""
     try:
@@ -45,8 +51,11 @@ async def add_regulatory(
         )
         created = await regulatory_ctrl.create_regulatory(regulatory_data)
         return {"message": "Regulatory created successfully", "regulatory": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/pdf/{pdf_id}")
@@ -88,8 +97,11 @@ async def list_regulatory():
     """Return all regulatory documents sorted by newest first."""
     try:
         return await regulatory_ctrl.get_all_regulatory()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -109,8 +121,10 @@ async def update_regulatory(
     short_description: Optional[str] = Form(None),
     edited_by: str = Form(...),
     pdf: Optional[UploadFile] = File(None),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
+    edited_by = current_admin.email   # never trust the client for who edited
     """Update an existing regulatory document. Tracks edit history."""
     try:
         update_data = RegulatoryUpdate(edited_by=edited_by)
@@ -132,12 +146,15 @@ async def update_regulatory(
         return {"message": "Regulatory updated successfully", "regulatory": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{regulatory_id}", status_code=status.HTTP_200_OK)
-async def remove_regulatory(regulatory_id: str):
+async def remove_regulatory(regulatory_id: str, current_admin: AdminInDB = Depends(content_admin)):
     deleted = await regulatory_ctrl.delete_regulatory(regulatory_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Regulatory not found")

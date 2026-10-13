@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminWhitePapers.css';
 
 interface WhitePaper {
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 const AdminWhitePapers: React.FC = () => {
+  const { token } = useAuth();
   const [whitePapers, setWhitePapers] = useState<WhitePaper[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -88,11 +90,13 @@ const AdminWhitePapers: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/whitepapers/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/whitepapers/upload`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -139,6 +143,7 @@ const AdminWhitePapers: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/whitepapers/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

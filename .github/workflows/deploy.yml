@@ -224,6 +224,7 @@ jobs:
             # script is sent (same as MONGODB_URL above).
             export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
             export PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}"
+            export APP_ENV=$ENV
             export SECRET_KEY="${{ secrets.SECRET_KEY }}"
             export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"

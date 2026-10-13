@@ -5,6 +5,7 @@ from collections import defaultdict, deque
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from app.utils.netutil import client_ip
 from fastapi.responses import StreamingResponse
 
 from app.auth.deps import require_roles
@@ -27,12 +28,6 @@ _HOUR = 3600
 _MAX_PER_EVENT_HOUR = 15      # attempts per IP for one event per hour (offices share one IP)
 _hits: dict[str, deque] = defaultdict(deque)
 
-
-def _client_ip(request: Request) -> str:
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
 
 
 def _throttle(key: str, window: int, limit: int) -> None:
@@ -159,7 +154,7 @@ async def event_detail(event_id: str):
 
 @router.post("/{event_id}/register", response_model=RegistrationResult, status_code=status.HTTP_201_CREATED)
 async def register_for_event(event_id: str, data: RegistrationCreate, request: Request):
-    ip = _client_ip(request)
+    ip = client_ip(request)
     ip_key = hash_ip(ip)
     _throttle(f"all:{ip_key}", _WINDOW, _MAX_PER_WINDOW)
     _throttle(f"ev:{ip_key}:{event_id}", _HOUR, _MAX_PER_EVENT_HOUR)

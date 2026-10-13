@@ -35,6 +35,14 @@ async def create_user_with_password(data: UserSignup) -> dict:
             detail="An account with this email already exists. Please sign in instead.",
         )
 
+    # An address that belongs to an admin can never be registered as a public account.
+    from app.auth.deps import find_admin_by_email
+    if await find_admin_by_email(data.email):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="An account with this email already exists. Please sign in instead.",
+        )
+
     now = datetime.now(timezone.utc)
     doc = {
         "first_name": data.first_name.strip(),

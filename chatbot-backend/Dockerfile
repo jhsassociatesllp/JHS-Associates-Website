@@ -23,6 +23,10 @@ RUN npm ci --omit=dev
 
 COPY . .
 
+# Run as an unprivileged user (the service only needs to write inside /app).
+RUN chown -R node:node /app
+USER node
+
 EXPOSE 3001
 
 CMD ["node", "server.js"]

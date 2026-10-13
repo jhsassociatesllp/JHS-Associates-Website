@@ -4,6 +4,7 @@ import time
 from collections import defaultdict, deque
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
+from app.utils.netutil import client_ip
 from fastapi.responses import StreamingResponse
 
 from app.auth.deps import require_roles
@@ -23,12 +24,6 @@ _MAX_PER_WINDOW = 12
 _hits: dict[str, deque] = defaultdict(deque)
 
 
-def _client_ip(request: Request) -> str:
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
-
 
 def _check_rate(key: str) -> None:
     now = time.monotonic()
@@ -47,7 +42,7 @@ def _check_rate(key: str) -> None:
 
 @router.post("/", status_code=status.HTTP_204_NO_CONTENT)
 async def submit_consent(data: ConsentSubmit, request: Request):
-    ip = _client_ip(request)
+    ip = client_ip(request)
     _check_rate(ctrl.hash_ip(ip))
     await ctrl.record_consent(data, ip, request.headers.get("user-agent", ""))
     return Response(status_code=status.HTTP_204_NO_CONTENT)

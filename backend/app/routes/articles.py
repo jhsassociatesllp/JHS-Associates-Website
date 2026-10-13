@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form, Depends
 from fastapi.responses import StreamingResponse
 from app.schemas.article import ArticleCreate, ArticleUpdate, ArticleResponse
@@ -57,8 +58,11 @@ async def add_article(
         )
         created = await article_ctrl.create_article(article_data)
         return {"message": "Article created successfully", "article": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/image/{image_id}")
@@ -100,8 +104,11 @@ async def list_articles():
     """Return all articles sorted by newest first."""
     try:
         return await article_ctrl.get_all_articles()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -156,8 +163,11 @@ async def update_article(
         return {"message": "Article updated successfully", "article": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{article_id}", status_code=status.HTTP_200_OK)

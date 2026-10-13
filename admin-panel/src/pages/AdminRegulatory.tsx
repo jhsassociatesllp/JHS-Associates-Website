@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminRegulatory.css';
 
 interface Regulatory {
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 const AdminRegulatory: React.FC = () => {
+  const { token } = useAuth();
   const [regulatoryItems, setRegulatoryItems] = useState<Regulatory[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -88,11 +90,13 @@ const AdminRegulatory: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/regulatory/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/regulatory/upload`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -139,6 +143,7 @@ const AdminRegulatory: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/regulatory/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

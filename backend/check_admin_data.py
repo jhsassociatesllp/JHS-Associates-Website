@@ -37,7 +37,7 @@ async def check_admin_data():
             print(f"   📧 Email: {admin['email']}")
             print(f"   👤 Name: {admin['name']}")
             print(f"   🔑 Role: {admin['role']}")
-            print(f"   🔒 Password: {admin['password']}")
+            print("   🔒 Password: " + ("hashed" if str(admin.get('password','')).startswith('$2') else "NOT HASHED - will be upgraded at next login"))
             print(f"   📅 Created: {admin['created_at']}")
             print(f"   🕐 Last Login: {admin.get('last_login', 'Never')}")
             

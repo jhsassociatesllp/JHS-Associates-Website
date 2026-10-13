@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminNewsletters.css';
 
 interface Newsletter {
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 const AdminNewsletters: React.FC = () => {
+  const { token } = useAuth();
   const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -88,11 +90,13 @@ const AdminNewsletters: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/newsletters/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/newsletters/upload`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -139,6 +143,7 @@ const AdminNewsletters: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/newsletters/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

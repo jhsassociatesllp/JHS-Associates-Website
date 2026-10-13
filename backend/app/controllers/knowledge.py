@@ -3,6 +3,7 @@ from datetime import datetime
 from app.database.connection import get_database
 from app.schemas.knowledge import KnowledgeCreate, KnowledgeUpdate
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
+from app.utils.uploads import check_pdf, require_webp
 from app.utils.image import convert_to_webp, webp_filename
 from io import BytesIO
 
@@ -122,9 +123,8 @@ async def upload_image_to_gridfs(file_content: bytes, filename: str, content_typ
     """Upload image to GridFS as WebP and return the file ID"""
     db = get_database()
     fs = AsyncIOMotorGridFSBucket(db)
-    webp_bytes = convert_to_webp(file_content)
-    if webp_bytes is not None:
-        file_content, filename, content_type = webp_bytes, webp_filename(filename), "image/webp"
+    webp_bytes = require_webp(file_content)   # re-encoded; the original upload is never stored
+    file_content, filename, content_type = webp_bytes, webp_filename(filename), "image/webp"
     file_id = await fs.upload_from_stream(
         filename,
         BytesIO(file_content),
@@ -135,6 +135,7 @@ async def upload_image_to_gridfs(file_content: bytes, filename: str, content_typ
 
 async def upload_pdf_to_gridfs(file_content: bytes, filename: str) -> str:
     """Upload PDF to GridFS and return the file ID"""
+    check_pdf(file_content)
     db = get_database()
     fs = AsyncIOMotorGridFSBucket(db)
     file_id = await fs.upload_from_stream(

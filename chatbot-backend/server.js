@@ -79,6 +79,33 @@ function requireApiKeyForExternalCallers(req, res, next) {
   return res.status(401).json({ error: "Missing or invalid API key. Pass it as the 'x-api-key' header." });
 }
 
+// /api/reindex changes what the chatbot knows and makes the server fetch a page, so it is
+// admin-only: it needs the API key (fail closed if none is configured) and the browser
+// "Origin" header is NOT accepted, because any non-browser client can fake that.
+function requireApiKeyStrict(req, res, next) {
+  const key = process.env.API_KEY;
+  if (!key) return res.status(503).json({ error: "Endpoint disabled" });
+  const sent = String(req.headers["x-api-key"] || "");
+  const a = Buffer.from(sent);
+  const b = Buffer.from(key);
+  if (a.length !== b.length || !require("crypto").timingSafeEqual(a, b)) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  return next();
+}
+
+// Only our own website may be (re)crawled - never an arbitrary address (SSRF).
+const REINDEX_HOSTS = (process.env.REINDEX_ALLOWED_HOSTS || "jhsassociates.in,www.jhsassociates.in,staging.jhsassociates.in")
+  .split(",").map((h) => h.trim().toLowerCase()).filter(Boolean);
+function isAllowedSiteUrl(raw) {
+  try {
+    const u = new URL(String(raw));
+    return u.protocol === "https:" && REINDEX_HOSTS.includes(u.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
 // Basic abuse protection — also protects your OpenAI bill
 app.use(
   "/api/chat",
@@ -1236,10 +1263,11 @@ async function answerCompoundContentAddendum(message) {
 
 // ---- Tier 1 Webhook Endpoint for Instant Re-indexing ---------------------
 
-app.post("/api/reindex", requireApiKeyForExternalCallers, async (req, res) => {
+app.post("/api/reindex", requireApiKeyStrict, async (req, res) => {
   try {
-    const { type, url, collection, docId } = req.body;
+    const { type, url, collection, docId } = req.body || {};
     if (type === "url" && url) {
+      if (!isAllowedSiteUrl(url)) return res.status(400).json({ error: "URL not allowed" });
       const result = await crawler.crawlPageByUrl(url);
       if (result.items && result.items.length > 0) {
         loadIndex();
@@ -1260,7 +1288,7 @@ app.post("/api/reindex", requireApiKeyForExternalCallers, async (req, res) => {
     return res.status(400).json({ error: "Invalid payload. Provide { type: 'url', url } or { type: 'mongodb', collection, docId }" });
   } catch (err) {
     console.error("Reindex error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 

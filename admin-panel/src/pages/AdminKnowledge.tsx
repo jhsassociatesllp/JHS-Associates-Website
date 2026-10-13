@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminKnowledge.css';
 
 interface KnowledgeResource {
@@ -22,6 +23,7 @@ interface FormData {
 }
 
 const AdminKnowledge: React.FC = () => {
+  const { token } = useAuth();
   const [knowledgeResources, setKnowledgeResources] = useState<KnowledgeResource[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -92,11 +94,13 @@ const AdminKnowledge: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/knowledge/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/knowledge/upload`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -145,6 +149,7 @@ const AdminKnowledge: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/knowledge/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

@@ -1,16 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from app.auth.deps import require_roles
 from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.alumni import AlumniCreate, AlumniResponse
 from app.controllers.alumni import create_alumni_registration, get_all_alumni
 from typing import List
+from app.utils.netutil import client_ip, throttle
 
 router = APIRouter(prefix="/alumni", tags=["Alumni"])
 
 hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 
 @router.post("/", response_model=AlumniResponse, status_code=status.HTTP_201_CREATED)
-async def submit_alumni(alumni: AlumniCreate):
+async def submit_alumni(request: Request, alumni: AlumniCreate):
+    throttle(f"alumni:{client_ip(request)}", 3600, 10)
     try:
         result = await create_alumni_registration(alumni)
         return result

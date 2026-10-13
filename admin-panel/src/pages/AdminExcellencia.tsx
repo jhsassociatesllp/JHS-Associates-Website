@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminExcellencia.css';
 
 interface Excellencia {
@@ -22,6 +23,7 @@ interface FormData {
 }
 
 const AdminExcellencia: React.FC = () => {
+  const { token } = useAuth();
   const [entries, setEntries] = useState<Excellencia[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -85,11 +87,13 @@ const AdminExcellencia: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/excellencia/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/excellencia/upload`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -138,6 +142,7 @@ const AdminExcellencia: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/excellencia/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {

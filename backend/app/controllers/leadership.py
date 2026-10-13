@@ -5,6 +5,7 @@ from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
 
 from app.database.connection import get_database
+from app.utils.uploads import check_pdf, require_webp
 from app.utils.image import convert_to_webp, webp_filename
 
 COLLECTION = "leadership"
@@ -57,9 +58,8 @@ async def delete_member(member_id: str) -> bool:
 
 async def upload_photo(content: bytes, filename: str, content_type: str | None) -> str:
     fs = AsyncIOMotorGridFSBucket(get_database())
-    webp_bytes = convert_to_webp(content)
-    if webp_bytes is not None:
-        content, filename, content_type = webp_bytes, webp_filename(filename), "image/webp"
+    webp_bytes = require_webp(content)   # re-encoded; the original upload is never stored
+    content, filename, content_type = webp_bytes, webp_filename(filename), "image/webp"
     file_id = await fs.upload_from_stream(
         filename,
         BytesIO(content),

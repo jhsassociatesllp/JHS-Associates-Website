@@ -27,7 +27,7 @@ router = APIRouter(prefix="/careers", tags=["Careers"])
 
 hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 MAX_RESUME_SIZE = 8 * 1024 * 1024
-APPLICANT_TOKEN_EXPIRES = timedelta(days=30)
+APPLICANT_TOKEN_EXPIRES = timedelta(hours=24)
 
 # ── Resume upload hygiene ─────────────────────────────────────────────────
 def _safe_filename(name: Optional[str]) -> str:

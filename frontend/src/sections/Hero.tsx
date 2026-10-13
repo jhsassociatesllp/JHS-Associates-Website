@@ -468,13 +468,13 @@ export default function Hero() {
       {/* Top-right action buttons */}
       <div className="hero__actions">
         <button
-          className="hero__action-btn hero__action-btn--outline"
+          className="hero__action-btn hero__action-btn--outline hero__action-btn--desktop-only"
           onClick={() => navigate("/approval-for-proposal")}
         >
           Business Opportunities
         </button>
         <button
-          className="hero__action-btn hero__action-btn--solid"
+          className="hero__action-btn hero__action-btn--solid hero__action-btn--desktop-only"
           onClick={() => navigate("/about/careers")}
         >
           Join Our Team

@@ -1137,19 +1137,25 @@
   }
 
   .hero__carousel-track {
-    height: 380px;
+    height: 430px;
   }
 
   .hero__carousel-card {
-    width: min(264px, 70vw);
-    height: 340px;
-    margin-left: calc(min(264px, 70vw) / -2);
-    margin-top: -170px;
+    width: min(288px, 76vw);
+    height: 380px;
+    margin-left: calc(min(288px, 76vw) / -2);
+    margin-top: -190px;
     border-radius: 20px;
     box-shadow: 0 22px 40px -18px rgba(15, 35, 64, 0.55);
   }
 
   .hero__carousel-dots {
     margin-top: 6px;
+  }
+
+  /* Business Opportunities and Join Our Team are not shown on phones
+     (they stay on tablets and desktops); language and log-in remain. */
+  .hero__action-btn--desktop-only {
+    display: none;
   }
 }

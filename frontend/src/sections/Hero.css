@@ -1186,3 +1186,95 @@
     display: none;
   }
 }
+
+/* =============================================
+   LAPTOP / DESKTOP FIT (>= 901px)
+   The old layout used fixed sizes (card 520px tall, 80px gaps) that were taller than a
+   laptop window, so the cards ran off the bottom of the first screen. Everything below is
+   sized from the window height, so the headline, the whole centre card, the dots and the
+   arrows fit on the first screen on any laptop, and tall monitors still get the full-size card.
+   ============================================= */
+@media (min-width: 901px) {
+  .hero {
+    --hero-card-h: clamp(280px, calc(82vh - 200px), 520px);
+    --hero-card-w: calc(var(--hero-card-h) * 0.7308);
+    padding: 72px 48px 12px;
+  }
+
+  .hero__header {
+    margin-top: 0;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+
+  .hero__eyebrow {
+    font-size: clamp(12px, 2.4vh, 18px);
+  }
+
+  .hero__headline {
+    font-size: clamp(26px, 5.2vh, 56px);
+    line-height: 1.16;
+  }
+
+  .hero__carousel-track {
+    height: calc(var(--hero-card-h) + 16px);
+  }
+
+  .hero__carousel-container {
+    min-height: 0;
+  }
+
+  .hero__carousel-card {
+    width: var(--hero-card-w);
+    height: var(--hero-card-h);
+    margin-left: calc(var(--hero-card-w) / -2);
+    margin-top: calc(var(--hero-card-h) / -2);
+  }
+
+  /* the text on the card scales with the card, so a smaller laptop card is not cramped */
+  .hero__carousel-card-content {
+    bottom: calc(var(--hero-card-h) * 0.045);
+    left: calc(var(--hero-card-h) * 0.045);
+    right: calc(var(--hero-card-h) * 0.045);
+    padding: calc(var(--hero-card-h) * 0.05) calc(var(--hero-card-h) * 0.045);
+  }
+
+  .hero__carousel-card-title {
+    font-size: clamp(12px, calc(var(--hero-card-h) * 0.0385), 20px);
+    margin-top: calc(var(--hero-card-h) * 0.012);
+  }
+
+  .hero__carousel-card-meta {
+    font-size: clamp(8.5px, calc(var(--hero-card-h) * 0.02), 11px);
+  }
+
+  /* dots and arrows share one row under the card, so every control is visible */
+  .hero__carousel {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .hero__carousel-container {
+    grid-column: 1 / -1;
+  }
+
+  .hero__carousel-dots {
+    grid-column: 2;
+    margin-top: 10px;
+  }
+
+  .hero__spotlight-controls {
+    grid-column: 3;
+    justify-self: start;
+    margin: 10px 0 0 28px;
+  }
+}
+
+/* wide windows: the side cards sit one card-width away (was a fixed 430px for a 380px card) */
+@media (min-width: 1201px) {
+  .hero__carousel-card--prev2 { transform: translateX(-110%) scale(0.5); }
+  .hero__carousel-card--prev  { transform: translateX(-113%) scale(0.75); }
+  .hero__carousel-card--next  { transform: translateX(113%) scale(0.75); }
+  .hero__carousel-card--next2 { transform: translateX(110%) scale(0.5); }
+}

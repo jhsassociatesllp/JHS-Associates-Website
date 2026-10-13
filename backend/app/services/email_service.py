@@ -61,6 +61,7 @@ async def _send_email(
     to_name: str,
     subject: str,
     html_body: str,
+    extra_headers: dict | None = None,
 ) -> bool:
     """Send a single email via Outlook/Office 365 SMTP. Returns True on success."""
     if not SMTP_USERNAME or not SMTP_PASSWORD:
@@ -74,6 +75,8 @@ async def _send_email(
     message["To"] = f"{safe_name} <{to_email}>" if safe_name else to_email
     message["Subject"] = " ".join(str(subject).split())[:200]   # no line breaks: blocks header injection
     message.attach(MIMEText(html_body, "html"))
+    for key, value in (extra_headers or {}).items():
+        message[key] = " ".join(str(value).split())
 
     try:
         await aiosmtplib.send(
@@ -94,7 +97,7 @@ async def _send_email(
 
 # ── Shared HTML wrapper (letterhead layout) ──────────────────
 FIRM_ADDRESS = "B Wing, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Mumbai &ndash; 400059"
-FIRM_PHONE = "1800 120 1022"
+FIRM_PHONE = "+91 8097095057"
 FIRM_WEBSITE = "jhsassociates.in"
 FIRM_EMAIL = "connect@jhsassociates.in"
 

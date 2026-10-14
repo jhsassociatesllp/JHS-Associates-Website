@@ -1196,7 +1196,7 @@
    ============================================= */
 @media (min-width: 901px) {
   .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 192px), 520px);
+    --hero-card-h: clamp(280px, calc(82vh - 168px), 520px);
     --hero-card-w: calc(var(--hero-card-h) * 0.7308);
     padding: 64px 48px 8px;
   }
@@ -1304,8 +1304,8 @@
    one beyond that - all sized from the card width, so they keep their spacing at any size. */
 @media (min-width: 1201px) {
   .hero {
-    --hero-card-h: clamp(290px, min(calc(82vh - 192px), 27vw), 540px);
-    --hero-card-w: calc(var(--hero-card-h) * 0.8);
+    --hero-card-h: clamp(290px, min(calc(82vh - 160px), 25vw), 540px);
+    --hero-card-w: calc(var(--hero-card-h) * 0.86);
   }
 
   .hero__carousel-card--prev2,
@@ -1317,13 +1317,13 @@
   }
 
   /* 3D cover-flow: the cards beside the centre turn towards it and sit further back */
-  .hero__carousel-card--prev  { transform: translateX(-86%) translateZ(-90px) rotateY(36deg) scale(0.92); z-index: 5; opacity: 1; }
-  .hero__carousel-card--next  { transform: translateX(86%) translateZ(-90px) rotateY(-36deg) scale(0.92); z-index: 5; opacity: 1; }
-  .hero__carousel-card--prev2 { transform: translateX(-148%) translateZ(-230px) rotateY(46deg) scale(0.84); }
-  .hero__carousel-card--next2 { transform: translateX(148%) translateZ(-230px) rotateY(-46deg) scale(0.84); }
+  .hero__carousel-card--prev  { transform: translateX(-102%) translateZ(-90px) rotateY(34deg) scale(0.92); z-index: 5; opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(102%) translateZ(-90px) rotateY(-34deg) scale(0.92); z-index: 5; opacity: 1; }
+  .hero__carousel-card--prev2 { transform: translateX(-186%) translateZ(-230px) rotateY(44deg) scale(0.84); }
+  .hero__carousel-card--next2 { transform: translateX(186%) translateZ(-230px) rotateY(-44deg) scale(0.84); }
 
-  .hero__carousel-card--gone-l { transform: translateX(-215%) translateZ(-340px) rotateY(52deg) scale(0.7); }
-  .hero__carousel-card--gone-r { transform: translateX(215%) translateZ(-340px) rotateY(-52deg) scale(0.7); }
+  .hero__carousel-card--gone-l { transform: translateX(-255%) translateZ(-340px) rotateY(50deg) scale(0.7); }
+  .hero__carousel-card--gone-r { transform: translateX(255%) translateZ(-340px) rotateY(-50deg) scale(0.7); }
 }
 
 /* cards waiting outside the visible row */
@@ -1354,12 +1354,25 @@
 
 /* laptops and tablets (901 - 1200px): three cards, turned towards the centre */
 @media (min-width: 901px) and (max-width: 1200px) {
-  .hero__carousel-card--prev  { transform: translateX(-82%) translateZ(-80px) rotateY(34deg) scale(0.9); opacity: 1; }
-  .hero__carousel-card--next  { transform: translateX(82%) translateZ(-80px) rotateY(-34deg) scale(0.9); opacity: 1; }
+  .hero__carousel-card--prev  { transform: translateX(-100%) translateZ(-80px) rotateY(32deg) scale(0.9); opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(100%) translateZ(-80px) rotateY(-32deg) scale(0.9); opacity: 1; }
 }
 
 /* phones and small tablets: the neighbours peek in at an angle */
 @media (max-width: 900px) {
-  .hero__carousel-card--prev  { transform: translateX(-78%) translateZ(-70px) rotateY(32deg) scale(0.88); opacity: 0.85; }
-  .hero__carousel-card--next  { transform: translateX(78%) translateZ(-70px) rotateY(-32deg) scale(0.88); opacity: 0.85; }
+  .hero__carousel-card--prev  { transform: translateX(-90%) translateZ(-70px) rotateY(30deg) scale(0.88); opacity: 0.85; }
+  .hero__carousel-card--next  { transform: translateX(90%) translateZ(-70px) rotateY(-30deg) scale(0.88); opacity: 0.85; }
+}
+
+/* with the event bar showing there is 34px less height, so the cards are a little shorter */
+@media (min-width: 901px) {
+  html[data-evm] .hero {
+    --hero-card-h: clamp(280px, calc(82vh - 202px), 520px);
+  }
+}
+
+@media (min-width: 1201px) {
+  html[data-evm] .hero {
+    --hero-card-h: clamp(290px, min(calc(82vh - 194px), 25vw), 540px);
+  }
 }

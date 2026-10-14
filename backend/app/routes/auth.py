@@ -10,6 +10,7 @@ from app.controllers import applicant as applicant_ctrl
 from app.controllers import user as user_ctrl
 from app.schemas.user import (
     AuthResponse,
+    SignupResponse,
     GoogleAuthRequest,
     UserLogin,
     UserResponse,
@@ -29,12 +30,13 @@ def _issue_token(user: dict) -> str:
     )
 
 
-@router.post("/signup", response_model=AuthResponse, status_code=201)
+@router.post("/signup", response_model=SignupResponse, status_code=201)
 async def signup(request: Request, data: UserSignup):
     throttle(f"signup:{client_ip(request)}", 3600, 8, "Too many sign-up attempts. Please try again later.")
     user = await user_ctrl.create_user_with_password(data)
     await send_user_welcome_email(user)
-    return {"token": _issue_token(user), "user": user}
+    # No session is opened here: the new member signs in next with the email and password just chosen.
+    return {"message": "Account created successfully. Please sign in to continue.", "email": user["email"]}
 
 
 @router.post("/login", response_model=AuthResponse)

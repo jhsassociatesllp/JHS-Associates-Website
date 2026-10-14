@@ -39,6 +39,11 @@ class UserResponse(BaseModel):
     last_login: Optional[datetime] = None
 
 
+class SignupResponse(BaseModel):
+    message: str
+    email: EmailStr
+
+
 class AuthResponse(BaseModel):
     token: str
     user: UserResponse

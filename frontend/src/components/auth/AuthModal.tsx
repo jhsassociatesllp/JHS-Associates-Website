@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { X, Loader2, AlertCircle } from 'lucide-react'
+import { X, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { useSiteAuth } from '../../context/SiteAuthContext'
 import { useGoogleIdentity, getGoogleIdentity } from '../../hooks/useGoogleIdentity'
 import './AuthModal.css'
@@ -13,6 +13,7 @@ export default function AuthModal() {
   const [mode, setMode] = useState<Mode>('signin')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -26,6 +27,7 @@ export default function AuthModal() {
   useEffect(() => {
     if (isAuthModalOpen) {
       setError('')
+      setNotice('')
       setMode('signin')
     }
   }, [isAuthModalOpen])
@@ -64,6 +66,7 @@ export default function AuthModal() {
   const switchMode = (next: Mode) => {
     setMode(next)
     setError('')
+    setNotice('')
     resetFields()
   }
 
@@ -80,9 +83,16 @@ export default function AuthModal() {
     try {
       if (mode === 'signup') {
         await signup({ first_name: firstName, last_name: lastName, email, password, agree_terms: agreeTerms })
-      } else {
-        await login(email, password)
+        // Account created - now ask them to sign in with it (the email stays filled in).
+        setMode('signin')
+        setPassword('')
+        setFirstName('')
+        setLastName('')
+        setAgreeTerms(false)
+        setNotice('Account created successfully. Please sign in to continue.')
+        return
       }
+      await login(email, password)
       closeAuthModal()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
@@ -153,6 +163,7 @@ export default function AuthModal() {
             </label>
           )}
 
+          {notice && !error && <p className="am-notice"><CheckCircle2 size={14} /> {notice}</p>}
           {error && <p className="am-error"><AlertCircle size={13} /> {error}</p>}
 
           <button type="submit" className="am-submit" disabled={submitting}>

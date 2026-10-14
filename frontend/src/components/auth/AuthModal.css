@@ -245,3 +245,17 @@
   .am-panel { padding: 30px 20px 22px; }
   .am-row { grid-template-columns: 1fr; }
 }
+
+.am-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #e8f6ee;
+  color: #176b3c;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.4;
+}

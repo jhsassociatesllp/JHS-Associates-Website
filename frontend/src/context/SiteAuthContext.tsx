@@ -57,17 +57,19 @@ function readStoredToken(): string | null {
   }
 }
 
-async function parseAuthResponse(res: Response): Promise<{ token: string; user: SiteUser }> {
-  if (!res.ok) {
-    let detail = 'Something went wrong. Please try again.'
-    try {
-      const body = await res.json()
-      if (body?.detail) detail = body.detail
-    } catch {
-      /* non-JSON error body — keep the generic message */
-    }
-    throw new Error(detail)
+async function throwApiError(res: Response): Promise<never> {
+  let detail = 'Something went wrong. Please try again.'
+  try {
+    const body = await res.json()
+    if (body?.detail) detail = body.detail
+  } catch {
+    /* non-JSON error body — keep the generic message */
   }
+  throw new Error(detail)
+}
+
+async function parseAuthResponse(res: Response): Promise<{ token: string; user: SiteUser }> {
+  if (!res.ok) return throwApiError(res)
   return res.json()
 }
 
@@ -135,9 +137,9 @@ export function SiteAuthProvider({ children }: { children: ReactNode }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-    const parsed = await parseAuthResponse(res)
-    persist(parsed.token, parsed.user)
-  }, [persist])
+    // Signing up only creates the account; the visitor then signs in with it.
+    if (!res.ok) await throwApiError(res)
+  }, [])
 
   const loginWithGoogle = useCallback(async (credential: string) => {
     const res = await fetch(`${API_BASE_URL}/auth/google`, {

@@ -20,7 +20,6 @@ import Cities from './sections/Cities'
 import VisionMission from './sections/VisionMission'
 import Insights from './sections/Insights'
 import FAQ from './sections/FAQ'
-import Disclaimer from './components/Disclaimer'
 import CookieConsent from './components/common/CookieConsent'
 
 const SOP_URL = 'https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/'
@@ -195,7 +194,6 @@ export default function App() {
   return (
     <SiteAuthProvider>
       <SEOHead />
-      <Disclaimer />
       <CookieConsent />
       <AuthModal />
       <Navbar />

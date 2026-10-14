@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Cookie, Check } from 'lucide-react'
 import {
   POLICY_VERSION,
-  hasAcknowledgedDisclaimer,
   readConsent,
   saveConsent,
   syncPendingConsent,
@@ -16,24 +15,20 @@ export const DISCLAIMER_ACCEPTED = 'jhs:disclaimer-accepted'
 
 export default function CookieConsent() {
   const [consent, setConsent] = useState<Consent | null>(() => readConsent())
-  const [disclaimerDone, setDisclaimerDone] = useState(() => hasAcknowledgedDisclaimer())
   const [reopened, setReopened] = useState(false)
   const [customizing, setCustomizing] = useState(false)
   const [preferences, setPreferences] = useState(() => readConsent()?.p ?? true)
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    const onDisclaimer = () => setDisclaimerDone(true)
     const onReopen = () => {
       const current = readConsent()
       setPreferences(current?.p ?? true)
       setCustomizing(true)
       setReopened(true)
     }
-    window.addEventListener(DISCLAIMER_ACCEPTED, onDisclaimer)
     window.addEventListener(OPEN_COOKIE_SETTINGS, onReopen)
     return () => {
-      window.removeEventListener(DISCLAIMER_ACCEPTED, onDisclaimer)
       window.removeEventListener(OPEN_COOKIE_SETTINGS, onReopen)
     }
   }, [])
@@ -42,8 +37,8 @@ export default function CookieConsent() {
   useEffect(() => { syncPendingConsent() }, [])
 
   const needsChoice = !consent || consent.v !== POLICY_VERSION
-  // The legal disclaimer comes first; the cookie notice follows it.
-  const visible = reopened || (disclaimerDone && needsChoice)
+  // The cookie notice is the only pop-up shown when the site opens.
+  const visible = reopened || needsChoice
 
   const choose = useCallback(async (status: 'accepted' | 'rejected' | 'custom', prefs: boolean) => {
     setSaving(true)

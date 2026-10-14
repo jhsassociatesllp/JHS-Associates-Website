@@ -1143,7 +1143,7 @@
   }
 
   .hero__header {
-    margin: 0 0 6px;
+    margin: 0 0 20px;
     gap: 10px;
   }
 
@@ -1200,14 +1200,14 @@
    ============================================= */
 @media (min-width: 901px) {
   .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 188px), 520px);
+    --hero-card-h: clamp(262px, calc(82vh - 208px), 520px);
     --hero-card-w: calc(var(--hero-card-h) * 0.7308);
     padding: 64px 48px 8px;
   }
 
   .hero__header {
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 14px;
     gap: 5px;
   }
 
@@ -1310,7 +1310,7 @@
    one beyond that - all sized from the card width, so they keep their spacing at any size. */
 @media (min-width: 1201px) {
   .hero {
-    --hero-card-h: clamp(290px, min(calc(82vh - 180px), 25vw), 540px);
+    --hero-card-h: clamp(268px, min(calc(82vh - 200px), 25vw), 540px);
     --hero-card-w: calc(var(--hero-card-h) * 0.86);
   }
 
@@ -1366,12 +1366,12 @@
 /* with the event bar showing there is 34px less height, so the cards are a little shorter */
 @media (min-width: 901px) {
   html[data-evm] .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 242px), 520px);
+    --hero-card-h: clamp(262px, calc(82vh - 268px), 520px);
   }
 }
 
 @media (min-width: 1201px) {
   html[data-evm] .hero {
-    --hero-card-h: clamp(290px, min(calc(82vh - 234px), 25vw), 540px);
+    --hero-card-h: clamp(268px, min(calc(82vh - 260px), 25vw), 540px);
   }
 }

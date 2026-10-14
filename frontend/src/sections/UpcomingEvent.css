@@ -364,3 +364,21 @@ html[data-evm] .hero__actions { transform: translateY(34px); }
   box-shadow: 0 12px 24px -14px rgba(15, 35, 64, 0.6);
 }
 .ue-btn:hover { background: var(--accent); color: #fff; }
+
+/* phones: in the stacked layout the button had a 200px flex-basis, so it became 200px TALL.
+   Give it a normal, compact size. */
+@media (max-width: 560px) {
+  .ue-cta { gap: 14px; }
+
+  .ue-btn {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 11px 20px;
+    font-size: 0.86rem;
+    border-radius: 100px;
+  }
+
+  .ue-count { gap: 6px; }
+  .ue-count div { min-width: 0; padding: 8px 4px 7px; border-radius: 12px; }
+  .ue-count strong { font-size: 1.25rem; }
+}

@@ -552,11 +552,9 @@ export default function Hero() {
       <div className="hero__header">
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
-          Building Trust
-          <br />
-          Delivering Excellence
-          <br />
-          Shaping Better Futures
+          <span className="hero__headline-part hero__headline-part--lead">Building Trust</span>{" "}
+          <span className="hero__headline-part">Delivering Excellence</span>
+          <span className="hero__headline-part">Shaping Better Futures</span>
         </h1>
         {/* <span className="hero__badge">RESPONSIBLE AI</span> */}
       </div>

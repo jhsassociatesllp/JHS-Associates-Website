@@ -134,6 +134,10 @@
   display: block;
 }
 
+.hero__headline-part {
+  display: block;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -1150,7 +1154,7 @@
   }
 
   .hero__headline {
-    font-size: clamp(23px, 6.6vw, 29px);
+    font-size: clamp(25px, 7.2vw, 31px);
     line-height: 1.22;
     padding: 0 4px;
   }
@@ -1211,9 +1215,28 @@
     font-size: clamp(12px, 2.4vh, 18px);
   }
 
+  /* a bigger heading on two lines instead of a small one on three: "Building Trust · Delivering
+     Excellence" over "Shaping Better Futures" - larger text for the same height */
   .hero__headline {
-    font-size: clamp(24px, 4.6vh, 56px);
-    line-height: 1.16;
+    font-size: clamp(32px, min(7.2vh, 3.6vw), 64px);
+    line-height: 1.14;
+    max-width: min(1100px, 92vw);
+  }
+
+  .hero__headline-part {
+    display: inline;
+  }
+
+  .hero__headline-part--lead::after {
+    content: "•";
+    color: #D62049;
+    margin: 0 0.45em;
+    font-size: 0.7em;
+    vertical-align: middle;
+  }
+
+  .hero__headline-part:last-child {
+    display: block;
   }
 
   .hero__carousel-track {

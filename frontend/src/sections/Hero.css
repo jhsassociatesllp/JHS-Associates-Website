@@ -1196,15 +1196,15 @@
    ============================================= */
 @media (min-width: 901px) {
   .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 200px), 520px);
+    --hero-card-h: clamp(280px, calc(82vh - 192px), 520px);
     --hero-card-w: calc(var(--hero-card-h) * 0.7308);
-    padding: 72px 48px 12px;
+    padding: 64px 48px 8px;
   }
 
   .hero__header {
     margin-top: 0;
-    margin-bottom: 8px;
-    gap: 8px;
+    margin-bottom: 6px;
+    gap: 6px;
   }
 
   .hero__eyebrow {
@@ -1212,7 +1212,7 @@
   }
 
   .hero__headline {
-    font-size: clamp(26px, 5.2vh, 56px);
+    font-size: clamp(24px, 4.6vh, 56px);
     line-height: 1.16;
   }
 
@@ -1229,6 +1229,29 @@
     height: var(--hero-card-h);
     margin-left: calc(var(--hero-card-w) / -2);
     margin-top: calc(var(--hero-card-h) / -2);
+  }
+
+  /* smaller top buttons on laptops and desktops (Business Opportunities, Join Our Team, language, Log In) */
+  .hero__actions {
+    top: 24px;
+    right: 40px;
+    gap: 10px;
+  }
+
+  .hero__actions .hero__action-btn {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 6px 13px;
+  }
+
+  .hero__actions .lang-switch__btn {
+    padding: 5px 9px !important;
+    font-size: 10px !important;
+  }
+
+  .hero__actions .lang-switch__btn svg {
+    width: 13px;
+    height: 13px;
   }
 
   /* the text on the card scales with the card, so a smaller laptop card is not cramped */
@@ -1261,20 +1284,82 @@
 
   .hero__carousel-dots {
     grid-column: 2;
-    margin-top: 10px;
+    margin-top: 6px;
   }
 
   .hero__spotlight-controls {
     grid-column: 3;
     justify-self: start;
-    margin: 10px 0 0 28px;
+    margin: 6px 0 0 28px;
+  }
+
+  .hero__spotlight-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
   }
 }
 
-/* wide windows: the side cards sit one card-width away (was a fixed 430px for a 380px card) */
+/* wide windows: five cards in a row - the centre card, a smaller card each side and a smaller
+   one beyond that - all sized from the card width, so they keep their spacing at any size. */
 @media (min-width: 1201px) {
-  .hero__carousel-card--prev2 { transform: translateX(-110%) scale(0.5); }
-  .hero__carousel-card--prev  { transform: translateX(-113%) scale(0.75); }
-  .hero__carousel-card--next  { transform: translateX(113%) scale(0.75); }
-  .hero__carousel-card--next2 { transform: translateX(110%) scale(0.5); }
+  .hero {
+    --hero-card-h: clamp(290px, min(calc(82vh - 192px), 27vw), 540px);
+    --hero-card-w: calc(var(--hero-card-h) * 0.8);
+  }
+
+  .hero__carousel-card--prev2,
+  .hero__carousel-card--next2 {
+    opacity: 0.92;
+    z-index: 2;
+    pointer-events: auto;
+    box-shadow: none;
+  }
+
+  /* 3D cover-flow: the cards beside the centre turn towards it and sit further back */
+  .hero__carousel-card--prev  { transform: translateX(-86%) translateZ(-90px) rotateY(36deg) scale(0.92); z-index: 5; opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(86%) translateZ(-90px) rotateY(-36deg) scale(0.92); z-index: 5; opacity: 1; }
+  .hero__carousel-card--prev2 { transform: translateX(-148%) translateZ(-230px) rotateY(46deg) scale(0.84); }
+  .hero__carousel-card--next2 { transform: translateX(148%) translateZ(-230px) rotateY(-46deg) scale(0.84); }
+
+  .hero__carousel-card--gone-l { transform: translateX(-215%) translateZ(-340px) rotateY(52deg) scale(0.7); }
+  .hero__carousel-card--gone-r { transform: translateX(215%) translateZ(-340px) rotateY(-52deg) scale(0.7); }
+}
+
+/* cards waiting outside the visible row */
+.hero__carousel-card--gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =============================================
+   3D CARD ROW (all sizes)
+   ============================================= */
+.hero__carousel-container {
+  perspective: 1500px;
+  perspective-origin: 50% 40%;
+}
+
+.hero__carousel-track {
+  transform-style: preserve-3d;
+}
+
+.hero__carousel-card {
+  backface-visibility: hidden;
+}
+
+.hero__carousel-card--current {
+  box-shadow: 0 30px 60px -22px rgba(15, 35, 64, 0.55);
+}
+
+/* laptops and tablets (901 - 1200px): three cards, turned towards the centre */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .hero__carousel-card--prev  { transform: translateX(-82%) translateZ(-80px) rotateY(34deg) scale(0.9); opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(82%) translateZ(-80px) rotateY(-34deg) scale(0.9); opacity: 1; }
+}
+
+/* phones and small tablets: the neighbours peek in at an angle */
+@media (max-width: 900px) {
+  .hero__carousel-card--prev  { transform: translateX(-78%) translateZ(-70px) rotateY(32deg) scale(0.88); opacity: 0.85; }
+  .hero__carousel-card--next  { transform: translateX(78%) translateZ(-70px) rotateY(-32deg) scale(0.88); opacity: 0.85; }
 }

@@ -143,3 +143,73 @@ export function HeroEventPill() {
     <Link className="hep" to={href} style={{ ['--accent' as string]: accent }}>{inner}</Link>
   )
 }
+
+/**
+ * Slim scrolling announcement bar at the very top of the home page showing the current
+ * upcoming events (admin-managed). It scrolls away with the page; the navbar below it uses
+ * the --topbar-h variable to sit just under it and slide up as the bar leaves the screen.
+ */
+const MARQUEE_HEIGHT = 34
+
+export function EventMarquee() {
+  const { events } = useEvents(false, 4)
+  const list = events ?? []
+  const visible = list.length > 0
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (!visible) {
+      root.style.setProperty('--topbar-h', '0px')
+      root.removeAttribute('data-evm')
+      return
+    }
+    root.setAttribute('data-evm', '1')
+    const update = () => root.style.setProperty('--topbar-h', `${Math.max(0, MARQUEE_HEIGHT - window.scrollY)}px`)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', update)
+      root.style.setProperty('--topbar-h', '0px')
+      root.removeAttribute('data-evm')
+    }
+  }, [visible])
+
+  if (!visible) return null
+
+  const makeChunk = (tag: string) => list.map((e) => {
+    const accent = EVENT_TYPES_ACCENT[e.event_type] ?? EVENT_TYPES_ACCENT.Other
+    const href = e.external_registration_url ?? `/events/${e.id}`
+    const external = Boolean(e.external_registration_url)
+    const inner = (
+      <>
+        <i className="evm__dot" style={{ background: accent }} aria-hidden="true" />
+        <b className="evm__type" style={{ color: accent }}>{e.event_type}</b>
+        <span className="evm__title">{e.title}</span>
+        <span className="evm__when">{formatDay(e.start_at)} {formatMonth(e.start_at)} · {formatTime(e.start_at)}</span>
+        <span className="evm__cta">{e.registration_open ? 'Register now' : 'View details'} →</span>
+      </>
+    )
+    return external ? (
+      <a key={`${e.id}-${tag}`} className="evm__item" href={href} target="_blank" rel="noopener noreferrer">{inner}</a>
+    ) : (
+      <Link key={`${e.id}-${tag}`} className="evm__item" to={href}>{inner}</Link>
+    )
+  })
+
+  // the strip is repeated so the loop has no gap, however few events there are; the second half
+  // is an exact copy of the first, which is what lets the animation restart unnoticed
+  const repeat = Math.max(2, Math.ceil(6 / list.length))
+  const half = (tag: string) =>
+    Array.from({ length: repeat }, (_, i) => (
+      <div className="evm__seq" key={`${tag}-${i}`}>{makeChunk(`${tag}-${i}`)}</div>
+    ))
+
+  return (
+    <div className="evm" role="region" aria-label="Upcoming events">
+      <div className="evm__track">
+        <div className="evm__half">{half('a')}</div>
+        <div className="evm__half" aria-hidden="true">{half('b')}</div>
+      </div>
+    </div>
+  )
+}

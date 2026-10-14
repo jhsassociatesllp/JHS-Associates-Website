@@ -43,7 +43,7 @@
    ================================================================ */
 .nb {
   position: fixed;
-  top: 16px;
+  top: calc(16px + var(--topbar-h, 0px));
   left: 16px;
   width: fit-content;
   max-width: calc(100% - 32px);
@@ -62,7 +62,7 @@
 /* Tablet and Desktop */
 @media (min-width: 768px) {
   .nb {
-    top: 20px;
+    top: calc(20px + var(--topbar-h, 0px));
     left: 20px;
     width: fit-content;
     max-width: calc(100% - 40px);
@@ -1034,7 +1034,7 @@
 
 .nb-account-fixed {
   position: fixed;
-  top: 28px;
+  top: calc(28px + var(--topbar-h, 0px));
   right: 48px;
   z-index: 1000;
   transition: transform 0.4s ease, opacity 0.3s ease;
@@ -1094,14 +1094,14 @@
 
 @media (max-width: 900px) {
   .nb-account-fixed {
-    top: 22px;
+    top: calc(22px + var(--topbar-h, 0px));
     right: 20px;
   }
 }
 
 @media (max-width: 600px) {
   .nb-account-fixed {
-    top: 24px;
+    top: calc(24px + var(--topbar-h, 0px));
     right: 14px;
   }
 

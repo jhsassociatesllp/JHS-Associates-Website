@@ -82,10 +82,17 @@ export function useEvents(past = false, limit = 12) {
   const [error, setError] = useState(false)
   useEffect(() => {
     let cancelled = false
-    fetch(`${API_BASE}/events/?past=${past}&limit=${limit}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: SiteEvent[]) => { if (!cancelled) setEvents(d) })
-      .catch(() => { if (!cancelled) setError(true) })
+    // one quiet retry covers a momentary server hiccup
+    const load = (retry: boolean) =>
+      fetch(`${API_BASE}/events/?past=${past}&limit=${limit}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((d: SiteEvent[]) => { if (!cancelled) { setEvents(d); setError(false) } })
+        .catch(() => {
+          if (cancelled) return
+          if (retry) window.setTimeout(() => load(false), 2000)
+          else setError(true)
+        })
+    load(true)
     return () => { cancelled = true }
   }, [past, limit])
   return { events, loading: events === null && !error, error }

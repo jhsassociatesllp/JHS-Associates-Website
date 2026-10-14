@@ -5,7 +5,7 @@ import { imageUrl } from '../utils/imageUrl'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { useSiteAuth } from '../context/SiteAuthContext'
 import AccountMenu from '../components/common/AccountMenu'
-import { HeroEventPill } from './UpcomingEvent'
+import { EventMarquee } from './UpcomingEvent'
 
 interface Card {
   id: number;
@@ -401,12 +401,41 @@ export default function Hero() {
 
   const POSITION_BY_OFFSET = ["prev2", "prev", "current", "next", "next2"];
 
+  // Where each card was on the previous render. A card that wraps round to the far side
+  // (or comes back from hiding) must not fly across the carousel: it is moved instantly and
+  // only its opacity animates.
+  const [previousOffsets, setPreviousOffsets] = useState<Record<number, number>>({});
+  useEffect(() => {
+    const total = cards.length;
+    const next: Record<number, number> = {};
+    cards.forEach((c, i) => {
+      let diff = i - currentIndex;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+      next[c.id] = diff;
+    });
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- remembers the layout of the render that just finished
+    setPreviousOffsets(next);
+  }, [cards, currentIndex]);
+
+  // Tapping a card in the row brings it to the centre.
+  const jumpTo = (index: number) => {
+    if (index === currentIndex) return;
+    setCurrentIndex(index);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+    startAutoSlide();
+  };
+
   const renderCard = (card: Card, index: number) => {
     const offset = getOffset(index);
-    // Anything beyond the 5 visible slots collapses onto the nearest edge
-    // slot — that slot is opacity:0 already, so it just stays invisible.
+    // Five cards are shown (two each side of the centre). Anything further out waits,
+    // invisible, just outside the row on its own side.
+    const gone = Math.abs(offset) > 2;
     const clamped = Math.max(-2, Math.min(2, offset));
     const position = POSITION_BY_OFFSET[clamped + 2];
+    const before = previousOffsets[card.id];
+    const jumped = before !== undefined && Math.abs(offset - before) > 2;
 
     const isHovered = hoveredCard === card.id;
     const isCenter = position === "current";
@@ -416,11 +445,11 @@ export default function Hero() {
     return (
       <article
         key={card.id}
-        className={`hero__carousel-card hero__carousel-card--${position} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
+        className={`hero__carousel-card hero__carousel-card--${position} ${gone ? `hero__carousel-card--gone hero__carousel-card--gone-${offset < 0 ? "l" : "r"}` : ""} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
           }`}
+        style={jumped ? { transition: "opacity 0.35s ease" } : undefined}
         onClick={() => {
-          if (position === "prev") prevSlide();
-          else if (position === "next") nextSlide();
+          if (!isCenter && !gone) jumpTo(index);
         }}
         onMouseEnter={() => {
           if (isCenter) {
@@ -490,6 +519,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero__bg" aria-hidden="true" />
+      <EventMarquee />
 
       {/* Top-right action buttons */}
       <div className="hero__actions">
@@ -520,7 +550,6 @@ export default function Hero() {
 
       {/* Header */}
       <div className="hero__header">
-        <HeroEventPill />
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
           Building Trust

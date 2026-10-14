@@ -15,7 +15,7 @@ import './UpcomingEvent.css'
 function useCountdown(startIso: string) {
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
-    const t = window.setInterval(() => setNow(Date.now()), 30_000)
+    const t = window.setInterval(() => setNow(Date.now()), 1000)   // ticks every second
     return () => window.clearInterval(t)
   }, [])
   const diff = new Date(startIso).getTime() - now
@@ -24,6 +24,7 @@ function useCountdown(startIso: string) {
     days: Math.floor(diff / 86_400_000),
     hours: Math.floor((diff % 86_400_000) / 3_600_000),
     minutes: Math.floor((diff % 3_600_000) / 60_000),
+    seconds: Math.floor((diff % 60_000) / 1000),
   }
 }
 
@@ -32,7 +33,7 @@ function Countdown({ start }: { start: string }) {
   if (!c) return <span className="ue-live"><i /> Happening now</span>
   return (
     <div className="ue-count" aria-label="Time until the event starts">
-      {[['Days', c.days], ['Hours', c.hours], ['Mins', c.minutes]].map(([label, value]) => (
+      {[['Days', c.days], ['Hours', c.hours], ['Mins', c.minutes], ['Secs', c.seconds]].map(([label, value]) => (
         <div key={label as string}>
           <strong>{String(value).padStart(2, '0')}</strong>
           <span>{label}</span>
@@ -89,8 +90,14 @@ export default function UpcomingEvent() {
             <p className="ue-when">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
               {formatWhen(next.start_at)}
-              {next.host && <span className="ue-host"> · {next.host}</span>}
             </p>
+            {next.host && (
+              <p className="ue-hostline">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                <span className="ue-hostline__label">Host / Speaker</span>
+                <strong>{next.host}</strong>
+              </p>
+            )}
           </div>
 
           <div className="ue-cta">

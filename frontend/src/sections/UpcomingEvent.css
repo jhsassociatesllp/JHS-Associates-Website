@@ -273,3 +273,22 @@
   html[data-evm] .hero__header { padding-top: 34px; }
 }
 html[data-evm] .hero__actions { transform: translateY(34px); }
+
+/* host / speaker on its own line under the date and time */
+.ue-hostline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+.ue-hostline svg { flex-shrink: 0; opacity: 0.85; }
+.ue-hostline__label { color: rgba(255, 255, 255, 0.62); font-weight: 500; }
+.ue-hostline strong { font-weight: 700; color: #fff; }
+
+/* live countdown has four boxes now */
+.ue-count { gap: 8px; }
+.ue-count div { min-width: 56px; }
+.ue-count strong { font-variant-numeric: tabular-nums; }

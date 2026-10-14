@@ -267,5 +267,9 @@
 }
 
 /* with the bar showing, the content below it makes room and the floating buttons move down */
-html[data-evm] .hero__header { padding-top: 34px; }
+/* phones: the content starts lower so it clears the logo pill, which sits under the bar.
+   On laptops the content already starts clear of the bar, so the cards keep exactly the same size. */
+@media (max-width: 900px) {
+  html[data-evm] .hero__header { padding-top: 34px; }
+}
 html[data-evm] .hero__actions { transform: translateY(34px); }

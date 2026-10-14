@@ -1362,16 +1362,3 @@
   .hero__carousel-card--prev  { transform: translateX(-88%) scale(0.86); opacity: 0.8; }
   .hero__carousel-card--next  { transform: translateX(88%) scale(0.86); opacity: 0.8; }
 }
-
-/* with the event bar showing there is 34px less height, so the cards are a little shorter */
-@media (min-width: 901px) {
-  html[data-evm] .hero {
-    --hero-card-h: clamp(262px, calc(82vh - 268px), 520px);
-  }
-}
-
-@media (min-width: 1201px) {
-  html[data-evm] .hero {
-    --hero-card-h: clamp(268px, min(calc(82vh - 260px), 25vw), 540px);
-  }
-}

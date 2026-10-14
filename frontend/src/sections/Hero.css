@@ -1200,47 +1200,30 @@
    ============================================= */
 @media (min-width: 901px) {
   .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 168px), 520px);
+    --hero-card-h: clamp(280px, calc(82vh - 188px), 520px);
     --hero-card-w: calc(var(--hero-card-h) * 0.7308);
     padding: 64px 48px 8px;
   }
 
   .hero__header {
     margin-top: 0;
-    margin-bottom: 6px;
-    gap: 6px;
+    margin-bottom: 0;
+    gap: 5px;
   }
 
   .hero__eyebrow {
     font-size: clamp(12px, 2.4vh, 18px);
   }
 
-  /* a bigger heading on two lines instead of a small one on three: "Building Trust · Delivering
-     Excellence" over "Shaping Better Futures" - larger text for the same height */
+  /* three stacked lines, as originally designed - as large as the window height allows */
   .hero__headline {
-    font-size: clamp(32px, min(7.2vh, 3.6vw), 64px);
-    line-height: 1.14;
-    max-width: min(1100px, 92vw);
-  }
-
-  .hero__headline-part {
-    display: inline;
-  }
-
-  .hero__headline-part--lead::after {
-    content: "•";
-    color: #D62049;
-    margin: 0 0.45em;
-    font-size: 0.7em;
-    vertical-align: middle;
-  }
-
-  .hero__headline-part:last-child {
-    display: block;
+    font-size: clamp(28px, min(5.7vh, 3.4vw), 58px);
+    line-height: 1.15;
+    max-width: 900px;
   }
 
   .hero__carousel-track {
-    height: calc(var(--hero-card-h) + 16px);
+    height: calc(var(--hero-card-h) + 6px);
   }
 
   .hero__carousel-container {
@@ -1327,7 +1310,7 @@
    one beyond that - all sized from the card width, so they keep their spacing at any size. */
 @media (min-width: 1201px) {
   .hero {
-    --hero-card-h: clamp(290px, min(calc(82vh - 160px), 25vw), 540px);
+    --hero-card-h: clamp(290px, min(calc(82vh - 180px), 25vw), 540px);
     --hero-card-w: calc(var(--hero-card-h) * 0.86);
   }
 
@@ -1339,14 +1322,14 @@
     box-shadow: none;
   }
 
-  /* 3D cover-flow: the cards beside the centre turn towards it and sit further back */
-  .hero__carousel-card--prev  { transform: translateX(-102%) translateZ(-90px) rotateY(34deg) scale(0.92); z-index: 5; opacity: 1; }
-  .hero__carousel-card--next  { transform: translateX(102%) translateZ(-90px) rotateY(-34deg) scale(0.92); z-index: 5; opacity: 1; }
-  .hero__carousel-card--prev2 { transform: translateX(-186%) translateZ(-230px) rotateY(44deg) scale(0.84); }
-  .hero__carousel-card--next2 { transform: translateX(186%) translateZ(-230px) rotateY(-44deg) scale(0.84); }
+  /* a flat, balanced row: the centre card in front, a smaller card each side, and a faded one beyond */
+  .hero__carousel-card--prev  { transform: translateX(-102%) scale(0.85); z-index: 5; opacity: 1; box-shadow: 0 18px 36px -22px rgba(15, 35, 64, 0.45); }
+  .hero__carousel-card--next  { transform: translateX(102%) scale(0.85); z-index: 5; opacity: 1; box-shadow: 0 18px 36px -22px rgba(15, 35, 64, 0.45); }
+  .hero__carousel-card--prev2 { transform: translateX(-184%) scale(0.62); opacity: 0.45; }
+  .hero__carousel-card--next2 { transform: translateX(184%) scale(0.62); opacity: 0.45; }
 
-  .hero__carousel-card--gone-l { transform: translateX(-255%) translateZ(-340px) rotateY(50deg) scale(0.7); }
-  .hero__carousel-card--gone-r { transform: translateX(255%) translateZ(-340px) rotateY(-50deg) scale(0.7); }
+  .hero__carousel-card--gone-l { transform: translateX(-250%) scale(0.5); }
+  .hero__carousel-card--gone-r { transform: translateX(250%) scale(0.5); }
 }
 
 /* cards waiting outside the visible row */
@@ -1356,46 +1339,39 @@
 }
 
 /* =============================================
-   3D CARD ROW (all sizes)
+   CARD ROW (all sizes)
    ============================================= */
-.hero__carousel-container {
-  perspective: 1500px;
-  perspective-origin: 50% 40%;
-}
-
-.hero__carousel-track {
-  transform-style: preserve-3d;
-}
-
 .hero__carousel-card {
-  backface-visibility: hidden;
+  background: linear-gradient(135deg, #16305a 0%, #0f2340 100%); /* shows if a picture is slow or missing */
 }
 
 .hero__carousel-card--current {
-  box-shadow: 0 30px 60px -22px rgba(15, 35, 64, 0.55);
+  box-shadow: 0 28px 54px -24px rgba(15, 35, 64, 0.55);
 }
 
-/* laptops and tablets (901 - 1200px): three cards, turned towards the centre */
+/* laptops and tablets (901 - 1200px): three cards */
 @media (min-width: 901px) and (max-width: 1200px) {
-  .hero__carousel-card--prev  { transform: translateX(-100%) translateZ(-80px) rotateY(32deg) scale(0.9); opacity: 1; }
-  .hero__carousel-card--next  { transform: translateX(100%) translateZ(-80px) rotateY(-32deg) scale(0.9); opacity: 1; }
+  .hero__carousel-card--prev  { transform: translateX(-102%) scale(0.86); opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(102%) scale(0.86); opacity: 1; }
+  .hero__carousel-card--prev2,
+  .hero__carousel-card--next2 { opacity: 0; pointer-events: none; }
 }
 
-/* phones and small tablets: the neighbours peek in at an angle */
+/* phones and small tablets: the neighbours peek in from the sides */
 @media (max-width: 900px) {
-  .hero__carousel-card--prev  { transform: translateX(-90%) translateZ(-70px) rotateY(30deg) scale(0.88); opacity: 0.85; }
-  .hero__carousel-card--next  { transform: translateX(90%) translateZ(-70px) rotateY(-30deg) scale(0.88); opacity: 0.85; }
+  .hero__carousel-card--prev  { transform: translateX(-88%) scale(0.86); opacity: 0.8; }
+  .hero__carousel-card--next  { transform: translateX(88%) scale(0.86); opacity: 0.8; }
 }
 
 /* with the event bar showing there is 34px less height, so the cards are a little shorter */
 @media (min-width: 901px) {
   html[data-evm] .hero {
-    --hero-card-h: clamp(280px, calc(82vh - 202px), 520px);
+    --hero-card-h: clamp(280px, calc(82vh - 242px), 520px);
   }
 }
 
 @media (min-width: 1201px) {
   html[data-evm] .hero {
-    --hero-card-h: clamp(290px, min(calc(82vh - 194px), 25vw), 540px);
+    --hero-card-h: clamp(290px, min(calc(82vh - 234px), 25vw), 540px);
   }
 }

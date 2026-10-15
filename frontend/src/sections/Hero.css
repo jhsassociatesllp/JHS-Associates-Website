@@ -83,6 +83,20 @@
   box-shadow: 0 6px 18px rgba(30, 58, 95, 0.25);
 }
 
+/* Solid navy — Business Opportunities */
+.hero__action-btn--navy {
+  background: #1e3a5f;
+  color: #ffffff;
+  border: 1.5px solid #1e3a5f;
+}
+
+.hero__action-btn--navy:hover {
+  background: #0f2340;
+  border-color: #0f2340;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(30, 58, 95, 0.3);
+}
+
 /* Solid (primary) — Apply Now */
 .hero__action-btn--solid {
   background: #D62049;
@@ -1237,27 +1251,34 @@
     margin-top: calc(var(--hero-card-h) / -2);
   }
 
-  /* smaller top buttons on laptops and desktops (Business Opportunities, Join Our Team, language, Log In) */
+  /* top buttons on laptops and desktops (Business Opportunities, Join Our Team, language, Log In):
+     all four share the same height so the row looks even */
   .hero__actions {
     top: 24px;
     right: 40px;
-    gap: 10px;
+    gap: 11px;
   }
 
   .hero__actions .hero__action-btn {
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    padding: 6px 13px;
+    font-size: 11px;
+    letter-spacing: 0.045em;
+    padding: 0 16px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .hero__actions .lang-switch__btn {
-    padding: 5px 9px !important;
-    font-size: 10px !important;
+    height: 32px;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+    gap: 5px;
+    border-radius: 100px;
   }
 
   .hero__actions .lang-switch__btn svg {
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
   }
 
   /* the text on the card scales with the card, so a smaller laptop card is not cramped */

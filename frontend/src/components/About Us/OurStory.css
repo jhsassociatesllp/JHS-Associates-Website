@@ -340,7 +340,7 @@
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  color: rgba(15, 35, 64, 0.16);
+  color: #0f2340;
 }
 
 .story-timeline__item:nth-child(odd) .story-timeline__card {

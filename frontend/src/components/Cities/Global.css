@@ -1138,3 +1138,13 @@
     grid-template-columns: repeat(4, minmax(0, 270px));
   }
 }
+
+/* Laptop/desktop: leave room for the KPI ribbon so it shows on the first screen */
+@media (min-width: 901px) {
+  section.glb-hero {
+    height: calc(100vh - 118px);
+    height: calc(100svh - 118px);
+    min-height: 520px;
+    max-height: 820px;
+  }
+}

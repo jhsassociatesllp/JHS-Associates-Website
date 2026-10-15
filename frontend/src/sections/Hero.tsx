@@ -524,7 +524,7 @@ export default function Hero() {
       {/* Top-right action buttons */}
       <div className="hero__actions">
         <button
-          className="hero__action-btn hero__action-btn--outline hero__action-btn--desktop-only"
+          className="hero__action-btn hero__action-btn--navy hero__action-btn--desktop-only"
           onClick={() => navigate("/approval-for-proposal")}
         >
           Business Opportunities

@@ -41,6 +41,8 @@ if not SECRET_KEY:
     # restart gets a fresh random key (logins/sessions reset) until it is configured.
     SECRET_KEY = secrets.token_urlsafe(64)
     logging.getLogger(__name__).warning("SECRET_KEY is not set - using a temporary random key. Set SECRET_KEY in the environment.")
+if len(SECRET_KEY) < 32:
+    logging.getLogger(__name__).warning("SECRET_KEY is shorter than 32 characters - use a long random value (python -c \"import secrets;print(secrets.token_urlsafe(64))\").")
 ALGORITHM = "HS256"
 # Admin panel session length. Used only by the two /admin/login* routes —
 # every other token type (site users, careers, consulting) sets its own
@@ -66,7 +68,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
 
-    to_encode.update({"exp": expire})
+    to_encode.setdefault("jti", secrets.token_hex(12))   # unique id of this token (audit FRM-09)
+    to_encode.update({"exp": expire, "iat": datetime.now(timezone.utc)})
 
     encoded_jwt = jwt.encode(
         to_encode,

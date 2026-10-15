@@ -5,13 +5,15 @@ from collections import defaultdict, deque
 from datetime import timedelta
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Response, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, Response, UploadFile, status
+from pydantic import ValidationError
 
 from app.auth.deps import get_current_applicant, get_current_user, require_roles
 from app.auth.security import create_access_token
 from app.controllers import applicant as applicant_ctrl
 from app.controllers import career as career_ctrl
 from app.services import ats
+from app.utils.validation import FormGuard, guard_form
 from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.applicant import ApplicantResponse, GoogleAuthRequest, GoogleAuthResponse
 from app.schemas.career import (
@@ -39,12 +41,28 @@ def _safe_filename(name: Optional[str]) -> str:
     return base[:120]
 
 
+_PDF_ACTIVE = re.compile(rb"/(JavaScript|JS|Launch|EmbeddedFile|RichMedia)(?![A-Za-z0-9])")
+MAX_PDF_PAGES = 30
+
+
 def _validate_pdf(content_type: Optional[str], data: bytes) -> None:
     """Content-Type is client-controlled, so the file's own signature is checked too."""
     if content_type != "application/pdf" or not data.startswith(b"%PDF-"):
         raise HTTPException(status_code=400, detail="Resume must be a PDF file")
+    if len(data) < 100:
+        raise HTTPException(status_code=400, detail="Resume PDF is empty or damaged")
     if len(data) > MAX_RESUME_SIZE:
         raise HTTPException(status_code=400, detail="Resume PDF must be 8 MB or smaller")
+    if _PDF_ACTIVE.search(data):
+        raise HTTPException(status_code=400, detail="Resume PDF must not contain scripts or attachments")
+    try:
+        from io import BytesIO
+        from pypdf import PdfReader
+        pages = len(PdfReader(BytesIO(data), strict=False).pages)
+    except Exception:
+        return   # unreadable text is handled by the ATS ("review manually"); not a reason to refuse
+    if pages > MAX_PDF_PAGES:
+        raise HTTPException(status_code=400, detail=f"Resume PDF must have {MAX_PDF_PAGES} pages or fewer")
 
 
 # ── Rate limit for the pre-submit resume check (PDF parsing is not free) ──
@@ -125,6 +143,7 @@ async def submit_application(
     status_code=status.HTTP_201_CREATED,
 )
 async def submit_application_with_resume(
+    request: Request,
     job_id: Optional[str] = Form(None),
     full_name: str = Form(...),
     email: str = Form(...),
@@ -141,30 +160,30 @@ async def submit_application_with_resume(
     expected_ctc: Optional[str] = Form(None),
     how_heard: str = Form(...),
     how_heard_detail: Optional[str] = Form(None),
+    consent: bool = Form(False),
+    website: Optional[str] = Form(None),
+    cf_turnstile_token: Optional[str] = Form(None),
     resume: UploadFile = File(...),
     applicant: dict = Depends(get_current_user),
 ):
+    # Check every text field BEFORE reading the file or touching the database, and answer 422 (never 500).
+    try:
+        data = ApplicationCreate(
+            job_id=job_id, full_name=full_name, email=email, phone=phone,
+            current_location=current_location, experience_years=experience_years, cover_letter=cover_letter,
+            place_of_residence=place_of_residence, highest_qualification=highest_qualification,
+            highest_qualification_other=highest_qualification_other, profile=profile, profile_other=profile_other,
+            current_ctc=current_ctc, expected_ctc=expected_ctc, how_heard=how_heard,
+            how_heard_detail=how_heard_detail, consent=consent,
+        )
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=[{"loc": list(e["loc"]), "msg": e["msg"].replace("Value error, ", "")} for e in exc.errors()])
+    await guard_form(request, FormGuard(website=website, cf_turnstile_token=cf_turnstile_token, consent=True), "careers", per_hour=20, per_minute=5)
+
+    if not (resume.filename or "").lower().endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="Resume must be a PDF file (name ending in .pdf)")
     resume_bytes = await resume.read(MAX_RESUME_SIZE + 1)
     _validate_pdf(resume.content_type, resume_bytes)
-
-    data = ApplicationCreate(
-        job_id=job_id or None,
-        full_name=full_name,
-        email=email,
-        phone=phone,
-        current_location=current_location,
-        experience_years=experience_years,
-        cover_letter=cover_letter,
-        place_of_residence=place_of_residence,
-        highest_qualification=highest_qualification,
-        highest_qualification_other=highest_qualification_other,
-        profile=profile,
-        profile_other=profile_other,
-        current_ctc=current_ctc,
-        expected_ctc=expected_ctc,
-        how_heard=how_heard,
-        how_heard_detail=how_heard_detail,
-    )
 
     try:
         application = await career_ctrl.create_application_with_resume(
@@ -305,7 +324,7 @@ async def admin_application_resume(
     return Response(
         content=resume["contents"],
         media_type=resume["content_type"],
-        headers={"Content-Disposition": f'inline; filename="{filename}"'},
+        headers={"Content-Disposition": f'attachment; filename="{filename}"', "X-Content-Type-Options": "nosniff"},
     )
 
 

@@ -1,3 +1,4 @@
+import uuid
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -152,6 +153,7 @@ async def create_application(data: ApplicationCreate, applicant: Optional[dict] 
 
     now = datetime.now(timezone.utc)
     payload = data.model_dump()
+    payload["consent_at"] = now
     payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
@@ -183,6 +185,7 @@ async def create_application_with_resume(
 
     now = datetime.now(timezone.utc)
     payload = data.model_dump()
+    payload["consent_at"] = now
     payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
@@ -193,9 +196,10 @@ async def create_application_with_resume(
 
     bucket = AsyncIOMotorGridFSBucket(db, bucket_name=RESUME_BUCKET)
     file_id = await bucket.upload_from_stream(
-        resume_filename,
+        f"{uuid.uuid4().hex}.pdf",   # stored under a random name; the visitor's file name is display text only
         resume_bytes,
         metadata={
+            "original_filename": resume_filename,
             "job_id": data.job_id,
             "job_title": job["title"] if job else None,
             "candidate_email": data.email,

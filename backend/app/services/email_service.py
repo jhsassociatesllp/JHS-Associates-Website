@@ -418,8 +418,10 @@ async def notify_hr_new_appointment(data: dict) -> None:
     speciality = data.get("speciality", "")
     partner = data.get("partner") or "Any available partner"
 
+    reference = data.get("reference") or ""
     rows = (
-        _row("Name", name)
+        (_row("Reference", reference) if reference else "")
+        + _row("Name", name)
         + _row("Mobile", f"+91 {esc(mobile)}")
         + _row("Email", email)
         + _row("City", data.get("city") or "—")
@@ -442,6 +444,7 @@ async def notify_hr_new_appointment(data: dict) -> None:
           Dear <strong>{esc(name)}</strong>,<br><br>
           Thank you for booking an appointment with <strong>JHS</strong>
           for <strong>{esc(speciality)}</strong>.<br><br>
+          {("Your booking reference is <strong>" + esc(reference) + "</strong>.<br><br>") if reference else ""}
           Our team will call you on <strong>+91 {esc(mobile)}</strong> shortly to confirm
           a convenient time for your appointment.<br><br>
           Warm regards,<br>

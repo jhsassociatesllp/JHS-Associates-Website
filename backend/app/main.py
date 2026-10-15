@@ -3,6 +3,7 @@ import logging
 import sys
 
 from fastapi import FastAPI, APIRouter
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.config.settings import settings
@@ -103,6 +104,32 @@ async def security_headers(request, call_next):
         # Uploaded pictures can never run script even if one were opened directly.
         response.headers.setdefault("Content-Security-Policy", "default-src 'none'; sandbox")
     return response
+
+
+MAX_JSON_BODY = 64 * 1024
+
+
+@app.middleware("http")
+async def limit_json_body(request, call_next):
+    # Cheap early refusal of oversized JSON bodies (nginx also enforces this at the edge).
+    if "application/json" in request.headers.get("content-type", ""):
+        try:
+            size = int(request.headers.get("content-length") or 0)
+        except ValueError:
+            size = 0
+        if size > MAX_JSON_BODY:
+            return JSONResponse(status_code=413, content={"detail": "Request is too large"})
+    return await call_next(request)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request, exc: RequestValidationError):
+    # Report only WHERE and WHY a field is wrong - never echo the submitted value back.
+    detail = [
+        {"loc": [str(p) for p in e.get("loc", ())], "msg": str(e.get("msg", "Invalid value")).replace("Value error, ", "")}
+        for e in exc.errors()
+    ]
+    return JSONResponse(status_code=422, content={"detail": detail})
 
 
 @app.exception_handler(Exception)

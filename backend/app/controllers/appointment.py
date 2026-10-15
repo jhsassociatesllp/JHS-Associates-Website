@@ -1,3 +1,4 @@
+import secrets
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -7,6 +8,7 @@ from bson.errors import InvalidId
 from app.database.connection import get_database
 from app.schemas.appointment import AppointmentCreate, AppointmentStatusUpdate
 from app.services.email_service import notify_hr_new_appointment
+from app.utils.validation import GUARD_FIELDS
 
 APPOINTMENTS_COLLECTION = "appointments"
 
@@ -26,7 +28,9 @@ def _serialize(doc: dict) -> dict:
 async def create_appointment(data: AppointmentCreate, user: dict) -> dict:
     db = get_database()
     now = datetime.now(timezone.utc)
-    payload = data.model_dump()
+    payload = data.model_dump(exclude=GUARD_FIELDS)
+    payload["reference"] = "JHS-" + secrets.token_hex(4).upper()   # shown to the visitor, emailed, and stored
+    payload["consent_at"] = now
     payload["status"] = "new"
     payload["user_id"] = user["id"]
     payload["account_email"] = user.get("email")   # the signed-in site account that booked

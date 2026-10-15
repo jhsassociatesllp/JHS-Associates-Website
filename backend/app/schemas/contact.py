@@ -1,14 +1,27 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field, field_validator
+from typing import Literal, Optional
 from datetime import datetime
 
-class ContactCreate(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100)
-    email: EmailStr
-    phone: Optional[str] = None
-    company: Optional[str] = None
-    service: Optional[str] = None
-    message: str = Field(..., min_length=10, max_length=1000)
+from app.utils.validation import Email, FormGuard, Name, Phone, ShortText, _text, optional_blank_to_none
+
+ContactService = Literal[
+    "Audit & Assurance", "Taxation Services", "Consulting", "Outsourcing",
+    "SOC Attestation", "Single Window Assistance", "Other",
+]
+
+
+class ContactCreate(FormGuard):
+    name: Name
+    email: Email
+    phone: Optional[Phone] = None
+    company: Optional[ShortText] = None
+    service: Optional[ContactService] = None
+    message: _text(10, 1000)
+
+    @field_validator("phone", "company", "service", mode="before")
+    @classmethod
+    def _blank(cls, v):
+        return optional_blank_to_none(v)
 
 class ContactResponse(BaseModel):
     id: str

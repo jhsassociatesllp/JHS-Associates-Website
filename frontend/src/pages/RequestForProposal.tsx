@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import './RequestForProposal.css'
 import { imageUrl } from '../utils/imageUrl'
 import { useSiteAuth } from '../context/SiteAuthContext'
+import { ConsentCheck, CharCount, Honeypot } from '../components/common/FormExtras'
+import { useTurnstile } from '../components/common/useTurnstile'
+import { LIMITS, MIN_MESSAGE, apiErrorMessage, validateEmail, validateName, validatePhone, validateText } from '../utils/formRules'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -23,6 +26,8 @@ interface FormErrors {
   phone?: string
   inquiry_reason?: string
   subject?: string
+  message?: string
+  consent?: string
 }
 
 /* ─── Static Data ────────────────────────────────────────── */
@@ -68,6 +73,10 @@ export default function RequestForProposal() {
   const [submitted, setSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [submitErrorText, setSubmitErrorText] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
   const pageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -88,23 +97,17 @@ export default function RequestForProposal() {
 
   /* ── Validation ──────────────────────────────────────── */
   const validate = (): boolean => {
-    const e: FormErrors = {}
-
-    if (!formData.first_name.trim()) e.first_name = 'First name is required'
-    else if (formData.first_name.trim().length < 2) e.first_name = 'Must be at least 2 characters'
-
-    if (!formData.last_name.trim()) e.last_name = 'Last name is required'
-
-    if (!formData.email.trim()) e.email = 'Email address is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Enter a valid email'
-
-    if (formData.phone && !/^[+\d\s\-()]{7,16}$/.test(formData.phone))
-      e.phone = 'Enter a valid phone number'
-
-    if (!formData.inquiry_reason) e.inquiry_reason = 'Please select an inquiry reason'
-
-    if (!formData.subject.trim()) e.subject = 'Subject is required'
-    else if (formData.subject.trim().length < 2) e.subject = 'Must be at least 2 characters'
+    const e: FormErrors = {
+      first_name: validateName(formData.first_name, 'First name'),
+      last_name: validateText(formData.last_name, 'Last name', { required: true }),
+      email: validateEmail(formData.email),
+      phone: validatePhone(formData.phone),
+      inquiry_reason: formData.inquiry_reason ? undefined : 'Please select an inquiry reason',
+      subject: validateText(formData.subject, 'Subject', { required: true, min: 2 }),
+      message: validateText(formData.message, 'Details', { required: true, min: MIN_MESSAGE }),
+      consent: consent ? undefined : 'Please accept the Privacy Policy to continue',
+    }
+    Object.keys(e).forEach((k) => { if (!e[k as keyof FormErrors]) delete e[k as keyof FormErrors] })
 
     setErrors(e)
     return Object.keys(e).length === 0
@@ -123,21 +126,26 @@ export default function RequestForProposal() {
     e.preventDefault()
     if (!token) { openAuthModal('request a proposal'); return }
     if (!validate()) return
+    if (loading) return // ignore a second click while the first is still being sent
     setLoading(true)
     setSubmitError(false)
+    setSubmitErrorText('')
 
     try {
       const response = await fetch(`${API_BASE_URL}/proposal/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, consent, website: honeypot, cf_turnstile_token: turnstile.token || null }),
       })
 
       if (response.status === 401 || response.status === 403) {
         openAuthModal('request a proposal')
         throw new Error('Your session has expired. Please sign in again.')
       }
-      if (!response.ok) throw new Error('Network response was not ok')
+      if (!response.ok) {
+        const body = await response.json().catch(() => null)
+        throw new Error(apiErrorMessage(body))
+      }
 
       setSubmitted(true)
       setFormData({
@@ -149,9 +157,12 @@ export default function RequestForProposal() {
         subject: '',
         message: '',
       })
+      setConsent(false)
+      turnstile.reset()
       setTimeout(() => setSubmitted(false), 8000)
     } catch (error) {
-      console.error('Failed to submit proposal:', error)
+      setSubmitErrorText(error instanceof Error ? error.message : '')
+      turnstile.reset()
       setSubmitError(true)
       setTimeout(() => setSubmitError(false), 8000)
     } finally {
@@ -245,7 +256,7 @@ export default function RequestForProposal() {
               <div>
                 <p className="rfp-success__title">Request not submitted</p>
                 <p className="rfp-success__sub">
-                  Something went wrong. Please try again, or reach us directly.
+                  {submitErrorText || 'Something went wrong. Please try again, or reach us directly.'}
                 </p>
               </div>
             </div>
@@ -276,16 +287,21 @@ export default function RequestForProposal() {
                 </label>
                 <input
                   id="rfp-first-name"
+                  maxLength={LIMITS.name}
+                  aria-invalid={errors.first_name ? true : undefined}
+                  aria-describedby={errors.first_name ? 'rfp-first-name-err' : undefined}
+                  required
+                  aria-required="true"
                   type="text"
                   name="first_name"
                   value={formData.first_name}
-                  placeholder="Enter Your Frist Name"
+                  placeholder="Enter Your First Name"
                   autoComplete="given-name"
                   onChange={handleChange}
                   className={inputClass('first_name', 'rfp-input')}
                 />
                 {errors.first_name && (
-                  <span className="rfp-error">
+                  <span id="rfp-first-name-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.first_name}
                   </span>
@@ -298,16 +314,21 @@ export default function RequestForProposal() {
                 </label>
                 <input
                   id="rfp-last-name"
+                  maxLength={LIMITS.shortText}
+                  aria-invalid={errors.last_name ? true : undefined}
+                  aria-describedby={errors.last_name ? 'rfp-last-name-err' : undefined}
+                  required
+                  aria-required="true"
                   type="text"
                   name="last_name"
                   value={formData.last_name}
-                  placeholder="Enter Your Last"
+                  placeholder="Enter Your Last Name"
                   autoComplete="family-name"
                   onChange={handleChange}
                   className={inputClass('last_name', 'rfp-input')}
                 />
                 {errors.last_name && (
-                  <span className="rfp-error">
+                  <span id="rfp-last-name-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.last_name}
                   </span>
@@ -323,16 +344,21 @@ export default function RequestForProposal() {
                 </label>
                 <input
                   id="rfp-email"
+                  maxLength={LIMITS.email}
+                  aria-invalid={errors.email ? true : undefined}
+                  aria-describedby={errors.email ? 'rfp-email-err' : undefined}
+                  required
+                  aria-required="true"
                   type="email"
                   name="email"
                   value={formData.email}
-                  placeholder="Enter Your Name "
+                  placeholder="Enter Your Email"
                   autoComplete="email"
                   onChange={handleChange}
                   className={inputClass('email', 'rfp-input')}
                 />
                 {errors.email && (
-                  <span className="rfp-error">
+                  <span id="rfp-email-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.email}
                   </span>
@@ -343,6 +369,9 @@ export default function RequestForProposal() {
                 <label className="rfp-label" htmlFor="rfp-phone">Phone number</label>
                 <input
                   id="rfp-phone"
+                  maxLength={LIMITS.phone}
+                  aria-invalid={errors.phone ? true : undefined}
+                  aria-describedby={errors.phone ? 'rfp-phone-err' : undefined}
                   type="tel"
                   name="phone"
                   value={formData.phone}
@@ -352,7 +381,7 @@ export default function RequestForProposal() {
                   className={inputClass('phone', 'rfp-input')}
                 />
                 {errors.phone && (
-                  <span className="rfp-error">
+                  <span id="rfp-phone-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.phone}
                   </span>
@@ -381,7 +410,7 @@ export default function RequestForProposal() {
                   ))}
                 </select>
                 {errors.inquiry_reason && (
-                  <span className="rfp-error">
+                  <span id="rfp-inquiry-reason-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.inquiry_reason}
                   </span>
@@ -394,6 +423,11 @@ export default function RequestForProposal() {
                 </label>
                 <input
                   id="rfp-subject"
+                  maxLength={LIMITS.subject}
+                  aria-invalid={errors.subject ? true : undefined}
+                  aria-describedby={errors.subject ? 'rfp-subject-err' : undefined}
+                  required
+                  aria-required="true"
                   type="text"
                   name="subject"
                   value={formData.subject}
@@ -402,7 +436,7 @@ export default function RequestForProposal() {
                   className={inputClass('subject', 'rfp-input')}
                 />
                 {errors.subject && (
-                  <span className="rfp-error">
+                  <span id="rfp-subject-err" className="rfp-error" role="alert">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
                     {errors.subject}
                   </span>
@@ -412,9 +446,14 @@ export default function RequestForProposal() {
 
             {/* Message / Additional Details */}
             <div className="rfp-field rfp-field--single">
-              <label className="rfp-label" htmlFor="rfp-message">Additional details</label>
+              <label className="rfp-label" htmlFor="rfp-message">Additional details <span className="rfp-req">*</span></label>
               <textarea
                 id="rfp-message"
+                maxLength={LIMITS.longMessage}
+                aria-invalid={errors.message ? true : undefined}
+                aria-describedby={errors.message ? 'rfp-message-err' : undefined}
+                required
+                aria-required="true"
                 name="message"
                 value={formData.message}
                 rows={5}
@@ -422,7 +461,16 @@ export default function RequestForProposal() {
                 onChange={handleChange}
                 className="rfp-textarea"
               />
+              <CharCount value={formData.message} max={LIMITS.longMessage} />
+              {errors.message && (
+                <span id="rfp-message-err" className="rfp-error" role="alert">{errors.message}</span>
+              )}
             </div>
+
+            <Honeypot value={honeypot} onChange={setHoneypot} />
+            {turnstile.widget}
+            <ConsentCheck id="rfp-consent" checked={consent} error={errors.consent}
+              onChange={(v) => { setConsent(v); if (v && errors.consent) setErrors((prev) => ({ ...prev, consent: undefined })) }} />
 
             {/* Submit */}
             <div className="rfp-submit-row">
@@ -453,7 +501,7 @@ export default function RequestForProposal() {
                 )}
               </button>
               <p className="rfp-privacy">
-                By submitting, you agree to our privacy policy. We'll respond within one business day.
+                We'll respond within one business day.
               </p>
             </div>
           </form>

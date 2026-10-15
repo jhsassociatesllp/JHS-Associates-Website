@@ -15,6 +15,9 @@ import { imageUrl } from '../utils/imageUrl'
 import { useLeadership } from '../data/leadership'
 import { useSiteAuth } from '../context/SiteAuthContext'
 import './BookAppointment.css'
+import { ConsentCheck, CharCount, Honeypot } from '../components/common/FormExtras'
+import { useTurnstile } from '../components/common/useTurnstile'
+import { LIMITS, apiErrorMessage, validateEmail, validateName, validateText } from '../utils/formRules'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -31,8 +34,7 @@ async function otpRequest(path: 'send' | 'verify', body: object, token: string) 
   const json = await response.json().catch(() => null)
   if (response.status === 401) throw new Error('session-expired')
   if (!response.ok) {
-    const detail = typeof json?.detail === 'string' ? json.detail : 'Something went wrong. Please try again.'
-    throw new Error(detail)
+    throw new Error(apiErrorMessage(json))
   }
   return json
 }
@@ -46,7 +48,12 @@ async function verifyOtp(mobile: string, otp: string, token: string): Promise<st
   return json.otp_token as string
 }
 
-async function submitAppointment(payload: AppointmentData, token: string, otpToken: string): Promise<void> {
+async function submitAppointment(
+  payload: AppointmentData,
+  token: string,
+  otpToken: string,
+  guard: { honeypot: string; turnstile: string },
+): Promise<string> {
   const response = await fetch(`${API_BASE_URL}/appointments/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, 'X-OTP-Token': otpToken },
@@ -60,11 +67,16 @@ async function submitAppointment(payload: AppointmentData, token: string, otpTok
       partner: payload.partner || null,
       source: 'book_appointment_page',
       source_page: window.location.pathname,
+      consent: true,
+      website: guard.honeypot,
+      cf_turnstile_token: guard.turnstile || null,
     }),
   })
   if (response.status === 401) throw new Error('session-expired')
   if (response.status === 403) throw new Error('otp-required')
-  if (!response.ok) throw new Error('Failed to submit appointment')
+  const json = await response.json().catch(() => null)
+  if (!response.ok) throw new Error(apiErrorMessage(json))
+  return typeof json?.reference === 'string' ? json.reference : ''
 }
 
 /* ─── Static data ─────────────────────────────────────────────── */
@@ -113,7 +125,6 @@ const INITIAL_DATA: AppointmentData = {
 }
 
 const MOBILE_REGEX = /^[6-9]\d{9}$/
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const RESEND_SECONDS = 30
 
 export default function BookAppointment() {
@@ -127,7 +138,10 @@ export default function BookAppointment() {
   const [resendTimer, setResendTimer] = useState(0)
   const [bookingConfirmed, setBookingConfirmed] = useState(false)
   const [referenceId, setReferenceId] = useState('')
-  const [submitError, setSubmitError] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
   const pageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -242,9 +256,14 @@ export default function BookAppointment() {
   const handleDetailsSubmit = (e: FormEvent) => {
     e.preventDefault()
     const e2: Record<string, string> = {}
-    if (!data.fullName.trim()) e2.fullName = 'Full name is required'
-    if (!data.email.trim()) e2.email = 'Email address is required'
-    else if (!EMAIL_REGEX.test(data.email)) e2.email = 'Enter a valid email'
+    const nameErr = validateName(data.fullName, 'Full name')
+    if (nameErr) e2.fullName = nameErr
+    const emailErr = validateEmail(data.email)
+    if (emailErr) e2.email = emailErr
+    const cityErr = validateText(data.city, 'City')
+    if (cityErr) e2.city = cityErr
+    const msgErr = validateText(data.message, 'Notes')
+    if (msgErr) e2.message = msgErr
     setErrors(e2)
     if (Object.keys(e2).length === 0) setStep(4)
   }
@@ -261,12 +280,16 @@ export default function BookAppointment() {
   /* ── Step 5: Confirm ────────────────────────────────────── */
   const handleConfirm = async () => {
     if (!token) { openAuthModal('book an appointment'); return }
+    if (!consent) { setErrors({ consent: 'Please accept the Privacy Policy to continue' }); return }
+    if (loading) return // ignore a second click while the first is still being sent
     setLoading(true)
-    setSubmitError(false)
+    setSubmitError('')
     try {
-      await submitAppointment(data, token, otpToken)
-      setReferenceId(`JHS-${Date.now().toString().slice(-8)}`)
+      const reference = await submitAppointment(data, token, otpToken, { honeypot, turnstile: turnstile.token })
+      setReferenceId(reference) // issued by the server; the same code is in the database and in the confirmation email
       setBookingConfirmed(true)
+      setConsent(false)
+      turnstile.reset()
     } catch (error) {
       if (error instanceof Error && error.message === 'session-expired') {
         openAuthModal('book an appointment')
@@ -277,8 +300,8 @@ export default function BookAppointment() {
         setErrors({ mobile: 'Please verify your mobile number again to complete the booking.' })
         setStep(1)
       } else {
-        console.error('Failed to submit appointment:', error)
-        setSubmitError(true)
+        turnstile.reset()
+        setSubmitError(error instanceof Error && error.message ? error.message : 'Something went wrong submitting your appointment. Please try again.')
       }
     } finally {
       setLoading(false)
@@ -290,6 +313,7 @@ export default function BookAppointment() {
     setOtp('')
     setOtpToken('')
     setErrors({})
+    setReferenceId('')
     setBookingConfirmed(false)
     setStep(1)
   }
@@ -511,10 +535,15 @@ export default function BookAppointment() {
                       type="text"
                       className={`bap-input ${errors.fullName ? 'bap-input--error' : ''}`}
                       placeholder="Enter Your Name"
+                      maxLength={LIMITS.name}
+                      required
+                      aria-required="true"
+                      aria-invalid={errors.fullName ? true : undefined}
+                      aria-describedby={errors.fullName ? 'bap-name-err' : undefined}
                       value={data.fullName}
                       onChange={(e) => setField('fullName', e.target.value)}
                     />
-                    {errors.fullName && <span className="bap-error"><AlertCircle size={13} />{errors.fullName}</span>}
+                    {errors.fullName && <span id="bap-name-err" role="alert" className="bap-error"><AlertCircle size={13} />{errors.fullName}</span>}
                   </div>
 
                   <div className="bap-row">
@@ -525,10 +554,15 @@ export default function BookAppointment() {
                         type="email"
                         className={`bap-input ${errors.email ? 'bap-input--error' : ''}`}
                         placeholder="Enter Your Mail"
+                        maxLength={LIMITS.email}
+                        required
+                        aria-required="true"
+                        aria-invalid={errors.email ? true : undefined}
+                        aria-describedby={errors.email ? 'bap-email-err' : undefined}
                         value={data.email}
                         onChange={(e) => setField('email', e.target.value)}
                       />
-                      {errors.email && <span className="bap-error"><AlertCircle size={13} />{errors.email}</span>}
+                      {errors.email && <span id="bap-email-err" role="alert" className="bap-error"><AlertCircle size={13} />{errors.email}</span>}
                     </div>
 
                     <div className="bap-field">
@@ -536,11 +570,15 @@ export default function BookAppointment() {
                       <input
                         id="bap-city"
                         type="text"
-                        className="bap-input"
+                        className={`bap-input ${errors.city ? 'bap-input--error' : ''}`}
                         placeholder="Enter Your City"
+                        maxLength={LIMITS.shortText}
+                        aria-invalid={errors.city ? true : undefined}
+                        aria-describedby={errors.city ? 'bap-city-err' : undefined}
                         value={data.city}
                         onChange={(e) => setField('city', e.target.value)}
                       />
+                      {errors.city && <span id="bap-city-err" role="alert" className="bap-error"><AlertCircle size={13} />{errors.city}</span>}
                     </div>
                   </div>
 
@@ -551,9 +589,14 @@ export default function BookAppointment() {
                       rows={4}
                       className="bap-textarea"
                       placeholder="Briefly describe your requirement..."
+                      maxLength={LIMITS.longMessage}
+                      aria-invalid={errors.message ? true : undefined}
+                      aria-describedby={errors.message ? 'bap-message-err' : undefined}
                       value={data.message}
                       onChange={(e) => setField('message', e.target.value)}
                     />
+                    <CharCount value={data.message} max={LIMITS.longMessage} />
+                    {errors.message && <span id="bap-message-err" role="alert" className="bap-error"><AlertCircle size={13} />{errors.message}</span>}
                   </div>
 
                   <div className="bap-btn-row">
@@ -662,9 +705,14 @@ export default function BookAppointment() {
                     </div>
                   </div>
 
+                  <Honeypot value={honeypot} onChange={setHoneypot} />
+                  {turnstile.widget}
+                  <ConsentCheck id="bap-consent" checked={consent} error={errors.consent}
+                    onChange={(v) => { setConsent(v); if (v && errors.consent) clearError('consent') }} />
+
                   {submitError && (
-                    <p className="bap-error" style={{ marginBottom: 14 }}>
-                      <AlertCircle size={13} /> Something went wrong submitting your appointment. Please try again.
+                    <p className="bap-error" role="alert" style={{ marginBottom: 14 }}>
+                      <AlertCircle size={13} /> {submitError}
                     </p>
                   )}
 

@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Header, HTTPException, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from app.utils.validation import guard_form
 
 from app.auth.deps import get_current_user, require_roles
 from app.controllers import appointment as appointment_ctrl
@@ -17,10 +18,12 @@ hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 
 @router.post("/", response_model=AppointmentResponse, status_code=status.HTTP_201_CREATED)
 async def submit_appointment(
+    request: Request,
     data: AppointmentCreate,
     user: dict = Depends(get_current_user),
     x_otp_token: str | None = Header(default=None),
 ):
+    await guard_form(request, data, "appointment", per_hour=10, per_minute=3)
     # Two-step verification: the signed-in user must have just verified this mobile by OTP.
     try:
         await otp_ctrl.consume_token(user, data.mobile, x_otp_token)

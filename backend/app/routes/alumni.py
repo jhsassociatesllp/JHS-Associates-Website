@@ -4,7 +4,7 @@ from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.alumni import AlumniCreate, AlumniResponse
 from app.controllers.alumni import create_alumni_registration, get_all_alumni
 from typing import List
-from app.utils.netutil import client_ip, throttle
+from app.utils.validation import guard_form
 
 router = APIRouter(prefix="/alumni", tags=["Alumni"])
 
@@ -12,7 +12,7 @@ hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 
 @router.post("/", response_model=AlumniResponse, status_code=status.HTTP_201_CREATED)
 async def submit_alumni(request: Request, alumni: AlumniCreate):
-    throttle(f"alumni:{client_ip(request)}", 3600, 10)
+    await guard_form(request, alumni, "alumni", per_hour=10, per_minute=3, dup=alumni.email + alumni.company)
     try:
         result = await create_alumni_registration(alumni)
         return result

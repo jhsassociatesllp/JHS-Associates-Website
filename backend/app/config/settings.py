@@ -74,6 +74,9 @@ class Settings(BaseSettings):
     # and add this site's origin under "Authorized JavaScript origins".
     google_client_id: str = ""
 
+    # Cloudflare Turnstile (bot check on public forms). Leave empty to switch it off.
+    turnstile_secret: str = ""
+
     model_config = SettingsConfigDict(
         env_file=str(BACKEND_DIR / ".env"),
         env_file_encoding="utf-8",

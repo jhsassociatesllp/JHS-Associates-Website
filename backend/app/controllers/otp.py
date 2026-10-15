@@ -21,10 +21,13 @@ from app.services import sms_service
 
 OTP_COLLECTION = "otp_codes"
 USED_TOKENS = "otp_used_tokens"
+SEND_LOG = "otp_send_log"              # one row per SMS sent; kept 25 h so daily caps can be counted
 OTP_TTL = timedelta(minutes=5)          # requirement: 5 minutes to validate
 RESEND_COOLDOWN_SECONDS = 30
 MAX_ATTEMPTS = 5
 MAX_SENDS_PER_HOUR = 5                  # per mobile and per user
+MAX_SENDS_PER_DAY_MOBILE = 5            # SMS-cost protection (audit FRM-15)
+MAX_SENDS_PER_DAY_USER = 10
 TOKEN_TTL = timedelta(minutes=20)       # time allowed to finish the booking form after verifying
 MOBILE_RE = re.compile(r"^[6-9]\d{9}$")
 
@@ -40,6 +43,9 @@ async def _ensure_indexes() -> None:
     await db[OTP_COLLECTION].create_index("expires_at", expireAfterSeconds=0)
     await db[OTP_COLLECTION].create_index([("user_id", 1), ("mobile", 1)])
     await db[USED_TOKENS].create_index("expires_at", expireAfterSeconds=0)
+    await db[SEND_LOG].create_index("created_at", expireAfterSeconds=25 * 3600)
+    await db[SEND_LOG].create_index([("mobile", 1), ("created_at", -1)])
+    await db[SEND_LOG].create_index([("user_id", 1), ("created_at", -1)])
 
 
 def _digest(user_id: str, mobile: str, otp: str) -> str:
@@ -72,10 +78,15 @@ async def send_code(user: dict, mobile: str) -> int:
         raise OtpError(429, "Please wait a few seconds before requesting another OTP.")
 
     hour_ago = now - timedelta(hours=1)
-    by_mobile = await db[OTP_COLLECTION].count_documents({"mobile": mobile, "created_at": {"$gte": hour_ago}})
-    by_user = await db[OTP_COLLECTION].count_documents({"user_id": uid, "created_at": {"$gte": hour_ago}})
+    day_ago = now - timedelta(hours=24)
+    by_mobile = await db[SEND_LOG].count_documents({"mobile": mobile, "created_at": {"$gte": hour_ago}})
+    by_user = await db[SEND_LOG].count_documents({"user_id": uid, "created_at": {"$gte": hour_ago}})
     if by_mobile >= MAX_SENDS_PER_HOUR or by_user >= MAX_SENDS_PER_HOUR:
         raise OtpError(429, "Too many OTP requests. Please try again after some time.")
+    day_mobile = await db[SEND_LOG].count_documents({"mobile": mobile, "created_at": {"$gte": day_ago}})
+    day_user = await db[SEND_LOG].count_documents({"user_id": uid, "created_at": {"$gte": day_ago}})
+    if day_mobile >= MAX_SENDS_PER_DAY_MOBILE or day_user >= MAX_SENDS_PER_DAY_USER:
+        raise OtpError(429, "Daily OTP limit reached. Please try again tomorrow or contact us.")
 
     otp = f"{secrets.randbelow(1_000_000):06d}"
     result = await db[OTP_COLLECTION].insert_one({
@@ -89,6 +100,7 @@ async def send_code(user: dict, mobile: str) -> int:
     except sms_service.SmsError:
         await db[OTP_COLLECTION].delete_one({"_id": result.inserted_id})
         raise OtpError(502, "We could not send the OTP right now. Please try again shortly.")
+    await db[SEND_LOG].insert_one({"user_id": uid, "mobile": mobile, "created_at": now})   # counted only when an SMS really went out
     return RESEND_COOLDOWN_SECONDS
 
 

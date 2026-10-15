@@ -272,6 +272,17 @@ async def get_current_user(token: str = Depends(site_user_oauth2_scheme)) -> dic
     if payload.get("type") != "site_user":
         raise credentials_exception
 
+    # A token that was signed out (logout) stops working immediately, before its expiry.
+    jti = payload.get("jti")
+    if jti:
+        try:
+            if await get_database()["revoked_tokens"].find_one({"jti": jti}, {"_id": 1}):
+                raise credentials_exception
+        except HTTPException:
+            raise
+        except Exception:
+            pass   # a database hiccup must not lock everyone out
+
     user_id = payload.get("uid")
     if not user_id:
         raise credentials_exception

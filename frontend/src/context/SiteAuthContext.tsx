@@ -88,6 +88,11 @@ export function SiteAuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const logout = useCallback(() => {
+    // Tell the server to retire this token too, so a copied token stops working straight away.
+    const oldToken = localStorage.getItem(TOKEN_KEY)
+    if (oldToken) {
+      fetch(`${API_BASE_URL}/auth/logout`, { method: 'POST', headers: { Authorization: `Bearer ${oldToken}` } }).catch(() => { /* offline: the token still expires by itself */ })
+    }
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
     setToken(null)

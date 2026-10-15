@@ -1,3 +1,4 @@
+from app.utils.validation import GUARD_FIELDS
 from app.database.connection import get_database
 from app.schemas.proposal import ProposalCreate, ProposalResponse
 from app.services.email_service import notify_hr_new_proposal
@@ -8,7 +9,8 @@ async def create_proposal(proposal: ProposalCreate, user: dict) -> ProposalRespo
     collection = db["proposals"]
 
     # Prepare document
-    proposal_dict = proposal.model_dump()
+    proposal_dict = proposal.model_dump(exclude=GUARD_FIELDS)
+    proposal_dict["consent_at"] = datetime.now(timezone.utc)
     proposal_dict["user_id"] = user["id"]
     proposal_dict["created_at"] = datetime.now(timezone.utc)
 

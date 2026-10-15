@@ -1,20 +1,32 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional, List
+from pydantic import BaseModel, EmailStr, Field, field_validator
+from typing import Annotated, Literal, Optional, List
 from datetime import datetime
 
-class ReferenceItem(BaseModel):
-    company_name: str = ""
-    name_designation: str = ""
-    phone: str = ""
-    email: str = ""
+from app.utils.validation import FormGuard, Name, _no_markup, _text, optional_blank_to_none
 
-class FeedbackCreate(BaseModel):
+# a short optional free-text box: trimmed, no angle brackets, at most 100 characters
+_Opt100 = Annotated[str, Field(max_length=100)]
+
+
+class ReferenceItem(BaseModel):
+    company_name: str = Field("", max_length=100)
+    name_designation: str = Field("", max_length=100)
+    phone: str = Field("", max_length=30)
+    email: str = Field("", max_length=254)
+
+    @field_validator("company_name", "name_designation", "phone", "email")
+    @classmethod
+    def _plain(cls, v: str) -> str:
+        return _no_markup(v.strip())
+
+
+class FeedbackCreate(FormGuard):
     # Basic Information
-    client_name: str = Field(..., min_length=2, max_length=200)
-    nature_of_assignment: str = Field(..., min_length=2, max_length=300)
-    period_of_assignment: Optional[str] = None
-    assignment_reporting: str = "CEO"
-    assignment_spoc: Optional[str] = None
+    client_name: _text(2, 200)
+    nature_of_assignment: _text(2, 300)
+    period_of_assignment: Optional[_text(1, 100)] = None
+    assignment_reporting: _text(1, 100) = "CEO"
+    assignment_spoc: Optional[_text(1, 100)] = None
     
     # On-boarding ratings (1-5)
     onboarding_reason: int = Field(0, ge=0, le=5)
@@ -44,18 +56,24 @@ class FeedbackCreate(BaseModel):
     research_publications: int = Field(0, ge=0, le=5)
     
     # Yes/No questions
-    would_refer: str = ""
-    delighted_by_service: str = ""
+    would_refer: Literal["", "Yes", "No", "Maybe"] = ""
+    delighted_by_service: Literal["", "Yes", "No", "Maybe"] = ""
     
     # References
-    references: List[ReferenceItem] = []
+    references: List[ReferenceItem] = Field(default_factory=list, max_length=5)
     
     # Testimonial
-    testimonial: Optional[str] = None
+    testimonial: Optional[_text(1, 2000)] = None
     
     # Your Details
-    name: str = Field(..., min_length=2, max_length=100)
-    designation: str = Field(..., min_length=2, max_length=100)
+    name: Name
+    designation: _text(2, 100)
+
+    @field_validator("period_of_assignment", "assignment_spoc", "testimonial", mode="before")
+    @classmethod
+    def _blank(cls, v):
+        return optional_blank_to_none(v)
+
 
 class FeedbackResponse(BaseModel):
     id: str

@@ -1,0 +1,73 @@
+# Gateway in front of the website and the API. ${APP_ENV} is filled in by the nginx image
+# (templates in /etc/nginx/templates are processed with envsubst when the container starts).
+
+# Staging must never be indexed by search engines (audit SEC-01). Production stays indexable.
+map "${APP_ENV}" $jhs_noindex {
+    default "";
+    staging "noindex, nofollow, noarchive";
+}
+
+map "${APP_ENV}" $jhs_is_staging {
+    default 0;
+    staging 1;
+}
+
+server {
+
+    listen 80;
+
+    # Everything is small by default; only the routes that really take files are allowed more.
+    client_max_body_size 64k;
+
+    # An empty value means nginx sends no header at all (production).
+    add_header X-Robots-Tag $jhs_noindex always;
+
+    location = /robots.txt {
+        if ($jhs_is_staging) {
+            add_header Content-Type text/plain;
+            add_header X-Robots-Tag $jhs_noindex always;
+            return 200 "User-agent: *\nDisallow: /\n";
+        }
+        proxy_pass http://frontend:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location / {
+        proxy_pass http://frontend:80;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /api/ {
+
+        proxy_pass http://backend:8000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_connect_timeout 60s;
+    }
+
+    # Résumé upload: an 8 MB PDF plus the form fields.
+    location ~ ^/api/careers/(applications/upload|ats-check)$ {
+
+        client_max_body_size 9m;
+
+        proxy_pass http://backend:8000;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_connect_timeout 60s;
+    }
+}

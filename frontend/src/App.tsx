@@ -98,6 +98,7 @@ const WhitePapers = lazy(() => import('./components/Insights/WhitePapers'))
 const Regulatory = lazy(() => import('./components/Insights/Regulatory'))
 const RegWatch = lazy(() => import('./pages/RegWatch'))
 const Unsubscribe = lazy(() => import('./pages/Unsubscribe'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Spotlight pages
 const AIAutomation = lazy(() => import('./components/Spotlight/AIAutomation'))
@@ -324,6 +325,8 @@ export default function App() {
           <Route path="/digital/digital-twins" element={<DigitalTwins />} />
           <Route path="/regulatory/sebi-draft-circular" element={<SEBIDraftCircular />} />
           <Route path="/regulatory/rbi-cooling-off-period" element={<RBICoolingOffPeriod />} />
+          {/* Anything else: a real "not found" page (the server also answers these URLs with HTTP 404) */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Footer />

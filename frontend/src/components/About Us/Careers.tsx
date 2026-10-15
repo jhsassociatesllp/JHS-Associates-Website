@@ -3,6 +3,9 @@ import type { FormEvent } from 'react'
 import { imageUrl } from '../../utils/imageUrl'
 import { useSiteAuth } from '../../context/SiteAuthContext'
 import ResumeMatchCheck from './ResumeMatchCheck'
+import { ConsentCheck, CharCount, Honeypot } from '../common/FormExtras'
+import { useTurnstile } from '../common/useTurnstile'
+import { LIMITS, apiErrorMessage, validateEmail, validateName, validateText } from '../../utils/formRules'
 
 /* ─── Types ─────────────────────────────────────────────── */
 type ApplicationForm = {
@@ -22,7 +25,7 @@ type ApplicationForm = {
   remark: string
 }
 
-type FormErrors = Partial<Record<keyof ApplicationForm | 'resume', string>>
+type FormErrors = Partial<Record<keyof ApplicationForm | 'resume' | 'consent', string>>
 
 type JobStatus = 'draft' | 'open' | 'closed'
 
@@ -150,6 +153,9 @@ export default function Careers() {
   const [formData, setFormData] = useState<ApplicationForm>(emptyForm)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [consent, setConsent] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
 
   const [jobs, setJobs] = useState<Job[]>([])
   const [jobsLoading, setJobsLoading] = useState(true)
@@ -224,11 +230,11 @@ export default function Careers() {
   const validate = (): boolean => {
     const e: FormErrors = {}
 
-    if (!formData.full_name.trim()) e.full_name = 'Full name is required'
-    else if (formData.full_name.trim().length < 2) e.full_name = 'Full name must be at least 2 characters'
+    const nameErr = validateName(formData.full_name, 'Full name')
+    if (nameErr) e.full_name = nameErr
 
-    if (!formData.email.trim()) e.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) e.email = 'Your email format is incorrect'
+    const emailErr = validateEmail(formData.email)
+    if (emailErr) e.email = 'Your email format is incorrect'
 
     if (!formData.phone.trim()) e.phone = 'Contact number is required'
     else if (!/^\+?[\d\s\-()]{7,20}$/.test(formData.phone.trim())) e.phone = 'Your phone number is incorrect'
@@ -237,6 +243,11 @@ export default function Careers() {
       if (digits.length < 10 || digits.length > 15) e.phone = 'Enter a valid contact number (10-15 digits)'
       else if (digits.length === 10 && !/^[6-9]/.test(digits)) e.phone = 'Enter a valid 10-digit mobile number'
     }
+
+    const placeErr = validateText(formData.place_of_residence, 'Place of residence')
+    if (placeErr) e.place_of_residence = placeErr
+    const remarkErr = validateText(formData.remark, 'Remark')
+    if (remarkErr) e.remark = remarkErr
 
     if (!formData.highest_qualification) e.highest_qualification = 'Please select your highest qualification'
     else if (showQualOther && !formData.highest_qualification_other.trim()) e.highest_qualification_other = 'Please specify your qualification'
@@ -253,6 +264,9 @@ export default function Careers() {
     else if (howHeardDetailLabel && !formData.how_heard_detail.trim()) e.how_heard_detail = `Please provide the ${howHeardDetailLabel.toLowerCase()}`
 
     if (!resumeFile) e.resume = 'Resume (PDF) is required'
+    else if (!/\.pdf$/i.test(resumeFile.name)) e.resume = 'Only PDF files are accepted'
+    else if (resumeFile.size > 5 * 1024 * 1024) e.resume = 'The PDF must be 5 MB or smaller'
+    if (!consent) e.consent = 'Please accept the Privacy Policy to continue'
 
     setErrors(e)
     return Object.keys(e).length === 0
@@ -262,6 +276,7 @@ export default function Careers() {
     e.preventDefault()
     if (!careerToken) { openAuthModal('apply for this role'); return }
     if (!validate()) return
+    if (submitting) return // ignore a second click while the first is still being sent
     setSubmitting(true); setMessage('')
     try {
       const payload = new FormData()
@@ -279,6 +294,9 @@ export default function Careers() {
       payload.append('how_heard', formData.how_heard)
       payload.append('how_heard_detail', howHeardDetailLabel ? formData.how_heard_detail : '')
       payload.append('cover_letter', formData.remark)
+      payload.append('consent', 'true')
+      payload.append('website', honeypot)
+      if (turnstile.token) payload.append('cf_turnstile_token', turnstile.token)
       payload.append('resume', resumeFile as File)
 
       const res = await fetch(`${API_BASE_URL}/careers/applications/upload`, {
@@ -287,12 +305,17 @@ export default function Careers() {
         body: payload,
       })
       if (res.status === 401) { signOutApplicant(); throw new Error('unauthorized') }
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(apiErrorMessage(body, ''))
+      }
       setFormData(c => ({ ...emptyForm, full_name: c.full_name, email: c.email }))
-      setResumeFile(null); setErrors({})
+      setResumeFile(null); setErrors({}); setConsent(false); turnstile.reset()
       setMessage('Application submitted successfully. Our HR team will review it soon.')
-    } catch {
-      setMessage('Could not submit your application right now. Please try again.')
+    } catch (err) {
+      turnstile.reset()
+      const detail = err instanceof Error && err.message && err.message !== 'unauthorized' ? ` ${err.message}` : ' Please try again.'
+      setMessage(`Could not submit your application right now.${detail}`)
     } finally { setSubmitting(false) }
   }
 
@@ -479,11 +502,15 @@ export default function Careers() {
                     onChange={e => updateField(field, e.target.value)}
                     placeholder={placeholder}
                     required={required}
+                    aria-required={required ? 'true' : undefined}
+                    aria-invalid={errors[field] ? true : undefined}
+                    aria-describedby={errors[field] ? `career-${field}-err` : undefined}
+                    maxLength={field === 'full_name' ? LIMITS.name : field === 'email' ? LIMITS.email : field === 'phone' ? LIMITS.phone : LIMITS.shortText}
                     autoComplete={autoComplete}
                     readOnly={field === 'email'}
                   />
                   {field === 'email' && <span style={{ fontSize: '0.72rem', color: '#888' }}>Verified via your Google account</span>}
-                  {errors[field] && <span style={ss.formErr}>{errors[field]}</span>}
+                  {errors[field] && <span id={`career-${field}-err`} role="alert" style={ss.formErr}>{errors[field]}</span>}
                 </div>
               ))}
 
@@ -620,6 +647,7 @@ export default function Careers() {
                     type="file"
                     accept="application/pdf,.pdf"
                     required
+                    aria-required="true"
                     style={{ display: 'none' }}
                     onChange={e => {
                       setResumeFile(e.target.files?.[0] ?? null)
@@ -647,7 +675,18 @@ export default function Careers() {
                 onChange={e => updateField('remark', e.target.value)}
                 placeholder="Anything else you'd like us to know… (optional)"
                 rows={4}
+                maxLength={LIMITS.longMessage}
+                aria-invalid={errors.remark ? true : undefined}
               />
+              <CharCount value={formData.remark} max={LIMITS.longMessage} />
+              {errors.remark && <span role="alert" style={ss.formErr}>{errors.remark}</span>}
+            </div>
+
+            <Honeypot value={honeypot} onChange={setHoneypot} />
+            {turnstile.widget}
+            <div style={{ marginTop: '0.8rem' }}>
+              <ConsentCheck id="career-consent" checked={consent} error={errors.consent}
+                onChange={(v) => { setConsent(v); if (v && errors.consent) setErrors(prev => ({ ...prev, consent: undefined })) }} />
             </div>
 
             <button type="submit" className="careers-apply-btn" style={{ ...ss.applyBtn, width: '100%', padding: '0.88rem', marginTop: '1rem', fontSize: '0.9rem', display: 'block', textAlign: 'center', opacity: submitting ? 0.65 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }} disabled={submitting}>

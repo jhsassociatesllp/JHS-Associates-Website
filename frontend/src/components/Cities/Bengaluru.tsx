@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Bengaluru.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
@@ -97,7 +97,7 @@ export default function Bengaluru() {
     <div className="blr-page">
       <section className="blr-hero">
         <video className="blr-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('bengaluru_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('bengaluru_vid.mp4')} type="video/mp4" />
         </video>
         <div className="blr-hero__overlay" />
         <div className="blr-hero__content">

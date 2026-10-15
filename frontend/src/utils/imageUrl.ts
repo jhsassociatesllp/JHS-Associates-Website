@@ -33,3 +33,14 @@ export function imageUrl(filename: string): string {
   const clean = filename.replace(/^\/+/, '');
   return `${IMAGE_BASE}/${clean}`;
 }
+
+/**
+ * videoUrl — office-page background videos.
+ *
+ * These ship inside the website build (frontend/public/Uploads), so they are served from
+ * /Uploads/<file> on every environment and do not depend on the separately managed images
+ * folder on the server.
+ */
+export function videoUrl(filename: string): string {
+  return `/Uploads/${filename.replace(/^\/+/, '')}`;
+}

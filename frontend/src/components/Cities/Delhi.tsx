@@ -3,7 +3,7 @@ import './Delhi.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
@@ -118,7 +118,7 @@ export default function Delhi() {
       {/* ══ HERO ══ */}
       <section className="del-hero">
         <video className="del-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('dehli_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('dehli_vid.mp4')} type="video/mp4" />
         </video>
         <div className="del-hero__overlay" />
         <div className="del-hero__content">

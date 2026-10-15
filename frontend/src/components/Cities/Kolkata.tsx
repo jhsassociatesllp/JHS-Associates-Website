@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Kolkata.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import { useCityPartners } from '../../data/leadership'
@@ -213,7 +213,7 @@ export default function Kolkata() {
     <div className="kol-page">
       <section className="kol-hero">
         <video className="kol-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('kolkata_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('kolkata_vid.mp4')} type="video/mp4" />
         </video>
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">

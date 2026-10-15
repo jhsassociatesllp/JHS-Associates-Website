@@ -3,7 +3,7 @@ import './Mumbai.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrlFor } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
@@ -194,7 +194,7 @@ export default function Mumbai() {
       {/* ══ HERO ══ */}
       <section className="mum-hero">
         <video className="mum-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('mumbai_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('mumbai_vid.mp4')} type="video/mp4" />
         </video>
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">

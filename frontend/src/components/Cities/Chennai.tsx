@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Chennai.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
@@ -97,7 +97,7 @@ export default function Chennai() {
     <div className="chn-page">
       <section className="chn-hero">
         <video className="chn-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('chennai_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('chennai_vid.mp4')} type="video/mp4" />
         </video>
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">

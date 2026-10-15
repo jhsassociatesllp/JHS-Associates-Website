@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Global.css'
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import { useCityPartners } from '../../data/leadership'
@@ -233,7 +233,7 @@ export default function Global() {
     <div className="glb-page">
       <section className="glb-hero">
         <video className="glb-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('Global_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('Global_vid.mp4')} type="video/mp4" />
         </video>
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">

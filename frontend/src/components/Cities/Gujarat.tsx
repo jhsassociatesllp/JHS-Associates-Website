@@ -3,7 +3,7 @@ import './Gujarat.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
@@ -205,7 +205,7 @@ export default function Gujarat() {
       {/* ══ HERO ══ */}
       <section className="ahm-hero">
         <video className="ahm-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={imageUrl('ahmedabad_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('ahmedabad_vid.mp4')} type="video/mp4" />
         </video>
         <div className="ahm-hero__overlay" />
         <div className="ahm-hero__content">

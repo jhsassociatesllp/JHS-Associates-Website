@@ -1,4 +1,79 @@
-/* Podcasts — episode cards (added alongside the existing SimpleInsight page styles) */
+/* ============================================================
+   Podcasts — same hero and image-card design as Excellencia
+   ============================================================ */
+
+.pod-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* ── Hero ── */
+.pod-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 160px 5% 72px;
+  background-color: #0f2340;
+  text-align: center;
+}
+
+.pod-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.pod-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(10, 20, 50, 0.86) 0%, rgba(10, 20, 50, 0.62) 55%, rgba(10, 20, 50, 0.82) 100%);
+  z-index: 1;
+}
+
+.pod-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.pod-hero__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ff8fa3;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: 100px;
+}
+
+.pod-hero__title {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 20px;
+}
+
+.pod-hero__sub {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── Content ── */
+.pod-content {
+  padding: 80px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .pod-status {
   padding: 24px;
   text-align: center;
@@ -10,54 +85,213 @@
 
 .pod-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
   width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
   text-align: left;
 }
 
+@media (max-width: 1100px) {
+  .pod-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+}
+
+@media (max-width: 640px) {
+  .pod-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+}
+
+/* ── Card shell ── */
 .pod-card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid #e6ebf3;
-  border-top: 4px solid #D62049;
+  position: relative;
+  height: 420px;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 10px 30px -20px rgba(15, 35, 64, 0.35);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.pod-card:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -22px rgba(15, 35, 64, 0.45); }
 
-.pod-card__cover { height: 180px; background-size: cover; background-position: center; background-color: #e9eef6; }
-.pod-card__cover--plain {
-  display: flex; align-items: center; justify-content: center;
+.pod-card:hover,
+.pod-card:focus-within {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+/* ── Cover image (or gradient when no image was uploaded) ── */
+.pod-card__bg-img,
+.pod-card__bg-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pod-card__bg-img {
+  background-size: cover;
+  background-position: center;
+  background-color: #e9eef6;
+}
+
+.pod-card__bg-fallback {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 3.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(135deg, #0f2340 0%, #1e3a5f 30%, #D62049 70%, #8a1725 100%);
+}
+
+.pod-card:hover .pod-card__bg-img,
+.pod-card:hover .pod-card__bg-fallback {
+  transform: scale(1.06);
+}
+
+/* ── Default state: white box at the bottom ── */
+.pod-card__default-box {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 2;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pod-card:hover .pod-card__default-box,
+.pod-card:focus-within .pod-card__default-box {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.pod-card__meta {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.pod-card__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1e3a5f;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Hover state: frosted overlay ── */
+.pod-card__hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+
+.pod-card:hover .pod-card__hover-overlay,
+.pod-card:focus-within .pod-card__hover-overlay {
+  opacity: 1;
+}
+
+.pod-card__hover-content {
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.pod-card:hover .pod-card__hover-content,
+.pod-card:focus-within .pod-card__hover-content {
+  transform: translateY(0);
+}
+
+.pod-card__hover-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f2340;
+  line-height: 1.3;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.pod-card__guest {
+  margin: 0 0 0.6rem;
+  font-size: 0.84rem;
+  font-weight: 600;
   color: #D62049;
-  background: linear-gradient(135deg, #fdecef, #f1f5fb);
 }
 
-.pod-card__body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
-.pod-card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-.pod-tag { padding: 4px 11px; border-radius: 100px; background: #eef2f8; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; color: #44506a; }
-.pod-tag--platform { background: #D62049; color: #fff; }
-
-.pod-card__title { margin: 0 0 6px; font-size: 1.12rem; line-height: 1.35; font-weight: 700; color: #0f2340; }
-.pod-card__guest { margin: 0 0 8px; font-size: 0.84rem; font-weight: 600; color: #D62049; }
-.pod-card__desc { margin: 0 0 16px; font-size: 0.92rem; line-height: 1.65; color: #4a5872; }
-
-.pod-btn {
-  margin-top: auto;
-  align-self: flex-start;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 20px; border-radius: 100px;
-  background: #0f2340; color: #fff; text-decoration: none;
-  font-size: 0.86rem; font-weight: 700;
-  transition: background 0.2s ease, transform 0.2s ease;
+.pod-card__hover-desc {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: #475569;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.pod-btn:hover { background: #D62049; transform: translateY(-1px); }
 
-@media (max-width: 700px) {
-  .pod-grid { grid-template-columns: minmax(0, 1fr); }
+.pod-card__hover-actions {
+  display: flex;
+  align-items: center;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.pod-card:hover .pod-card__hover-actions,
+.pod-card:focus-within .pod-card__hover-actions {
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.pod-card__view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #D62049 0%, #d62b3e 100%);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 14px rgba(214, 32, 73, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pod-card__view-btn:hover {
+  box-shadow: 0 8px 24px rgba(214, 32, 73, 0.4);
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+@media (max-width: 600px) {
+  .pod-hero { padding: 130px 6% 48px; }
+  .pod-card { height: 360px; }
+  .pod-card__default-box { bottom: 1rem; left: 1rem; right: 1rem; padding: 1rem 1.25rem; }
+  .pod-card__hover-overlay { padding: 1.5rem; }
+}
+
+/* touch screens have no hover: show the details panel always, under the cover image */
+@media (hover: none) {
+  .pod-card__default-box { display: none; }
+  .pod-card__hover-overlay { opacity: 1; background: rgba(255, 255, 255, 0.94); top: auto; padding: 1.25rem 1.4rem; }
+  .pod-card__hover-content, .pod-card__hover-actions { transform: none; }
+  .pod-card__hover-desc { -webkit-line-clamp: 3; }
+  .pod-card__hover-title { font-size: 1.1rem; margin-top: 0.4rem; }
+  .pod-card__hover-overlay { gap: 0.8rem; }
 }

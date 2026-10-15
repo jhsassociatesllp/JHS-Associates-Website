@@ -212,7 +212,6 @@ export default function Mumbai() {
           </div>
           <div className="mum-hero__card-divider" />
           <div className="mum-hero__card-right">
-            <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Phone</span><span className="mum-hero__card-stat-val">+91 8097095057</span></div>
             <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Email</span><span className="mum-hero__card-stat-val">connect@jhsassociates.in</span></div>
             {/* <div className="mum-hero__card-stat"><span className="mum-hero__card-stat-label">Hours</span><span className="mum-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>

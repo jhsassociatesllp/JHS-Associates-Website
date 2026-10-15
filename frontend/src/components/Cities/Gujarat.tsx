@@ -223,7 +223,6 @@ export default function Gujarat() {
           </div>
           <div className="ahm-hero__card-divider" />
           <div className="ahm-hero__card-right">
-            <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Phone</span><span className="ahm-hero__card-stat-val">+91 9374639574</span></div>
             <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Email</span><span className="ahm-hero__card-stat-val">kalpesh.parmar@jhsassociates.in</span></div>
             {/* <div className="ahm-hero__card-stat"><span className="ahm-hero__card-stat-label">Hours</span><span className="ahm-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>

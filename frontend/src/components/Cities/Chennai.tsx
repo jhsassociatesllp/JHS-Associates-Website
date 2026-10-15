@@ -112,7 +112,6 @@ export default function Chennai() {
           </div>
           <div className="chn-hero__card-divider" />
           <div className="chn-hero__card-right">
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 9840131965</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chandrasekaran@jhsassociates.in</span></div>
             {/* <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>

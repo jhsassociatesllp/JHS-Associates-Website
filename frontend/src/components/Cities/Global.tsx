@@ -258,12 +258,6 @@ export default function Global() {
                 <span className="glb-hero__card-info-val">vinod.joshi@jhsuae.com</span>
               </div>
             </div>
-            <div className="glb-hero__card-info-item">
-              <div>
-                <span className="glb-hero__card-info-label">Phone</span>
-                <span className="glb-hero__card-info-val">+971 4348 0046</span>
-              </div>
-            </div>
           </div>
         </div >
       </section >

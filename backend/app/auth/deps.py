@@ -114,6 +114,17 @@ async def get_current_admin(token: str = Depends(oauth2_scheme)):
         if payload.get("type") != "admin":
             raise credentials_exception
 
+        # A signed-out token stops working immediately (see POST /admin/logout).
+        jti = payload.get("jti")
+        if jti:
+            try:
+                if await get_database()["revoked_tokens"].find_one({"jti": jti}, {"_id": 1}):
+                    raise credentials_exception
+            except HTTPException:
+                raise
+            except Exception:
+                pass   # a database hiccup must not lock every admin out
+
         email: str = payload.get("sub")
         role: str = payload.get("role")
 

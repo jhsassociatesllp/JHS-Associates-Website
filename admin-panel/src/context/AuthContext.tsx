@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 interface User {
   id: string;
@@ -116,6 +115,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
+    // Tell the server to retire this token too, so a copied or stolen token stops working straight away.
+    if (token) {
+      fetch(`${API_BASE_URL}/admin/logout`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } })
+        .catch(() => { /* offline: the token still expires by itself after 2 hours */ });
+    }
     setToken(null);
     setUser(null);
   };

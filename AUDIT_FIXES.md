@@ -42,3 +42,20 @@ Tests: `backend/tests/test_form_validation.py` and `backend/tests/test_logout_re
 6. **FRM-08** – the page still says "Book an appointment" (no time slot, the team calls back). Rename to "Request a call back" if the owner prefers.
 7. **Section 11 – delete the test data** on staging (contact/proposal/career/appointment records, the résumés named `shell.php`, the test Google user).
 8. After deploy, test in this order: home, Contact, Careers upload, Book Appointment, Google Sign-In, language switch. Watch the browser console for CSP messages.
+
+---
+
+# VAPT report of 19 Oct 2026 (Gauhar Nasim Akhtar) – status
+
+Checked against the `staging` branch with an automated route test (154 API operations, no token, a normal site-user token, and fake/garbage tokens).
+
+| Finding | Staging branch | Production (`main`) |
+|---|---|---|
+| F-01 – PUT/DELETE without login (articles, knowledge, ...) | **Fixed** – every write route needs an admin token (401 otherwise) | **Still open** – `main` is 64 commits behind |
+| Attack chain D – upload XSS | **Fixed** – uploads need an admin login; images are re-encoded to WebP, PDFs must be real PDFs, nothing else is accepted; images are served with a "sandbox" policy | **Still open** |
+| Token revocation | **Fixed** – logout now cancels both admin and site tokens on the server (new `POST /api/admin/logout`) | **Still open** |
+| Admin-panel CSP | **Fixed** – enforced (no inline or third-party scripts), so an injected script cannot run | **Still open** |
+| PII-01 – GET /contact, /proposal, /alumni | **Fixed** – 401 without an admin token | **Still open** |
+| HOST-01 – MySQL 3306 / WHM / cPanel open | Not code – IT team | IT team |
+| CLOUD-01 – origin IP bypasses Cloudflare | Not code – IT team | IT team |
+| DMARC `p=none` | Not code – DNS | DNS |

@@ -1,12 +1,15 @@
 import hmac
 
+import jwt
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordRequestForm
 from app.schemas.admin import Token, AdminLogin, AdminResponse, AdminInDB, AdminRole
-from app.auth.security import verify_password, get_password_hash, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.auth.security import ALGORITHM, SECRET_KEY, verify_password, get_password_hash, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.auth.throttle import MAX_FAILS, MAX_FAILS_PER_IP, check_login_allowed, clear_failures, record_failure
 from app.utils.netutil import client_ip
 from app.auth.deps import (
+    oauth2_scheme,
     find_admin_by_email,
     get_current_admin,
     normalize_admin_data,
@@ -68,6 +71,21 @@ async def login_for_access_token(request: Request, admin: AdminLogin):
 @router.post("/login-form", response_model=Token)
 async def login_for_access_token_form(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     return {"access_token": await _authenticate(request, form_data.username, form_data.password), "token_type": "bearer"}
+
+@router.post("/logout", status_code=204)
+async def admin_logout(token: str = Depends(oauth2_scheme)):
+    """Ends this admin session for good: the token's id is remembered until the token would have expired anyway."""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except jwt.InvalidTokenError:
+        return None
+    jti, exp = payload.get("jti"), payload.get("exp")
+    if payload.get("type") == "admin" and jti and exp:
+        col = get_database()["revoked_tokens"]
+        await col.create_index("expires_at", expireAfterSeconds=0)
+        await col.update_one({"jti": jti}, {"$set": {"jti": jti, "expires_at": datetime.fromtimestamp(exp, tz=timezone.utc)}}, upsert=True)
+    return None
+
 
 @router.get("/me", response_model=AdminResponse)
 async def read_users_me(current_admin: AdminInDB = Depends(get_current_admin)):

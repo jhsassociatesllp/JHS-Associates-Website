@@ -70,9 +70,9 @@ Reports: (1) first security audit (`SECURITY_FIXES.md`), (2) v2 AI audit (top of
 | | Count |
 |---|---|
 | Fixed in the code and tested | **40** |
-| Code done – the last step is yours (keys, firewall, settings) | **11** |
+| Code done – the last step is yours (keys, secrets, settings) | **10** |
 | Needs IT / hosting / DNS (cannot be done from code) | **7** |
-| Not done on purpose (needs a decision) | **2** |
+| Not done on purpose (bigger change, needs a decision) | **3** (secure-cookie login counted in two reports, list paging) |
 
 ## Added in this round (code)
 | Item | What was done |
@@ -98,4 +98,5 @@ Reports: (1) first security audit (`SECURITY_FIXES.md`), (2) v2 AI audit (top of
 
 ## Not done on purpose
 - Login in a secure cookie instead of browser storage (H3 / FRM-09): every page and the admin panel would have to change how they send the login, with CSRF handling. The stolen-token risk is already covered by the enforced CSP, 8-hour sessions, and logout that cancels the token. Plan it as its own release.
+- Paging of every long list (M5): the lists are small today; adding paging means changing every admin page.
 - Email verification for password sign-ups: needs a new email flow; the risk is low (a sign-up can never become an admin, and unverified accounts get no notifications).

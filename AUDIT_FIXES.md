@@ -59,3 +59,43 @@ Checked against the `staging` branch with an automated route test (154 API opera
 | HOST-01 – MySQL 3306 / WHM / cPanel open | Not code – IT team | IT team |
 | CLOUD-01 – origin IP bypasses Cloudflare | Not code – IT team | IT team |
 | DMARC `p=none` | Not code – DNS | DNS |
+
+---
+
+# FINAL STATUS – all three reports matched against the `staging` branch (20 Oct 2026)
+
+Reports: (1) first security audit (`SECURITY_FIXES.md`), (2) v2 AI audit (top of this file), (3) VAPT report of 19 Oct (IT team).
+60 items in total.
+
+| | Count |
+|---|---|
+| Fixed in the code and tested | **40** |
+| Code done – the last step is yours (keys, firewall, settings) | **11** |
+| Needs IT / hosting / DNS (cannot be done from code) | **7** |
+| Not done on purpose (needs a decision) | **2** |
+
+## Added in this round (code)
+| Item | What was done |
+|---|---|
+| Chatbot abuse (M6) | Per visitor: 15 per minute, 80 per hour, 300 per day; a site-wide daily ceiling (`MAX_CHAT_PER_DAY`, default 4000) so a flood cannot run up the OpenAI bill; questions over 600 characters and request bodies over 20 KB are refused. The visitor is identified by the real address (not the proxy's), so one visitor cannot use up everyone's allowance. |
+| Admin activity log (L8) | Every admin change (POST/PUT/PATCH/DELETE) and every admin sign-in attempt is stored with who, what, when, status and IP for about 13 months. Super Admins can read it at `GET /api/admin/audit-log`. |
+| Locked-in posture | `tests/test_open_routes_allowlist.py` lists the 51 operations that are public on purpose. A new open route, or any open edit/delete route, makes the test fail. |
+| Secret key (M1) | New switch `REQUIRE_SECRET_KEY`. When it is `1` the API refuses to start without a real `SECRET_KEY`. It is OFF by default so the site cannot go down before the secret is set. |
+| Automatic scans (M9) | `.github/workflows/security-scan.yml` runs the five security tests and the library vulnerability checks (Python and all three Node projects) on every push to staging/main and weekly. |
+| Earlier today | Admin logout cancels the token on the server; admin panel runs with an enforced CSP. |
+
+## Left for you / IT (see the report for the steps)
+1. MongoDB: close port 27017, turn on a database login (C0).
+2. Rotate the old keys: SMTP, MSG91, OpenAI, Pinecone, `SECRET_KEY` (C6).
+3. Set GitHub secret `REQUIRE_SECRET_KEY` = `1` after `SECRET_KEY` is set (M1).
+4. Turnstile keys, Cloudflare rate limits (H6, FRM-01).
+5. Staging password / Cloudflare Access; admin panel behind Cloudflare Access or an IP allow-list (SEC-01, M8).
+6. HTTP to HTTPS redirect; duplicate Permissions-Policy; SOP page address (HDR-03/04/05).
+7. Origin firewall to Cloudflare IPs only; MySQL 3306 / WHM / cPanel ports; MySQL 5.7 upgrade (CLOUD-01, HOST-01).
+8. DMARC `p=quarantine` (DNS).
+9. Google OAuth origins, deploy credentials hygiene (L5-L7).
+10. Merge `staging` into `main` so production gets all of this.
+
+## Not done on purpose
+- Login in a secure cookie instead of browser storage (H3 / FRM-09): every page and the admin panel would have to change how they send the login, with CSRF handling. The stolen-token risk is already covered by the enforced CSP, 8-hour sessions, and logout that cancels the token. Plan it as its own release.
+- Email verification for password sign-ups: needs a new email flow; the risk is low (a sign-up can never become an admin, and unverified accounts get no notifications).

@@ -58,7 +58,7 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGIN || "")
   .map((o) => o.trim().replace(/\/$/, ""))
   .filter(Boolean);
 const ALLOWED_ORIGIN = ALLOWED_ORIGINS.length ? ALLOWED_ORIGINS.join(",") : "*";
-app.use(express.json());
+app.use(express.json({ limit: "20kb" }));
 app.use(cors({ origin: ALLOWED_ORIGINS.length ? ALLOWED_ORIGINS : "*" }));
 app.use(express.static(path.join(__dirname, "public"))); // serves /widget.js and /demo.html
 
@@ -106,12 +106,57 @@ function isAllowedSiteUrl(raw) {
   }
 }
 
-// Basic abuse protection — also protects your OpenAI bill
-app.use(
-  "/api/chat",
-  requireApiKeyForExternalCallers,
-  rateLimit({ windowMs: 60 * 1000, max: 15, message: { error: "Too many requests, slow down." } })
-);
+// ---- abuse protection (also protects the OpenAI bill) --------------------
+const net = require("net");
+
+function isPublicIp(ip) {
+  if (!net.isIP(ip)) return false;
+  if (net.isIPv4(ip)) {
+    const [a, b] = ip.split(".").map(Number);
+    return !(a === 10 || a === 127 || a === 0 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 169 && b === 254) || a >= 224);
+  }
+  const l = ip.toLowerCase();
+  return !(l === "::1" || l.startsWith("fc") || l.startsWith("fd") || l.startsWith("fe80") || l === "::");
+}
+
+// The visitor's address as seen by OUR first outside proxy: the right-most public entry of
+// X-Forwarded-For (everything to its left can be forged by the visitor). Falls back to the socket.
+function visitorIp(req) {
+  const parts = String(req.headers["x-forwarded-for"] || "").split(",").map((p) => p.trim()).filter(Boolean);
+  for (let i = parts.length - 1; i >= 0; i--) if (isPublicIp(parts[i])) return parts[i];
+  return req.socket.remoteAddress || "unknown";
+}
+
+const limiter = (windowMs, max, message) =>
+  rateLimit({ windowMs, max, keyGenerator: visitorIp, validate: false, standardHeaders: true, legacyHeaders: false, message: { error: message } });
+
+// One visitor: 15 per minute, 80 per hour, 300 per day.
+const perMinute = limiter(60 * 1000, 15, "Too many requests, slow down.");
+const perHour = limiter(60 * 60 * 1000, 80, "You have reached the hourly chat limit. Please try again later or contact our team.");
+const perDay = limiter(24 * 60 * 60 * 1000, 300, "You have reached the daily chat limit. Please contact our team directly.");
+
+// Whole site: a daily ceiling on chat questions so a flood from many addresses can never run up the OpenAI bill.
+const MAX_CHAT_PER_DAY = Number(process.env.MAX_CHAT_PER_DAY || 4000);
+let budgetDay = new Date().toISOString().slice(0, 10);
+let budgetUsed = 0;
+function dailyBudget(req, res, next) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today !== budgetDay) { budgetDay = today; budgetUsed = 0; }
+  if (budgetUsed >= MAX_CHAT_PER_DAY) {
+    return res.status(429).json({ error: "The assistant is very busy today. Please use the Contact page and our team will help you." });
+  }
+  budgetUsed += 1;
+  return next();
+}
+
+// A question is a sentence or two; refuse huge bodies before they reach the model.
+function capMessageSize(req, res, next) {
+  const m = req.body && req.body.message;
+  if (typeof m === "string" && m.length > 600) return res.status(400).json({ error: "Please keep your question under 600 characters." });
+  return next();
+}
+
+app.use("/api/chat", requireApiKeyForExternalCallers, perMinute, perHour, perDay, capMessageSize, dailyBudget);
 
 // ---- load the content index built by crawler.js ------------------------
 

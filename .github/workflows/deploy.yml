@@ -227,6 +227,8 @@ jobs:
             export APP_ENV=$ENV
             if [ "$BRANCH" = "main" ]; then export SITE_URL="https://jhsassociates.in"; else export SITE_URL="https://staging.jhsassociates.in"; fi
             export SECRET_KEY="${{ secrets.SECRET_KEY }}"
+            # set the GitHub secret REQUIRE_SECRET_KEY to 1 once SECRET_KEY is configured: the API then refuses to start without it
+            export REQUIRE_SECRET_KEY="${{ secrets.REQUIRE_SECRET_KEY || '0' }}"
             export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
             export SENDER_EMAIL="${{ secrets.SENDER_EMAIL }}"

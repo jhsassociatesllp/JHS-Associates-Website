@@ -108,6 +108,54 @@ async def security_headers(request, call_next):
 
 MAX_JSON_BODY = 64 * 1024
 
+AUDIT_COLLECTION = "admin_audit_log"
+_audit_ready = False
+
+
+async def _write_audit(entry: dict) -> None:
+    """Best effort: a database hiccup must never break the request that was already answered."""
+    global _audit_ready
+    try:
+        from app.database.connection import get_database
+        col = get_database()[AUDIT_COLLECTION]
+        if not _audit_ready:
+            await col.create_index("at", expireAfterSeconds=400 * 24 * 3600)   # keep about 13 months
+            _audit_ready = True
+        await col.insert_one(entry)
+    except Exception:
+        logging.getLogger("api").warning("audit log write failed", exc_info=True)
+
+
+@app.middleware("http")
+async def admin_audit(request, call_next):
+    """Records who changed what in the admin panel: every admin write (POST/PUT/PATCH/DELETE) and every admin sign-in attempt."""
+    response = await call_next(request)
+    try:
+        path = request.url.path
+        if request.method in ("POST", "PUT", "PATCH", "DELETE") and path.startswith("/api/"):
+            actor = None
+            auth = request.headers.get("authorization", "")
+            if auth.lower().startswith("bearer "):
+                import jwt as _jwt
+                from app.auth.security import ALGORITHM, SECRET_KEY
+                try:
+                    payload = _jwt.decode(auth[7:], SECRET_KEY, algorithms=[ALGORITHM])
+                    if payload.get("type") == "admin":
+                        actor = payload.get("sub")
+                except Exception:
+                    actor = None
+            is_login = path.startswith("/api/admin/login")
+            if actor or is_login:
+                from datetime import datetime, timezone
+                from app.utils.netutil import client_ip
+                asyncio.create_task(_write_audit({
+                    "at": datetime.now(timezone.utc), "actor": actor, "method": request.method, "path": path[:200],
+                    "status": response.status_code, "ip": client_ip(request), "kind": "login" if is_login else "change",
+                }))
+    except Exception:
+        pass
+    return response
+
 
 @app.middleware("http")
 async def limit_json_body(request, call_next):

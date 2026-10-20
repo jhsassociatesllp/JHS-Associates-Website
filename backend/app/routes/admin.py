@@ -72,6 +72,17 @@ async def login_for_access_token(request: Request, admin: AdminLogin):
 async def login_for_access_token_form(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     return {"access_token": await _authenticate(request, form_data.username, form_data.password), "token_type": "bearer"}
 
+@router.get("/audit-log")
+async def admin_audit_log(limit: int = 200, current_admin: AdminInDB = Depends(require_super_admin)):
+    """Newest first: who changed what, and every admin sign-in attempt (Super Admin only)."""
+    limit = max(1, min(limit, 1000))
+    out = []
+    async for d in get_database()["admin_audit_log"].find({}).sort("at", -1).limit(limit):
+        d["id"] = str(d.pop("_id"))
+        out.append(d)
+    return out
+
+
 @router.post("/logout", status_code=204)
 async def admin_logout(token: str = Depends(oauth2_scheme)):
     """Ends this admin session for good: the token's id is remembered until the token would have expired anyway."""

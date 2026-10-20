@@ -1,21 +1,23 @@
 /* ============================================================
-   Feedback.css — JHS & Associates LLP
-   Matching Footer theme with DM Sans font
+   Feedback.css — JHS Client Feedback
+   Navy + crimson theme, card layout, DM Sans
    ============================================================ */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap");
 
 :root {
-  --fb-primary: #3a6fa5;
-  --fb-primary-dark: #2a5080;
+  --fb-navy: #1e3a5f;
+  --fb-navy-dark: #0f2340;
+  --fb-primary: #1e3a5f;
   --fb-accent: #D62049;
   --fb-accent-hover: #b81a3d;
-  --fb-text: #1e3a5f;
-  --fb-text-light: #6b7280;
-  --fb-border: #e5e7eb;
-  --fb-bg: #f9fafb;
+  --fb-text: #1a2a40;
+  --fb-text-light: #5b6b82;
+  --fb-border: #dbe3ee;
+  --fb-bg: #f5f8fc;
   --fb-white: #ffffff;
-  --fb-star: #fbbf24;
-  --fb-star-inactive: #d1d5db;
+  --fb-star: #f5a623;
+  --fb-star-inactive: #cfd8e6;
+  --fb-radius: 14px;
   --fb-font: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -25,73 +27,116 @@
 
 .feedback-page {
   font-family: var(--fb-font);
-  background: var(--fb-bg);
   min-height: 100vh;
-  padding: 80px 0 60px;
+  padding: 110px 0 80px;
+  background:
+    radial-gradient(ellipse 55% 40% at 0% 0%, rgba(30, 58, 95, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 20%, rgba(214, 32, 73, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 40% at 0% 100%, rgba(214, 32, 73, 0.07) 0%, transparent 70%),
+    var(--fb-bg);
   -webkit-font-smoothing: antialiased;
 }
 
 .feedback-container {
-  max-width: 1240px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  padding: 0 2rem;
 }
 
 /* ── Header ──────────────────────────────────────────── */
 .feedback-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
 
 .feedback-title {
+  margin: 0 0 14px;
   font-size: clamp(2rem, 4vw, 2.8rem);
   font-weight: 800;
-  color: var(--fb-text);
+  color: var(--fb-navy);
   letter-spacing: -0.02em;
-  margin-bottom: 12px;
+}
+
+.feedback-title::before {
+  content: "Client experience";
+  display: block;
+  width: fit-content;
+  margin: 0 auto 14px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(214, 32, 73, 0.08);
+  color: var(--fb-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.feedback-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: 16px auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--fb-accent), #ff6b86);
 }
 
 .feedback-subtitle {
+  max-width: 560px;
+  margin: 0 auto;
   font-size: 1.05rem;
   color: var(--fb-text-light);
-  font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* ── Form ────────────────────────────────────────────── */
+/* ── Form card ───────────────────────────────────────── */
 .feedback-form {
   background: var(--fb-white);
-  border-radius: 16px;
-  padding: 48px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e6ecf4;
+  border-radius: 22px;
+  padding: 44px 48px 48px;
+  box-shadow: 0 24px 60px -36px rgba(15, 35, 64, 0.3);
 }
 
 .form-section {
-  margin-bottom: 40px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--fb-border);
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid #edf1f7;
 }
 
 .form-section:last-of-type {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
   border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
 }
 
 .section-title {
-  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--fb-text);
-  margin-bottom: 24px;
+  color: var(--fb-navy-dark);
   letter-spacing: -0.01em;
 }
 
-/* ── Form Rows & Groups ──────────────────────────────── */
+.section-title::before {
+  content: "";
+  width: 5px;
+  height: 22px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--fb-accent), #ff6b86);
+  flex-shrink: 0;
+}
+
+/* ── Fields ──────────────────────────────────────────── */
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  margin-bottom: 22px;
 }
 
 .form-row:last-child {
@@ -102,244 +147,327 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .form-group label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--fb-text);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--fb-navy);
   letter-spacing: 0.01em;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 12px 16px;
+  width: 100%;
+  padding: 13px 16px;
   border: 1.5px solid var(--fb-border);
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 0.95rem;
   font-family: var(--fb-font);
   color: var(--fb-text);
-  background: var(--fb-white);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fbfcfe;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9aa7bb;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: #b9c6da;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--fb-primary);
-  box-shadow: 0 0 0 3px rgba(58, 111, 165, 0.1);
+  background: #fff;
+  border-color: var(--fb-navy);
+  box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.12);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 130px;
   line-height: 1.6;
 }
 
-/* ── Rating Instructions ──────────────────────────────── */
+/* ── Rating instructions ─────────────────────────────── */
 .rating-instructions {
-  background: #fef3c7;
-  border-left: 4px solid #f59e0b;
-  padding: 16px 20px;
-  margin-bottom: 32px;
-  border-radius: 8px;
-  font-size: 0.93rem;
-  color: #92400e;
-  line-height: 1.6;
+  margin: 0 0 30px;
+  padding: 16px 22px;
+  border-radius: 12px;
+  border-left: 5px solid var(--fb-accent);
+  background: #fdf1f4;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--fb-navy-dark);
 }
 
 .rating-instructions strong {
   font-weight: 700;
+  color: var(--fb-accent);
 }
 
-/* ── Ratings Grid (3 columns) ─────────────────────────── */
+/* ── Rating columns ──────────────────────────────────── */
 .ratings-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid #edf1f7;
 }
 
 .rating-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  padding: 22px 22px 18px;
+  background: #f8fafd;
+  border: 1px solid #e6ecf4;
+  border-radius: 16px;
+}
+
+.rating-section .section-title {
+  margin-bottom: 18px;
+  font-size: 1.05rem;
 }
 
 .rating-group {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.rating-group:last-child {
+  margin-bottom: 0;
 }
 
 .rating-group > label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--fb-text);
-  margin-bottom: 4px;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fb-text-light);
 }
 
 .rating-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  padding: 10px 12px;
+  margin: 0 -12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.rating-item:hover {
+  background: #eef3fa;
 }
 
 .rating-item span {
-  font-size: 0.9rem;
-  color: var(--fb-text-light);
+  font-size: 0.92rem;
   font-weight: 500;
+  color: var(--fb-text);
 }
 
-/* ── Star Rating ──────────────────────────────────────── */
+/* ── Stars ───────────────────────────────────────────── */
 .star-rating {
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .star {
   background: none;
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   color: var(--fb-star-inactive);
   cursor: pointer;
   transition: color 0.15s, transform 0.15s;
-  padding: 0;
+  padding: 0 1px;
   line-height: 1;
 }
 
 .star:hover,
 .star.active {
   color: var(--fb-star);
-  transform: scale(1.1);
 }
 
-.star:focus {
-  outline: 2px solid var(--fb-primary);
+.star:hover {
+  transform: scale(1.18);
+}
+
+.star:focus-visible {
+  outline: 2px solid var(--fb-navy);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-/* ── Radio Groups ──────────────────────────────────────── */
+/* ── Yes / No as toggle pills ────────────────────────── */
 .radio-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 6px;
 }
 
 .radio-group > label {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: var(--fb-text);
+  color: var(--fb-navy);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .radio-options {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 
 .radio-label {
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  min-width: 78px;
+  padding: 9px 20px;
+  border: 1.5px solid var(--fb-border);
+  border-radius: 100px;
+  background: #fbfcfe;
   cursor: pointer;
   font-size: 0.9rem;
+  font-weight: 600;
   color: var(--fb-text-light);
-  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.radio-label:hover {
+  border-color: var(--fb-navy);
+  color: var(--fb-navy);
 }
 
 .radio-label input[type="radio"] {
-  width: 18px;
-  height: 18px;
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   cursor: pointer;
-  accent-color: var(--fb-primary);
 }
 
 .radio-label span {
   user-select: none;
 }
 
-/* ── References Section ────────────────────────────────── */
+.radio-label:has(input:checked) {
+  background: var(--fb-navy);
+  border-color: var(--fb-navy);
+  color: #fff;
+  box-shadow: 0 8px 18px -10px rgba(30, 58, 95, 0.7);
+}
+
+.radio-label:has(input:focus-visible) {
+  outline: 2px solid var(--fb-accent);
+  outline-offset: 2px;
+}
+
+/* ── References ──────────────────────────────────────── */
 .references-section .section-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--fb-text);
+  align-items: flex-start;
+  font-size: 1.05rem;
+  line-height: 1.45;
   margin-bottom: 20px;
 }
 
+.references-section .section-title::before {
+  margin-top: 2px;
+}
+
 .reference-row {
-  margin-bottom: 20px;
-  padding: 20px;
-  background: var(--fb-bg);
-  border-radius: 8px;
-  border: 1px solid var(--fb-border);
+  margin-bottom: 18px;
+  padding: 22px;
+  background: #f7f9fc;
+  border-radius: 16px;
+  border: 1px solid #e6ecf4;
+}
+
+.reference-row .form-row {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 0;
 }
 
 .reference-buttons {
   display: flex;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .btn-add,
 .btn-remove {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 0.88rem;
+  font-weight: 700;
   font-family: var(--fb-font);
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  background: #fff;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
 }
 
 .btn-add {
-  background: var(--fb-primary);
-  color: var(--fb-white);
+  border: 1.5px solid var(--fb-navy);
+  color: var(--fb-navy);
 }
 
 .btn-add:hover {
-  background: var(--fb-primary-dark);
+  background: var(--fb-navy);
+  color: #fff;
   transform: translateY(-1px);
 }
 
 .btn-remove {
-  background: #ef4444;
-  color: var(--fb-white);
+  border: 1.5px solid #e4a3b1;
+  color: var(--fb-accent);
 }
 
 .btn-remove:hover {
-  background: #dc2626;
+  background: var(--fb-accent);
+  border-color: var(--fb-accent);
+  color: #fff;
   transform: translateY(-1px);
 }
 
-/* ── Submit Button ──────────────────────────────────────── */
+/* ── Submit ──────────────────────────────────────────── */
 .form-actions {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 28px;
 }
 
 .btn-submit {
-  padding: 16px 48px;
-  background: var(--fb-accent);
-  color: var(--fb-white);
+  min-width: 260px;
+  padding: 16px 44px;
   border: none;
-  border-radius: 8px;
-  font-size: 1.05rem;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--fb-accent) 0%, #e8264f 100%);
+  color: #fff;
+  font-size: 1rem;
   font-weight: 700;
   font-family: var(--fb-font);
+  letter-spacing: 0.03em;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
-  letter-spacing: 0.02em;
+  box-shadow: 0 14px 30px -12px rgba(214, 32, 73, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
 }
 
 .btn-submit:hover {
-  background: var(--fb-accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(214, 32, 73, 0.3);
+  box-shadow: 0 20px 36px -14px rgba(214, 32, 73, 0.7);
+  filter: brightness(1.05);
 }
 
 .btn-submit:active {
@@ -347,71 +475,73 @@
 }
 
 .btn-submit:disabled {
-  background: #9ca3af;
+  opacity: 0.65;
   cursor: not-allowed;
   transform: none;
-}
-
-.btn-submit:disabled:hover {
-  background: #9ca3af;
   box-shadow: none;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
+.btn-submit:disabled:hover {
+  transform: none;
+  filter: none;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 1024px) {
   .ratings-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
+  }
+
+  .rating-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
 
   .feedback-form {
-    padding: 36px;
+    padding: 36px 32px 40px;
   }
 }
 
 @media (max-width: 768px) {
   .feedback-page {
-    padding: 60px 0 40px;
+    padding: 96px 0 48px;
   }
 
   .feedback-container {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
 
   .feedback-form {
-    padding: 28px 20px;
+    padding: 28px 18px 32px;
+    border-radius: 20px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .ratings-grid {
-    gap: 32px;
-  }
-
-  .star {
-    font-size: 1.4rem;
+    gap: 18px;
   }
 
   .btn-submit {
     width: 100%;
-    padding: 14px 32px;
+    min-width: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .feedback-title {
-    font-size: 1.75rem;
-  }
-
   .feedback-subtitle {
     font-size: 0.95rem;
   }
 
-  .section-title {
-    font-size: 1.15rem;
+  .rating-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .star {
+    font-size: 1.6rem;
   }
 
   .reference-buttons {

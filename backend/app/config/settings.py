@@ -49,6 +49,9 @@ class Settings(BaseSettings):
     # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
     # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").
     secret_key: str = ""
+    # Set REQUIRE_SECRET_KEY=1 (in GitHub / the server environment) once SECRET_KEY is configured: the app then REFUSES
+    # to start without a real key instead of using a random one (which would log everyone out on every restart).
+    require_secret_key: bool = False
     # Separate secret for hashing visitor IPs (falls back to secret_key when empty).
     ip_hash_salt: str = ""
 

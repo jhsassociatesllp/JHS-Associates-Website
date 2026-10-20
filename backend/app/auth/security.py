@@ -36,6 +36,8 @@ import secrets
 from app.config.settings import settings
 
 SECRET_KEY = settings.secret_key
+if not SECRET_KEY and settings.require_secret_key:
+    raise RuntimeError("SECRET_KEY is not set and REQUIRE_SECRET_KEY is on - refusing to start with a random key.")
 if not SECRET_KEY:
     # Never fall back to a known value. Without SECRET_KEY in the environment every
     # restart gets a fresh random key (logins/sessions reset) until it is configured.

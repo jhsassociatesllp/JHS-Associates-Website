@@ -1,7 +1,7 @@
 /* Home page — next event spotlight */
 .ue {
   background: #fff;
-  padding: 16px 48px 8px;
+  padding: 36px 48px 56px;   /* room above (carousel) and below (Spotlight) */
   font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -166,7 +166,7 @@
 .ue-more__when { color: #64748b; font-weight: 600; }
 
 @media (max-width: 960px) {
-  .ue { padding: 12px 20px 4px; }
+  .ue { padding: 28px 20px 40px; }
   .ue-card { grid-template-columns: 96px minmax(0, 1fr); gap: 22px; padding: 26px 24px; }
   .ue-cta { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; justify-content: space-between; min-width: 0; }
   .ue-btn { width: auto; flex: 1 1 200px; }

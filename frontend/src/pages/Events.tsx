@@ -20,29 +20,32 @@ function EventCard({ event }: { event: SiteEvent }) {
     <Link to={`/events/${event.id}`} className="ev-card" style={{ ['--accent' as string]: accent }}>
       <div className="ev-card__media">
         {event.image_id ? (
-          <img src={eventImageUrl(event.image_id)} alt="" loading="lazy" className="ev-card__img" />
+          <>
+            {/* a blurred copy fills the frame, the real picture is shown whole on top (nothing is cropped) */}
+            <img src={eventImageUrl(event.image_id)} alt="" aria-hidden="true" className="ev-card__fill" loading="lazy" />
+            <img src={eventImageUrl(event.image_id)} alt={event.title} loading="lazy" className="ev-card__img" />
+          </>
         ) : (
           <div className="ev-card__placeholder" aria-hidden="true">
             <span>{event.event_type}</span>
           </div>
         )}
-        <div className="ev-card__date">
-          <span>{formatWeekday(event.start_at).slice(0, 3).toUpperCase()}</span>
-          <strong>{formatDay(event.start_at)}</strong>
-          <em>{formatMonth(event.start_at)}</em>
-        </div>
-        {event.state === 'live' && <span className="ev-chip ev-chip--live ev-card__live">Live now</span>}
       </div>
       <div className="ev-card__body">
+        <div className="ev-card__when">
+          <span className="ev-card__day"><b>{formatDay(event.start_at)}</b> {formatMonth(event.start_at)}</span>
+          <span>{formatWeekday(event.start_at)} · {formatTime(event.start_at)}</span>
+        </div>
         <div className="ev-card__tags">
           <span className="ev-chip ev-chip--type">{event.event_type}</span>
           <span className="ev-chip">{event.mode}</span>
+          {event.state === 'live' && <span className="ev-chip ev-chip--live">Live now</span>}
           {event.state === 'upcoming' && full && <span className="ev-chip ev-chip--full">Full</span>}
         </div>
         <h3>{event.title}</h3>
         {event.summary && <p>{event.summary}</p>}
         <div className="ev-card__foot">
-          <span>{formatTime(event.start_at)}{event.host ? ` · ${event.host}` : ''}</span>
+          <span>{event.host ?? ''}</span>
           <span className="ev-card__cta">
             {event.state === 'past' ? 'View details' : event.registration_open ? 'Register' : 'Details'} <i aria-hidden="true">→</i>
           </span>

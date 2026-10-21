@@ -167,7 +167,7 @@ export default function Partners() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${bundledUrl('Career-Hero-Bg.webp')})`, backgroundPosition: 'center 58%' }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${bundledUrl('Leadership-Hero-Bg.webp')})`, backgroundPosition: 'center bottom' }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Experts</p>

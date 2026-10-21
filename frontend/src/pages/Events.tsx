@@ -10,6 +10,7 @@ import {
   useEvents,
   type SiteEvent,
 } from '../data/events'
+import { bundledUrl } from '../utils/imageUrl'
 import './Events.css'
 
 function EventCard({ event }: { event: SiteEvent }) {
@@ -58,7 +59,9 @@ export default function Events() {
 
   return (
     <div className="ev-page">
-      <section className="ev-hero">
+      <section className="ev-hero ev-hero--list">
+        <div className="ev-hero__bg" style={{ backgroundImage: `url(${bundledUrl('Events-Hero-Bg.webp')})` }} aria-hidden="true" />
+        <div className="ev-hero__shade" aria-hidden="true" />
         <div className="ev-hero__inner">
           <p className="ev-hero__crumb">Home <span aria-hidden="true">/</span> Events</p>
           <h1>Events &amp; Webinars</h1>

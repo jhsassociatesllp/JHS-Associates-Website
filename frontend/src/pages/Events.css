@@ -26,6 +26,15 @@
 .ev-hero__sub { margin: 0; max-width: 620px; font-size: 1.02rem; line-height: 1.65; color: #c0cddf; }
 .ev-hero__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 
+/* Events list page: full-width picture, heading in the centre */
+.ev-hero--list { position: relative; overflow: hidden; display: flex; align-items: center; min-height: 440px; background: #0c1a30; }
+.ev-hero__bg { position: absolute; inset: 0; background-size: cover; background-position: center 55%; z-index: 0; }
+.ev-hero__shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10, 20, 50, 0.72) 0%, rgba(10, 20, 50, 0.5) 45%, rgba(10, 20, 50, 0.72) 100%); }
+.ev-hero--list .ev-hero__inner { position: relative; z-index: 2; width: 100%; text-align: center; padding: 120px 24px 72px; }
+.ev-hero--list .ev-hero__crumb { margin-bottom: 18px; }
+.ev-hero--list h1 { margin: 0 auto 16px; font-size: clamp(2.2rem, 5vw, 3.6rem); text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45); }
+.ev-hero--list .ev-hero__sub { margin: 0 auto; max-width: 640px; color: rgba(255, 255, 255, 0.92); text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5); }
+
 .ev-chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; background: #eef1f6; color: #1e3a5f; }
 .ev-hero .ev-chip { background: rgba(255, 255, 255, 0.14); color: #fff; }
 .ev-chip--type { background: var(--accent) !important; color: #fff !important; }
@@ -161,6 +170,8 @@
 
 @media (max-width: 560px) {
   .ev-hero__inner { padding: 112px 18px 54px; }
+  .ev-hero--list { min-height: 380px; }
+  .ev-hero--list .ev-hero__inner { padding: 104px 18px 48px; }
   .ev-section { padding: 36px 16px 64px; }
   .ev-row { grid-template-columns: minmax(0, 1fr); }
   .ev-info, .ev-form-card { padding: 24px 20px; }

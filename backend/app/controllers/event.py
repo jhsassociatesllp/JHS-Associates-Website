@@ -2,7 +2,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from bson import ObjectId
+from bson import Binary, ObjectId
 from bson.errors import InvalidId
 from pymongo.errors import DuplicateKeyError
 
@@ -11,6 +11,8 @@ from app.database.connection import get_database
 from app.schemas.event import EventCreate, EventUpdate, RegistrationCreate
 
 EVENTS = "events"
+EVENT_FILES = "event_files"   # thumbnails live in an ordinary collection (GridFS is unreliable on this database server)
+MAX_IMAGE_BYTES = 5 * 1024 * 1024
 REGISTRATIONS = "event_registrations"
 DEFAULT_LENGTH = timedelta(hours=2)
 
@@ -88,6 +90,7 @@ def _view(doc: dict, admin: bool = False) -> dict:
         "host": doc.get("host"),
         "state": state,
         "registration_open": is_open,
+        "image_id": doc.get("image_id"),
     }
     if admin:
         out.update({
@@ -155,10 +158,78 @@ async def update_event(event_id: str, data: EventUpdate) -> Optional[dict]:
 async def delete_event(event_id: str) -> bool:
     db = get_database()
     oid = _oid(event_id)
+    doc = await db[EVENTS].find_one({"_id": oid}, {"image_id": 1})
     result = await db[EVENTS].delete_one({"_id": oid})
     if result.deleted_count:
         await db[REGISTRATIONS].delete_many({"event_id": event_id})
+        await _delete_file(doc.get("image_id") if doc else None)
     return result.deleted_count == 1
+
+
+# ── Admin: thumbnail picture ────────────────────────────────────────────────
+
+async def _delete_file(file_id: Optional[str]) -> None:
+    if not file_id:
+        return
+    try:
+        await get_database()[EVENT_FILES].delete_one({"_id": ObjectId(file_id)})
+    except Exception:
+        pass
+
+
+def _prepare_image(content: bytes) -> bytes:
+    """Decode and re-encode as WebP (this destroys anything hidden in the file), at most 1600 px wide."""
+    from io import BytesIO
+    from PIL import Image
+    from app.utils.uploads import require_webp
+
+    webp = require_webp(content)
+    img = Image.open(BytesIO(webp))
+    img.load()
+    if img.width > 1600:
+        img = img.resize((1600, round(img.height * 1600 / img.width)), Image.LANCZOS)
+    out = BytesIO()
+    img.save(out, format="WEBP", quality=88, method=6)
+    return out.getvalue()
+
+
+async def set_image(event_id: str, content: bytes) -> Optional[dict]:
+    """Stores a new thumbnail for the event (replacing the old one). None if the event does not exist."""
+    if not content or len(content) > MAX_IMAGE_BYTES:
+        from fastapi import HTTPException
+        raise HTTPException(400, "The picture must be under 5 MB")
+    db = get_database()
+    oid = _oid(event_id)
+    doc = await db[EVENTS].find_one({"_id": oid}, {"image_id": 1})
+    if not doc:
+        return None
+    webp = _prepare_image(content)
+    saved = await db[EVENT_FILES].insert_one({
+        "content_type": "image/webp", "size": len(webp), "data": Binary(webp), "created_at": datetime.now(timezone.utc),
+    })
+    await db[EVENTS].update_one({"_id": oid}, {"$set": {"image_id": str(saved.inserted_id), "updated_at": datetime.now(timezone.utc)}})
+    await _delete_file(doc.get("image_id"))
+    return _view(await db[EVENTS].find_one({"_id": oid}), admin=True)
+
+
+async def clear_image(event_id: str) -> Optional[dict]:
+    db = get_database()
+    oid = _oid(event_id)
+    doc = await db[EVENTS].find_one({"_id": oid}, {"image_id": 1})
+    if not doc:
+        return None
+    await db[EVENTS].update_one({"_id": oid}, {"$unset": {"image_id": ""}, "$set": {"updated_at": datetime.now(timezone.utc)}})
+    await _delete_file(doc.get("image_id"))
+    return _view(await db[EVENTS].find_one({"_id": oid}), admin=True)
+
+
+async def read_image(image_id: str) -> Optional[tuple[bytes, str]]:
+    """Only pictures that belong to an event are served."""
+    db = get_database()
+    if not await db[EVENTS].find_one({"image_id": image_id, "status": {"$in": ["published", "cancelled"]}}, {"_id": 1}):
+        return None
+    f = await db[EVENT_FILES].find_one({"_id": _oid(image_id)})
+    return (bytes(f["data"]), f.get("content_type", "image/webp")) if f else None
 
 
 async def summary() -> dict:

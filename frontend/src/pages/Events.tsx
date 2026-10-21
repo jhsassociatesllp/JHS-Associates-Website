@@ -5,6 +5,7 @@ import {
   formatDay,
   formatMonth,
   formatTime,
+  eventImageUrl,
   formatWeekday,
   useEvents,
   type SiteEvent,
@@ -16,16 +17,25 @@ function EventCard({ event }: { event: SiteEvent }) {
   const full = event.capacity > 0 && event.registered >= event.capacity
   return (
     <Link to={`/events/${event.id}`} className="ev-card" style={{ ['--accent' as string]: accent }}>
-      <div className="ev-card__date">
-        <span>{formatWeekday(event.start_at).slice(0, 3).toUpperCase()}</span>
-        <strong>{formatDay(event.start_at)}</strong>
-        <em>{formatMonth(event.start_at)}</em>
+      <div className="ev-card__media">
+        {event.image_id ? (
+          <img src={eventImageUrl(event.image_id)} alt="" loading="lazy" className="ev-card__img" />
+        ) : (
+          <div className="ev-card__placeholder" aria-hidden="true">
+            <span>{event.event_type}</span>
+          </div>
+        )}
+        <div className="ev-card__date">
+          <span>{formatWeekday(event.start_at).slice(0, 3).toUpperCase()}</span>
+          <strong>{formatDay(event.start_at)}</strong>
+          <em>{formatMonth(event.start_at)}</em>
+        </div>
+        {event.state === 'live' && <span className="ev-chip ev-chip--live ev-card__live">Live now</span>}
       </div>
       <div className="ev-card__body">
         <div className="ev-card__tags">
           <span className="ev-chip ev-chip--type">{event.event_type}</span>
           <span className="ev-chip">{event.mode}</span>
-          {event.state === 'live' && <span className="ev-chip ev-chip--live">Live now</span>}
           {event.state === 'upcoming' && full && <span className="ev-chip ev-chip--full">Full</span>}
         </div>
         <h3>{event.title}</h3>

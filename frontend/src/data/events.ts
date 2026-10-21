@@ -20,7 +20,11 @@ export interface SiteEvent {
   host: string | null
   state: 'upcoming' | 'live' | 'past'
   registration_open: boolean
+  image_id?: string | null
 }
+
+/** Address of an event's thumbnail picture (uploaded in the admin panel). */
+export const eventImageUrl = (imageId: string) => `${API_BASE}/events/image/${imageId}`
 
 export interface RegistrationResult {
   message: string

@@ -35,6 +35,7 @@ PUBLIC_ON_PURPOSE = {
     ("POST", "/api/cookie-consent/"),
     ("GET", "/api/events/"),
     ("GET", "/api/events/{event_id}"),
+    ("GET", "/api/events/image/{image_id}"),
     ("POST", "/api/events/{event_id}/register"),
     ("GET", "/api/excellencia/"),
     ("GET", "/api/excellencia/image/{image_id}"),

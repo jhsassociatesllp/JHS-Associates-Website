@@ -97,6 +97,7 @@ class EventPublic(BaseModel):
     host: Optional[str] = None
     state: EventState
     registration_open: bool
+    image_id: Optional[str] = None   # thumbnail picture (served from /events/image/{image_id})
 
 
 class EventAdmin(EventPublic):

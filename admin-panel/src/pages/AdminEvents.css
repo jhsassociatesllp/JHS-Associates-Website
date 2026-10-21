@@ -69,3 +69,13 @@
   .ae__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ae__grid { grid-template-columns: 1fr; }
 }
+
+
+/* ── thumbnail picture ── */
+.ae__image { display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+.ae__image-preview { width: 200px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; border: 1px solid #dbe3ef; background: #f1f5fb; }
+.ae__image-actions { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ae__image-actions small { color: #6b7a90; }
+.ae__check { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #b42318; font-weight: 600; cursor: pointer; }
+.ae__cell { display: flex; align-items: center; gap: 12px; }
+.ae__thumb { width: 64px; height: 36px; object-fit: cover; border-radius: 6px; border: 1px solid #dbe3ef; flex-shrink: 0; }

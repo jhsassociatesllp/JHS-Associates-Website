@@ -24,6 +24,7 @@ interface EventRow {
   status: EventStatus;
   state: 'upcoming' | 'live' | 'past';
   registration_open: boolean;
+  image_id?: string | null;
 }
 
 interface Registration {
@@ -89,6 +90,9 @@ const AdminEvents: React.FC = () => {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [formError, setFormError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [image, setImage] = useState<File | null>(null);          // new thumbnail picked in the form
+  const [removeImage, setRemoveImage] = useState(false);          // tick "remove current picture"
+  const [preview, setPreview] = useState('');
 
   const [viewing, setViewing] = useState<EventRow | null>(null);
   const [regs, setRegs] = useState<Registration[]>([]);
@@ -140,6 +144,8 @@ const AdminEvents: React.FC = () => {
   const openNew = () => {
     setForm(EMPTY_FORM);
     setFormError('');
+    setImage(null);
+    setRemoveImage(false);
     setEditing('new');
   };
 
@@ -151,10 +157,37 @@ const AdminEvents: React.FC = () => {
       capacity: String(e.capacity), registration_deadline: isoToIstInput(e.registration_deadline), host: e.host ?? '', status: e.status,
     });
     setFormError('');
+    setImage(null);
+    setRemoveImage(false);
     setEditing(e);
   };
 
   const set = (key: keyof FormState, value: string) => setForm((f) => ({ ...f, [key]: value }));
+
+  useEffect(() => {
+    if (!image) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPreview('');
+      return;
+    }
+    const url = URL.createObjectURL(image);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [image]);
+
+  const pickImage = (file: File | null) => {
+    if (file && !['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
+      setFormError('Please choose a JPG, PNG or WebP picture.');
+      return;
+    }
+    if (file && file.size > 5 * 1024 * 1024) {
+      setFormError('The picture must be under 5 MB.');
+      return;
+    }
+    setFormError('');
+    setImage(file);
+    if (file) setRemoveImage(false);
+  };
 
   const save = async (ev: React.FormEvent) => {
     ev.preventDefault();
@@ -190,8 +223,22 @@ const AdminEvents: React.FC = () => {
           : err?.detail;
         return setFormError(typeof detail === 'string' ? detail : 'Unable to save the event.');
       }
+      const saved = await res.json().catch(() => null);
+      const eventId: string | undefined = saved?.id ?? (isNew ? undefined : (editing as EventRow).id);
+      let pictureNote = '';
+      if (eventId && image) {
+        const data = new FormData();
+        data.append('image', image);
+        const up = await fetch(`${API_BASE_URL}/events/admin/${eventId}/image`, { method: 'POST', headers: auth, body: data });
+        if (!up.ok) {
+          const err = await up.json().catch(() => null);
+          pictureNote = ` The picture could not be saved: ${typeof err?.detail === 'string' ? err.detail : 'please try again.'}`;
+        }
+      } else if (eventId && removeImage && !isNew) {
+        await fetch(`${API_BASE_URL}/events/admin/${eventId}/image`, { method: 'DELETE', headers: auth });
+      }
       setEditing(null);
-      setMsg({ type: 'success', text: isNew ? 'Event created.' : 'Event updated.' });
+      setMsg({ type: pictureNote ? 'error' : 'success', text: (isNew ? 'Event created.' : 'Event updated.') + pictureNote });
       load();
     } finally {
       setSaving(false);
@@ -293,8 +340,13 @@ const AdminEvents: React.FC = () => {
                 {events.map((e) => (
                   <tr key={e.id}>
                     <td>
-                      <div className="ae__name">{e.title}</div>
-                      <span className="ae__type">{e.event_type}</span>
+                      <div className="ae__cell">
+                        {e.image_id && <img className="ae__thumb" src={`${API_BASE_URL}/events/image/${e.image_id}`} alt="" loading="lazy" />}
+                        <div>
+                          <div className="ae__name">{e.title}</div>
+                          <span className="ae__type">{e.event_type}</span>
+                        </div>
+                      </div>
                     </td>
                     <td>{fmt(e.start_at)}</td>
                     <td>{e.mode}</td>
@@ -348,6 +400,27 @@ const AdminEvents: React.FC = () => {
               <div className="ae__field ae__field--full">
                 <label>Short summary <small>(shown on the home page card)</small></label>
                 <input value={form.summary} onChange={(e) => set('summary', e.target.value)} maxLength={300} />
+              </div>
+              <div className="ae__field ae__field--full">
+                <label>Thumbnail picture <small>(shown on the Events page card and the event page; JPG, PNG or WebP, up to 5 MB)</small></label>
+                <div className="ae__image">
+                  {(preview || (editing !== 'new' && editing.image_id && !removeImage)) && (
+                    <img
+                      className="ae__image-preview"
+                      src={preview || `${API_BASE_URL}/events/image/${(editing as EventRow).image_id}`}
+                      alt="Thumbnail preview"
+                    />
+                  )}
+                  <div className="ae__image-actions">
+                    <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => pickImage(e.target.files?.[0] ?? null)} />
+                    {editing !== 'new' && editing.image_id && !image && (
+                      <label className="ae__check">
+                        <input type="checkbox" checked={removeImage} onChange={(e) => setRemoveImage(e.target.checked)} /> Remove the current picture
+                      </label>
+                    )}
+                    <small>Best size: 1600 × 900 (wide). Without a picture the card shows a coloured design.</small>
+                  </div>
+                </div>
               </div>
               <div className="ae__field ae__field--full">
                 <label>Description</label>

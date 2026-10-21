@@ -8,7 +8,6 @@ import {
   Email as EmailIcon,
   Lock as LockIcon,
   Visibility, VisibilityOff,
-  Dashboard as DashboardIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 
@@ -77,13 +76,12 @@ export default function Login() {
 
         {/* Logo */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 5 }}>
-          <Box sx={{
-            width: 44, height: 44, borderRadius: 2,
-            background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <DashboardIcon sx={{ color: '#fff', fontSize: 24 }} />
-          </Box>
+          <Box
+            component="img"
+            src="/logo.webp"
+            alt="JHS"
+            sx={{ width: 56, height: 56, borderRadius: 2, objectFit: 'contain', bgcolor: '#fff', p: '4px', boxShadow: '0 4px 16px rgba(0,0,0,0.35)' }}
+          />
           <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.3rem', fontFamily: 'Inter, sans-serif' }}>
             JHS Admin
           </Typography>
@@ -124,9 +122,7 @@ export default function Login() {
           <Box sx={{ mb: 4 }}>
             {/* Mobile logo */}
             <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1.5, mb: 3 }}>
-              <Box sx={{ width: 36, height: 36, borderRadius: 1.5, background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <DashboardIcon sx={{ color: '#fff', fontSize: 20 }} />
-              </Box>
+              <Box component="img" src="/logo.webp" alt="JHS" sx={{ width: 44, height: 44, borderRadius: 1.5, objectFit: 'contain', border: '1px solid #e6e8ee', p: '3px' }} />
               <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', color: '#2d3748', fontFamily: 'Inter, sans-serif' }}>JHS Admin</Typography>
             </Box>
 

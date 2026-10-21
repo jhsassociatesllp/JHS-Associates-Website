@@ -9,6 +9,7 @@ export type LegalBlock =
   | { type: 'p'; text: string }
   | { type: 'ul'; items: string[] }
   | { type: 'dl'; items: { term: string; desc: string }[] }
+  | { type: 'table'; headers: string[]; rows: string[][] }
 
 interface LegalPageProps {
   eyebrow: string
@@ -18,6 +19,28 @@ interface LegalPageProps {
   blocks: LegalBlock[]
 }
 
+/** Text may carry **bold** parts (used for lead-in labels such as "Personal Data."). */
+function Inline({ text }: { text: string }) {
+  const parts = text.split('**')
+  return (
+    <>
+      {parts.map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>))}
+    </>
+  )
+}
+
+/** A table cell may hold several lines (one per paragraph in the source document). */
+function Cell({ text }: { text: string }) {
+  const lines = text.split('\n')
+  return (
+    <>
+      {lines.map((line, i) => (
+        <div key={i} className="legal-table__line">{line}</div>
+      ))}
+    </>
+  )
+}
+
 function LegalBlockRenderer({ block }: { block: LegalBlock }) {
   switch (block.type) {
     case 'h2':
@@ -25,12 +48,12 @@ function LegalBlockRenderer({ block }: { block: LegalBlock }) {
     case 'h3':
       return <h3 className="legal-h3">{block.text}</h3>
     case 'p':
-      return <p className="legal-p">{block.text}</p>
+      return <p className="legal-p"><Inline text={block.text} /></p>
     case 'ul':
       return (
         <ul className="legal-ul">
           {block.items.map((item, i) => (
-            <li key={i}>{item}</li>
+            <li key={i}><Inline text={item} /></li>
           ))}
         </ul>
       )
@@ -44,6 +67,29 @@ function LegalBlockRenderer({ block }: { block: LegalBlock }) {
             </div>
           ))}
         </dl>
+      )
+    case 'table':
+      return (
+        <div className="legal-table-wrap" tabIndex={0} role="region" aria-label="Data table">
+          <table className="legal-table">
+            <thead>
+              <tr>
+                {block.headers.map((h, i) => (
+                  <th key={i} scope="col">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, r) => (
+                <tr key={r}>
+                  {row.map((cell, c) => (
+                    <td key={c}><Cell text={cell} /></td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )
     default:
       return null

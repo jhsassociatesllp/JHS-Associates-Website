@@ -41,6 +41,10 @@ export function imageUrl(filename: string): string {
  * /Uploads/<file> on every environment and do not depend on the separately managed images
  * folder on the server.
  */
+export function bundledUrl(filename: string): string {
+  return `/Uploads/${filename.replace(/^\/+/, '')}`;
+}
+
 export function videoUrl(filename: string): string {
   return `/Uploads/${filename.replace(/^\/+/, '')}`;
 }

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { imageUrl } from '../../utils/imageUrl'
+import { bundledUrl, imageUrl } from '../../utils/imageUrl'
 import { useSiteAuth } from '../../context/SiteAuthContext'
 import ResumeMatchCheck from './ResumeMatchCheck'
 import { ConsentCheck, CharCount, Honeypot } from '../common/FormExtras'
@@ -328,7 +328,7 @@ export default function Careers() {
 
       {/* ══ HERO ══ */}
       <section style={ss.hero}>
-        <div style={{ ...ss.heroBg, backgroundImage: `url(${imageUrl('Career-Page-Bg.png')})` }} />
+        <div style={{ ...ss.heroBg, backgroundImage: `url(${bundledUrl('Career-Hero-Bg.webp')})` }} />
         <div style={ss.heroOverlay} />
         <div className="careers-hero-content" style={ss.heroContent}>
           <p style={ss.heroEyebrow}>Join JHS</p>
@@ -709,8 +709,8 @@ export default function Careers() {
 /* ─── Static style objects (no media-query needed) ───────── */
 const ss = {
   hero: { position: 'relative' as const, minHeight: '92vh', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between', overflow: 'hidden' },
-  heroBg: { position: 'absolute' as const, inset: 0, backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0 },
-  heroOverlay: { position: 'absolute' as const, inset: 0, background: 'linear-gradient(160deg,rgba(10,20,50,0.82) 0%,rgba(10,20,50,0.6) 60%,rgba(10,20,50,0.78) 100%)', zIndex: 1 },
+  heroBg: { position: 'absolute' as const, inset: 0, backgroundSize: 'cover', backgroundPosition: 'center 62%', zIndex: 0 },
+  heroOverlay: { position: 'absolute' as const, inset: 0, background: 'linear-gradient(180deg,rgba(10,20,50,0.78) 0%,rgba(10,20,50,0.5) 38%,rgba(10,20,50,0.28) 62%,rgba(10,20,50,0.72) 100%)', zIndex: 1 },
   heroContent: { position: 'relative' as const, zIndex: 2, padding: '7rem 2rem 3rem', width: '100%', display: 'flex', flexDirection: 'column' as const, alignItems: 'center', textAlign: 'center' as const, gap: '1rem' },
   heroEyebrow: { fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.6)', margin: 0 },
   heroTitle: { fontSize: 'clamp(2rem,6vw,5rem)', fontWeight: 800, lineHeight: 1.05, color: '#fff', margin: 0, maxWidth: '800px' },

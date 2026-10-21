@@ -4,9 +4,9 @@ import time
 from collections import defaultdict, deque
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, UploadFile, status
 from app.utils.netutil import client_ip
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 
 from app.auth.deps import require_roles
 from app.controllers import event as ctrl
@@ -56,6 +56,19 @@ async def upcoming_events(past: bool = False, limit: int = Query(12, ge=1, le=50
     return await ctrl.list_public(past=past, limit=limit)
 
 
+@router.get("/image/{image_id}")
+async def event_image(image_id: str):
+    """The thumbnail picture of a published event."""
+    try:
+        found = await ctrl.read_image(image_id)
+    except ValueError:
+        found = None
+    if not found:
+        raise HTTPException(status_code=404, detail="Image not found")
+    data, content_type = found
+    return Response(content=data, media_type=content_type, headers={"Cache-Control": "public, max-age=86400"})
+
+
 @router.get("/admin/all", response_model=List[EventAdmin])
 async def admin_events(_: AdminInDB = Depends(admin_access)):
     return await ctrl.list_admin()
@@ -69,6 +82,30 @@ async def admin_summary(_: AdminInDB = Depends(admin_access)):
 @router.post("/admin", response_model=EventAdmin, status_code=status.HTTP_201_CREATED)
 async def admin_create(data: EventCreate, _: AdminInDB = Depends(admin_access)):
     return await ctrl.create_event(data)
+
+
+@router.post("/admin/{event_id}/image", response_model=EventAdmin)
+async def admin_set_image(event_id: str, image: UploadFile = File(...), _: AdminInDB = Depends(admin_access)):
+    """Upload (or replace) the event's thumbnail picture. JPG, PNG or WebP, up to 5 MB."""
+    content = await image.read(5 * 1024 * 1024 + 1)
+    try:
+        updated = await ctrl.set_image(event_id, content)
+    except ValueError:
+        raise _bad_id()
+    if not updated:
+        raise _bad_id()
+    return updated
+
+
+@router.delete("/admin/{event_id}/image", response_model=EventAdmin)
+async def admin_clear_image(event_id: str, _: AdminInDB = Depends(admin_access)):
+    try:
+        updated = await ctrl.clear_image(event_id)
+    except ValueError:
+        raise _bad_id()
+    if not updated:
+        raise _bad_id()
+    return updated
 
 
 @router.put("/admin/{event_id}", response_model=EventAdmin)

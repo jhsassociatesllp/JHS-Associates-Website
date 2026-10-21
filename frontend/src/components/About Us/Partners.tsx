@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './SharedAbout.css'
 import './Partners.css'
-import { imageUrl } from '../../utils/imageUrl'
+import { bundledUrl } from '../../utils/imageUrl'
 import LazyImage from '../common/LazyImage'
 import { useLeadership, ROLE_ORDER, type Member } from '../../data/leadership'
 
@@ -167,7 +167,7 @@ export default function Partners() {
     <div className="ap-page">
       {/* ════ HERO ════ */}
       <section className="ap-hero">
-        <div className="ap-hero__bg" style={{ backgroundImage: `url(${imageUrl('Leadership.webp')})` }} />
+        <div className="ap-hero__bg" style={{ backgroundImage: `url(${bundledUrl('Leadership-Hero-Bg.webp')})`, backgroundPosition: 'center bottom' }} />
         <div className="ap-hero__overlay" />
         <div className="ap-hero__content">
           <p className="ap-hero__eyebrow">Our Experts</p>

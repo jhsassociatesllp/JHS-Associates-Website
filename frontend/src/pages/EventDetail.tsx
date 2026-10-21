@@ -4,6 +4,7 @@ import { useSiteAuth } from '../context/SiteAuthContext'
 import {
   EVENT_TYPES_ACCENT,
   downloadCalendarFile,
+  eventImageUrl,
   formatDate,
   formatTime,
   formatWeekday,
@@ -104,6 +105,7 @@ export default function EventDetail() {
       <section className="ev-section ev-section--detail">
         <div className="ev-container ev-detail">
           <aside className="ev-info">
+            {event.image_id && <img src={eventImageUrl(event.image_id)} alt={event.title} className="ev-info__img" />}
             <h2>Event details</h2>
             <ul>
               <li>

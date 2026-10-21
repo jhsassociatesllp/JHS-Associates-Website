@@ -163,6 +163,7 @@ export default function Footer() {
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
             <Link to="/terms-of-business">Terms of Business</Link>
+            <Link to="/posh-policy">POSH Policy</Link>
             <button type="button" className="footer__legal-btn" onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS))}>
               Cookie Settings
             </button>

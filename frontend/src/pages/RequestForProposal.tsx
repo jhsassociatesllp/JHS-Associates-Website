@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './RequestForProposal.css'
-import { imageUrl } from '../utils/imageUrl'
+import { bundledUrl } from '../utils/imageUrl'
 import { useSiteAuth } from '../context/SiteAuthContext'
 import { ConsentCheck, CharCount, Honeypot } from '../components/common/FormExtras'
 import { useTurnstile } from '../components/common/useTurnstile'
@@ -180,7 +180,7 @@ export default function RequestForProposal() {
       {/* ══════════════ HERO ══════════════ */}
       <section
         className="rfp-hero"
-        style={{ backgroundImage: `url(${imageUrl('proposalBG.webp')})` }}
+        style={{ backgroundImage: `url(${bundledUrl('Proposal-Hero-Bg.webp')})` }}
       >
         <div className="rfp-hero__overlay" />
         <div className="rfp-hero__content">

@@ -5,33 +5,38 @@ import {
   formatDay,
   formatMonth,
   formatTime,
-  formatWeekday,
+  eventImageUrl,
   useEvents,
   type SiteEvent,
 } from '../data/events'
+import { bundledUrl } from '../utils/imageUrl'
 import './Events.css'
 
 function EventCard({ event }: { event: SiteEvent }) {
   const accent = EVENT_TYPES_ACCENT[event.event_type] ?? EVENT_TYPES_ACCENT.Other
   const full = event.capacity > 0 && event.registered >= event.capacity
+  const when = `${formatDay(event.start_at)} ${formatMonth(event.start_at)} · ${formatTime(event.start_at)}`
   return (
     <Link to={`/events/${event.id}`} className="ev-card" style={{ ['--accent' as string]: accent }}>
-      <div className="ev-card__date">
-        <span>{formatWeekday(event.start_at).slice(0, 3).toUpperCase()}</span>
-        <strong>{formatDay(event.start_at)}</strong>
-        <em>{formatMonth(event.start_at)}</em>
-      </div>
-      <div className="ev-card__body">
-        <div className="ev-card__tags">
-          <span className="ev-chip ev-chip--type">{event.event_type}</span>
-          <span className="ev-chip">{event.mode}</span>
-          {event.state === 'live' && <span className="ev-chip ev-chip--live">Live now</span>}
-          {event.state === 'upcoming' && full && <span className="ev-chip ev-chip--full">Full</span>}
+      {/* the picture fills the whole card; a light box floats at the bottom (same look as the home page cards) */}
+      {event.image_id ? (
+        <img src={eventImageUrl(event.image_id)} alt="" loading="lazy" className="ev-card__img" />
+      ) : (
+        <div className="ev-card__placeholder" aria-hidden="true">
+          <span>{event.event_type}</span>
+          <strong>{formatDay(event.start_at)}</strong>
+          <em>{formatMonth(event.start_at)}</em>
+        </div>
+      )}
+      {event.state === 'live' && <span className="ev-chip ev-chip--live ev-card__live">Live now</span>}
+
+      <div className="ev-card__box">
+        <div className="ev-card__meta">
+          {event.event_type} · {when}
         </div>
         <h3>{event.title}</h3>
-        {event.summary && <p>{event.summary}</p>}
         <div className="ev-card__foot">
-          <span>{formatTime(event.start_at)}{event.host ? ` · ${event.host}` : ''}</span>
+          <span className="ev-card__mode">{event.mode}{event.state === 'upcoming' && full ? ' · Full' : ''}</span>
           <span className="ev-card__cta">
             {event.state === 'past' ? 'View details' : event.registration_open ? 'Register' : 'Details'} <i aria-hidden="true">→</i>
           </span>
@@ -48,7 +53,9 @@ export default function Events() {
 
   return (
     <div className="ev-page">
-      <section className="ev-hero">
+      <section className="ev-hero ev-hero--list">
+        <div className="ev-hero__bg" style={{ backgroundImage: `url(${bundledUrl('Events-Hero-Bg.webp')})` }} aria-hidden="true" />
+        <div className="ev-hero__shade" aria-hidden="true" />
         <div className="ev-hero__inner">
           <p className="ev-hero__crumb">Home <span aria-hidden="true">/</span> Events</p>
           <h1>Events &amp; Webinars</h1>

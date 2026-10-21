@@ -10,11 +10,12 @@ export type LegalBlock =
   | { type: 'ul'; items: string[] }
   | { type: 'dl'; items: { term: string; desc: string }[] }
   | { type: 'table'; headers: string[]; rows: string[][] }
+  | { type: 'image'; src: string; alt: string; caption?: string }
 
 interface LegalPageProps {
   eyebrow: string
   title: string
-  lastUpdated: string
+  lastUpdated?: string
   intro?: string
   blocks: LegalBlock[]
 }
@@ -91,6 +92,13 @@ function LegalBlockRenderer({ block }: { block: LegalBlock }) {
           </table>
         </div>
       )
+    case 'image':
+      return (
+        <figure className="legal-figure">
+          <img src={block.src} alt={block.alt} loading="lazy" />
+          {block.caption && <figcaption>{block.caption}</figcaption>}
+        </figure>
+      )
     default:
       return null
   }
@@ -106,7 +114,7 @@ export default function LegalPage({ eyebrow, title, lastUpdated, intro, blocks }
         <div className="legal-hero__inner">
           <span className="legal-hero__eyebrow">{eyebrow}</span>
           <h1 className="legal-hero__title">{title}</h1>
-          <p className="legal-hero__updated">Last updated: {lastUpdated}</p>
+          {lastUpdated && <p className="legal-hero__updated">Last updated: {lastUpdated}</p>}
         </div>
       </section>
 
@@ -138,6 +146,8 @@ export default function LegalPage({ eyebrow, title, lastUpdated, intro, blocks }
             <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
             <span className="legal-footer-links__dot">·</span>
             <Link to="/terms-of-business">Terms of Business</Link>
+            <span className="legal-footer-links__dot">·</span>
+            <Link to="/posh-policy">POSH Policy</Link>
           </div>
         </div>
       </section>

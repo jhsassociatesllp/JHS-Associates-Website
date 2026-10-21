@@ -194,7 +194,7 @@ export default function Mumbai() {
       {/* ══ HERO ══ */}
       <section className="mum-hero">
         <video className="mum-hero__photo" autoPlay muted loop playsInline preload="auto">
-          <source src={videoUrl('mumbai_vid.mp4')} type="video/mp4" />
+          <source src={videoUrl('mumbai_vid_enhanced_1080p.mp4')} type="video/mp4" />
         </video>
         <div className="mum-hero__overlay" />
         <div className="mum-hero__content">

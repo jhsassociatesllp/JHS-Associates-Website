@@ -34,6 +34,7 @@ jobs:
           python tests/test_logout_revokes_token.py
           python tests/test_admin_logout_revokes_token.py
           python tests/test_admin_audit_log.py
+          python tests/test_event_image.py
 
   python-dependencies:
     name: Python library vulnerabilities

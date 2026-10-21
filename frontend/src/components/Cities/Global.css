@@ -1148,3 +1148,37 @@
     max-height: 820px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Office pages on phones: the title sits at the top and the address card at the bottom of the
+   hero, so the background picture / video stays visible in between instead of being covered.
+   --------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+  section.glb-hero {
+    min-height: max(640px, 88svh);
+    padding-top: 104px;
+    padding-bottom: 20px;
+    justify-content: space-between;
+  }
+
+  /* the empty overlay element would push the title to the middle of the hero */
+  section.glb-hero > .glb-hero__overlay {
+    display: none;
+  }
+
+  section.glb-hero .glb-hero__content {
+    margin: 0 auto;
+  }
+
+  section.glb-hero .glb-hero__card {
+    margin: 0 auto;
+    padding: 16px 18px 18px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  /* the sub-title sits on a bright background picture, so give it a shadow */
+  section.glb-hero .glb-hero__sub {
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+}

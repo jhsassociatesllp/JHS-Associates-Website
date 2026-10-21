@@ -1,0 +1,73 @@
+.nf {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  padding: 140px 20px 80px;
+  background:
+    radial-gradient(ellipse 55% 50% at 0% 0%, rgba(30, 58, 95, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 55% at 100% 100%, rgba(214, 32, 73, 0.10) 0%, transparent 70%),
+    #fff;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+}
+
+.nf__card {
+  max-width: 520px;
+  text-align: center;
+}
+
+.nf__code {
+  display: block;
+  font-size: clamp(72px, 14vw, 120px);
+  font-weight: 800;
+  line-height: 1;
+  color: #1e3a5f;
+  letter-spacing: -0.04em;
+}
+
+.nf__title {
+  margin: 12px 0 10px;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 600;
+  color: #1a2a40;
+}
+
+.nf__text {
+  margin: 0 0 26px;
+  color: #4a5872;
+  line-height: 1.7;
+}
+
+.nf__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nf__btn {
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: 1.5px solid #1e3a5f;
+  color: #1e3a5f;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.nf__btn:hover {
+  transform: translateY(-2px);
+  background: #1e3a5f;
+  color: #fff;
+}
+
+.nf__btn--solid {
+  background: #D62049;
+  border-color: #D62049;
+  color: #fff;
+}
+
+.nf__btn--solid:hover {
+  background: #b81a3d;
+  border-color: #b81a3d;
+}

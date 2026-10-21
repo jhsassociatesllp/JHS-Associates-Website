@@ -11,12 +11,21 @@ import AdminBlogs from './pages/AdminBlogs';         // ✅ NEW
 import AdminKnowledge from './pages/AdminKnowledge'; // ✅ NEW
 import AdminWhitePapers from './pages/AdminWhitePapers'; // ✅ NEW
 import AdminRegulatory from './pages/AdminRegulatory'; // ✅ NEW
+import AdminRegWatch from './pages/AdminRegWatch';
+import AdminPodcasts from './pages/AdminPodcasts';
+import AdminNotifications from './pages/AdminNotifications';
 import AdminExcellencia from './pages/AdminExcellencia'; // ✅ NEW
 import AdminNewsletters from './pages/AdminNewsletters'; // ✅ NEW
 import AdminContacts from './pages/AdminContacts';   // ✅ NEW
 import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
 import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
 import AdminCareers from './pages/AdminCareers';
+import AdminAppointments from './pages/AdminAppointments';
+import AdminUsers from './pages/AdminUsers';         // ✅ SITE ACCOUNT
+import AdminLeadership from './pages/AdminLeadership'; // ✅ LEADERSHIP
+import AdminCatalog from './pages/AdminCatalog';       // ✅ SERVICES & SECTORS
+import AdminCookies from './pages/AdminCookies';       // ✅ COOKIE CONSENT
+import AdminEvents from './pages/AdminEvents';         // ✅ EVENTS
 
 const theme = createTheme({
   palette: {
@@ -46,12 +55,21 @@ export default function App() {
               <Route path="/knowledge" element={<AdminKnowledge />} /> {/* ✅ NEW */}
               <Route path="/white-papers" element={<AdminWhitePapers />} /> {/* ✅ NEW */}
               <Route path="/regulatory" element={<AdminRegulatory />} /> {/* ✅ NEW */}
+              <Route path="/reg-watch" element={<AdminRegWatch />} />
+              <Route path="/podcasts" element={<AdminPodcasts />} />
+              <Route path="/notifications" element={<AdminNotifications />} />
               <Route path="/excellencia" element={<AdminExcellencia />} /> {/* ✅ NEW */}
               <Route path="/newsletters" element={<AdminNewsletters />} /> {/* ✅ NEW */}
+              <Route path="/leadership" element={<AdminLeadership />} /> {/* ✅ LEADERSHIP */}
+              <Route path="/services-sectors" element={<AdminCatalog />} /> {/* ✅ SERVICES & SECTORS */}
+              <Route path="/cookie-consent" element={<AdminCookies />} /> {/* ✅ COOKIE CONSENT */}
+              <Route path="/events" element={<AdminEvents />} /> {/* ✅ EVENTS */}
               <Route path="/contacts" element={<AdminContacts />} />   {/* ✅ NEW */}
               <Route path="/alumni" element={<AdminAlumni />} />       {/* ✅ NEW */}
               <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}
               <Route path="/careers" element={<AdminCareers />} />
+              <Route path="/appointments" element={<AdminAppointments />} />
+              <Route path="/users" element={<AdminUsers />} /> {/* ✅ SITE ACCOUNT */}
             </Route>
           </Route>
 

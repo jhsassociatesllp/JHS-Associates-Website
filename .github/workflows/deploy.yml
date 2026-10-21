@@ -219,6 +219,27 @@ jobs:
             # Backend ENV
             export MONGODB_URL=$MONGODB_URL
             export DATABASE_NAME=$DATABASE_NAME
+            # GitHub secrets are NOT available as shell variables on the
+            # remote server — they must be expanded by Actions before the
+            # script is sent (same as MONGODB_URL above).
+            export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+            export PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}"
+            export APP_ENV=$ENV
+            if [ "$BRANCH" = "main" ]; then export SITE_URL="https://jhsassociates.in"; else export SITE_URL="https://staging.jhsassociates.in"; fi
+            export SECRET_KEY="${{ secrets.SECRET_KEY }}"
+            # set the GitHub secret REQUIRE_SECRET_KEY to 1 once SECRET_KEY is configured: the API then refuses to start without it
+            export REQUIRE_SECRET_KEY="${{ secrets.REQUIRE_SECRET_KEY || '0' }}"
+            export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
+            export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
+            export SENDER_EMAIL="${{ secrets.SENDER_EMAIL }}"
+            export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+            export MSG91_AUTH_KEY="${{ secrets.MSG91_AUTH_KEY }}"
+            export MSG91_TEMPLATE_ID="${{ secrets.MSG91_TEMPLATE_ID }}"
+            # optional bot check on the public forms (leave the secrets empty to keep it switched off)
+            export TURNSTILE_SECRET="${{ secrets.TURNSTILE_SECRET }}"
+            export VITE_TURNSTILE_SITE_KEY="${{ secrets.VITE_TURNSTILE_SITE_KEY }}"
+            export PINECONE_INDEX="${{ secrets.PINECONE_INDEX }}"
+            export SITE_SITEMAP_URL="${{ secrets.SITE_SITEMAP_URL }}"
 
             docker compose -p $COMPOSE_PROJECT_NAME down --remove-orphans
             docker compose -p $COMPOSE_PROJECT_NAME up -d --build

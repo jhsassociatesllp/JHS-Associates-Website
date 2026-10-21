@@ -3,27 +3,115 @@
 /* Main Container */
 .excellencia-container {
   padding: 24px;
-  background-color: #f8fafc;
+  background-color: #f4f5fa;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Header Section */
 .excellencia-header {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.excellencia-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #696cff;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0 0 4px;
 }
 
 .excellencia-title {
-  font-weight: 600;
+  font-weight: 800;
   color: #1e293b;
-  margin-bottom: 8px;
+  margin: 0 0 6px;
   font-size: 1.875rem;
 }
 
 .excellencia-subtitle {
   color: #64748b;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 400;
+  margin: 0;
+}
+
+/* Stat cards row */
+.excellencia-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.excellencia-stat-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-left: 3px solid #696cff;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.excellencia-stat-card.blue { border-left-color: #3b82f6; }
+.excellencia-stat-card.green { border-left-color: #10b981; }
+.excellencia-stat-card.orange { border-left-color: #f59e0b; }
+.excellencia-stat-card.dark { border-left-color: #111827; }
+
+.excellencia-stat-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8a8d93;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 6px;
+}
+
+.excellencia-stat-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 4px;
+  line-height: 1;
+}
+
+.excellencia-stat-sub {
+  font-size: 0.78rem;
+  color: #8a8d93;
+  margin: 0;
+}
+
+/* Filter tabs */
+.excellencia-filter-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f4f5fa;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.excellencia-filter-tabs button {
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.excellencia-filter-tabs button.active {
+  background: #fff;
+  color: #696cff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Action Bar */
@@ -31,12 +119,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .excellencia-search {
   position: relative;
   width: 320px;
+  flex: 1;
+  min-width: 220px;
+  max-width: 380px;
 }
 
 .excellencia-search input {
@@ -51,7 +144,7 @@
 }
 
 .excellencia-search input:focus {
-  border-color: #6366f1;
+  border-color: #696cff;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
 }
@@ -91,12 +184,12 @@
 }
 
 .excellencia-btn-primary {
-  background-color: #6366f1;
+  background-color: #696cff;
   color: white;
 }
 
 .excellencia-btn-primary:hover {
-  background-color: #5856eb;
+  background-color: #5a5de0;
   transform: translateY(-1px);
 }
 
@@ -114,8 +207,8 @@
 }
 
 .excellencia-btn-icon:hover {
-  color: #6366f1;
-  border-color: #6366f1;
+  color: #696cff;
+  border-color: #696cff;
   background-color: #f8fafc;
 }
 
@@ -148,7 +241,7 @@
 
 /* Gradient Header */
 .excellencia-gradient-header {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #696cff 0%, #8b5cf6 100%);
   padding: 24px;
   color: white;
 }
@@ -401,7 +494,7 @@
   width: 32px;
   height: 32px;
   border: 3px solid #e5e7eb;
-  border-top: 3px solid #6366f1;
+  border-top: 3px solid #696cff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -1003,7 +1096,7 @@
 }
 
 .excellencia-form-header {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #696cff 0%, #8b5cf6 100%);
   padding: 24px;
   color: white;
   position: relative;
@@ -1118,7 +1211,7 @@
 }
 
 .excellencia-section-avatar.info {
-  background-color: #6366f1;
+  background-color: #696cff;
 }
 
 .excellencia-section-avatar.info::before {
@@ -1180,7 +1273,7 @@
   display: block;
 }
 .excellencia-form-input:focus {
-  border-color: #6366f1;
+  border-color: #696cff;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
 }
@@ -1231,7 +1324,7 @@
 }
 
 .excellencia-upload-zone:hover {
-  border-color: #6366f1;
+  border-color: #696cff;
   background-color: #f0f9ff;
 }
 
@@ -1252,7 +1345,7 @@
 }
 
 .excellencia-upload-avatar.image {
-  background-color: #6366f1;
+  background-color: #696cff;
 }
 
 .excellencia-upload-avatar.image::before {
@@ -1395,12 +1488,12 @@
 }
 
 .excellencia-form-btn-submit {
-  background-color: #6366f1;
+  background-color: #696cff;
   color: white;
 }
 
 .excellencia-form-btn-submit:hover {
-  background-color: #5856eb;
+  background-color: #5a5de0;
 }
 
 .excellencia-form-btn-submit:disabled {

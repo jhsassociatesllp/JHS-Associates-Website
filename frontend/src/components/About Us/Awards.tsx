@@ -34,7 +34,7 @@ export default function Awards() {
                 We don't work for awards; we work for client success. However, we are profoundly humbled when industry bodies and standard-setters recognize the rigor, innovation, and integrity of our practice.
               </p>
               <p>
-                Over the past decades, JHS &amp; Associates has been consistently ranked among the emerging leaders in full-service consulting, winning commendations for our specialized work in banking audits, taxation structuring, and comprehensive assurance.
+                Over the past decades, JHS has been consistently ranked among the emerging leaders in full-service consulting, winning commendations for our specialized work in banking audits, taxation structuring, and comprehensive assurance.
               </p>
             </div>
           </div>

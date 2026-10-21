@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Mail } from 'lucide-react'
 import LazyImage from '../common/LazyImage'
+import { useGatedDownload } from '../../hooks/useGatedDownload'
 import './Newsletters.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -34,8 +35,19 @@ export default function Newsletters() {
   const [newsletters, setNewsletters] = useState<Newsletter[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [downloadError, setDownloadError] = useState<string | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  const { openFile } = useGatedDownload()
+
+  const handleOpen = async (nl: Newsletter) => {
+    setDownloadError(null)
+    try {
+      await openFile(pdfUrl(nl.pdf_id), `${nl.heading}.pdf`, 'view')
+    } catch (err) {
+      setDownloadError(err instanceof Error ? err.message : 'Could not open this newsletter.')
+    }
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -112,6 +124,14 @@ export default function Newsletters() {
         </div>
       </section>
 
+      {downloadError && (
+        <section className="container nl-empty" role="alert">
+          <div className="nl-empty__box">
+            <p>{downloadError}</p>
+          </div>
+        </section>
+      )}
+
       {/* Loading */}
       {loading && (
         <section className="container nl-empty">
@@ -169,14 +189,13 @@ export default function Newsletters() {
                     <p className="nl-card__hover-desc">{nl.short_description}</p>
                   </div>
 
-                  <a
-                    href={pdfUrl(nl.pdf_id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
                     className="nl-card__learn-btn"
+                    onClick={() => handleOpen(nl)}
                   >
                     Read Newsletter <ArrowRight size={16} />
-                  </a>
+                  </button>
                 </div>
 
               </article>

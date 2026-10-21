@@ -30,6 +30,35 @@ const insights: InsightItem[] = [
   },
 ];
 
+/* Counts up from 0 to the target the first time the section scrolls into view, e.g. "1,000+" */
+function CountUp({ value, start }: { value: string; start: boolean }) {
+  const target = parseInt(value.replace(/[^0-9]/g, ""), 10);
+  const suffix = value.replace(/[0-9,]/g, "");
+  const grouped = value.includes(",");
+  const [shown, setShown] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShown(target);
+      return;
+    }
+    const duration = 2000;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min((now - t0) / duration, 1);
+      setShown(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [start, target]);
+
+  return <>{(grouped ? shown.toLocaleString("en-US") : String(shown)) + suffix}</>;
+}
+
 export default function Stats() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -124,7 +153,7 @@ export default function Stats() {
               )
             },
             {
-              number: "13",
+              number: "14",
               label: "Offices",
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -149,7 +178,7 @@ export default function Stats() {
             <div className="stats__stat" key={i}>
               <div className="stats__stat-icon">{s.icon}</div>
               <div className="stats__stat-content">
-                <span className="stats__stat-number">{s.number}</span>
+                <span className="stats__stat-number" aria-label={s.number}><CountUp value={s.number} start={isVisible} /></span>
                 <span className="stats__stat-label">{s.label}</span>
               </div>
             </div>

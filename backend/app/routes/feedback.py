@@ -1,14 +1,19 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, Request, status, Depends
 from app.schemas.feedback import FeedbackCreate, FeedbackResponse
 from app.controllers.feedback import create_feedback, get_all_feedbacks, get_feedback_by_id, delete_feedback
-from app.auth.deps import get_current_admin
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminRole
 from typing import List
+from app.utils.validation import guard_form
+
+hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
 
 router = APIRouter(prefix="/feedback", tags=["Feedback"])
 
 # Public endpoint - anyone can submit feedback
 @router.post("/", response_model=FeedbackResponse, status_code=status.HTTP_201_CREATED)
-async def submit_feedback(feedback: FeedbackCreate):
+async def submit_feedback(request: Request, feedback: FeedbackCreate):
+    await guard_form(request, feedback, "feedback", per_hour=10, per_minute=3, dup=feedback.name + feedback.client_name)
     try:
         result = await create_feedback(feedback)
         return result
@@ -21,7 +26,7 @@ async def submit_feedback(feedback: FeedbackCreate):
 
 # Protected endpoint - only admin can view all feedbacks
 @router.get("/", response_model=List[FeedbackResponse])
-async def list_feedbacks(current_admin: dict = Depends(get_current_admin)):
+async def list_feedbacks(current_admin = Depends(hr_access)):
     try:
         feedbacks = await get_all_feedbacks()
         return feedbacks
@@ -34,7 +39,7 @@ async def list_feedbacks(current_admin: dict = Depends(get_current_admin)):
 
 # Protected endpoint - get single feedback
 @router.get("/{feedback_id}", response_model=FeedbackResponse)
-async def get_feedback(feedback_id: str, current_admin: dict = Depends(get_current_admin)):
+async def get_feedback(feedback_id: str, current_admin = Depends(hr_access)):
     try:
         feedback = await get_feedback_by_id(feedback_id)
         if not feedback:
@@ -54,7 +59,7 @@ async def get_feedback(feedback_id: str, current_admin: dict = Depends(get_curre
 
 # Protected endpoint - delete feedback
 @router.delete("/{feedback_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def remove_feedback(feedback_id: str, current_admin: dict = Depends(get_current_admin)):
+async def remove_feedback(feedback_id: str, current_admin = Depends(hr_access)):
     try:
         success = await delete_feedback(feedback_id)
         if not success:

@@ -164,7 +164,7 @@
 
 /* ── Brand column ──────────────────────────────────────── */
 .footer__brand-logo {
-  width: 220px;
+  width: 90px;
   margin-bottom: 20px;
 }
 
@@ -346,6 +346,22 @@
 }
 
 .footer__legal a:hover {
+  color: var(--ft-white);
+}
+
+.footer__legal-btn {
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--ft-text-dim);
+  font-weight: 400;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--ft-dur) var(--ft-ease);
+}
+
+.footer__legal-btn:hover {
   color: var(--ft-white);
 }
 

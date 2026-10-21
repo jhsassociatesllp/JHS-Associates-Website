@@ -2,12 +2,13 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Hyderabad.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Pradeep', image: imageUrl('NM Pradeep.webp'), qualifications: 'CA, CMA ', designation: 'Indirect Tax & Advisory ', email: 'pradeep@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/pradeep-jhs' },
   { name: 'Geethika Ghanta', image: imageUrl('Geethika Ghanta.webp'), qualifications: 'ACA', designation: ', Taxation & Audit Specialist', email: 'geethika.ghanta@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-geethika-ghanta-99a159160/' },
 ]
@@ -75,6 +76,7 @@ const IconPin = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="non
 const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>)
 
 export default function Hyderabad() {
+  const PARTNERS = useCityPartners('Hyderabad', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -94,10 +96,12 @@ export default function Hyderabad() {
   return (
     <div className="hyd-page">
       <section className="hyd-hero">
-        <div className="hyd-hero__photo" style={{ backgroundImage: `url(${imageUrl('Hyderabad.webp')})` }} />
+        <video className="hyd-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={videoUrl('hydrabad_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="hyd-hero__overlay" />
         <div className="hyd-hero__content">
-          {/* <span className="hyd-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="hyd-hero__eyebrow">JHS</span> */}
           <h1 className="hyd-hero__title">Hyderabad</h1>
           <p className="hyd-hero__sub">South India Tech Hub &amp; Strategic Regional Office</p>
         </div>
@@ -108,7 +112,6 @@ export default function Hyderabad() {
           </div>
           <div className="hyd-hero__card-divider" />
           {/* <div className="hyd-hero__card-right">
-            <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Phone</span><span className="hyd-hero__card-stat-val">+91 40 1234 5678</span></div>
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Email</span><span className="hyd-hero__card-stat-val">hyderabad@jhsassociates.in</span></div>
             <div className="hyd-hero__card-stat"><span className="hyd-hero__card-stat-label">Hours</span><span className="hyd-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div>
           </div> */}
@@ -117,7 +120,7 @@ export default function Hyderabad() {
 
       <div className="hyd-ribbon">
         <div className="hyd-ribbon__inner">
-          {([['2', 'Expert Partners'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
+          {([['2', 'Expert Associates'], ['3', 'Sectors Served'], ['7', 'Specialisations'], ['1', 'Hyderabad Offices']] as [string, string][]).map(([num, lbl]) => (
             <div key={lbl} className="hyd-ribbon__item"><span className="hyd-ribbon__num">{num}</span><span className="hyd-ribbon__lbl">{lbl}</span></div>
           ))}
         </div>
@@ -127,7 +130,7 @@ export default function Hyderabad() {
           <div className="hyd-container">
             <div className="hyd-section-hdr">
               <span className="hyd-section-hdr__tag">Our Team</span>
-              <h2 className="hyd-section-hdr__title">Hyderabad Partners</h2>
+              <h2 className="hyd-section-hdr__title">Hyderabad Associates</h2>
               <p className="hyd-section-hdr__sub">Meet the leaders driving excellence across audit, tax, advisory, and assurance in Hyderabad.</p>
             </div>
             <div className="hyd-partners-grid">
@@ -202,7 +205,7 @@ export default function Hyderabad() {
             <div className="hyd-specials-inner">
               <div className="hyd-specials-left">
                 <span className="hyd-section-hdr__tag hyd-section-hdr__tag--white">Expertise</span>
-                <h2 className="hyd-specials-title">We Specialised In</h2>
+                <h2 className="hyd-specials-title">We Specialise In</h2>
                 <p className="hyd-specials-body">From concurrent bank audits to transfer pricing, our Hyderabad team delivers specialised financial and tax advisory across key sectors.</p>
                 <div className="hyd-specials-accent-line" />
                 <p className="hyd-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

@@ -1,0 +1,230 @@
+/* Cookie consent — bottom-left card, same type and palette as the site's dialogs */
+.ck-banner {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 9998;
+  width: min(440px, calc(100vw - 32px));
+  font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+  animation: ck-rise 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ck-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ck-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 22px 18px;
+  box-shadow: 0 20px 50px -12px rgba(10, 22, 38, 0.38), 0 0 0 1px rgba(15, 35, 64, 0.08);
+}
+
+.ck-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ck-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0f2340;
+}
+
+.ck-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B01E2E;
+  background: rgba(176, 30, 46, 0.09);
+}
+
+.ck-text {
+  margin: 0 0 14px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.ck-text a {
+  color: #0f2340;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.ck-text a:hover {
+  color: #B01E2E;
+}
+
+.ck-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ck-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.ck-option strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #0f2340;
+  margin-bottom: 2px;
+}
+
+.ck-option p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.ck-option--toggle {
+  cursor: pointer;
+}
+
+.ck-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1f9d55;
+  background: rgba(31, 157, 85, 0.1);
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+/* toggle switch */
+.ck-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin: 0;
+}
+
+.ck-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.ck-switch:checked {
+  background: #0f2340;
+}
+
+.ck-switch:checked::after {
+  transform: translateX(18px);
+}
+
+.ck-switch:focus-visible {
+  outline: 3px solid rgba(15, 35, 64, 0.25);
+  outline-offset: 2px;
+}
+
+.ck-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ck-btn {
+  flex: 1 1 auto;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ck-btn--primary {
+  background: #0f2340;
+  color: #fff;
+  border: 1px solid #0f2340;
+}
+
+.ck-btn--primary:hover:not(:disabled) {
+  background: #1e3a5f;
+  border-color: #1e3a5f;
+}
+
+.ck-btn--outline {
+  background: #fff;
+  color: #0f2340;
+  border: 1px solid #cbd5e1;
+}
+
+.ck-btn--outline:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.ck-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.ck-link {
+  flex-basis: 100%;
+  background: none;
+  border: none;
+  padding: 4px 0 0;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+}
+
+.ck-link:hover {
+  color: #B01E2E;
+}
+
+@media (max-width: 480px) {
+  .ck-banner {
+    left: 8px;
+    bottom: 8px;
+    width: calc(100vw - 16px);
+  }
+
+  .ck-card {
+    padding: 16px 16px 14px;
+  }
+}

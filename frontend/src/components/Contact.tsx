@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './Contact.css'
 import { mapEmbedUrlFor } from '../utils/mapEmbedUrl'
+import { ConsentCheck, CharCount, Honeypot } from './common/FormExtras'
+import { useTurnstile } from './common/useTurnstile'
+import { LIMITS, MIN_MESSAGE, apiErrorMessage, validateEmail, validateName, validatePhone, validateText } from '../utils/formRules'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -17,7 +20,9 @@ interface FormErrors {
   name?: string
   email?: string
   phone?: string
+  company?: string
   message?: string
+  consent?: string
 }
 
 /* ─── Static Data ────────────────────────────────────────── */
@@ -87,7 +92,7 @@ const OFFICES = [
   },
   {
     city: 'Delhi',
-    region: 'Delhi',
+    region: 'New Delhi',
     address: 'Unit No.306, DLF Centre, Savitri Cinema Complex, Delhi - 110048',
   },
   {
@@ -156,6 +161,10 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [submitErrorText, setSubmitErrorText] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
   const pageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -173,17 +182,15 @@ export default function Contact() {
   }, [])
 
   const validate = (): boolean => {
-    const e: FormErrors = {}
-    if (!formData.name.trim()) e.name = 'Name is required'
-    else if (formData.name.trim().length < 2) e.name = 'Name must be at least 2 characters'
-
-    if (!formData.email.trim()) e.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Enter a valid email'
-
-    if (formData.phone && !/^[+\d\s\-()\\.]{7,16}$/.test(formData.phone)) e.phone = 'Enter a valid phone'
-
-    if (!formData.message.trim()) e.message = 'Message is required'
-    else if (formData.message.trim().length < 10) e.message = 'Message must be at least 10 characters'
+    const e: FormErrors = {
+      name: validateName(formData.name),
+      email: validateEmail(formData.email),
+      phone: validatePhone(formData.phone),
+      company: validateText(formData.company, 'Company name'),
+      message: validateText(formData.message, 'Message', { required: true, min: MIN_MESSAGE }),
+      consent: consent ? undefined : 'Please accept the Privacy Policy to continue',
+    }
+    Object.keys(e).forEach((k) => { if (!e[k as keyof FormErrors]) delete e[k as keyof FormErrors] })
 
     setErrors(e)
     return Object.keys(e).length === 0
@@ -198,8 +205,10 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
+    if (loading) return // ignore a second click while the first is still being sent
     setLoading(true)
     setSubmitError(false)
+    setSubmitErrorText('')
 
     try {
       const apiUrl = `${API_BASE_URL}/contact/`
@@ -208,18 +217,22 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, consent, website: honeypot, cf_turnstile_token: turnstile.token || null }),
       })
 
       if (!response.ok) {
-        throw new Error('Network response was not ok')
+        const body = await response.json().catch(() => null)
+        throw new Error(apiErrorMessage(body))
       }
 
       setSubmitted(true)
       setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' })
+      setConsent(false)
+      turnstile.reset()
       setTimeout(() => setSubmitted(false), 7000)
     } catch (error) {
-      console.error('Failed to submit form:', error)
+      setSubmitErrorText(error instanceof Error ? error.message : '')
+      turnstile.reset()
       setSubmitError(true)
       setTimeout(() => setSubmitError(false), 7000)
     } finally {
@@ -270,7 +283,7 @@ export default function Contact() {
           </span>
           <div>
             <span className="ct-strip__label">Phone</span>
-            <span className="ct-strip__val">1800 120 1022</span>
+            <span className="ct-strip__val">+91 8097095057</span>
           </div>
         </div>
         <div className="ct-strip__divider" />
@@ -333,7 +346,7 @@ export default function Contact() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
                 <div>
                   <p className="ct-error-banner__title">Message not sent</p>
-                  <p className="ct-error-banner__sub">Something went wrong. Please try again, or email us directly.</p>
+                  <p className="ct-error-banner__sub">{submitErrorText || 'Something went wrong. Please try again, or email us directly.'}</p>
                 </div>
               </div>
             )}
@@ -343,19 +356,21 @@ export default function Contact() {
               <div className="ct-row">
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-name">Full Name *</label>
-                  <input id="ct-name" type="text" name="name" value={formData.name} placeholder="Your full name"
-                    autoComplete="name"
+                  <input id="ct-name" type="text" name="name" value={formData.name} placeholder="Your Full Name"
+                    autoComplete="name" maxLength={LIMITS.name} required aria-required="true"
+                    aria-invalid={errors.name ? true : undefined} aria-describedby={errors.name ? 'ct-name-err' : undefined}
                     onChange={handleChange} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)}
                     className={fc('name')} />
-                  {errors.name && <span className="ct-err">{errors.name}</span>}
+                  {errors.name && <span id="ct-name-err" className="ct-err" role="alert">{errors.name}</span>}
                 </div>
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-email">Email Address *</label>
-                  <input id="ct-email" type="email" name="email" value={formData.email} placeholder="you@company.com"
-                    autoComplete="email"
+                  <input id="ct-email" type="email" name="email" value={formData.email} placeholder="Enter Your Mail"
+                    autoComplete="email" maxLength={LIMITS.email} required aria-required="true"
+                    aria-invalid={errors.email ? true : undefined} aria-describedby={errors.email ? 'ct-email-err' : undefined}
                     onChange={handleChange} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)}
                     className={fc('email')} />
-                  {errors.email && <span className="ct-err">{errors.email}</span>}
+                  {errors.email && <span id="ct-email-err" className="ct-err" role="alert">{errors.email}</span>}
                 </div>
               </div>
 
@@ -363,18 +378,21 @@ export default function Contact() {
               <div className="ct-row">
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-phone">Phone Number</label>
-                  <input id="ct-phone" type="tel" name="phone" value={formData.phone} placeholder="+91 98765 43210"
-                    autoComplete="tel"
+                  <input id="ct-phone" type="tel" name="phone" value={formData.phone} placeholder="Enter Your Number"
+                    autoComplete="tel" maxLength={LIMITS.phone}
+                    aria-invalid={errors.phone ? true : undefined} aria-describedby={errors.phone ? 'ct-phone-err' : undefined}
                     onChange={handleChange} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)}
                     className={fc('phone')} />
-                  {errors.phone && <span className="ct-err">{errors.phone}</span>}
+                  {errors.phone && <span id="ct-phone-err" className="ct-err" role="alert">{errors.phone}</span>}
                 </div>
                 <div className="ct-field">
                   <label className="ct-label" htmlFor="ct-company">Company Name</label>
                   <input id="ct-company" type="text" name="company" value={formData.company} placeholder="Your company"
-                    autoComplete="organization"
+                    autoComplete="organization" maxLength={LIMITS.shortText}
+                    aria-invalid={errors.company ? true : undefined} aria-describedby={errors.company ? 'ct-company-err' : undefined}
                     onChange={handleChange} onFocus={() => setFocused('company')} onBlur={() => setFocused(null)}
                     className={fc('company')} />
+                  {errors.company && <span id="ct-company-err" className="ct-err" role="alert">{errors.company}</span>}
                 </div>
               </div>
 
@@ -392,11 +410,18 @@ export default function Contact() {
               <div className="ct-field">
                 <label className="ct-label" htmlFor="ct-message">Your Message *</label>
                 <textarea id="ct-message" name="message" value={formData.message} rows={5}
-                  placeholder="Describe your requirement or query…"
+                  placeholder="Describe your requirement or query…" maxLength={LIMITS.contactMessage} required aria-required="true"
+                  aria-invalid={errors.message ? true : undefined} aria-describedby={errors.message ? 'ct-message-err' : undefined}
                   onChange={handleChange} onFocus={() => setFocused('message')} onBlur={() => setFocused(null)}
                   className={fc('message')} />
-                {errors.message && <span className="ct-err">{errors.message}</span>}
+                <CharCount value={formData.message} max={LIMITS.contactMessage} />
+                {errors.message && <span id="ct-message-err" className="ct-err" role="alert">{errors.message}</span>}
               </div>
+
+              <Honeypot value={honeypot} onChange={setHoneypot} />
+              {turnstile.widget}
+              <ConsentCheck id="ct-consent" checked={consent} error={errors.consent}
+                onChange={(v) => { setConsent(v); if (v && errors.consent) setErrors(prev => ({ ...prev, consent: undefined })) }} />
 
               {/* Submit */}
               <div className="ct-submit-row">
@@ -409,7 +434,6 @@ export default function Contact() {
                     </>
                   }
                 </button>
-                <p className="ct-privacy">By submitting, you agree to our Privacy Policy.</p>
               </div>
             </form>
           </div>
@@ -425,7 +449,7 @@ export default function Contact() {
               </div>
               <div className="ct-map-wrap">
                 <iframe
-                  title="JHS Associates Mumbai"
+                  title="JHS Mumbai"
                   src={mapEmbedUrlFor(OFFICES[0])}
                   allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                 />

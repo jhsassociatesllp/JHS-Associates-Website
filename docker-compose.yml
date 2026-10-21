@@ -9,6 +9,19 @@ services:
     environment:
       MONGODB_URL: ${MONGODB_URL}
       DATABASE_NAME: ${DATABASE_NAME}
+      SECRET_KEY: ${SECRET_KEY:-}
+      REQUIRE_SECRET_KEY: ${REQUIRE_SECRET_KEY:-0}
+      SMTP_HOST: ${SMTP_HOST:-smtp.office365.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SENDER_EMAIL: ${SENDER_EMAIL:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      APP_ENV: ${APP_ENV:-production}
+      SITE_URL: ${SITE_URL:-https://jhsassociates.in}
+      MSG91_AUTH_KEY: ${MSG91_AUTH_KEY:-}
+      MSG91_TEMPLATE_ID: ${MSG91_TEMPLATE_ID:-}
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET:-}
 
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -27,15 +40,45 @@ services:
       context: ./frontend
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        VITE_TURNSTILE_SITE_KEY: ${VITE_TURNSTILE_SITE_KEY:-}
 
     expose:
       - "80"
 
     depends_on:
       - backend
+      - chatbot-backend
 
     volumes:
       - "${UPLOADS_DIR:-/www/wwwroot/jhs-website-content/uploads}/images:/usr/share/nginx/uploads:ro"
+
+  # ==========================================
+  # CHATBOT BACKEND
+  # ==========================================
+  chatbot-backend:
+    build: ./chatbot-backend
+
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      PINECONE_API_KEY: ${PINECONE_API_KEY:-}
+      PINECONE_INDEX: ${PINECONE_INDEX:-jhs-website-chatbot}
+      SITE_SITEMAP_URL: ${SITE_SITEMAP_URL:-https://jhsassociates.in/sitemap.xml}
+      MONGO_URI: ${MONGODB_URL}
+      MONGO_DB_NAME: ${DATABASE_NAME:-JHS_website}
+      MONGO_COLLECTION: ${MONGO_COLLECTION:-knowledge_base}
+      PORT: 3001
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-*}
+      # index.json is gitignored, so a fresh container has none — build it
+      # on startup (then re-crawl every 24h).
+      AUTO_REFRESH_HOURS: 24
+      AUTO_REFRESH_ON_START: 1
+
+    # MONGODB_URL points at host.docker.internal (same as the backend service)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    expose:
+      - "3001"
 
   # ==========================================
   # ADMIN PANEL
@@ -58,11 +101,17 @@ services:
     ports:
       - "127.0.0.1:${GATEWAY_PORT:-9025}:80"
 
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      # the nginx image fills ${APP_ENV} into this template when it starts
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
 
     depends_on:
       - frontend
       - backend
       - admin
+      - chatbot-backend
+
       

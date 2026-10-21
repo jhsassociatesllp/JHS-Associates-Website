@@ -1,15 +1,27 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from pydantic import BaseModel, EmailStr, Field, field_validator
+from typing import Literal, Optional
 from datetime import datetime
 
-class ProposalCreate(BaseModel):
-    first_name: str = Field(..., min_length=2, max_length=100)
-    last_name: str = Field(..., min_length=1, max_length=100)
-    email: EmailStr
-    phone: Optional[str] = None
-    inquiry_reason: str = Field(..., min_length=2, max_length=200)
-    subject: str = Field(..., min_length=2, max_length=300)
-    message: Optional[str] = Field(None, max_length=2000)
+from app.utils.validation import Email, FormGuard, Message, Name, Phone, ShortText, Subject, optional_blank_to_none
+
+InquiryReason = Literal[
+    "I have an interesting news", "Request for services", "Partnership opportunity", "General inquiry", "Other",
+]
+
+
+class ProposalCreate(FormGuard):
+    first_name: Name
+    last_name: ShortText
+    email: Email
+    phone: Optional[Phone] = None
+    inquiry_reason: InquiryReason
+    subject: Subject
+    message: Message
+
+    @field_validator("phone", mode="before")
+    @classmethod
+    def _blank(cls, v):
+        return optional_blank_to_none(v)
 
 class ProposalResponse(BaseModel):
     id: str
@@ -20,6 +32,7 @@ class ProposalResponse(BaseModel):
     inquiry_reason: str
     subject: str
     message: Optional[str] = None
+    user_id: Optional[str] = None
     created_at: datetime
 
     class Config:

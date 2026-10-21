@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+*.md
+.git
+tests/
+check_admin_data.py
+setup_admin_roles.py
+update_admins.py
+test_data.py
+verify_role_access.py
+seed_leadership.py
+normalize_portraits.py

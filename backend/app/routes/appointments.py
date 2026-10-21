@@ -1,0 +1,58 @@
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from app.utils.validation import guard_form
+
+from app.auth.deps import get_current_user, require_roles
+from app.controllers import appointment as appointment_ctrl
+from app.controllers import otp as otp_ctrl
+from app.schemas.admin import AdminInDB, AdminRole
+from app.schemas.appointment import (
+    AppointmentCreate,
+    AppointmentResponse,
+    AppointmentStatusUpdate,
+)
+
+router = APIRouter(prefix="/appointments", tags=["Appointments"])
+
+hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
+
+
+@router.post("/", response_model=AppointmentResponse, status_code=status.HTTP_201_CREATED)
+async def submit_appointment(
+    request: Request,
+    data: AppointmentCreate,
+    user: dict = Depends(get_current_user),
+    x_otp_token: str | None = Header(default=None),
+):
+    await guard_form(request, data, "appointment", per_hour=10, per_minute=3)
+    # Two-step verification: the signed-in user must have just verified this mobile by OTP.
+    try:
+        await otp_ctrl.consume_token(user, data.mobile, x_otp_token)
+    except otp_ctrl.OtpError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.detail)
+    return await appointment_ctrl.create_appointment(data, user)
+
+
+@router.get("/admin/summary")
+async def admin_booking_sources(current_admin: AdminInDB = Depends(hr_access)):
+    return await appointment_ctrl.source_summary()
+
+
+@router.get("/admin", response_model=list[AppointmentResponse])
+async def admin_list_appointments(current_admin: AdminInDB = Depends(hr_access)):
+    return await appointment_ctrl.list_appointments()
+
+
+@router.patch("/admin/{appointment_id}/status", response_model=AppointmentResponse)
+async def admin_update_appointment_status(
+    appointment_id: str,
+    data: AppointmentStatusUpdate,
+    current_admin: AdminInDB = Depends(hr_access),
+):
+    try:
+        appointment = await appointment_ctrl.update_appointment_status(appointment_id, data)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid appointment id")
+
+    if not appointment:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+    return appointment

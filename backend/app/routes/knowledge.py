@@ -1,11 +1,19 @@
-from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
+import logging
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
+from app.auth.deps import get_current_user
+from app.controllers import activity as activity_ctrl
 from app.schemas.knowledge import KnowledgeCreate, KnowledgeUpdate, KnowledgeResponse
 from app.controllers import knowledge as knowledge_ctrl
 from app.utils.http import content_disposition
 from io import BytesIO
 from datetime import datetime
 from typing import Optional
+
+content_admin = require_roles([AdminRole.SUPER_ADMIN, AdminRole.ADMIN])
 
 router = APIRouter(prefix="/knowledge", tags=["Knowledge Resources"])
 
@@ -18,7 +26,8 @@ async def add_knowledge(
     short_description: str = Form(...),
     content: str = Form(...),
     image: UploadFile = File(...),
-    pdf: UploadFile = File(...)
+    pdf: UploadFile = File(...),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
     """Upload a new knowledge resource with image and PDF (both stored in GridFS)."""
     try:
@@ -43,9 +52,13 @@ async def add_knowledge(
             pdf_id=pdf_id
         )
         created = await knowledge_ctrl.create_knowledge(knowledge_data)
+        await notify_ctrl.queue_content("knowledge", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Knowledge resource created successfully", "knowledge": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/image/{image_id}")
@@ -64,16 +77,20 @@ async def get_image(image_id: str):
 
 
 @router.get("/pdf/{pdf_id}")
-async def get_pdf(pdf_id: str):
-    """Stream PDF from GridFS."""
+async def get_pdf(pdf_id: str, user: dict = Depends(get_current_user)):
+    """Stream PDF from GridFS. Requires sign-in; logs a download activity row."""
     try:
         content, filename, _ = await knowledge_ctrl.get_file_from_gridfs(pdf_id)
+        title = await knowledge_ctrl.get_title_by_pdf_id(pdf_id)
+        await activity_ctrl.log_download(user, "knowledge", pdf_id, title or filename)
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
             headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=404, detail="PDF not found")
 
@@ -83,8 +100,11 @@ async def list_knowledge():
     """Return all knowledge resources sorted by newest first."""
     try:
         return await knowledge_ctrl.get_all_knowledge()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -105,8 +125,10 @@ async def update_knowledge(
     content: Optional[str] = Form(None),
     edited_by: str = Form(...),
     image: Optional[UploadFile] = File(None),
-    pdf: Optional[UploadFile] = File(None)
+    pdf: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
+    edited_by = current_admin.email   # never trust the client for who edited
     """Update an existing knowledge resource. Tracks edit history."""
     try:
         update_data = KnowledgeUpdate(edited_by=edited_by)
@@ -129,12 +151,15 @@ async def update_knowledge(
         return {"message": "Knowledge resource updated successfully", "knowledge": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{knowledge_id}", status_code=status.HTTP_200_OK)
-async def remove_knowledge(knowledge_id: str):
+async def remove_knowledge(knowledge_id: str, current_admin: AdminInDB = Depends(content_admin)):
     deleted = await knowledge_ctrl.delete_knowledge(knowledge_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Knowledge resource not found")

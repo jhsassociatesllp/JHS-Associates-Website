@@ -75,7 +75,7 @@ const blocks: LegalBlock[] = [
     type: 'dl',
     items: [
       { term: 'Necessary / Essential Cookies (Session · administered by Us)', desc: 'These Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help authenticate users and prevent fraudulent use of user accounts.' },
-      { term: 'Cookies Policy / Notice Acceptance Cookies (Persistent · administered by Us)', desc: 'These Cookies identify if users have accepted the use of cookies on the Website.' },
+      { term: 'Cookies Policy / Notice Acceptance Cookies (Persistent · administered by Us)', desc: 'These Cookies record your cookie choice and your acknowledgement of the website notice, and are kept for 12 months. We also keep a minimal record of your choice (accepted, declined or customised, the date, and the type of browser and device — not your IP address or name) so we can demonstrate consent and see how many visitors accept or decline. You can change your choice at any time using “Cookie Settings” in the footer.' },
       { term: 'Functionality Cookies (Persistent · administered by Us)', desc: 'These Cookies allow us to remember choices You make when You use the Website, such as remembering your login details or language preference, to provide You with a more personal experience.' },
     ],
   },

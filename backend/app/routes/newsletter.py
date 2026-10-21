@@ -1,10 +1,18 @@
-from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
+import logging
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
+from app.auth.deps import get_current_user
+from app.controllers import activity as activity_ctrl
 from app.schemas.newsletter import NewsletterCreate, NewsletterUpdate, NewsletterResponse
 from app.controllers import newsletter as newsletter_ctrl
 from app.utils.http import content_disposition
 from io import BytesIO
 from typing import Optional
+
+content_admin = require_roles([AdminRole.SUPER_ADMIN, AdminRole.ADMIN])
 
 router = APIRouter(prefix="/newsletters", tags=["Newsletters"])
 
@@ -16,7 +24,8 @@ async def add_newsletter(
     heading: str = Form(...),
     short_description: str = Form(...),
     pdf: UploadFile = File(...),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
     """Upload a new newsletter with a PDF and optional cover image (stored in GridFS)."""
     try:
@@ -42,22 +51,30 @@ async def add_newsletter(
             image_id=image_id
         )
         created = await newsletter_ctrl.create_newsletter(newsletter_data)
+        await notify_ctrl.queue_content("newsletter", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Newsletter created successfully", "newsletter": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/pdf/{pdf_id}")
-async def get_pdf(pdf_id: str):
-    """Stream PDF from GridFS."""
+async def get_pdf(pdf_id: str, user: dict = Depends(get_current_user)):
+    """Stream PDF from GridFS. Requires sign-in; logs a download activity row."""
     try:
         content, filename, _ = await newsletter_ctrl.get_file_from_gridfs(pdf_id)
+        title = await newsletter_ctrl.get_title_by_pdf_id(pdf_id)
+        await activity_ctrl.log_download(user, "newsletter", pdf_id, title or filename)
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
             headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=404, detail="PDF not found")
 
@@ -82,8 +99,11 @@ async def list_newsletters():
     """Return all newsletters sorted by newest first."""
     try:
         return await newsletter_ctrl.get_all_newsletters()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -103,8 +123,10 @@ async def update_newsletter(
     short_description: Optional[str] = Form(None),
     edited_by: str = Form(...),
     pdf: Optional[UploadFile] = File(None),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
+    edited_by = current_admin.email   # never trust the client for who edited
     """Update an existing newsletter. Tracks edit history."""
     try:
         update_data = NewsletterUpdate(edited_by=edited_by)
@@ -126,12 +148,15 @@ async def update_newsletter(
         return {"message": "Newsletter updated successfully", "newsletter": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{newsletter_id}", status_code=status.HTTP_200_OK)
-async def remove_newsletter(newsletter_id: str):
+async def remove_newsletter(newsletter_id: str, current_admin: AdminInDB = Depends(content_admin)):
     deleted = await newsletter_ctrl.delete_newsletter(newsletter_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Newsletter not found")

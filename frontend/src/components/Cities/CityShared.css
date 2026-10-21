@@ -170,3 +170,24 @@
   font-weight: 800;
   letter-spacing: 0.02em;
 }
+
+/* ---------------------------------------------------------------------------
+   Office pages, laptop/desktop: size the hero from the window height so the
+   address card AND the four KPI numbers underneath are both visible on the
+   first screen (the hero used to be 92-95% of the window, pushing the KPIs
+   below the fold).
+   --------------------------------------------------------------------------- */
+@media (min-width: 901px) {
+  section.mum-hero,
+  section.del-hero,
+  section.blr-hero,
+  section.hyd-hero,
+  section.chn-hero,
+  section.ahm-hero,
+  section.kol-hero {
+    height: calc(100vh - 118px);
+    height: calc(100svh - 118px);
+    min-height: 520px;
+    max-height: 820px;
+  }
+}

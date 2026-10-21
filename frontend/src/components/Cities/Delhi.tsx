@@ -3,15 +3,16 @@ import './Delhi.css'
 import './CityShared.css'
 
 /* ─── Hero background ───────────────────────────────── */
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
 /* ─── Partner Image Imports ─────────────────────────── */
 
 /* ─── Partner Data ─────────────────────────────────── */
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'Nikhel Kochhar', image: imageUrl('Nikhel-Kochhar-removebg-preview.webp'), qualifications: 'FCA, CIA', designation: 'Governance, Risk & Internal Audit', email: 'nikhil.kochhar@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/nikhelkochhar' },
   // { name: 'Jagdish Solanki', image: imageUrl('Jagdish-Solanki-removebg-preview.webp'), qualifications: 'B.Com (Hons), FCA, ', designation: 'Direct & Indirect Tax', email: 'jagdish.solanki@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/jagdish-solanki' },
   // { name: 'Piyush Agarwal', image: imageUrl('Sunil-Pathak-removebg-preview.webp'), qualifications: 'FCA', designation: 'Tax & Corporate Advisory', email: 'piyush.agarwal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/piyush-agarwal' },
@@ -94,6 +95,7 @@ const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="n
 
 /* ─── Page ───────────────────────────────────────── */
 export default function Delhi() {
+  const PARTNERS = useCityPartners('Delhi', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -115,10 +117,12 @@ export default function Delhi() {
 
       {/* ══ HERO ══ */}
       <section className="del-hero">
-        <div className="del-hero__photo" style={{ backgroundImage: `url(${imageUrl('Dehli.webp')})` }} />
+        <video className="del-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={videoUrl('dehli_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="del-hero__overlay" />
         <div className="del-hero__content">
-          {/* <span className="del-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="del-hero__eyebrow">JHS</span> */}
           <h1 className="del-hero__title">Delhi</h1>
           <p className="del-hero__sub">National Capital &amp; Strategic North India Office</p>
         </div>
@@ -129,7 +133,6 @@ export default function Delhi() {
           </div>
           <div className="del-hero__card-divider" />
           <div className="del-hero__card-right">
-            <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Phone</span><span className="del-hero__card-stat-val">+91 9810333433</span></div>
             <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Email</span><span className="del-hero__card-stat-val">nikhel.kochhar@jhsassociates.in</span></div>
             {/* <div className="del-hero__card-stat"><span className="del-hero__card-stat-label">Hours</span><span className="del-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>
@@ -225,7 +228,7 @@ export default function Delhi() {
           <div className="del-specials-inner">
             <div className="del-specials-left">
               <span className="del-section-hdr__tag del-section-hdr__tag--white">Expertise</span>
-              <h2 className="del-specials-title">We Specialised In</h2>
+              <h2 className="del-specials-title">We Specialise In</h2>
               <p className="del-specials-body">From risk-based audit frameworks to dispute resolution, our Delhi team delivers targeted advisory across North India's real estate and infrastructure sectors.</p>
               <div className="del-specials-accent-line" />
               <p className="del-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

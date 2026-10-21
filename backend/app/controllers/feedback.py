@@ -1,3 +1,4 @@
+from app.utils.validation import GUARD_FIELDS
 from app.database.connection import get_database
 from app.schemas.feedback import FeedbackCreate, FeedbackResponse
 from app.services.email_service import notify_hr_new_feedback
@@ -8,7 +9,8 @@ async def create_feedback(feedback: FeedbackCreate) -> FeedbackResponse:
     collection = db["feedback"]
     
     # Prepare document
-    feedback_dict = feedback.model_dump()
+    feedback_dict = feedback.model_dump(exclude=GUARD_FIELDS)
+    feedback_dict["consent_at"] = datetime.now(timezone.utc)
     feedback_dict["created_at"] = datetime.now(timezone.utc)
     
     # Insert into MongoDB

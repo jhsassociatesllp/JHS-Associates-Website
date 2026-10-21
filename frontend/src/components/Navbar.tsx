@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { User, LogOut } from "lucide-react";
+import AccountMenu from "./common/AccountMenu";
 import "./Navbar.css";
 import { imageUrl } from '../utils/imageUrl'
+import { useSiteAuth } from '../context/SiteAuthContext'
 
 // ─── Types ─────────────────────────────────────────────────────
 interface SubItem {
@@ -43,11 +46,13 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Resources", description: "Reports, Tools & Frameworks", href: '/resources' },
       { label: "White Papers", description: "In-depth Research & Analysis", href: '/white-papers' },
       { label: "Regulatory", description: "Compliance Updates & Regulatory Filings", href: '/regulatory' },
+      { label: "Reg-Watch", description: "Regulatory changes tracked & explained", href: '/reg-watch' },
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
       { label: "Thought Leadership", description: "Leadership Perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
       { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
       { label: "Podcasts", description: "Audio Insights on the go", href: '/podcasts' },
+      { label: "Events", description: "Excellencia, Knowledge Setu & more — register to join", href: '/events' },
     ],
   },
 
@@ -165,7 +170,7 @@ const NAV_ITEMS: NavItem[] = [
     id: "aboutus",
     label: "About Us",
     subLabel: "About Us",
-    subDesc: "JHS & Associates LLP your trusted partners in finance.",
+    subDesc: "JHS your trusted partners in finance.",
     subItems: [
       // { label: "Company Overview", description: "Who we are", href: '/about/company-overview' },
       { label: "Our Offices", description: "Mumbai, Delhi, Bangalore & more", href: '/about/our-offices' },
@@ -180,6 +185,16 @@ const NAV_ITEMS: NavItem[] = [
     label: "Contact",
     href: '/contact',
   },
+  {
+    id: "book-appointment",
+    label: "Book Appointment",
+    href: '/book-appointment',
+  },
+  {
+    id: "sop",
+    label: "SOP",
+    href: '/SOP',
+  },
 ];
 
 // ─── Component ─────────────────────────────────────────────────
@@ -189,6 +204,9 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [activeId, setActiveId] = useState<string>(NAV_ITEMS[0].id);
   const [selectedId, setSelectedId] = useState<string>("insights");
+  const { user, openAuthModal, logout } = useSiteAuth();
+  // The home page shows the account chip in the hero's action row instead.
+  const isHome = useLocation().pathname === "/";
 
   const menuOpenRef = useRef(menuOpen);
   useEffect(() => {
@@ -366,10 +384,14 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* <div className="nb__right">
-          <a href="/login" className="nb__login">LOG IN</a>
-        </div> */}
       </header>
+
+      {/* Signed-in account chip: fixed top-right on inner pages */}
+      {user && !isHome && !menuOpen && (
+        <div className={`nb-account-fixed ${hidden ? "nb-account-fixed--hidden" : ""}`}>
+          <AccountMenu />
+        </div>
+      )}
 
       {/* ══════════════ FULL-WIDTH MEGA MODAL ══════════════ */}
       <div
@@ -550,6 +572,20 @@ const Navbar = () => {
 
               {/* P0: ROOT (L1 categories) */}
               <div className="mega__mobile-panel">
+                <div className="mega__mobile-account">
+                  {user ? (
+                    <>
+                      <span className="mega__mobile-account-email">{user.email}</span>
+                      <button type="button" className="mega__mobile-account-btn" onClick={() => { logout(); closeMenu(); }}>
+                        <LogOut size={14} /> Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" className="mega__mobile-account-btn" onClick={() => { openAuthModal(); closeMenu(); }}>
+                      <User size={14} /> Log In / Sign Up
+                    </button>
+                  )}
+                </div>
                 <ul className="mega__mobile-list">
                   {NAV_ITEMS.map((item) => (
                     <li key={item.id}>

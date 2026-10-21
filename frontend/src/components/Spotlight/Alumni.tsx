@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import { ConsentCheck, CharCount, Honeypot } from '../common/FormExtras';
+import { useTurnstile } from '../common/useTurnstile';
+import { LIMITS, apiErrorMessage, validateEmail, validateName, validatePhone, validateText } from '../../utils/formRules';
 import './SpotlightPages.css';
 import './Alumni.css';
 import { imageUrl } from '../../utils/imageUrl'
@@ -38,7 +41,7 @@ const ALUMNI_PROFILES = [
     id: 5,
     name: "Riya Almeida",
     // role: "Articleship",
-    desc: "My stint at JHS & Associates LLP provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
+    desc: "My stint at JHS provided me with valuable hands-on experience and instilled a disciplined, detail-oriented approach to work. The guidance and exposure during this period played a key role in shaping my professional mindset.",
     image: imageUrl('Riya Almeida.webp')
   },
   {
@@ -88,17 +91,36 @@ export default function Alumni() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const turnstile = useTurnstile();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return; // ignore a second click while the first is still being sent
+    const found: Record<string, string> = {
+      first_name: validateName(formData.first_name, 'First name') ?? '',
+      last_name: validateName(formData.last_name, 'Last name') ?? '',
+      email: validateEmail(formData.email) ?? '',
+      phone: validatePhone(formData.phone) ?? '',
+      company: validateText(formData.company, 'Company', { required: true, min: 2 }) ?? '',
+      designation: validateText(formData.designation, 'Designation', { required: true, min: 2 }) ?? '',
+      tenure: validateText(formData.tenure, 'Tenure', { required: true, min: 2 }) ?? '',
+      last_role: validateText(formData.last_role, 'Last role', { required: true, min: 2 }) ?? '',
+      message: validateText(formData.message, 'Message') ?? '',
+      consent: consent ? '' : 'Please accept the Privacy Policy to continue',
+    };
+    if (Object.values(found).some(Boolean)) { setErrors(found); return; }
     setLoading(true);
-    setSubmitError(false);
+    setSubmitError('');
     try {
       const apiUrl = `${API_BASE_URL}/alumni/`;
       const response = await fetch(apiUrl, {
@@ -106,22 +128,26 @@ export default function Alumni() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, consent, website: honeypot, cf_turnstile_token: turnstile.token || null }),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const body = await response.json().catch(() => null);
+        throw new Error(apiErrorMessage(body));
       }
 
       setSubmitted(true);
       setFormData({
         first_name: '', last_name: '', email: '', phone: '', company: '', designation: '', tenure: '', last_role: '', message: ''
       });
+      setConsent(false);
+      setErrors({});
+      turnstile.reset();
       setTimeout(() => setSubmitted(false), 7000);
     } catch (error) {
-      console.error('Failed to submit form:', error);
-      setSubmitError(true);
-      setTimeout(() => setSubmitError(false), 7000);
+      turnstile.reset();
+      setSubmitError(error instanceof Error && error.message ? error.message : 'Something went wrong. Please try again.');
+      setTimeout(() => setSubmitError(''), 7000);
     } finally {
       setLoading(false);
     }
@@ -219,11 +245,11 @@ export default function Alumni() {
               </div>
               <div className="alumni-contact-item">
                 <IconPhone />
-                <span>1800 120 1022</span>
+                <span>+91 8097095057</span>
               </div>
               <div className="alumni-contact-item">
                 <IconPin />
-                <span>JHS & Associates LLP, Head Office, Mumbai</span>
+                <span>JHS, Head Office, Mumbai</span>
               </div>
             </div>
           </div>
@@ -239,7 +265,7 @@ export default function Alumni() {
 
             {submitError && (
               <div role="alert" style={{ backgroundColor: '#fdecea', color: '#a63222', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
-                Failed to send registration. Please try again later.
+                {submitError}
               </div>
             )}
 
@@ -247,51 +273,66 @@ export default function Alumni() {
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="first_name">First Name</label>
-                  <input type="text" id="first_name" name="first_name" value={formData.first_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter your first name" required />
+                  <input type="text" id="first_name" name="first_name" value={formData.first_name} maxLength={LIMITS.name} aria-invalid={errors.first_name ? true : undefined} aria-describedby={errors.first_name ? 'first_name-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="Enter your first name" required />
+                  {errors.first_name && <span id="first_name-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.first_name}</span>}
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="last_name">Last Name</label>
-                  <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} className="alumni-form-input" placeholder="Enter your last name" required />
+                  <input type="text" id="last_name" name="last_name" value={formData.last_name} maxLength={LIMITS.name} aria-invalid={errors.last_name ? true : undefined} aria-describedby={errors.last_name ? 'last_name-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="Enter your last name" required />
+                  {errors.last_name && <span id="last_name-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.last_name}</span>}
                 </div>
               </div>
 
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="alumni-form-input" placeholder="name@email.com" required />
+                  <input type="email" id="email" name="email" value={formData.email} maxLength={LIMITS.email} aria-invalid={errors.email ? true : undefined} aria-describedby={errors.email ? 'email-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="name@email.com" required />
+                  {errors.email && <span id="email-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.email}</span>}
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="alumni-form-input" placeholder="+91 XXXX XXXXXX" />
+                  <input type="tel" id="phone" name="phone" value={formData.phone} maxLength={LIMITS.phone} aria-invalid={errors.phone ? true : undefined} aria-describedby={errors.phone ? 'phone-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="+91 XXXX XXXXXX" />
+                  {errors.phone && <span id="phone-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.phone}</span>}
                 </div>
               </div>
 
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="company">Current Company</label>
-                  <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} className="alumni-form-input" placeholder="Where do you work now?" required />
+                  <input type="text" id="company" name="company" value={formData.company} maxLength={LIMITS.shortText} aria-invalid={errors.company ? true : undefined} aria-describedby={errors.company ? 'company-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="Where do you work now?" required />
+                  {errors.company && <span id="company-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.company}</span>}
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="designation">Current Designation</label>
-                  <input type="text" id="designation" name="designation" value={formData.designation} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Finance Director" required />
+                  <input type="text" id="designation" name="designation" value={formData.designation} maxLength={LIMITS.shortText} aria-invalid={errors.designation ? true : undefined} aria-describedby={errors.designation ? 'designation-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Finance Director" required />
+                  {errors.designation && <span id="designation-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.designation}</span>}
                 </div>
               </div>
 
               <div className="alumni-form-row">
                 <div className="alumni-form-group">
                   <label htmlFor="tenure">Years at JHS</label>
-                  <input type="text" id="tenure" name="tenure" value={formData.tenure} onChange={handleChange} className="alumni-form-input" placeholder="e.g. 2015 - 2020" required />
+                  <input type="text" id="tenure" name="tenure" value={formData.tenure} maxLength={50} aria-invalid={errors.tenure ? true : undefined} aria-describedby={errors.tenure ? 'tenure-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="e.g. 2015 - 2020" required />
+                  {errors.tenure && <span id="tenure-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.tenure}</span>}
                 </div>
                 <div className="alumni-form-group">
                   <label htmlFor="last_role">Last Role at JHS</label>
-                  <input type="text" id="last_role" name="last_role" value={formData.last_role} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Senior Manager" required />
+                  <input type="text" id="last_role" name="last_role" value={formData.last_role} maxLength={LIMITS.shortText} aria-invalid={errors.last_role ? true : undefined} aria-describedby={errors.last_role ? 'last_role-err' : undefined} onChange={handleChange} className="alumni-form-input" placeholder="e.g. Senior Manager" required />
+                  {errors.last_role && <span id="last_role-err" role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.last_role}</span>}
                 </div>
               </div>
 
               <div className="alumni-form-group">
                 <label htmlFor="message">Message</label>
-                <textarea id="message" name="message" value={formData.message} onChange={handleChange} className="alumni-form-input" placeholder="Tell us how you'd like to get involved..."></textarea>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} className="alumni-form-input" placeholder="Tell us how you'd like to get involved..." maxLength={LIMITS.longMessage}></textarea>
+                <CharCount value={formData.message} max={LIMITS.longMessage} />
+                {errors.message && <span role="alert" style={{ color: '#D62049', fontSize: 12 }}>{errors.message}</span>}
               </div>
+
+              <Honeypot value={honeypot} onChange={setHoneypot} />
+              {turnstile.widget}
+              <ConsentCheck id="alumni-consent" checked={consent} error={errors.consent}
+                onChange={(v) => { setConsent(v); if (v && errors.consent) setErrors(prev => ({ ...prev, consent: '' })); }} />
 
               <button type="submit" className="alumni-form-submit" disabled={loading}>
                 {loading ? "Sending..." : "Send Connection Request"}

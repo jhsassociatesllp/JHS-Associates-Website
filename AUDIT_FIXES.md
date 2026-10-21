@@ -1,0 +1,102 @@
+# v2 AI Audit – what was fixed (staging branch)
+
+Status of every item in "JHS Website – Developer Remediation Report" (15 Oct 2026).
+**Done** = changed in code and tested. **Needs you** = has to be set outside the code (Cloudflare, aaPanel, GitHub secrets).
+
+## Done in code
+
+| ID | What was changed |
+|---|---|
+| SEC-01 | Staging gets `X-Robots-Tag: noindex, nofollow, noarchive` and `robots.txt` = `Disallow: /` (nginx/default.conf.template, switched by `APP_ENV=staging`). Production is unchanged. |
+| SEC-02 | CSP is now **enforced** (frontend/security-headers.conf), no `unsafe-inline` for scripts. Tested: home, contact, Google Translate and Google Sign-In script load with zero violations. |
+| FRM-01 | Every public form: rate limit per IP (per minute + per hour), hidden honeypot field, optional Cloudflare Turnstile (off until keys are set). |
+| FRM-02 | Careers upload validates all fields first and answers 422 (never 500). |
+| FRM-03 | Resume is stored under a random name; visitor file name is display text only; must end in `.pdf`; `%PDF-` check; PDFs with JavaScript/attachments or over 30 pages are refused; admin download is `attachment` + `nosniff`. |
+| FRM-04 | `<` and `>` rejected in all plain-text fields. Emails were already HTML-escaped; CSV exports already neutralise `= + - @`. |
+| FRM-05 / 06 | Speciality, contact service, inquiry reason, qualification, profile, how-heard are fixed lists on the server. |
+| FRM-07 | `maxLength` + live counters on the message boxes, same limits as the server (frontend/src/utils/formRules.ts). |
+| FRM-08 | Booking reference is created by the server, shown on the page, stored, and put in the confirmation e-mail. |
+| FRM-09 (part) | Tokens now carry `iat` + `jti`; **logout revokes the token on the server**; site session shortened 24 h → 8 h; warning if `SECRET_KEY` < 32 chars. |
+| FRM-10 | 422 answers contain only field + message, never the submitted value. |
+| FRM-11 | nginx: 64 KB default body, 9 MB only for the résumé upload. App also refuses JSON over 64 KB. |
+| FRM-12 | Required Privacy-Policy checkbox on Contact, Proposal, Careers, Appointment, Feedback, Alumni; `consent` + `consent_at` stored. |
+| FRM-13 | One shared validation module (front-end `formRules.ts`, back-end `utils/validation.py`); proposal message now required. |
+| FRM-14 | Submit buttons ignore double clicks; same e-mail + text within 5 minutes is refused. |
+| FRM-15 | OTP daily caps: 5 per mobile and 10 per account per 24 h (SMS-cost protection). |
+| FRM-16 / 17 | `required`, `aria-invalid`, `aria-describedby`, `role="alert"` on errors; unnamed Feedback fields now have labels, ids and names. |
+| HDR-01 | Unknown URLs now return real **HTTP 404** (route list generated at build time) and show a new "page not found" screen; `.env`, `.git`, `.map`, `.zip`, `.php` etc. always 404. |
+| HDR-02 | Canonical / og / sitemap / robots all use `https://jhsassociates.in`. |
+| HDR-03 | HSTS `max-age=31536000; includeSubDomains; preload`. |
+| HDR-04 | `/.well-known/security.txt` added. |
+| HDR-05 | No source maps in the build; hashed `/assets/*` cached for a year, `index.html` never; `npm audit fix` applied (frontend 0, chatbot 0, admin 4 left in Firebase's server library). |
+
+Tests: `backend/tests/test_form_validation.py` and `backend/tests/test_logout_revokes_token.py` (no database needed). nginx configs were run in real nginx containers.
+
+## Needs you (outside the code)
+
+1. **SEC-01 – lock staging.** Put staging behind Cloudflare Access (or nginx basic auth / IP allow-list). Add a 301 from port 80 to https on the aaPanel site. In Google Cloud, give staging its own OAuth client.
+2. **FRM-01 – Cloudflare.** Add WAF rate limiting for `/api/contact/`, `/api/proposal/`, `/api/careers/applications/upload` (e.g. 5/min, 30/h per IP). Create a Turnstile widget, then set GitHub secrets `TURNSTILE_SECRET` and `VITE_TURNSTILE_SITE_KEY`. Real client IP behind Cloudflare is `CF-Connecting-IP`.
+3. **Duplicate Permissions-Policy** on production: remove one of the two (origin or Cloudflare).
+4. **HDR-05** – the SOP page still embeds `mediumslateblue-louse-618680.hostingersite.com`; host that file on jhsassociates.in and change `SOP_URL` in `frontend/src/App.tsx` and the `frame-src` in `security-headers.conf`.
+5. **FRM-09 (rest)** – moving the session to an HttpOnly cookie (or 15–60 min token + refresh) is a larger change that touches login, CORS and CSRF; not done here.
+6. **FRM-08** – the page still says "Book an appointment" (no time slot, the team calls back). Rename to "Request a call back" if the owner prefers.
+7. **Section 11 – delete the test data** on staging (contact/proposal/career/appointment records, the résumés named `shell.php`, the test Google user).
+8. After deploy, test in this order: home, Contact, Careers upload, Book Appointment, Google Sign-In, language switch. Watch the browser console for CSP messages.
+
+---
+
+# VAPT report of 19 Oct 2026 (Gauhar Nasim Akhtar) – status
+
+Checked against the `staging` branch with an automated route test (154 API operations, no token, a normal site-user token, and fake/garbage tokens).
+
+| Finding | Staging branch | Production (`main`) |
+|---|---|---|
+| F-01 – PUT/DELETE without login (articles, knowledge, ...) | **Fixed** – every write route needs an admin token (401 otherwise) | **Still open** – `main` is 64 commits behind |
+| Attack chain D – upload XSS | **Fixed** – uploads need an admin login; images are re-encoded to WebP, PDFs must be real PDFs, nothing else is accepted; images are served with a "sandbox" policy | **Still open** |
+| Token revocation | **Fixed** – logout now cancels both admin and site tokens on the server (new `POST /api/admin/logout`) | **Still open** |
+| Admin-panel CSP | **Fixed** – enforced (no inline or third-party scripts), so an injected script cannot run | **Still open** |
+| PII-01 – GET /contact, /proposal, /alumni | **Fixed** – 401 without an admin token | **Still open** |
+| HOST-01 – MySQL 3306 / WHM / cPanel open | Not code – IT team | IT team |
+| CLOUD-01 – origin IP bypasses Cloudflare | Not code – IT team | IT team |
+| DMARC `p=none` | Not code – DNS | DNS |
+
+---
+
+# FINAL STATUS – all three reports matched against the `staging` branch (20 Oct 2026)
+
+Reports: (1) first security audit (`SECURITY_FIXES.md`), (2) v2 AI audit (top of this file), (3) VAPT report of 19 Oct (IT team).
+60 items in total.
+
+| | Count |
+|---|---|
+| Fixed in the code and tested | **40** |
+| Code done – the last step is yours (keys, secrets, settings) | **10** |
+| Needs IT / hosting / DNS (cannot be done from code) | **7** |
+| Not done on purpose (bigger change, needs a decision) | **3** (secure-cookie login counted in two reports, list paging) |
+
+## Added in this round (code)
+| Item | What was done |
+|---|---|
+| Chatbot abuse (M6) | Per visitor: 15 per minute, 80 per hour, 300 per day; a site-wide daily ceiling (`MAX_CHAT_PER_DAY`, default 4000) so a flood cannot run up the OpenAI bill; questions over 600 characters and request bodies over 20 KB are refused. The visitor is identified by the real address (not the proxy's), so one visitor cannot use up everyone's allowance. |
+| Admin activity log (L8) | Every admin change (POST/PUT/PATCH/DELETE) and every admin sign-in attempt is stored with who, what, when, status and IP for about 13 months. Super Admins can read it at `GET /api/admin/audit-log`. |
+| Locked-in posture | `tests/test_open_routes_allowlist.py` lists the 51 operations that are public on purpose. A new open route, or any open edit/delete route, makes the test fail. |
+| Secret key (M1) | New switch `REQUIRE_SECRET_KEY`. When it is `1` the API refuses to start without a real `SECRET_KEY`. It is OFF by default so the site cannot go down before the secret is set. |
+| Automatic scans (M9) | `.github/workflows/security-scan.yml` runs the five security tests and the library vulnerability checks (Python and all three Node projects) on every push to staging/main and weekly. |
+| Earlier today | Admin logout cancels the token on the server; admin panel runs with an enforced CSP. |
+
+## Left for you / IT (see the report for the steps)
+1. MongoDB: close port 27017, turn on a database login (C0).
+2. Rotate the old keys: SMTP, MSG91, OpenAI, Pinecone, `SECRET_KEY` (C6).
+3. Set GitHub secret `REQUIRE_SECRET_KEY` = `1` after `SECRET_KEY` is set (M1).
+4. Turnstile keys, Cloudflare rate limits (H6, FRM-01).
+5. Staging password / Cloudflare Access; admin panel behind Cloudflare Access or an IP allow-list (SEC-01, M8).
+6. HTTP to HTTPS redirect; duplicate Permissions-Policy; SOP page address (HDR-03/04/05).
+7. Origin firewall to Cloudflare IPs only; MySQL 3306 / WHM / cPanel ports; MySQL 5.7 upgrade (CLOUD-01, HOST-01).
+8. DMARC `p=quarantine` (DNS).
+9. Google OAuth origins, deploy credentials hygiene (L5-L7).
+10. Merge `staging` into `main` so production gets all of this.
+
+## Not done on purpose
+- Login in a secure cookie instead of browser storage (H3 / FRM-09): every page and the admin panel would have to change how they send the login, with CSRF handling. The stolen-token risk is already covered by the enforced CSP, 8-hour sessions, and logout that cancels the token. Plan it as its own release.
+- Paging of every long list (M5): the lists are small today; adding paging means changing every admin page.
+- Email verification for password sign-ups: needs a new email flow; the risk is low (a sign-up can never become an admin, and unverified accounts get no notifications).

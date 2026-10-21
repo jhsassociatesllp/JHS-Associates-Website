@@ -1,0 +1,657 @@
+{
+  "services": [
+    {
+      "key": "assurance",
+      "name": "Assurance",
+      "order": 1,
+      "points": [
+        {
+          "id": "01",
+          "title": "Statutory Audit under the Companies Act, LLP Act & other applicable statutes",
+          "desc": "Independent financial statement audits",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Tax Audit under Section 44AB of the Income Tax Act",
+          "desc": "Compliance-driven tax audit reporting",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Internal Audit & Internal Financial Controls (IFC) Reviews",
+          "desc": "Process assurance & control effectiveness",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Concurrent Audit for Banks & NBFCs",
+          "desc": "Real-time transaction monitoring & compliance",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Stock & Inventory Audit",
+          "desc": "Physical verification & valuation checks",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Limited Review of Quarterly Financial Results for Listed Entities",
+          "desc": "SEBI-mandated quarterly reviews",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Bank Audit — Statutory, Concurrent & Revenue Audit",
+          "desc": "RBI-aligned banking sector assurance",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Special Purpose Audits, Due Diligence & Forensic Reviews",
+          "desc": "Transaction & investigative assurance",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "Ind AS / IFRS Implementation & Financial Statement Assurance",
+          "desc": "Accounting standards advisory & assurance",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Certification Services — Net Worth, Turnover, FDI/FEMA & ROC",
+          "desc": "Statutory & regulatory certifications",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "Trust, Society & NGO Audits (12A / 80G Compliance)",
+          "desc": "Not-for-profit compliance & reporting",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "Group Reporting, Consolidation & Multi-location Audit Coordination",
+          "desc": "Pan-India audit coordination for large groups",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "consulting",
+      "name": "Consulting",
+      "order": 2,
+      "points": [
+        {
+          "id": "01",
+          "title": "Company Incorporation and regulatory setup services",
+          "desc": "Entity formation & compliance setup",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Internal Financial Controls, SOP design & automation",
+          "desc": "Process design & control frameworks",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Risk Management Frameworks and fraud investigations",
+          "desc": "Risk assessment & fraud detection",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Business Advisory, Valuation, and field verification studies",
+          "desc": "Strategic advisory & business valuation",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Efficiency Improvement and process optimization consulting",
+          "desc": "Operational excellence & cost optimisation",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Family Arbitration, Private Trust & Succession Planning",
+          "desc": "Wealth continuity & family governance",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Secretarial Practice, Company Law Compliance & Due Diligence",
+          "desc": "Corporate governance & statutory filings",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Internal Control Evaluation, Business Impact & Continuity Planning",
+          "desc": "BCP design & control effectiveness",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "Annual Return Filing, and statutory compliance management",
+          "desc": "Regulatory reporting & filing support",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Merger, Acquisition, Demerger & Reorganisation Planning",
+          "desc": "M&A structuring & transaction support",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "Financial Forecasting, Working Capital & Business Valuation Support",
+          "desc": "Financial modelling & capital planning",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "FEMA Advisory, Project Feasibility Reports & Liquidation Assistance",
+          "desc": "Cross-border compliance & exit support",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "taxation",
+      "name": "Taxation",
+      "order": 3,
+      "points": [
+        {
+          "id": "01",
+          "title": "Representation before tax authorities for assessments, refunds & rectifications",
+          "desc": "Direct representation & dispute resolution",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Tax structuring, budgeting, forecasting & M&A advisory",
+          "desc": "Strategic tax planning & deal structuring",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Corporate & Non-Corporate Return Filing (Direct Tax)",
+          "desc": "Income tax return preparation & filing",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Tax Planning, TDS & Advance Tax Compliance",
+          "desc": "Withholding tax & advance tax management",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "GST Return Filing, Retainership & Indirect Tax Advisory",
+          "desc": "End-to-end GST compliance & advisory",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Tax Advisory, GST Health Check & Dispute Resolution",
+          "desc": "Tax review & litigation support",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Survey, Search & Seizure Support",
+          "desc": "Emergency response & regulatory support",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Scrutiny & Faceless Representation",
+          "desc": "Assessment proceedings & e-proceedings",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "Assessments, Appeals & Litigation",
+          "desc": "CIT(A), ITAT & High Court representation",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Transfer Pricing (Domestic & International), Reviews & Certifications",
+          "desc": "TP documentation & OECD BEPS advisory",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "International Tax & Inbound/Outbound Structuring",
+          "desc": "DTAA, FEMA & cross-border compliance",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "Tax Audits, Digitalization, Registration (PAN, GSTIN, TAN, Charitable Trusts)",
+          "desc": "Tax audit & registration services",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "outsourcing",
+      "name": "Outsourcing",
+      "order": 4,
+      "points": [
+        {
+          "id": "01",
+          "title": "Accounting system selection, design & implementation",
+          "desc": "ERP setup & accounting infrastructure",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Budgeting & Monitoring Financial Reporting",
+          "desc": "Financial planning & MIS reporting",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "MIS, global & domestic bookkeeping, and full compliance management",
+          "desc": "End-to-end bookkeeping & compliance",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Corporate Training",
+          "desc": "Upskilling & capability development",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Tax Return Preparation (Federal, State, GST/VAT, Payroll, FBAR)",
+          "desc": "Multi-jurisdiction tax return filing",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Fixed Asset Management (Verification to Reconciliation)",
+          "desc": "Asset lifecycle tracking & audit",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Inventory Verification & Payroll Processing",
+          "desc": "Stock audit & salary management",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Virtual CXO Services (CEO, CFO, CTO, CPO)",
+          "desc": "On-demand executive leadership",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "Accounting, Reporting & AP/AR Reconciliation",
+          "desc": "Receivables & payables management",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Cloud Office Setup, Automation & Support",
+          "desc": "Digital workspace & process automation",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "Remote Secretarial Services",
+          "desc": "Virtual company secretary support",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "Risk Assessment & Register Maintenance",
+          "desc": "Risk mapping & control registers",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "corporate-finance",
+      "name": "Corporate Finance",
+      "order": 5,
+      "points": [
+        {
+          "id": "01",
+          "title": "Project Finance, ECB, Debt",
+          "desc": "Structured finance & debt advisory",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Capital Markets, IPO & PE Advisory",
+          "desc": "Equity capital & private equity support",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Business Plans & Projections",
+          "desc": "Financial modelling & forecasting",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Mergers & Acquisition",
+          "desc": "M&A structuring & transaction support",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Valuation, Due Diligence",
+          "desc": "Business valuation & risk assessment",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Treasury, Controls",
+          "desc": "Cash management & treasury oversight",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "CFO Services",
+          "desc": "Virtual CFO & financial leadership",
+          "order": 7
+        },
+        {
+          "id": "11",
+          "title": "Govt. & Infra. Advisory",
+          "desc": "Public sector & infrastructure consulting",
+          "order": 8
+        }
+      ]
+    },
+    {
+      "key": "learning-development",
+      "name": "Learning & Development",
+      "order": 6,
+      "points": [
+        {
+          "id": "01",
+          "title": "GST Law, Compliance & Return Filing Workshops",
+          "desc": "Practical GST training for finance teams",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Income Tax Provisions, TDS & Advance Tax Training",
+          "desc": "Direct tax fundamentals & compliance",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Accounting Standards (Ind AS) & Financial Reporting Workshops",
+          "desc": "Standards-based reporting capability",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Corporate Compliance & Companies Act Training Programs",
+          "desc": "Statutory & secretarial compliance training",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Internal Audit & Internal Financial Controls Certification Programs",
+          "desc": "IFC design & testing capability building",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Risk Management & Governance Awareness Sessions",
+          "desc": "Enterprise risk & governance literacy",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Statutory Audit Methodology & Documentation Training",
+          "desc": "Audit quality & documentation standards",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Soft Skills, Communication & Client Handling Workshops",
+          "desc": "Professional & client-facing capability",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "ERP & Digital Tools Training (Tally, SAP, NetSuite)",
+          "desc": "Hands-on systems & automation training",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Leadership Development & Team Management Programs",
+          "desc": "Building future-ready managers",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "Sector-Specific Regulatory Training (BFSI, NBFC, Insurance)",
+          "desc": "Industry-focused regulatory deep-dives",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "Customized In-House Training Programs for Corporate Teams",
+          "desc": "Tailored curriculum for client teams",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "compliance-learning",
+      "name": "Compliance & Governance",
+      "order": 7,
+      "points": [
+        {
+          "id": "01",
+          "title": "Compliance & Governance Solutions",
+          "desc": "Regulatory framework design & oversight",
+          "order": 1
+        },
+        {
+          "id": "02",
+          "title": "Compliance Awareness Sessions & Corporate Learning Programs",
+          "desc": "Training & capability development",
+          "order": 2
+        },
+        {
+          "id": "03",
+          "title": "Enterprise Risk Identification & Assessment Across Business Functions",
+          "desc": "Organisation-wide risk mapping",
+          "order": 3
+        },
+        {
+          "id": "04",
+          "title": "Risk Mitigation Strategy Development, Implementation & Continuous Monitoring",
+          "desc": "Proactive risk management",
+          "order": 4
+        },
+        {
+          "id": "05",
+          "title": "Internal Reviews to Ensure Compliance & Evaluate Internal Controls",
+          "desc": "Control effectiveness reviews",
+          "order": 5
+        },
+        {
+          "id": "06",
+          "title": "Company Incorporation & Drafting of Memorandum and Articles of Association",
+          "desc": "Entity formation & constitutional docs",
+          "order": 6
+        },
+        {
+          "id": "07",
+          "title": "Board Meeting & AGM Compliance",
+          "desc": "Corporate meeting governance",
+          "order": 7
+        },
+        {
+          "id": "08",
+          "title": "Filing Annual Returns & Statutory Documents with Regulatory Authorities",
+          "desc": "Statutory filing & submissions",
+          "order": 8
+        },
+        {
+          "id": "09",
+          "title": "Maintenance of Statutory Registers, Board Resolutions, Shareholding Patterns & KMP Records",
+          "desc": "Corporate record management",
+          "order": 9
+        },
+        {
+          "id": "10",
+          "title": "Regulatory Liaison & Representation Support",
+          "desc": "Authority engagement & advocacy",
+          "order": 10
+        },
+        {
+          "id": "11",
+          "title": "Governance Framework Development & Control Environment Assessment",
+          "desc": "Governance architecture design",
+          "order": 11
+        },
+        {
+          "id": "12",
+          "title": "External Audit Support, Review Assistance & Control",
+          "desc": "Audit facilitation & coordination",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "key": "it-assurance",
+      "name": "IT Assurance",
+      "order": 8,
+      "points": []
+    },
+    {
+      "key": "soc-attestation",
+      "name": "SOC Attestation",
+      "order": 9,
+      "points": []
+    },
+    {
+      "key": "single-window-assistance",
+      "name": "Single Window Assistance",
+      "order": 10,
+      "points": []
+    }
+  ],
+  "sectors": [
+    {
+      "name": "Media",
+      "order": 1
+    },
+    {
+      "name": "IT System Audit",
+      "order": 2
+    },
+    {
+      "name": "IT / ITeS",
+      "order": 3
+    },
+    {
+      "name": "FMCG",
+      "order": 4
+    },
+    {
+      "name": "Retail",
+      "order": 5
+    },
+    {
+      "name": "Oil & Gas",
+      "order": 6
+    },
+    {
+      "name": "Housing",
+      "order": 7
+    },
+    {
+      "name": "Real Estate",
+      "order": 8
+    },
+    {
+      "name": "Commodity",
+      "order": 9
+    },
+    {
+      "name": "Gems & Jewellery",
+      "order": 10
+    },
+    {
+      "name": "Banking",
+      "order": 11
+    },
+    {
+      "name": "Retail & Corporate Banking",
+      "order": 12
+    },
+    {
+      "name": "Insurance",
+      "order": 13
+    },
+    {
+      "name": "Broking",
+      "order": 14
+    },
+    {
+      "name": "Mutual Funds",
+      "order": 15
+    },
+    {
+      "name": "Digital Currency",
+      "order": 16
+    },
+    {
+      "name": "Crypto & Blockchain Advisory",
+      "order": 17
+    },
+    {
+      "name": "Family Oriented Businesses",
+      "order": 18
+    },
+    {
+      "name": "Portfolio Management",
+      "order": 19
+    },
+    {
+      "name": "Venture Capital",
+      "order": 20
+    },
+    {
+      "name": "NBFC",
+      "order": 21
+    },
+    {
+      "name": "Healthcare",
+      "order": 22
+    },
+    {
+      "name": "Constructions",
+      "order": 23
+    },
+    {
+      "name": "Manufacturing",
+      "order": 24
+    },
+    {
+      "name": "Logistics",
+      "order": 25
+    },
+    {
+      "name": "NGO",
+      "order": 26
+    }
+  ]
+}

@@ -9,21 +9,79 @@
 
 # settings = Settings()
 
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Anchored to this file's location (backend/app/config/settings.py -> backend/)
+# rather than left relative, so .env still loads correctly no matter what
+# working directory the server is launched from (a relative path here only
+# resolves when the process happens to be started from inside backend/).
+BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 class Settings(BaseSettings):
-    mongodb_url: str = "mongodb://localhost:27017"
+    mongodb_url: str = "mongodb://localhost:27017/"
     database_name: str = "JHS_website"
 
-    # Brevo (Sendinblue) email configuration
+    # Brevo (Sendinblue) email configuration — kept for rollback only, no
+    # longer used by email_service.py (see smtp_* below, which is active).
     brevo_api_key: str = ""
     hr_notification_email: str = "hr@jhsassociates.in"
-    sender_email: str = "vasu.gadde@jhsassociates.in"
-    sender_name: str = "JHS Associates"
+    # Contact Us and Request for Proposal submissions are routed here.
+    connect_notification_email: str = "connect@jhsassociates.in"
+    # Appointment / consultation bookings (Book Appointment page and the partner
+    # cards' Book Appointment button) are routed here instead of the HR inbox.
+    appointment_notification_email: str = "connect@jhsassociates.in"
+    sender_email: str = "maaz.quraishi@jhsassociates.in"
+    sender_name: str = "JHS"
+
+    # Outlook / Microsoft 365 SMTP configuration.
+    # smtp_username/smtp_password are the mailbox credentials that send the
+    # mail (an App Password if MFA is on). sender_email should normally
+    # match smtp_username unless a send-as alias is configured on that
+    # mailbox — Microsoft may otherwise reject or rewrite the From address.
+    smtp_host: str = "smtp.office365.com"
+    smtp_port: int = 587
+    smtp_username: str = "maaz.quraishi@jhsassociates.in"
+    smtp_password: str = ""
+
+    # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
+    # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").
+    secret_key: str = ""
+    # Set REQUIRE_SECRET_KEY=1 (in GitHub / the server environment) once SECRET_KEY is configured: the app then REFUSES
+    # to start without a real key instead of using a random one (which would log everyone out on every restart).
+    require_secret_key: bool = False
+    # Separate secret for hashing visitor IPs (falls back to secret_key when empty).
+    ip_hash_salt: str = ""
+
+    # production | staging | development. API docs are only served in development.
+    app_env: str = "production"
+    # Comma-separated list of browser origins allowed to call the API cross-site.
+    cors_origins: str = (
+        "https://jhsassociates.in,https://www.jhsassociates.in,https://staging.jhsassociates.in,"
+        "https://admin.jhsassociates.in,https://staging-admin.jhsassociates.in"
+    )
+
+    # Public address of the website (used for the links inside notification emails).
+    site_url: str = "https://jhsassociates.in"
+    # Background sender for "new insight" emails. Turn off on a computer that shares the live database.
+    notify_worker_enabled: bool = True
+
+    # MSG91 SMS (mobile OTP for appointment booking). Template id + auth key from MSG91.
+    msg91_auth_key: str = ""
+    msg91_template_id: str = ""
+
+    # Google Sign-In (career applicants + consulting appointment requests).
+    # Create an OAuth 2.0 Client ID (Web application) in Google Cloud Console
+    # and add this site's origin under "Authorized JavaScript origins".
+    google_client_id: str = ""
+
+    # Cloudflare Turnstile (bot check on public forms). Leave empty to switch it off.
+    turnstile_secret: str = ""
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(BACKEND_DIR / ".env"),
         env_file_encoding="utf-8",
         extra="ignore"
     )

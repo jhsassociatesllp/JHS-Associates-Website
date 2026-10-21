@@ -69,6 +69,9 @@
 .ahm-hero__photo {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -594,7 +597,8 @@
 
 .ahm-partners-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
   column-gap: 1.5rem;
   row-gap: 100px;
   padding-top: 80px;
@@ -1358,5 +1362,11 @@
 
   .ahm-ribbon__lbl {
     font-size: 9px;
+  }
+}
+/* 4 partners per row once a city has four or more (desktop only) */
+@media (min-width: 1101px) {
+  .ahm-partners-grid:has(> :nth-child(4)) {
+    grid-template-columns: repeat(4, minmax(0, 270px));
   }
 }

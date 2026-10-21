@@ -1,8 +1,11 @@
+import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form, Depends
+from app.controllers import notify as notify_ctrl
 from fastapi.responses import StreamingResponse
 from app.schemas.article import ArticleCreate, ArticleUpdate, ArticleResponse
 from app.controllers import article as article_ctrl
-from app.auth.deps import require_admin_or_above
+from app.controllers import activity as activity_ctrl
+from app.auth.deps import require_admin_or_above, get_current_user
 from app.utils.http import content_disposition
 from app.schemas.admin import AdminInDB
 from io import BytesIO
@@ -55,9 +58,13 @@ async def add_article(
             publish_date=parsed_date
         )
         created = await article_ctrl.create_article(article_data)
+        await notify_ctrl.queue_content("article", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "Article created successfully", "article": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/image/{image_id}")
@@ -76,16 +83,20 @@ async def get_image(image_id: str):
 
 
 @router.get("/pdf/{pdf_id}")
-async def get_pdf(pdf_id: str):
-    """Stream PDF from GridFS."""
+async def get_pdf(pdf_id: str, user: dict = Depends(get_current_user)):
+    """Stream PDF from GridFS. Requires sign-in; logs a download activity row."""
     try:
         content, filename, _ = await article_ctrl.get_file_from_gridfs(pdf_id)
+        title = await article_ctrl.get_title_by_pdf_id(pdf_id)
+        await activity_ctrl.log_download(user, "article", pdf_id, title or filename)
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
             headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=404, detail="PDF not found")
 
@@ -95,8 +106,11 @@ async def list_articles():
     """Return all articles sorted by newest first."""
     try:
         return await article_ctrl.get_all_articles()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -151,8 +165,11 @@ async def update_article(
         return {"message": "Article updated successfully", "article": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{article_id}", status_code=status.HTTP_200_OK)

@@ -40,7 +40,7 @@ export default function GlobalPresence() {
             </div>
             <div className="ap-grid-right">
               <p>
-                In an increasingly interconnected global economy, challenges don't stop at the border. At JHS &amp; Associates LLP, we help multi-national corporations and fast-growing domestic companies expand their horizons. 
+                In an increasingly interconnected global economy, challenges don't stop at the border. At JHS, we help multi-national corporations and fast-growing domestic companies expand their horizons. 
               </p>
               <p>
                 Through robust strategic alliances and network partnerships, we provide seamless, end-to-end compliance and advisory services across major international jurisdictions including the US, UK, UAE, and Singapore.

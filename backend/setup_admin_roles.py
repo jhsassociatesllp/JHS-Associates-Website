@@ -1,4 +1,15 @@
 import asyncio
+import os
+
+
+def _initial_password() -> str:
+    """The starting password comes from the ADMIN_BOOTSTRAP_PASSWORD environment variable.
+    No password is stored in this file; admins are upgraded to a bcrypt hash at first login."""
+    pw = os.environ.get("ADMIN_BOOTSTRAP_PASSWORD")
+    if not pw or len(pw) < 12:
+        raise SystemExit("Set ADMIN_BOOTSTRAP_PASSWORD (at least 12 characters) before running this script.")
+    return pw
+
 import sys
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime, timezone
@@ -29,7 +40,7 @@ async def setup_admin_roles():
             # Super Admins (2 users) - Password: superadmin123
             {
                 "email": "superadmin1@jhs.com",
-                "password": "superadmin123",
+                "password": _initial_password(),
                 "role": "super_admin",
                 "name": "Super Administrator 1",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -37,7 +48,7 @@ async def setup_admin_roles():
             },
             {
                 "email": "superadmin2@jhs.com",
-                "password": "superadmin123",
+                "password": _initial_password(),
                 "role": "super_admin",
                 "name": "Super Administrator 2",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -47,7 +58,7 @@ async def setup_admin_roles():
             # Regular Admins (2 users) - Password: admin123
             {
                 "email": "admin1@jhs.com",
-                "password": "admin123", 
+                "password": _initial_password(),
                 "role": "admin",
                 "name": "Content Administrator 1",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -55,7 +66,7 @@ async def setup_admin_roles():
             },
             {
                 "email": "admin2@jhs.com",
-                "password": "admin123", 
+                "password": _initial_password(),
                 "role": "admin",
                 "name": "Content Administrator 2",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -65,7 +76,7 @@ async def setup_admin_roles():
             # HR Admins (3 users) - Password: hradmin123
             {
                 "email": "hradmin1@jhs.com", 
-                "password": "hradmin123",
+                "password": _initial_password(),
                 "role": "hr_admin",
                 "name": "HR Administrator 1",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -73,7 +84,7 @@ async def setup_admin_roles():
             },
             {
                 "email": "hradmin2@jhs.com", 
-                "password": "hradmin123",
+                "password": _initial_password(),
                 "role": "hr_admin",
                 "name": "HR Administrator 2",
                 "created_at": datetime.now(timezone.utc).isoformat(),
@@ -81,7 +92,7 @@ async def setup_admin_roles():
             },
             {
                 "email": "hradmin3@jhs.com", 
-                "password": "hradmin123",
+                "password": _initial_password(),
                 "role": "hr_admin",
                 "name": "HR Administrator 3",
                 "created_at": datetime.now(timezone.utc).isoformat(),

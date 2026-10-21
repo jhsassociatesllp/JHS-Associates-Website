@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './Consulting.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–06)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Company Incorporation and regulatory setup services", desc: "Entity formation & compliance setup" },
   { id: "02", title: "Internal Financial Controls, SOP design & automation", desc: "Process design & control frameworks" },
   { id: "03", title: "Risk Management Frameworks and fraud investigations", desc: "Risk assessment & fraud detection" },
@@ -18,7 +21,7 @@ const leftItems = [
 ]
 
 // Right column items (07–12)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Secretarial Practice, Company Law Compliance & Due Diligence", desc: "Corporate governance & statutory filings" },
   { id: "08", title: "Internal Control Evaluation, Business Impact & Continuity Planning", desc: "BCP design & control effectiveness" },
   { id: "09", title: "Annual Return Filing, and statutory compliance management", desc: "Regulatory reporting & filing support" },
@@ -27,8 +30,12 @@ const rightItems = [
   { id: "12", title: "FEMA Advisory, Project Feasibility Reports & Liquidation Assistance", desc: "Cross-border compliance & exit support" },
 ]
 
+
 export default function Consulting() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('consulting', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -103,10 +110,18 @@ export default function Consulting() {
             {/* LEFT COLUMN */}
             <div className="c-spoke-col c-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="c-spoke-row c-spoke-row--left">
+                <div
+                    key={item.id}
+                    className="c-spoke-row c-spoke-row--left"
+                    onClick={() => setActivePoint(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                  >
                   <div className="c-spoke-text c-spoke-text--left">
                     <h3 className="c-spoke-title">{item.title}</h3>
                     <p className="c-spoke-desc">{item.desc}</p>
+                  <span className="c-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="c-spoke-connector c-spoke-connector--left">
                     <div className="c-spoke-line" />
@@ -130,7 +145,14 @@ export default function Consulting() {
             {/* RIGHT COLUMN */}
             <div className="c-spoke-col c-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="c-spoke-row c-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="c-spoke-row c-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="c-spoke-connector c-spoke-connector--right">
                     <div className="c-spoke-badge c-spoke-badge--red">{item.id}</div>
                     <div className="c-spoke-line" />
@@ -138,6 +160,7 @@ export default function Consulting() {
                   <div className="c-spoke-text c-spoke-text--right">
                     <h3 className="c-spoke-title">{item.title}</h3>
                     <p className="c-spoke-desc">{item.desc}</p>
+                  <span className="c-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -150,13 +173,21 @@ export default function Consulting() {
             {[...leftItems, ...rightItems]
               .sort((a, b) => parseInt(a.id) - parseInt(b.id))
               .map((item) => (
-                <div key={item.id} className="c-spoke-mobile-card">
+                <div
+                  key={item.id}
+                  className="c-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className={`c-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'c-spoke-badge--navy' : 'c-spoke-badge--red'}`}>
                     {item.id}
                   </div>
                   <div>
                     <h3 className="c-spoke-title">{item.title}</h3>
                     <p className="c-spoke-desc">{item.desc}</p>
+                  <span className="c-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -164,7 +195,7 @@ export default function Consulting() {
 
           <div className="c-certification">
             <Shield className="c-certification__icon" size={28} />
-            <p className="c-certification__text">JHS & Associates LLP · Trusted Advisory Partner across 7+ Cities in India</p>
+            <p className="c-certification__text">JHS · Trusted Advisory Partner across 7+ Cities in India</p>
           </div>
         </div>
       </section>
@@ -179,6 +210,17 @@ export default function Consulting() {
           </div>
         </div>
       </section> */}
+
+
+    <ServicePartnersModal
+      isOpen={Boolean(activePoint)}
+      onClose={() => setActivePoint(null)}
+      serviceKey="consulting"
+      serviceTitle="Consulting Services"
+      point={activePoint}
+      partners={activePoint ? getPartnersForSubPoint('consulting', activePoint.id) : []}
+    />
+
 
     </div>
   )

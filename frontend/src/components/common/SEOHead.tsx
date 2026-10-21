@@ -8,7 +8,7 @@ export default function SEOHead() {
   const meta =
     SEO_META[pathname] ??
     (pathname.startsWith('/case-studies/')
-      ? { title: `Case Study | ${SITE_NAME}`, description: 'A client case study showcasing the impact of JHS & Associates advisory work.' }
+      ? { title: `Case Study | ${SITE_NAME}`, description: 'A client case study showcasing the impact of JHS advisory work.' }
       : DEFAULT_META)
 
   const canonicalUrl = `${SITE_URL}${pathname === '/' ? '' : pathname}`

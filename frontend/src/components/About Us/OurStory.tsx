@@ -10,36 +10,39 @@ const MILESTONES = [
     desc: 'Establishment of JHS, laying the foundation for a practice built on professional integrity, client trust and technical excellence.',
   },
   {
-    year: '1990s – 2000s',
+    year: '1990 – 2000',
     title: 'Expanding Capabilities',
     desc: 'Expansion beyond core taxation into assurance and accounting services, and corporate advisory supporting clients across growth stages.',
   },
   {
-    year: '2010s',
+    year: '2010',
     title: 'Pan-India Integration',
     desc: 'Progressed through a series of mergers and integration of professional practices to combine capabilities and offer a single window approach to clients. Development of a pan-India presence through multiple offices, enabling proximity-based delivery and deeper engagement with clients across sectors and geographies.',
   },
   {
-    year: '2020s',
+    year: '2020',
     title: 'Technology Transformation Era',
     desc: 'Adoption of data analytics, audit automation, dashboards, forensic tools, AI-enabled assurance methodologies and technology-led service delivery models to create scalable and insight-driven solutions. Launch of full-fledged Cyber Security Solutions, Data Privacy Assurance and receiving the coveted CERT-In empanelment.',
   },
   {
-    year: '2020s',
+    year: '2020',
     title: 'Global Connectivity',
     desc: 'Strengthening international capabilities through membership of the PrimeGlobal network, providing clients access to global perspectives and cross-border advisory support.',
   },
 ]
 
 const BODY_PARAGRAPHS = [
-  "JHS & Associates LLP (JHS) is a professionally managed assurance, advisory and consulting firm that has been serving clients since 28 February 1981. Over more than four decades, JHS has evolved from a traditional chartered accountancy practice into a multi-disciplinary professional services organization that combines deep technical expertise with technology-enabled delivery and strategic business insights.",
-  "Today, JHS serves 1,000+ clients through a network of 13 offices across India, supported by 700+ people and 30 partners and advisory board members, providing a rare combination of local proximity and national reach. The firm's growth has been built on a simple philosophy: building trust, delivering excellence, and shaping better futures.",
+  "JHS  is a professionally managed assurance, advisory and consulting firm that has been serving clients since 28 February 1981. Over more than four decades, JHS has evolved from a traditional chartered accountancy practice into a multi-disciplinary professional services organization that combines deep technical expertise with technology-enabled delivery and strategic business insights.",
+  "Today, JHS serves 1,000+ clients through a network of 14 offices across India, supported by 700+ people and 30 partners and advisory board members, providing a rare combination of local proximity and national reach. The firm's growth has been built on a simple philosophy: building trust, delivering excellence, and shaping better futures.",
   'What differentiates JHS is its ability to provide an integrated platform of services under one roof. From Assurance, Risk Advisory, Taxation and Compliance to Corporate Finance, Outsourcing, Technology Assurance, Governance, Internal Audit, Forensics, ESG and Business Transformation, clients benefit from a partner-led model focused on practical outcomes rather than theoretical advice.',
   'JHS has consistently positioned itself as a business enabler rather than a service provider. The firm partners with organizations across their growth journey, from incorporation and capital raising to expansion, governance enhancement, operational excellence and global growth. Its solutions are designed to reduce risk, improve efficiency, strengthen controls, simplify compliance and drive sustainable value creation.',
   'The firm combines the stability of a legacy institution with the agility of a modern advisory practice. Through investments in analytics, automation, dashboards, AI-enabled assurance and digital transformation capabilities, JHS helps organizations respond to rapidly changing regulatory, technological and business environments.',
   'A strong culture of integrity, objectivity, quality, mutual respect and result orientation forms the foundation of the organization. Diversity, inclusion and people development remain central to its philosophy, reflected in a workforce that actively promotes equal opportunity and professional growth. About 40% of the workforce at JHS comprises of women.',
   "As India's businesses become more ambitious and globally connected, JHS continues to expand its capabilities and network. Backed by decades of trust, a multidisciplinary talent pool, and global affiliations, JHS aspires to be a globally respected professional services firm that helps clients navigate complexity, unlock growth opportunities and build resilient enterprises for the future.",
 ]
+
+// From the culture paragraph: "integrity, objectivity, quality, mutual respect and result orientation"
+const VALUES = ['Integrity', 'Objectivity', 'Quality', 'Mutual Respect', 'Result Orientation']
 
 export default function OurStory() {
   useEffect(() => { window.scrollTo({ top: 0 }) }, [])
@@ -63,7 +66,7 @@ export default function OurStory() {
             <span className="story-stat__label">Years of Trust</span>
           </div>
           <div className="story-stat">
-            <span className="story-stat__num">13</span>
+            <span className="story-stat__num">14</span>
             <span className="story-stat__label">Offices</span>
           </div>
           <div className="story-stat">
@@ -86,10 +89,31 @@ export default function OurStory() {
 
       <section className="ap-content story-section">
         <div className="ap-container">
-          <div className="story-body">
-            {BODY_PARAGRAPHS.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
+          <div className="story-grid" lang="en">
+            <aside className="story-aside">
+              <div className="story-aside__fact">
+                <span className="story-aside__label">Serving clients since</span>
+                <span className="story-aside__value">28 February 1981</span>
+              </div>
+              <blockquote className="story-aside__quote">
+                A business enabler rather than a service provider.
+              </blockquote>
+            </aside>
+
+            <div className="story-body">
+              {BODY_PARAGRAPHS.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+
+              <div className="story-values">
+                <span className="story-values__label">The foundation</span>
+                <ul>
+                  {VALUES.map((v) => (
+                    <li key={v}>{v}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -105,7 +129,7 @@ export default function OurStory() {
 
           <div className="story-timeline">
             {MILESTONES.map((m, i) => (
-              <div className="story-timeline__item" key={i}>
+              <div className="story-timeline__item" key={i} data-year={m.year}>
                 <div className="story-timeline__marker">
                   <span className="story-timeline__dot" />
                 </div>

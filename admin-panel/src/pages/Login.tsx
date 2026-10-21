@@ -8,7 +8,6 @@ import {
   Email as EmailIcon,
   Lock as LockIcon,
   Visibility, VisibilityOff,
-  Dashboard as DashboardIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 
@@ -77,20 +76,19 @@ export default function Login() {
 
         {/* Logo */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 5 }}>
-          <Box sx={{
-            width: 44, height: 44, borderRadius: 2,
-            background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <DashboardIcon sx={{ color: '#fff', fontSize: 24 }} />
-          </Box>
+          <Box
+            component="img"
+            src="/logo.webp"
+            alt="JHS"
+            sx={{ width: 56, height: 56, borderRadius: 2, objectFit: 'contain', bgcolor: '#fff', p: '4px', boxShadow: '0 4px 16px rgba(0,0,0,0.35)' }}
+          />
           <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.3rem', fontFamily: 'Inter, sans-serif' }}>
             JHS Admin
           </Typography>
         </Box>
 
         <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.8rem', textAlign: 'center', lineHeight: 1.3, fontFamily: 'Inter, sans-serif', mb: 2 }}>
-          Welcome to JHS &amp; Associates
+          Welcome to JHS
         </Typography>
         <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', textAlign: 'center', lineHeight: 1.6, mb: 1 }}>
           Admin panel for managing contacts, articles, and blog content.
@@ -124,9 +122,7 @@ export default function Login() {
           <Box sx={{ mb: 4 }}>
             {/* Mobile logo */}
             <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1.5, mb: 3 }}>
-              <Box sx={{ width: 36, height: 36, borderRadius: 1.5, background: 'linear-gradient(135deg, #696cff 0%, #4a4cf7 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <DashboardIcon sx={{ color: '#fff', fontSize: 20 }} />
-              </Box>
+              <Box component="img" src="/logo.webp" alt="JHS" sx={{ width: 44, height: 44, borderRadius: 1.5, objectFit: 'contain', border: '1px solid #e6e8ee', p: '3px' }} />
               <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', color: '#2d3748', fontFamily: 'Inter, sans-serif' }}>JHS Admin</Typography>
             </Box>
 
@@ -137,7 +133,7 @@ export default function Login() {
               Enter your credentials to access the dashboard
             </Typography>
             <Typography sx={{ fontSize: '0.8rem', color: '#a0a3a8' }}>
-              Secure login to JHS Associates Admin Panel
+              Secure login to JHS Admin Panel
             </Typography>
           </Box>
 
@@ -179,12 +175,13 @@ export default function Login() {
               sx={{
                 mb: 2.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, 
+                  borderRadius: 2,
                   fontSize: '0.875rem',
                   backgroundColor: '#fafbfc',
                   transition: 'all 0.2s',
                   '& fieldset': { borderColor: '#e2e8f0' },
-                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&:hover': { backgroundColor: '#fff' },
+                  '&:hover fieldset': { borderColor: '#696cff' },
                   '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
                   '&.Mui-focused': { backgroundColor: '#fff' },
                 },
@@ -227,12 +224,13 @@ export default function Login() {
               sx={{
                 mb: 1.5,
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2, 
+                  borderRadius: 2,
                   fontSize: '0.875rem',
                   backgroundColor: '#fafbfc',
                   transition: 'all 0.2s',
                   '& fieldset': { borderColor: '#e2e8f0' },
-                  '&:hover fieldset': { borderColor: '#696cff', backgroundColor: '#fff' },
+                  '&:hover': { backgroundColor: '#fff' },
+                  '&:hover fieldset': { borderColor: '#696cff' },
                   '&.Mui-focused fieldset': { borderColor: '#696cff', borderWidth: 2 },
                   '&.Mui-focused': { backgroundColor: '#fff' },
                 },

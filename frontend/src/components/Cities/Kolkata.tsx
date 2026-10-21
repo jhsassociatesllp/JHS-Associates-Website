@@ -2,11 +2,12 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Kolkata.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   {
     name: 'Sharad Mohata',
     image: imageUrl('Sharad-Mohata-removebg-preview.webp'),
@@ -191,6 +192,7 @@ const IconCheck = () => (
 )
 
 export default function Kolkata() {
+  const PARTNERS = useCityPartners('Kolkata', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -210,10 +212,12 @@ export default function Kolkata() {
   return (
     <div className="kol-page">
       <section className="kol-hero">
-        <div className="kol-hero__photo" style={{ backgroundImage: `url(${imageUrl('Kolkata.webp')})` }} />
+        <video className="kol-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={videoUrl('kolkata_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="kol-hero__overlay" />
         <div className="kol-hero__content">
-          {/* <p className="kol-hero__eyebrow">JHS &amp; Associates LLP</p> */}
+          {/* <p className="kol-hero__eyebrow">JHS</p> */}
           <h1 className="kol-hero__title">Kolkata</h1>
           <p className="kol-hero__sub">City of Joy &amp; Eastern India Business Gateway</p>
         </div>
@@ -227,12 +231,6 @@ export default function Kolkata() {
             </div>
           </div>
           <div className="kol-hero__card-info">
-            <div className="kol-hero__card-info-item">
-              <div>
-                <span className="kol-hero__card-info-label">Phone</span>
-                <span className="kol-hero__card-info-val">+91 9831150209</span>
-              </div>
-            </div>
             <div className="kol-hero__card-info-item">
               <div>
                 <span className="kol-hero__card-info-label">Email</span>
@@ -343,7 +341,7 @@ export default function Kolkata() {
           <div className="kol-specials-inner">
             <div className="kol-specials-left">
               <span className="kol-section-hdr__tag kol-section-hdr__tag--white">Expertise</span>
-              <h2 className="kol-specials-title">We Specialised In</h2>
+              <h2 className="kol-specials-title">We Specialise In</h2>
               <p className="kol-specials-body">Bringing a breadth of specialised capabilities unmatched in the region.</p>
               <div className="kol-specials-accent-line" />
               <p className="kol-specials-note">Each specialisation is backed by certified professionals with real-world project experience.</p>

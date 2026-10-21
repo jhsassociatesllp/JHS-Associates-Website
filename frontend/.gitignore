@@ -33,3 +33,4 @@ src/image/
 
 .env.production
 .env
+known-routes.inc

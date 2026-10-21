@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import LazyImage from '../../common/LazyImage'
 import { SECTOR_EXPERTS } from '../../../data/SectorExperts'
+import { useSectorExperts, type SectorExpert } from '../../../data/leadership'
 import { SECTOR_CASE_STUDY_MAP } from '../../../data/SectorCaseStudyMap'
 import { CASE_STUDIES } from '../../../data/CaseStudies'
 import { copyToClipboard } from '../../../utils/copyToClipboard'
@@ -42,7 +43,8 @@ const IconPin = () => (
 )
 
 export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngagementProps) {
-  const experts = SECTOR_EXPERTS[sectorKey as keyof typeof SECTOR_EXPERTS] ?? []
+  const fallbackExperts = (SECTOR_EXPERTS[sectorKey as keyof typeof SECTOR_EXPERTS] ?? []) as SectorExpert[]
+  const experts = useSectorExperts(sectorKey, fallbackExperts)
   const matchedSectors: string[] = SECTOR_CASE_STUDY_MAP[sectorKey as keyof typeof SECTOR_CASE_STUDY_MAP] ?? []
   const caseStudies = (CASE_STUDIES as CaseStudy[]).filter((cs) => matchedSectors.includes(cs.sector)).slice(0, 2)
 
@@ -132,7 +134,7 @@ export default function SectorEngagement({ sectorKey, sectorLabel }: SectorEngag
                             type="button"
                             className="se-expert-card__mail-option"
                             onClick={() => {
-                              copyToClipboard(person.email)
+                              copyToClipboard(person.email ?? "")
                               setOpenMailFor(null)
                             }}
                           >

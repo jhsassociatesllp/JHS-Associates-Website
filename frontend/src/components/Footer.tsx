@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { MapPin, Mail, Phone } from 'lucide-react'
 import { imageUrl } from '../utils/imageUrl'
 import LazyImage from './common/LazyImage'
+import { OPEN_COOKIE_SETTINGS } from './common/CookieConsent'
 
 /* ─── Column Data ────────────────────────────────────── */
 const INSIGHTS = [
@@ -27,9 +28,7 @@ const SERVICES = [
   { name: 'Taxation', path: '/services/taxation' },
   { name: 'Outsourcing', path: '/services/outsourcing' },
   { name: 'Corporate Finance', path: '/services/corporate-finance' },
-  { name: 'Compliance', path: '/services/compliance-learning' },
-  { name: 'Learning & Development', path: '/services/learning-development' },
-
+  { name: 'Compliance, Learning & Development', path: '/services/compliance-learning' },
 ]
 
 /* ─── Social Icons ──────────────────────────────────── */
@@ -60,7 +59,6 @@ const IconYouTube = () => (
 
 /* ─── Component ─────────────────────────────────────── */
 export default function Footer() {
-  const year = new Date().getFullYear()
 
   return (
     <footer className="footer" id="contact">
@@ -95,11 +93,11 @@ export default function Footer() {
           {/* Col 1 — Brand + Services */}
           <div className="footer__col footer__col--brand">
             <div className="footer__brand-logo">
-              <LazyImage src={imageUrl('logo-footer.webp')} alt="JHS & Associates LLP" />
+              <LazyImage src={imageUrl('logo.webp')} alt="JHS" />
             </div>
             <p className="footer__brand-desc">
-              Trusted Chartered Accountants and Advisory Partners for Businesses across India.
-              Excellence, Integrity, and Expertise in Every Engagement.
+              Trusted Chartered Accountants and Advisory Partners for Businesses across India. <br />
+              Excellence, Integrity and Expertise in Every Engagement.
             </p>
 
             {/* Services heading + pills */}
@@ -149,7 +147,7 @@ export default function Footer() {
               </li>
               <li>
                 <Phone size={16} className="footer__contact-icon" />
-                <a href="tel:18001201022">1800 120 1022</a>
+                <a href="tel:+918097095057">+91 8097095057</a>
               </li>
             </ul>
           </div>
@@ -160,11 +158,14 @@ export default function Footer() {
       {/* ══ Bottom Bar ══ */}
       <div className="footer__bottom">
         <div className="footer__bottom-inner">
-          <p className="footer__copy">Copyright © {year} JHS & Associates LLP All rights reserved. </p>
+          {/* <p className="footer__copy">Copyright © {year} JHS All rights reserved. </p> */}
           <div className="footer__legal">
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
             <Link to="/terms-of-business">Terms of Business</Link>
+            <button type="button" className="footer__legal-btn" onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS))}>
+              Cookie Settings
+            </button>
           </div>
         </div>
       </div>

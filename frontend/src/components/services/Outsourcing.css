@@ -177,6 +177,35 @@
   display: flex;
   align-items: center;
   padding: 14px 0;
+  cursor: pointer;
+}
+
+.o-spoke-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--o-red);
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.o-spoke-row:hover .o-spoke-cta,
+.o-spoke-mobile-card:hover .o-spoke-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.o-spoke-text--right .o-spoke-cta {
+  justify-content: flex-start;
+}
+
+.o-spoke-text--left .o-spoke-cta {
+  justify-content: flex-end;
+  width: 100%;
 }
 
 /* .o-spoke-row:hover .o-spoke-title {
@@ -497,6 +526,7 @@
     box-shadow: var(--o-shadow-sm);
     border: 1px solid var(--o-gray-200);
     transition: all 0.25s ease;
+    cursor: pointer;
   }
 
   .o-spoke-mobile-card:hover {

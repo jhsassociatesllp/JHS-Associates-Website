@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 import { imageUrl } from '../utils/imageUrl'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import { useSiteAuth } from '../context/SiteAuthContext'
+import AccountMenu from '../components/common/AccountMenu'
+import { EventMarquee } from './UpcomingEvent'
 
 interface Card {
   id: number;
@@ -32,6 +35,23 @@ interface RegulatoryEntry {
   image_id?: string;
   created_at?: string;
 }
+interface PodcastEntry {
+  title: string;
+  description: string;
+  guest?: string | null;
+  platform: string;
+  image_id?: string | null;
+  published_on?: string;
+  created_at?: string;
+}
+interface RegWatchEntry {
+  title: string;
+  summary: string;
+  regulator: string;
+  image_id?: string | null;
+  published_on?: string;
+  created_at?: string;
+}
 interface WhitePaperEntry {
   title: string;
   short_description: string;
@@ -47,6 +67,8 @@ const yearOf = (iso?: string) => (iso ? new Date(iso).getFullYear() : new Date()
 const EXCELLENCIA_CARD_ID = 3;
 const REGULATORY_CARD_ID = 2;
 const WHITEPAPER_CARD_ID = 7;
+const REGWATCH_CARD_ID = 8;
+const PODCAST_CARD_ID = 9;
 
 
 const mapExcellenciaEntry = (entry: ExcellenciaEntry): Card => ({
@@ -70,6 +92,28 @@ const mapRegulatoryEntry = (entry: RegulatoryEntry): Card => ({
   hoverTitle: entry.title,
   hoverDescription: entry.short_description,
   route: "/regulatory",
+});
+
+const mapPodcastEntry = (entry: PodcastEntry): Card => ({
+  id: PODCAST_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/podcasts/image/${entry.image_id}` : imageUrl('Card3.webp'),
+  category: "PODCAST",
+  meta: `JHS PODCASTS · ${entry.platform.toUpperCase()} · ${yearOf(entry.published_on || entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.guest ? `With ${entry.guest}. ${entry.description}` : entry.description,
+  route: "/podcasts",
+});
+
+const mapRegWatchEntry = (entry: RegWatchEntry): Card => ({
+  id: REGWATCH_CARD_ID,
+  image: entry.image_id ? `${API_BASE}/reg-watch/image/${entry.image_id}` : imageUrl('Regulatory-bg-img.webp'),
+  category: "REG-WATCH",
+  meta: `JHS REG-WATCH · ${entry.regulator.toUpperCase()} · ${yearOf(entry.published_on || entry.created_at)}`,
+  title: entry.title,
+  hoverTitle: entry.title,
+  hoverDescription: entry.summary,
+  route: "/reg-watch",
 });
 
 const mapWhitePaperEntry = (entry: WhitePaperEntry): Card => ({
@@ -108,6 +152,17 @@ const DEFAULT_CARDS: Card[] = [
       "Discover the latest amendments that modernize partnership firm registration in Maharashtra with a completely online process, making registration simpler, faster, and more accessible for entrepreneurs.",
     route: "/regulatory",
   },
+  {
+    id: REGWATCH_CARD_ID,
+    image: imageUrl('Regulatory-bg-img.webp'),
+    category: "REG-WATCH",
+    meta: "JHS REG-WATCH · REGULATORY RADAR · 2026",
+    title: "Reg-Watch: Regulatory changes tracked and explained by JHS",
+    hoverTitle: "JHS Reg-Watch",
+    hoverDescription:
+      "Circulars, notifications and rule changes from SEBI, RBI, MCA, GST, Income Tax and more — tracked by JHS and explained in plain language, so you always know what changed and what to do next.",
+    route: "/reg-watch",
+  },
 
   {
     id: EXCELLENCIA_CARD_ID,
@@ -119,6 +174,17 @@ const DEFAULT_CARDS: Card[] = [
     hoverDescription:
       "Our proprietary knowledge base of premium research, industry benchmarks, and strategic frameworks. Access curated whitepapers, regulatory updates, and strategic guides developed by JHS experts to empower informed decision-making.",
     route: "/excellencia",
+  },
+  {
+    id: PODCAST_CARD_ID,
+    image: imageUrl('Card3.webp'),
+    category: "PODCAST",
+    meta: "JHS PODCASTS · EXPERT CONVERSATIONS · 2026",
+    title: "JHS Podcasts: How industry leaders are adapting",
+    hoverTitle: "JHS Podcasts",
+    hoverDescription:
+      "Exclusive audio insights on the go. Hear directly from top executives and our senior partners on tax, regulation and business strategy.",
+    route: "/podcasts",
   },
   {
     id: WHITEPAPER_CARD_ID,
@@ -145,10 +211,9 @@ export default function Hero() {
   const autoSlideRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
   const navigate = useNavigate();
+  const { user, openAuthModal } = useSiteAuth();
 
   // Touch Swipe Refs
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
 
   const totalCards = cards.length;
 
@@ -189,6 +254,45 @@ export default function Hero() {
     };
   }, []);
 
+  // Reg-Watch loads on its own so a slow request for the other cards never delays it.
+  // One quiet retry covers a momentary network / server hiccup; the default card stays otherwise.
+  useEffect(() => {
+    let cancelled = false;
+    const load = (retry: boolean) =>
+      fetch(`${API_BASE}/reg-watch/?limit=1`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((list: RegWatchEntry[]) => {
+          if (cancelled || !Array.isArray(list) || list.length === 0) return;
+          setCards((prev) => prev.map((card) => (card.id === REGWATCH_CARD_ID ? mapRegWatchEntry(list[0]) : card)));
+        })
+        .catch(() => {
+          if (retry && !cancelled) window.setTimeout(() => load(false), 2000);
+        });
+    load(true);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Latest podcast episode — loaded on its own, with one quiet retry, like Reg-Watch.
+  useEffect(() => {
+    let cancelled = false;
+    const load = (retry: boolean) =>
+      fetch(`${API_BASE}/podcasts/?limit=1`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((list: PodcastEntry[]) => {
+          if (cancelled || !Array.isArray(list) || list.length === 0) return;
+          setCards((prev) => prev.map((card) => (card.id === PODCAST_CARD_ID ? mapPodcastEntry(list[0]) : card)));
+        })
+        .catch(() => {
+          if (retry && !cancelled) window.setTimeout(() => load(false), 2000);
+        });
+    load(true);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const nextSlide = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
@@ -210,16 +314,21 @@ export default function Hero() {
   }, [nextSlide]);
 
   // Single stable auto-slide interval — does not restart on index change
-  useEffect(() => {
+  const startAutoSlide = useCallback(() => {
+    if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     autoSlideRef.current = setInterval(() => {
       if (!isPausedRef.current) {
         nextSlideRef.current();
       }
     }, AUTO_SLIDE_MS);
+  }, []);
+
+  useEffect(() => {
+    startAutoSlide();
     return () => {
       if (autoSlideRef.current) clearInterval(autoSlideRef.current);
     };
-  }, []);
+  }, [startAutoSlide]);
 
   const pauseAutoSlide = useCallback(() => {
     isPausedRef.current = true;
@@ -229,32 +338,55 @@ export default function Hero() {
     isPausedRef.current = false;
   }, []);
 
-  // --- SWIPE HANDLERS ---
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchEndX.current = null;
-    touchStartX.current = e.targetTouches[0].clientX;
+  // --- SWIPE / DRAG HANDLERS ---
+  // Pointer events cover a finger, a mouse drag and a pen with one code path, and treat a swipe
+  // to the left and a swipe to the right exactly the same way. A mostly vertical drag is left
+  // alone so the page still scrolls (CSS `touch-action: pan-y` hands us the horizontal moves).
+  const dragRef = useRef<{ x: number; y: number; id: number } | null>(null);
+  const draggedRef = useRef(false);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragRef.current = { x: e.clientX, y: e.clientY, id: e.pointerId };
+    draggedRef.current = false;
     pauseAutoSlide();
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
+  const handlePointerMove = (e: React.PointerEvent) => {
+    const d = dragRef.current;
+    if (d && d.id === e.pointerId && Math.abs(e.clientX - d.x) > 10) draggedRef.current = true;
   };
 
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) {
-      resumeAutoSlide();
-      return;
-    }
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 50;
+  // A swipe always responds right away (it is not held back by an automatic slide that has just
+  // happened), and the automatic timer starts again afterwards so it cannot jump straight after.
+  const slideByUser = (direction: 1 | -1) => {
+    setCurrentIndex((prev) => (prev + direction + totalCards) % totalCards);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+    startAutoSlide();
+  };
 
-    if (distance > minSwipeDistance) {
-      nextSlide();
-    } else if (distance < -minSwipeDistance) {
-      prevSlide();
+  const finishDrag = (e: React.PointerEvent, cancelled: boolean) => {
+    const d = dragRef.current;
+    if (!d || d.id !== e.pointerId) return;
+    dragRef.current = null;
+    if (!cancelled) {
+      const dx = d.x - e.clientX;
+      const dy = d.y - e.clientY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        slideByUser(dx > 0 ? 1 : -1);
+      }
     }
-
     resumeAutoSlide();
+  };
+
+  // After a real drag, the click that follows must not also trigger a card's own click.
+  const handleClickCapture = (e: React.MouseEvent) => {
+    if (draggedRef.current) {
+      e.stopPropagation();
+      e.preventDefault();
+      draggedRef.current = false;
+    }
   };
 
   // Signed distance from currentIndex, wrapped the short way around the
@@ -269,12 +401,41 @@ export default function Hero() {
 
   const POSITION_BY_OFFSET = ["prev2", "prev", "current", "next", "next2"];
 
+  // Where each card was on the previous render. A card that wraps round to the far side
+  // (or comes back from hiding) must not fly across the carousel: it is moved instantly and
+  // only its opacity animates.
+  const [previousOffsets, setPreviousOffsets] = useState<Record<number, number>>({});
+  useEffect(() => {
+    const total = cards.length;
+    const next: Record<number, number> = {};
+    cards.forEach((c, i) => {
+      let diff = i - currentIndex;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+      next[c.id] = diff;
+    });
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- remembers the layout of the render that just finished
+    setPreviousOffsets(next);
+  }, [cards, currentIndex]);
+
+  // Tapping a card in the row brings it to the centre.
+  const jumpTo = (index: number) => {
+    if (index === currentIndex) return;
+    setCurrentIndex(index);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), TRANSITION_MS);
+    startAutoSlide();
+  };
+
   const renderCard = (card: Card, index: number) => {
     const offset = getOffset(index);
-    // Anything beyond the 5 visible slots collapses onto the nearest edge
-    // slot — that slot is opacity:0 already, so it just stays invisible.
+    // Five cards are shown (two each side of the centre). Anything further out waits,
+    // invisible, just outside the row on its own side.
+    const gone = Math.abs(offset) > 2;
     const clamped = Math.max(-2, Math.min(2, offset));
     const position = POSITION_BY_OFFSET[clamped + 2];
+    const before = previousOffsets[card.id];
+    const jumped = before !== undefined && Math.abs(offset - before) > 2;
 
     const isHovered = hoveredCard === card.id;
     const isCenter = position === "current";
@@ -284,11 +445,11 @@ export default function Hero() {
     return (
       <article
         key={card.id}
-        className={`hero__carousel-card hero__carousel-card--${position} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
+        className={`hero__carousel-card hero__carousel-card--${position} ${gone ? `hero__carousel-card--gone hero__carousel-card--gone-${offset < 0 ? "l" : "r"}` : ""} ${isHovered && isCenter ? "hero__carousel-card--hovered" : ""
           }`}
+        style={jumped ? { transition: "opacity 0.35s ease" } : undefined}
         onClick={() => {
-          if (position === "prev") prevSlide();
-          else if (position === "next") nextSlide();
+          if (!isCenter && !gone) jumpTo(index);
         }}
         onMouseEnter={() => {
           if (isCenter) {
@@ -358,33 +519,42 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero__bg" aria-hidden="true" />
+      <EventMarquee />
 
       {/* Top-right action buttons */}
       <div className="hero__actions">
         <button
-          className="hero__action-btn hero__action-btn--outline"
+          className="hero__action-btn hero__action-btn--navy hero__action-btn--desktop-only"
           onClick={() => navigate("/approval-for-proposal")}
         >
           Business Opportunities
         </button>
         <button
-          className="hero__action-btn hero__action-btn--solid"
+          className="hero__action-btn hero__action-btn--solid hero__action-btn--desktop-only"
           onClick={() => navigate("/about/careers")}
         >
           Join Our Team
         </button>
         <LanguageSwitcher />
+        {user ? (
+          <AccountMenu className="nb__account--hero" />
+        ) : (
+          <button
+            className="hero__action-btn hero__action-btn--outline hero__action-btn--desktop-only"
+            onClick={() => openAuthModal()}
+          >
+            Log In
+          </button>
+        )}
       </div>
 
       {/* Header */}
       <div className="hero__header">
         <span className="hero__eyebrow">WELCOME TO JHS</span>
         <h1 className="hero__headline">
-          Building Trust
-          <br />
-          Delivering Excellence
-          <br />
-          Shaping Better Futures
+          <span className="hero__headline-part hero__headline-part--lead">Building Trust</span>{" "}
+          <span className="hero__headline-part">Delivering Excellence</span>
+          <span className="hero__headline-part">Shaping Better Futures</span>
         </h1>
         {/* <span className="hero__badge">RESPONSIBLE AI</span> */}
       </div>
@@ -393,9 +563,12 @@ export default function Hero() {
       <div className="hero__carousel">
         <div
           className="hero__carousel-container"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={(e) => finishDrag(e, false)}
+          onPointerCancel={(e) => finishDrag(e, true)}
+          onPointerLeave={(e) => { if (e.pointerType === "mouse") finishDrag(e, false); }}
+          onClickCapture={handleClickCapture}
         >
           <div className="hero__carousel-track">
             {cards.map((card, index) => renderCard(card, index))}

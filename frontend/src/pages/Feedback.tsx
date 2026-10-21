@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './Feedback.css'
+import { ConsentCheck, CharCount, Honeypot } from '../components/common/FormExtras'
+import { useTurnstile } from '../components/common/useTurnstile'
+import { LIMITS, apiErrorMessage, hasMarkup, validateEmail, validatePhone } from '../utils/formRules'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
 
@@ -16,7 +19,11 @@ interface ReferenceRow {
 export default function Feedback() {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState('')
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
   const [formData, setFormData] = useState({
     clientName: '',
     natureOfAssignment: '',
@@ -101,8 +108,15 @@ export default function Feedback() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (submitting) return // ignore a second click while the first is still being sent
+    const textFields = [formData.clientName, formData.natureOfAssignment, formData.periodOfAssignment, formData.assignmentSPOC,
+      formData.testimonial, formData.name, formData.designation, ...references.flatMap(r => [r.companyName, r.nameDesignation])]
+    if (textFields.some(hasMarkup)) { setSubmitError('Please remove the < and > characters from the text boxes.'); return }
+    const badRef = references.find(r => (r.email && validateEmail(r.email)) || (r.phone && validatePhone(r.phone)))
+    if (badRef) { setSubmitError('Please check the phone number and email of your references.'); return }
+    if (!consent) { setConsentError('Please accept the Privacy Policy to continue'); return }
     setSubmitting(true)
-    setSubmitError(false)
+    setSubmitError('')
 
     try {
       // Transform form data to match backend schema
@@ -147,7 +161,10 @@ export default function Feedback() {
         
         testimonial: formData.testimonial,
         name: formData.name,
-        designation: formData.designation
+        designation: formData.designation,
+        consent,
+        website: honeypot,
+        cf_turnstile_token: turnstile.token || null,
       }
 
       const response = await axios.post(`${API_BASE_URL}/feedback/`, payload)
@@ -158,8 +175,9 @@ export default function Feedback() {
         navigate('/')
       }
     } catch (error) {
-      console.error('Error submitting feedback:', error)
-      setSubmitError(true)
+      turnstile.reset()
+      const body = axios.isAxiosError(error) ? error.response?.data : null
+      setSubmitError(apiErrorMessage(body, 'Failed to submit feedback. Please try again.'))
     } finally {
       setSubmitting(false)
     }
@@ -195,7 +213,7 @@ export default function Feedback() {
 
         {submitError && (
           <div role="alert" style={{ backgroundColor: '#fdecea', color: '#a63222', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
-            Failed to submit feedback. Please try again.
+            {submitError}
           </div>
         )}
 
@@ -209,6 +227,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="clientName"
+                  maxLength={LIMITS.name * 2}
                   name="clientName"
                   value={formData.clientName}
                   onChange={handleInputChange}
@@ -220,6 +239,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="natureOfAssignment"
+                  maxLength={300}
                   name="natureOfAssignment"
                   value={formData.natureOfAssignment}
                   onChange={handleInputChange}
@@ -234,6 +254,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="periodOfAssignment"
+                  maxLength={100}
                   name="periodOfAssignment"
                   value={formData.periodOfAssignment}
                   onChange={handleInputChange}
@@ -261,6 +282,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="assignmentSPOC"
+                  maxLength={100}
                   name="assignmentSPOC"
                   value={formData.assignmentSPOC}
                   onChange={handleInputChange}
@@ -494,32 +516,44 @@ export default function Feedback() {
               <div key={ref.id} className="reference-row">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Name of the Company</label>
+                    <label htmlFor={`ref-companyName-${ref.id}`}>Name of the Company</label>
                     <input
+                      id={`ref-companyName-${ref.id}`}
+                      name={`reference_companyName_${ref.id}`}
+                      maxLength={100}
                       type="text"
                       value={ref.companyName}
                       onChange={(e) => handleReferenceChange(ref.id, 'companyName', e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label>Name & Designation</label>
+                    <label htmlFor={`ref-nameDesignation-${ref.id}`}>Name & Designation</label>
                     <input
+                      id={`ref-nameDesignation-${ref.id}`}
+                      name={`reference_nameDesignation_${ref.id}`}
+                      maxLength={100}
                       type="text"
                       value={ref.nameDesignation}
                       onChange={(e) => handleReferenceChange(ref.id, 'nameDesignation', e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label>Phone</label>
+                    <label htmlFor={`ref-phone-${ref.id}`}>Phone</label>
                     <input
+                      id={`ref-phone-${ref.id}`}
+                      name={`reference_phone_${ref.id}`}
+                      maxLength={LIMITS.phone}
                       type="tel"
                       value={ref.phone}
                       onChange={(e) => handleReferenceChange(ref.id, 'phone', e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label>Email</label>
+                    <label htmlFor={`ref-email-${ref.id}`}>Email</label>
                     <input
+                      id={`ref-email-${ref.id}`}
+                      name={`reference_email_${ref.id}`}
+                      maxLength={LIMITS.email}
                       type="email"
                       value={ref.email}
                       onChange={(e) => handleReferenceChange(ref.id, 'email', e.target.value)}
@@ -555,8 +589,10 @@ export default function Feedback() {
                 value={formData.testimonial}
                 onChange={handleInputChange}
                 rows={5}
+                maxLength={LIMITS.longMessage}
                 placeholder="Share your experience with our services..."
               />
+              <CharCount value={formData.testimonial} max={LIMITS.longMessage} />
             </div>
           </section>
 
@@ -569,6 +605,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="name"
+                  maxLength={LIMITS.name}
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
@@ -580,6 +617,7 @@ export default function Feedback() {
                 <input
                   type="text"
                   id="designation"
+                  maxLength={100}
                   name="designation"
                   value={formData.designation}
                   onChange={handleInputChange}
@@ -588,6 +626,11 @@ export default function Feedback() {
               </div>
             </div>
           </section>
+
+          <Honeypot value={honeypot} onChange={setHoneypot} />
+          {turnstile.widget}
+          <ConsentCheck id="fb-consent" checked={consent} error={consentError}
+            onChange={(v) => { setConsent(v); if (v) setConsentError('') }} />
 
           {/* Submit Button */}
           <div className="form-actions">

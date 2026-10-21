@@ -333,12 +333,12 @@ export default function ITAssurance() {
                   "Execution of assessments using industry-grade tooling",
                   "Detailed vulnerability reports with mitigating controls",
                   "Tracking management's corrective action plan",
-                  "Black Box &amp; White Box methodologies as required",
+                  "Black Box & White Box methodologies as required",
                   "Scheduled to minimise operational disruption"
                 ].map((pt, i) => (
                   <div key={i} className="a-vapt-value__point">
                     <CheckCircle2 size={16} />
-                    <span dangerouslySetInnerHTML={{ __html: pt }} />
+                    <span>{pt}</span>
                   </div>
                 ))}
               </div>

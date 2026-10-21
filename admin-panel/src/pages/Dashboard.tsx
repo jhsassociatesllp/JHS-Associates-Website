@@ -13,24 +13,22 @@ import {
 import {
   AreaChart, Area, BarChart, Bar,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
-  PieChart, Pie,
 } from 'recharts';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-console.log("API Base URL", API_BASE_URL)
 
 /* ─── Design Tokens ────────────────────────────────────────── */
 const C = {
-  pageBg:   '#f4f5fa',
+  pageBg:   '#eef2f9',
   cardBg:   '#ffffff',
-  textMain: '#2d3748',
-  textMuted:'#8a8d93',
-  border:   'rgba(0,0,0,0.07)',
-  shadow:   '0 2px 8px rgba(0,0,0,0.08)',
-  accent:   '#696cff',
-  success:  '#10b981',
+  textMain: '#1e293b',
+  textMuted:'#6b7a90',
+  border:   'rgba(15,35,64,0.06)',
+  shadow:   '0 6px 22px rgba(15,35,64,0.07)',
+  accent:   '#2563eb',
+  success:  '#16a34a',
   warning:  '#f59e0b',
   danger:   '#ef4444',
   info:     '#3b82f6',
@@ -281,42 +279,61 @@ export default function Dashboard() {
     );
   }
 
+  const series = (pick: (m: MonthlyData) => number) => monthlyData.map((m) => ({ v: pick(m) }));
   const STAT_CARDS = [
     {
       label: 'Total Articles',
       value: stats.totalArticles,
       icon: ArticleIcon,
-      iconColor: C.accent,
+      from: '#7c3aed', to: '#4f46e5',
       change: '+12%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      spark: series((m) => m.articles),
     },
     {
       label: 'Total Blogs',
       value: stats.totalBlogs,
       icon: BlogIcon,
-      iconColor: C.success,
+      from: '#22c55e', to: '#15803d',
       change: '+8%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      spark: series((m) => m.blogs),
     },
     {
       label: 'Knowledge Resources',
       value: stats.totalKnowledge,
       icon: KnowledgeIcon,
-      iconColor: C.info,
+      from: '#f97316', to: '#ea580c',
       change: '+15%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      spark: series((m) => m.knowledge),
     },
     {
       label: 'Total Contacts',
       value: stats.totalContacts,
       icon: EmailIcon,
-      iconColor: C.warning,
+      from: '#3b82f6', to: '#1d4ed8',
       change: '+23%',
       sub: 'from last month',
-      bgGradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      spark: series((m) => m.contacts),
+    },
+    {
+      label: 'Pending Contacts',
+      value: stats.pendingContacts,
+      icon: AssessmentIcon,
+      from: '#ec4899', to: '#be185d',
+      change: '',
+      sub: 'waiting for a reply',
+      spark: series((m) => m.contacts),
+    },
+    {
+      label: 'All Content Items',
+      value: stats.totalArticles + stats.totalBlogs + stats.totalKnowledge,
+      icon: KnowledgeIcon,
+      from: '#14b8a6', to: '#0f766e',
+      change: '',
+      sub: 'articles, blogs, knowledge',
+      spark: series((m) => m.articles + m.blogs + m.knowledge),
     },
   ];
 
@@ -325,134 +342,106 @@ export default function Dashboard() {
 
       {/* ── Page Header ─────────────────────────────────────── */}
       <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
           <Box>
-            <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
-              Dashboard
+            <Typography sx={{
+              fontSize: '0.7rem', fontWeight: 700, color: C.accent, letterSpacing: 1.2,
+              textTransform: 'uppercase', mb: 0.5, fontFamily: 'Inter,sans-serif',
+            }}>
+              Content Command Center
+            </Typography>
+            <Typography sx={{ fontSize: '1.75rem', fontWeight: 800, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
+              Dashboard overview
             </Typography>
             <Typography sx={{ fontSize: '0.875rem', color: C.textMuted, mt: 0.5 }}>
               Welcome back, Admin. Here's what's happening with your content.
             </Typography>
           </Box>
           <Chip
-            label="Last updated: Just now"
+            label="Updated just now"
             size="small"
+            icon={<Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: C.success, ml: '10px !important' }} />}
             sx={{
-              bgcolor: `${C.success}15`,
-              color: C.success,
-              fontWeight: 600,
-              fontSize: '0.75rem',
-              px: 1,
+              bgcolor: '#fff',
+              border: `1px solid ${C.border}`,
+              color: C.textMain,
+              fontWeight: 700,
+              fontSize: '0.72rem',
+              letterSpacing: 0.4,
+              textTransform: 'uppercase',
+              px: 0.5,
+              boxShadow: C.shadow,
             }}
           />
         </Box>
       </Box>
 
       {/* ── Row 1: Stat Cards ───────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '24px' }}>
-        {STAT_CARDS.map((card) => {
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(6, 1fr)' }, gap: '18px', mb: 3 }}>
+        {STAT_CARDS.map((card, idx) => {
           const Icon = card.icon;
           return (
             <Card
               key={card.label}
               elevation={0}
               sx={{
-                bgcolor: C.cardBg,
-                border: `1px solid ${C.border}`,
-                borderRadius: 2,
+                background: `linear-gradient(135deg, ${card.from} 0%, ${card.to} 100%)`,
+                borderRadius: 3,
                 overflow: 'hidden',
                 position: 'relative',
+                color: '#fff',
+                boxShadow: `0 10px 24px -10px ${card.to}`,
                 transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                },
+                '&:hover': { transform: 'translateY(-4px)', boxShadow: `0 16px 30px -10px ${card.to}` },
               }}
             >
-                {/* Gradient background strip */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 4,
-                    background: card.bgGradient,
-                  }}
-                />
-
-                <CardContent sx={{ p: '20px !important' }}>
-                  {/* Top Row: Icon + Label */}
-                  <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
-                    <Box
-                      sx={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: 2,
-                        background: card.bgGradient,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                      }}
-                    >
-                      <Icon sx={{ fontSize: 24, color: '#fff' }} />
-                    </Box>
-                    <Chip
-                      label={card.change}
-                      size="small"
-                      sx={{
-                        bgcolor: card.change.startsWith('+') ? `${C.success}15` : `${C.danger}15`,
-                        color: card.change.startsWith('+') ? C.success : C.danger,
-                        fontWeight: 700,
-                        fontSize: '0.7rem',
-                      }}
-                    />
+              <CardContent sx={{ p: '18px !important', position: 'relative', zIndex: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1.4 }}>
+                  <Box sx={{ width: 38, height: 38, borderRadius: 2, bgcolor: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Icon sx={{ fontSize: 20, color: '#fff' }} />
                   </Box>
-
-                  {/* Label */}
-                  <Typography
-                    sx={{
-                      fontSize: '0.8rem',
-                      color: C.textMuted,
-                      fontWeight: 600,
-                      fontFamily: 'Inter,sans-serif',
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                      mb: 0.5,
-                    }}
-                  >
+                  <Typography sx={{ fontSize: '0.74rem', fontWeight: 600, lineHeight: 1.25, opacity: 0.95, fontFamily: 'Inter,sans-serif' }}>
                     {card.label}
                   </Typography>
+                </Box>
 
-                  {/* Value */}
-                  <Typography
-                    sx={{
-                      fontSize: '2rem',
-                      fontWeight: 700,
-                      color: C.textMain,
-                      lineHeight: 1.2,
-                      fontFamily: 'Inter,sans-serif',
-                      mb: 0.5,
-                    }}
-                  >
-                    {card.value}
-                  </Typography>
+                <Typography sx={{ fontSize: '1.9rem', fontWeight: 800, lineHeight: 1.1, fontFamily: 'Inter,sans-serif', mb: 0.6 }}>
+                  {card.value}
+                </Typography>
 
-                  {/* Subtitle */}
-                  <Typography sx={{ fontSize: '0.75rem', color: C.textMuted }}>
-                    {card.sub}
-                  </Typography>
-                </CardContent>
-              </Card>
+                <Typography sx={{ fontSize: '0.72rem', opacity: 0.9, display: 'flex', alignItems: 'center', gap: 0.6 }}>
+                  {card.change && (
+                    <Box component="span" sx={{ px: 0.8, py: 0.1, borderRadius: 1, bgcolor: 'rgba(255,255,255,0.22)', fontWeight: 700 }}>
+                      {card.change}
+                    </Box>
+                  )}
+                  {card.sub}
+                </Typography>
+              </CardContent>
+
+              {/* small trend line along the bottom */}
+              <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 46, opacity: 0.9, pointerEvents: 'none' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={card.spark.length ? card.spark : [{ v: 0 }, { v: 0 }]} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id={`kpi-${idx}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fff" stopOpacity={0.35} />
+                        <stop offset="100%" stopColor="#fff" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <Area type="monotone" dataKey="v" stroke="rgba(255,255,255,0.85)" strokeWidth={2} fill={`url(#kpi-${idx})`} dot={false} isAnimationActive={false} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </Box>
+            </Card>
           );
         })}
-      </div>
+      </Box>
 
       {/* ── Row 2: Charts ────────────────────────────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '24px' }}>
         {/* Content Overview Chart */}
-        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2, height: '100%' }}>
+        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3, height: '100%' }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
               <Box>
@@ -478,7 +467,7 @@ export default function Dashboard() {
                     color: C.textMuted,
                     textTransform: 'none',
                     '&.Mui-selected': { bgcolor: C.accent, color: '#fff', borderColor: C.accent },
-                    '&.Mui-selected:hover': { bgcolor: '#5a5de0' },
+                    '&.Mui-selected:hover': { bgcolor: '#1d4fd8' },
                   },
                 }}
               >
@@ -531,7 +520,7 @@ export default function Dashboard() {
         </Card>
 
         {/* Content Distribution Pie Chart */}
-        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2, height: '100%' }}>
+        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3, height: '100%' }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.5 }}>
               Content Distribution
@@ -540,28 +529,42 @@ export default function Dashboard() {
               Current content breakdown
             </Typography>
 
-            <Box sx={{ height: 240, position: 'relative' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={contentDistribution}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    paddingAngle={3}
-                    dataKey="value"
-                    startAngle={90}
-                    endAngle={-270}
-                  >
-                    {contentDistribution.map((entry, i) => (
-                      <g key={i}>
-                        <path fill={entry.color} />
-                      </g>
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+            <Box sx={{ height: 240, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {/* Hand-drawn SVG donut (stroke-dasharray per segment) rather than
+                  Recharts' <Pie> — recharts 3.8.1 computes a zero-width angle
+                  for every segment here regardless of props, an upstream bug,
+                  not something tunable from this component. This renders the
+                  same contentDistribution data/colors with no library dependency. */}
+              {(() => {
+                const total = contentDistribution.reduce((sum, d) => sum + d.value, 0) || 1;
+                const radius = 80;
+                const circumference = 2 * Math.PI * radius;
+                const gap = 3;
+                let acc = 0;
+                return (
+                  <svg width={200} height={200} viewBox="0 0 200 200">
+                    {contentDistribution.filter((d) => d.value > 0).map((entry) => {
+                      const dash = (entry.value / total) * circumference;
+                      const rotation = (acc / total) * 360 - 90;
+                      acc += entry.value;
+                      return (
+                        <circle
+                          key={entry.name}
+                          cx={100}
+                          cy={100}
+                          r={radius}
+                          fill="none"
+                          stroke={entry.color}
+                          strokeWidth={28}
+                          strokeDasharray={`${Math.max(dash - gap, 0)} ${circumference - Math.max(dash - gap, 0)}`}
+                          strokeLinecap="round"
+                          transform={`rotate(${rotation} 100 100)`}
+                        />
+                      );
+                    })}
+                  </svg>
+                );
+              })()}
 
               {/* Center label */}
               <Box
@@ -606,7 +609,7 @@ export default function Dashboard() {
       {/* ── Row 3: Recent Activity & Weekly Trend ─────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
         {/* Recent Activity */}
-        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2 }}>
+        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3 }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
               <Box>
@@ -717,7 +720,7 @@ export default function Dashboard() {
         </Card>
 
         {/* Weekly Trend */}
-        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, borderRadius: 2 }}>
+        <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3 }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.5 }}>
               Weekly Activity Trend

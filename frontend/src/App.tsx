@@ -7,7 +7,12 @@ import { patchDomForGoogleTranslate, initPersistedLanguage } from './i18n/google
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import SEOHead from './components/common/SEOHead'
+import ChatBot from './components/common/ChatBot'
+import QuickActionsFab from './components/common/QuickActionsFab'
+import AuthModal from './components/auth/AuthModal'
+import { SiteAuthProvider } from './context/SiteAuthContext'
 import Hero from './sections/Hero'
+import UpcomingEvent from './sections/UpcomingEvent'
 import Spotlight from './sections/Spotlight'
 import Stats from './sections/Stats'
 import Services from './sections/Services'
@@ -15,7 +20,7 @@ import Cities from './sections/Cities'
 import VisionMission from './sections/VisionMission'
 import Insights from './sections/Insights'
 import FAQ from './sections/FAQ'
-import Disclaimer from './components/Disclaimer'
+import CookieConsent from './components/common/CookieConsent'
 
 const SOP_URL = 'https://mediumslateblue-louse-618680.hostingersite.com/samplesopdel/'
 
@@ -91,6 +96,9 @@ const Podcasts = lazy(() => import('./components/Insights/Podcasts'))
 const Excellencia = lazy(() => import('./components/Insights/Excellencia'))
 const WhitePapers = lazy(() => import('./components/Insights/WhitePapers'))
 const Regulatory = lazy(() => import('./components/Insights/Regulatory'))
+const RegWatch = lazy(() => import('./pages/RegWatch'))
+const Unsubscribe = lazy(() => import('./pages/Unsubscribe'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Spotlight pages
 const AIAutomation = lazy(() => import('./components/Spotlight/AIAutomation'))
@@ -131,6 +139,11 @@ const Feedback = lazy(() => import('./pages/Feedback'))
 // Request for Proposal page
 const RequestForProposal = lazy(() => import('./pages/RequestForProposal'))
 
+// Book Appointment page
+const BookAppointment = lazy(() => import('./pages/BookAppointment'))
+const Events = lazy(() => import('./pages/Events'))
+const EventDetail = lazy(() => import('./pages/EventDetail'))
+
 // Hero Card Detail Pages
 const BoardroomsInTransition = lazy(() => import('./pages/BoardroomsInTransition'))
 const DataGovernanceRule6 = lazy(() => import('./pages/DataGovernanceRule6'))
@@ -146,6 +159,7 @@ function HomePage() {
   return (
     <main>
       <Hero />
+      <UpcomingEvent />
       <Spotlight />
       <Stats />
       <Services />
@@ -179,9 +193,10 @@ export default function App() {
   if (pathname.toLowerCase().replace(/\/+$/, '') === '/sop') return <SopPage />
 
   return (
-    <>
+    <SiteAuthProvider>
       <SEOHead />
-      <Disclaimer />
+      <CookieConsent />
+      <AuthModal />
       <Navbar />
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
@@ -253,6 +268,8 @@ export default function App() {
           <Route path="/resources" element={<Resources />} />
           <Route path="/white-papers" element={<WhitePapers />} />
           <Route path="/regulatory" element={<Regulatory />} />
+          <Route path="/reg-watch" element={<RegWatch />} />
+          <Route path="/unsubscribe" element={<Unsubscribe />} />
           <Route path="/articles" element={<Articles />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
@@ -295,6 +312,11 @@ export default function App() {
           {/* Request for Proposal */}
           <Route path="/approval-for-proposal" element={<RequestForProposal />} />
 
+          {/* Book Appointment */}
+          <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetail />} />
+
           {/* Hero Card Detail Pages */}
           <Route path="/articles/boardrooms-in-transition" element={<BoardroomsInTransition />} />
           <Route path="/resources/data-governance-rule-6" element={<DataGovernanceRule6 />} />
@@ -303,9 +325,13 @@ export default function App() {
           <Route path="/digital/digital-twins" element={<DigitalTwins />} />
           <Route path="/regulatory/sebi-draft-circular" element={<SEBIDraftCircular />} />
           <Route path="/regulatory/rbi-cooling-off-period" element={<RBICoolingOffPeriod />} />
+          {/* Anything else: a real "not found" page (the server also answers these URLs with HTTP 404) */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Footer />
-    </>
+      <QuickActionsFab />
+      <ChatBot />
+    </SiteAuthProvider>
   )
 }

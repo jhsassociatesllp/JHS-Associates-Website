@@ -1,9 +1,15 @@
 import { Fragment, useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { imageUrl } from '../../utils/imageUrl'
+import { useSiteAuth } from '../../context/SiteAuthContext'
+import ResumeMatchCheck from './ResumeMatchCheck'
+import { ConsentCheck, CharCount, Honeypot } from '../common/FormExtras'
+import { useTurnstile } from '../common/useTurnstile'
+import { LIMITS, apiErrorMessage, validateEmail, validateName, validateText } from '../../utils/formRules'
 
 /* ─── Types ─────────────────────────────────────────────── */
 type ApplicationForm = {
+  job_id: string
   full_name: string
   email: string
   phone: string
@@ -12,14 +18,30 @@ type ApplicationForm = {
   highest_qualification_other: string
   profile: string
   profile_other: string
+  current_ctc: string
+  expected_ctc: string
   how_heard: string
   how_heard_detail: string
   remark: string
 }
 
-type FormErrors = Partial<Record<keyof ApplicationForm | 'resume', string>>
+type FormErrors = Partial<Record<keyof ApplicationForm | 'resume' | 'consent', string>>
+
+type JobStatus = 'draft' | 'open' | 'closed'
+
+interface Job {
+  id: string
+  title: string
+  department: string
+  location: string
+  employment_type: string
+  experience: string
+  description: string
+  status: JobStatus
+}
 
 const emptyForm: ApplicationForm = {
+  job_id: '',
   full_name: '',
   email: '',
   phone: '',
@@ -28,9 +50,26 @@ const emptyForm: ApplicationForm = {
   highest_qualification_other: '',
   profile: '',
   profile_other: '',
+  current_ctc: '',
+  expected_ctc: '',
   how_heard: '',
   how_heard_detail: '',
   remark: '',
+}
+
+/* Pastel badge colors cycled by department, for a bit of visual variety
+   in the roles grid (matches the reference design's per-category tinting). */
+const DEPT_BADGE_COLORS = [
+  { bg: '#fde8e0', fg: '#b0521e' },
+  { bg: '#e3f3ea', fg: '#1f7a4d' },
+  { bg: '#eee6fb', fg: '#5b3aa8' },
+  { bg: '#e5f0fb', fg: '#1d5fa3' },
+  { bg: '#fdeef1', fg: '#b0245c' },
+]
+const badgeColorFor = (department: string) => {
+  let hash = 0
+  for (let i = 0; i < department.length; i++) hash = (hash * 31 + department.charCodeAt(i)) >>> 0
+  return DEPT_BADGE_COLORS[hash % DEPT_BADGE_COLORS.length]
 }
 
 /* ─── Constants ──────────────────────────────────────────── */
@@ -64,8 +103,10 @@ const RESPONSIVE_CSS = `
   .careers-life-grid    { grid-template-columns: 1fr 1.7fr !important; gap: 4rem !important; }
   .careers-culture-img  { height: 380px !important; }
 
+  /* ── Roles section ── */
+  .careers-roles-section { padding: 5rem 6rem !important; }
+  .careers-roles-grid    { grid-template-columns: repeat(3, 1fr) !important; }
 
-  
   /* ── Apply section ── */
   .careers-apply-section { padding: 4rem 4rem 5rem !important; }
   .careers-apply-card    { max-width: 760px !important; margin: 0 auto !important; }
@@ -78,6 +119,9 @@ const RESPONSIVE_CSS = `
     .careers-life-grid    { grid-template-columns: 1fr !important; gap: 2rem !important; }
     .careers-culture-img  { height: 260px !important; }
 
+    .careers-roles-section { padding: 3.5rem 2.5rem !important; }
+    .careers-roles-grid    { grid-template-columns: repeat(2, 1fr) !important; }
+
     .careers-apply-section { padding: 3rem 2rem 4rem !important; }
   }
 
@@ -89,6 +133,9 @@ const RESPONSIVE_CSS = `
 
     .careers-life-section { padding: 2.5rem 1.25rem !important; }
     .careers-culture-img  { height: 200px !important; border-radius: 10px !important; }
+
+    .careers-roles-section { padding: 2.5rem 1.25rem !important; }
+    .careers-roles-grid    { grid-template-columns: 1fr !important; }
 
     .careers-apply-section { padding: 2rem 1rem 3rem !important; }
     .careers-form-grid     { grid-template-columns: 1fr !important; }
@@ -106,8 +153,55 @@ export default function Careers() {
   const [formData, setFormData] = useState<ApplicationForm>(emptyForm)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [consent, setConsent] = useState(false)
+  const [honeypot, setHoneypot] = useState('')
+  const turnstile = useTurnstile()
+
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobsLoading, setJobsLoading] = useState(true)
+  const [jobsError, setJobsError] = useState(false)
+  const [expandedJobId, setExpandedJobId] = useState<string | null>(null)
+
+  /* Sign-in is handled by the site-wide account system (shared AuthModal)
+     rather than a Careers-specific Google flow. */
+  const { user: applicant, token: careerToken, openAuthModal, logout: signOutApplicant } = useSiteAuth()
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+
+  /* Prefill from the signed-in account, same as Request a Proposal / Book
+     an Appointment do. */
+  useEffect(() => {
+    if (!applicant) return
+    setFormData(c => ({ ...c, full_name: c.full_name || applicant.name, email: applicant.email }))
+  }, [applicant])
+
+  /* Fetch live open roles from the database (managed via the admin panel) */
+  useEffect(() => {
+    let cancelled = false
+    const loadJobs = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/careers/jobs`)
+        if (!res.ok) throw new Error()
+        const data: Job[] = await res.json()
+        if (!cancelled) setJobs(data)
+      } catch {
+        if (!cancelled) setJobsError(true)
+      } finally {
+        if (!cancelled) setJobsLoading(false)
+      }
+    }
+    loadJobs()
+    return () => { cancelled = true }
+  }, [API_BASE_URL])
+
+  const selectedJob = jobs.find(j => j.id === formData.job_id) ?? null
+
+  const applyForJob = (jobId: string) => {
+    setFormData(c => ({ ...c, job_id: jobId }))
+    document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const clearJobSelection = () => setFormData(c => ({ ...c, job_id: '' }))
 
   /* Inject CSS once */
   useEffect(() => {
@@ -130,16 +224,17 @@ export default function Careers() {
 
   const showQualOther = formData.highest_qualification === 'Others'
   const showProfileOther = formData.profile === 'Other'
+  const showCtcFields = formData.profile !== '' && formData.profile !== 'Fresher'
   const howHeardDetailLabel = HOW_HEARD_DETAIL_LABEL[formData.how_heard]
 
   const validate = (): boolean => {
     const e: FormErrors = {}
 
-    if (!formData.full_name.trim()) e.full_name = 'Full name is required'
-    else if (formData.full_name.trim().length < 2) e.full_name = 'Full name must be at least 2 characters'
+    const nameErr = validateName(formData.full_name, 'Full name')
+    if (nameErr) e.full_name = nameErr
 
-    if (!formData.email.trim()) e.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) e.email = 'Your email format is incorrect'
+    const emailErr = validateEmail(formData.email)
+    if (emailErr) e.email = 'Your email format is incorrect'
 
     if (!formData.phone.trim()) e.phone = 'Contact number is required'
     else if (!/^\+?[\d\s\-()]{7,20}$/.test(formData.phone.trim())) e.phone = 'Your phone number is incorrect'
@@ -149,16 +244,29 @@ export default function Careers() {
       else if (digits.length === 10 && !/^[6-9]/.test(digits)) e.phone = 'Enter a valid 10-digit mobile number'
     }
 
+    const placeErr = validateText(formData.place_of_residence, 'Place of residence')
+    if (placeErr) e.place_of_residence = placeErr
+    const remarkErr = validateText(formData.remark, 'Remark')
+    if (remarkErr) e.remark = remarkErr
+
     if (!formData.highest_qualification) e.highest_qualification = 'Please select your highest qualification'
     else if (showQualOther && !formData.highest_qualification_other.trim()) e.highest_qualification_other = 'Please specify your qualification'
 
     if (!formData.profile) e.profile = 'Please select your profile'
     else if (showProfileOther && !formData.profile_other.trim()) e.profile_other = 'Please specify your profile'
 
+    if (showCtcFields) {
+      if (!formData.current_ctc.trim()) e.current_ctc = 'Please enter your current CTC'
+      if (!formData.expected_ctc.trim()) e.expected_ctc = 'Please enter your expected CTC'
+    }
+
     if (!formData.how_heard) e.how_heard = 'Please select an option'
     else if (howHeardDetailLabel && !formData.how_heard_detail.trim()) e.how_heard_detail = `Please provide the ${howHeardDetailLabel.toLowerCase()}`
 
     if (!resumeFile) e.resume = 'Resume (PDF) is required'
+    else if (!/\.pdf$/i.test(resumeFile.name)) e.resume = 'Only PDF files are accepted'
+    else if (resumeFile.size > 5 * 1024 * 1024) e.resume = 'The PDF must be 5 MB or smaller'
+    if (!consent) e.consent = 'Please accept the Privacy Policy to continue'
 
     setErrors(e)
     return Object.keys(e).length === 0
@@ -166,10 +274,13 @@ export default function Careers() {
 
   const submitApplication = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!careerToken) { openAuthModal('apply for this role'); return }
     if (!validate()) return
+    if (submitting) return // ignore a second click while the first is still being sent
     setSubmitting(true); setMessage('')
     try {
       const payload = new FormData()
+      if (formData.job_id) payload.append('job_id', formData.job_id)
       payload.append('full_name', formData.full_name)
       payload.append('email', formData.email)
       payload.append('phone', formData.phone)
@@ -178,17 +289,33 @@ export default function Careers() {
       payload.append('highest_qualification_other', showQualOther ? formData.highest_qualification_other : '')
       payload.append('profile', formData.profile)
       payload.append('profile_other', showProfileOther ? formData.profile_other : '')
+      payload.append('current_ctc', showCtcFields ? formData.current_ctc : '')
+      payload.append('expected_ctc', showCtcFields ? formData.expected_ctc : '')
       payload.append('how_heard', formData.how_heard)
       payload.append('how_heard_detail', howHeardDetailLabel ? formData.how_heard_detail : '')
       payload.append('cover_letter', formData.remark)
+      payload.append('consent', 'true')
+      payload.append('website', honeypot)
+      if (turnstile.token) payload.append('cf_turnstile_token', turnstile.token)
       payload.append('resume', resumeFile as File)
 
-      const res = await fetch(`${API_BASE_URL}/careers/applications/upload`, { method: 'POST', body: payload })
-      if (!res.ok) throw new Error()
-      setFormData(emptyForm); setResumeFile(null); setErrors({})
+      const res = await fetch(`${API_BASE_URL}/careers/applications/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${careerToken}` },
+        body: payload,
+      })
+      if (res.status === 401) { signOutApplicant(); throw new Error('unauthorized') }
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(apiErrorMessage(body, ''))
+      }
+      setFormData(c => ({ ...emptyForm, full_name: c.full_name, email: c.email }))
+      setResumeFile(null); setErrors({}); setConsent(false); turnstile.reset()
       setMessage('Application submitted successfully. Our HR team will review it soon.')
-    } catch {
-      setMessage('Could not submit your application right now. Please try again.')
+    } catch (err) {
+      turnstile.reset()
+      const detail = err instanceof Error && err.message && err.message !== 'unauthorized' ? ` ${err.message}` : ' Please try again.'
+      setMessage(`Could not submit your application right now.${detail}`)
     } finally { setSubmitting(false) }
   }
 
@@ -201,7 +328,7 @@ export default function Careers() {
 
       {/* ══ HERO ══ */}
       <section style={ss.hero}>
-        <div style={{ ...ss.heroBg, backgroundImage: `url(${imageUrl('WebPoster4.webp')})` }} />
+        <div style={{ ...ss.heroBg, backgroundImage: `url(${imageUrl('Career-Page-Bg.png')})` }} />
         <div style={ss.heroOverlay} />
         <div className="careers-hero-content" style={ss.heroContent}>
           <p style={ss.heroEyebrow}>Join JHS</p>
@@ -232,7 +359,7 @@ export default function Careers() {
           </div>
           <div>
             <p style={ss.lifeBody}>
-              We believe our firm is only as good as the people within it. At JHS &amp; Associates, we foster an inclusive, dynamic, and high-performance culture that rewards innovation and hard work.
+              We believe our firm is only as good as the people within it. At JHS, we foster an inclusive, dynamic, and high-performance culture that rewards innovation and hard work.
             </p>
             <p style={{ ...ss.lifeBody, marginBottom: 0 }}>
               Whether you're an aspiring articled assistant seeking deep foundational training or an experienced professional aiming to lead advisory verticals, JHS gives you the platform to excel.
@@ -247,6 +374,67 @@ export default function Careers() {
         <img src={imageUrl('growthposter.webp')} alt="JHS Office Culture" className="careers-culture-img" style={ss.cultureImg} loading="lazy" />
       </section>
 
+      {/* ══ OPEN ROLES ══ */}
+      <section className="careers-roles-section" style={ss.rolesSection} id="roles">
+        <div style={ss.rolesHeader}>
+          <div>
+            <p style={ss.eyebrow}>We're Hiring</p>
+            <h2 style={ss.sectionTitle}>Open Roles</h2>
+          </div>
+          {!jobsLoading && !jobsError && (
+            <p style={ss.rolesCount}>{jobs.length} open {jobs.length === 1 ? 'position' : 'positions'}</p>
+          )}
+        </div>
+
+        {jobsLoading && <p style={ss.rolesStateMsg}>Loading open roles…</p>}
+
+        {!jobsLoading && jobsError && (
+          <p style={ss.rolesStateMsg}>Couldn't load open roles right now. Please check back shortly, or apply below.</p>
+        )}
+
+        {!jobsLoading && !jobsError && jobs.length === 0 && (
+          <p style={ss.rolesStateMsg}>No open positions at the moment — check back soon, or send us a general application below.</p>
+        )}
+
+        {!jobsLoading && !jobsError && jobs.length > 0 && (
+          <div className="careers-roles-grid" style={ss.rolesGrid}>
+            {jobs.map(job => {
+              const isExpanded = expandedJobId === job.id
+              const badge = badgeColorFor(job.department)
+              return (
+                <div key={job.id} style={ss.roleCard}>
+                  <div style={ss.roleCardTop}>
+                    <span style={{ ...ss.roleBadge, background: badge.bg, color: badge.fg }}>{job.department}</span>
+                    <span style={ss.roleLocation}>{job.location}</span>
+                  </div>
+                  <h3 style={ss.roleTitle}>{job.title}</h3>
+                  <div style={ss.roleTags}>
+                    <span style={ss.roleTag}>{job.employment_type}</span>
+                    <span style={ss.roleTag}>{job.experience}</span>
+                  </div>
+
+                  {isExpanded && (
+                    <div style={ss.roleDetails}>
+                      <p style={ss.roleDetailsLabel}>Role Description</p>
+                      <p style={ss.roleDetailsText}>{job.description}</p>
+                    </div>
+                  )}
+
+                  <div style={ss.roleCardActions}>
+                    <button type="button" style={ss.roleViewBtn} onClick={() => setExpandedJobId(isExpanded ? null : job.id)}>
+                      {isExpanded ? 'Hide Details' : 'View Role'}
+                    </button>
+                    <button type="button" className="careers-apply-btn" style={ss.roleApplyBtn} onClick={() => applyForJob(job.id)}>
+                      Apply Now
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </section>
+
       {/* ══ APPLY TO JOIN US ══ */}
       <section className="careers-apply-section" style={ss.applySection} id="apply">
         <div className="careers-apply-card" style={ss.applyCard}>
@@ -256,7 +444,47 @@ export default function Careers() {
             <p style={ss.boardSub}>Tell us a bit about yourself — our HR team reviews every submission.</p>
           </div>
 
+          {!applicant && (
+            <div style={ss.authGate}>
+              {selectedJob && (
+                <div style={ss.jobBanner}>
+                  <span>Applying for <strong>{selectedJob.title}</strong> ({selectedJob.location})</span>
+                  <button type="button" style={ss.jobBannerClear} onClick={clearJobSelection}>Apply generally instead</button>
+                </div>
+              )}
+              <p style={ss.authGateText}>Sign in to apply. We'll use your account to submit your application and let you track it.</p>
+              <button type="button" style={ss.applyBtn} onClick={() => openAuthModal('apply for this role')}>Sign In / Sign Up</button>
+              {message && <p style={ss.formErr}>{message}</p>}
+            </div>
+          )}
+
+          {applicant && (
           <form onSubmit={submitApplication} noValidate style={{ padding: '1.4rem 1.5rem 2rem' }}>
+            <div style={ss.signedInBar}>
+              <span>Signed in as <strong>{applicant.email}</strong></span>
+              <button type="button" style={ss.jobBannerClear} onClick={signOutApplicant}>Sign out</button>
+            </div>
+
+            {selectedJob ? (
+              <div style={ss.jobBanner}>
+                <span>Applying for <strong>{selectedJob.title}</strong> ({selectedJob.location})</span>
+                <button type="button" style={ss.jobBannerClear} onClick={clearJobSelection}>Apply generally instead</button>
+              </div>
+            ) : jobs.length > 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginBottom: '0.85rem' }}>
+                <label style={ss.formLabel} htmlFor="career-job">Which role are you interested in?</label>
+                <select
+                  id="career-job"
+                  style={ss.formInput}
+                  value={formData.job_id}
+                  onChange={e => updateField('job_id', e.target.value)}
+                >
+                  <option value="">General Application</option>
+                  {jobs.map(job => <option key={job.id} value={job.id}>{job.title} — {job.location}</option>)}
+                </select>
+              </div>
+            )}
+
             <div className="careers-form-grid" style={ss.formGrid}>
               {[
                 { label: 'Full Name *', field: 'full_name' as const, placeholder: 'Enter your full name', type: 'text', required: true, autoComplete: 'name' },
@@ -268,15 +496,21 @@ export default function Careers() {
                   <label style={ss.formLabel} htmlFor={`career-${field}`}>{label}</label>
                   <input
                     id={`career-${field}`}
-                    style={inputStyle(field)}
+                    style={field === 'email' ? { ...inputStyle(field), background: '#f4f4f2', color: '#666' } : inputStyle(field)}
                     type={type}
                     value={formData[field]}
                     onChange={e => updateField(field, e.target.value)}
                     placeholder={placeholder}
                     required={required}
+                    aria-required={required ? 'true' : undefined}
+                    aria-invalid={errors[field] ? true : undefined}
+                    aria-describedby={errors[field] ? `career-${field}-err` : undefined}
+                    maxLength={field === 'full_name' ? LIMITS.name : field === 'email' ? LIMITS.email : field === 'phone' ? LIMITS.phone : LIMITS.shortText}
                     autoComplete={autoComplete}
+                    readOnly={field === 'email'}
                   />
-                  {errors[field] && <span style={ss.formErr}>{errors[field]}</span>}
+                  {field === 'email' && <span style={{ fontSize: '0.72rem', color: '#888' }}>Verified via your Google account</span>}
+                  {errors[field] && <span id={`career-${field}-err`} role="alert" style={ss.formErr}>{errors[field]}</span>}
                 </div>
               ))}
 
@@ -342,6 +576,37 @@ export default function Careers() {
                 </div>
               )}
 
+              {showCtcFields && (
+                <>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                    <label style={ss.formLabel} htmlFor="career-current-ctc">Current CTC *</label>
+                    <input
+                      id="career-current-ctc"
+                      style={inputStyle('current_ctc')}
+                      type="text"
+                      value={formData.current_ctc}
+                      onChange={e => updateField('current_ctc', e.target.value)}
+                      placeholder="e.g. 6 LPA"
+                      required
+                    />
+                    {errors.current_ctc && <span style={ss.formErr}>{errors.current_ctc}</span>}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                    <label style={ss.formLabel} htmlFor="career-expected-ctc">Expected CTC *</label>
+                    <input
+                      id="career-expected-ctc"
+                      style={inputStyle('expected_ctc')}
+                      type="text"
+                      value={formData.expected_ctc}
+                      onChange={e => updateField('expected_ctc', e.target.value)}
+                      placeholder="e.g. 8 LPA"
+                      required
+                    />
+                    {errors.expected_ctc && <span style={ss.formErr}>{errors.expected_ctc}</span>}
+                  </div>
+                </>
+              )}
+
               {/* How did you hear about us */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 <label style={ss.formLabel} htmlFor="career-how-heard">How did you hear about us? *</label>
@@ -382,6 +647,7 @@ export default function Careers() {
                     type="file"
                     accept="application/pdf,.pdf"
                     required
+                    aria-required="true"
                     style={{ display: 'none' }}
                     onChange={e => {
                       setResumeFile(e.target.files?.[0] ?? null)
@@ -390,6 +656,13 @@ export default function Careers() {
                   />
                 </label>
                 {errors.resume && <span style={ss.formErr}>{errors.resume}</span>}
+                <ResumeMatchCheck
+                  key={`${formData.job_id}-${resumeFile?.name}-${resumeFile?.size}-${resumeFile?.lastModified}`}
+                  jobId={formData.job_id}
+                  file={resumeFile}
+                  token={careerToken}
+                  onUnauthorized={signOutApplicant}
+                />
               </div>
             </div>
 
@@ -402,7 +675,18 @@ export default function Careers() {
                 onChange={e => updateField('remark', e.target.value)}
                 placeholder="Anything else you'd like us to know… (optional)"
                 rows={4}
+                maxLength={LIMITS.longMessage}
+                aria-invalid={errors.remark ? true : undefined}
               />
+              <CharCount value={formData.remark} max={LIMITS.longMessage} />
+              {errors.remark && <span role="alert" style={ss.formErr}>{errors.remark}</span>}
+            </div>
+
+            <Honeypot value={honeypot} onChange={setHoneypot} />
+            {turnstile.widget}
+            <div style={{ marginTop: '0.8rem' }}>
+              <ConsentCheck id="career-consent" checked={consent} error={errors.consent}
+                onChange={(v) => { setConsent(v); if (v && errors.consent) setErrors(prev => ({ ...prev, consent: undefined })) }} />
             </div>
 
             <button type="submit" className="careers-apply-btn" style={{ ...ss.applyBtn, width: '100%', padding: '0.88rem', marginTop: '1rem', fontSize: '0.9rem', display: 'block', textAlign: 'center', opacity: submitting ? 0.65 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }} disabled={submitting}>
@@ -415,6 +699,7 @@ export default function Careers() {
               </p>
             )}
           </form>
+          )}
         </div>
       </section>
     </div>
@@ -447,6 +732,35 @@ const ss = {
   perkItem: { display: 'flex', alignItems: 'baseline', gap: '0.65rem', fontSize: '0.94rem', color: '#333', lineHeight: 1.5 },
   perkDot: { width: '6px', height: '6px', borderRadius: '50%', background: BRAND, flexShrink: 0, marginTop: '1px' },
   cultureImg: { width: '100%', height: '380px', objectFit: 'cover' as const, borderRadius: '16px', display: 'block', boxShadow: '0 8px 40px rgba(0,0,0,0.1)' },
+
+  rolesSection: { padding: '5rem 6rem', background: '#fff' },
+  rolesHeader: { display: 'flex', flexWrap: 'wrap' as const, alignItems: 'flex-end', justifyContent: 'space-between', gap: '0.75rem', marginBottom: '2.2rem' },
+  rolesCount: { fontSize: '0.85rem', fontWeight: 600, color: '#888', margin: 0 },
+  rolesStateMsg: { fontSize: '0.95rem', color: '#777', padding: '2rem 0', margin: 0 },
+  rolesGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' },
+
+  roleCard: { display: 'flex', flexDirection: 'column' as const, background: '#faf8f5', border: '1.5px solid #eeebe4', borderRadius: '14px', padding: '1.5rem' },
+  roleCardTop: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.9rem' },
+  roleBadge: { fontSize: '0.7rem', fontWeight: 700, padding: '0.25rem 0.65rem', borderRadius: '999px', letterSpacing: '0.02em' },
+  roleLocation: { fontSize: '0.78rem', fontWeight: 600, color: '#888' },
+  roleTitle: { fontSize: '1.15rem', fontWeight: 800, color: '#111', margin: '0 0 0.5rem' },
+  roleTags: { display: 'flex', flexWrap: 'wrap' as const, gap: '0.4rem', marginBottom: '1.1rem' },
+  roleTag: { fontSize: '0.72rem', fontWeight: 600, color: '#666', background: '#efece5', padding: '0.25rem 0.6rem', borderRadius: '999px' },
+
+  roleDetails: { borderTop: '1px solid #eeebe4', paddingTop: '1rem', marginBottom: '1.1rem' },
+  roleDetailsLabel: { fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.05em', color: BRAND, margin: '0 0 0.3rem' },
+  roleDetailsText: { fontSize: '0.85rem', color: '#555', lineHeight: 1.65, margin: '0 0 0.9rem', whiteSpace: 'pre-wrap' as const },
+
+  roleCardActions: { display: 'flex', gap: '0.6rem', marginTop: 'auto' },
+  roleViewBtn: { flex: 1, padding: '0.6rem', background: '#fff', color: '#333', border: '1.5px solid #ddd8cf', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', fontFamily: FONT },
+  roleApplyBtn: { flex: 1, padding: '0.6rem', background: BRAND, color: '#fff', border: 'none', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', fontFamily: FONT },
+
+  jobBanner: { display: 'flex', flexWrap: 'wrap' as const, alignItems: 'center', justifyContent: 'space-between', gap: '0.6rem', background: '#fdf2f2', border: '1.5px solid #f6d9d9', borderRadius: '10px', padding: '0.75rem 1rem', marginBottom: '1rem', fontSize: '0.85rem', color: '#333' },
+  jobBannerClear: { background: 'none', border: 'none', color: BRAND, fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer', fontFamily: FONT, textDecoration: 'underline', padding: 0 },
+
+  authGate: { display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: '0.9rem', padding: '2.2rem 1.5rem 2.6rem', textAlign: 'center' as const },
+  authGateText: { fontSize: '0.9rem', color: '#555', lineHeight: 1.6, margin: 0, maxWidth: '420px' },
+  signedInBar: { display: 'flex', flexWrap: 'wrap' as const, alignItems: 'center', justifyContent: 'space-between', gap: '0.6rem', background: '#f2f7f2', border: '1.5px solid #dcecdc', borderRadius: '10px', padding: '0.65rem 1rem', marginBottom: '1rem', fontSize: '0.85rem', color: '#2d6a2d' },
 
   applySection: { padding: '4rem 4rem 5rem', background: '#f7f6f3', fontFamily: FONT },
   applyCard: { background: '#fff', borderRadius: '16px', border: '1.5px solid #e8e5df', overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.06)' },

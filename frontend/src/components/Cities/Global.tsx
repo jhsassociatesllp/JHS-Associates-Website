@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Global.css'
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   {
     name: 'Vinod Joshi',
     image: imageUrl('vinod joshi.webp'),
@@ -211,6 +212,7 @@ const IconCheck = () => (
 )
 
 export default function Global() {
+  const PARTNERS = useCityPartners('Global', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -230,10 +232,12 @@ export default function Global() {
   return (
     <div className="glb-page">
       <section className="glb-hero">
-        <div className="glb-hero__photo" style={{ backgroundImage: `url(${imageUrl('Global.webp')})` }} />
+        <video className="glb-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={videoUrl('Global_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="glb-hero__overlay" />
         <div className="glb-hero__content">
-          {/* <p className="glb-hero__eyebrow">JHS &amp; Associates LLP</p> */}
+          {/* <p className="glb-hero__eyebrow">JHS</p> */}
           <h1 className="glb-hero__title">Global Presence</h1>
           <p className="glb-hero__sub">Delivering Excellence Across International Borders</p>
         </div>
@@ -252,12 +256,6 @@ export default function Global() {
               <div>
                 <span className="glb-hero__card-info-label">Email</span>
                 <span className="glb-hero__card-info-val">vinod.joshi@jhsuae.com</span>
-              </div>
-            </div>
-            <div className="glb-hero__card-info-item">
-              <div>
-                <span className="glb-hero__card-info-label">Phone</span>
-                <span className="glb-hero__card-info-val">+971 4348 0046</span>
               </div>
             </div>
           </div>

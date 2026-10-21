@@ -35,6 +35,7 @@ const AdminArticles: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -219,11 +220,18 @@ const AdminArticles: React.FC = () => {
   };
 
   // Filter articles based on search
-  const filteredArticles = articles.filter(article =>
-    article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    article.short_description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (article.author && article.author.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch =
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.short_description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (article.author && article.author.toLowerCase().includes(searchTerm.toLowerCase()));
+    const isUpdated = !!article.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedArticles = filteredArticles.slice(
@@ -233,14 +241,62 @@ const AdminArticles: React.FC = () => {
 
   const totalPages = Math.ceil(filteredArticles.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = articles.filter(a => !a.last_edited_at).length;
+  const updatedCount = articles.filter(a => a.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = articles.filter(a => {
+    const d = new Date(a.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="articles-container">
       {/* Header */}
       <div className="articles-header">
-        <h1 className="articles-title">Articles</h1>
-        <p className="articles-subtitle">
-          Create and manage articles for your website
-        </p>
+        <div>
+          <p className="articles-eyebrow">Content Library</p>
+          <h1 className="articles-title">Articles</h1>
+          <p className="articles-subtitle">
+            Create, review and manage your website articles.
+          </p>
+        </div>
+        <button
+          className="articles-btn articles-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Article
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="articles-stats-row">
+        <div className="articles-stat-card blue">
+          <p className="articles-stat-label">Total Articles</p>
+          <p className="articles-stat-value">{articles.length}</p>
+          <p className="articles-stat-sub">All website content</p>
+        </div>
+        <div className="articles-stat-card green">
+          <p className="articles-stat-label">Published</p>
+          <p className="articles-stat-value">{publishedCount}</p>
+          <p className="articles-stat-sub">
+            {articles.length > 0 ? Math.round((publishedCount / articles.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="articles-stat-card orange">
+          <p className="articles-stat-label">Updated</p>
+          <p className="articles-stat-value">{updatedCount}</p>
+          <p className="articles-stat-sub">Edited after publish</p>
+        </div>
+        <div className="articles-stat-card dark">
+          <p className="articles-stat-label">Added This Month</p>
+          <p className="articles-stat-value">{addedThisMonthCount}</p>
+          <p className="articles-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -248,31 +304,24 @@ const AdminArticles: React.FC = () => {
         <div className="articles-search">
           <input
             type="text"
-            placeholder="Search articles..."
+            placeholder="Search articles by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
-        <div className="articles-actions">
-          <button 
-            className="articles-btn articles-btn-icon icon-refresh"
-            onClick={fetchArticles}
-            title="Refresh"
-          >
-          </button>
-          
-          <button
-            className="articles-btn articles-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Article
-          </button>
+
+        <div className="articles-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="articles-btn articles-btn-icon icon-refresh"
+          onClick={fetchArticles}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Articles Table */}
@@ -282,8 +331,8 @@ const AdminArticles: React.FC = () => {
             <div className="articles-header-avatar">
             </div>
             <div className="articles-header-text">
-              <h3>Articles</h3>
-              <p>{filteredArticles.length} total articles</p>
+              <h3>Article directory</h3>
+              <p>{paginatedArticles.length} records shown · {filteredArticles.length} total articles</p>
             </div>
           </div>
         </div>

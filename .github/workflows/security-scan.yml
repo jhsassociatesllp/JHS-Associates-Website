@@ -1,0 +1,64 @@
+name: Security checks
+
+# Runs on every push / pull request to staging and main, and once a week, so a vulnerable library or a newly
+# opened API route is noticed before it reaches the live site. It never deploys anything.
+on:
+  push:
+    branches: [staging, main]
+  pull_request:
+    branches: [staging, main]
+  schedule:
+    - cron: "0 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  api-tests:
+    name: API security tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install backend requirements
+        run: pip install -r backend/requirements.txt
+      - name: Run the security tests (no database needed)
+        working-directory: backend
+        env:
+          SECRET_KEY: ci-only-secret-key-not-used-anywhere-else-0123456789
+        run: |
+          python tests/test_open_routes_allowlist.py
+          python tests/test_form_validation.py
+          python tests/test_logout_revokes_token.py
+          python tests/test_admin_logout_revokes_token.py
+          python tests/test_admin_audit_log.py
+
+  python-dependencies:
+    name: Python library vulnerabilities
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pip-audit
+      - run: pip-audit -r backend/requirements.txt
+
+  node-dependencies:
+    name: Website, admin panel and chatbot library vulnerabilities
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        folder: [frontend, admin-panel, chatbot-backend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: npm audit (production libraries, high and critical only)
+        working-directory: ${{ matrix.folder }}
+        run: npm audit --omit=dev --audit-level=high

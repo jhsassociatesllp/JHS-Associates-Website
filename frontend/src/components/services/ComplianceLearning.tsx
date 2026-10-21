@@ -1,13 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './ComplianceLearning.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Compliance & Governance Solutions", desc: "Regulatory framework design & oversight" },
   { id: "02", title: "Compliance Awareness Sessions & Corporate Learning Programs", desc: "Training & capability development" },
   { id: "03", title: "Enterprise Risk Identification & Assessment Across Business Functions", desc: "Organisation-wide risk mapping" },
@@ -16,7 +19,7 @@ const leftItems = [
   { id: "06", title: "Company Incorporation & Drafting of Memorandum and Articles of Association", desc: "Entity formation & constitutional docs" },
 ]
 
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Board Meeting & AGM Compliance", desc: "Corporate meeting governance" },
   { id: "08", title: "Filing Annual Returns & Statutory Documents with Regulatory Authorities", desc: "Statutory filing & submissions" },
   { id: "09", title: "Maintenance of Statutory Registers, Board Resolutions, Shareholding Patterns & KMP Records", desc: "Corporate record management" },
@@ -25,8 +28,12 @@ const rightItems = [
   { id: "12", title: "External Audit Support, Review Assistance & Control", desc: "Audit facilitation & coordination" },
 ]
 
+
 export default function ComplianceLearning() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('compliance-learning', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -73,10 +80,18 @@ export default function ComplianceLearning() {
           <div className="cl-spoke-diagram">
             <div className="cl-spoke-col cl-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="cl-spoke-row cl-spoke-row--left">
+                <div
+                  key={item.id}
+                  className="cl-spoke-row cl-spoke-row--left"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="cl-spoke-text cl-spoke-text--left">
                     <h3 className="cl-spoke-title">{item.title}</h3>
                     <p className="cl-spoke-desc">{item.desc}</p>
+                    <span className="cl-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="cl-spoke-connector cl-spoke-connector--left">
                     <div className="cl-spoke-line" />
@@ -99,7 +114,14 @@ export default function ComplianceLearning() {
 
             <div className="cl-spoke-col cl-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="cl-spoke-row cl-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="cl-spoke-row cl-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="cl-spoke-connector cl-spoke-connector--right">
                     <div className="cl-spoke-badge cl-spoke-badge--red">{item.id}</div>
                     <div className="cl-spoke-line" />
@@ -107,6 +129,7 @@ export default function ComplianceLearning() {
                   <div className="cl-spoke-text cl-spoke-text--right">
                     <h3 className="cl-spoke-title">{item.title}</h3>
                     <p className="cl-spoke-desc">{item.desc}</p>
+                    <span className="cl-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -115,11 +138,19 @@ export default function ComplianceLearning() {
 
           <div className="cl-spoke-mobile-grid">
             {[...leftItems, ...rightItems].sort((a, b) => parseInt(a.id) - parseInt(b.id)).map((item) => (
-              <div key={item.id} className="cl-spoke-mobile-card">
+              <div
+                key={item.id}
+                className="cl-spoke-mobile-card"
+                onClick={() => setActivePoint(item)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+              >
                 <div className={`cl-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'cl-spoke-badge--navy' : 'cl-spoke-badge--red'}`}>{item.id}</div>
                 <div>
                   <h3 className="cl-spoke-title">{item.title}</h3>
                   <p className="cl-spoke-desc">{item.desc}</p>
+                  <span className="cl-spoke-cta"><Users size={12} /> View Experts</span>
                 </div>
               </div>
             ))}
@@ -127,7 +158,7 @@ export default function ComplianceLearning() {
 
           <div className="cl-certification">
             <Shield className="cl-certification__icon" size={28} />
-            <p className="cl-certification__text">JHS & Associates LLP · Compliance, Governance & Corporate Learning across all Regulatory Frameworks</p>
+            <p className="cl-certification__text">JHS · Compliance, Governance & Corporate Learning across all Regulatory Frameworks</p>
           </div>
         </div>
       </section>
@@ -141,6 +172,15 @@ export default function ComplianceLearning() {
           </div>
         </div>
       </section>
+
+      <ServicePartnersModal
+        isOpen={Boolean(activePoint)}
+        onClose={() => setActivePoint(null)}
+        serviceKey="compliance-learning"
+        serviceTitle="Compliance, Learning & Innovation"
+        point={activePoint}
+        partners={activePoint ? getPartnersForSubPoint('complianceLearning', activePoint.id) : []}
+      />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './AdminBlogs.css';
 
 interface Blog {
@@ -26,6 +27,7 @@ interface FormData {
 }
 
 const AdminBlogs: React.FC = () => {
+  const { token } = useAuth();
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -33,6 +35,7 @@ const AdminBlogs: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'updated'>('all');
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
@@ -112,11 +115,13 @@ const AdminBlogs: React.FC = () => {
         formDataToSend.append('edited_by', 'Admin User');
         response = await fetch(`${API_BASE_URL}/blogs/${editingId}`, {
           method: 'PUT',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       } else {
         response = await fetch(`${API_BASE_URL}/blogs/`, {
           method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
           body: formDataToSend,
         });
       }
@@ -169,6 +174,7 @@ const AdminBlogs: React.FC = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {
@@ -188,12 +194,19 @@ const AdminBlogs: React.FC = () => {
   };
 
   // Filter blogs based on search
-  const filteredBlogs = blogs.filter(blog =>
-    blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blog.short_description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (blog.author && blog.author.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (blog.category && blog.category.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredBlogs = blogs.filter(blog => {
+    const matchesSearch =
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.short_description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (blog.author && blog.author.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (blog.category && blog.category.toLowerCase().includes(searchTerm.toLowerCase()));
+    const isUpdated = !!blog.last_edited_at;
+    const matchesStatus =
+      statusFilter === 'all' ||
+      (statusFilter === 'updated' && isUpdated) ||
+      (statusFilter === 'published' && !isUpdated);
+    return matchesSearch && matchesStatus;
+  });
 
   // Pagination
   const paginatedBlogs = filteredBlogs.slice(
@@ -203,14 +216,62 @@ const AdminBlogs: React.FC = () => {
 
   const totalPages = Math.ceil(filteredBlogs.length / rowsPerPage);
 
+  // Header stat row — derived only from existing fields, no new data source.
+  const publishedCount = blogs.filter(b => !b.last_edited_at).length;
+  const updatedCount = blogs.filter(b => b.last_edited_at).length;
+  const now = new Date();
+  const addedThisMonthCount = blogs.filter(b => {
+    const d = new Date(b.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+
   return (
     <div className="blogs-container">
       {/* Header */}
       <div className="blogs-header">
-        <h1 className="blogs-title">Blog Posts</h1>
-        <p className="blogs-subtitle">
-          Create and manage blog posts for your website
-        </p>
+        <div>
+          <p className="blogs-eyebrow">Content Library</p>
+          <h1 className="blogs-title">Blog Posts</h1>
+          <p className="blogs-subtitle">
+            Create, review and manage your website's blog posts.
+          </p>
+        </div>
+        <button
+          className="blogs-btn blogs-btn-primary"
+          onClick={() => {
+            resetForm();
+            setShowForm(true);
+          }}
+        >
+          <span className="icon-plus"></span>
+          Add Blog Post
+        </button>
+      </div>
+
+      {/* Stat cards */}
+      <div className="blogs-stats-row">
+        <div className="blogs-stat-card blue">
+          <p className="blogs-stat-label">Total Posts</p>
+          <p className="blogs-stat-value">{blogs.length}</p>
+          <p className="blogs-stat-sub">All blog content</p>
+        </div>
+        <div className="blogs-stat-card green">
+          <p className="blogs-stat-label">Published</p>
+          <p className="blogs-stat-value">{publishedCount}</p>
+          <p className="blogs-stat-sub">
+            {blogs.length > 0 ? Math.round((publishedCount / blogs.length) * 100) : 0}% live
+          </p>
+        </div>
+        <div className="blogs-stat-card orange">
+          <p className="blogs-stat-label">Updated</p>
+          <p className="blogs-stat-value">{updatedCount}</p>
+          <p className="blogs-stat-sub">Edited after publish</p>
+        </div>
+        <div className="blogs-stat-card dark">
+          <p className="blogs-stat-label">Added This Month</p>
+          <p className="blogs-stat-value">{addedThisMonthCount}</p>
+          <p className="blogs-stat-sub">New since the 1st</p>
+        </div>
       </div>
 
       {/* Action Bar */}
@@ -218,31 +279,24 @@ const AdminBlogs: React.FC = () => {
         <div className="blogs-search">
           <input
             type="text"
-            placeholder="Search blog posts..."
+            placeholder="Search blog posts by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
-        <div className="blogs-actions">
-          <button 
-            className="blogs-btn blogs-btn-icon icon-refresh"
-            onClick={fetchBlogs}
-            title="Refresh"
-          >
-          </button>
-          
-          <button
-            className="blogs-btn blogs-btn-primary"
-            onClick={() => {
-              resetForm();
-              setShowForm(true);
-            }}
-          >
-            <span className="icon-plus"></span>
-            Add Blog Post
-          </button>
+
+        <div className="blogs-filter-tabs">
+          <button className={statusFilter === 'all' ? 'active' : ''} onClick={() => setStatusFilter('all')}>All</button>
+          <button className={statusFilter === 'published' ? 'active' : ''} onClick={() => setStatusFilter('published')}>Published</button>
+          <button className={statusFilter === 'updated' ? 'active' : ''} onClick={() => setStatusFilter('updated')}>Updated</button>
         </div>
+
+        <button
+          className="blogs-btn blogs-btn-icon icon-refresh"
+          onClick={fetchBlogs}
+          title="Refresh"
+        >
+        </button>
       </div>
 
       {/* Blogs Table */}
@@ -252,8 +306,8 @@ const AdminBlogs: React.FC = () => {
             <div className="blogs-header-avatar">
             </div>
             <div className="blogs-header-text">
-              <h3>Blog Posts</h3>
-              <p>{filteredBlogs.length} total blog posts</p>
+              <h3>Blog directory</h3>
+              <p>{paginatedBlogs.length} records shown · {filteredBlogs.length} total posts</p>
             </div>
           </div>
         </div>

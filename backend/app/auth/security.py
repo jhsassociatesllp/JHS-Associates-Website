@@ -3,7 +3,6 @@
 # from jose import jwt
 # from passlib.context import CryptContext
 
-# SECRET_KEY = "supersecretkey_jhs_admin_panel_do_not_use_in_prod_like_this"
 # ALGORITHM = "HS256"
 # ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
@@ -31,9 +30,26 @@ from typing import Optional
 import jwt
 from passlib.context import CryptContext
 
-SECRET_KEY = "supersecretkey_jhs_admin_panel_do_not_use_in_prod_like_this"
+import logging
+import secrets
+
+from app.config.settings import settings
+
+SECRET_KEY = settings.secret_key
+if not SECRET_KEY and settings.require_secret_key:
+    raise RuntimeError("SECRET_KEY is not set and REQUIRE_SECRET_KEY is on - refusing to start with a random key.")
+if not SECRET_KEY:
+    # Never fall back to a known value. Without SECRET_KEY in the environment every
+    # restart gets a fresh random key (logins/sessions reset) until it is configured.
+    SECRET_KEY = secrets.token_urlsafe(64)
+    logging.getLogger(__name__).warning("SECRET_KEY is not set - using a temporary random key. Set SECRET_KEY in the environment.")
+if len(SECRET_KEY) < 32:
+    logging.getLogger(__name__).warning("SECRET_KEY is shorter than 32 characters - use a long random value (python -c \"import secrets;print(secrets.token_urlsafe(64))\").")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
+# Admin panel session length. Used only by the two /admin/login* routes —
+# every other token type (site users, careers, consulting) sets its own
+# expires_delta and ignores this constant.
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 2
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -54,7 +70,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
 
-    to_encode.update({"exp": expire})
+    to_encode.setdefault("jti", secrets.token_hex(12))   # unique id of this token (audit FRM-09)
+    to_encode.update({"exp": expire, "iat": datetime.now(timezone.utc)})
 
     encoded_jwt = jwt.encode(
         to_encode,

@@ -1,110 +1,98 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Disclaimer.css";
+import { COOKIE_DAYS, DISCLAIMER_COOKIE as COOKIE_NAME, getCookie, setCookie } from "../utils/cookieConsent";
+import { DISCLAIMER_ACCEPTED } from "./common/CookieConsent";
 
 export default function Disclaimer() {
-  const [visible, setVisible] = useState(() => !sessionStorage.getItem("jhs_disclaimer_accepted"));
+  const [visible, setVisible] = useState(() => !getCookie(COOKIE_NAME));
   const [agreed, setAgreed] = useState(false);
-
-  useEffect(() => {
-    if (visible) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    } else {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    };
-  }, [visible]);
+  const [expanded, setExpanded] = useState(false);
 
   const handleAccept = () => {
-    sessionStorage.setItem("jhs_disclaimer_accepted", "true");
+    setCookie(COOKIE_NAME, "true", COOKIE_DAYS); // remembered for 12 months
     setVisible(false);
-  };
-
-  const handleDecline = () => {
-    window.location.href = "https://www.google.com";
+    window.dispatchEvent(new Event(DISCLAIMER_ACCEPTED)); // the cookie notice follows
   };
 
   if (!visible) return null;
 
   return (
-    <div className="disclaimer-backdrop" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" data-lenis-prevent>
-      <div className="disclaimer-modal">
-        {/* Header */}
-        <div className="disclaimer-header">
-          <div className="disclaimer-logo-row">
-            <span className="disclaimer-firm-name">JHS & Associates LLP</span>
-          </div>
-          <div className="disclaimer-badge">IMPORTANT NOTICE</div>
+    <div className="disclaimer-banner" role="region" aria-label="Website Disclaimer" data-lenis-prevent>
+      <div className="disclaimer-banner-inner">
+        <div className="disclaimer-banner-header">
+          <span className="disclaimer-firm-name">JHS &amp; Associates LLP</span>
+          <span className="disclaimer-badge">IMPORTANT NOTICE</span>
         </div>
 
-        {/* Body */}
-        <div className="disclaimer-body">
-          <h2 id="disclaimer-title" className="disclaimer-title">Disclaimer &amp; Terms of Use</h2>
-          <p className="disclaimer-intro">
-            Please read this disclaimer carefully before accessing or using this website.
+        <div className="disclaimer-banner-body">
+          <h2 className="disclaimer-banner-title">Disclaimer &amp; Terms of Use</h2>
+          <p className="disclaimer-banner-summary">
+            This website is intended for general informational purposes only and does not
+            constitute legal, financial, tax, or professional advice. It does not create a
+            client&ndash;firm relationship, nor is it a solicitation of our services.{" "}
+            <button
+              type="button"
+              className="disclaimer-banner-toggle"
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+            >
+              {expanded ? "Show less" : "Read full disclaimer"}
+            </button>
           </p>
 
-          <div className="disclaimer-sections">
-            <div className="disclaimer-section">
-              <h3 className="disclaimer-section-title">General Information Only</h3>
-              <p>
-                The content published on this website is intended solely for general
-                informational purposes. It does not constitute legal, financial, tax,
-                regulatory, or professional advice of any kind, and must not be relied
-                upon as such.
-              </p>
-            </div>
+          {expanded && (
+            <div className="disclaimer-sections">
+              <div className="disclaimer-section">
+                <h3 className="disclaimer-section-title">General Information Only</h3>
+                <p>
+                  The content published on this website is intended solely for general
+                  informational purposes. It does not constitute legal, financial, tax,
+                  regulatory, or professional advice of any kind, and must not be relied
+                  upon as such.
+                </p>
+              </div>
 
-            <div className="disclaimer-section">
-              <h3 className="disclaimer-section-title">No Client Relationship</h3>
-              <p>
-                Accessing this website does not create a client–firm relationship between
-                you and JHS &amp; Associates LLP. For advice specific to your circumstances,
-                please consult a qualified professional directly.
-              </p>
-            </div>
+              <div className="disclaimer-section">
+                <h3 className="disclaimer-section-title">No Client Relationship</h3>
+                <p>
+                  Accessing this website does not create a client–firm relationship between
+                  you and JHS &amp; Associates LLP. For advice specific to your circumstances,
+                  please consult a qualified professional directly.
+                </p>
+              </div>
 
-            <div className="disclaimer-section">
-              <h3 className="disclaimer-section-title">No Solicitation</h3>
-              <p>
-                Nothing on this website constitutes an advertisement, solicitation, or
-                invitation to engage our services. Information about our services is
-                provided purely for awareness purposes.
-              </p>
-            </div>
+              <div className="disclaimer-section">
+                <h3 className="disclaimer-section-title">No Solicitation</h3>
+                <p>
+                  Nothing on this website constitutes an advertisement, solicitation, or
+                  invitation to engage our services. Information about our services is
+                  provided purely for awareness purposes.
+                </p>
+              </div>
 
-            <div className="disclaimer-section">
-              <h3 className="disclaimer-section-title">Accuracy &amp; Updates</h3>
-              <p>
-                While we endeavour to keep the information current and accurate, JHS &amp;
-                Associates LLP makes no representations or warranties, express or implied,
-                regarding the completeness, accuracy, or reliability of any content on
-                this website.
-              </p>
-            </div>
+              <div className="disclaimer-section">
+                <h3 className="disclaimer-section-title">Accuracy &amp; Updates</h3>
+                <p>
+                  While we endeavour to keep the information current and accurate, JHS &amp;
+                  Associates LLP makes no representations or warranties, express or implied,
+                  regarding the completeness, accuracy, or reliability of any content on
+                  this website.
+                </p>
+              </div>
 
-            <div className="disclaimer-section">
-              <h3 className="disclaimer-section-title">Regulatory Compliance</h3>
-              <p>
-                This website complies with the guidelines issued by the Institute of
-                Chartered Accountants of India (ICAI) and all applicable regulations
-                governing the professional conduct of Chartered Accountants in India.
-              </p>
+              <div className="disclaimer-section">
+                <h3 className="disclaimer-section-title">Regulatory Compliance</h3>
+                <p>
+                  This website complies with the guidelines issued by the Institute of
+                  Chartered Accountants of India (ICAI) and all applicable regulations
+                  governing the professional conduct of Chartered Accountants in India.
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Footer Actions */}
-        <div className="disclaimer-footer">
-          <p className="disclaimer-confirm-text">
-            By clicking <strong>"I Agree"</strong>, you confirm that you have read,
-            understood, and accepted this disclaimer and agree to the terms of use of
-            this website.
-          </p>
+        <div className="disclaimer-banner-footer">
           <label className="disclaimer-checkbox-row">
             <input
               type="checkbox"
@@ -114,19 +102,14 @@ export default function Disclaimer() {
             />
             <span>I have read and understood the above disclaimer.</span>
           </label>
-          <div className="disclaimer-actions">
-            <button className="disclaimer-btn disclaimer-btn--decline" onClick={handleDecline}>
-              Decline &amp; Exit
-            </button>
-            <button
-              className="disclaimer-btn disclaimer-btn--accept"
-              onClick={handleAccept}
-              disabled={!agreed}
-              aria-disabled={!agreed}
-            >
-              I Agree &amp; Continue
-            </button>
-          </div>
+          <button
+            className="disclaimer-btn disclaimer-btn--accept"
+            onClick={handleAccept}
+            disabled={!agreed}
+            aria-disabled={!agreed}
+          >
+            I Understand &amp; Continue
+          </button>
         </div>
       </div>
     </div>

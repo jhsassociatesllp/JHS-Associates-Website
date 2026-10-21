@@ -1,12 +1,18 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from app.schemas.contact import ContactCreate, ContactResponse
 from app.controllers.contact import create_contact_message, get_all_contacts
 from typing import List
+from app.utils.validation import guard_form
 
 router = APIRouter(prefix="/contact", tags=["Contact"])
 
+hr_access = require_roles([AdminRole.SUPER_ADMIN, AdminRole.HR_ADMIN])
+
 @router.post("/", response_model=ContactResponse, status_code=status.HTTP_201_CREATED)
-async def submit_contact(contact: ContactCreate):
+async def submit_contact(request: Request, contact: ContactCreate):
+    await guard_form(request, contact, "contact", per_hour=15, per_minute=5, dup=contact.email + contact.message)   # rate limit + honeypot + Turnstile
     try:
         result = await create_contact_message(contact)
         return result
@@ -17,7 +23,7 @@ async def submit_contact(contact: ContactCreate):
         )
 
 @router.get("/", response_model=List[ContactResponse])
-async def list_contacts():
+async def list_contacts(current_admin: AdminInDB = Depends(hr_access)):
     try:
         contacts = await get_all_contacts()
         return contacts

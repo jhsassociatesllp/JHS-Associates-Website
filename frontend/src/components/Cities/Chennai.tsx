@@ -2,12 +2,13 @@ import { useEffect, useRef, useState, type ReactElement } from 'react'
 import './Chennai.css'
 import './CityShared.css'
 
-import { imageUrl } from '../../utils/imageUrl'
+import { imageUrl, videoUrl } from '../../utils/imageUrl'
 import { mapEmbedUrl } from '../../utils/mapEmbedUrl'
 import { copyToClipboard } from '../../utils/copyToClipboard'
 import CityPartnerAvatar from './CityPartnerAvatar'
+import { useCityPartners } from '../../data/leadership'
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   { name: 'G Chandrasekaran', image: imageUrl('Chandra-Shekaran.webp'), qualifications: 'DSM, FCA, DISA', designation: 'Statutory & Corporate Tax Audits', email: 'chandrasekaran@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/ca-g-chandrasekaran-4a967b29' },
   { name: 'Pranal P', image: imageUrl('Pranal p.webp'), qualifications: 'FCA ', designation: 'Specialising in GST', email: 'parnal@jhsassociates.in', linkedin: 'https://www.linkedin.com/in/parnal-p' },
 ]
@@ -75,6 +76,7 @@ const IconPin = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="non
 const IconCheck = () => (<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>)
 
 export default function Chennai() {
+  const PARTNERS = useCityPartners('Chennai', FALLBACK_PARTNERS)
   const [activeLocation, setActiveLocation] = useState(MAP_LOCATIONS[0])
   const [openMailFor, setOpenMailFor] = useState<string | null>(null)
   const mailRef = useRef<HTMLDivElement>(null)
@@ -94,10 +96,12 @@ export default function Chennai() {
   return (
     <div className="chn-page">
       <section className="chn-hero">
-        <div className="chn-hero__photo" style={{ backgroundImage: `url(${imageUrl('Chennai.webp')})` }} />
+        <video className="chn-hero__photo" autoPlay muted loop playsInline preload="auto">
+          <source src={videoUrl('chennai_vid.mp4')} type="video/mp4" />
+        </video>
         <div className="chn-hero__overlay" />
         <div className="chn-hero__content">
-          {/* <span className="chn-hero__eyebrow">JHS &amp; Associates LLP</span> */}
+          {/* <span className="chn-hero__eyebrow">JHS</span> */}
           <h1 className="chn-hero__title">Chennai</h1>
           <p className="chn-hero__sub">Gateway to South India &amp; Regional Financial Centre</p>
         </div>
@@ -108,7 +112,6 @@ export default function Chennai() {
           </div>
           <div className="chn-hero__card-divider" />
           <div className="chn-hero__card-right">
-            <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Phone</span><span className="chn-hero__card-stat-val">+91 9840131965</span></div>
             <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Email</span><span className="chn-hero__card-stat-val">chandrasekaran@jhsassociates.in</span></div>
             {/* <div className="chn-hero__card-stat"><span className="chn-hero__card-stat-label">Hours</span><span className="chn-hero__card-stat-val">Mon–Sat, 9:30 AM – 6:30 PM</span></div> */}
           </div>

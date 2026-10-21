@@ -1,10 +1,18 @@
-from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
+import logging
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from app.controllers import notify as notify_ctrl
+from app.auth.deps import require_roles
+from app.schemas.admin import AdminInDB, AdminRole
 from fastapi.responses import StreamingResponse
+from app.auth.deps import get_current_user
+from app.controllers import activity as activity_ctrl
 from app.schemas.whitepaper import WhitePaperCreate, WhitePaperUpdate, WhitePaperResponse
 from app.controllers import whitepaper as whitepaper_ctrl
 from app.utils.http import content_disposition
 from io import BytesIO
 from typing import Optional
+
+content_admin = require_roles([AdminRole.SUPER_ADMIN, AdminRole.ADMIN])
 
 router = APIRouter(prefix="/whitepapers", tags=["White Papers"])
 
@@ -16,7 +24,8 @@ async def add_whitepaper(
     title: str = Form(...),
     short_description: str = Form(...),
     pdf: UploadFile = File(...),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
     """Upload a new white paper with a PDF and optional cover image (stored in GridFS)."""
     try:
@@ -42,22 +51,30 @@ async def add_whitepaper(
             image_id=image_id
         )
         created = await whitepaper_ctrl.create_whitepaper(whitepaper_data)
+        await notify_ctrl.queue_content("white_paper", created.get("id"), created.get("title"), created.get("short_description"))   # emails subscribers after the cancel window
         return {"message": "White paper created successfully", "whitepaper": created}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/pdf/{pdf_id}")
-async def get_pdf(pdf_id: str):
-    """Stream PDF from GridFS."""
+async def get_pdf(pdf_id: str, user: dict = Depends(get_current_user)):
+    """Stream PDF from GridFS. Requires sign-in; logs a download activity row."""
     try:
         content, filename, _ = await whitepaper_ctrl.get_file_from_gridfs(pdf_id)
+        title = await whitepaper_ctrl.get_title_by_pdf_id(pdf_id)
+        await activity_ctrl.log_download(user, "whitepaper", pdf_id, title or filename)
         return StreamingResponse(
             BytesIO(content),
             media_type="application/pdf",
             headers={"Content-Disposition": content_disposition(filename),
                      "Cache-Control": "public, max-age=86400"}
         )
+    except HTTPException:
+        raise
     except Exception:
         raise HTTPException(status_code=404, detail="PDF not found")
 
@@ -82,8 +99,11 @@ async def list_whitepapers():
     """Return all white papers sorted by newest first."""
     try:
         return await whitepaper_ctrl.get_all_whitepapers()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 # ── Dynamic paths AFTER all static ones ──────────────────────────────────────
@@ -103,8 +123,10 @@ async def update_whitepaper(
     short_description: Optional[str] = Form(None),
     edited_by: str = Form(...),
     pdf: Optional[UploadFile] = File(None),
-    image: Optional[UploadFile] = File(None)
+    image: Optional[UploadFile] = File(None),
+    current_admin: AdminInDB = Depends(content_admin),
 ):
+    edited_by = current_admin.email   # never trust the client for who edited
     """Update an existing white paper. Tracks edit history."""
     try:
         update_data = WhitePaperUpdate(edited_by=edited_by)
@@ -126,12 +148,15 @@ async def update_whitepaper(
         return {"message": "White paper updated successfully", "whitepaper": updated}
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logging.getLogger("api").exception("request failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.delete("/{whitepaper_id}", status_code=status.HTTP_200_OK)
-async def remove_whitepaper(whitepaper_id: str):
+async def remove_whitepaper(whitepaper_id: str, current_admin: AdminInDB = Depends(content_admin)):
     deleted = await whitepaper_ctrl.delete_whitepaper(whitepaper_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="White paper not found")

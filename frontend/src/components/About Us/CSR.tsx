@@ -42,7 +42,7 @@ export default function CSR() {
             </div>
             <div className="ap-grid-right">
               <p>
-                At JHS &amp; Associates, we understand that true corporate success cannot be separated from societal well-being. Our Corporate Social Responsibility (CSR) initiatives are deeply ingrained in our firm’s DNA.
+                At JHS, we understand that true corporate success cannot be separated from societal well-being. Our Corporate Social Responsibility (CSR) initiatives are deeply ingrained in our firm’s DNA.
               </p>
               <p>
                 We focus our efforts on primarily three verticals: Education, Healthcare, and Environmental Sustainability. By partnering with leading grassroots NGOs, we ensure that our philanthropic contributions translate into measurable, real-world impact.

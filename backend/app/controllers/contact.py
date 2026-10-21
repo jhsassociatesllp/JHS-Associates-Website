@@ -1,3 +1,4 @@
+from app.utils.validation import GUARD_FIELDS
 from app.database.connection import get_database
 from app.schemas.contact import ContactCreate, ContactResponse
 from app.services.email_service import notify_hr_new_contact
@@ -8,7 +9,8 @@ async def create_contact_message(contact: ContactCreate) -> ContactResponse:
     collection = db["contact_us"]
     
     # Prepare document
-    contact_dict = contact.model_dump()
+    contact_dict = contact.model_dump(exclude=GUARD_FIELDS)
+    contact_dict["consent_at"] = datetime.now(timezone.utc)
     contact_dict["created_at"] = datetime.now(timezone.utc)
     
     # Insert into MongoDB

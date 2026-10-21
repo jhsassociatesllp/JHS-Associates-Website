@@ -1,14 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { Shield, Users } from 'lucide-react'
 import './Taxation.css'
+import ServicePartnersModal from './ServicePartnersModal'
+import { getPartnersForSubPoint } from './servicePartnersData'
 import { imageUrl } from '../../utils/imageUrl'
+import { useServicePoints } from '../../data/leadership'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // Left column items (01–06)
-const leftItems = [
+const FALLBACK_LEFT_ITEMS = [
   { id: "01", title: "Representation before tax authorities for assessments, refunds & rectifications", desc: "Direct representation & dispute resolution" },
   { id: "02", title: "Tax structuring, budgeting, forecasting & M&A advisory", desc: "Strategic tax planning & deal structuring" },
   { id: "03", title: "Corporate & Non-Corporate Return Filing (Direct Tax)", desc: "Income tax return preparation & filing" },
@@ -18,7 +21,7 @@ const leftItems = [
 ]
 
 // Right column items (07–12)
-const rightItems = [
+const FALLBACK_RIGHT_ITEMS = [
   { id: "07", title: "Survey, Search & Seizure Support", desc: "Emergency response & regulatory support" },
   { id: "08", title: "Scrutiny & Faceless Representation", desc: "Assessment proceedings & e-proceedings" },
   { id: "09", title: "Assessments, Appeals & Litigation", desc: "CIT(A), ITAT & High Court representation" },
@@ -27,8 +30,12 @@ const rightItems = [
   { id: "12", title: "Tax Audits, Digitalization, Registration (PAN, GSTIN, TAN, Charitable Trusts)", desc: "Tax audit & registration services" },
 ]
 
+
 export default function Taxation() {
+  // Sub-services come from the admin panel (Services & Sectors); the lists above are the fallback.
+  const { leftItems, rightItems } = useServicePoints('taxation', FALLBACK_LEFT_ITEMS, FALLBACK_RIGHT_ITEMS)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activePoint, setActivePoint] = useState<{ id: string; title: string; desc: string } | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -103,10 +110,18 @@ export default function Taxation() {
             {/* LEFT COLUMN */}
             <div className="tx-spoke-col tx-spoke-col--left">
               {leftItems.map((item) => (
-                <div key={item.id} className="tx-spoke-row tx-spoke-row--left">
+                <div
+                    key={item.id}
+                    className="tx-spoke-row tx-spoke-row--left"
+                    onClick={() => setActivePoint(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                  >
                   <div className="tx-spoke-text tx-spoke-text--left">
                     <h3 className="tx-spoke-title">{item.title}</h3>
                     <p className="tx-spoke-desc">{item.desc}</p>
+                  <span className="tx-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                   <div className="tx-spoke-connector tx-spoke-connector--left">
                     <div className="tx-spoke-line" />
@@ -130,7 +145,14 @@ export default function Taxation() {
             {/* RIGHT COLUMN */}
             <div className="tx-spoke-col tx-spoke-col--right">
               {rightItems.map((item) => (
-                <div key={item.id} className="tx-spoke-row tx-spoke-row--right">
+                <div
+                  key={item.id}
+                  className="tx-spoke-row tx-spoke-row--right"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className="tx-spoke-connector tx-spoke-connector--right">
                     <div className="tx-spoke-badge tx-spoke-badge--red">{item.id}</div>
                     <div className="tx-spoke-line" />
@@ -138,6 +160,7 @@ export default function Taxation() {
                   <div className="tx-spoke-text tx-spoke-text--right">
                     <h3 className="tx-spoke-title">{item.title}</h3>
                     <p className="tx-spoke-desc">{item.desc}</p>
+                  <span className="tx-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -150,13 +173,21 @@ export default function Taxation() {
             {[...leftItems, ...rightItems]
               .sort((a, b) => parseInt(a.id) - parseInt(b.id))
               .map((item) => (
-                <div key={item.id} className="tx-spoke-mobile-card">
+                <div
+                  key={item.id}
+                  className="tx-spoke-mobile-card"
+                  onClick={() => setActivePoint(item)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setActivePoint(item)}
+                >
                   <div className={`tx-spoke-mobile-badge ${parseInt(item.id) <= 6 ? 'tx-spoke-badge--navy' : 'tx-spoke-badge--red'}`}>
                     {item.id}
                   </div>
                   <div>
                     <h3 className="tx-spoke-title">{item.title}</h3>
                     <p className="tx-spoke-desc">{item.desc}</p>
+                  <span className="tx-spoke-cta"><Users size={12} /> View Experts</span>
                   </div>
                 </div>
               ))}
@@ -164,7 +195,7 @@ export default function Taxation() {
 
           <div className="tx-certification">
             <Shield className="tx-certification__icon" size={28} />
-            <p className="tx-certification__text">JHS & Associates LLP · Full-Spectrum Tax Advisory — Direct, Indirect & International under One Team</p>
+            <p className="tx-certification__text">JHS · Full-Spectrum Tax Advisory — Direct, Indirect & International under One Team</p>
           </div>
         </div>
       </section>
@@ -179,6 +210,17 @@ export default function Taxation() {
           </div>
         </div>
       </section> */}
+
+
+    <ServicePartnersModal
+      isOpen={Boolean(activePoint)}
+      onClose={() => setActivePoint(null)}
+      serviceKey="taxation"
+      serviceTitle="Taxation Services"
+      point={activePoint}
+      partners={activePoint ? getPartnersForSubPoint('taxation', activePoint.id) : []}
+    />
+
 
     </div>
   )

@@ -1,0 +1,62 @@
+/* AdminCookies.css - Cookie consent dashboard */
+.ck-admin { padding: 24px; background: #f4f5fa; min-height: 100vh; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+.ck-admin__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.ck-admin__eyebrow { font-size: 0.7rem; font-weight: 700; color: #696cff; letter-spacing: 1.2px; text-transform: uppercase; margin: 0 0 4px; }
+.ck-admin__title { font-weight: 800; color: #1e293b; margin: 0 0 6px; font-size: 1.875rem; }
+.ck-admin__subtitle { color: #64748b; font-size: 0.95rem; margin: 0; max-width: 680px; }
+.ck-admin__header-actions { display: flex; gap: 10px; }
+.ck-admin__btn { border: 1px solid #d5d8e3; background: #fff; color: #334155; padding: 9px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+.ck-admin__btn:hover { background: #f1f2f8; }
+.ck-admin__btn--primary { background: #696cff; border-color: #696cff; color: #fff; }
+.ck-admin__btn--primary:hover { background: #5658e6; }
+.ck-admin__alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 0.875rem; background: #fdecec; color: #b42318; }
+
+.ck-admin__stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }
+.ck-admin__stat { background: #fff; border: 1px solid rgba(0, 0, 0, 0.07); border-left: 3px solid #696cff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; gap: 4px; }
+.ck-admin__stat--green { border-left-color: #22a06b; }
+.ck-admin__stat--red { border-left-color: #e5484d; }
+.ck-admin__stat--amber { border-left-color: #f5a623; }
+.ck-admin__stat--blue { border-left-color: #3b82f6; }
+.ck-admin__stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #64748b; }
+.ck-admin__stat-value { font-size: 1.9rem; font-weight: 800; color: #1e293b; line-height: 1.1; }
+.ck-admin__stat-sub { font-size: 0.78rem; color: #94a3b8; }
+
+.ck-admin__card { background: #fff; border: 1px solid #e6e8f1; border-radius: 12px; padding: 20px 22px; margin-bottom: 20px; }
+.ck-admin__card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.ck-admin__card-head h2 { margin: 0; font-size: 1.05rem; color: #1e293b; }
+.ck-admin__legend { display: flex; gap: 14px; font-size: 0.78rem; color: #64748b; }
+.ck-admin__legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.dot--accepted, .seg--accepted { background: #22a06b; }
+.dot--custom, .seg--custom { background: #f5a623; }
+.dot--rejected, .seg--rejected { background: #e5484d; }
+
+.ck-admin__chart { display: flex; align-items: flex-end; gap: 4px; height: 170px; padding-top: 6px; }
+.ck-admin__bar { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; }
+.ck-admin__bar-stack { width: 100%; max-width: 22px; display: flex; flex-direction: column; border-radius: 4px 4px 0 0; overflow: hidden; min-height: 2px; background: #eef0f6; }
+.seg { display: block; flex-basis: 0; }
+.ck-admin__bar-day { font-size: 0.62rem; color: #94a3b8; }
+
+.ck-admin__tabs { display: inline-flex; background: #eef0f6; border-radius: 8px; padding: 3px; }
+.ck-admin__tabs button { border: none; background: transparent; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #64748b; cursor: pointer; }
+.ck-admin__tabs button.active { background: #fff; color: #1e293b; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+
+.ck-admin__table-wrap { overflow-x: auto; }
+.ck-admin__table { width: 100%; border-collapse: collapse; }
+.ck-admin__table th { text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; padding: 10px 12px; border-bottom: 1px solid #eceef5; white-space: nowrap; }
+.ck-admin__table td { padding: 11px 12px; border-bottom: 1px solid #f1f2f8; font-size: 0.84rem; color: #334155; white-space: nowrap; }
+.ck-admin__table code { background: #f1f2f8; padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; }
+.ck-admin__page { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+.ck-admin__chip { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; }
+.ck-admin__chip--accepted { background: #e6f6ee; color: #1a7f45; }
+.ck-admin__chip--rejected { background: #fdecec; color: #b42318; }
+.ck-admin__chip--custom { background: #fef3dc; color: #a96a00; }
+.ck-admin__empty { text-align: center; color: #94a3b8; padding: 32px 0; }
+.ck-admin__pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; font-size: 0.82rem; color: #64748b; }
+.ck-admin__pager button { border: 1px solid #d5d8e3; background: #fff; padding: 6px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.ck-admin__pager button:disabled { opacity: 0.4; cursor: default; }
+.ck-admin__note { font-size: 0.82rem; line-height: 1.6; color: #64748b; background: #eef0ff; border: 1px solid #dfe2fb; border-radius: 10px; padding: 14px 18px; }
+
+@media (max-width: 1100px) {
+  .ck-admin__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

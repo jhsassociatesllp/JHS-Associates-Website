@@ -83,6 +83,20 @@
   box-shadow: 0 6px 18px rgba(30, 58, 95, 0.25);
 }
 
+/* Solid navy — Business Opportunities */
+.hero__action-btn--navy {
+  background: #1e3a5f;
+  color: #ffffff;
+  border: 1.5px solid #1e3a5f;
+}
+
+.hero__action-btn--navy:hover {
+  background: #0f2340;
+  border-color: #0f2340;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(30, 58, 95, 0.3);
+}
+
 /* Solid (primary) — Apply Now */
 .hero__action-btn--solid {
   background: #D62049;
@@ -134,6 +148,10 @@
   display: block;
 }
 
+.hero__headline-part {
+  display: block;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -173,6 +191,9 @@
 }
 
 .hero__carousel-container {
+  touch-action: pan-y; /* keep horizontal swipes for the carousel, vertical drags still scroll the page */
+  user-select: none;
+  -webkit-user-select: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1078,4 +1099,287 @@
   .hero__carousel-card--next2 {
     transform: translateX(500px) scale(0.75);
   }
+}
+
+/* Keep the eyebrow clear of the top-right action buttons (Log In made the row wider). */
+@media (min-width: 601px) {
+  .hero__header {
+    margin-top: 40px;
+  }
+}
+
+/* =============================================
+   PHONE POLISH (<= 600px)
+   Everything above the carousel is tightened so the whole centre card, its
+   neighbours and the dots are visible on the first screen instead of being
+   pushed below the fold and cut off.
+   ============================================= */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 96px 16px 28px;
+  }
+
+  /* On phones this row is in normal flow (position: static), and the hero's white
+     background layer is a positioned element, which paints OVER static content - so the
+     Business Opportunities / Join Our Team / Log In buttons were hidden behind it.
+     Giving the row its own stacking level brings them back. */
+  /* On phones the language switch sits at the top-right, level with the logo pill, so
+     it no longer takes a row of its own. */
+  .hero__actions {
+    position: absolute;
+    top: 30px;
+    right: 16px;
+    left: auto;
+    z-index: 20;
+    margin: 0;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .hero__actions .lang-switch__btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    gap: 3px;
+  }
+
+  .hero__actions .lang-switch__btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* the list opens under the button and stays on screen */
+  .hero__actions .lang-switch__menu {
+    left: auto;
+    right: 0;
+  }
+
+  .hero__header {
+    margin: 0 0 20px;
+    gap: 10px;
+  }
+
+  .hero__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 0;
+  }
+
+  .hero__headline {
+    font-size: clamp(25px, 7.2vw, 31px);
+    line-height: 1.22;
+    padding: 0 4px;
+  }
+
+  .hero__carousel {
+    padding: 0;
+  }
+
+  .hero__carousel-container {
+    min-height: 0;
+  }
+
+  .hero__carousel-track {
+    height: 430px;
+  }
+
+  .hero__carousel-card {
+    width: min(288px, 76vw);
+    height: 380px;
+    margin-left: calc(min(288px, 76vw) / -2);
+    margin-top: -190px;
+    border-radius: 20px;
+    box-shadow: 0 22px 40px -18px rgba(15, 35, 64, 0.55);
+  }
+
+  .hero__carousel-dots {
+    margin-top: 6px;
+  }
+
+  /* Business Opportunities and Join Our Team are not shown on phones
+     (they stay on tablets and desktops); language and log-in remain. */
+  .hero__action-btn--desktop-only {
+    display: none;
+  }
+}
+
+/* =============================================
+   LAPTOP / DESKTOP FIT (>= 901px)
+   The old layout used fixed sizes (card 520px tall, 80px gaps) that were taller than a
+   laptop window, so the cards ran off the bottom of the first screen. Everything below is
+   sized from the window height, so the headline, the whole centre card, the dots and the
+   arrows fit on the first screen on any laptop, and tall monitors still get the full-size card.
+   ============================================= */
+@media (min-width: 901px) {
+  .hero {
+    --hero-card-h: clamp(262px, calc(82vh - 208px), 520px);
+    --hero-card-w: calc(var(--hero-card-h) * 0.7308);
+    padding: 64px 48px 8px;
+  }
+
+  .hero__header {
+    margin-top: 0;
+    margin-bottom: 14px;
+    gap: 5px;
+  }
+
+  .hero__eyebrow {
+    font-size: clamp(12px, 2.4vh, 18px);
+  }
+
+  /* three stacked lines, as originally designed - as large as the window height allows */
+  .hero__headline {
+    font-size: clamp(28px, min(5.7vh, 3.4vw), 58px);
+    line-height: 1.15;
+    max-width: 900px;
+  }
+
+  .hero__carousel-track {
+    height: calc(var(--hero-card-h) + 6px);
+  }
+
+  .hero__carousel-container {
+    min-height: 0;
+  }
+
+  .hero__carousel-card {
+    width: var(--hero-card-w);
+    height: var(--hero-card-h);
+    margin-left: calc(var(--hero-card-w) / -2);
+    margin-top: calc(var(--hero-card-h) / -2);
+  }
+
+  /* top buttons on laptops and desktops (Business Opportunities, Join Our Team, language, Log In):
+     all four share the same height so the row looks even */
+  .hero__actions {
+    top: 24px;
+    right: 40px;
+    gap: 11px;
+  }
+
+  .hero__actions .hero__action-btn {
+    font-size: 11px;
+    letter-spacing: 0.045em;
+    padding: 0 16px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hero__actions .lang-switch__btn {
+    height: 32px;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+    gap: 5px;
+    border-radius: 100px;
+  }
+
+  .hero__actions .lang-switch__btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* the text on the card scales with the card, so a smaller laptop card is not cramped */
+  .hero__carousel-card-content {
+    bottom: calc(var(--hero-card-h) * 0.045);
+    left: calc(var(--hero-card-h) * 0.045);
+    right: calc(var(--hero-card-h) * 0.045);
+    padding: calc(var(--hero-card-h) * 0.05) calc(var(--hero-card-h) * 0.045);
+  }
+
+  .hero__carousel-card-title {
+    font-size: clamp(12px, calc(var(--hero-card-h) * 0.0385), 20px);
+    margin-top: calc(var(--hero-card-h) * 0.012);
+  }
+
+  .hero__carousel-card-meta {
+    font-size: clamp(8.5px, calc(var(--hero-card-h) * 0.02), 11px);
+  }
+
+  /* dots and arrows share one row under the card, so every control is visible */
+  .hero__carousel {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .hero__carousel-container {
+    grid-column: 1 / -1;
+  }
+
+  .hero__carousel-dots {
+    grid-column: 2;
+    margin-top: 6px;
+  }
+
+  .hero__spotlight-controls {
+    grid-column: 3;
+    justify-self: start;
+    margin: 6px 0 0 28px;
+  }
+
+  .hero__spotlight-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
+  }
+}
+
+/* wide windows: five cards in a row - the centre card, a smaller card each side and a smaller
+   one beyond that - all sized from the card width, so they keep their spacing at any size. */
+@media (min-width: 1201px) {
+  .hero {
+    --hero-card-h: clamp(268px, min(calc(82vh - 200px), 25vw), 540px);
+    --hero-card-w: calc(var(--hero-card-h) * 0.86);
+  }
+
+  .hero__carousel-card--prev2,
+  .hero__carousel-card--next2 {
+    opacity: 0.92;
+    z-index: 2;
+    pointer-events: auto;
+    box-shadow: none;
+  }
+
+  /* a flat, balanced row: the centre card in front, a smaller card each side, and a faded one beyond */
+  .hero__carousel-card--prev  { transform: translateX(-102%) scale(0.85); z-index: 5; opacity: 1; box-shadow: 0 18px 36px -22px rgba(15, 35, 64, 0.45); }
+  .hero__carousel-card--next  { transform: translateX(102%) scale(0.85); z-index: 5; opacity: 1; box-shadow: 0 18px 36px -22px rgba(15, 35, 64, 0.45); }
+  .hero__carousel-card--prev2 { transform: translateX(-184%) scale(0.62); opacity: 0.45; }
+  .hero__carousel-card--next2 { transform: translateX(184%) scale(0.62); opacity: 0.45; }
+
+  .hero__carousel-card--gone-l { transform: translateX(-250%) scale(0.5); }
+  .hero__carousel-card--gone-r { transform: translateX(250%) scale(0.5); }
+}
+
+/* cards waiting outside the visible row */
+.hero__carousel-card--gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =============================================
+   CARD ROW (all sizes)
+   ============================================= */
+.hero__carousel-card {
+  background: linear-gradient(135deg, #16305a 0%, #0f2340 100%); /* shows if a picture is slow or missing */
+}
+
+.hero__carousel-card--current {
+  box-shadow: 0 28px 54px -24px rgba(15, 35, 64, 0.55);
+}
+
+/* laptops and tablets (901 - 1200px): three cards */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .hero__carousel-card--prev  { transform: translateX(-102%) scale(0.86); opacity: 1; }
+  .hero__carousel-card--next  { transform: translateX(102%) scale(0.86); opacity: 1; }
+  .hero__carousel-card--prev2,
+  .hero__carousel-card--next2 { opacity: 0; pointer-events: none; }
+}
+
+/* phones and small tablets: the neighbours peek in from the sides */
+@media (max-width: 900px) {
+  .hero__carousel-card--prev  { transform: translateX(-88%) scale(0.86); opacity: 0.8; }
+  .hero__carousel-card--next  { transform: translateX(88%) scale(0.86); opacity: 0.8; }
 }

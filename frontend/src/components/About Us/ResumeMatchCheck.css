@@ -1,0 +1,57 @@
+/* Resume match check — shown under the resume upload on the careers form */
+.rmc { margin-top: 0.6rem; font-family: 'DM Sans', 'Helvetica Neue', sans-serif; }
+
+.rmc-hint { margin: 0.5rem 0 0; font-size: 0.78rem; color: #64748b; }
+
+.rmc-btn {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #0f2340;
+  background: #fff;
+  color: #0f2340;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.rmc-btn:hover:not(:disabled) { background: #0f2340; color: #fff; }
+.rmc-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.rmc-error { margin: 0.5rem 0 0; font-size: 0.78rem; color: #b01e2e; }
+
+.rmc-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.rmc-card--good { border-color: #bfe8d1; background: #f3fbf7; }
+.rmc-card--low { border-color: #f4d9b5; background: #fffaf3; }
+.rmc-card--warn { border-color: #f1d98f; background: #fffbea; }
+
+.rmc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.rmc-head strong { display: block; font-size: 0.9rem; color: #0f2340; }
+.rmc-sub { display: block; margin-top: 2px; font-size: 0.74rem; color: #64748b; }
+.rmc-score { font-size: 1.5rem; font-weight: 800; color: #0f2340; line-height: 1; }
+.rmc-card--good .rmc-score { color: #1a7f45; }
+.rmc-card--low .rmc-score { color: #b25e00; }
+
+.rmc-bar { position: relative; height: 8px; margin: 12px 0 4px; border-radius: 999px; background: #e5e7ef; overflow: visible; }
+.rmc-bar__fill { height: 100%; border-radius: 999px; background: #e89b3c; transition: width 0.5s ease; }
+.rmc-card--good .rmc-bar__fill { background: #22a06b; }
+.rmc-bar__line { position: absolute; top: -3px; width: 2px; height: 14px; background: #0f2340; opacity: 0.45; }
+
+.rmc-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; }
+.rmc-chips > span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; margin-right: 2px; }
+.rmc-chip { font-style: normal; padding: 2px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+.rmc-chip--ok { background: #e1f4ea; color: #1a7f45; }
+
+.rmc-tips { margin: 12px 0 0; padding-left: 18px; font-size: 0.78rem; line-height: 1.55; color: #475569; }
+.rmc-tips li { margin-bottom: 4px; }
+
+.rmc-link { margin-top: 8px; padding: 0; border: none; background: none; font-family: inherit; font-size: 0.78rem; font-weight: 600; color: #475569; text-decoration: underline; cursor: pointer; }
+.rmc-link:hover { color: #b01e2e; }

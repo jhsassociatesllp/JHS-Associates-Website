@@ -75,6 +75,16 @@ type Application = {
 
 type JobForm = Omit<Job, 'id' | 'created_at' | 'keywords'>;
 
+/* The firm counts days in Indian Standard Time, whatever time zone the browser is in. */
+const istDay = (iso: string | Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(iso)); // 2026-10-23
+const addDays = (day: string, n: number) => {
+  const d = new Date(`${day}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const prettyDay = (day: string) =>
+  new Intl.DateTimeFormat('en-IN', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${day}T00:00:00Z`));
+
 const initialJobForm: JobForm = {
   title: '',
   department: '',
@@ -226,6 +236,9 @@ const AdminCareers: React.FC = () => {
   const [viewApplication, setViewApplication] = useState<Application | null>(null);
   const [vacancySearch, setVacancySearch] = useState('');
   const [applicationSearch, setApplicationSearch] = useState('');
+  const [dateFrom, setDateFrom] = useState(''); // YYYY-MM-DD (Indian day); empty = no limit
+  const [dateTo, setDateTo] = useState('');
+  const [exporting, setExporting] = useState<'' | 'zip' | 'report'>('');
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -447,6 +460,8 @@ const AdminCareers: React.FC = () => {
     else if (selectedJobFilter !== 'all') list = list.filter((application) => application.job_id === selectedJobFilter);
 
     if (topOnly) list = list.filter((application) => application.ats_status === 'matched');
+    if (dateFrom) list = list.filter((application) => istDay(application.created_at) >= dateFrom);
+    if (dateTo) list = list.filter((application) => istDay(application.created_at) <= dateTo);
 
     const q = applicationSearch.trim().toLowerCase();
     if (q) {
@@ -458,7 +473,53 @@ const AdminCareers: React.FC = () => {
       );
     }
     return list;
-  }, [applications, selectedJobFilter, applicationSearch, topOnly]);
+  }, [applications, selectedJobFilter, applicationSearch, topOnly, dateFrom, dateTo]);
+
+  /** How many applications came on each day (for the chosen vacancy and dates), newest day first. */
+  const dayCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    filteredApplications.forEach((a) => counts.set(istDay(a.created_at), (counts.get(istDay(a.created_at)) ?? 0) + 1));
+    return [...counts.entries()].sort((a, b) => (a[0] < b[0] ? 1 : -1));
+  }, [filteredApplications]);
+
+  const today = istDay(new Date());
+  const pickRange = (from: string, to: string) => {
+    setDateFrom(from);
+    setDateTo(to);
+  };
+
+  /** Downloads the résumés + report (ZIP) or just the report for the chosen vacancy and dates. */
+  const exportApplications = async (what: 'zip' | 'report') => {
+    setExporting(what);
+    setMessage('');
+    try {
+      const qs = new URLSearchParams({ what });
+      if (dateFrom) qs.set('date_from', dateFrom);
+      if (dateTo) qs.set('date_to', dateTo);
+      if (selectedJobFilter !== 'all') qs.set('job_id', selectedJobFilter);
+      const response = await fetch(`${API_BASE_URL}/careers/admin/applications/export?${qs.toString()}`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(typeof err?.detail === 'string' ? err.detail : 'Unable to prepare the download.');
+      }
+      const count = response.headers.get('X-Application-Count');
+      const blob = await response.blob();
+      const named = /filename="([^"]+)"/.exec(response.headers.get('Content-Disposition') || '');
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = named?.[1] || (what === 'zip' ? 'JHS_Resumes.zip' : 'JHS_Applications_Report.csv');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setMessage(count === '0' ? 'No applications in these dates, so the file is empty.' : `Downloaded ${count} application(s).`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Unable to prepare the download.');
+    } finally {
+      setExporting('');
+    }
+  };
 
   const filteredJobs = useMemo(() => {
     const q = vacancySearch.trim().toLowerCase();
@@ -571,6 +632,50 @@ const AdminCareers: React.FC = () => {
                 {scoring ? 'Scoring…' : `Score ${unscored} older application${unscored === 1 ? '' : 's'}`}
               </button>
             )}
+          </div>
+        )}
+
+        {tab === 1 && (
+          <div className="careers-report">
+            <div className="careers-report__row">
+              <div className="careers-report__dates">
+                <label>
+                  From
+                  <input type="date" value={dateFrom} max={dateTo || undefined} onChange={(e) => setDateFrom(e.target.value)} />
+                </label>
+                <label>
+                  To
+                  <input type="date" value={dateTo} min={dateFrom || undefined} onChange={(e) => setDateTo(e.target.value)} />
+                </label>
+              </div>
+              <div className="careers-report__quick">
+                <button type="button" onClick={() => pickRange(today, today)} className={dateFrom === today && dateTo === today ? 'on' : ''}>Today</button>
+                <button type="button" onClick={() => pickRange(addDays(today, -1), addDays(today, -1))} className={dateFrom === addDays(today, -1) && dateTo === addDays(today, -1) ? 'on' : ''}>Yesterday</button>
+                <button type="button" onClick={() => pickRange(addDays(today, -6), today)}>Last 7 days</button>
+                <button type="button" onClick={() => pickRange('', '')} className={!dateFrom && !dateTo ? 'on' : ''}>All dates</button>
+              </div>
+              <div className="careers-report__actions">
+                <button type="button" className="careers-report__btn careers-report__btn--primary" onClick={() => exportApplications('zip')} disabled={exporting !== '' || filteredApplications.length === 0}>
+                  {exporting === 'zip' ? 'Preparing folder…' : 'Download resumes + report (folder)'}
+                </button>
+                <button type="button" className="careers-report__btn" onClick={() => exportApplications('report')} disabled={exporting !== '' || filteredApplications.length === 0}>
+                  {exporting === 'report' ? 'Preparing…' : 'Report only (Excel)'}
+                </button>
+              </div>
+            </div>
+            <div className="careers-report__summary">
+              <strong>{filteredApplications.length}</strong> application{filteredApplications.length === 1 ? '' : 's'}
+              {dateFrom || dateTo ? ` from ${dateFrom ? prettyDay(dateFrom) : 'the start'} to ${dateTo ? prettyDay(dateTo) : 'today'}` : ' in total'}
+              {dayCounts.length > 0 && (
+                <span className="careers-report__days">
+                  {dayCounts.slice(0, 14).map(([day, n]) => (
+                    <button type="button" key={day} onClick={() => pickRange(day, day)} title="Show only this day">
+                      {prettyDay(day)} <b>{n}</b>
+                    </button>
+                  ))}
+                </span>
+              )}
+            </div>
           </div>
         )}
 

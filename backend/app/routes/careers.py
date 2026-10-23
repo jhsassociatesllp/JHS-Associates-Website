@@ -5,13 +5,14 @@ from collections import defaultdict, deque
 from datetime import timedelta
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, Response, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, Request, Response, UploadFile, status
 from pydantic import ValidationError
 
 from app.auth.deps import get_current_applicant, get_current_user, require_roles
 from app.auth.security import create_access_token
 from app.controllers import applicant as applicant_ctrl
 from app.controllers import career as career_ctrl
+from app.controllers import career_export as export_ctrl
 from app.services import ats
 from app.utils.validation import FormGuard, guard_form
 from app.schemas.admin import AdminInDB, AdminRole
@@ -286,6 +287,31 @@ async def admin_applications(
     current_admin: AdminInDB = Depends(hr_access),
 ):
     return await career_ctrl.list_applications(job_id=job_id)
+
+
+@router.get("/admin/applications/export")
+async def admin_export_applications(
+    date_from: Optional[str] = Query(None, max_length=10),
+    date_to: Optional[str] = Query(None, max_length=10),
+    job_id: Optional[str] = Query(None, max_length=40),
+    what: str = Query("zip", pattern="^(zip|report)$"),
+    current_admin: AdminInDB = Depends(hr_access),
+):
+    """Résumés + report for the days chosen. what=zip -> one folder with every résumé; what=report -> just the sheet."""
+    try:
+        day_from, day_to = export_ctrl.parse_day(date_from), export_ctrl.parse_day(date_to)
+        docs = await export_ctrl.load_applications(day_from, day_to, job_id)
+        label = export_ctrl.label_for(day_from, day_to)
+        if what == "report":
+            body, media, fname = await export_ctrl.report_csv(docs), "text/csv; charset=utf-8", f"JHS_Applications_Report_{label}.csv"
+        else:
+            body, media, fname = await export_ctrl.build_zip(docs, label), "application/zip", f"JHS_Resumes_{label}.zip"
+    except export_ctrl.ExportError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.detail)
+    return Response(content=body, media_type=media, headers={
+        "Content-Disposition": f'attachment; filename="{fname}"', "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
+        "X-Application-Count": str(len(docs)),
+    })
 
 
 @router.patch(

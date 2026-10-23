@@ -482,6 +482,13 @@ const AdminCareers: React.FC = () => {
     return [...counts.entries()].sort((a, b) => (a[0] < b[0] ? 1 : -1));
   }, [filteredApplications]);
 
+  /** How many applications came from each kind of profile (Fresher, Experienced ...). */
+  const profileCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    filteredApplications.forEach((a) => { const k = (a as { profile?: string }).profile || 'Not given'; counts.set(k, (counts.get(k) ?? 0) + 1); });
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  }, [filteredApplications]);
+
   const today = istDay(new Date());
   const pickRange = (from: string, to: string) => {
     setDateFrom(from);
@@ -656,10 +663,10 @@ const AdminCareers: React.FC = () => {
               </div>
               <div className="careers-report__actions">
                 <button type="button" className="careers-report__btn careers-report__btn--primary" onClick={() => exportApplications('zip')} disabled={exporting !== '' || filteredApplications.length === 0}>
-                  {exporting === 'zip' ? 'Preparing folder…' : 'Download resumes + report (folder)'}
+                  {exporting === 'zip' ? 'Preparing folder…' : 'Download resumes + tracker (folder)'}
                 </button>
                 <button type="button" className="careers-report__btn" onClick={() => exportApplications('report')} disabled={exporting !== '' || filteredApplications.length === 0}>
-                  {exporting === 'report' ? 'Preparing…' : 'Report only (Excel)'}
+                  {exporting === 'report' ? 'Preparing…' : 'Tracker only (Excel)'}
                 </button>
               </div>
             </div>
@@ -676,6 +683,16 @@ const AdminCareers: React.FC = () => {
                 </span>
               )}
             </div>
+            {profileCounts.length > 0 && (
+              <div className="careers-report__summary">
+                By profile:
+                <span className="careers-report__days">
+                  {profileCounts.map(([name, n]) => (
+                    <span className="careers-report__chip" key={name}>{name} <b>{n}</b></span>
+                  ))}
+                </span>
+              </div>
+            )}
           </div>
         )}
 

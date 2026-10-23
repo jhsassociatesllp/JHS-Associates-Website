@@ -3,7 +3,6 @@
 
 Days are Indian Standard Time days, because that is how the firm counts a "day".
 """
-import csv
 import io
 import re
 import zipfile
@@ -12,6 +11,9 @@ from datetime import date, datetime, time, timedelta, timezone
 from typing import Optional
 
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.utils import get_column_letter
 
 from app.controllers.cookie_consent import csv_safe
 from app.controllers.career import APPLICATIONS_COLLECTION, RESUME_BUCKET, _object_id, get_database
@@ -100,15 +102,6 @@ def _row(n: int, d: dict, resume_name: str) -> list:
     ]
 
 
-def _csv_bytes(header: list, rows: list[list]) -> bytes:
-    buf = io.StringIO()
-    w = csv.writer(buf)
-    w.writerow(header)
-    for r in rows:
-        w.writerow([csv_safe(c) for c in r])
-    return ("﻿" + buf.getvalue()).encode("utf-8")   # BOM so Excel shows every character correctly
-
-
 def daily_summary(docs: list[dict]) -> list[list]:
     by_day: "OrderedDict[str, list[dict]]" = OrderedDict()
     for d in docs:
@@ -129,12 +122,80 @@ def label_for(day_from: Optional[date], day_to: Optional[date]) -> str:
     return "all_dates"
 
 
-async def report_csv(docs: list[dict]) -> bytes:
-    return _csv_bytes(REPORT_COLUMNS, [_row(i, d, "") for i, d in enumerate(docs, 1)])
+NAVY = "0F2340"
+HEAD_FILL = PatternFill("solid", fgColor=NAVY)
+BAND_FILL = PatternFill("solid", fgColor="EAF0FA")
+
+
+def _count_by(docs: list[dict], key) -> list[tuple]:
+    counts: dict = {}
+    for d in docs:
+        k = key(d) or "Not given"
+        counts[k] = counts.get(k, 0) + 1
+    return sorted(counts.items(), key=lambda kv: (-kv[1], str(kv[0])))
+
+
+def _put_table(ws, row: int, title: str, headers: list[str], rows: list[list]) -> int:
+    ws.cell(row=row, column=1, value=title).font = Font(bold=True, size=12, color=NAVY)
+    row += 1
+    for c, h in enumerate(headers, 1):
+        cell = ws.cell(row=row, column=c, value=h)
+        cell.font, cell.fill = Font(bold=True, color="FFFFFF"), HEAD_FILL
+    for r in rows:
+        row += 1
+        for c, v in enumerate(r, 1):
+            ws.cell(row=row, column=c, value=csv_safe(v) if isinstance(v, str) else v)
+    return row + 2
+
+
+def build_workbook(docs: list[dict], label: str, resume_names: Optional[list[str]] = None) -> bytes:
+    """Tracker.xlsx: a Summary sheet (totals, by day / profile / position / source) and the Tracker sheet (one line per candidate)."""
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Summary"
+    ws["A1"] = "JHS & Associates LLP - Resumes received through the website"
+    ws["A1"].font = Font(bold=True, size=15, color=NAVY)
+    ws["A2"] = f"Period: {label.replace('_', ' ')} (Indian Standard Time)"
+    ws["A3"] = f"Total applications: {len(docs)}"
+    ws["A3"].font = Font(bold=True, size=12)
+    ws["A4"] = f"Resumes attached: {sum(1 for d in docs if d.get('resume_file_id'))}     Good resume matches: {sum(1 for d in docs if d.get('ats_status') == 'matched')}"
+    row = 6
+    row = _put_table(ws, row, "Day-wise", ["Date", "Applications", "Good matches", "Resumes attached"], daily_summary(docs))
+    row = _put_table(ws, row, "By profile (who applied)", ["Profile", "Applications"], [list(x) for x in _count_by(docs, lambda d: d.get("profile"))])
+    row = _put_table(ws, row, "By position applied for", ["Position", "Applications"], [list(x) for x in _count_by(docs, lambda d: d.get("job_title") or "General application")])
+    row = _put_table(ws, row, "By highest qualification", ["Qualification", "Applications"], [list(x) for x in _count_by(docs, lambda d: d.get("highest_qualification"))])
+    row = _put_table(ws, row, "How they heard about JHS", ["Source", "Applications"], [list(x) for x in _count_by(docs, lambda d: d.get("how_heard"))])
+    ws.column_dimensions["A"].width = 44
+    for col in "BCD":
+        ws.column_dimensions[col].width = 20
+
+    tr = wb.create_sheet("Tracker")
+    header = REPORT_COLUMNS + ["HR remarks"]
+    tr.append(header)
+    for c in range(1, len(header) + 1):
+        cell = tr.cell(row=1, column=c)
+        cell.font, cell.fill, cell.alignment = Font(bold=True, color="FFFFFF"), HEAD_FILL, Alignment(vertical="center", wrap_text=True)
+    for i, d in enumerate(docs, 1):
+        r = _row(i, d, (resume_names[i - 1] if resume_names else ""))
+        tr.append([csv_safe(v) if isinstance(v, str) else v for v in r] + [""])
+        if i % 2 == 0:
+            for c in range(1, len(header) + 1):
+                tr.cell(row=i + 1, column=c).fill = BAND_FILL
+    tr.freeze_panes = "E2"
+    tr.auto_filter.ref = f"A1:{get_column_letter(len(header))}{max(len(docs) + 1, 2)}"
+    for c, w in enumerate([7, 12, 10, 26, 30, 15, 28, 22, 22, 22, 14, 14, 24, 12, 14, 14, 44, 30], 1):
+        tr.column_dimensions[get_column_letter(c)].width = w
+    out = io.BytesIO()
+    wb.save(out)
+    return out.getvalue()
+
+
+async def report_xlsx(docs: list[dict], label: str) -> bytes:
+    return build_workbook(docs, label)
 
 
 async def build_zip(docs: list[dict], label: str) -> bytes:
-    """Folder 'JHS_Resumes_<label>' with Resumes/, Report.csv and Daily_Summary.csv."""
+    """Folder 'JHS_Resumes_<label>' with Resumes/ and Tracker.xlsx."""
     if len(docs) > MAX_RESUMES_PER_DOWNLOAD:
         raise ExportError(400, f"{len(docs)} applications is too many for one download. Please choose fewer days (limit {MAX_RESUMES_PER_DOWNLOAD}).")
     root = f"JHS_Resumes_{label}"
@@ -161,16 +222,14 @@ async def build_zip(docs: list[dict], label: str) -> bytes:
             else:
                 name = "(no resume file)"
             rows.append(_row(n, d, name))
-        z.writestr(f"{root}/Report.csv", _csv_bytes(REPORT_COLUMNS, rows))
-        z.writestr(f"{root}/Daily_Summary.csv", _csv_bytes(
-            ["Date (IST)", "Applications received", "Good resume matches", "Resumes attached"], daily_summary(docs)))
+        z.writestr(f"{root}/Tracker.xlsx", build_workbook(docs, label, [r[-1] for r in rows]))
         total = len(docs)
         z.writestr(f"{root}/READ_ME.txt",
                    f"JHS & Associates LLP - resumes received through the website\n"
                    f"Period: {label.replace('_', ' ')} (Indian Standard Time)\n"
                    f"Applications: {total}   Resumes in this folder: {total - missing}\n\n"
-                   "Report.csv         - one line per candidate (open in Excel)\n"
-                   "Daily_Summary.csv  - how many applications came on each day\n"
+                   "Tracker.xlsx       - open in Excel. 'Summary' sheet: totals, day-wise, by profile, by position, by source.\n"
+                   "                     'Tracker' sheet: one line per candidate (filterable, with an HR remarks column)\n"
                    "Resumes/<date>/    - the resumes, one folder per day\n"
                    "Personal data: please handle and delete according to the JHS Privacy Policy.\n")
     return out.getvalue()

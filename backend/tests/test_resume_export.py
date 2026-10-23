@@ -2,11 +2,12 @@
 
 Daily résumé report: date filter (Indian days), ZIP with every résumé + report, admin-only.
 """
-import csv
 import io
 import os
 import sys
 import zipfile
+
+from openpyxl import load_workbook
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import datetime, timedelta, timezone
@@ -114,18 +115,21 @@ names = z.namelist()
 root = "JHS_Resumes_23-10-2026/"
 pdfs = [n for n in names if n.endswith(".pdf")]
 check("only that Indian day (midnight edges handled): Bilal + Chitra, not Asha / Esha", r.headers["x-application-count"] == "3" and len(pdfs) == 2 and any("Bilal" in n for n in pdfs) and any("Chitra" in n for n in pdfs) and not any("Asha" in n or "Esha" in n for n in pdfs), (r.headers["x-application-count"], pdfs))
-check("folder has Report, Daily summary, read-me", all(root + f in names for f in ("Report.csv", "Daily_Summary.csv", "READ_ME.txt")))
-rows = list(csv.reader(io.StringIO(z.read(root + "Report.csv").decode("utf-8-sig"))))
-check("report: header + 3 rows, IST date/time", len(rows) == 4 and rows[1][1] == "23-10-2026" and rows[1][2] == "12:05 AM", rows[1][:4])
-check("candidate without a file is listed too", any("(no resume file)" in x for row in rows for x in row))
-check("spreadsheet formula in a name is neutralised", any(row[3].startswith("'=") for row in rows[1:]), [row[3] for row in rows[1:]])
-check("daily summary counts", list(csv.reader(io.StringIO(z.read(root + "Daily_Summary.csv").decode("utf-8-sig"))))[1][:2] == ["23-10-2026", "3"])
+check("folder has Tracker, read-me", all(root + f in names for f in ("Tracker.xlsx", "READ_ME.txt")))
+wb = load_workbook(io.BytesIO(z.read(root + "Tracker.xlsx")))
+rows = [[x for x in r] for r in wb["Tracker"].iter_rows(values_only=True)]
+check("tracker: header + 3 rows, IST date/time", len(rows) == 4 and rows[1][1] == "23-10-2026" and rows[1][2] == "12:05 AM", rows[1][:4])
+check("candidate without a file is listed too", any("(no resume file)" in str(x) for row in rows for x in row))
+check("spreadsheet formula in a name is neutralised", any(str(row[3]).startswith("'=") for row in rows[1:]), [row[3] for row in rows[1:]])
+summ = [[x for x in r] for r in wb["Summary"].iter_rows(values_only=True)]
+flat = [x for r in summ for x in r if x is not None]
+check("summary: total, day-wise, by profile", "Total applications: 3" in flat and "23-10-2026" in flat and "Fresher" in flat and "By profile (who applied)" in flat)
 check("resume content is intact", z.read([n for n in names if "Bilal" in n][0]).startswith(b"%PDF-1.4 resume of Bilal"))
 
 r2 = c.get(U + "?date_from=2026-10-22&date_to=2026-10-24", headers=hr)
 check("three days -> 5 applications, folders per day", r2.headers["x-application-count"] == "5" and {n.split("/")[2] for n in zipfile.ZipFile(io.BytesIO(r2.content)).namelist() if "/Resumes/" in n} == {"22-10-2026", "23-10-2026", "24-10-2026"})
 r3 = c.get(U + "?what=report&date_from=2026-10-23&date_to=2026-10-23", headers=hr)
-check("report only -> CSV", r3.status_code == 200 and r3.headers["content-type"].startswith("text/csv") and r3.content.startswith(b"\xef\xbb\xbf"))
+check("report only -> Excel", r3.status_code == 200 and "spreadsheetml" in r3.headers["content-type"] and r3.content[:2] == b"PK" and ".xlsx" in r3.headers["content-disposition"])
 r4 = c.get(U + "?date_from=2026-10-23&date_to=2026-10-23&job_id=general", headers=hr)
 check("general-applications filter", r4.headers["x-application-count"] == "1")
 check("bad date -> 422", c.get(U + "?date_from=hello", headers=hr).status_code == 422)

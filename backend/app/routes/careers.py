@@ -303,7 +303,7 @@ async def admin_export_applications(
         docs = await export_ctrl.load_applications(day_from, day_to, job_id)
         label = export_ctrl.label_for(day_from, day_to)
         if what == "report":
-            body, media, fname = await export_ctrl.report_csv(docs), "text/csv; charset=utf-8", f"JHS_Applications_Report_{label}.csv"
+            body, media, fname = await export_ctrl.report_xlsx(docs, label), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", f"JHS_Tracker_{label}.xlsx"
         else:
             body, media, fname = await export_ctrl.build_zip(docs, label), "application/zip", f"JHS_Resumes_{label}.zip"
     except export_ctrl.ExportError as exc:

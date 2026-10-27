@@ -79,6 +79,7 @@ const NAV_ITEMS: NavItem[] = [
           { label: "Compliance & Governance", description: "Risk, Compliance and Corporate Governance Advisory.", href: '/services/compliance-learning' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
+          { label: "Start-Ups & MSMEs", description: "Compliance, governance & accounting services", href: '/services/startups-msmes' },
         ],
       },
       // {

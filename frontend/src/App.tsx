@@ -41,6 +41,7 @@ const TermsAndConditions = lazy(() => import('./components/legal/TermsAndConditi
 const TermsOfBusiness = lazy(() => import('./components/legal/TermsOfBusiness'))
 const PoshPolicy = lazy(() => import('./components/legal/PoshPolicy'))
 const ComplianceCalendar = lazy(() => import('./pages/ComplianceCalendar'))
+const StartupServices = lazy(() => import('./pages/StartupServices'))
 
 // Services pages
 const Outsourcing = lazy(() => import('./components/services/Outsourcing'))
@@ -232,6 +233,7 @@ export default function App() {
           <Route path="/services/soc-attestation" element={<SOCAttestation />} />
           <Route path="/services/corporate-finance" element={<CorporateFinance />} />
           <Route path="/services/compliance-learning" element={<ComplianceLearning />} />
+          <Route path="/services/startups-msmes" element={<StartupServices />} />
           <Route path="/services/learning-development" element={<LearningDevelopment />} />
 
           {/* Financial Services */}

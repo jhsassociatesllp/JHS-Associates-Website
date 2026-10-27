@@ -55,6 +55,7 @@ export const SEO_META: Record<string, RouteMeta> = {
   '/services/single-window-assistance': { title: `Single Window Assistance${suffix}`, description: 'End-to-end regulatory and compliance assistance through a single point of contact.' },
   '/services/soc-attestation': { title: `SOC Attestation${suffix}`, description: 'SOC 1 / SOC 2 attestation and reporting services from JHS.' },
   '/services/corporate-finance': { title: `Corporate Finance Solutions${suffix}`, description: 'Capital raising, M&A and corporate finance advisory services from JHS.' },
+  '/services/startups-msmes': { title: `Services Listing for Start-Ups & MSMEs${suffix}`, description: 'Compliance, governance, accounting and secretarial services for start-ups and MSMEs from JHS.' },
   '/services/compliance-learning': { title: `Compliance, Learning & Innovation${suffix}`, description: 'Compliance training, learning and innovation programs from JHS.' },
   '/services/learning-development': { title: `Learning & Development${suffix}`, description: 'Learning and development programs to build professional capability, from JHS.' },
 

@@ -724,6 +724,9 @@
   }
 }
 
+/* Phone-only Compliance Calendar button (hidden on tablet / desktop, where the top row has it) */
+.hero__mobile-cta { display: none; }
+
 /* Action buttons — mobile: drop below header, centered.
    margin-top clears the fixed floating navbar pill (top:16 + height:60 = 76px)
    so the buttons don't render partially hidden behind it. */
@@ -1203,6 +1206,36 @@
   .hero__action-btn--desktop-only {
     display: none;
   }
+
+  .hero__mobile-cta {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0 22px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero__mobile-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border: 0;
+    border-radius: 100px;
+    background: #1e3a5f;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 22px -12px rgba(30, 58, 95, 0.7);
+  }
+
+  .hero__mobile-cta-btn:active {
+    transform: scale(0.97);
+  }
 }
 
 /* =============================================
@@ -1214,9 +1247,9 @@
    ============================================= */
 @media (min-width: 901px) {
   .hero {
-    --hero-card-h: clamp(262px, calc(82vh - 208px), 520px);
+    --hero-card-h: clamp(250px, calc(82vh - 240px), 520px);
     --hero-card-w: calc(var(--hero-card-h) * 0.7308);
-    padding: 64px 48px 8px;
+    padding: 100px 48px 8px;   /* room for the button row above the heading */
   }
 
   .hero__header {
@@ -1331,7 +1364,7 @@
    one beyond that - all sized from the card width, so they keep their spacing at any size. */
 @media (min-width: 1201px) {
   .hero {
-    --hero-card-h: clamp(268px, min(calc(82vh - 200px), 25vw), 540px);
+    --hero-card-h: clamp(256px, min(calc(82vh - 232px), 25vw), 540px);
     --hero-card-w: calc(var(--hero-card-h) * 0.86);
   }
 

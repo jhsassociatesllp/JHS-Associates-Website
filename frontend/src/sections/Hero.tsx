@@ -535,6 +535,12 @@ export default function Hero() {
         >
           Join Our Team
         </button>
+        <button
+          className="hero__action-btn hero__action-btn--outline hero__action-btn--desktop-only"
+          onClick={() => navigate("/compliance-calendar-2026")}
+        >
+          Compliance Calendar
+        </button>
         <LanguageSwitcher />
         {user ? (
           <AccountMenu className="nb__account--hero" />
@@ -557,6 +563,14 @@ export default function Hero() {
           <span className="hero__headline-part">Shaping Better Futures</span>
         </h1>
         {/* <span className="hero__badge">RESPONSIBLE AI</span> */}
+      </div>
+
+      {/* Phones only: the top buttons are hidden there, so the calendar gets its own button under the heading */}
+      <div className="hero__mobile-cta">
+        <button type="button" className="hero__mobile-cta-btn" onClick={() => navigate("/compliance-calendar-2026")}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+          Compliance Calendar 2026
+        </button>
       </div>
 
       {/* Carousel */}

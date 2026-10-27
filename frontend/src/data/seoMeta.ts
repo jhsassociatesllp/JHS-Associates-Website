@@ -124,6 +124,7 @@ export const SEO_META: Record<string, RouteMeta> = {
   '/terms-and-conditions': { title: `Terms & Conditions${suffix}`, description: 'Terms and conditions for use of the JHS website.' },
   '/terms-of-business': { title: `Terms of Business${suffix}`, description: 'Terms of business governing engagements with JHS.' },
   '/posh-policy': { title: `POSH Policy${suffix}`, description: 'The JHS Prevention of Sexual Harassment (POSH) Policy, Internal Committee and how to file a complaint.' },
+  '/compliance-calendar-2026': { title: `Annual Compliance Calendar 2026${suffix}`, description: 'Key statutory due dates for 2026 under GST, Income Tax, Company Law, FEMA, RBI, SEBI, Labour Codes and more. Search, filter by law and download the PDF.' },
   '/approval-for-proposal': { title: `Request for Proposal${suffix}`, description: 'Submit a request for proposal to engage JHS for your business needs.' },
 
   // Hero card detail / standalone article pages

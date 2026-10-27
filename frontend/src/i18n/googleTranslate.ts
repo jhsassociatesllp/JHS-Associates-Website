@@ -9,6 +9,8 @@ export interface LanguageOption {
   code: string
   label: string
   nativeLabel: string
+  /** Text on the language button when this language is active (defaults to the upper-cased code). */
+  short?: string
 }
 
 export const LANGUAGES: LanguageOption[] = [
@@ -20,6 +22,14 @@ export const LANGUAGES: LanguageOption[] = [
   { code: 'ar', label: 'Arabic', nativeLabel: 'العربية' },
   { code: 'ta', label: 'Tamil', nativeLabel: 'தமிழ்' },
   { code: 'te', label: 'Telugu', nativeLabel: 'తెలుగు' },
+]
+
+/** Languages offered in the website's language menu: the list above plus Chinese and Japanese.
+ *  (The chat assistant keeps the shorter list above, because its screens are written by hand.) */
+export const SITE_LANGUAGES: LanguageOption[] = [
+  ...LANGUAGES,
+  { code: 'zh-CN', label: 'Chinese', nativeLabel: '中文（简体）', short: 'ZH' },
+  { code: 'ja', label: 'Japanese', nativeLabel: '日本語', short: 'JA' },
 ]
 
 const SOURCE_LANG = 'en'
@@ -84,7 +94,7 @@ export function loadGoogleTranslate(): Promise<void> {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: SOURCE_LANG,
-            includedLanguages: LANGUAGES.filter((l) => l.code !== SOURCE_LANG)
+            includedLanguages: SITE_LANGUAGES.filter((l) => l.code !== SOURCE_LANG)
               .map((l) => l.code)
               .join(','),
             autoDisplay: false,

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { LANGUAGES, getStoredLanguage, setLanguage } from '../i18n/googleTranslate'
+import { SITE_LANGUAGES, getStoredLanguage, setLanguage } from '../i18n/googleTranslate'
 import './LanguageSwitcher.css'
 
 const IconGlobe = () => (
@@ -46,7 +46,7 @@ export default function LanguageSwitcher() {
     setSwitching(false)
   }
 
-  const activeOption = LANGUAGES.find((l) => l.code === active) ?? LANGUAGES[0]
+  const activeOption = SITE_LANGUAGES.find((l) => l.code === active) ?? SITE_LANGUAGES[0]
 
   return (
     <div className="lang-switch notranslate" ref={wrapRef} translate="no">
@@ -60,13 +60,13 @@ export default function LanguageSwitcher() {
         title={activeOption.label}
       >
         <IconGlobe />
-        <span className="lang-switch__code">{switching ? '…' : activeOption.code.toUpperCase()}</span>
+        <span className="lang-switch__code">{switching ? '…' : activeOption.short ?? activeOption.code.toUpperCase()}</span>
         <IconChevron />
       </button>
 
       {open && (
-        <ul className="lang-switch__menu" role="listbox">
-          {LANGUAGES.map((lang) => (
+        <ul className="lang-switch__menu" role="listbox" data-lenis-prevent>
+          {SITE_LANGUAGES.map((lang) => (
             <li key={lang.code}>
               <button
                 type="button"

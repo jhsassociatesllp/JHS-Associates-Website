@@ -98,6 +98,7 @@ async def _send_email(
 # ── Shared HTML wrapper (letterhead layout) ──────────────────
 FIRM_ADDRESS = "B Wing, 4th Floor, Navkar Chambers, Marol Naka Metro Station, Andheri (East), Mumbai &ndash; 400059"
 FIRM_PHONE = "+91 8097095057"
+HR_PHONE = "+91 8097093034"   # shown in the career and alumni acknowledgement emails
 FIRM_WEBSITE = "jhsassociates.in"
 FIRM_EMAIL = "connect@jhsassociates.in"
 
@@ -116,8 +117,12 @@ def _letter_date() -> str:
     return datetime.now(ist).strftime("%d %B %Y")
 
 
-def _wrap_html(title: str, body_rows: str) -> str:
-    """Return a styled HTML email in a professional letterhead layout."""
+def _wrap_html(title: str, body_rows: str, phone: str = FIRM_PHONE) -> str:
+    """Return a styled HTML email in a professional letterhead layout.
+
+    `phone` is the number shown in the letterhead and footer: the firm number by default,
+    the HR number for the career and alumni emails.
+    """
     from html import escape as _esc
 
     title = _esc(title)
@@ -155,7 +160,7 @@ def _wrap_html(title: str, body_rows: str) -> str:
                     <td valign="top" style="font-size:12px;line-height:1.75;color:#44506a;">
                       <strong style="color:{CRIMSON};">Website</strong>&nbsp; : &nbsp;<a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a><br>
                       <strong style="color:{CRIMSON};">Email</strong>&nbsp; : &nbsp;<a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
-                      <strong style="color:{CRIMSON};">Phone</strong>&nbsp; : &nbsp;{FIRM_PHONE}<br>
+                      <strong style="color:{CRIMSON};">Phone</strong>&nbsp; : &nbsp;{_esc(phone)}<br>
                       <strong style="color:{CRIMSON};">Date</strong>&nbsp; : &nbsp;{_letter_date()}
                     </td>
                   </tr></table>
@@ -183,7 +188,7 @@ def _wrap_html(title: str, body_rows: str) -> str:
                 <td style="padding:16px 36px 26px;font-size:12px;line-height:1.8;color:#44506a;">
                   <strong style="color:{NAVY};font-size:13px;">JHS &ndash; Chartered Accountants</strong><br>
                   {FIRM_ADDRESS}<br>
-                  <span style="color:{CRIMSON};font-weight:700;">Phone</span>&nbsp; {FIRM_PHONE}<br>
+                  <span style="color:{CRIMSON};font-weight:700;">Phone</span>&nbsp; {_esc(phone)}<br>
                   <span style="color:{CRIMSON};font-weight:700;">Email</span>&nbsp; <a href="mailto:{FIRM_EMAIL}" style="color:#44506a;text-decoration:none;">{FIRM_EMAIL}</a><br>
                   <span style="color:{CRIMSON};font-weight:700;">Website</span>&nbsp; <a href="https://{FIRM_WEBSITE}" style="color:#44506a;text-decoration:none;">{FIRM_WEBSITE}</a>
                 </td>
@@ -295,6 +300,7 @@ async def notify_hr_new_alumni(data: dict) -> None:
           <strong>JHS</strong>
         </td></tr>
         """,
+        phone=HR_PHONE,
     )
     _fire_and_forget(
         _send_email(email, full_name, "Welcome back to JHS Alumni Network", user_body)
@@ -396,6 +402,7 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
           <strong>HR Team<br>JHS</strong>
         </td></tr>
         """,
+        phone=HR_PHONE,
     )
     _fire_and_forget(
         _send_email(

@@ -55,6 +55,7 @@ export const SEO_META: Record<string, RouteMeta> = {
   '/services/single-window-assistance': { title: `Single Window Assistance${suffix}`, description: 'End-to-end regulatory and compliance assistance through a single point of contact.' },
   '/services/soc-attestation': { title: `SOC Attestation${suffix}`, description: 'SOC 1 / SOC 2 attestation and reporting services from JHS.' },
   '/services/corporate-finance': { title: `Corporate Finance Solutions${suffix}`, description: 'Capital raising, M&A and corporate finance advisory services from JHS.' },
+  '/services/startups-msmes': { title: `Services Listing for Start-Ups & MSMEs${suffix}`, description: 'Compliance, governance, accounting and secretarial services for start-ups and MSMEs from JHS.' },
   '/services/compliance-learning': { title: `Compliance, Learning & Innovation${suffix}`, description: 'Compliance training, learning and innovation programs from JHS.' },
   '/services/learning-development': { title: `Learning & Development${suffix}`, description: 'Learning and development programs to build professional capability, from JHS.' },
 
@@ -124,6 +125,7 @@ export const SEO_META: Record<string, RouteMeta> = {
   '/terms-and-conditions': { title: `Terms & Conditions${suffix}`, description: 'Terms and conditions for use of the JHS website.' },
   '/terms-of-business': { title: `Terms of Business${suffix}`, description: 'Terms of business governing engagements with JHS.' },
   '/posh-policy': { title: `POSH Policy${suffix}`, description: 'The JHS Prevention of Sexual Harassment (POSH) Policy, Internal Committee and how to file a complaint.' },
+  '/compliance-calendar-2026': { title: `Annual Compliance Calendar 2026${suffix}`, description: 'Key statutory due dates for 2026 under GST, Income Tax, Company Law, FEMA, RBI, SEBI, Labour Codes and more. Search, filter by law and download the PDF.' },
   '/approval-for-proposal': { title: `Request for Proposal${suffix}`, description: 'Submit a request for proposal to engage JHS for your business needs.' },
 
   // Hero card detail / standalone article pages

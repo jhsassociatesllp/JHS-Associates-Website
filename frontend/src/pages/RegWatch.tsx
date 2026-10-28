@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Download, FileText, Radar } from 'lucide-react'
 import { useGatedDownload } from '../hooks/useGatedDownload'
+import { bundledUrl } from '../utils/imageUrl'
 import {
   REGULATOR_ACCENT,
   formatRegDate,
@@ -42,6 +43,8 @@ export default function RegWatch() {
   return (
     <div className="rw-page">
       <section className="rw-hero">
+        <div className="rw-hero__bg" style={{ backgroundImage: `url(${bundledUrl('RegWatch-Hero-Bg.webp')})` }} aria-hidden="true" />
+        <div className="rw-hero__shade" aria-hidden="true" />
         <div className="rw-hero__inner">
           <nav className="rw-crumbs" aria-label="Breadcrumb">
             <Link to="/">Home</Link><span>/</span><Link to="/regulatory">Insights</Link><span>/</span><b>Reg-Watch</b>
@@ -83,26 +86,34 @@ export default function RegWatch() {
               const accent = REGULATOR_ACCENT[item.regulator] ?? REGULATOR_ACCENT.Other
               return (
                 <article key={item.id} className="rw-card" style={{ ['--accent' as string]: accent }}>
+                  {/* Full-card picture (or a coloured fallback when none was uploaded) */}
                   {item.image_id ? (
-                    <div className="rw-card__cover" style={{ backgroundImage: `url(${regWatchImageUrl(item.image_id)})` }} />
+                    <div className="rw-card__bg-img" style={{ backgroundImage: `url(${regWatchImageUrl(item.image_id)})` }} />
                   ) : (
-                    <div className="rw-card__cover rw-card__cover--plain"><Radar size={30} strokeWidth={1.5} /></div>
+                    <div className="rw-card__bg-fallback"><Radar size={44} strokeWidth={1.4} /></div>
                   )}
-                  <div className="rw-card__body">
-                    <div className="rw-card__tags">
-                      <span className="rw-tag rw-tag--reg">{item.regulator}</span>
-                      <span className="rw-tag">{formatRegDate(item.published_on)}</span>
-                    </div>
+
+                  {/* Default state: white box at the bottom */}
+                  <div className="rw-card__default-box">
+                    <div className="rw-card__meta">{item.regulator} • {formatRegDate(item.published_on).toUpperCase()}</div>
                     <h2 className="rw-card__title">{item.title}</h2>
-                    <p className="rw-card__summary">{item.summary}</p>
-                    {item.reference && <p className="rw-card__ref">Ref: {item.reference}</p>}
-                    <div className="rw-card__actions">
-                      <button type="button" className="rw-btn" onClick={() => handleOpen(item, 'view')}>
-                        Read update <ArrowRight size={15} />
+                  </div>
+
+                  {/* Hover / keyboard-focus state: frosted overlay */}
+                  <div className="rw-card__hover-overlay">
+                    <div className="rw-card__hover-content">
+                      <div className="rw-card__meta">{item.regulator} • {formatRegDate(item.published_on).toUpperCase()}</div>
+                      <h2 className="rw-card__hover-title">{item.title}</h2>
+                      <p className="rw-card__hover-desc">{item.summary}</p>
+                      {item.reference && <p className="rw-card__ref">Ref: {item.reference}</p>}
+                    </div>
+                    <div className="rw-card__hover-actions">
+                      <button type="button" className="rw-card__view-btn" onClick={() => handleOpen(item, 'view')}>
+                        Read update <ArrowRight size={16} />
                       </button>
                       <button
                         type="button"
-                        className="rw-icon-btn"
+                        className="rw-card__download-btn"
                         title="Download PDF"
                         aria-label={`Download ${item.title}`}
                         onClick={() => handleOpen(item, 'download')}

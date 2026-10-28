@@ -39,6 +39,13 @@ const INQUIRY_REASONS = [
   'Other',
 ]
 
+/* Icons for the three trust points (clock, target, shield) */
+const ASSURANCE_ICONS = [
+  <svg key="clock" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15.5 14" /></svg>,
+  <svg key="target" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.2" fill="currentColor" /></svg>,
+  <svg key="shield" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z" /><polyline points="9 12 11.2 14.2 15.2 10" /></svg>,
+]
+
 /* Trust points shown as a strip between hero and form */
 const ASSURANCES = [
   {
@@ -200,11 +207,7 @@ export default function RequestForProposal() {
       <section className="rfp-assure-strip">
         {ASSURANCES.map((item, i) => (
           <div className="rfp-assure" key={i}>
-            <span className="rfp-assure__mark" aria-hidden="true">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </span>
+            <span className="rfp-assure__mark" aria-hidden="true">{ASSURANCE_ICONS[i]}</span>
             <div>
               <p className="rfp-assure__title">{item.title}</p>
               <p className="rfp-assure__body">{item.body}</p>
@@ -219,12 +222,20 @@ export default function RequestForProposal() {
           <div className="rfp-card__accent" />
 
           <header className="rfp-formhead">
-            {/* <span className="rfp-formhead__tag">Our approach</span> */}
-            <h2 className="rfp-formhead__title">Tell us about your requirements</h2>
-            <p className="rfp-formhead__sub">
-              Fill in the details below and we'll get back to you within one business day.
-              Fields marked <span className="rfp-req">*</span> are required.
-            </p>
+            <span className="rfp-formhead__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" /><polyline points="14 3 14 8 19 8" /><line x1="9" y1="13" x2="15" y2="13" /><line x1="9" y1="17" x2="13" y2="17" /></svg>
+            </span>
+            <div>
+              <h2 className="rfp-formhead__title">Tell us about your requirements</h2>
+              <p className="rfp-formhead__sub">
+                Fill in the details below and we'll get back to you within one business day.
+                Fields marked <span className="rfp-req">*</span> are required.
+              </p>
+              <a className="rfp-call" href="tel:+918097095057">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg>
+                <span>Call us: <strong>+91 8097095057</strong></span>
+              </a>
+            </div>
           </header>
 
           {/* Success Message */}
@@ -279,6 +290,7 @@ export default function RequestForProposal() {
           {/* Form */}
           {user && (
           <form onSubmit={handleSubmit} noValidate className="rfp-form">
+            <p className="rfp-group"><span>1</span> Your details</p>
             {/* Row 1: First Name + Last Name */}
             <div className="rfp-row">
               <div className="rfp-field">
@@ -389,6 +401,7 @@ export default function RequestForProposal() {
               </div>
             </div>
 
+            <p className="rfp-group rfp-group--next"><span>2</span> Your request</p>
             {/* Row 3: Inquiry Reason + Subject */}
             <div className="rfp-row">
               <div className="rfp-field">

@@ -50,6 +50,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Articles", description: "Expert authored deep-dives", href: '/articles' },
       { label: "Thought Leadership", description: "Leadership Perspectives", href: '/thought-leadership' },
       { label: "Case Studies", description: "Real-world transformation stories", href: '/case-studies' },
+      { label: "Compliance Calendar 2026", description: "Every statutory due date, month by month", href: '/compliance-calendar-2026' },
       { label: "Newsletters", description: "Subscribe to our weekly digest", href: '/newsletters' },
       { label: "Podcasts", description: "Audio Insights on the go", href: '/podcasts' },
       { label: "Events", description: "Excellencia, Knowledge Setu & more — register to join", href: '/events' },
@@ -78,6 +79,7 @@ const NAV_ITEMS: NavItem[] = [
           { label: "Compliance & Governance", description: "Risk, Compliance and Corporate Governance Advisory.", href: '/services/compliance-learning' },
           { label: "Single Window Assistance", description: "", href: '/services/single-window-assistance' },
           { label: "SOC Attestation", description: "", href: '/services/soc-attestation' },
+          { label: "Start-Ups & MSMEs", description: "Compliance, governance & accounting services", href: '/services/startups-msmes' },
         ],
       },
       // {

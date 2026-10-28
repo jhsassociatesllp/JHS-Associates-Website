@@ -40,6 +40,8 @@ const PrivacyPolicy = lazy(() => import('./components/legal/PrivacyPolicy'))
 const TermsAndConditions = lazy(() => import('./components/legal/TermsAndConditions'))
 const TermsOfBusiness = lazy(() => import('./components/legal/TermsOfBusiness'))
 const PoshPolicy = lazy(() => import('./components/legal/PoshPolicy'))
+const ComplianceCalendar = lazy(() => import('./pages/ComplianceCalendar'))
+const StartupServices = lazy(() => import('./pages/StartupServices'))
 
 // Services pages
 const Outsourcing = lazy(() => import('./components/services/Outsourcing'))
@@ -231,6 +233,7 @@ export default function App() {
           <Route path="/services/soc-attestation" element={<SOCAttestation />} />
           <Route path="/services/corporate-finance" element={<CorporateFinance />} />
           <Route path="/services/compliance-learning" element={<ComplianceLearning />} />
+          <Route path="/services/startups-msmes" element={<StartupServices />} />
           <Route path="/services/learning-development" element={<LearningDevelopment />} />
 
           {/* Financial Services */}
@@ -307,6 +310,7 @@ export default function App() {
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/terms-of-business" element={<TermsOfBusiness />} />
           <Route path="/posh-policy" element={<PoshPolicy />} />
+          <Route path="/compliance-calendar-2026" element={<ComplianceCalendar />} />
 
           {/* SOP — jhsassociates.in/SOP opens the SOP page, URL unchanged */}
           <Route path="/sop" element={<SopPage />} />

@@ -46,6 +46,14 @@ class Settings(BaseSettings):
     smtp_username: str = "maaz.quraishi@jhsassociates.in"
     smtp_password: str = ""
 
+    # Microsoft Graph (preferred way to send): an app registration with the Mail.Send permission
+    # sends as graph_sender over HTTPS. When all four are set, mail goes through Graph and SMTP above
+    # is only the fallback. Set the GitHub secrets GRAPH_TENANT_ID / GRAPH_CLIENT_ID / GRAPH_CLIENT_SECRET / GRAPH_SENDER.
+    graph_tenant_id: str = ""
+    graph_client_id: str = ""
+    graph_client_secret: str = ""
+    graph_sender: str = ""
+
     # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
     # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").
     secret_key: str = ""

@@ -20,7 +20,12 @@
 .pod-hero {
   position: relative;
   overflow: hidden;
-  padding: 160px 5% 72px;
+  /* taller hero so the whole studio picture (both chairs, lamps, table) shows */
+  min-height: clamp(540px, 68vh, 700px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 150px 5% 90px;
   background-color: #0f2340;
   text-align: center;
 }
@@ -29,7 +34,7 @@
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
+  background-position: center 62%;
   background-repeat: no-repeat;
   z-index: 0;
 }
@@ -44,6 +49,8 @@
 .pod-hero__content {
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 960px;
 }
 
 .pod-hero__eyebrow {

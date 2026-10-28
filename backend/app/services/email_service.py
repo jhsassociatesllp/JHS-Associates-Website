@@ -56,6 +56,59 @@ SMTP_PASSWORD = settings.smtp_password
 
 
 # ── Low‑level sender ────────────────────────────────────────
+# What went wrong with the most recent send (empty when it worked). Read by scripts/check_email.py.
+last_error: str = ""
+
+
+def _explain(exc: Exception) -> str:
+    """A plain-English reason for a failed send, so the log says what to fix."""
+    text = str(exc)
+    low = text.lower()
+    if isinstance(exc, aiosmtplib.SMTPAuthenticationError) or "authentication unsuccessful" in low or "5.7.139" in low or "5.7.3 " in low:
+        return ("Microsoft refused the login. Check SMTP_USERNAME / SMTP_PASSWORD (use an App Password if the mailbox has MFA) "
+                "and that 'Authenticated SMTP' is enabled for that mailbox in the Microsoft 365 admin centre. " + text)
+    if _is_send_as_denied(exc):
+        return ("The login worked but that mailbox is not allowed to send as the From address. "
+                "Give it 'Send As' permission on the From mailbox, or set SENDER_EMAIL to the same address as SMTP_USERNAME. " + text)
+    if isinstance(exc, (aiosmtplib.SMTPConnectError, aiosmtplib.SMTPConnectTimeoutError, aiosmtplib.SMTPServerDisconnected, asyncio.TimeoutError, OSError)):
+        return ("Could not reach the mail server. The server may be blocking outgoing port 587 (check the firewall / hosting panel). " + text)
+    return text
+
+
+def _is_send_as_denied(exc: Exception) -> bool:
+    low = str(exc).lower()
+    return isinstance(exc, aiosmtplib.SMTPSenderRefused) or any(
+        k in low for k in ("sendasdenied", "5.7.60", "not have permissions to send as", "sender address rejected")
+    )
+
+
+def _build_message(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None,
+                   from_email: str, reply_to: str | None = None) -> MIMEMultipart:
+    message = MIMEMultipart("alternative")
+    message["From"] = f"{SENDER_NAME} <{from_email}>"
+    safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
+    message["To"] = f"{safe_name} <{to_email}>" if safe_name else to_email
+    message["Subject"] = " ".join(str(subject).split())[:200]   # no line breaks: blocks header injection
+    if reply_to:
+        message["Reply-To"] = reply_to
+    message.attach(MIMEText(html_body, "html"))
+    for key, value in (extra_headers or {}).items():
+        message[key] = " ".join(str(value).split())
+    return message
+
+
+async def _smtp_send(message: MIMEMultipart) -> None:
+    await aiosmtplib.send(
+        message,
+        hostname=SMTP_HOST,
+        port=SMTP_PORT,
+        username=SMTP_USERNAME,
+        password=SMTP_PASSWORD,
+        start_tls=True,
+        timeout=15,
+    )
+
+
 async def _send_email(
     to_email: str,
     to_name: str,
@@ -63,36 +116,45 @@ async def _send_email(
     html_body: str,
     extra_headers: dict | None = None,
 ) -> bool:
-    """Send a single email via Outlook/Office 365 SMTP. Returns True on success."""
+    """Send a single email via Outlook/Office 365 SMTP. Returns True on success.
+
+    If Microsoft refuses the From address (the login mailbox has no 'Send As' right on it),
+    the mail is sent again from the login mailbox itself, with Reply-To set to the wanted
+    address, so the visitor still gets the message and replies still reach the right inbox.
+    """
+    global last_error
     if not SMTP_USERNAME or not SMTP_PASSWORD:
+        last_error = "SMTP_USERNAME / SMTP_PASSWORD are empty: set the SMTP_USERNAME and SMTP_PASSWORD secrets"
         logger.warning("SMTP credentials not configured – skipping email to %s", to_email)
         return False
 
-    effective_sender = SENDER_EMAIL or SMTP_USERNAME
-    message = MIMEMultipart("alternative")
-    message["From"] = f"{SENDER_NAME} <{effective_sender}>"
-    safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
-    message["To"] = f"{safe_name} <{to_email}>" if safe_name else to_email
-    message["Subject"] = " ".join(str(subject).split())[:200]   # no line breaks: blocks header injection
-    message.attach(MIMEText(html_body, "html"))
-    for key, value in (extra_headers or {}).items():
-        message[key] = " ".join(str(value).split())
-
+    wanted_sender = SENDER_EMAIL or SMTP_USERNAME
     try:
-        await aiosmtplib.send(
-            message,
-            hostname=SMTP_HOST,
-            port=SMTP_PORT,
-            username=SMTP_USERNAME,
-            password=SMTP_PASSWORD,
-            start_tls=True,
-            timeout=15,
-        )
+        await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, wanted_sender))
+        last_error = ""
         logger.info("Email sent -> %s  subject=%s", to_email, subject)
         return True
     except Exception as exc:
-        logger.error("Email send error -> %s: %s", to_email, exc)
+        if _is_send_as_denied(exc) and wanted_sender.lower() != SMTP_USERNAME.lower():
+            logger.warning("Mail server refused From=%s; sending from %s instead (Reply-To %s)", wanted_sender, SMTP_USERNAME, wanted_sender)
+            try:
+                await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, SMTP_USERNAME, reply_to=wanted_sender))
+                last_error = ""
+                logger.info("Email sent -> %s  subject=%s (from login mailbox)", to_email, subject)
+                return True
+            except Exception as exc2:
+                exc = exc2
+        last_error = _explain(exc)
+        logger.error("Email send error -> %s: %s", to_email, last_error)
         return False
+
+
+def log_email_settings() -> None:
+    """One line at start-up saying whether mail can be sent, so a missing secret is obvious in the logs."""
+    if not SMTP_USERNAME or not SMTP_PASSWORD:
+        logger.warning("EMAIL OFF: SMTP_USERNAME / SMTP_PASSWORD are not set, so no email (acknowledgements or HR alerts) will be sent")
+    else:
+        logger.info("Email on: login=%s  from=%s  server=%s:%s", SMTP_USERNAME, SENDER_EMAIL or SMTP_USERNAME, SMTP_HOST, SMTP_PORT)
 
 
 # ── Shared HTML wrapper (letterhead layout) ──────────────────

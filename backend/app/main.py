@@ -53,6 +53,8 @@ from app.routes.events import router as events_router                 # ✅ EVEN
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
+    from app.services.email_service import log_email_settings
+    log_email_settings()   # says in the logs whether email is switched on
     await connect_to_mongo()
     from app.services.seed import seed_defaults
     # fills an empty database once (never overwrites); runs in the background so a slow database cannot delay start-up

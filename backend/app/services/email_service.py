@@ -1,8 +1,10 @@
 """
-Outlook / Microsoft 365 SMTP Email Service
-============================================
-Sends transactional emails via SMTP through an Outlook/Microsoft 365
-mailbox (smtp.office365.com, STARTTLS on port 587).
+Microsoft 365 Email Service (Graph API first, SMTP fallback)
+============================================================
+Sends transactional emails through the Microsoft Graph API (an app registration with the
+Mail.Send permission sends as GRAPH_SENDER over HTTPS). If Graph is not configured, or a send
+through it fails, the mail is sent over SMTP through an Outlook/Microsoft 365 mailbox
+(smtp.office365.com, STARTTLS on port 587) instead.
 Every public helper fires TWO emails:
   1.  HR notification   →  HR_NOTIFICATION_EMAIL
   2.  Thank‑you email   →  the submitting user
@@ -17,11 +19,13 @@ Password for smtp_password if MFA is enabled on the account.
 
 import asyncio
 import logging
+import time
 from html import escape as esc
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 import aiosmtplib
+import httpx
 
 from app.config.settings import settings
 
@@ -53,6 +57,12 @@ SMTP_HOST = settings.smtp_host
 SMTP_PORT = settings.smtp_port
 SMTP_USERNAME = settings.smtp_username
 SMTP_PASSWORD = settings.smtp_password
+
+GRAPH_TENANT_ID = settings.graph_tenant_id
+GRAPH_CLIENT_ID = settings.graph_client_id
+GRAPH_CLIENT_SECRET = settings.graph_client_secret
+GRAPH_SENDER = settings.graph_sender
+GRAPH_TIMEOUT = 15
 
 
 # ── Low‑level sender ────────────────────────────────────────
@@ -109,7 +119,7 @@ async def _smtp_send(message: MIMEMultipart) -> None:
     )
 
 
-async def _send_email(
+async def _send_via_smtp(
     to_email: str,
     to_name: str,
     subject: str,
@@ -149,12 +159,157 @@ async def _send_email(
         return False
 
 
-def log_email_settings() -> None:
-    """One line at start-up saying whether mail can be sent, so a missing secret is obvious in the logs."""
-    if not SMTP_USERNAME or not SMTP_PASSWORD:
-        logger.warning("EMAIL OFF: SMTP_USERNAME / SMTP_PASSWORD are not set, so no email (acknowledgements or HR alerts) will be sent")
+# ── Microsoft Graph sender ──────────────────────────────────
+_graph_token_cache: dict = {"token": "", "expires": 0.0}
+last_method: str = ""   # "graph" or "smtp": how the most recent mail went out (read by scripts/check_email.py)
+
+
+def _graph_configured() -> bool:
+    return all((GRAPH_TENANT_ID, GRAPH_CLIENT_ID, GRAPH_CLIENT_SECRET, GRAPH_SENDER))
+
+
+class GraphError(Exception):
+    """A Graph request failed; the message is already in plain English."""
+
+
+def _graph_explain(status: int, body: str) -> str:
+    """Turns a Graph / Entra error reply into what to fix. Never includes the client secret."""
+    import json
+
+    code, msg = "", ""
+    try:
+        data = json.loads(body)
+        err = data.get("error")
+        if isinstance(err, dict):
+            code, msg = str(err.get("code", "")), str(err.get("message", ""))
+        else:
+            code, msg = str(err or ""), str(data.get("error_description", ""))
+    except Exception:
+        msg = body[:200]
+    low = f"{code} {msg}".lower()
+    if "aadsts7000215" in low or "invalid_client" in low or "aadsts7000222" in low:
+        hint = "The app login was refused: GRAPH_CLIENT_SECRET is wrong or has expired. Create a new client secret in Entra ID and update the GitHub secret."
+    elif "aadsts700016" in low or "aadsts90002" in low:
+        hint = "Entra could not find the app or tenant. Check GRAPH_CLIENT_ID and GRAPH_TENANT_ID."
+    elif "erroraccessdenied" in low or status == 403:
+        hint = ("Graph refused to send as that mailbox. Check that Mail.Send (Application) has admin consent, and that the "
+                "Application Access Policy includes GRAPH_SENDER's mailbox.")
+    elif "mailboxnotfound" in low or "resourcenotfound" in low or status == 404 or "inactive" in low:
+        hint = "The sender mailbox was not found. GRAPH_SENDER must be an existing mailbox in your Microsoft 365 tenant."
+    elif status == 401:
+        hint = "Graph did not accept the app token. Check admin consent for Mail.Send (Application)."
+    elif status == 429:
+        hint = "Microsoft is rate-limiting this app. It will work again shortly."
     else:
-        logger.info("Email on: login=%s  from=%s  server=%s:%s", SMTP_USERNAME, SENDER_EMAIL or SMTP_USERNAME, SMTP_HOST, SMTP_PORT)
+        hint = "Graph returned an error."
+    return f"{hint} [HTTP {status} {code}] {msg[:200]}".strip()
+
+
+async def _graph_token() -> str:
+    """App-only access token, kept until shortly before it expires."""
+    now = time.time()
+    if _graph_token_cache["token"] and _graph_token_cache["expires"] > now + 60:
+        return _graph_token_cache["token"]
+    url = f"https://login.microsoftonline.com/{GRAPH_TENANT_ID}/oauth2/v2.0/token"
+    form = {"client_id": GRAPH_CLIENT_ID, "client_secret": GRAPH_CLIENT_SECRET,
+            "scope": "https://graph.microsoft.com/.default", "grant_type": "client_credentials"}
+    async with httpx.AsyncClient(timeout=GRAPH_TIMEOUT) as client:
+        resp = await client.post(url, data=form)
+    if resp.status_code != 200:
+        raise GraphError(_graph_explain(resp.status_code, resp.text))
+    data = resp.json()
+    _graph_token_cache["token"] = data["access_token"]
+    _graph_token_cache["expires"] = now + int(data.get("expires_in", 3600))
+    return _graph_token_cache["token"]
+
+
+async def _graph_post(token: str, payload: dict) -> tuple[int, str]:
+    url = f"https://graph.microsoft.com/v1.0/users/{GRAPH_SENDER}/sendMail"
+    async with httpx.AsyncClient(timeout=GRAPH_TIMEOUT) as client:
+        resp = await client.post(url, json=payload, headers={"Authorization": f"Bearer {token}"})
+    return resp.status_code, resp.text
+
+
+def _graph_payload(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None) -> dict:
+    safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
+    recipient = {"address": to_email}
+    if safe_name:
+        recipient["name"] = safe_name
+    message: dict = {
+        "subject": " ".join(str(subject).split())[:200],   # no line breaks, same as the SMTP path
+        "body": {"contentType": "HTML", "content": html_body},
+        "toRecipients": [{"emailAddress": recipient}],
+        "from": {"emailAddress": {"address": GRAPH_SENDER, "name": SENDER_NAME}},
+    }
+    headers = [{"name": k, "value": " ".join(str(v).split())[:250]} for k, v in (extra_headers or {}).items()]
+    if headers:
+        message["internetMessageHeaders"] = headers
+    return {"message": message, "saveToSentItems": True}
+
+
+def _graph_can_carry(extra_headers: dict | None) -> bool:
+    """Graph only accepts custom headers that start with x-; mail needing others (List-Unsubscribe) goes by SMTP."""
+    return all(str(k).lower().startswith("x-") for k in (extra_headers or {}))
+
+
+async def _send_via_graph(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None = None) -> bool:
+    """Send through Microsoft Graph. Returns True when Microsoft accepted it (HTTP 202); raises GraphError otherwise."""
+    payload = _graph_payload(to_email, to_name, subject, html_body, extra_headers)
+    try:
+        token = await _graph_token()
+        status, body = await _graph_post(token, payload)
+        if status == 401:   # the token may have been revoked: get a fresh one once
+            _graph_token_cache["token"] = ""
+            token = await _graph_token()
+            status, body = await _graph_post(token, payload)
+    except GraphError:
+        raise
+    except (httpx.HTTPError, asyncio.TimeoutError, OSError) as exc:
+        raise GraphError(f"Could not reach Microsoft Graph (network or timeout): {exc}") from exc
+    if status != 202:
+        raise GraphError(_graph_explain(status, body))
+    return True
+
+
+async def _send_email(
+    to_email: str,
+    to_name: str,
+    subject: str,
+    html_body: str,
+    extra_headers: dict | None = None,
+) -> bool:
+    """Send one email: Microsoft Graph first, SMTP as the fallback. Returns True on success."""
+    global last_error, last_method
+    graph_error = ""
+    if _graph_configured() and _graph_can_carry(extra_headers):
+        try:
+            await _send_via_graph(to_email, to_name, subject, html_body, extra_headers)
+            last_error, last_method = "", "graph"
+            logger.info("Email sent (Graph) -> %s  subject=%s", to_email, subject)
+            return True
+        except GraphError as exc:
+            graph_error = str(exc)
+            logger.error("Graph send error -> %s: %s", to_email, graph_error)
+    smtp_ok = await _send_via_smtp(to_email, to_name, subject, html_body, extra_headers)
+    if smtp_ok:
+        last_method = "smtp"
+        if graph_error:
+            logger.warning("Email to %s went by SMTP because Graph failed", to_email)
+        return True
+    if graph_error:
+        last_error = f"Graph: {graph_error} | SMTP: {last_error}"
+    return False
+
+
+def log_email_settings() -> None:
+    """One line at start-up saying how mail will be sent, so a missing secret is obvious in the logs."""
+    smtp_ok = bool(SMTP_USERNAME and SMTP_PASSWORD)
+    if _graph_configured():
+        logger.info("Email on: Microsoft Graph as %s (tenant %s...), SMTP fallback %s", GRAPH_SENDER, GRAPH_TENANT_ID[:8], "ready" if smtp_ok else "not set")
+    elif smtp_ok:
+        logger.info("Email on: SMTP login=%s  from=%s  server=%s:%s (Graph not configured)", SMTP_USERNAME, SENDER_EMAIL or SMTP_USERNAME, SMTP_HOST, SMTP_PORT)
+    else:
+        logger.warning("EMAIL OFF: neither Microsoft Graph (GRAPH_* secrets) nor SMTP (SMTP_* secrets) is set, so no email will be sent")
 
 
 # ── Shared HTML wrapper (letterhead layout) ──────────────────

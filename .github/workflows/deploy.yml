@@ -232,6 +232,11 @@ jobs:
             export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
             export SENDER_EMAIL="${{ secrets.SENDER_EMAIL }}"
+            # Microsoft Graph mail (preferred); SMTP above stays as the fallback
+            export GRAPH_TENANT_ID="${{ secrets.GRAPH_TENANT_ID }}"
+            export GRAPH_CLIENT_ID="${{ secrets.GRAPH_CLIENT_ID }}"
+            export GRAPH_CLIENT_SECRET="${{ secrets.GRAPH_CLIENT_SECRET }}"
+            export GRAPH_SENDER="${{ secrets.GRAPH_SENDER }}"
             export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
             export MSG91_AUTH_KEY="${{ secrets.MSG91_AUTH_KEY }}"
             export MSG91_TEMPLATE_ID="${{ secrets.MSG91_TEMPLATE_ID }}"

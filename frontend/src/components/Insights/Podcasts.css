@@ -5,6 +5,15 @@
 .pod-page {
   min-height: 100vh;
   background-color: #f8fafc;
+  /* the website's own font (same as the Regulatory and Excellencia pages) */
+  font-family: "Inter", "DM Sans", "Helvetica Neue", sans-serif;
+}
+
+/* headings otherwise pick up a generic bold fallback font; use the page font instead */
+.pod-page h1,
+.pod-page h2,
+.pod-page h3 {
+  font-family: inherit;
 }
 
 /* ── Hero ── */
@@ -28,7 +37,7 @@
 .pod-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, rgba(10, 20, 50, 0.86) 0%, rgba(10, 20, 50, 0.62) 55%, rgba(10, 20, 50, 0.82) 100%);
+  background: linear-gradient(180deg, rgba(10, 20, 50, 0.70) 0%, rgba(10, 20, 50, 0.52) 50%, rgba(10, 20, 50, 0.72) 100%);
   z-index: 1;
 }
 

@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Mic } from 'lucide-react'
 import { formatEpisodeDate, podcastImageUrl, usePodcasts } from '../../data/podcasts'
-import { imageUrl as staticImageUrl } from '../../utils/imageUrl'
+import { bundledUrl } from '../../utils/imageUrl'
 import './SimpleInsight.css'
 import './Podcasts.css'
 
-/* Two layers: the Podcasts picture first; if that file is not on the server yet, the Excellencia picture shows instead. */
-const HERO_BG = `url(${staticImageUrl('Podcast-bg-img.webp')}), url(${staticImageUrl('Excellencia-bg-img.webp')})`
+/* Hero picture: the podcast studio, shipped with the site. */
+const HERO_BG = `url(${bundledUrl('Podcast-Hero-Bg.webp')})`
 
 export default function Podcasts() {
   const { episodes, loading, error } = usePodcasts()

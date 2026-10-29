@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Button } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { formatShort } from '../utils/dateTime';
 import './AdminAppointments.css';
 
 type AppointmentStatus = 'new' | 'confirmed' | 'completed' | 'cancelled';
@@ -195,7 +196,7 @@ const AdminAppointments: React.FC = () => {
                   <th>Partner</th>
                   <th>Source</th>
                   <th>Status</th>
-                  <th>Requested</th>
+                  <th>Submitted</th>
                 </tr>
               </thead>
               <tbody>
@@ -229,7 +230,7 @@ const AdminAppointments: React.FC = () => {
                         </select>
                       </div>
                     </td>
-                    <td>{new Date(appointment.created_at).toLocaleDateString()}</td>
+                    <td>{formatShort(appointment.created_at)}</td>
                   </tr>
                 ))}
               </tbody>

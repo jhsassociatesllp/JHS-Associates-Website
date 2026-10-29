@@ -1,4 +1,5 @@
 from app.utils.validation import GUARD_FIELDS
+from app.utils.timestamps import submitted_at_ist
 from app.database.connection import get_database
 from app.schemas.contact import ContactCreate, ContactResponse
 from app.services.email_service import notify_hr_new_contact
@@ -12,6 +13,7 @@ async def create_contact_message(contact: ContactCreate) -> ContactResponse:
     contact_dict = contact.model_dump(exclude=GUARD_FIELDS)
     contact_dict["consent_at"] = datetime.now(timezone.utc)
     contact_dict["created_at"] = datetime.now(timezone.utc)
+    contact_dict["submitted_at_ist"] = submitted_at_ist(contact_dict["created_at"])
     
     # Insert into MongoDB
     result = await collection.insert_one(contact_dict)

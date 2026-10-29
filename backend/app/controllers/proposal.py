@@ -9,6 +9,7 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
 from app.utils.validation import GUARD_FIELDS
+from app.utils.timestamps import submitted_at_ist
 from app.database.connection import get_database
 from app.schemas.proposal import ProposalCreate, ProposalResponse, ProposalStatusUpdate
 from app.services.email_service import notify_hr_new_proposal
@@ -24,6 +25,7 @@ async def create_proposal(proposal: ProposalCreate, user: dict) -> ProposalRespo
     proposal_dict["consent_at"] = datetime.now(timezone.utc)
     proposal_dict["user_id"] = user["id"]
     proposal_dict["created_at"] = datetime.now(timezone.utc)
+    proposal_dict["submitted_at_ist"] = submitted_at_ist(proposal_dict["created_at"])
     proposal_dict["status"] = "new"
 
     # Insert into MongoDB

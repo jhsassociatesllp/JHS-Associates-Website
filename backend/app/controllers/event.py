@@ -7,6 +7,7 @@ from bson.errors import InvalidId
 from pymongo.errors import DuplicateKeyError
 
 from app.controllers.cookie_consent import hash_ip
+from app.utils.timestamps import submitted_at_ist
 from app.database.connection import get_database
 from app.schemas.event import EventCreate, EventUpdate, RegistrationCreate
 
@@ -286,6 +287,7 @@ async def register(event_id: str, data: RegistrationCreate, ip: str) -> tuple[di
         "consent": True,
         "ip_hash": hash_ip(ip),
         "created_at": now,
+        "submitted_at_ist": submitted_at_ist(now),
     }
     try:
         inserted = await db[REGISTRATIONS].insert_one(record)

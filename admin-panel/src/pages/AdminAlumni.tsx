@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { formatCompact, formatExact, istDay as istDayKey, parseApiDate, timeAgo } from '../utils/dateTime';
 import './AdminAlumni.css';
 
 // All admin-facing timestamps are shown in Indian Standard Time regardless
@@ -65,20 +66,7 @@ const AdminAlumni: React.FC = () => {
   }, []);
 
   // Format time ago helper
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours} hours ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 7) return `${diffInDays} days ago`;
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    if (diffInWeeks < 4) return `${diffInWeeks} weeks ago`;
-    const diffInMonths = Math.floor(diffInDays / 30);
-    return `${diffInMonths} months ago`;
-  };
+  const formatTimeAgo = (dateString: string) => timeAgo(dateString);
 
   const stats = useMemo(() => {
     const now = new Date();
@@ -86,8 +74,8 @@ const AdminAlumni: React.FC = () => {
     const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     return {
       total: alumni.length,
-      today: alumni.filter((a) => istDateKey(new Date(a.created_at)) === todayKey).length,
-      thisWeek: alumni.filter((a) => new Date(a.created_at).getTime() >= weekAgo).length,
+      today: alumni.filter((a) => istDayKey(a.created_at) === todayKey).length,
+      thisWeek: alumni.filter((a) => (parseApiDate(a.created_at)?.getTime() ?? 0) >= weekAgo).length,
     };
   }, [alumni]);
 
@@ -243,7 +231,7 @@ const AdminAlumni: React.FC = () => {
                       <span className="alumni-inbox-item-body">
                         <span className="alumni-inbox-item-top">
                           <span className="alumni-inbox-item-name">{person.first_name} {person.last_name}</span>
-                          <span className="alumni-inbox-item-time">{formatTimeAgo(person.created_at)}</span>
+                          <span className="alumni-inbox-item-time">{formatCompact(person.created_at)}</span>
                         </span>
                         <span className="alumni-inbox-item-preview">{person.designation} · {person.company}</span>
                         <span className="alumni-inbox-item-email">{person.email}</span>
@@ -303,8 +291,9 @@ const AdminAlumni: React.FC = () => {
                       </div>
                     )}
                     <div className="alumni-info-box">
-                      <span className="alumni-info-label">Registered</span>
-                      <span className="alumni-info-value">{formatTimeAgo(activeAlumni.created_at)}</span>
+                      <span className="alumni-info-label">Submitted</span>
+                      <span className="alumni-info-value">{formatExact(activeAlumni.created_at)}</span>
+                      <span className="alumni-info-label">{formatTimeAgo(activeAlumni.created_at)}</span>
                     </div>
                   </div>
 
@@ -341,10 +330,7 @@ const AdminAlumni: React.FC = () => {
                   </div>
 
                   <p className="alumni-detail-footnote">
-                    Registered on {new Date(activeAlumni.created_at).toLocaleDateString('en-US', {
-                      timeZone: IST_TIME_ZONE,
-                      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-                    })} IST
+                    Submitted on {formatExact(activeAlumni.created_at)}
                   </p>
                 </>
               ) : (

@@ -1,4 +1,4 @@
-"""Fills a LOCAL test database (Docker, port 27018) with one admin login and a few sample proposal requests,
+"""Fills a LOCAL test database (Docker, port 27117) with one admin login and a few sample proposal requests,
 so the admin panel can be tried on a computer that cannot reach the real database.
 
 Run (from the backend folder):   python scripts/seed_local_test.py
@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, timezone
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pymongo import MongoClient
 
-URL = os.environ.get("LOCAL_MONGODB_URL", "mongodb://localhost:27018/")
+URL = os.environ.get("LOCAL_MONGODB_URL", "mongodb://127.0.0.1:27117/")
 DB = os.environ.get("LOCAL_DATABASE_NAME", "JHS_local_test")
 
 if not any(h in URL for h in ("localhost", "127.0.0.1")):

@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Download, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { formatCompact, formatExact, istDay as sharedIstDay } from '../utils/dateTime';
 import './AdminContacts.css';
 import './AdminProposals.css';
 
 // Days are Indian Standard Time days, whatever the viewer's own time zone is.
 const IST_TIME_ZONE = 'Asia/Kolkata';
-const istDay = (iso: string | Date) => new Date(iso).toLocaleDateString('en-CA', { timeZone: IST_TIME_ZONE }); // 2026-10-28
+const istDay = (iso: string | Date) => sharedIstDay(iso); // 2026-10-28
 const addDays = (day: string, n: number) => {
   const d = new Date(`${day}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + n);
@@ -41,12 +42,7 @@ interface Proposal {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-const formatIst = (iso?: string | null) =>
-  iso
-    ? `${new Date(iso).toLocaleString('en-IN', {
-        timeZone: IST_TIME_ZONE, day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
-      })} IST`
-    : '';
+const formatIst = (iso?: string | null) => (iso ? formatExact(iso) : '');
 
 const AdminProposals: React.FC = () => {
   const { token } = useAuth();
@@ -310,7 +306,7 @@ const AdminProposals: React.FC = () => {
                     <span className="contacts-inbox-item-body">
                       <span className="contacts-inbox-item-top">
                         <span className="contacts-inbox-item-name">{fullName(p)}</span>
-                        <span className="contacts-inbox-item-time">{new Date(p.created_at).toLocaleDateString('en-IN', { timeZone: IST_TIME_ZONE, day: '2-digit', month: 'short' })}</span>
+                        <span className="contacts-inbox-item-time">{formatCompact(p.created_at)}</span>
                       </span>
                       <span className="contacts-inbox-item-preview">{p.subject}</span>
                       <span className="contacts-inbox-item-email">{p.email}</span>
@@ -352,7 +348,7 @@ const AdminProposals: React.FC = () => {
                       <span className="contacts-info-value">{active.inquiry_reason}</span>
                     </div>
                     <div className="contacts-info-box">
-                      <span className="contacts-info-label">Received</span>
+                      <span className="contacts-info-label">Submitted</span>
                       <span className="contacts-info-value">{formatIst(active.created_at)}</span>
                     </div>
                   </div>

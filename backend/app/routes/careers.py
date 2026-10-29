@@ -294,14 +294,15 @@ async def admin_export_applications(
     date_from: Optional[str] = Query(None, max_length=10),
     date_to: Optional[str] = Query(None, max_length=10),
     job_id: Optional[str] = Query(None, max_length=40),
+    profile: Optional[str] = Query(None, max_length=60),
     what: str = Query("zip", pattern="^(zip|report)$"),
     current_admin: AdminInDB = Depends(hr_access),
 ):
     """Résumés + report for the days chosen. what=zip -> one folder with every résumé; what=report -> just the sheet."""
     try:
         day_from, day_to = export_ctrl.parse_day(date_from), export_ctrl.parse_day(date_to)
-        docs = await export_ctrl.load_applications(day_from, day_to, job_id)
-        label = export_ctrl.label_for(day_from, day_to)
+        docs = await export_ctrl.load_applications(day_from, day_to, job_id, profile)
+        label = export_ctrl.label_for(day_from, day_to, profile)
         if what == "report":
             body, media, fname = await export_ctrl.report_xlsx(docs, label), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", f"JHS_Tracker_{label}.xlsx"
         else:

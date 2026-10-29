@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { formatExact } from '../utils/dateTime';
 import './AdminEvents.css';
 
 type EventStatus = 'draft' | 'published' | 'cancelled';
@@ -73,8 +74,7 @@ const EMPTY_FORM: FormState = {
 // The admin types times in Indian Standard Time; the server stores UTC.
 const istInputToIso = (v: string) => (v ? `${v}:00+05:30` : null);
 const isoToIstInput = (iso: string | null) => (iso ? new Date(new Date(iso).getTime() + IST_OFFSET_MS).toISOString().slice(0, 16) : '');
-const fmt = (iso: string | null) =>
-  iso ? new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date(iso)) + ' IST' : '—';
+const fmt = (iso: string | null) => (iso ? formatExact(iso) : '—');
 
 const AdminEvents: React.FC = () => {
   const { token } = useAuth();
@@ -505,7 +505,7 @@ const AdminEvents: React.FC = () => {
               <div className="ae__table-wrap">
                 <table className="ae__table">
                   <thead>
-                    <tr><th>Name</th><th>Email</th><th>Phone</th><th>Organisation</th><th>City</th><th>Registered</th><th>Attended</th><th /></tr>
+                    <tr><th>Name</th><th>Email</th><th>Phone</th><th>Organisation</th><th>City</th><th>Submitted</th><th>Attended</th><th /></tr>
                   </thead>
                   <tbody>
                     {regs.map((r) => (

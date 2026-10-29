@@ -6,6 +6,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 
 from app.database.connection import get_database
+from app.utils.timestamps import submitted_at_ist
 from app.schemas.appointment import AppointmentCreate, AppointmentStatusUpdate
 from app.services.email_service import notify_hr_new_appointment
 from app.utils.validation import GUARD_FIELDS
@@ -36,6 +37,7 @@ async def create_appointment(data: AppointmentCreate, user: dict) -> dict:
     payload["account_email"] = user.get("email")   # the signed-in site account that booked
     payload["mobile_verified"] = True   # booking is only reachable after a successful OTP check
     payload["created_at"] = now
+    payload["submitted_at_ist"] = submitted_at_ist(now)
     payload["updated_at"] = now
 
     result = await db[APPOINTMENTS_COLLECTION].insert_one(payload)

@@ -9,6 +9,7 @@ from bson.errors import InvalidId
 from motor.motor_asyncio import AsyncIOMotorGridFSBucket
 
 from app.database.connection import get_database
+from app.utils.timestamps import submitted_at_ist
 from app.schemas.career import (
     ApplicationCreate,
     ApplicationStatusUpdate,
@@ -42,6 +43,7 @@ async def create_job(data: JobCreate, created_by: Optional[str] = None) -> dict:
     now = datetime.now(timezone.utc)
     payload = data.model_dump()
     payload["created_at"] = now
+    payload["submitted_at_ist"] = submitted_at_ist(now)
     payload["updated_at"] = now
     payload["created_by"] = created_by
 
@@ -157,6 +159,7 @@ async def create_application(data: ApplicationCreate, applicant: Optional[dict] 
     payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
+    payload["submitted_at_ist"] = submitted_at_ist(now)
     payload["updated_at"] = now
     if applicant:
         payload["applicant_id"] = applicant["id"]
@@ -189,6 +192,7 @@ async def create_application_with_resume(
     payload["job_title"] = job["title"] if job else None
     payload["status"] = "new"
     payload["created_at"] = now
+    payload["submitted_at_ist"] = submitted_at_ist(now)
     payload["updated_at"] = now
     if applicant:
         payload["applicant_id"] = applicant["id"]

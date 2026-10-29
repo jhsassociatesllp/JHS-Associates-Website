@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import { formatExact, formatShort, istDay as sharedIstDay } from '../utils/dateTime';
 import './AdminCareers.css';
 
 type JobStatus = 'draft' | 'open' | 'closed';
@@ -76,7 +77,7 @@ type Application = {
 type JobForm = Omit<Job, 'id' | 'created_at' | 'keywords'>;
 
 /* The firm counts days in Indian Standard Time, whatever time zone the browser is in. */
-const istDay = (iso: string | Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date(iso)); // 2026-10-23
+const istDay = (iso: string | Date) => sharedIstDay(iso); // 2026-10-23, read as the UTC moment the server saved
 const addDays = (day: string, n: number) => {
   const d = new Date(`${day}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + n);
@@ -236,6 +237,7 @@ const AdminCareers: React.FC = () => {
   const [viewApplication, setViewApplication] = useState<Application | null>(null);
   const [vacancySearch, setVacancySearch] = useState('');
   const [applicationSearch, setApplicationSearch] = useState('');
+  const [profileFilter, setProfileFilter] = useState(''); // '' = every profile; otherwise one profile (Fresher, Qualified CA ...)
   const [dateFrom, setDateFrom] = useState(''); // YYYY-MM-DD (Indian day); empty = no limit
   const [dateTo, setDateTo] = useState('');
   const [exporting, setExporting] = useState<'' | 'zip' | 'report'>('');
@@ -454,7 +456,8 @@ const AdminCareers: React.FC = () => {
     }
   };
 
-  const filteredApplications = useMemo(() => {
+  /** Everything except the profile filter, so the profile buttons can keep showing every profile's count. */
+  const beforeProfile = useMemo(() => {
     let list = applications;
     if (selectedJobFilter === 'general') list = list.filter((application) => !application.job_id);
     else if (selectedJobFilter !== 'all') list = list.filter((application) => application.job_id === selectedJobFilter);
@@ -475,6 +478,11 @@ const AdminCareers: React.FC = () => {
     return list;
   }, [applications, selectedJobFilter, applicationSearch, topOnly, dateFrom, dateTo]);
 
+  const filteredApplications = useMemo(
+    () => (profileFilter ? beforeProfile.filter((a) => (a.profile || 'Not given') === profileFilter) : beforeProfile),
+    [beforeProfile, profileFilter],
+  );
+
   /** How many applications came on each day (for the chosen vacancy and dates), newest day first. */
   const dayCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -482,12 +490,13 @@ const AdminCareers: React.FC = () => {
     return [...counts.entries()].sort((a, b) => (a[0] < b[0] ? 1 : -1));
   }, [filteredApplications]);
 
-  /** How many applications came from each kind of profile (Fresher, Experienced ...). */
+  /** How many applications came from each kind of profile (Fresher, Experienced ...), for the current vacancy / dates / search. */
   const profileCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    filteredApplications.forEach((a) => { const k = (a as { profile?: string }).profile || 'Not given'; counts.set(k, (counts.get(k) ?? 0) + 1); });
-    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [filteredApplications]);
+    beforeProfile.forEach((a) => { const k = a.profile || 'Not given'; counts.set(k, (counts.get(k) ?? 0) + 1); });
+    if (profileFilter && !counts.has(profileFilter)) counts.set(profileFilter, 0);   // keep the chosen button visible
+    return [...counts.entries()].sort((x, y) => y[1] - x[1]);
+  }, [beforeProfile, profileFilter]);
 
   const today = istDay(new Date());
   const pickRange = (from: string, to: string) => {
@@ -504,6 +513,7 @@ const AdminCareers: React.FC = () => {
       if (dateFrom) qs.set('date_from', dateFrom);
       if (dateTo) qs.set('date_to', dateTo);
       if (selectedJobFilter !== 'all') qs.set('job_id', selectedJobFilter);
+      if (profileFilter) qs.set('profile', profileFilter);
       const response = await fetch(`${API_BASE_URL}/careers/admin/applications/export?${qs.toString()}`, { headers: { Authorization: `Bearer ${token}` } });
       if (!response.ok) {
         const err = await response.json().catch(() => null);
@@ -686,10 +696,24 @@ const AdminCareers: React.FC = () => {
             {profileCounts.length > 0 && (
               <div className="careers-report__summary">
                 By profile:
-                <span className="careers-report__days">
+                <span className="careers-report__days" role="group" aria-label="Filter applications by profile">
                   {profileCounts.map(([name, n]) => (
-                    <span className="careers-report__chip" key={name}>{name} <b>{n}</b></span>
+                    <button
+                      type="button"
+                      key={name}
+                      className={`careers-report__chip${profileFilter === name ? ' on' : ''}`}
+                      aria-pressed={profileFilter === name}
+                      title={profileFilter === name ? 'Click to show every profile again' : `Show only ${name}`}
+                      onClick={() => { setProfileFilter(profileFilter === name ? '' : name); }}
+                    >
+                      {name} <b>{n}</b>
+                    </button>
                   ))}
+                  {profileFilter && (
+                    <button type="button" className="careers-report__chip careers-report__chip--clear" onClick={() => setProfileFilter('')}>
+                      Show all profiles ✕
+                    </button>
+                  )}
                 </span>
               </div>
             )}
@@ -808,7 +832,7 @@ const AdminCareers: React.FC = () => {
                         </select>
                       </div>
                     </td>
-                    <td>{new Date(application.created_at).toLocaleDateString()}</td>
+                    <td>{formatShort(application.created_at)}</td>
                     <td>
                       <button className="link-btn view" onClick={() => setViewApplication(application)}>View</button>
                     </td>
@@ -924,7 +948,7 @@ const AdminCareers: React.FC = () => {
               )}
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Applied</Typography>
-                <Typography sx={{ textAlign: 'right' }}>{new Date(viewApplication.created_at).toLocaleString()}</Typography>
+                <Typography sx={{ textAlign: 'right' }}>{formatExact(viewApplication.created_at)}</Typography>
               </Stack>
               <Stack>
                 <Typography sx={{ color: '#6b7280', fontSize: 13, mb: 0.5 }}>Remark</Typography>

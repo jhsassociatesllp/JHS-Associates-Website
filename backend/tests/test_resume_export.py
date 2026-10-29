@@ -43,7 +43,7 @@ def add(name, created, job="Senior Auditor", job_id="j1", with_file=True, extra=
 
 add("Asha Rao", at(2026, 10, 22, 23, 50))            # 22 Oct, just before midnight IST
 add("Bilal Khan", at(2026, 10, 23, 0, 5))            # 23 Oct, just after midnight IST
-add("Chitra Nair", at(2026, 10, 23, 15, 30))
+add("Chitra Nair", at(2026, 10, 23, 15, 30), extra={"profile": "Qualified CA"})
 add("=HYPERLINK(\"x\")", at(2026, 10, 23, 18, 0), job="General", job_id=None, with_file=False)
 add("Esha Mehta", at(2026, 10, 24, 9, 0))
 
@@ -64,7 +64,13 @@ class Col:
                 if "$gte" in c and t < c["$gte"]: continue
                 if "$lt" in c and t >= c["$lt"]: continue
             if "job_id" in q and d["job_id"] != q["job_id"]: continue
-            if "$or" in q and d["job_id"]: continue
+            if "profile" in q and d.get("profile") != q["profile"]: continue
+            skip = False
+            for cond in q.get("$and", []):
+                alts = cond["$or"]
+                if any("job_id" in a for a in alts) and d["job_id"]: skip = True       # general applications only
+                if any("profile" in a for a in alts) and d.get("profile"): skip = True  # profile left blank only
+            if skip: continue
             rows.append(dict(d))
         return Cur(rows)
 
@@ -132,6 +138,13 @@ r3 = c.get(U + "?what=report&date_from=2026-10-23&date_to=2026-10-23", headers=h
 check("report only -> Excel", r3.status_code == 200 and "spreadsheetml" in r3.headers["content-type"] and r3.content[:2] == b"PK" and ".xlsx" in r3.headers["content-disposition"])
 r4 = c.get(U + "?date_from=2026-10-23&date_to=2026-10-23&job_id=general", headers=hr)
 check("general-applications filter", r4.headers["x-application-count"] == "1")
+r5 = c.get(U + "?date_from=2026-10-23&date_to=2026-10-23&profile=Qualified%20CA", headers=hr)
+check("profile filter: only Qualified CA", r5.status_code == 200 and r5.headers["x-application-count"] == "1" and "Chitra" in str(zipfile.ZipFile(io.BytesIO(r5.content)).namelist()) and "Qualified_CA" in r5.headers["content-disposition"], r5.headers.get("content-disposition"))
+r6 = c.get(U + "?date_from=2026-10-23&date_to=2026-10-23&profile=Fresher", headers=hr)
+check("profile filter: Fresher = Bilal + the no-file candidate", r6.headers["x-application-count"] == "2", r6.headers["x-application-count"])
+r7 = c.get(U + "?profile=Qualified%20CA&job_id=general", headers=hr)
+check("profile + general vacancy together", r7.status_code == 200 and r7.headers["x-application-count"] == "0", r7.headers["x-application-count"])
+check("profile too long -> 422", c.get(U + "?profile=" + "a" * 61, headers=hr).status_code == 422)
 check("bad date -> 422", c.get(U + "?date_from=hello", headers=hr).status_code == 422)
 check("'to' before 'from' -> 422", c.get(U + "?date_from=2026-10-24&date_to=2026-10-22", headers=hr).status_code == 422)
 check("bad 'what' -> 422", c.get(U + "?what=exe", headers=hr).status_code == 422)

@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { formatCompact, formatExact, istDay as istDayKey, parseApiDate, timeAgo } from '../utils/dateTime';
 import './AdminContacts.css';
 
 // All admin-facing timestamps are shown in Indian Standard Time regardless
@@ -63,20 +64,7 @@ const AdminContacts: React.FC = () => {
   }, []);
 
   // Format time ago helper
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours} hours ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 7) return `${diffInDays} days ago`;
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    if (diffInWeeks < 4) return `${diffInWeeks} weeks ago`;
-    const diffInMonths = Math.floor(diffInDays / 30);
-    return `${diffInMonths} months ago`;
-  };
+  const formatTimeAgo = (dateString: string) => timeAgo(dateString);
 
   const stats = useMemo(() => {
     const now = new Date();
@@ -84,8 +72,8 @@ const AdminContacts: React.FC = () => {
     const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
     return {
       total: contacts.length,
-      today: contacts.filter((c) => istDateKey(new Date(c.created_at)) === todayKey).length,
-      thisWeek: contacts.filter((c) => new Date(c.created_at).getTime() >= weekAgo).length,
+      today: contacts.filter((c) => istDayKey(c.created_at) === todayKey).length,
+      thisWeek: contacts.filter((c) => (parseApiDate(c.created_at)?.getTime() ?? 0) >= weekAgo).length,
     };
   }, [contacts]);
 
@@ -238,7 +226,7 @@ const AdminContacts: React.FC = () => {
                       <span className="contacts-inbox-item-body">
                         <span className="contacts-inbox-item-top">
                           <span className="contacts-inbox-item-name">{contact.name}</span>
-                          <span className="contacts-inbox-item-time">{formatTimeAgo(contact.created_at)}</span>
+                          <span className="contacts-inbox-item-time">{formatCompact(contact.created_at)}</span>
                         </span>
                         <span className="contacts-inbox-item-preview">
                           {contact.service || contact.message}
@@ -288,8 +276,9 @@ const AdminContacts: React.FC = () => {
                       </div>
                     )}
                     <div className="contacts-info-box">
-                      <span className="contacts-info-label">Received</span>
-                      <span className="contacts-info-value">{formatTimeAgo(activeContact.created_at)}</span>
+                      <span className="contacts-info-label">Submitted</span>
+                      <span className="contacts-info-value">{formatExact(activeContact.created_at)}</span>
+                      <span className="contacts-info-label">{formatTimeAgo(activeContact.created_at)}</span>
                     </div>
                   </div>
 
@@ -330,10 +319,7 @@ const AdminContacts: React.FC = () => {
                   </div>
 
                   <p className="contacts-detail-footnote">
-                    Submitted on {new Date(activeContact.created_at).toLocaleDateString('en-US', {
-                      timeZone: IST_TIME_ZONE,
-                      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-                    })} IST
+                    Submitted on {formatExact(activeContact.created_at)}
                   </p>
                 </>
               ) : (

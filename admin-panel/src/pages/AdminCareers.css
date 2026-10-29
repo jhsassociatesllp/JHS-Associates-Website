@@ -391,5 +391,9 @@
 .careers-report__days button { padding: 4px 10px; border: 1px solid #dbe3ef; border-radius: 999px; background: #fff; font-family: inherit; font-size: 0.76rem; color: #475569; cursor: pointer; }
 .careers-report__days button:hover { border-color: #2563eb; color: #2563eb; }
 .careers-report__days b { color: #2563eb; margin-left: 2px; }
-.careers-report__chip { padding: 4px 10px; border: 1px solid #dbe3ef; border-radius: 999px; background: #fff; font-size: 0.76rem; color: #475569; }
+.careers-report__chip { padding: 4px 10px; border: 1px solid #dbe3ef; border-radius: 999px; background: #fff; font-family: inherit; font-size: 0.76rem; color: #475569; cursor: pointer; transition: all 0.15s ease; }
 .careers-report__chip b { color: #2563eb; margin-left: 2px; }
+.careers-report__chip:hover { border-color: #2563eb; color: #2563eb; }
+.careers-report__chip.on { background: #2563eb; border-color: #2563eb; color: #fff; }
+.careers-report__chip.on b { color: #fff; }
+.careers-report__chip--clear { border-style: dashed; color: #64748b; }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { formatCompact, formatExact, timeAgo } from '../utils/dateTime';
 import {
   Star as StarIcon,
   ThumbUp as ThumbUpIcon,
@@ -125,20 +126,7 @@ const AdminFeedback: React.FC = () => {
   };
 
   // Format time ago helper
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours} hours ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 7) return `${diffInDays} days ago`;
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    if (diffInWeeks < 4) return `${diffInWeeks} weeks ago`;
-    const diffInMonths = Math.floor(diffInDays / 30);
-    return `${diffInMonths} months ago`;
-  };
+  const formatTimeAgo = (dateString: string) => timeAgo(dateString);
 
   // Delete feedback
   const handleDelete = async (id: string) => {
@@ -330,7 +318,7 @@ const AdminFeedback: React.FC = () => {
                       <span className="feedback-inbox-item-body">
                         <span className="feedback-inbox-item-top">
                           <span className="feedback-inbox-item-name">{feedback.client_name}</span>
-                          <span className="feedback-inbox-item-time">{formatTimeAgo(feedback.created_at)}</span>
+                          <span className="feedback-inbox-item-time">{formatCompact(feedback.created_at)}</span>
                         </span>
                         <span className="feedback-inbox-item-preview">{feedback.nature_of_assignment}</span>
                         <span className="feedback-inbox-item-rating">{renderStars(feedback.overall)} {calculateAverageRating(feedback)}/5</span>
@@ -461,9 +449,7 @@ const AdminFeedback: React.FC = () => {
                   </section>
 
                   <p className="feedback-detail-footnote">
-                    Submitted on {new Date(activeFeedback.created_at).toLocaleDateString('en-US', {
-                      year: 'numeric', month: 'short', day: 'numeric',
-                    })}
+                    Submitted on {formatExact(activeFeedback.created_at)} ({formatTimeAgo(activeFeedback.created_at)})
                   </p>
                 </>
               ) : (

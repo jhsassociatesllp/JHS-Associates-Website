@@ -54,7 +54,7 @@ def _safe(text: str, limit: int = 40) -> str:
     return (text or "NA")[:limit]
 
 
-async def load_applications(day_from: Optional[date], day_to: Optional[date], job_id: Optional[str]) -> list[dict]:
+async def load_applications(day_from: Optional[date], day_to: Optional[date], job_id: Optional[str], profile: Optional[str] = None) -> list[dict]:
     """Applications received in the range, oldest first (one folder per day reads best that way)."""
     if day_from and day_to and day_to < day_from:
         raise ExportError(422, "The 'to' date is before the 'from' date")
@@ -66,10 +66,18 @@ async def load_applications(day_from: Optional[date], day_to: Optional[date], jo
             query["created_at"]["$gte"] = start
         if end:
             query["created_at"]["$lt"] = end
+    conditions: list[dict] = []
     if job_id == "general":
-        query["$or"] = [{"job_id": None}, {"job_id": ""}, {"job_id": {"$exists": False}}]
+        conditions.append({"$or": [{"job_id": None}, {"job_id": ""}, {"job_id": {"$exists": False}}]})
     elif job_id and job_id != "all":
         query["job_id"] = job_id
+    if profile:   # the profile the candidate chose on the form (Fresher, Qualified CA ...); "Not given" = left blank
+        if profile == "Not given":
+            conditions.append({"$or": [{"profile": None}, {"profile": ""}, {"profile": {"$exists": False}}]})
+        else:
+            query["profile"] = profile
+    if conditions:
+        query["$and"] = conditions
     docs = [d async for d in get_database()[APPLICATIONS_COLLECTION].find(query)]
     docs.sort(key=lambda d: d.get("created_at") or datetime.min)
     return docs
@@ -114,12 +122,13 @@ def daily_summary(docs: list[dict]) -> list[list]:
     return rows
 
 
-def label_for(day_from: Optional[date], day_to: Optional[date]) -> str:
+def label_for(day_from: Optional[date], day_to: Optional[date], profile: Optional[str] = None) -> str:
+    suffix = f"_{_safe(profile, 24)}" if profile else ""
     if day_from and day_to and day_from == day_to:
-        return day_from.strftime("%d-%m-%Y")
+        return day_from.strftime("%d-%m-%Y") + suffix
     if day_from or day_to:
-        return f"{day_from.strftime('%d-%m-%Y') if day_from else 'start'}_to_{day_to.strftime('%d-%m-%Y') if day_to else 'today'}"
-    return "all_dates"
+        return f"{day_from.strftime('%d-%m-%Y') if day_from else 'start'}_to_{day_to.strftime('%d-%m-%Y') if day_to else 'today'}" + suffix
+    return "all_dates" + suffix
 
 
 NAVY = "0F2340"

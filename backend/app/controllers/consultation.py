@@ -5,6 +5,7 @@ from bson import ObjectId
 from bson.errors import InvalidId
 
 from app.database.connection import get_database
+from app.utils.timestamps import submitted_at_ist
 from app.schemas.consultation import ConsultationRequestCreate
 from app.services.email_service import notify_hr_new_consultation_request
 
@@ -90,6 +91,7 @@ async def create_consultation_request(data: ConsultationRequestCreate, user: dic
             "user_picture": user.get("picture"),
             "status": "new",
             "created_at": now,
+            "submitted_at_ist": submitted_at_ist(now),
             "updated_at": now,
         }
     )

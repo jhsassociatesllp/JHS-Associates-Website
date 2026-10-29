@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import KpiGrid from '../components/KpiGrid';
 import { formatExact, formatShort, istDay as sharedIstDay } from '../utils/dateTime';
 import './AdminCareers.css';
 
@@ -556,6 +557,10 @@ const AdminCareers: React.FC = () => {
 
   const openJobs = jobs.filter((job) => job.status === 'open').length;
   const topMatches = applications.filter((a) => a.ats_status === 'matched').length;
+  const newApplications = applications.filter((a) => (a as { status?: string }).status === 'new').length;
+  const todayKey = istDay(new Date());
+  const applicationsToday = applications.filter((a) => istDay(a.created_at) === todayKey).length;
+  const applicationsWeek = applications.filter((a) => istDay(a.created_at) >= addDays(todayKey, -6)).length;
   const unscored = applications.filter((a) => !a.ats_status).length;
 
   return (
@@ -577,24 +582,15 @@ const AdminCareers: React.FC = () => {
         </Alert>
       )}
 
-      <div className="careers-stats-row">
-        <div className="careers-stat-card">
-          <p className="careers-stat-label">Total Vacancies</p>
-          <p className="careers-stat-value">{jobs.length}</p>
-        </div>
-        <div className="careers-stat-card">
-          <p className="careers-stat-label">Open Vacancies</p>
-          <p className="careers-stat-value">{openJobs}</p>
-        </div>
-        <div className="careers-stat-card">
-          <p className="careers-stat-label">Applications</p>
-          <p className="careers-stat-value">{applications.length}</p>
-        </div>
-        <div className="careers-stat-card ats-stat">
-          <p className="careers-stat-label">Top ATS Matches ({ATS_THRESHOLD}%+)</p>
-          <p className="careers-stat-value">{topMatches}</p>
-        </div>
-      </div>
+      <KpiGrid
+        items={[
+          { label: 'Total vacancies', value: jobs.length, sub: 'All roles you have posted', tone: 'red' },
+          { label: 'Open vacancies', value: openJobs, sub: 'Accepting applications now', tone: 'green' },
+          { label: 'Applications', value: applications.length, sub: `${applicationsToday} today · ${applicationsWeek} in the last 7 days`, tone: 'blue' },
+          { label: 'New applications', value: newApplications, sub: 'Not reviewed yet', tone: 'amber' },
+          { label: `Top ATS matches (${ATS_THRESHOLD}%+)`, value: topMatches, sub: 'Strong resume match', tone: 'purple' },
+        ]}
+      />
 
       <div className="careers-main-card">
         <div className="careers-tabs-row">

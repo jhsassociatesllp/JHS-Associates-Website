@@ -1014,3 +1014,5 @@
     grid-template-columns: 1fr;
   }
 }
+
+.feedback-header-actions { display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }

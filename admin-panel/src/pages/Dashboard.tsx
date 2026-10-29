@@ -1,14 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Typography, Box, Card, CardContent, Chip,
   ToggleButtonGroup, ToggleButton, CircularProgress,
 } from '@mui/material';
 import {
   Article as ArticleIcon,
-  Description as BlogIcon,
-  Email as EmailIcon,
-  Assessment as AssessmentIcon,
+  Gavel as RegulatoryIcon,
+  Radar as RegWatchIcon,
+  Description as WhitePaperIcon,
   MenuBook as KnowledgeIcon,
+  Layers as AllContentIcon,
+  ContactMail as ContactIcon,
+  RequestQuote as ProposalIcon,
+  Work as WorkIcon,
+  Event as AppointmentIcon,
+  School as AlumniIcon,
+  Feedback as FeedbackIcon,
+  People as PeopleIcon,
+  ConfirmationNumber as RegistrationIcon,
+  Assessment as AssessmentIcon,
 } from '@mui/icons-material';
 import {
   AreaChart, Area, BarChart, Bar,
@@ -16,8 +27,10 @@ import {
 } from 'recharts';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { timeAgo } from '../utils/dateTime';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+const REFRESH_EVERY_MS = 20000; // the dashboard re-reads the live numbers every 20 seconds
 
 /* ─── Design Tokens ────────────────────────────────────────── */
 const C = {
@@ -34,242 +47,139 @@ const C = {
   info:     '#3b82f6',
 };
 
-/* ─── Interfaces ───────────────────────────────────────────── */
-interface DashboardStats {
-  totalArticles: number;
-  totalBlogs: number;
-  totalKnowledge: number;
-  totalContacts: number;
-  pendingContacts: number;
+/* ─── Types (what /dashboard/stats returns) ─────────────────── */
+interface Counter { label: string; path: string; total: number; today: number; week: number; month: number; attention?: number }
+type SeriesRow = { label: string } & Record<string, number | string>;
+interface Series { week: SeriesRow[]; month: SeriesRow[]; year: SeriesRow[] }
+interface RecentItem { type: string; title: string; subtitle: string; at: string | null; path: string }
+interface Stats {
+  generated_at: string;
+  role: string;
+  content: Record<string, Counter> | null;
+  submissions: Record<string, Counter> | null;
+  content_series: Series | null;
+  submission_series: Series | null;
+  recent: RecentItem[];
 }
 
-interface ActivityItem {
-  id: string;
-  type: 'article' | 'blog' | 'knowledge' | 'contact';
-  title: string;
-  time: string;
-  status: 'published' | 'updated' | 'pending' | 'resolved';
-  author?: string;
-}
+/* ─── What each number looks like ───────────────────────────── */
+const KPI_STYLE: Record<string, { icon: typeof ArticleIcon; from: string; to: string; color: string }> = {
+  articles:            { icon: ArticleIcon,      from: '#7c3aed', to: '#4f46e5', color: '#7c3aed' },
+  regulatory:          { icon: RegulatoryIcon,   from: '#ef4444', to: '#b91c1c', color: '#ef4444' },
+  reg_watch:           { icon: RegWatchIcon,     from: '#06b6d4', to: '#0e7490', color: '#06b6d4' },
+  white_papers:        { icon: WhitePaperIcon,   from: '#22c55e', to: '#15803d', color: '#22c55e' },
+  knowledge:           { icon: KnowledgeIcon,    from: '#f97316', to: '#ea580c', color: '#f97316' },
+  blogs:               { icon: ArticleIcon,      from: '#84cc16', to: '#4d7c0f', color: '#84cc16' },
+  excellencia:         { icon: KnowledgeIcon,    from: '#a855f7', to: '#7e22ce', color: '#a855f7' },
+  newsletters:         { icon: ArticleIcon,      from: '#0ea5e9', to: '#0369a1', color: '#0ea5e9' },
+  podcasts:            { icon: ArticleIcon,      from: '#f43f5e', to: '#be123c', color: '#f43f5e' },
+  contacts:            { icon: ContactIcon,      from: '#3b82f6', to: '#1d4ed8', color: '#3b82f6' },
+  proposals:           { icon: ProposalIcon,     from: '#ec4899', to: '#be185d', color: '#ec4899' },
+  applications:        { icon: WorkIcon,         from: '#14b8a6', to: '#0f766e', color: '#14b8a6' },
+  appointments:        { icon: AppointmentIcon,  from: '#f59e0b', to: '#b45309', color: '#f59e0b' },
+  alumni:              { icon: AlumniIcon,       from: '#8b5cf6', to: '#6d28d9', color: '#8b5cf6' },
+  feedback:            { icon: FeedbackIcon,     from: '#10b981', to: '#047857', color: '#10b981' },
+  users:               { icon: PeopleIcon,       from: '#6366f1', to: '#4338ca', color: '#6366f1' },
+  event_registrations: { icon: RegistrationIcon, from: '#d946ef', to: '#a21caf', color: '#d946ef' },
+};
+const CONTENT_CARDS = ['articles', 'regulatory', 'reg_watch', 'white_papers', 'knowledge'];
+const CHART_KEYS = ['articles', 'knowledge', 'regulatory', 'reg_watch', 'white_papers'];
+const SUBMISSION_CHART_KEYS = ['contacts', 'proposals', 'applications', 'appointments'];
 
-interface MonthlyData {
-  month: string;
-  articles: number;
-  blogs: number;
-  knowledge: number;
-  contacts: number;
-}
-
-/* ─── Static Data ──────────────────────────────────────────── */
-const weeklyData = [
-  { day: 'Mon', value: 32 },
-  { day: 'Tue', value: 48 },
-  { day: 'Wed', value: 41 },
-  { day: 'Thu', value: 61 },
-  { day: 'Fri', value: 54 },
-  { day: 'Sat', value: 38 },
-  { day: 'Sun', value: 45 },
-];
+const kindLabel = (type: string, stats: Stats | null) => stats?.content?.[type]?.label ?? stats?.submissions?.[type]?.label ?? type;
+const isContent = (type: string, stats: Stats | null) => !!stats?.content && type in stats.content;
 
 /* ─── Component ─────────────────────────────────────────────── */
 export default function Dashboard() {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const navigate = useNavigate();
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [offline, setOffline] = useState(false);
   const [timeRange, setTimeRange] = useState<'week' | 'month' | 'year'>('month');
-  const [stats, setStats] = useState<DashboardStats>({
-    totalArticles: 0,
-    totalBlogs: 0,
-    totalKnowledge: 0,
-    totalContacts: 0,
-    pendingContacts: 0,
-  });
-  const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
-  const [contentDistribution, setContentDistribution] = useState<any[]>([]);
-  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
+  const [now, setNow] = useState(() => Date.now());
+  const [lastOkAt, setLastOkAt] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
 
-  // Generate monthly data based on real data
-  const generateMonthlyData = (articles: any[], blogs: any[], knowledge: any[], contacts: any[]) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const currentMonth = new Date().getMonth();
-    
-    return months.slice(Math.max(0, currentMonth - 5), currentMonth + 1).map((month, index) => {
-      const monthIndex = currentMonth - 5 + index;
-      const articlesCount = articles.filter(item => {
-        const date = new Date(item.created_at || item.publish_date);
-        return date.getMonth() === monthIndex;
-      }).length;
-      
-      const blogsCount = blogs.filter(item => {
-        const date = new Date(item.created_at || item.publish_date);
-        return date.getMonth() === monthIndex;
-      }).length;
-      
-      const knowledgeCount = knowledge.filter(item => {
-        const date = new Date(item.created_at);
-        return date.getMonth() === monthIndex;
-      }).length;
-      
-      const contactsCount = contacts.filter(item => {
-        const date = new Date(item.created_at);
-        return date.getMonth() === monthIndex;
-      }).length;
-
-      return {
-        month,
-        articles: articlesCount,
-        blogs: blogsCount,
-        knowledge: knowledgeCount,
-        contacts: contactsCount,
-      };
-    });
-  };
-
-  // Generate content distribution
-  const generateContentDistribution = (articlesCount: number, blogsCount: number, knowledgeCount: number) => {
-    const total = articlesCount + blogsCount + knowledgeCount;
-    if (total === 0) return [];
-
-    return [
-      { 
-        name: 'Articles', 
-        value: Math.round((articlesCount / total) * 100), 
-        color: C.accent,
-        count: articlesCount 
-      },
-      { 
-        name: 'Blogs', 
-        value: Math.round((blogsCount / total) * 100), 
-        color: C.success,
-        count: blogsCount 
-      },
-      { 
-        name: 'Knowledge', 
-        value: Math.round((knowledgeCount / total) * 100), 
-        color: C.info,
-        count: knowledgeCount 
-      },
-    ];
-  };
-
-  // Generate recent activity from real data
-  const generateRecentActivity = (articles: any[], blogs: any[], knowledge: any[], contacts: any[], alumni: any[]) => {
-    const activities: ActivityItem[] = [];
-
-    // Add recent articles
-    articles.slice(0, 3).forEach(article => {
-      activities.push({
-        id: article.id,
-        type: 'article',
-        title: article.title,
-        time: formatTimeAgo(article.last_edited_at || article.created_at),
-        status: article.last_edited_at ? 'updated' : 'published',
-        author: article.author,
-      });
-    });
-
-    // Add recent blogs
-    blogs.slice(0, 3).forEach(blog => {
-      activities.push({
-        id: blog.id,
-        type: 'blog',
-        title: blog.title,
-        time: formatTimeAgo(blog.last_edited_at || blog.created_at),
-        status: blog.last_edited_at ? 'updated' : 'published',
-        author: blog.author,
-      });
-    });
-
-    // Add recent knowledge resources
-    knowledge.slice(0, 2).forEach(resource => {
-      activities.push({
-        id: resource.id,
-        type: 'knowledge',
-        title: resource.title,
-        time: formatTimeAgo(resource.last_edited_at || resource.created_at),
-        status: resource.last_edited_at ? 'updated' : 'published',
-      });
-    });
-
-    // Add recent contacts
-    contacts.slice(0, 2).forEach(contact => {
-      activities.push({
-        id: contact.id,
-        type: 'contact',
-        title: `New inquiry from ${contact.name}`,
-        time: formatTimeAgo(contact.created_at),
-        status: contact.resolved ? 'resolved' : 'pending',
-      });
-    });
-
-    // Add recent alumni
-    alumni.slice(0, 2).forEach(person => {
-      activities.push({
-        id: person.id,
-        type: 'contact', // Using contact type for alumni as well since we don't have a separate alumni icon
-        title: `Alumni registration: ${person.first_name} ${person.last_name}`,
-        time: formatTimeAgo(person.created_at),
-        status: 'published',
-      });
-    });
-
-    // Sort by most recent and limit to 8 items
-    return activities
-      .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
-      .slice(0, 8);
-  };
-
-  // Format time ago helper
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours} hours ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 7) return `${diffInDays} days ago`;
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    return `${diffInWeeks} weeks ago`;
-  };
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [articlesRes, blogsRes, knowledgeRes, contactsRes, alumniRes] = await Promise.all([
-          axios.get(`${API_BASE_URL}/articles/`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/blogs/`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/knowledge/`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/admin/contacts`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API_BASE_URL}/admin/alumni`, { headers: { Authorization: `Bearer ${token}` } }),
-        ]);
-
-        const articles = articlesRes.data || [];
-        const blogs = blogsRes.data || [];
-        const knowledge = knowledgeRes.data || [];
-        const contacts = contactsRes.data || [];
-        const alumni = alumniRes.data || [];
-
-        setStats({
-          totalArticles: articles.length,
-          totalBlogs: blogs.length,
-          totalKnowledge: knowledge.length,
-          totalContacts: contacts.length,
-          pendingContacts: contacts.filter((c: any) => !c.resolved).length,
-        });
-
-        setMonthlyData(generateMonthlyData(articles, blogs, knowledge, contacts));
-        setContentDistribution(generateContentDistribution(articles.length, blogs.length, knowledge.length));
-        setRecentActivity(generateRecentActivity(articles, blogs, knowledge, contacts, alumni));
-
-      } catch (error) {
-        console.error('Failed to fetch stats:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
+  const load = useCallback(async (showBusy = true) => {
+    try {
+      if (showBusy) setRefreshing(true);
+      const response = await axios.get<Stats>(`${API_BASE_URL}/dashboard/stats`, { headers: { Authorization: `Bearer ${token}` } });
+      setStats(response.data);
+      setLastOkAt(Date.now());
+      setOffline(false);
+    } catch (error) {
+      console.error('Failed to fetch dashboard numbers:', error);
+      setOffline(true);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
   }, [token]);
+
+  // first load, then every 20 s, and straight away when the tab comes back into view
+  useEffect(() => {
+    load(false);
+    const timer = window.setInterval(() => { if (document.visibilityState === 'visible') load(false); }, REFRESH_EVERY_MS);
+    const onVisible = () => { if (document.visibilityState === 'visible') load(false); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', onVisible); };
+  }, [load]);
+
+  // keeps the "updated 12 s ago" label ticking
+  useEffect(() => {
+    const t = window.setInterval(() => setNow(Date.now()), 5000);
+    return () => window.clearInterval(t);
+  }, []);
+
+  const secondsAgo = Math.max(0, Math.round((now - lastOkAt) / 1000));
+  const updatedText = !lastOkAt ? 'Loading…' : secondsAgo < 10 ? 'just now' : secondsAgo < 60 ? `${secondsAgo}s ago` : `${Math.round(secondsAgo / 60)} min ago`;
+
+  const contentSeries = stats?.content_series?.[timeRange] ?? [];
+  const submissionSeries = stats?.submission_series?.[timeRange] ?? [];
+  const chartKeys = stats?.content ? CHART_KEYS : SUBMISSION_CHART_KEYS;
+  const chartData = (stats?.content ? contentSeries : submissionSeries) as SeriesRow[];
+  const chartLabelOf = (key: string) => kindLabel(key, stats);
+
+  /* donut: content mix for content roles, submission mix otherwise */
+  const mixSource = stats?.content ?? stats?.submissions ?? {};
+  const distribution = Object.entries(mixSource)
+    .map(([key, v]) => ({ key, name: v.label, count: v.total, color: KPI_STYLE[key]?.color ?? C.accent }))
+    .filter((d) => d.count > 0)
+    .sort((a, b) => b.count - a.count);
+  const distributionTotal = distribution.reduce((n, d) => n + d.count, 0);
+  const mixTitle = stats?.content ? 'Content Distribution' : 'Submissions Breakdown';
+  const mixSub = stats?.content ? 'Current content breakdown' : 'Where the requests come from';
+  const mixCenter = stats?.content ? 'Total Items' : 'Total Requests';
+
+  /* last 7 days: form submissions, or content added for content-only roles */
+  const weekRows = (stats?.submissions ? stats.submission_series?.week : stats?.content_series?.week) ?? [];
+  const weeklyData = weekRows.map((r) => ({
+    day: r.label,
+    value: Object.entries(r).filter(([k, v]) => k !== 'label' && k !== 'date' && typeof v === 'number').reduce((n, [, v]) => n + (v as number), 0),
+  }));
+  const weeklyTitle = stats?.submissions ? 'Weekly Submissions Trend' : 'Weekly Content Trend';
+  const weeklySub = stats?.submissions ? 'Form submissions received, last 7 days' : 'Content added, last 7 days';
+
+  const sparkOf = (key: string) => (stats?.content_series?.month ?? stats?.submission_series?.month ?? []).map((m) => ({ v: Number(m[key] ?? 0) }));
+
+  const allContentTotal = stats?.content ? Object.values(stats.content).reduce((n, c) => n + c.total, 0) : 0;
+  const allContentMonth = stats?.content ? Object.values(stats.content).reduce((n, c) => n + c.month, 0) : 0;
+  const allContentToday = stats?.content ? Object.values(stats.content).reduce((n, c) => n + c.today, 0) : 0;
+
+  interface Card { key: string; label: string; value: number; icon: typeof ArticleIcon; from: string; to: string; pill: string; sub: string; spark: { v: number }[]; path?: string }
+  const contentCards: Card[] = stats?.content ? [
+    ...CONTENT_CARDS.filter((k) => stats.content![k]).map((k): Card => {
+      const c = stats.content![k];
+      return { key: k, label: c.label, value: c.total, ...KPI_STYLE[k], pill: c.today ? `+${c.today} today` : '', sub: `${c.month} added this month`, spark: sparkOf(k), path: c.path };
+    }),
+    { key: 'all', label: 'All Content Items', value: allContentTotal, ...KPI_STYLE.blogs, icon: AllContentIcon, from: '#14b8a6', to: '#0f766e',
+      pill: allContentToday ? `+${allContentToday} today` : '', sub: `${allContentMonth} added this month`, spark: (stats.content_series?.month ?? []).map((m) => ({ v: Object.entries(m).filter(([k, v]) => k !== 'label' && k !== 'month' && typeof v === 'number').reduce((n, [, v]) => n + (v as number), 0) })) },
+  ] : [];
+  const submissionCards: Card[] = stats?.submissions ? Object.entries(stats.submissions).map(([k, c]): Card => ({
+    key: k, label: c.label, value: c.total, ...KPI_STYLE[k], pill: c.today ? `+${c.today} today` : '',
+    sub: c.attention ? `${c.attention} new · need attention` : `${c.week} in the last 7 days`, spark: sparkOf(k), path: c.path,
+  })) : [];
 
   if (loading) {
     return (
@@ -279,63 +189,60 @@ export default function Dashboard() {
     );
   }
 
-  const series = (pick: (m: MonthlyData) => number) => monthlyData.map((m) => ({ v: pick(m) }));
-  const STAT_CARDS = [
-    {
-      label: 'Total Articles',
-      value: stats.totalArticles,
-      icon: ArticleIcon,
-      from: '#7c3aed', to: '#4f46e5',
-      change: '+12%',
-      sub: 'from last month',
-      spark: series((m) => m.articles),
-    },
-    {
-      label: 'Total Blogs',
-      value: stats.totalBlogs,
-      icon: BlogIcon,
-      from: '#22c55e', to: '#15803d',
-      change: '+8%',
-      sub: 'from last month',
-      spark: series((m) => m.blogs),
-    },
-    {
-      label: 'Knowledge Resources',
-      value: stats.totalKnowledge,
-      icon: KnowledgeIcon,
-      from: '#f97316', to: '#ea580c',
-      change: '+15%',
-      sub: 'from last month',
-      spark: series((m) => m.knowledge),
-    },
-    {
-      label: 'Total Contacts',
-      value: stats.totalContacts,
-      icon: EmailIcon,
-      from: '#3b82f6', to: '#1d4ed8',
-      change: '+23%',
-      sub: 'from last month',
-      spark: series((m) => m.contacts),
-    },
-    {
-      label: 'Pending Contacts',
-      value: stats.pendingContacts,
-      icon: AssessmentIcon,
-      from: '#ec4899', to: '#be185d',
-      change: '',
-      sub: 'waiting for a reply',
-      spark: series((m) => m.contacts),
-    },
-    {
-      label: 'All Content Items',
-      value: stats.totalArticles + stats.totalBlogs + stats.totalKnowledge,
-      icon: KnowledgeIcon,
-      from: '#14b8a6', to: '#0f766e',
-      change: '',
-      sub: 'articles, blogs, knowledge',
-      spark: series((m) => m.articles + m.blogs + m.knowledge),
-    },
-  ];
+  const KpiCard = ({ card, idx, group }: { card: Card; idx: number; group: string }) => {
+    const Icon = card.icon;
+    return (
+      <Card
+        elevation={0}
+        onClick={card.path ? () => navigate(card.path!) : undefined}
+        sx={{
+          background: `linear-gradient(135deg, ${card.from} 0%, ${card.to} 100%)`,
+          borderRadius: 3, overflow: 'hidden', position: 'relative', color: '#fff',
+          cursor: card.path ? 'pointer' : 'default',
+          boxShadow: `0 10px 24px -10px ${card.to}`,
+          transition: 'transform 0.2s, box-shadow 0.2s',
+          '&:hover': { transform: 'translateY(-4px)', boxShadow: `0 16px 30px -10px ${card.to}` },
+        }}
+      >
+        <CardContent sx={{ p: '18px !important', position: 'relative', zIndex: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1.4 }}>
+            <Box sx={{ width: 38, height: 38, borderRadius: 2, bgcolor: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Icon sx={{ fontSize: 20, color: '#fff' }} />
+            </Box>
+            <Typography sx={{ fontSize: '0.74rem', fontWeight: 600, lineHeight: 1.25, opacity: 0.95, fontFamily: 'Inter,sans-serif' }}>
+              {card.label}
+            </Typography>
+          </Box>
+          <Typography sx={{ fontSize: '1.9rem', fontWeight: 800, lineHeight: 1.1, fontFamily: 'Inter,sans-serif', mb: 0.6 }}>
+            {card.value}
+          </Typography>
+          <Typography sx={{ fontSize: '0.72rem', opacity: 0.9, display: 'flex', alignItems: 'center', gap: 0.6, flexWrap: 'wrap' }}>
+            {card.pill && (
+              <Box component="span" sx={{ px: 0.8, py: 0.1, borderRadius: 1, bgcolor: 'rgba(255,255,255,0.22)', fontWeight: 700 }}>
+                {card.pill}
+              </Box>
+            )}
+            {card.sub}
+          </Typography>
+        </CardContent>
+        <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 46, opacity: 0.9, pointerEvents: 'none' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={card.spark.length ? card.spark : [{ v: 0 }, { v: 0 }]} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id={`kpi-${group}-${idx}`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#fff" stopOpacity={0.35} />
+                  <stop offset="100%" stopColor="#fff" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <Area type="monotone" dataKey="v" stroke="rgba(255,255,255,0.85)" strokeWidth={2} fill={`url(#kpi-${group}-${idx})`} dot={false} isAnimationActive={false} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </Box>
+      </Card>
+    );
+  };
+
+  const firstName = (user?.name || 'Admin').split(' ')[0];
 
   return (
     <Box sx={{ p: { xs: 2, md: 3 }, bgcolor: C.pageBg, minHeight: '100%' }}>
@@ -354,118 +261,66 @@ export default function Dashboard() {
               Dashboard overview
             </Typography>
             <Typography sx={{ fontSize: '0.875rem', color: C.textMuted, mt: 0.5 }}>
-              Welcome back, Admin. Here's what's happening with your content.
+              Welcome back, {firstName}. Here's what's happening across your website, live.
             </Typography>
           </Box>
           <Chip
-            label="Updated just now"
+            onClick={() => load()}
+            label={offline ? 'Offline · retrying' : refreshing ? 'Updating…' : `Live · updated ${updatedText}`}
             size="small"
-            icon={<Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: C.success, ml: '10px !important' }} />}
+            icon={<Box sx={{
+              width: 7, height: 7, borderRadius: '50%', ml: '10px !important',
+              bgcolor: offline ? C.danger : C.success,
+              animation: offline ? 'none' : 'livePulse 1.8s ease-in-out infinite',
+              '@keyframes livePulse': { '0%,100%': { opacity: 1, transform: 'scale(1)' }, '50%': { opacity: 0.4, transform: 'scale(1.5)' } },
+            }} />}
             sx={{
-              bgcolor: '#fff',
-              border: `1px solid ${C.border}`,
-              color: C.textMain,
-              fontWeight: 700,
-              fontSize: '0.72rem',
-              letterSpacing: 0.4,
-              textTransform: 'uppercase',
-              px: 0.5,
-              boxShadow: C.shadow,
+              bgcolor: '#fff', border: `1px solid ${C.border}`, color: C.textMain, fontWeight: 700, fontSize: '0.72rem',
+              letterSpacing: 0.4, textTransform: 'uppercase', px: 0.5, boxShadow: C.shadow, cursor: 'pointer',
             }}
           />
         </Box>
       </Box>
 
-      {/* ── Row 1: Stat Cards ───────────────────────────────── */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(6, 1fr)' }, gap: '18px', mb: 3 }}>
-        {STAT_CARDS.map((card, idx) => {
-          const Icon = card.icon;
-          return (
-            <Card
-              key={card.label}
-              elevation={0}
-              sx={{
-                background: `linear-gradient(135deg, ${card.from} 0%, ${card.to} 100%)`,
-                borderRadius: 3,
-                overflow: 'hidden',
-                position: 'relative',
-                color: '#fff',
-                boxShadow: `0 10px 24px -10px ${card.to}`,
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: `0 16px 30px -10px ${card.to}` },
-              }}
-            >
-              <CardContent sx={{ p: '18px !important', position: 'relative', zIndex: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2, mb: 1.4 }}>
-                  <Box sx={{ width: 38, height: 38, borderRadius: 2, bgcolor: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Icon sx={{ fontSize: 20, color: '#fff' }} />
-                  </Box>
-                  <Typography sx={{ fontSize: '0.74rem', fontWeight: 600, lineHeight: 1.25, opacity: 0.95, fontFamily: 'Inter,sans-serif' }}>
-                    {card.label}
-                  </Typography>
-                </Box>
+      {/* ── Row 1: Content cards ─────────────────────────────── */}
+      {contentCards.length > 0 && (
+        <>
+          <Typography sx={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: C.textMuted, mb: 1.2 }}>Website content</Typography>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(6, 1fr)' }, gap: '18px', mb: 3 }}>
+            {contentCards.map((card, idx) => <KpiCard key={card.key} card={card} idx={idx} group="c" />)}
+          </Box>
+        </>
+      )}
 
-                <Typography sx={{ fontSize: '1.9rem', fontWeight: 800, lineHeight: 1.1, fontFamily: 'Inter,sans-serif', mb: 0.6 }}>
-                  {card.value}
-                </Typography>
+      {/* ── Row 2: Form submissions ──────────────────────────── */}
+      {submissionCards.length > 0 && (
+        <>
+          <Typography sx={{ fontSize: '0.72rem', fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: C.textMuted, mb: 1.2 }}>Form submissions &amp; accounts</Typography>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: '18px', mb: 3 }}>
+            {submissionCards.map((card, idx) => <KpiCard key={card.key} card={card} idx={idx} group="s" />)}
+          </Box>
+        </>
+      )}
 
-                <Typography sx={{ fontSize: '0.72rem', opacity: 0.9, display: 'flex', alignItems: 'center', gap: 0.6 }}>
-                  {card.change && (
-                    <Box component="span" sx={{ px: 0.8, py: 0.1, borderRadius: 1, bgcolor: 'rgba(255,255,255,0.22)', fontWeight: 700 }}>
-                      {card.change}
-                    </Box>
-                  )}
-                  {card.sub}
-                </Typography>
-              </CardContent>
-
-              {/* small trend line along the bottom */}
-              <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 46, opacity: 0.9, pointerEvents: 'none' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={card.spark.length ? card.spark : [{ v: 0 }, { v: 0 }]} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id={`kpi-${idx}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#fff" stopOpacity={0.35} />
-                        <stop offset="100%" stopColor="#fff" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <Area type="monotone" dataKey="v" stroke="rgba(255,255,255,0.85)" strokeWidth={2} fill={`url(#kpi-${idx})`} dot={false} isAnimationActive={false} />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </Box>
-            </Card>
-          );
-        })}
-      </Box>
-
-      {/* ── Row 2: Charts ────────────────────────────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '24px' }}>
-        {/* Content Overview Chart */}
+      {/* ── Row 3: Charts ────────────────────────────────────── */}
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: '20px', mb: 3 }}>
+        {/* Overview chart */}
         <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3, height: '100%' }}>
           <CardContent sx={{ p: '20px !important' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2, flexWrap: 'wrap', gap: 1 }}>
               <Box>
                 <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
-                  Content Overview
+                  {stats?.content ? 'Content Overview' : 'Submissions Overview'}
                 </Typography>
                 <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mt: 0.25 }}>
-                  Monthly content creation trends
+                  {stats?.content ? 'Content added over time' : 'Requests received over time'}
                 </Typography>
               </Box>
               <ToggleButtonGroup
-                size="small"
-                value={timeRange}
-                exclusive
-                onChange={(_, v) => v && setTimeRange(v)}
+                size="small" value={timeRange} exclusive onChange={(_, v) => v && setTimeRange(v)}
                 sx={{
                   '& .MuiToggleButton-root': {
-                    fontSize: '0.72rem',
-                    fontWeight: 600,
-                    px: 1.5,
-                    py: 0.5,
-                    border: `1px solid ${C.border}`,
-                    color: C.textMuted,
-                    textTransform: 'none',
+                    fontSize: '0.72rem', fontWeight: 600, px: 1.5, py: 0.5, border: `1px solid ${C.border}`, color: C.textMuted, textTransform: 'none',
                     '&.Mui-selected': { bgcolor: C.accent, color: '#fff', borderColor: C.accent },
                     '&.Mui-selected:hover': { bgcolor: '#1d4fd8' },
                   },
@@ -479,255 +334,143 @@ export default function Dashboard() {
 
             <Box sx={{ height: 320, mt: 2 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{
-                      background: '#fff',
-                      border: `1px solid ${C.border}`,
-                      borderRadius: 8,
-                      fontSize: 12,
-                      boxShadow: C.shadow,
-                    }}
-                  />
-                  <Bar dataKey="articles" fill={C.accent} radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="blogs" fill={C.success} radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="knowledge" fill={C.info} radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="contacts" fill={C.warning} radius={[8, 8, 0, 0]} />
+                  <XAxis dataKey="label" tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ background: '#fff', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, boxShadow: C.shadow }} />
+                  {chartKeys.map((key) => (
+                    <Bar key={key} dataKey={key} name={chartLabelOf(key)} fill={KPI_STYLE[key]?.color ?? C.accent} radius={[6, 6, 0, 0]} />
+                  ))}
                 </BarChart>
               </ResponsiveContainer>
             </Box>
 
-            {/* Legend */}
-            <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', mt: 2 }}>
-              {[
-                { label: 'Articles', color: C.accent },
-                { label: 'Blogs', color: C.success },
-                { label: 'Knowledge', color: C.info },
-                { label: 'Contacts', color: C.warning },
-              ].map((item) => (
-                <Box key={item.label} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Box sx={{ width: 12, height: 12, borderRadius: 1, bgcolor: item.color }} />
-                  <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, fontWeight: 500 }}>
-                    {item.label}
-                  </Typography>
+            <Box sx={{ display: 'flex', gap: 2.5, justifyContent: 'center', mt: 2, flexWrap: 'wrap' }}>
+              {chartKeys.map((key) => (
+                <Box key={key} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box sx={{ width: 12, height: 12, borderRadius: 1, bgcolor: KPI_STYLE[key]?.color ?? C.accent }} />
+                  <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, fontWeight: 500 }}>{chartLabelOf(key)}</Typography>
                 </Box>
               ))}
             </Box>
           </CardContent>
         </Card>
 
-        {/* Content Distribution Pie Chart */}
+        {/* Distribution donut */}
         <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3, height: '100%' }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.5 }}>
-              Content Distribution
+              {mixTitle}
             </Typography>
-            <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mb: 2 }}>
-              Current content breakdown
-            </Typography>
+            <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mb: 2 }}>{mixSub}</Typography>
 
             <Box sx={{ height: 240, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Hand-drawn SVG donut (stroke-dasharray per segment) rather than
-                  Recharts' <Pie> — recharts 3.8.1 computes a zero-width angle
-                  for every segment here regardless of props, an upstream bug,
-                  not something tunable from this component. This renders the
-                  same contentDistribution data/colors with no library dependency. */}
+              {/* Hand-drawn SVG donut (stroke-dasharray per segment): Recharts' <Pie> draws zero-width segments here (upstream bug). */}
               {(() => {
-                const total = contentDistribution.reduce((sum, d) => sum + d.value, 0) || 1;
+                const total = distributionTotal || 1;
                 const radius = 80;
                 const circumference = 2 * Math.PI * radius;
                 const gap = 3;
-                let acc = 0;
+                const segments = distribution.map((entry, i) => ({ entry, before: distribution.slice(0, i).reduce((n, d) => n + d.count, 0) }));
                 return (
                   <svg width={200} height={200} viewBox="0 0 200 200">
-                    {contentDistribution.filter((d) => d.value > 0).map((entry) => {
-                      const dash = (entry.value / total) * circumference;
-                      const rotation = (acc / total) * 360 - 90;
-                      acc += entry.value;
+                    {segments.map(({ entry, before }) => {
+                      const dash = (entry.count / total) * circumference;
+                      const rotation = (before / total) * 360 - 90;
                       return (
                         <circle
-                          key={entry.name}
-                          cx={100}
-                          cy={100}
-                          r={radius}
-                          fill="none"
-                          stroke={entry.color}
-                          strokeWidth={28}
+                          key={entry.key} cx={100} cy={100} r={radius} fill="none" stroke={entry.color} strokeWidth={28}
                           strokeDasharray={`${Math.max(dash - gap, 0)} ${circumference - Math.max(dash - gap, 0)}`}
-                          strokeLinecap="round"
-                          transform={`rotate(${rotation} 100 100)`}
+                          strokeLinecap="round" transform={`rotate(${rotation} 100 100)`}
                         />
                       );
                     })}
                   </svg>
                 );
               })()}
-
-              {/* Center label */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  textAlign: 'center',
-                  pointerEvents: 'none',
-                }}
-              >
+              <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', pointerEvents: 'none' }}>
                 <Typography sx={{ fontSize: '1.75rem', fontWeight: 700, color: C.textMain, lineHeight: 1.1, fontFamily: 'Inter,sans-serif' }}>
-                  {stats.totalArticles + stats.totalBlogs + stats.totalKnowledge}
+                  {distributionTotal}
                 </Typography>
-                <Typography sx={{ fontSize: '0.7rem', color: C.textMuted, fontWeight: 600 }}>
-                  Total Items
-                </Typography>
+                <Typography sx={{ fontSize: '0.7rem', color: C.textMuted, fontWeight: 600 }}>{mixCenter}</Typography>
               </Box>
             </Box>
 
-            {/* Legend */}
             <Box sx={{ mt: 2 }}>
-              {contentDistribution.map((item) => (
-                <Box key={item.name} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
+              {distribution.map((item) => (
+                <Box key={item.key} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.2 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                     <Box sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: item.color, flexShrink: 0 }} />
-                    <Typography sx={{ fontSize: '0.85rem', color: C.textMuted, fontWeight: 500 }}>
-                      {item.name}
-                    </Typography>
+                    <Typography sx={{ fontSize: '0.85rem', color: C.textMuted, fontWeight: 500 }}>{item.name}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: C.textMain }}>
-                    {item.count}
-                  </Typography>
+                  <Typography sx={{ fontSize: '0.85rem', fontWeight: 700, color: C.textMain }}>{item.count}</Typography>
                 </Box>
               ))}
+              {distribution.length === 0 && <Typography sx={{ fontSize: '0.85rem', color: C.textMuted }}>Nothing to show yet.</Typography>}
             </Box>
           </CardContent>
         </Card>
-      </div>
+      </Box>
 
-      {/* ── Row 3: Recent Activity & Weekly Trend ─────────────── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-        {/* Recent Activity */}
+      {/* ── Row 4: Recent Activity & Weekly Trend ─────────────── */}
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, gap: '20px' }}>
         <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3 }}>
           <CardContent sx={{ p: '20px !important' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
               <Box>
-                <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>
-                  Recent Activity
-                </Typography>
-                <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mt: 0.25 }}>
-                  Latest updates and changes
-                </Typography>
+                <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif' }}>Recent Activity</Typography>
+                <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mt: 0.25 }}>Newest content and submissions, updated live</Typography>
               </Box>
               <AssessmentIcon sx={{ fontSize: 20, color: C.accent }} />
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-              {recentActivity.length > 0 ? recentActivity.map((activity) => (
-                <Box
-                  key={activity.id}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1.5,
-                    p: 1.5,
-                    bgcolor: '#fafafa',
-                    borderRadius: 1.5,
-                    border: `1px solid ${C.border}`,
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      bgcolor: '#f5f5f5',
-                      borderColor: C.accent,
-                    },
-                  }}
-                >
+              {stats && stats.recent.length > 0 ? stats.recent.slice(0, 10).map((activity, i) => {
+                const style = KPI_STYLE[activity.type] ?? KPI_STYLE.articles;
+                const Icon = style.icon;
+                const content = isContent(activity.type, stats);
+                return (
                   <Box
+                    key={`${activity.type}-${i}-${activity.at}`}
+                    onClick={() => navigate(activity.path)}
                     sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 1.5,
-                      bgcolor:
-                        activity.type === 'article'
-                          ? `${C.accent}15`
-                          : activity.type === 'blog'
-                          ? `${C.success}15`
-                          : activity.type === 'knowledge'
-                          ? `${C.info}15`
-                          : `${C.warning}15`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
+                      display: 'flex', alignItems: 'center', gap: 1.5, p: 1.5, bgcolor: '#fafafa', borderRadius: 1.5,
+                      border: `1px solid ${C.border}`, cursor: 'pointer', transition: 'all 0.2s',
+                      '&:hover': { bgcolor: '#f5f5f5', borderColor: C.accent },
                     }}
                   >
-                    {activity.type === 'article' ? (
-                      <ArticleIcon sx={{ fontSize: 18, color: C.accent }} />
-                    ) : activity.type === 'blog' ? (
-                      <BlogIcon sx={{ fontSize: 18, color: C.success }} />
-                    ) : activity.type === 'knowledge' ? (
-                      <KnowledgeIcon sx={{ fontSize: 18, color: C.info }} />
-                    ) : (
-                      <EmailIcon sx={{ fontSize: 18, color: C.warning }} />
-                    )}
+                    <Box sx={{ width: 40, height: 40, borderRadius: 1.5, bgcolor: `${style.color}1f`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <Icon sx={{ fontSize: 18, color: style.color }} />
+                    </Box>
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography sx={{ fontSize: '0.85rem', fontWeight: 600, color: C.textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {activity.title}
+                      </Typography>
+                      <Typography sx={{ fontSize: '0.75rem', color: C.textMuted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {timeAgo(activity.at)}{activity.subtitle ? ` • ${activity.subtitle}` : ''}
+                      </Typography>
+                    </Box>
+                    <Chip
+                      label={kindLabel(activity.type, stats)}
+                      size="small"
+                      sx={{ bgcolor: content ? `${C.info}15` : `${C.warning}1f`, color: content ? C.info : '#b45309', fontWeight: 600, fontSize: '0.7rem' }}
+                    />
                   </Box>
-
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Typography
-                      sx={{
-                        fontSize: '0.85rem',
-                        fontWeight: 600,
-                        color: C.textMain,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {activity.title}
-                    </Typography>
-                    <Typography sx={{ fontSize: '0.75rem', color: C.textMuted }}>
-                      {activity.time} {activity.author && `• by ${activity.author}`}
-                    </Typography>
-                  </Box>
-
-                  <Chip
-                    label={activity.status}
-                    size="small"
-                    sx={{
-                      bgcolor: 
-                        activity.status === 'published' ? `${C.success}15` : 
-                        activity.status === 'updated' ? `${C.info}15` :
-                        activity.status === 'resolved' ? `${C.success}15` : `${C.warning}15`,
-                      color: 
-                        activity.status === 'published' ? C.success : 
-                        activity.status === 'updated' ? C.info :
-                        activity.status === 'resolved' ? C.success : C.warning,
-                      fontWeight: 600,
-                      fontSize: '0.7rem',
-                      textTransform: 'capitalize',
-                    }}
-                  />
-                </Box>
-              )) : (
+                );
+              }) : (
                 <Box sx={{ textAlign: 'center', py: 4 }}>
-                  <Typography sx={{ fontSize: '0.9rem', color: C.textMuted }}>
-                    No recent activity
-                  </Typography>
+                  <Typography sx={{ fontSize: '0.9rem', color: C.textMuted }}>No recent activity</Typography>
                 </Box>
               )}
             </Box>
           </CardContent>
         </Card>
 
-        {/* Weekly Trend */}
         <Card elevation={0} sx={{ bgcolor: C.cardBg, border: `1px solid ${C.border}`, boxShadow: C.shadow, borderRadius: 3 }}>
           <CardContent sx={{ p: '20px !important' }}>
-            <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.5 }}>
-              Weekly Activity Trend
-            </Typography>
-            <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mb: 2 }}>
-              User engagement over the past week
-            </Typography>
+            <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: C.textMain, fontFamily: 'Inter,sans-serif', mb: 0.5 }}>{weeklyTitle}</Typography>
+            <Typography sx={{ fontSize: '0.8rem', color: C.textMuted, mb: 2 }}>{weeklySub}</Typography>
 
             <Box sx={{ height: 240 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -740,31 +483,19 @@ export default function Dashboard() {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="day" tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
-                  <Tooltip
-                    contentStyle={{
-                      background: '#fff',
-                      border: `1px solid ${C.border}`,
-                      borderRadius: 8,
-                      fontSize: 12,
-                      boxShadow: C.shadow,
-                    }}
-                  />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: C.textMuted }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ background: '#fff', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, boxShadow: C.shadow }} />
                   <Area
-                    type="monotone"
-                    dataKey="value"
-                    stroke={C.accent}
-                    strokeWidth={3}
-                    fill="url(#weeklyGrad)"
-                    dot={{ r: 4, fill: C.accent, strokeWidth: 2, stroke: '#fff' }}
-                    activeDot={{ r: 6, fill: C.accent }}
+                    type="monotone" dataKey="value" name={stats?.submissions ? 'Submissions' : 'Items added'} stroke={C.accent} strokeWidth={3} fill="url(#weeklyGrad)"
+                    dot={{ r: 4, fill: C.accent, strokeWidth: 2, stroke: '#fff' }} activeDot={{ r: 6, fill: C.accent }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </Box>
           </CardContent>
         </Card>
-      </div>
+      </Box>
     </Box>
   );
 }
+

@@ -49,6 +49,8 @@ from app.routes.catalog import router as catalog_router       # ✅ SERVICES & S
 from app.routes.cookie_consent import router as cookie_consent_router # ✅ COOKIE CONSENT
 from app.routes.events import router as events_router                 # ✅ EVENTS
 from app.routes.email_health import router as email_health_router
+from app.routes.exports import router as exports_router
+from app.routes.dashboard import router as dashboard_router
 
 
 @asynccontextmanager
@@ -226,6 +228,8 @@ api_router.include_router(catalog_router)      # ✅ SERVICES & SECTORS
 api_router.include_router(cookie_consent_router) # ✅ COOKIE CONSENT
 api_router.include_router(events_router)       # ✅ EVENTS
 api_router.include_router(email_health_router) # EMAIL HEALTH (Super Admin only)
+api_router.include_router(exports_router)      # EXCEL EXPORTS (Super Admin / HR Admin)
+api_router.include_router(dashboard_router)    # LIVE DASHBOARD NUMBERS
 
 app.include_router(api_router)
 

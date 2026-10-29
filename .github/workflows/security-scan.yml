@@ -41,6 +41,7 @@ jobs:
           python tests/test_proposal_admin.py
           python tests/test_email_health.py
           python tests/test_submission_time.py
+          python tests/test_dashboard_exports.py
 
   python-dependencies:
     name: Python library vulnerabilities

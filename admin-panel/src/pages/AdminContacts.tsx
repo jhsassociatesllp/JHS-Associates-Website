@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import ExportExcelButton from '../components/ExportExcelButton';
 import { formatCompact, formatExact, istDay as istDayKey, parseApiDate, timeAgo } from '../utils/dateTime';
 import './AdminContacts.css';
 
@@ -126,8 +127,11 @@ const AdminContacts: React.FC = () => {
             Review enquiries and keep every conversation moving.
           </p>
         </div>
-        <span className="contacts-inbox-pill">
-          <span className="contacts-inbox-dot" /> Inbox active
+        <span className="contacts-header-actions">
+          <ExportExcelButton path="/export/contacts" fallbackName="JHS_Contact_Submissions.xlsx" />
+          <span className="contacts-inbox-pill">
+            <span className="contacts-inbox-dot" /> Inbox active
+          </span>
         </span>
       </div>
 

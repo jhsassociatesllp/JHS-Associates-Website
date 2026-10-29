@@ -48,6 +48,7 @@ from app.routes.leadership import router as leadership_router # ✅ LEADERSHIP
 from app.routes.catalog import router as catalog_router       # ✅ SERVICES & SECTORS
 from app.routes.cookie_consent import router as cookie_consent_router # ✅ COOKIE CONSENT
 from app.routes.events import router as events_router                 # ✅ EVENTS
+from app.routes.email_health import router as email_health_router
 
 
 @asynccontextmanager
@@ -224,6 +225,7 @@ api_router.include_router(leadership_router)   # ✅ LEADERSHIP
 api_router.include_router(catalog_router)      # ✅ SERVICES & SECTORS
 api_router.include_router(cookie_consent_router) # ✅ COOKIE CONSENT
 api_router.include_router(events_router)       # ✅ EVENTS
+api_router.include_router(email_health_router) # EMAIL HEALTH (Super Admin only)
 
 app.include_router(api_router)
 

@@ -1,0 +1,22 @@
+/* Email check — on top of the Contacts layout (AdminContacts.css) */
+.ec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 22px; }
+.ec-card { background: #fff; border: 1px solid #e6ebf3; border-radius: 14px; padding: 18px 20px; }
+.ec-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; font-size: 0.95rem; font-weight: 800; color: #0f2340; }
+.ec-row { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid #eef1f6; font-size: 0.85rem; color: #64748b; }
+.ec-row b { color: #1e293b; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.ec-row b.ec-bad { color: #b91c1c; }
+.ec-note { margin: 12px 0 0; font-size: 0.82rem; color: #64748b; }
+.ec-note b { color: #0f2340; }
+
+.ec-tag { padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; }
+.ec-tag--ok { background: #e6f4ea; color: #1e7a3c; }
+.ec-tag--warn { background: #fff0dc; color: #a15c07; }
+.ec-tag--bad { background: #fde8ec; color: #b0173a; }
+
+.ec-test { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.ec-hint { font-size: 0.82rem; color: #7b869a; }
+
+.ec-box { padding: 14px 18px; border-radius: 12px; font-size: 0.9rem; line-height: 1.55; margin-bottom: 14px; }
+.ec-box--ok { background: #f0fbf4; border: 1px solid #c3ecd1; color: #166534; }
+.ec-box--bad { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.ec-detail { margin: 8px 0 0; font-size: 0.85rem; overflow-wrap: anywhere; }

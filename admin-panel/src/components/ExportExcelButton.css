@@ -1,0 +1,11 @@
+.xl-export { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.xl-export__btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 10px; border: 1px solid #1d7a46;
+  background: #fff; color: #1d7a46; font-family: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.xl-export__btn:hover:not(:disabled) { background: #1d7a46; color: #fff; box-shadow: 0 8px 18px -10px rgba(29, 122, 70, 0.8); }
+.xl-export__btn:disabled { opacity: 0.6; cursor: wait; }
+.xl-export__note { font-size: 0.8rem; font-weight: 600; }
+.xl-export__note--ok { color: #15803d; }
+.xl-export__note--error { color: #b91c1c; }

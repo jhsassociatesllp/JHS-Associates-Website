@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import ExportExcelButton from '../components/ExportExcelButton';
 import { formatCompact, formatExact, timeAgo } from '../utils/dateTime';
 import {
   Star as StarIcon,
@@ -204,8 +205,11 @@ const AdminFeedback: React.FC = () => {
             Review client satisfaction submissions and testimonials.
           </p>
         </div>
-        <span className="feedback-inbox-pill">
-          <span className="feedback-inbox-dot" /> Inbox active
+        <span className="feedback-header-actions">
+          <ExportExcelButton path="/export/feedback" fallbackName="JHS_Client_Feedback.xlsx" />
+          <span className="feedback-inbox-pill">
+            <span className="feedback-inbox-dot" /> Inbox active
+          </span>
         </span>
       </div>
 

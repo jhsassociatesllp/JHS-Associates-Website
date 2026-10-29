@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
+import ExportExcelButton from '../components/ExportExcelButton';
 import './AdminUsers.css';
 
 const IST_TIME_ZONE = 'Asia/Kolkata';
@@ -158,7 +159,10 @@ const AdminUsers: React.FC = () => {
             Everyone who has created a site account — see what they downloaded, applied for, or requested.
           </p>
         </div>
-        <Button variant="outlined" onClick={fetchUsers}>Refresh</Button>
+        <div className="users-header-actions">
+          <ExportExcelButton path="/export/users" fallbackName="JHS_Site_Users.xlsx" />
+          <Button variant="outlined" onClick={fetchUsers}>Refresh</Button>
+        </div>
       </div>
 
       {message && (

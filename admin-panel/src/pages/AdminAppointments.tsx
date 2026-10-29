@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Button } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
+import KpiGrid from '../components/KpiGrid';
 import { formatShort } from '../utils/dateTime';
 import './AdminAppointments.css';
 
@@ -132,33 +133,17 @@ const AdminAppointments: React.FC = () => {
         </Alert>
       )}
 
-      <div className="appointments-stats-row">
-        <div className="appointments-stat-card">
-          <p className="appointments-stat-label">Total</p>
-          <p className="appointments-stat-value">{counts.total}</p>
-        </div>
-        <div className="appointments-stat-card">
-          <p className="appointments-stat-label">New</p>
-          <p className="appointments-stat-value">{counts.new}</p>
-        </div>
-        <div className="appointments-stat-card">
-          <p className="appointments-stat-label">Confirmed</p>
-          <p className="appointments-stat-value">{counts.confirmed}</p>
-        </div>
-        <div className="appointments-stat-card">
-          <p className="appointments-stat-label">Completed</p>
-          <p className="appointments-stat-value">{counts.completed}</p>
-        </div>
-      </div>
-
-      <div className="appointments-stats-row">
-        {Object.keys(SOURCE_LABELS).map((key) => (
-          <div className="appointments-stat-card" key={key}>
-            <p className="appointments-stat-label">Booked via {SOURCE_LABELS[key]}</p>
-            <p className="appointments-stat-value">{sources[key] ?? 0}</p>
-          </div>
-        ))}
-      </div>
+      <KpiGrid
+        items={[
+          { label: 'Total requests', value: counts.total, sub: 'All booked from the website', tone: 'red' },
+          { label: 'New', value: counts.new, sub: 'Need a call back', tone: 'amber' },
+          { label: 'Confirmed', value: counts.confirmed, sub: 'Slot agreed with the client', tone: 'blue' },
+          { label: 'Completed', value: counts.completed, sub: 'Consultation done', tone: 'green' },
+          ...Object.keys(SOURCE_LABELS).map((key) => ({
+            label: `Booked via ${SOURCE_LABELS[key]}`, value: sources[key] ?? 0, sub: 'Where the request came from', tone: 'purple' as const,
+          })),
+        ]}
+      />
 
       <div className="appointments-main-card">
         <div className="appointments-tabs-bar">

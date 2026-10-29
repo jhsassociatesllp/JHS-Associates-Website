@@ -1,0 +1,15 @@
+/* Summary boxes: same look as the Contacts page (white card, coloured edge, small caps label, big number) */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.kpi-card {
+  --kpi: #ef4444;
+  background: #fff; border: 1px solid rgba(0, 0, 0, 0.07); border-left: 3px solid var(--kpi); border-radius: 10px;
+  padding: 16px 18px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.kpi-card:hover { box-shadow: 0 10px 24px -16px rgba(15, 35, 64, 0.45); transform: translateY(-2px); }
+.kpi-card--green { --kpi: #22a06b; }
+.kpi-card--blue { --kpi: #2563eb; }
+.kpi-card--amber { --kpi: #f59e0b; }
+.kpi-card--purple { --kpi: #7c3aed; }
+.kpi-card__label { margin: 0 0 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: #8a8d93; }
+.kpi-card__value { margin: 0 0 4px; font-size: 1.7rem; font-weight: 800; line-height: 1; color: #2d3748; }
+.kpi-card__sub { margin: 0; font-size: 0.78rem; color: #8a8d93; }

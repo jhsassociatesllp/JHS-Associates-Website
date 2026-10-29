@@ -1,0 +1,50 @@
+/* Proposal requests — extras on top of the Contacts layout (AdminContacts.css) */
+
+.contacts-header .contacts-btn { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; }
+
+.prop-bar { flex-wrap: wrap; }
+
+.prop-dates {
+  display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin: -4px 0 18px;
+}
+.prop-dates label { display: flex; flex-direction: column; gap: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6b7a90; }
+.prop-dates input { padding: 8px 10px; border: 1px solid #dbe3ef; border-radius: 8px; background: #fff; font-family: inherit; font-size: 0.85rem; color: #1e293b; }
+.prop-quick { display: flex; gap: 6px; flex-wrap: wrap; }
+.prop-quick button { padding: 8px 14px; border: 1px solid #dbe3ef; border-radius: 999px; background: #fff; font-family: inherit; font-size: 0.8rem; font-weight: 600; color: #334155; cursor: pointer; }
+.prop-quick button:hover { border-color: #2563eb; color: #2563eb; }
+.prop-quick button.on { background: #2563eb; border-color: #2563eb; color: #fff; }
+.prop-count { margin-left: auto; font-size: 0.85rem; color: #64748b; }
+.prop-count strong { color: #0f2340; font-size: 1rem; }
+
+.prop-msg { margin: 0 0 14px; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; }
+.prop-msg--error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+/* status pills */
+.prop-pill {
+  flex: 0 0 auto; align-self: flex-start; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.03em; white-space: nowrap; background: #e8edf5; color: #334155; margin-left: 6px;
+}
+.prop-pill--new { background: #fde8ec; color: #b0173a; }
+.prop-pill--in_review { background: #fff0dc; color: #a15c07; }
+.prop-pill--proposal_sent { background: #e3f1ff; color: #0b5cad; }
+.prop-pill--closed { background: #e6f4ea; color: #1e7a3c; }
+
+/* follow-up box */
+.prop-track { margin: 18px 0; padding: 16px 18px; border: 1px solid #dbe3ef; border-radius: 12px; background: #f8faff; }
+.prop-track h4 { margin: 0 0 12px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #0f2340; }
+.prop-track label { display: flex; flex-direction: column; gap: 6px; font-size: 0.78rem; font-weight: 600; color: #475569; }
+.prop-track select,
+.prop-track textarea {
+  padding: 10px 12px; border: 1px solid #dbe3ef; border-radius: 8px; background: #fff; font-family: inherit; font-size: 0.88rem; color: #1e293b;
+}
+.prop-track select { max-width: 240px; }
+.prop-track textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
+.prop-track select:focus, .prop-track textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+.prop-track__row { margin-bottom: 12px; }
+.prop-track__count { align-self: flex-end; font-size: 0.7rem; font-weight: 500; color: #94a3b8; }
+.prop-track__actions { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.prop-track__who { margin: 12px 0 0; font-size: 0.75rem; color: #7b869a; }
+.prop-msg-inline { font-size: 0.82rem; font-weight: 600; }
+.prop-msg-inline--ok { color: #15803d; }
+.prop-msg-inline--error { color: #b91c1c; }
+.prop-track .contacts-btn:disabled { opacity: 0.5; cursor: not-allowed; }

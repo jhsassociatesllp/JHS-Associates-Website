@@ -11,6 +11,7 @@
 
 from pathlib import Path
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Anchored to this file's location (backend/app/config/settings.py -> backend/)
@@ -53,6 +54,13 @@ class Settings(BaseSettings):
     graph_client_id: str = ""
     graph_client_secret: str = ""
     graph_sender: str = ""
+
+    @field_validator("graph_tenant_id", "graph_client_id", "graph_client_secret", "graph_sender",
+                     "smtp_username", "smtp_password", "sender_email", mode="after")
+    @classmethod
+    def _strip_pasted_whitespace(cls, v: str) -> str:
+        """A secret pasted into GitHub often carries a trailing space or line break, which silently breaks the login."""
+        return v.strip() if isinstance(v, str) else v
 
     # Signs admin / user JWTs and hashes visitor IPs. REQUIRED in every
     # environment (generate with: python -c "import secrets;print(secrets.token_urlsafe(64))").

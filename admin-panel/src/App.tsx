@@ -20,6 +20,8 @@ import AdminContacts from './pages/AdminContacts';   // ✅ NEW
 import AdminAlumni from './pages/AdminAlumni';       // ✅ NEW
 import AdminFeedback from './pages/AdminFeedback';   // ✅ FEEDBACK
 import AdminCareers from './pages/AdminCareers';
+import AdminProposals from './pages/AdminProposals';
+import AdminEmailCheck from './pages/AdminEmailCheck';
 import AdminAppointments from './pages/AdminAppointments';
 import AdminUsers from './pages/AdminUsers';         // ✅ SITE ACCOUNT
 import AdminLeadership from './pages/AdminLeadership'; // ✅ LEADERSHIP
@@ -69,6 +71,8 @@ export default function App() {
               <Route path="/feedback" element={<AdminFeedback />} />   {/* ✅ FEEDBACK */}
               <Route path="/careers" element={<AdminCareers />} />
               <Route path="/appointments" element={<AdminAppointments />} />
+              <Route path="/proposals" element={<AdminProposals />} />
+              <Route path="/email-check" element={<AdminEmailCheck />} />
               <Route path="/users" element={<AdminUsers />} /> {/* ✅ SITE ACCOUNT */}
             </Route>
           </Route>

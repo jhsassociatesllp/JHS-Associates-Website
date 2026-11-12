@@ -332,3 +332,13 @@ async def rescore_applications(job_id: Optional[str] = None, only_unscored: bool
         await rescore_application_doc(doc)
         count += 1
     return count
+
+
+async def resend_hr_email(application_id: str) -> Optional[dict]:
+    """Sends the HR "new application" mail again for one application and returns how it went (None if not found)."""
+    db = get_database()
+    doc = await db[APPLICATIONS_COLLECTION].find_one({"_id": _object_id(application_id)})
+    if not doc:
+        return None
+    from app.services.email_service import send_hr_application_email
+    return await send_hr_application_email(doc, doc.get("job_title") or "General Application")

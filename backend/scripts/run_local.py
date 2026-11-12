@@ -9,6 +9,8 @@ import sys
 
 os.environ["MONGODB_URL"] = os.environ.get("LOCAL_MONGODB_URL", "mongodb://127.0.0.1:27117/")
 os.environ["DATABASE_NAME"] = os.environ.get("LOCAL_DATABASE_NAME", "JHS_local_test")
+# local testing must never mail the real HR inbox: HR mails go to the tester's own mailbox instead
+os.environ.setdefault("HR_NOTIFICATION_EMAIL", "maaz.quraishi@jhsassociates.in")
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import uvicorn  # noqa: E402

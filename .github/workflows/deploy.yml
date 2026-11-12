@@ -232,6 +232,8 @@ jobs:
             export SMTP_USERNAME="${{ secrets.SMTP_USERNAME }}"
             export SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}"
             export SENDER_EMAIL="${{ secrets.SENDER_EMAIL }}"
+            # who gets the "new job application" mail (one address, or several separated by commas); empty = hr@jhsassociates.in
+            export HR_NOTIFICATION_EMAIL="${{ secrets.HR_NOTIFICATION_EMAIL }}"
             # Microsoft Graph mail (preferred); SMTP above stays as the fallback
             export GRAPH_TENANT_ID="${{ secrets.GRAPH_TENANT_ID }}"
             export GRAPH_CLIENT_ID="${{ secrets.GRAPH_CLIENT_ID }}"

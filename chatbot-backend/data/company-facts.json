@@ -3,18 +3,29 @@
   "facts": [
     {
       "id": "founding-date",
-      "patterns": ["\\b(when|which year|what year|how old|since when)\\b.*\\b(jhs|firm|company|established|founded|started|begin|begun)\\b", "\\b(jhs|firm|company)\\b.*\\b(established|founded|started|inception)\\b", "\\byear of (establishment|inception|founding)\\b"],
+      "patterns": [
+        "\\b(when|which year|what year|how old|since when)\\b.*\\b(jhs|firm|company|established|founded|started|begin|begun)\\b",
+        "\\b(jhs|firm|company)\\b.*\\b(established|founded|started|inception)\\b",
+        "\\byear of (establishment|inception|founding)\\b"
+      ],
       "answer": "**JHS** has been serving clients since **28 February 1981** — over four decades."
     },
     {
       "id": "scale",
-      "patterns": ["\\bhow (big|large)\\b.*\\b(jhs|firm|company)\\b", "\\b(size|strength)\\b.*\\b(jhs|firm|company)\\b", "\\bhow many (partners|professionals|employees|people|clients)\\b.*\\b(jhs|firm|company)\\b"],
+      "patterns": [
+        "\\bhow (big|large)\\b.*\\b(jhs|firm|company)\\b",
+        "\\b(size|strength)\\b.*\\b(jhs|firm|company)\\b",
+        "\\bhow many (partners|professionals|employees|people|clients)\\b.*\\b(jhs|firm|company)\\b"
+      ],
       "answer": "JHS has a **45+ year** legacy with **30+ partners**, **700+ professionals** and **1000+ clients** served."
     },
     {
-      "id": "_founder-TEMPLATE",
-      "patterns": ["\\b(founder|founders|founded by|who (started|established|created|set up))\\b"],
-      "answer": "REPLACE THIS with the confirmed founder answer, then rename the id (remove the leading underscore) to enable it."
+      "id": "founder",
+      "patterns": [
+        "\\b(founder|founders|co-founder|founded by|owner)\\b",
+        "\\bwho (started|established|created|set up|founded|began)\\b"
+      ],
+      "answer": "**Huzeifa Unwala** is the Founder & Senior Partner of **JHS**."
     }
   ]
 }

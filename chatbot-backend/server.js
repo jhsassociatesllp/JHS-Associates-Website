@@ -14,6 +14,7 @@ const fs = require("fs");
 const { OpenAI } = require("openai");
 const { MongoClient } = require("mongodb");
 const pinecone = require("./lib/pinecone");
+const factsLib = require("./lib/facts");
 const crawler = require("./crawler");
 const ingestExtra = require("./ingest-extra");
 
@@ -1344,6 +1345,9 @@ app.post("/api/reindex", requireApiKeyStrict, async (req, res) => {
 // The exact, instant answers (no AI call): people / sector experts / team
 // lists, then content counts ("how many articles").
 async function answerDeterministic(text) {
+  // Verified facts (data/company-facts.json) win over everything else.
+  const fact = factsLib.matchFact(text);
+  if (fact) return { reply: fact, items: [], links: [], link: null };
   // People questions, tried in order of how specific they are, every person
   // with their own contact card:
   //   1. a named person         ("who is disha", "email of tasnim", "dhisa shah")

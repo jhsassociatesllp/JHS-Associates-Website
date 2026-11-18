@@ -162,6 +162,8 @@ jobs:
               DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
               COMPOSE_PROJECT_NAME="jhs-staging"
               ENV=staging
+              # staging chat window talks to the new AI assistant; main keeps the existing chatbot until cutover
+              export CHATBOT_UPSTREAM="ai-assistant:8100"
 
             else
               echo "❌ Unsupported branch: $BRANCH"

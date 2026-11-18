@@ -50,6 +50,10 @@ services:
     expose:
       - "80"
 
+    environment:
+      # which service answers /chatbot-api/ (staging sets ai-assistant:8100; leave unset to keep the existing chatbot)
+      CHATBOT_UPSTREAM: ${CHATBOT_UPSTREAM:-chatbot-backend:3001}
+
     depends_on:
       - backend
       - chatbot-backend
@@ -84,6 +88,38 @@ services:
 
     expose:
       - "3001"
+
+  # ==========================================
+  # AI KNOWLEDGE ASSISTANT (new; not wired into nginx until cutover)
+  # ==========================================
+  ai-assistant:
+    build: ./ai-assistant
+    restart: unless-stopped
+    environment: &ai_env
+      APP_ENV: ${APP_ENV:-production}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      PINECONE_API_KEY: ${PINECONE_API_KEY:-}
+      AI_PINECONE_INDEX: ${AI_PINECONE_INDEX:-jhs-assistant-vectors}
+      MONGO_URI: ${MONGODB_URL}
+      MONGO_DB_NAME: ${DATABASE_NAME:-JHS_website}
+      APP_DB_NAME: ${AI_APP_DB_NAME:-JHS_ai_assistant}
+      ADMIN_API_KEY: ${AI_ADMIN_API_KEY:-}
+      ALLOWED_ORIGINS: ${SITE_URL:-https://jhsassociates.in}
+      SITE_BASE_URL: ${SITE_URL:-https://jhsassociates.in}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    expose:
+      - "8100"
+
+  ai-worker:
+    build: ./ai-assistant
+    restart: unless-stopped
+    command: ["python", "-m", "app.workers.sync_worker"]
+    environment:
+      <<: *ai_env
+      SYNC_INTERVAL_MINUTES: ${AI_SYNC_INTERVAL_MINUTES:-360}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # ==========================================
   # ADMIN PANEL

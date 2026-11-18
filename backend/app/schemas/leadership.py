@@ -6,7 +6,7 @@ from pydantic import BaseModel
 # One collection holds everyone on the Leadership page; a person's standing is
 # expressed purely through the `roles` tags below (a Governance Council member
 # who is also a Partner carries both tags).
-ROLES = ["Partner", "Governance Council", "Advisory Board Member", "Associate"]
+ROLES = ["Partner", "Governance Council", "Advisory Board Member", "Associate Partner"]
 
 SERVICES = [
     "Assurance",

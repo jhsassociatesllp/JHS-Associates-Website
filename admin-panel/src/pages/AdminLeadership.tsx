@@ -336,7 +336,7 @@ const AdminLeadership: React.FC = () => {
           <p className="leadership-eyebrow">Website Content</p>
           <h1 className="leadership-title">Leadership &amp; Partners</h1>
           <p className="leadership-subtitle">
-            Manage Partners, Governance Council, Advisory Board Members and Associates shown on the Leadership page.
+            Manage Partners, Governance Council, Advisory Board Members and Associate Partners shown on the Leadership page.
           </p>
         </div>
         <button className="leadership-btn leadership-btn-primary" onClick={openCreate}>+ Add Member</button>

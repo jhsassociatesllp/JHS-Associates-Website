@@ -51,7 +51,7 @@ export interface LeadershipSection {
 }
 
 // Canonical role order — also the order of the "Filter by role" dropdown.
-export const ROLE_ORDER = ['Governance Council', 'Partner', 'Advisory Board Member', 'Associate']
+export const ROLE_ORDER = ['Governance Council', 'Partner', 'Advisory Board Member', 'Associate Partner']
 
 const GOVERNANCE = 'Governance Council'
 const DEFAULT_SECTION = 'Partners'

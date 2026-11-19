@@ -1,6 +1,7 @@
 """Run: python tests/test_logout_revokes_token.py (no database needed; the controllers are mocked)."""
 import sys
-sys.path.insert(0, r'F:\Maaz\JHS-Associates-Website\backend')
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import timedelta
 from fastapi.testclient import TestClient
 from app.main import app

@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     # Appointment / consultation bookings (Book Appointment page and the partner
     # cards' Book Appointment button) are routed here instead of the HR inbox.
     appointment_notification_email: str = "connect@jhsassociates.in"
-    sender_email: str = "maaz.quraishi@jhsassociates.in"
+    sender_email: str = ""   # set SENDER_EMAIL; empty = use the SMTP login
     sender_name: str = "JHS"
 
     # Outlook / Microsoft 365 SMTP configuration.
@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     # mailbox — Microsoft may otherwise reject or rewrite the From address.
     smtp_host: str = "smtp.office365.com"
     smtp_port: int = 587
-    smtp_username: str = "maaz.quraishi@jhsassociates.in"
+    smtp_username: str = ""   # set SMTP_USERNAME (GitHub secret)
     smtp_password: str = ""
 
     # Microsoft Graph (preferred way to send): an app registration with the Mail.Send permission
@@ -70,6 +70,14 @@ class Settings(BaseSettings):
     require_secret_key: bool = False
     # Separate secret for hashing visitor IPs (falls back to secret_key when empty).
     ip_hash_salt: str = ""
+
+    # Rate limits (see app/utils/ratelimit.py). Defaults suit a team of admins; raise them only if real users are being slowed down.
+    rate_limit_enabled: bool = True
+    rate_limit_ip_per_min: int = 900             # any API call from one visitor address
+    rate_limit_admin_per_min: int = 300          # any call made with one admin login
+    rate_limit_admin_write_per_min: int = 120    # changes (POST / PUT / PATCH / DELETE) with one admin login
+    rate_limit_export_per_5min: int = 12         # Excel / ZIP downloads with one admin login
+    rate_limit_refused_per_5min: int = 60        # refused (401 / 403) requests from one address before it is paused
 
     # production | staging | development. API docs are only served in development.
     app_env: str = "production"

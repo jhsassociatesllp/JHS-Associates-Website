@@ -12,6 +12,12 @@ interface Health {
   will_use: string;
 }
 
+interface HrTestResult {
+  to: string[];
+  ok: boolean;
+  results: { to: string; ok: boolean; method: string; error: string }[];
+}
+
 interface TestResult {
   to: string;
   ok: boolean;
@@ -34,6 +40,9 @@ const AdminEmailCheck: React.FC = () => {
   const [testing, setTesting] = useState(false);
   const [result, setResult] = useState<TestResult | null>(null);
   const [error, setError] = useState('');
+  const [hrTesting, setHrTesting] = useState(false);
+  const [hrResult, setHrResult] = useState<HrTestResult | null>(null);
+  const [hrError, setHrError] = useState('');
 
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -64,6 +73,24 @@ const AdminEmailCheck: React.FC = () => {
       setError(err instanceof Error ? err.message : 'The test could not be started.');
     } finally {
       setTesting(false);
+    }
+  };
+
+  const sendHrTest = async () => {
+    setHrTesting(true);
+    setHrResult(null);
+    setHrError('');
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/email-health/test-hr`, { method: 'POST', headers });
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(typeof err?.detail === 'string' ? err.detail : 'The test could not be started.');
+      }
+      setHrResult(await response.json());
+    } catch (err) {
+      setHrError(err instanceof Error ? err.message : 'The test could not be started.');
+    } finally {
+      setHrTesting(false);
     }
   };
 
@@ -118,6 +145,31 @@ const AdminEmailCheck: React.FC = () => {
           <strong>Sent through {result.method}.</strong> Check the inbox of <b>{result.to}</b> (and the Junk folder).
           {result.graph_error && (
             <p className="ec-detail">Microsoft Graph failed, so the backup (SMTP) was used. Fix Graph: {result.graph_error}</p>
+          )}
+        </div>
+      )}
+
+      {/* Job-application email to HR */}
+      {health && (
+        <div className="ec-card ec-hr">
+          <h3>Job-application email to HR</h3>
+          <Row label="HR inbox(es)" value={health.inboxes.hr} />
+          <p className="ec-note">When someone applies for a job, this inbox gets the candidate's details. This button sends a sample (marked TEST) to every HR inbox above, exactly like a real application.</p>
+          <div className="ec-test">
+            <button className="contacts-btn contacts-btn-primary" onClick={sendHrTest} disabled={hrTesting}>
+              {hrTesting ? 'Sending…' : 'Send a sample application email to HR'}
+            </button>
+          </div>
+          {hrError && <div className="ec-box ec-box--bad" role="alert">{hrError}</div>}
+          {hrResult && (
+            <div className={`ec-box ${hrResult.ok ? 'ec-box--ok' : 'ec-box--bad'}`} role="status">
+              <strong>{hrResult.ok ? 'Sent to every HR inbox.' : 'Not every HR inbox received it.'}</strong>
+              {hrResult.results.map((r) => (
+                <p className="ec-detail" key={r.to}>
+                  <b>{r.to}</b>: {r.ok ? `sent through ${r.method === 'graph' ? 'Microsoft Graph' : 'SMTP'}` : `FAILED. ${r.error}`}
+                </p>
+              ))}
+            </div>
           )}
         </div>
       )}

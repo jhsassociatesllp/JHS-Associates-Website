@@ -1,0 +1,31 @@
+{
+  "_readme": "Verified answers the chatbot gives instantly, BEFORE any AI/search. Each entry: 'patterns' = regexes (case-insensitive) matched against the visitor's question; 'answer' = exact reply. Only add facts you have confirmed. Edit this file and restart the server (or it reloads on the next start). Entries whose id starts with '_' are ignored.",
+  "facts": [
+    {
+      "id": "founding-date",
+      "patterns": [
+        "\\b(when|which year|what year|how old|since when)\\b.*\\b(jhs|firm|company|established|founded|started|begin|begun)\\b",
+        "\\b(jhs|firm|company)\\b.*\\b(established|founded|started|inception)\\b",
+        "\\byear of (establishment|inception|founding)\\b"
+      ],
+      "answer": "**JHS** has been serving clients since **28 February 1981** — over four decades."
+    },
+    {
+      "id": "scale",
+      "patterns": [
+        "\\bhow (big|large)\\b.*\\b(jhs|firm|company)\\b",
+        "\\b(size|strength)\\b.*\\b(jhs|firm|company)\\b",
+        "\\bhow many (partners|professionals|employees|people|clients)\\b.*\\b(jhs|firm|company)\\b"
+      ],
+      "answer": "JHS has a **45+ year** legacy with **30+ partners**, **700+ professionals** and **1000+ clients** served."
+    },
+    {
+      "id": "founder",
+      "patterns": [
+        "\\b(founder|founders|co-founder|founded by|owner)\\b",
+        "\\bwho (started|established|created|set up|founded|began)\\b"
+      ],
+      "answer": "**Huzeifa Unwala** is the Founder & Senior Partner of **JHS**."
+    }
+  ]
+}

@@ -334,6 +334,18 @@ async def admin_update_application_status(
     return application
 
 
+@router.post("/admin/applications/{application_id}/resend-hr-email")
+async def admin_resend_hr_email(application_id: str, current_admin: AdminInDB = Depends(hr_access)):
+    """Sends the "new application" email to the HR inbox again and says how it went."""
+    try:
+        status = await career_ctrl.resend_hr_email(application_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid application id")
+    if status is None:
+        raise HTTPException(status_code=404, detail="Application not found")
+    return status
+
+
 @router.get("/admin/applications/{application_id}/resume")
 async def admin_application_resume(
     application_id: str,

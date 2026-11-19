@@ -44,8 +44,16 @@ type AtsDetails = {
   flags: string[];
 };
 
+type HrEmailStatus = {
+  ok: boolean;
+  to: string[];
+  at?: string;
+  results?: { to: string; ok: boolean; method: string; error: string }[];
+};
+
 type Application = {
   id: string;
+  hr_email_status?: HrEmailStatus | null;
   job_id?: string;
   job_title?: string;
   full_name: string;
@@ -457,6 +465,32 @@ const AdminCareers: React.FC = () => {
     }
   };
 
+  const [resendingHr, setResendingHr] = useState(false);
+  const [hrResendNote, setHrResendNote] = useState('');
+
+  /** Sends the "new application" mail to the HR inbox again and shows how it went. */
+  const resendHrEmail = async (application: Application) => {
+    setResendingHr(true);
+    setHrResendNote('');
+    try {
+      const response = await fetch(`${API_BASE_URL}/careers/admin/applications/${application.id}/resend-hr-email`, {
+        method: 'POST', headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(typeof err?.detail === 'string' ? err.detail : 'Could not send the email.');
+      }
+      const status: HrEmailStatus = await response.json();
+      setApplications((prev) => prev.map((a) => (a.id === application.id ? { ...a, hr_email_status: { ...status, at: new Date().toISOString() } } : a)));
+      setViewApplication((prev) => (prev && prev.id === application.id ? { ...prev, hr_email_status: { ...status, at: new Date().toISOString() } } : prev));
+      setHrResendNote(status.ok ? `Sent to ${status.to.join(', ')}.` : 'Could not be delivered. See the reason below.');
+    } catch (error) {
+      setHrResendNote(error instanceof Error ? error.message : 'Could not send the email.');
+    } finally {
+      setResendingHr(false);
+    }
+  };
+
   /** Everything except the profile filter, so the profile buttons can keep showing every profile's count. */
   const beforeProfile = useMemo(() => {
     let list = applications;
@@ -799,6 +833,9 @@ const AdminCareers: React.FC = () => {
                       <p className="cell-primary">{application.full_name}</p>
                       <p className="cell-secondary">{application.email}</p>
                       <p className="cell-secondary">{application.phone}</p>
+                      {application.hr_email_status && !application.hr_email_status.ok && (
+                        <p className="cell-secondary" style={{ color: '#b91c1c', fontWeight: 700 }}>✉ HR email not delivered</p>
+                      )}
                     </td>
                     <td>{application.job_title || 'General Application'}</td>
                     <td><AtsBadge application={application} /></td>
@@ -886,7 +923,7 @@ const AdminCareers: React.FC = () => {
         </form>
       </Dialog>
 
-      <Dialog open={!!viewApplication} onClose={() => setViewApplication(null)} maxWidth="sm" fullWidth>
+      <Dialog open={!!viewApplication} onClose={() => { setViewApplication(null); setHrResendNote(''); }} maxWidth="sm" fullWidth>
         <DialogTitle>Application Details</DialogTitle>
         {viewApplication && (
           <DialogContent>
@@ -942,6 +979,27 @@ const AdminCareers: React.FC = () => {
                   <Typography sx={{ textAlign: 'right' }}>{viewApplication.experience_years}</Typography>
                 </Stack>
               )}
+              <Stack spacing={0.75}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                  <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Email to HR</Typography>
+                  <Typography sx={{ textAlign: 'right', fontWeight: 600, color: viewApplication.hr_email_status ? (viewApplication.hr_email_status.ok ? '#15803d' : '#b91c1c') : '#6b7280' }}>
+                    {viewApplication.hr_email_status
+                      ? (viewApplication.hr_email_status.ok ? `Sent to ${viewApplication.hr_email_status.to.join(', ')}` : 'NOT delivered')
+                      : 'Not recorded (older application)'}
+                  </Typography>
+                </Stack>
+                {viewApplication.hr_email_status && !viewApplication.hr_email_status.ok && (viewApplication.hr_email_status.results ?? []).filter((r) => !r.ok).map((r) => (
+                  <Typography key={r.to} sx={{ fontSize: 12.5, color: '#991b1b', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 1, p: 1, overflowWrap: 'anywhere' }}>
+                    {r.to}: {r.error || 'unknown reason'}
+                  </Typography>
+                ))}
+                <Stack direction="row" alignItems="center" spacing={1.5}>
+                  <Button size="small" variant="outlined" disabled={resendingHr} onClick={() => resendHrEmail(viewApplication)}>
+                    {resendingHr ? 'Sending…' : 'Send to HR again'}
+                  </Button>
+                  {hrResendNote && <Typography sx={{ fontSize: 12.5, color: '#475569' }}>{hrResendNote}</Typography>}
+                </Stack>
+              </Stack>
               <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: '#6b7280', fontSize: 13 }}>Applied</Typography>
                 <Typography sx={{ textAlign: 'right' }}>{formatExact(viewApplication.created_at)}</Typography>

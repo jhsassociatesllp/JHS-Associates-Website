@@ -38,7 +38,7 @@ async def email_health(current_admin: AdminInDB = Depends(super_admin_only)):
             "password": _mask(es.SMTP_PASSWORD),
             "server": f"{es.SMTP_HOST}:{es.SMTP_PORT}",
         },
-        "inboxes": {"hr": es.HR_EMAIL, "contact_and_proposals": es.CONNECT_EMAIL, "appointments": es.APPOINTMENT_EMAIL},
+        "inboxes": {"hr": ", ".join(es.hr_recipients()), "contact_and_proposals": es.CONNECT_EMAIL, "appointments": es.APPOINTMENT_EMAIL},
         "will_use": "Microsoft Graph, then SMTP if Graph fails" if graph else ("SMTP only" if es.SMTP_USERNAME and es.SMTP_PASSWORD else "NOTHING: no email can be sent"),
     }
 
@@ -65,3 +65,20 @@ async def send_test_email(current_admin: AdminInDB = Depends(super_admin_only)):
         return {**result, "ok": True, "method": "SMTP"}
     result["smtp_error"] = es.last_error or "SMTP is not configured"
     return result
+
+
+@router.post("/test-hr")
+async def send_test_hr_email(current_admin: AdminInDB = Depends(super_admin_only)):
+    """Sends a sample "New Job Application" email to the HR inbox(es), exactly as a real application would, and reports each one."""
+    now = time.monotonic()
+    key = current_admin.email + ":hr"
+    if now - _last_test.get(key, 0) < MIN_SECONDS_BETWEEN_TESTS:
+        raise HTTPException(status_code=429, detail="Please wait a few seconds before sending another test.")
+    _last_test[key] = now
+    sample = {
+        "full_name": "Test Candidate (sample)", "email": current_admin.email, "phone": "9876543210", "place_of_residence": "Mumbai",
+        "experience_years": "2 years", "highest_qualification": "Graduate", "profile": "Fresher", "current_ctc": "—", "expected_ctc": "—",
+        "how_heard": "Admin panel test", "cover_letter": "This is a TEST email sent from the admin panel. No real application was received.",
+    }
+    status = await es.send_hr_application_email(sample, "Sample vacancy (test)", record=False, test=True)
+    return {"to": status["to"], "ok": status["ok"], "results": status["results"]}

@@ -18,7 +18,22 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 MARKER = "default_content_seed_v1"
 
 
+async def rename_associate_role() -> None:
+    """Idempotent: existing records tagged "Associate" become "Associate Partner"."""
+    try:
+        res = await get_database()["leadership"].update_many(
+            {"roles": "Associate"},
+            {"$set": {"roles.$[r]": "Associate Partner"}},
+            array_filters=[{"r": "Associate"}],
+        )
+        if res.modified_count:
+            logger.info("Renamed role Associate -> Associate Partner on %d records", res.modified_count)
+    except Exception:
+        logger.exception("Role rename failed (the API will still start)")
+
+
 async def seed_defaults() -> None:
+    await rename_associate_role()
     try:
         db = get_database()
         if await db["app_meta"].find_one({"_id": MARKER}):

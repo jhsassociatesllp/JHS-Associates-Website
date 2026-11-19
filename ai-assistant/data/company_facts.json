@@ -1,0 +1,23 @@
+{
+  "_readme": "Verified answers given before any search. 'patterns' are regexes matched against the visitor's question. Only add facts that are confirmed by JHS. Ids starting with '_' are disabled. Later these are editable from the admin dashboard (collection ai_facts in the assistant's DB overrides this file by id).",
+  "facts": [
+    {
+      "id": "founder",
+      "patterns": ["\\b(founder|founders|co-founder|founded by)\\b", "\\bwho (started|established|created|set up|founded|began)\\b"],
+      "answer": "**Huzeifa Unwala** is the Founder & Senior Partner of **JHS**.",
+      "links": [{"label": "Leadership", "path": "/about/leadership"}]
+    },
+    {
+      "id": "founding-date",
+      "patterns": ["\\b(when|which year|what year|since when)\\b.*\\b(jhs|firm|company|established|founded|started)\\b", "\\b(jhs|firm|company)\\b.*\\b(established|founded|inception)\\b", "\\byear of (establishment|inception|founding)\\b"],
+      "answer": "**JHS** has been serving clients since **28 February 1981** — over four decades.",
+      "links": [{"label": "Our Story", "path": "/know-us/our-story"}]
+    },
+    {
+      "id": "scale",
+      "patterns": ["\\bhow (big|large)\\b.*\\b(jhs|firm|company)\\b", "\\b(size|strength)\\b.*\\b(jhs|firm|company)\\b", "\\bhow many (partners|professionals|employees|people|clients)\\b.*\\b(jhs|firm|company)\\b"],
+      "answer": "JHS has a **45+ year** legacy with **30+ partners**, **700+ professionals** and **1000+ clients** served.",
+      "links": [{"label": "Company Overview", "path": "/about/company-overview"}]
+    }
+  ]
+}

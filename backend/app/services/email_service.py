@@ -19,6 +19,7 @@ Password for smtp_password if MFA is enabled on the account.
 
 import asyncio
 import logging
+import re
 import time
 from html import escape as esc
 from email.mime.multipart import MIMEMultipart
@@ -47,7 +48,9 @@ def _fire_and_forget(coro) -> asyncio.Task:
 
 
 # ── Config from settings ─────────────────────────────────────
-HR_EMAIL = settings.hr_notification_email
+HR_DEFAULT_EMAIL = "hr@jhsassociates.in"
+# One address, or several separated by commas (hr@a.com, backup@a.com). Empty falls back to the default.
+HR_EMAIL = (settings.hr_notification_email or "").strip() or HR_DEFAULT_EMAIL
 APPOINTMENT_EMAIL = settings.appointment_notification_email
 CONNECT_EMAIL = settings.connect_notification_email   # Contact Us + Request for Proposal
 SENDER_EMAIL = settings.sender_email or settings.smtp_username
@@ -271,6 +274,21 @@ async def _send_via_graph(to_email: str, to_name: str, subject: str, html_body: 
     return True
 
 
+def _split_recipients(value: str | None) -> list[str]:
+    """'hr@a.com, backup@a.com' -> ['hr@a.com', 'backup@a.com'] (only real-looking addresses)."""
+    parts = re.split(r"[,;\s]+", str(value or ""))
+    seen: list[str] = []
+    for part in parts:
+        part = part.strip()
+        if "@" in part and part.lower() not in [x.lower() for x in seen]:
+            seen.append(part)
+    return seen
+
+
+def hr_recipients() -> list[str]:
+    return _split_recipients(HR_EMAIL) or [HR_DEFAULT_EMAIL]
+
+
 async def _send_email(
     to_email: str,
     to_name: str,
@@ -278,7 +296,22 @@ async def _send_email(
     html_body: str,
     extra_headers: dict | None = None,
 ) -> bool:
-    """Send one email: Microsoft Graph first, SMTP as the fallback. Returns True on success."""
+    """Send one email (to one address, or to each address in a comma-separated list). True only if every one went."""
+    recipients = _split_recipients(to_email)
+    if len(recipients) <= 1:
+        return await _send_email_one(recipients[0] if recipients else to_email, to_name, subject, html_body, extra_headers)
+    results = [await _send_email_one(r, to_name, subject, html_body, extra_headers) for r in recipients]
+    return all(results)
+
+
+async def _send_email_one(
+    to_email: str,
+    to_name: str,
+    subject: str,
+    html_body: str,
+    extra_headers: dict | None = None,
+) -> bool:
+    """Send one email to one address: Microsoft Graph first, SMTP as the fallback. Returns True on success."""
     global last_error, last_method
     graph_error = ""
     if _graph_configured() and _graph_can_carry(extra_headers):
@@ -561,8 +594,8 @@ async def notify_hr_new_feedback(data: dict) -> None:
 #  4.  CAREER APPLICATION
 # ══════════════════════════════════════════════════════════════
 
-async def notify_hr_new_application(data: dict, job_title: str) -> None:
-    """Fire‑and‑forget: HR + user emails for Career application."""
+def _hr_application_html(data: dict, job_title: str) -> str:
+    """The "New Job Application Received" mail the HR team gets."""
     name = data.get("full_name", "")
     email = data.get("email", "")
 
@@ -596,14 +629,44 @@ async def notify_hr_new_application(data: dict, job_title: str) -> None:
         rows = _row("ATS Resume Match", f"{data.get('ats_score')}% — {verdict}") + rows
     elif data.get("ats_status") == "unreadable":
         rows = _row("ATS Resume Match", "Resume text could not be read — review manually") + rows
-    hr_html = _wrap_html("New Job Application Received", rows)
-    _fire_and_forget(
-        _send_email(
-            HR_EMAIL, "JHS HR Team",
-            f"New Job Application: {name} for {job_title}",
-            hr_html,
-        )
-    )
+    return _wrap_html("New Job Application Received", rows)
+
+
+async def _deliver_each(recipients: list[str], to_name: str, subject: str, html: str) -> list[dict]:
+    """Sends to every address on its own and keeps a plain record of how each one went."""
+    out = []
+    for recipient in recipients:
+        ok = await _send_email_one(recipient, to_name, subject, html)
+        out.append({"to": recipient, "ok": bool(ok), "method": last_method if ok else "", "error": "" if ok else last_error})
+    return out
+
+
+async def send_hr_application_email(data: dict, job_title: str, record: bool = True, test: bool = False) -> dict:
+    """Mails the HR inbox(es) about a job application and (when `record`) saves how it went on the application,
+    so a delivery problem shows in the admin panel instead of failing silently."""
+    from datetime import datetime, timezone
+
+    name = data.get("full_name", "")
+    subject = f"New Job Application: {name} for {job_title}"
+    if test:
+        subject = f"TEST – {subject}"
+    results = await _deliver_each(hr_recipients(), "JHS HR Team", subject, _hr_application_html(data, job_title))
+    status = {"to": [r["to"] for r in results], "ok": all(r["ok"] for r in results), "results": results, "at": datetime.now(timezone.utc)}
+    if record and data.get("_id") is not None:
+        try:
+            from app.database.connection import get_database
+            await get_database()["career_applications"].update_one({"_id": data["_id"]}, {"$set": {"hr_email_status": status}})
+        except Exception:   # recording is a convenience; it must never break the application itself
+            logger.warning("Could not save the HR email status for application %s", data.get("_id"), exc_info=True)
+    return status
+
+
+async def notify_hr_new_application(data: dict, job_title: str) -> None:
+    """Fire‑and‑forget: HR + user emails for Career application."""
+    name = data.get("full_name", "")
+    email = data.get("email", "")
+
+    _fire_and_forget(send_hr_application_email(data, job_title))
 
     user_body = _wrap_html(
         f"Application Received — {job_title}",

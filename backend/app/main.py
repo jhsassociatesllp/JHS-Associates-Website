@@ -163,6 +163,23 @@ async def admin_audit(request, call_next):
 
 
 @app.middleware("http")
+async def api_rate_limit(request, call_next):
+    """Per-visitor and per-admin request limits (429 + Retry-After when passed). See app/utils/ratelimit.py."""
+    from app.utils import ratelimit
+    from app.utils.netutil import client_ip
+
+    ip = client_ip(request)
+    wait = ratelimit.check(request.method, request.url.path, ip, request.headers.get("authorization", ""))
+    if wait is not None:
+        return JSONResponse(status_code=429, content={"detail": "Too many requests. Please slow down and try again shortly."},
+                            headers={"Retry-After": str(wait), "X-Content-Type-Options": "nosniff", "X-Frame-Options": "DENY",
+                                     "Referrer-Policy": "strict-origin-when-cross-origin", "Cache-Control": "no-store"})
+    response = await call_next(request)
+    ratelimit.note_refused(request.url.path, response.status_code, ip)
+    return response
+
+
+@app.middleware("http")
 async def limit_json_body(request, call_next):
     # Cheap early refusal of oversized JSON bodies (nginx also enforces this at the edge).
     if "application/json" in request.headers.get("content-type", ""):

@@ -67,8 +67,16 @@ export default function Login() {
           navigate('/');
         }
       } else {
-        const errorData = await response.json().catch(() => ({ detail: 'Login failed' }));
-        setError(errorData.detail || 'Login failed. Please try again.');
+        if (response.status === 429) {
+          // either the API or the web server (edge) refused: too many tries from this address / account
+          const wait = Number(response.headers.get('Retry-After')) || 0;
+          setError(wait > 0
+            ? `Too many attempts. Please wait ${wait >= 90 ? `${Math.ceil(wait / 60)} minutes` : `${wait} seconds`} and try again.`
+            : 'Too many attempts. Please wait a few minutes and try again.');
+        } else {
+          const errorData = await response.json().catch(() => ({ detail: 'Login failed' }));
+          setError(errorData.detail || 'Login failed. Please try again.');
+        }
       }
     } catch (err: any) {
       console.error('Login error:', err);

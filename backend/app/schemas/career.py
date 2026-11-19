@@ -152,6 +152,8 @@ class ApplicationResponse(ApplicationFields):
     ats_match: Optional[bool] = None
     ats_details: Optional[dict[str, Any]] = None
     ats_scored_at: Optional[datetime] = None
+    # how the "new application" email to HR went: {to, ok, results[{to, ok, method, error}], at}
+    hr_email_status: Optional[dict[str, Any]] = None
     status: ApplicationStatus
     created_at: datetime
     updated_at: datetime

@@ -51,7 +51,7 @@ export interface LeadershipSection {
 }
 
 // Canonical role order — also the order of the "Filter by role" dropdown.
-export const ROLE_ORDER = ['Governance Council', 'Partner', 'Advisory Board Member', 'Associate']
+export const ROLE_ORDER = ['Governance Council', 'Partner', 'Advisory Board Member', 'Associate Partner']
 
 const GOVERNANCE = 'Governance Council'
 const DEFAULT_SECTION = 'Partners'
@@ -82,6 +82,13 @@ const toMember = (p: LeadershipPerson): Member => ({
   role: primaryRole(p.roles),
 })
 
+const CITY_SEQUENCE = ['bengaluru', 'chennai', 'hyderabad', 'kolkata']
+const cityRank = (location: string): number => {
+  const key = location.trim().toLowerCase().replace('bangalore', 'bengaluru')
+  const i = CITY_SEQUENCE.indexOf(key)
+  return i === -1 ? CITY_SEQUENCE.length : i
+}
+
 /** Flat, display-ordered member list. */
 export const buildMembers = (people: LeadershipPerson[]): Member[] => people.map(toMember)
 
@@ -104,6 +111,11 @@ export const buildSections = (members: Member[]): LeadershipSection[] => {
   }
   members.filter((m) => m.roles.includes(GOVERNANCE)).forEach((m) => add(GOVERNANCE, m))
   members.filter((m) => !m.roles.includes(GOVERNANCE)).forEach((m) => add(m.category, m))
+  // Founder's sequence for the southern/eastern offices: Bengaluru, Chennai,
+  // Hyderabad, then Kolkata. Stable sort, so everyone else keeps display_order.
+  sections.forEach((s) => {
+    if (s.category !== GOVERNANCE) s.members.sort((a, b) => cityRank(a.location) - cityRank(b.location))
+  })
   return sections
 }
 

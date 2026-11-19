@@ -43,7 +43,7 @@ const IconSearch = () => (
 // unfiltered by role (mixed roles, so no single role name applies).
 const ROLE_PLURALS: Record<string, string> = {
   'Partner': 'Partners',
-  'Associate': 'Associates',
+  'Associate Partner': 'Associate Partners',
   'Advisory Board Member': 'Advisory Board Members',
   'Governance Council': 'Governance Council Members',
 }

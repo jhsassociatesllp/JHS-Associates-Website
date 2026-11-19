@@ -38,3 +38,23 @@ async def test_send(day: str | None = Query(None, max_length=10), to: str | None
     if not result["sent"]:
         raise HTTPException(status_code=502, detail=result.get("error") or "The email could not be sent")
     return result
+
+
+_last_founder_send: list[float] = [0.0]
+MIN_SECONDS_BETWEEN_FOUNDER_SENDS = 60
+
+
+@router.post("/send-founder")
+async def send_to_founder(current_admin: AdminInDB = Depends(super_admin_only)):
+    """The admin-panel button: emails yesterday's report (with the résumés) to the configured recipients (the Founder) right now."""
+    import time
+    now = time.monotonic()
+    if now - _last_founder_send[0] < MIN_SECONDS_BETWEEN_FOUNDER_SENDS:
+        raise HTTPException(status_code=429, detail="The report was just sent. Please wait a minute before sending it again.")
+    _last_founder_send[0] = now
+    result = await dr.send_report(dr.yesterday_ist())
+    result["day"] = dr.yesterday_ist().isoformat()
+    if not result["sent"]:
+        _last_founder_send[0] = 0.0   # let them try again straight away
+        raise HTTPException(status_code=502, detail=result.get("error") or "The email could not be sent")
+    return result

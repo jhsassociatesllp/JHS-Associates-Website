@@ -26,6 +26,20 @@ interface TestResult {
   smtp_error: string;
 }
 
+interface FounderPreview {
+  day: string;
+  counts: Record<string, number>;
+  recipients: string[];
+  sends_at_ist: string;
+  enabled: boolean;
+}
+
+const COUNT_LABELS: [string, string][] = [
+  ['resumes', 'Resumes'], ['contacts', 'Contact messages'], ['proposals', 'Requests for Proposal'],
+  ['appointments', 'Appointments'], ['consultations', 'Consultation requests'], ['feedback', 'Client feedback'],
+  ['alumni', 'Alumni'], ['users', 'New sign-ups'],
+];
+
 const Row = ({ label, value }: { label: string; value: string }) => (
   <div className="ec-row">
     <span>{label}</span>
@@ -45,6 +59,38 @@ const AdminEmailCheck: React.FC = () => {
   const [hrError, setHrError] = useState('');
 
   const headers = { Authorization: `Bearer ${token}` };
+
+  const [founder, setFounder] = useState<FounderPreview | null>(null);
+  const [founderSending, setFounderSending] = useState(false);
+  const [founderDone, setFounderDone] = useState('');
+  const [founderError, setFounderError] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/admin/daily-report`, { headers: { Authorization: `Bearer ${token}` } });
+        if (response.ok) setFounder(await response.json());
+      } catch { /* the card simply shows no numbers */ }
+    })();
+  }, [token]);
+
+  const sendFounder = async () => {
+    const who = founder?.recipients.join(', ') || 'the Founder';
+    if (!window.confirm(`Send yesterday's website report (with the resumes) to ${who} now?`)) return;
+    setFounderSending(true);
+    setFounderDone('');
+    setFounderError('');
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/daily-report/send-founder`, { method: 'POST', headers });
+      const body = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(typeof body?.detail === 'string' ? body.detail : 'The report could not be sent.');
+      setFounderDone(`Sent to ${body.recipients.join(', ')}. Attached: ${body.attachments.join(', ')}.`);
+    } catch (err) {
+      setFounderError(err instanceof Error ? err.message : 'The report could not be sent.');
+    } finally {
+      setFounderSending(false);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -173,6 +219,26 @@ const AdminEmailCheck: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* Founder's daily report */}
+      <div className="ec-card ec-hr">
+        <h3>Founder's daily report <span className={`ec-tag ${founder?.enabled ? 'ec-tag--ok' : 'ec-tag--warn'}`}>{founder?.enabled ? `Automatic at ${founder.sends_at_ist} IST` : 'Automatic send is off'}</span></h3>
+        <Row label="Goes to" value={founder?.recipients.join(', ') || '…'} />
+        {founder && (
+          <>
+            <Row label="Day covered" value={founder.day.split('-').reverse().join('-')} />
+            {COUNT_LABELS.map(([key, label]) => <Row key={key} label={label} value={String(founder.counts[key] ?? 0)} />)}
+          </>
+        )}
+        <p className="ec-note">Yesterday's resumes, contact messages, proposals, appointments and feedback come in one email, with an Excel file and the resumes attached. Every morning the website sends it by itself; this button sends it right now.</p>
+        <div className="ec-test">
+          <button className="contacts-btn contacts-btn-primary" onClick={sendFounder} disabled={founderSending || !founder}>
+            {founderSending ? 'Sending…' : "Send yesterday's report to the Founder now"}
+          </button>
+        </div>
+        {founderError && <div className="ec-box ec-box--bad" role="alert">{founderError}</div>}
+        {founderDone && <div className="ec-box ec-box--ok" role="status"><strong>Report sent.</strong> {founderDone}</div>}
+      </div>
 
       {result && !result.ok && (
         <div className="ec-box ec-box--bad" role="alert">

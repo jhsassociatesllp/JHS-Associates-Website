@@ -21,6 +21,10 @@ services:
       GRAPH_CLIENT_ID: ${GRAPH_CLIENT_ID:-}
       GRAPH_CLIENT_SECRET: ${GRAPH_CLIENT_SECRET:-}
       GRAPH_SENDER: ${GRAPH_SENDER:-}
+      # Founder's daily report (switched on per environment by the deploy workflow)
+      DAILY_REPORT_ENABLED: ${DAILY_REPORT_ENABLED:-false}
+      DAILY_REPORT_RECIPIENTS: ${DAILY_REPORT_RECIPIENTS:-vasu.gadde@jhsassociates.in}
+      DAILY_REPORT_HOUR: ${DAILY_REPORT_HOUR:-10}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       APP_ENV: ${APP_ENV:-production}
       SITE_URL: ${SITE_URL:-https://jhsassociates.in}

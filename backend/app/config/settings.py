@@ -92,6 +92,12 @@ class Settings(BaseSettings):
     # Background sender for "new insight" emails. Turn off on a computer that shares the live database.
     notify_worker_enabled: bool = True
 
+    # Daily report to the Founder (yesterday's résumés, contacts, proposals, appointments, feedback ...).
+    # OFF by default so a laptop that shares the live database never emails the Founder: switch it on only on the server.
+    daily_report_enabled: bool = False
+    daily_report_recipients: str = "vasu.gadde@jhsassociates.in"   # comma-separated
+    daily_report_hour: int = 10                                      # Indian time (IST), 0-23
+
     # MSG91 SMS (mobile OTP for appointment booking). Template id + auth key from MSG91.
     msg91_auth_key: str = ""
     msg91_template_id: str = ""

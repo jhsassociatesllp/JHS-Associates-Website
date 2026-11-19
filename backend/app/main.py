@@ -51,6 +51,7 @@ from app.routes.events import router as events_router                 # ✅ EVEN
 from app.routes.email_health import router as email_health_router
 from app.routes.exports import router as exports_router
 from app.routes.dashboard import router as dashboard_router
+from app.routes.daily_report import router as daily_report_router
 
 
 @asynccontextmanager
@@ -66,9 +67,15 @@ async def lifespan(app: FastAPI):
     if settings.notify_worker_enabled:
         from app.controllers.notify import worker_loop
         worker = asyncio.create_task(worker_loop())   # sends "new insight" emails in the background
+    report_worker = None
+    if settings.daily_report_enabled:
+        from app.controllers.daily_report import worker_loop as daily_report_loop
+        report_worker = asyncio.create_task(daily_report_loop())   # emails the Founder yesterday's report every morning
     yield
     if worker:
         worker.cancel()
+    if report_worker:
+        report_worker.cancel()
     # Shutdown
     await close_mongo_connection()
 
@@ -247,6 +254,7 @@ api_router.include_router(events_router)       # ✅ EVENTS
 api_router.include_router(email_health_router) # EMAIL HEALTH (Super Admin only)
 api_router.include_router(exports_router)      # EXCEL EXPORTS (Super Admin / HR Admin)
 api_router.include_router(dashboard_router)    # LIVE DASHBOARD NUMBERS
+api_router.include_router(daily_report_router) # FOUNDER DAILY REPORT (test / preview)
 
 app.include_router(api_router)
 

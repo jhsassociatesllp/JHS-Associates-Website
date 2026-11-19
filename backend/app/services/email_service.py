@@ -22,6 +22,8 @@ import logging
 import re
 import time
 from html import escape as esc
+import base64
+from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -65,7 +67,8 @@ GRAPH_TENANT_ID = settings.graph_tenant_id
 GRAPH_CLIENT_ID = settings.graph_client_id
 GRAPH_CLIENT_SECRET = settings.graph_client_secret
 GRAPH_SENDER = settings.graph_sender
-GRAPH_TIMEOUT = 15
+GRAPH_TIMEOUT = 30
+GRAPH_MAX_ATTACHMENT_BYTES = 2_800_000
 
 
 # ── Low‑level sender ────────────────────────────────────────
@@ -96,8 +99,8 @@ def _is_send_as_denied(exc: Exception) -> bool:
 
 
 def _build_message(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None,
-                   from_email: str, reply_to: str | None = None) -> MIMEMultipart:
-    message = MIMEMultipart("alternative")
+                   from_email: str, reply_to: str | None = None, attachments: list | None = None) -> MIMEMultipart:
+    message = MIMEMultipart("mixed" if attachments else "alternative")
     message["From"] = f"{SENDER_NAME} <{from_email}>"
     safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
     message["To"] = f"{safe_name} <{to_email}>" if safe_name else to_email
@@ -105,6 +108,10 @@ def _build_message(to_email: str, to_name: str, subject: str, html_body: str, ex
     if reply_to:
         message["Reply-To"] = reply_to
     message.attach(MIMEText(html_body, "html"))
+    for filename, data, mime in (attachments or []):
+        part = MIMEApplication(data, _subtype=(mime.split("/", 1)[1] if "/" in mime else "octet-stream"))
+        part.add_header("Content-Disposition", "attachment", filename=filename)
+        message.attach(part)
     for key, value in (extra_headers or {}).items():
         message[key] = " ".join(str(value).split())
     return message
@@ -118,7 +125,7 @@ async def _smtp_send(message: MIMEMultipart) -> None:
         username=SMTP_USERNAME,
         password=SMTP_PASSWORD,
         start_tls=True,
-        timeout=15,
+        timeout=60,
     )
 
 
@@ -128,6 +135,7 @@ async def _send_via_smtp(
     subject: str,
     html_body: str,
     extra_headers: dict | None = None,
+    attachments: list | None = None,
 ) -> bool:
     """Send a single email via Outlook/Office 365 SMTP. Returns True on success.
 
@@ -143,7 +151,7 @@ async def _send_via_smtp(
 
     wanted_sender = SENDER_EMAIL or SMTP_USERNAME
     try:
-        await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, wanted_sender))
+        await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, wanted_sender, attachments=attachments))
         last_error = ""
         logger.info("Email sent -> %s  subject=%s", to_email, subject)
         return True
@@ -151,7 +159,7 @@ async def _send_via_smtp(
         if _is_send_as_denied(exc) and wanted_sender.lower() != SMTP_USERNAME.lower():
             logger.warning("Mail server refused From=%s; sending from %s instead (Reply-To %s)", wanted_sender, SMTP_USERNAME, wanted_sender)
             try:
-                await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, SMTP_USERNAME, reply_to=wanted_sender))
+                await _smtp_send(_build_message(to_email, to_name, subject, html_body, extra_headers, SMTP_USERNAME, reply_to=wanted_sender, attachments=attachments))
                 last_error = ""
                 logger.info("Email sent -> %s  subject=%s (from login mailbox)", to_email, subject)
                 return True
@@ -233,7 +241,7 @@ async def _graph_post(token: str, payload: dict) -> tuple[int, str]:
     return resp.status_code, resp.text
 
 
-def _graph_payload(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None) -> dict:
+def _graph_payload(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None, attachments: list | None = None) -> dict:
     safe_name = "".join(c for c in " ".join(str(to_name or "").split()) if c not in '<>"')[:100]
     recipient = {"address": to_email}
     if safe_name:
@@ -247,6 +255,12 @@ def _graph_payload(to_email: str, to_name: str, subject: str, html_body: str, ex
     headers = [{"name": k, "value": " ".join(str(v).split())[:250]} for k, v in (extra_headers or {}).items()]
     if headers:
         message["internetMessageHeaders"] = headers
+    if attachments:
+        message["attachments"] = [
+            {"@odata.type": "#microsoft.graph.fileAttachment", "name": filename, "contentType": mime,
+             "contentBytes": base64.b64encode(data).decode("ascii")}
+            for filename, data, mime in attachments
+        ]
     return {"message": message, "saveToSentItems": True}
 
 
@@ -255,9 +269,9 @@ def _graph_can_carry(extra_headers: dict | None) -> bool:
     return all(str(k).lower().startswith("x-") for k in (extra_headers or {}))
 
 
-async def _send_via_graph(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None = None) -> bool:
+async def _send_via_graph(to_email: str, to_name: str, subject: str, html_body: str, extra_headers: dict | None = None, attachments: list | None = None) -> bool:
     """Send through Microsoft Graph. Returns True when Microsoft accepted it (HTTP 202); raises GraphError otherwise."""
-    payload = _graph_payload(to_email, to_name, subject, html_body, extra_headers)
+    payload = _graph_payload(to_email, to_name, subject, html_body, extra_headers, attachments)
     try:
         token = await _graph_token()
         status, body = await _graph_post(token, payload)
@@ -295,12 +309,14 @@ async def _send_email(
     subject: str,
     html_body: str,
     extra_headers: dict | None = None,
+    attachments: list | None = None,
 ) -> bool:
-    """Send one email (to one address, or to each address in a comma-separated list). True only if every one went."""
+    """Send one email (to one address, or to each address in a comma-separated list). True only if every one went.
+    attachments = [(filename, bytes, mime_type), ...]"""
     recipients = _split_recipients(to_email)
     if len(recipients) <= 1:
-        return await _send_email_one(recipients[0] if recipients else to_email, to_name, subject, html_body, extra_headers)
-    results = [await _send_email_one(r, to_name, subject, html_body, extra_headers) for r in recipients]
+        return await _send_email_one(recipients[0] if recipients else to_email, to_name, subject, html_body, extra_headers, attachments)
+    results = [await _send_email_one(r, to_name, subject, html_body, extra_headers, attachments) for r in recipients]
     return all(results)
 
 
@@ -310,20 +326,23 @@ async def _send_email_one(
     subject: str,
     html_body: str,
     extra_headers: dict | None = None,
+    attachments: list | None = None,
 ) -> bool:
     """Send one email to one address: Microsoft Graph first, SMTP as the fallback. Returns True on success."""
     global last_error, last_method
     graph_error = ""
-    if _graph_configured() and _graph_can_carry(extra_headers):
+    # Graph's simple send accepts about 4 MB in all (attachments grow by a third when encoded): bigger mail goes by SMTP
+    small_enough = sum(len(a[1]) for a in (attachments or [])) <= GRAPH_MAX_ATTACHMENT_BYTES
+    if _graph_configured() and _graph_can_carry(extra_headers) and small_enough:
         try:
-            await _send_via_graph(to_email, to_name, subject, html_body, extra_headers)
+            await _send_via_graph(to_email, to_name, subject, html_body, extra_headers, attachments)
             last_error, last_method = "", "graph"
             logger.info("Email sent (Graph) -> %s  subject=%s", to_email, subject)
             return True
         except GraphError as exc:
             graph_error = str(exc)
             logger.error("Graph send error -> %s: %s", to_email, graph_error)
-    smtp_ok = await _send_via_smtp(to_email, to_name, subject, html_body, extra_headers)
+    smtp_ok = await _send_via_smtp(to_email, to_name, subject, html_body, extra_headers, attachments)
     if smtp_ok:
         last_method = "smtp"
         if graph_error:

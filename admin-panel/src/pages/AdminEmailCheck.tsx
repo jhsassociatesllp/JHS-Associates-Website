@@ -62,7 +62,7 @@ const AdminEmailCheck: React.FC = () => {
 
   const [founder, setFounder] = useState<FounderPreview | null>(null);
   const [founderSending, setFounderSending] = useState(false);
-  const [founderDone, setFounderDone] = useState('');
+  const [founderResults, setFounderResults] = useState<{ to: string; ok: boolean; method: string; error: string; attachments: string[] }[]>([]);
   const [founderError, setFounderError] = useState('');
 
   useEffect(() => {
@@ -78,13 +78,15 @@ const AdminEmailCheck: React.FC = () => {
     const who = founder?.recipients.join(', ') || 'the Founder';
     if (!window.confirm(`Send yesterday's website report (with the resumes) to ${who} now?`)) return;
     setFounderSending(true);
-    setFounderDone('');
+    setFounderResults([]);
     setFounderError('');
     try {
       const response = await fetch(`${API_BASE_URL}/admin/daily-report/send-founder`, { method: 'POST', headers });
       const body = await response.json().catch(() => null);
       if (!response.ok) throw new Error(typeof body?.detail === 'string' ? body.detail : 'The report could not be sent.');
-      setFounderDone(`Sent to ${body.recipients.join(', ')}. Attached: ${body.attachments.join(', ')}.`);
+      setFounderResults(body.results ?? []);
+      if (body.sent) setFounderError('');
+      else if (!(body.results ?? []).length) setFounderError(body.error || 'The report could not be sent.');
     } catch (err) {
       setFounderError(err instanceof Error ? err.message : 'The report could not be sent.');
     } finally {
@@ -237,7 +239,17 @@ const AdminEmailCheck: React.FC = () => {
           </button>
         </div>
         {founderError && <div className="ec-box ec-box--bad" role="alert">{founderError}</div>}
-        {founderDone && <div className="ec-box ec-box--ok" role="status"><strong>Report sent.</strong> {founderDone}</div>}
+        {founderResults.length > 0 && (
+          <div className={`ec-box ${founderResults.every((r) => r.ok) ? 'ec-box--ok' : 'ec-box--bad'}`} role="status">
+            <strong>{founderResults.every((r) => r.ok) ? 'Report sent to everyone.' : 'The report did not reach everyone.'}</strong>
+            {founderResults.map((r) => (
+              <p className="ec-detail" key={r.to}>
+                <b>{r.to}</b>: {r.ok ? `sent through ${r.method === 'graph' ? 'Microsoft Graph' : 'SMTP'}, attached: ${r.attachments.join(', ')}` : `FAILED. ${r.error}`}
+              </p>
+            ))}
+            <p className="ec-detail">If it says sent but nothing arrived, look in Junk and the Microsoft 365 quarantine.</p>
+          </div>
+        )}
       </div>
 
       {result && !result.ok && (

@@ -52,9 +52,9 @@ async def send_to_founder(current_admin: AdminInDB = Depends(super_admin_only)):
     if now - _last_founder_send[0] < MIN_SECONDS_BETWEEN_FOUNDER_SENDS:
         raise HTTPException(status_code=429, detail="The report was just sent. Please wait a minute before sending it again.")
     _last_founder_send[0] = now
-    result = await dr.send_report(dr.yesterday_ist())
-    result["day"] = dr.yesterday_ist().isoformat()
+    day = dr.yesterday_ist()
+    result = await dr.send_report(day)
+    result["day"] = day.isoformat()
     if not result["sent"]:
         _last_founder_send[0] = 0.0   # let them try again straight away
-        raise HTTPException(status_code=502, detail=result.get("error") or "The email could not be sent")
-    return result
+    return result   # always returned, with one line per person (who got it, how, or why not): the page shows it

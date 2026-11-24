@@ -52,7 +52,7 @@ async def fake_send(to, name, subject, html, headers=None, attachments=None):
     return True
 
 
-es._send_email = fake_send
+es._send_email_one = fake_send
 
 
 async def seed():
@@ -77,8 +77,10 @@ async def main():
     assert counts["resumes"] == 2, counts      # only yesterday (IST): 23:59 in, 00:01 next day out
     assert counts["contacts"] == 3 and counts["proposals"] == 1 and counts["appointments"] == 1 and counts["consultations"] == 1 and counts["feedback"] == 1, counts
 
-    result = await dr.send_report(DAY, "test@example.com")
-    assert result["sent"] and result["recipients"] == ["test@example.com"], result
+    result = await dr.send_report(DAY, "test@example.com, second@example.com")
+    assert result["sent"] and result["recipients"] == ["test@example.com", "second@example.com"] and len(sent) == 2, result
+    assert [r["ok"] for r in result["results"]] == [True, True]
+    sent.pop()
     mail = sent[-1]
     names = [a[0] for a in mail["attachments"]]
     assert names == [f"JHS_Daily_Report_{DAY.strftime('%d-%m-%Y')}.xlsx", f"JHS_Resumes_{DAY.strftime('%d-%m-%Y')}.zip"], names
@@ -99,7 +101,7 @@ async def main():
     # a failed send releases the claim so it is retried
     await db["app_meta"].delete_many({})
     async def failing(*a, **k): return False
-    es._send_email = failing
+    es._send_email_one = failing
     assert await dr.run_once() is False
     assert not await db["app_meta"].find_one({"_id": f"daily_report_{DAY.isoformat()}"})
 

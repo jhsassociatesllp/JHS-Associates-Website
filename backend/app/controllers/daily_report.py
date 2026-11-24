@@ -241,12 +241,23 @@ async def send_report(day: date, to: str | None = None) -> dict:
     if not to_list:
         return {"sent": False, "error": "No recipient: set DAILY_REPORT_RECIPIENTS", "counts": {}}
     report = await build_report(day)
-    ok = await es._send_email(", ".join(to_list), "", report["subject"], report["html"], None, report["attachments"])
-    if not ok:   # attachments can be what the mail server refuses: still get the numbers to the reader
-        logger.warning("Daily report: send with attachments failed; retrying with the Excel file only")
-        ok = await es._send_email(", ".join(to_list), "", report["subject"], report["html"], None, report["attachments"][:1])
-    return {"sent": bool(ok), "counts": report["counts"], "recipients": to_list,
-            "attachments": [a[0] for a in report["attachments"]], "error": "" if ok else es.last_error}
+    results = []
+    for address in to_list:   # one mail per person, so one failure never repeats the mail for the others
+        sent_files = report["attachments"]
+        ok = await es._send_email_one(address, "", report["subject"], report["html"], None, sent_files)
+        error = "" if ok else es.last_error
+        if not ok:   # attachments can be what the mail server refuses: still get the numbers to the reader
+            logger.warning("Daily report: send to %s with attachments failed (%s); retrying with the Excel file only", address, error)
+            sent_files = report["attachments"][:1]
+            ok = await es._send_email_one(address, "", report["subject"], report["html"], None, sent_files)
+            error = "" if ok else es.last_error
+        results.append({"to": address, "ok": bool(ok), "method": es.last_method if ok else "", "error": error,
+                        "attachments": [a[0] for a in sent_files] if ok else []})
+        logger.info("Daily report to %s: %s", address, "sent via " + es.last_method if ok else "FAILED " + error)
+    all_ok = all(r["ok"] for r in results)
+    first_error = next((r["error"] for r in results if not r["ok"]), "")
+    return {"sent": all_ok, "counts": report["counts"], "recipients": to_list, "results": results,
+            "attachments": [a[0] for a in report["attachments"]], "error": first_error}
 
 
 async def _already_sent(day: date) -> bool:

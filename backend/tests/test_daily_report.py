@@ -105,6 +105,28 @@ async def main():
     assert await dr.run_once() is False
     assert not await db["app_meta"].find_one({"_id": f"daily_report_{DAY.isoformat()}"})
 
+    # switching the report on AFTER the send time sends nothing there and then
+    es._send_email_one = fake_send
+    await db["app_meta"].delete_many({})
+    sent.clear()
+    dr.settings.daily_report_hour = 0                       # the send time has already passed
+    now = datetime.now(timezone.utc)
+    await dr.prepare_first_start(now)
+    assert await dr.run_once() is True and sent == [], "first start after the send time must not send"
+    assert (await db["app_meta"].find_one({"_id": f"daily_report_{DAY.isoformat()}"}))["state"] == "skipped"
+    # a later restart skips nothing: a report missed while the server was down still goes out
+    await db["app_meta"].delete_one({"_id": f"daily_report_{DAY.isoformat()}"})
+    await dr.prepare_first_start(now)
+    assert await dr.run_once() is True and len(sent) == 1, sent
+    # switched on BEFORE the send time: that morning's report goes out as usual
+    await db["app_meta"].delete_many({})
+    sent.clear()
+    dr.settings.daily_report_hour = 10
+    await dr.prepare_first_start(at(DAY + timedelta(days=1), 9, 0))
+    assert not await db["app_meta"].find_one({"_id": f"daily_report_{DAY.isoformat()}"}), "nothing to skip before the send time"
+    dr.settings.daily_report_hour = 0
+    assert await dr.run_once() is True and len(sent) == 1, sent
+
     # quiet day
     quiet = await dr.build_report(DAY - timedelta(days=30))
     assert "Nothing new came in" in quiet["html"] and quiet["counts"]["resumes"] == 0 and len(quiet["attachments"]) == 1

@@ -156,7 +156,9 @@ export function HeroEventPill() {
  * upcoming events (admin-managed). It scrolls away with the page; the navbar below it uses
  * the --topbar-h variable to sit just under it and slide up as the bar leaves the screen.
  */
-const MARQUEE_HEIGHT = 34
+const MARQUEE_HEIGHT = 42
+// time one event takes to cross the screen: slow enough to read it while it moves
+const SECONDS_PER_ITEM = 13
 
 export function EventMarquee() {
   const { events } = useEvents(false, 4)
@@ -189,17 +191,19 @@ export function EventMarquee() {
     const external = Boolean(e.external_registration_url)
     const inner = (
       <>
-        <i className="evm__dot" style={{ background: accent }} aria-hidden="true" />
-        <b className="evm__type" style={{ color: accent }}>{e.event_type}</b>
+        <b className="evm__type"><i className="evm__dot" aria-hidden="true" />{e.event_type}</b>
         <span className="evm__title">{e.title}</span>
-        <span className="evm__when">{formatDay(e.start_at)} {formatMonth(e.start_at)} · {formatTime(e.start_at)}</span>
+        <span className="evm__when">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+          {formatDay(e.start_at)} {formatMonth(e.start_at)} · {formatTime(e.start_at)}
+        </span>
         <span className="evm__cta">{e.registration_open ? 'Register now' : 'View details'} →</span>
       </>
     )
     return external ? (
-      <a key={`${e.id}-${tag}`} className="evm__item" href={href} target="_blank" rel="noopener noreferrer">{inner}</a>
+      <a key={`${e.id}-${tag}`} className="evm__item" href={href} target="_blank" rel="noopener noreferrer" style={{ ['--accent' as string]: accent }}>{inner}</a>
     ) : (
-      <Link key={`${e.id}-${tag}`} className="evm__item" to={href}>{inner}</Link>
+      <Link key={`${e.id}-${tag}`} className="evm__item" to={href} style={{ ['--accent' as string]: accent }}>{inner}</Link>
     )
   })
 
@@ -213,7 +217,7 @@ export function EventMarquee() {
 
   return (
     <div className="evm" role="region" aria-label="Upcoming events">
-      <div className="evm__track">
+      <div className="evm__track" style={{ animationDuration: `${list.length * repeat * SECONDS_PER_ITEM}s` }}>
         <div className="evm__half">{half('a')}</div>
         <div className="evm__half" aria-hidden="true">{half('b')}</div>
       </div>

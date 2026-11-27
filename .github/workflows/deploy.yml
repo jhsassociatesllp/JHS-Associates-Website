@@ -241,8 +241,9 @@ jobs:
             export GRAPH_CLIENT_ID="${{ secrets.GRAPH_CLIENT_ID }}"
             export GRAPH_CLIENT_SECRET="${{ secrets.GRAPH_CLIENT_SECRET }}"
             export GRAPH_SENDER="${{ secrets.GRAPH_SENDER }}"
-            # Founder's daily report (yesterday's resumes, contacts, proposals ...): ON for staging only until it is approved for main
-            if [ "$BRANCH" = "staging" ]; then export DAILY_REPORT_ENABLED=true; else export DAILY_REPORT_ENABLED="${{ secrets.DAILY_REPORT_ENABLED || 'false' }}"; fi
+            # Founder's daily report (yesterday's resumes, contacts, proposals ...): sent by the LIVE site only, because only
+            # its database holds the real website submissions. Staging has its own database, so its report showed all zeros.
+            if [ "$BRANCH" = "main" ]; then export DAILY_REPORT_ENABLED=true; else export DAILY_REPORT_ENABLED=false; fi
             export DAILY_REPORT_RECIPIENTS="${{ secrets.DAILY_REPORT_RECIPIENTS || 'vasu.gadde@jhsassociates.in' }}"
             export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
             export MSG91_AUTH_KEY="${{ secrets.MSG91_AUTH_KEY }}"

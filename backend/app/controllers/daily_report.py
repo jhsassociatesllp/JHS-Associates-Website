@@ -300,11 +300,35 @@ async def run_once() -> bool:
     return result["sent"]
 
 
+async def prepare_first_start(started: datetime) -> None:
+    """Switching the report on must not send a mail there and then. The very first time the scheduler runs on a database,
+    if that day's send time has already passed, yesterday is marked as skipped; automatic sending begins at the next send time.
+    Later restarts change nothing, so a report missed because the server was down still goes out when it comes back."""
+    from pymongo.errors import DuplicateKeyError
+    col, first_key = get_database()[META], "daily_report_scheduler"
+    if await col.find_one({"_id": first_key}):
+        return
+    local = started.astimezone(IST)
+    if local.hour >= settings.daily_report_hour:
+        day = local.date() - timedelta(days=1)
+        try:
+            await col.insert_one({"_id": f"daily_report_{day.isoformat()}", "state": "skipped", "claimed_at": started})
+            logger.info("Daily report switched on after the send time: %s is not sent automatically", day)
+        except DuplicateKeyError:
+            pass   # that day already has a mark (sent, or being sent)
+    # written last: if anything above fails, the next check starts over and nothing is sent in between
+    await col.update_one({"_id": first_key}, {"$setOnInsert": {"first_started_at": started}}, upsert=True)
+
+
 async def worker_loop() -> None:
     logger.info("Daily report scheduler started: sends at %02d:00 IST to %s", settings.daily_report_hour, recipients())
+    started, prepared = datetime.now(timezone.utc), False
     while True:
         wait = CHECK_MINUTES
         try:
+            if not prepared:
+                await prepare_first_start(started)
+                prepared = True
             if not await run_once():
                 wait = RETRY_MINUTES
         except asyncio.CancelledError:
